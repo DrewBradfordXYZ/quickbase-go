@@ -1,0 +1,9 @@
+package: generated
+output: internal/generated/quickbase.gen.go
+generate:
+  models: true
+  client: true
+  embedded-spec: false
+output-options:
+  skip-prune: true
+  skip-fmt: false
