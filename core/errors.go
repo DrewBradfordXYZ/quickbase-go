@@ -1,4 +1,19 @@
 // Package core provides shared types and utilities for the QuickBase SDK.
+//
+// This package contains:
+//   - Error types for different HTTP status codes (400, 401, 403, 404, 429, 5xx)
+//   - Date parsing and transformation utilities
+//   - Logging utilities
+//
+// Error types can be used for type assertions to handle specific error cases:
+//
+//	resp, err := client.API().GetAppWithResponse(ctx, appId)
+//	if err != nil {
+//	    var notFound *core.NotFoundError
+//	    if errors.As(err, &notFound) {
+//	        // Handle 404
+//	    }
+//	}
 package core
 
 import (
@@ -10,6 +25,9 @@ import (
 )
 
 // QuickbaseError is the base error type for all QuickBase SDK errors.
+//
+// All specific error types (RateLimitError, NotFoundError, etc.) embed this type.
+// The RayID field can be used for debugging with QuickBase support.
 type QuickbaseError struct {
 	Message     string `json:"message"`
 	StatusCode  int    `json:"statusCode"`
@@ -30,6 +48,9 @@ func (e *QuickbaseError) Unwrap() error {
 }
 
 // RateLimitInfo contains information about a rate limit event.
+//
+// This is passed to the OnRateLimit callback and included in RateLimitError.
+// The RetryAfter field indicates how long to wait before retrying (in seconds).
 type RateLimitInfo struct {
 	Timestamp  time.Time `json:"timestamp"`
 	RequestURL string    `json:"requestUrl"`

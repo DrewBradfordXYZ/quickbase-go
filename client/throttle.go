@@ -7,19 +7,43 @@ import (
 )
 
 // Throttle is the interface for rate limiting strategies.
+//
+// QuickBase enforces a rate limit of 100 requests per 10 seconds per user token.
+// Implementing this interface allows custom throttling behavior.
+//
+// The SDK provides two built-in implementations:
+//   - [SlidingWindowThrottle]: Proactive throttling to avoid hitting rate limits
+//   - [NoOpThrottle]: No throttling (default, relies on server-side 429 handling)
 type Throttle interface {
 	// Acquire blocks until a request slot is available.
+	// Returns an error if the context is cancelled while waiting.
 	Acquire(ctx context.Context) error
+
 	// GetWindowCount returns the number of requests in the current window.
 	GetWindowCount() int
+
 	// GetRemaining returns remaining requests available in the current window.
 	GetRemaining() int
+
 	// Reset clears the throttle state.
 	Reset()
 }
 
-// SlidingWindowThrottle implements QuickBase's rate limit: 100 requests per 10 seconds.
-// This matches the JS SDK's SlidingWindowThrottle.
+// SlidingWindowThrottle implements proactive rate limiting using a sliding window algorithm.
+//
+// This throttle tracks request timestamps and blocks new requests when the limit
+// would be exceeded. It automatically waits until the oldest request exits the
+// 10-second window before allowing new requests.
+//
+// QuickBase's rate limit is 100 requests per 10 seconds per user token.
+// Using this throttle prevents 429 errors by proactively limiting request rate.
+//
+// Example:
+//
+//	client, _ := quickbase.New(realm,
+//	    quickbase.WithUserToken(token),
+//	    quickbase.WithProactiveThrottle(100), // 100 req/10s
+//	)
 type SlidingWindowThrottle struct {
 	mu                   sync.Mutex
 	requestsPer10Seconds int
@@ -27,7 +51,10 @@ type SlidingWindowThrottle struct {
 }
 
 // NewSlidingWindowThrottle creates a new sliding window throttle.
-// Default is 100 requests per 10 seconds (QuickBase's limit).
+//
+// The requestsPer10Seconds parameter sets the maximum requests allowed per 10-second window.
+// QuickBase's default limit is 100 requests per 10 seconds per user token.
+// If requestsPer10Seconds is <= 0, it defaults to 100.
 func NewSlidingWindowThrottle(requestsPer10Seconds int) *SlidingWindowThrottle {
 	if requestsPer10Seconds <= 0 {
 		requestsPer10Seconds = 100
@@ -106,10 +133,13 @@ func (t *SlidingWindowThrottle) Reset() {
 	t.timestamps = t.timestamps[:0]
 }
 
-// NoOpThrottle is a throttle that does nothing (for when throttling is disabled).
+// NoOpThrottle is a throttle that does nothing.
+//
+// This is the default throttle used when proactive throttling is not enabled.
+// The SDK will still handle 429 responses from the server with automatic retry.
 type NoOpThrottle struct{}
 
-// NewNoOpThrottle creates a no-op throttle.
+// NewNoOpThrottle creates a no-op throttle that allows all requests immediately.
 func NewNoOpThrottle() *NoOpThrottle {
 	return &NoOpThrottle{}
 }

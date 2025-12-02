@@ -6,13 +6,20 @@ import (
 )
 
 // UserTokenStrategy authenticates using a QuickBase user token.
+//
 // User tokens are long-lived tokens that don't expire and work across all apps
-// the user has access to.
+// the user has access to. This is the simplest and most common authentication method.
+//
+// Generate a user token at: https://YOUR-REALM.quickbase.com/db/main?a=UserTokens
 type UserTokenStrategy struct {
 	token string
 }
 
 // NewUserTokenStrategy creates a new user token authentication strategy.
+//
+// Example:
+//
+//	strategy := auth.NewUserTokenStrategy("b9f3pk_xxx_xxxxxxxxxxxxxx")
 func NewUserTokenStrategy(token string) *UserTokenStrategy {
 	return &UserTokenStrategy{token: token}
 }

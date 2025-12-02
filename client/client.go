@@ -1,4 +1,23 @@
 // Package client provides a QuickBase API client with retry and rate limiting.
+//
+// This package is typically used through the top-level quickbase package,
+// but can be used directly for advanced use cases like custom pagination.
+//
+// Basic usage:
+//
+//	client, err := client.New(realm, authStrategy)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	resp, err := client.API().GetAppWithResponse(ctx, appId)
+//
+// With options:
+//
+//	client, err := client.New(realm, authStrategy,
+//	    client.WithMaxRetries(5),
+//	    client.WithTimeout(60 * time.Second),
+//	    client.WithProactiveThrottle(100),
+//	)
 package client
 
 import (
@@ -20,7 +39,17 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
-// Client wraps the generated QuickBase client with auth, retry, and rate limiting.
+// Client wraps the generated QuickBase client with authentication, automatic retry,
+// and rate limiting. It provides a robust interface for making QuickBase API requests.
+//
+// The Client automatically:
+//   - Adds authentication headers to all requests
+//   - Retries failed requests with exponential backoff and jitter
+//   - Handles rate limiting (429) responses with automatic retry
+//   - Refreshes expired tokens for temp token and SSO authentication
+//   - Applies proactive throttling to avoid hitting rate limits
+//
+// Access the underlying generated API client via the API() method.
 type Client struct {
 	generated *generated.ClientWithResponses
 	auth      auth.Strategy
@@ -207,6 +236,21 @@ func (c *Client) addHeaders(ctx context.Context, req *http.Request) error {
 }
 
 // API returns the generated API client for making requests.
+//
+// The returned client provides strongly-typed methods for all QuickBase API endpoints.
+// Each method has two variants:
+//   - Method(ctx, params) - returns (*http.Response, error)
+//   - MethodWithResponse(ctx, params) - returns parsed response with JSON200, JSON400, etc. fields
+//
+// Example:
+//
+//	resp, err := client.API().GetAppWithResponse(ctx, appId)
+//	if err != nil {
+//	    return err
+//	}
+//	if resp.JSON200 != nil {
+//	    fmt.Println("App name:", resp.JSON200.Name)
+//	}
 func (c *Client) API() *generated.ClientWithResponses {
 	return c.generated
 }
@@ -452,6 +496,9 @@ func parseRetryAfter(header string, baseDelay time.Duration, attempt int) time.D
 }
 
 // ValidateRealm validates the realm format.
+//
+// The realm should be just the subdomain portion, not the full hostname.
+// For example, use "mycompany" not "mycompany.quickbase.com".
 func ValidateRealm(realm string) error {
 	if realm == "" {
 		return fmt.Errorf("realm is required")
