@@ -119,6 +119,75 @@ func toFieldValue(v any) generated.FieldValue_Value {
 - `github.com/oapi-codegen/runtime` - OpenAPI runtime for generated client
 - `github.com/joho/godotenv` - Load .env files for integration tests
 
+## Temporary Token Authentication
+
+**This is a key architectural difference between the Go and JS SDKs.**
+
+### The Core Insight
+Temp tokens prove a user is logged into QuickBase via their browser session. The benefit is verification - you know the request came from someone actually logged into QuickBase.
+
+### JS SDK (Browser/Code Pages)
+The JS SDK can **fetch** temp tokens because it runs in the browser:
+```javascript
+// In temp-token.ts
+const response = await this.fetchApi(url, {
+  method: 'GET',
+  headers,
+  credentials: 'include', // <-- Sends browser cookies!
+});
+```
+- Uses `credentials: 'include'` on the `/auth/temporary/{dbid}` request
+- Browser automatically sends QuickBase session cookies
+- Works in Code Pages where user is logged into QuickBase
+- No user token needed - the browser session IS the auth
+
+### Go SDK (Server-Side)
+The Go SDK **receives** pre-existing temp tokens - it cannot fetch them:
+- No browser cookies available on server
+- The `fetchToken()` code was removed because it's dead code without cookies
+- Primary use case: receiving tokens from POST callbacks
+
+**Available options:**
+- `auth.ExtractPostTempToken(r)` - Extract token from incoming POST request
+- `auth.WithInitialTempToken(token)` - Create client with a received token
+- `auth.WithInitialTempTokenForTable(token, dbid)` - When you know the table ID
+- `strategy.SetToken(dbid, token)` - Add tokens during request lifecycle
+
+### Why use temp tokens over user tokens?
+- **Verification**: Proves user is logged into QuickBase right now
+- **No credentials storage**: Your server doesn't need to store user tokens
+- **Table-scoped**: More restrictive permissions
+- **Short-lived**: ~5 minutes, limits damage if leaked
+
+### Why NOT fetch temp tokens with a user token?
+You technically CAN call `/auth/temporary/{dbid}` with a user token, but there's no point:
+- If you have a user token, just use that directly
+- The benefit of temp tokens is proving browser session - if you're using a user token, you've already bypassed that
+
+### POST Temp Token Flow
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  QuickBase  │     │   Browser   │     │  Go Server  │
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                   │                   │
+       │  User clicks      │                   │
+       │  Formula-URL      │                   │
+       │◄──────────────────│                   │
+       │                   │                   │
+       │  POST {tempToken} │                   │
+       │───────────────────┼──────────────────►│
+       │                   │                   │
+       │                   │     API calls     │
+       │◄──────────────────┼───────────────────│
+       │                   │                   │
+```
+
+1. Configure Formula-URL field with "POST temp token" option
+2. User clicks link in QuickBase
+3. QuickBase POSTs `{"tempToken": "..."}` to your Go server
+4. Go server extracts token with `auth.ExtractPostTempToken(r)`
+5. Go server makes API calls back to QuickBase using that token
+
 ## Related Repository
 
 This SDK mirrors [quickbase-js](https://github.com/DrewBradfordXYZ/quickbase-js):

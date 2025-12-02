@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"sync"
@@ -10,17 +9,29 @@ import (
 )
 
 // TempTokenStrategy authenticates using QuickBase temporary tokens.
-// Temp tokens are short-lived, table-scoped tokens obtained via browser session.
+//
+// Temp tokens are short-lived (~5 min), table-scoped tokens that verify
+// a user is logged into QuickBase via their browser session.
+//
+// In a Go server, you receive temp tokens from QuickBase (e.g., via POST
+// from a Formula-URL field) rather than fetching them. Use ExtractPostTempToken
+// to extract tokens from incoming requests.
+//
+// Example:
+//
+//	func handler(w http.ResponseWriter, r *http.Request) {
+//	    token, _ := auth.ExtractPostTempToken(r)
+//	    client, _ := quickbase.New("realm",
+//	        quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	    )
+//	    // Use client...
+//	}
 type TempTokenStrategy struct {
 	realm    string
-	baseURL  string
-	client   *http.Client
 	lifespan time.Duration
 
-	mu           sync.RWMutex
-	cache        map[string]*cachedToken
-	pending      map[string]chan struct{}
-	initialToken string
+	mu    sync.RWMutex
+	cache map[string]*cachedToken
 }
 
 type cachedToken struct {
@@ -32,23 +43,46 @@ type cachedToken struct {
 type TempTokenOption func(*TempTokenStrategy)
 
 // WithTempTokenLifespan sets the token cache lifespan (default 290 seconds).
+// QuickBase temp tokens expire after ~5 minutes.
 func WithTempTokenLifespan(d time.Duration) TempTokenOption {
 	return func(s *TempTokenStrategy) {
 		s.lifespan = d
 	}
 }
 
-// WithInitialTempToken sets an initial temp token to use before fetching.
+// initialTokenOption holds the initial token to set after construction.
+type initialTokenOption struct {
+	token string
+	dbid  string
+}
+
+var pendingInitialTokens = make(map[*TempTokenStrategy]*initialTokenOption)
+var pendingMu sync.Mutex
+
+// WithInitialTempToken sets an initial temp token received from QuickBase.
+//
+// Use this when you've received a token from a POST callback (Formula-URL field)
+// or from a browser client. The token will be cached and used for API requests.
+//
+// If dbid is not known at creation time, the token will be used for the first
+// request and cached with that request's dbid.
 func WithInitialTempToken(token string) TempTokenOption {
 	return func(s *TempTokenStrategy) {
-		s.initialToken = token
+		pendingMu.Lock()
+		pendingInitialTokens[s] = &initialTokenOption{token: token}
+		pendingMu.Unlock()
 	}
 }
 
-// WithHTTPClient sets a custom HTTP client for token fetching.
-func WithHTTPClient(client *http.Client) TempTokenOption {
+// WithInitialTempTokenForTable sets an initial temp token for a specific table.
+func WithInitialTempTokenForTable(token string, dbid string) TempTokenOption {
 	return func(s *TempTokenStrategy) {
-		s.client = client
+		s.mu.Lock()
+		s.cache[dbid] = &cachedToken{
+			token:     token,
+			expiresAt: time.Now().Add(s.lifespan),
+		}
+		s.mu.Unlock()
 	}
 }
 
@@ -56,11 +90,8 @@ func WithHTTPClient(client *http.Client) TempTokenOption {
 func NewTempTokenStrategy(realm string, opts ...TempTokenOption) *TempTokenStrategy {
 	s := &TempTokenStrategy{
 		realm:    realm,
-		baseURL:  "https://api.quickbase.com/v1",
-		client:   http.DefaultClient,
 		lifespan: 290 * time.Second,
 		cache:    make(map[string]*cachedToken),
-		pending:  make(map[string]chan struct{}),
 	}
 	for _, opt := range opts {
 		opt(s)
@@ -68,16 +99,31 @@ func NewTempTokenStrategy(realm string, opts ...TempTokenOption) *TempTokenStrat
 	return s
 }
 
-// GetToken returns a temp token for the given table ID, fetching if needed.
+// GetToken returns a temp token for the given table ID.
+//
+// Since Go servers can't fetch temp tokens (no browser cookies), this returns
+// a cached token that was set via WithInitialTempToken or SetToken.
 func (s *TempTokenStrategy) GetToken(ctx context.Context, dbid string) (string, error) {
-	if dbid == "" {
-		if s.initialToken != "" {
-			return s.initialToken, nil
-		}
-		return "", fmt.Errorf("dbid required for temp token authentication")
-	}
+	// Check for pending initial token (set via WithInitialTempToken)
+	pendingMu.Lock()
+	if pending, ok := pendingInitialTokens[s]; ok {
+		delete(pendingInitialTokens, s)
+		pendingMu.Unlock()
 
-	// Check cache first
+		// Cache it for this dbid
+		if dbid != "" {
+			s.mu.Lock()
+			s.cache[dbid] = &cachedToken{
+				token:     pending.token,
+				expiresAt: time.Now().Add(s.lifespan),
+			}
+			s.mu.Unlock()
+		}
+		return pending.token, nil
+	}
+	pendingMu.Unlock()
+
+	// Check cache
 	s.mu.RLock()
 	if cached, ok := s.cache[dbid]; ok && time.Now().Before(cached.expiresAt) {
 		s.mu.RUnlock()
@@ -85,76 +131,19 @@ func (s *TempTokenStrategy) GetToken(ctx context.Context, dbid string) (string, 
 	}
 	s.mu.RUnlock()
 
-	// Check if there's already a pending fetch
-	s.mu.Lock()
-	if pending, ok := s.pending[dbid]; ok {
-		s.mu.Unlock()
-		<-pending // Wait for the pending fetch to complete
-		return s.GetToken(ctx, dbid)
-	}
-
-	// Start a new fetch
-	pending := make(chan struct{})
-	s.pending[dbid] = pending
-	s.mu.Unlock()
-
-	token, err := s.fetchToken(ctx, dbid)
-
-	s.mu.Lock()
-	delete(s.pending, dbid)
-	close(pending)
-	if err == nil {
-		s.cache[dbid] = &cachedToken{
-			token:     token,
-			expiresAt: time.Now().Add(s.lifespan),
-		}
-	}
-	s.mu.Unlock()
-
-	return token, err
+	return "", fmt.Errorf("no temp token available for dbid %s; use WithInitialTempToken or SetToken", dbid)
 }
 
-func (s *TempTokenStrategy) fetchToken(ctx context.Context, dbid string) (string, error) {
-	url := fmt.Sprintf("%s/auth/temporary/%s", s.baseURL, dbid)
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-		return "", fmt.Errorf("creating request: %w", err)
+// SetToken caches a temp token for a specific table ID.
+//
+// Use this to add tokens received from QuickBase during the request lifecycle.
+func (s *TempTokenStrategy) SetToken(dbid string, token string) {
+	s.mu.Lock()
+	s.cache[dbid] = &cachedToken{
+		token:     token,
+		expiresAt: time.Now().Add(s.lifespan),
 	}
-
-	req.Header.Set("QB-Realm-Hostname", s.realm+".quickbase.com")
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := s.client.Do(req)
-	if err != nil {
-		return "", fmt.Errorf("fetching temp token: %w", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		var errResp struct {
-			Message string `json:"message"`
-		}
-		json.NewDecoder(resp.Body).Decode(&errResp)
-		msg := errResp.Message
-		if msg == "" {
-			msg = "unknown error"
-		}
-		return "", fmt.Errorf("API error: %s (status: %d)", msg, resp.StatusCode)
-	}
-
-	var result struct {
-		TemporaryAuthorization string `json:"temporaryAuthorization"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return "", fmt.Errorf("decoding response: %w", err)
-	}
-
-	if result.TemporaryAuthorization == "" {
-		return "", fmt.Errorf("no temporary token returned from API")
-	}
-
-	return result.TemporaryAuthorization, nil
+	s.mu.Unlock()
 }
 
 // ApplyAuth applies the temp token to the Authorization header.
@@ -162,21 +151,34 @@ func (s *TempTokenStrategy) ApplyAuth(req *http.Request, token string) {
 	req.Header.Set("Authorization", "QB-TEMP-TOKEN "+token)
 }
 
-// HandleAuthError handles 401 errors by invalidating the cache and fetching a new token.
+// HandleAuthError handles 401 errors. For temp tokens, we can't refresh
+// server-side (no browser cookies), so we just invalidate the cache.
 func (s *TempTokenStrategy) HandleAuthError(ctx context.Context, statusCode int, dbid string, attempt int, maxAttempts int) (string, error) {
-	if statusCode != http.StatusUnauthorized || attempt >= maxAttempts-1 {
-		return "", nil
-	}
-
-	if dbid == "" {
+	if statusCode != http.StatusUnauthorized {
 		return "", nil
 	}
 
 	// Invalidate the cached token
+	if dbid != "" {
+		s.mu.Lock()
+		delete(s.cache, dbid)
+		s.mu.Unlock()
+	}
+
+	// Can't refresh - no browser cookies on server
+	return "", nil
+}
+
+// Invalidate removes a cached token.
+func (s *TempTokenStrategy) Invalidate(dbid string) {
 	s.mu.Lock()
 	delete(s.cache, dbid)
 	s.mu.Unlock()
+}
 
-	// Fetch a new token
-	return s.GetToken(ctx, dbid)
+// InvalidateAll removes all cached tokens.
+func (s *TempTokenStrategy) InvalidateAll() {
+	s.mu.Lock()
+	s.cache = make(map[string]*cachedToken)
+	s.mu.Unlock()
 }

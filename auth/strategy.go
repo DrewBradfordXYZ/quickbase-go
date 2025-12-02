@@ -3,17 +3,19 @@
 // QuickBase supports three authentication methods:
 //
 //   - User Token: Long-lived tokens for server-side applications
-//   - Temporary Token: Short-lived tokens scoped to specific tables
+//   - Temporary Token: Short-lived tokens received from QuickBase (e.g., POST callbacks)
 //   - SSO Token: SAML-based tokens for enterprise SSO integration
 //
-// User token authentication (most common):
+// User token authentication (most common for server-side):
 //
 //	strategy := auth.NewUserTokenStrategy("your-user-token")
 //
-// Temporary token authentication:
+// Temporary token authentication (for tokens received from QuickBase):
 //
+//	// Extract token from POST callback
+//	token, _ := auth.ExtractPostTempToken(r)
 //	strategy := auth.NewTempTokenStrategy(realm,
-//	    auth.WithTempTokenUserToken("user-token"),
+//	    auth.WithInitialTempToken(token),
 //	)
 //
 // SSO token authentication:

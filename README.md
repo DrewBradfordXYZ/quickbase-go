@@ -7,7 +7,7 @@ A Go client for the QuickBase JSON RESTful API.
 ## Features
 
 - **Typed API Methods** - Full type safety with auto-generated types from OpenAPI spec
-- **Multiple Auth Methods** - User token, temporary token, and SSO authentication
+- **Multiple Auth Methods** - User token, temporary token (via POST callback), and SSO
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Optional client-side request throttling (100 req/10s)
 - **Custom Error Types** - Specific error types for 400, 401, 403, 404, 429, 5xx responses
@@ -66,15 +66,49 @@ client, err := quickbase.New("mycompany",
 
 Generate a user token at: `https://YOUR-REALM.quickbase.com/db/main?a=UserTokens`
 
-### Temporary Token
+### Temporary Token (POST Callback)
+
+Temp tokens are short-lived (~5 min), table-scoped tokens that verify a user is logged into QuickBase. Unlike the JS SDK which can fetch temp tokens using browser cookies, **Go servers receive temp tokens from QuickBase** via POST callbacks.
+
+**How it works:**
+1. Configure a Formula-URL field in QuickBase with the "POST temp token" option
+2. When a user clicks the link, QuickBase POSTs `{"tempToken": "..."}` to your server
+3. Your server extracts the token and uses it to make API calls back to QuickBase
 
 ```go
-client, err := quickbase.New("mycompany",
-    quickbase.WithTempTokenAuth(
-        auth.WithTempTokenUserToken("your-user-token"),
-    ),
-)
+import "github.com/DrewBradfordXYZ/quickbase-go/auth"
+
+func handleQuickBaseCallback(w http.ResponseWriter, r *http.Request) {
+    // Extract the temp token from the POST body
+    token, err := auth.ExtractPostTempToken(r)
+    if err != nil {
+        http.Error(w, "Invalid request", http.StatusBadRequest)
+        return
+    }
+
+    // Create a client with the received token
+    client, err := quickbase.New("myrealm",
+        quickbase.WithTempTokenAuth(
+            auth.WithInitialTempToken(token),
+        ),
+    )
+    if err != nil {
+        http.Error(w, "Failed to create client", http.StatusInternalServerError)
+        return
+    }
+
+    // Use the client to make API calls back to QuickBase
+    resp, err := client.API().GetAppWithResponse(r.Context(), appId)
+    // ...
+}
 ```
+
+**Why use temp tokens?**
+- Verifies the user is actually logged into QuickBase (via their browser session)
+- Table-scoped (more restrictive than user tokens)
+- No need to store user credentials on your server
+
+See [QuickBase docs](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field) for configuring POST temp tokens.
 
 ### SSO Token
 
