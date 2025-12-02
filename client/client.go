@@ -158,33 +158,6 @@ func WithBaseURL(url string) Option {
 	}
 }
 
-// WithRateLimiter is deprecated, use WithThrottle or WithProactiveThrottle instead.
-func WithRateLimiter(rl *RateLimiter) Option {
-	return func(c *Client) {
-		// Legacy support - wrap in a throttle interface adapter
-		c.throttle = &rateLimiterAdapter{rl: rl}
-	}
-}
-
-// rateLimiterAdapter wraps the old RateLimiter to implement Throttle.
-type rateLimiterAdapter struct {
-	rl *RateLimiter
-}
-
-func (a *rateLimiterAdapter) Acquire(ctx context.Context) error {
-	return a.rl.Wait(ctx)
-}
-
-func (a *rateLimiterAdapter) GetWindowCount() int {
-	return 0
-}
-
-func (a *rateLimiterAdapter) GetRemaining() int {
-	return int(a.rl.tokens)
-}
-
-func (a *rateLimiterAdapter) Reset() {}
-
 // New creates a new QuickBase client.
 func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, error) {
 	c := &Client{
