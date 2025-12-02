@@ -419,11 +419,19 @@ cp .env.example .env
 go test ./tests/integration/... -v
 ```
 
-### Regenerating Wrapper Methods
+### Updating the OpenAPI Spec
 
-After updating the OpenAPI spec, regenerate the wrapper methods:
+The `spec/` directory is a Git submodule pointing to [quickbase-spec](https://github.com/DrewBradfordXYZ/quickbase-spec). Each SDK pins to a specific commit, so spec updates are controlled:
 
 ```bash
+# Update to latest spec
+cd spec
+git pull origin main
+cd ..
+git add spec
+git commit -m "Update quickbase-spec submodule"
+
+# Regenerate wrapper methods
 go run ./cmd/generate-wrappers/main.go
 ```
 
