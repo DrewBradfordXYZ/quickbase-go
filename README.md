@@ -142,6 +142,9 @@ client, err := quickbase.New("mycompany",
     // Request timeout
     quickbase.WithTimeout(60*time.Second),    // Default: 30s
 
+    // Connection pool (for high-throughput, see "High-Throughput Configuration")
+    quickbase.WithMaxIdleConnsPerHost(10),    // Default: 6
+
     // Proactive rate limiting (100 req/10s is QuickBase's limit)
     quickbase.WithProactiveThrottle(100),
 
@@ -370,6 +373,53 @@ if err != nil {
     }
 }
 ```
+
+## High-Throughput Configuration
+
+For batch operations like bulk imports, exports, or report generation, you may want to tune both connection pooling and throttling to maximize throughput while staying within rate limits.
+
+### Understanding the Interaction
+
+| Setting | What it controls | Default |
+|---------|-----------------|---------|
+| `WithMaxIdleConnsPerHost` | How many concurrent requests *can* be in flight | 6 |
+| `WithProactiveThrottle` | How many requests *should* be made per 10 seconds | disabled |
+
+**Without throttling:** 6 connections with ~100ms latency = ~60 requests/second possible, but QuickBase only allows 10 req/s sustained (100/10s). You'll burst, hit 429s, wait, repeat.
+
+**With throttling:** Requests are spread evenly across the 10-second window, avoiding 429s entirely.
+
+### Recommended Configuration for Batch Operations
+
+```go
+client, _ := quickbase.New("realm",
+    quickbase.WithUserToken("token"),
+
+    // Allow more concurrent connections for parallel requests
+    quickbase.WithMaxIdleConnsPerHost(10),
+
+    // Spread requests to avoid 429 errors
+    quickbase.WithProactiveThrottle(100),
+)
+```
+
+This allows up to 10 requests in parallel while ensuring you never exceed 100 requests per 10 seconds.
+
+### Connection Pool Settings
+
+```go
+// Connection pool tuning (optional)
+quickbase.WithMaxIdleConnsPerHost(10), // Concurrent connections (default: 6)
+quickbase.WithMaxIdleConns(100),       // Total pool size (default: 100)
+quickbase.WithIdleConnTimeout(2*time.Minute), // Keep connections warm
+```
+
+**When to increase `MaxIdleConnsPerHost`:**
+- Bulk record operations (importing/exporting thousands of records)
+- Fetching data from multiple tables concurrently
+- Report generation hitting multiple endpoints
+
+**Why the default is 6:** This matches browser standards and handles typical concurrent patterns (e.g., fetching app metadata + tables + fields simultaneously) without encouraging excessive parallelism.
 
 ## Pagination
 
