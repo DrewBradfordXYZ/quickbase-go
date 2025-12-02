@@ -30,8 +30,9 @@ type TempTokenStrategy struct {
 	realm    string
 	lifespan time.Duration
 
-	mu    sync.RWMutex
-	cache map[string]*cachedToken
+	mu           sync.RWMutex
+	cache        map[string]*cachedToken
+	pendingToken *string // initial token not yet associated with a dbid
 }
 
 type cachedToken struct {
@@ -50,15 +51,6 @@ func WithTempTokenLifespan(d time.Duration) TempTokenOption {
 	}
 }
 
-// initialTokenOption holds the initial token to set after construction.
-type initialTokenOption struct {
-	token string
-	dbid  string
-}
-
-var pendingInitialTokens = make(map[*TempTokenStrategy]*initialTokenOption)
-var pendingMu sync.Mutex
-
 // WithInitialTempToken sets an initial temp token received from QuickBase.
 //
 // Use this when you've received a token from a POST callback (Formula-URL field)
@@ -68,9 +60,7 @@ var pendingMu sync.Mutex
 // request and cached with that request's dbid.
 func WithInitialTempToken(token string) TempTokenOption {
 	return func(s *TempTokenStrategy) {
-		pendingMu.Lock()
-		pendingInitialTokens[s] = &initialTokenOption{token: token}
-		pendingMu.Unlock()
+		s.pendingToken = &token
 	}
 }
 
@@ -104,32 +94,29 @@ func NewTempTokenStrategy(realm string, opts ...TempTokenOption) *TempTokenStrat
 // Since Go servers can't fetch temp tokens (no browser cookies), this returns
 // a cached token that was set via WithInitialTempToken or SetToken.
 func (s *TempTokenStrategy) GetToken(ctx context.Context, dbid string) (string, error) {
+	s.mu.Lock()
 	// Check for pending initial token (set via WithInitialTempToken)
-	pendingMu.Lock()
-	if pending, ok := pendingInitialTokens[s]; ok {
-		delete(pendingInitialTokens, s)
-		pendingMu.Unlock()
+	if s.pendingToken != nil {
+		token := *s.pendingToken
+		s.pendingToken = nil
 
 		// Cache it for this dbid
 		if dbid != "" {
-			s.mu.Lock()
 			s.cache[dbid] = &cachedToken{
-				token:     pending.token,
+				token:     token,
 				expiresAt: time.Now().Add(s.lifespan),
 			}
-			s.mu.Unlock()
 		}
-		return pending.token, nil
+		s.mu.Unlock()
+		return token, nil
 	}
-	pendingMu.Unlock()
 
 	// Check cache
-	s.mu.RLock()
 	if cached, ok := s.cache[dbid]; ok && time.Now().Before(cached.expiresAt) {
-		s.mu.RUnlock()
+		s.mu.Unlock()
 		return cached.token, nil
 	}
-	s.mu.RUnlock()
+	s.mu.Unlock()
 
 	return "", fmt.Errorf("no temp token available for dbid %s; use WithInitialTempToken or SetToken", dbid)
 }
