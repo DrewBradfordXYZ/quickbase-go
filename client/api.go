@@ -2,10 +2,98 @@ package client
 
 import (
 	"context"
+	"encoding/json"
+	"net/http"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
+
+// parseAPIError extracts a typed error from a non-200 API response.
+// It parses the response body to get message, description, and any field errors,
+// then returns the appropriate error type based on status code.
+func parseAPIError(statusCode int, body []byte, httpResp *http.Response) error {
+	// Extract ray ID from headers
+	var rayID string
+	if httpResp != nil {
+		rayID = httpResp.Header.Get("qb-api-ray")
+		if rayID == "" {
+			rayID = httpResp.Header.Get("cf-ray")
+		}
+	}
+
+	// Parse error body
+	var errBody struct {
+		Message     string            `json:"message"`
+		Description string            `json:"description"`
+		Errors      []core.FieldError `json:"errors"`
+	}
+	if len(body) > 0 {
+		_ = json.Unmarshal(body, &errBody) // ignore parse errors, use what we got
+	}
+
+	message := errBody.Message
+	if message == "" {
+		message = http.StatusText(statusCode)
+	}
+
+	switch statusCode {
+	case 400:
+		return &core.ValidationError{
+			QuickbaseError: core.QuickbaseError{
+				Message:     message,
+				Description: errBody.Description,
+				StatusCode:  statusCode,
+				RayID:       rayID,
+			},
+			Errors: errBody.Errors,
+		}
+	case 401:
+		return &core.AuthenticationError{
+			QuickbaseError: core.QuickbaseError{
+				Message:     message,
+				Description: errBody.Description,
+				StatusCode:  statusCode,
+				RayID:       rayID,
+			},
+		}
+	case 403:
+		return &core.AuthorizationError{
+			QuickbaseError: core.QuickbaseError{
+				Message:     message,
+				Description: errBody.Description,
+				StatusCode:  statusCode,
+				RayID:       rayID,
+			},
+		}
+	case 404:
+		return &core.NotFoundError{
+			QuickbaseError: core.QuickbaseError{
+				Message:     message,
+				Description: errBody.Description,
+				StatusCode:  statusCode,
+				RayID:       rayID,
+			},
+		}
+	default:
+		if statusCode >= 500 {
+			return &core.ServerError{
+				QuickbaseError: core.QuickbaseError{
+					Message:     message,
+					Description: errBody.Description,
+					StatusCode:  statusCode,
+					RayID:       rayID,
+				},
+			}
+		}
+		return &core.QuickbaseError{
+			Message:     message,
+			Description: errBody.Description,
+			StatusCode:  statusCode,
+			RayID:       rayID,
+		}
+	}
+}
 
 // --- Friendly wrapper methods ---
 
@@ -39,7 +127,7 @@ func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONReques
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
 	result := &RunQueryResult{}
@@ -105,7 +193,7 @@ func (c *Client) runQueryFetcher(body generated.RunQueryJSONRequestBody) PageFet
 			return nil, err
 		}
 		if resp.JSON200 == nil {
-			return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+			return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 		}
 
 		var data []generated.QuickbaseRecord
@@ -156,7 +244,7 @@ func (c *Client) Upsert(ctx context.Context, body generated.UpsertJSONRequestBod
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
 	result := &UpsertResult{}
@@ -190,7 +278,7 @@ func (c *Client) DeleteRecords(ctx context.Context, body generated.DeleteRecords
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
 	return &DeleteRecordsResult{
@@ -216,7 +304,7 @@ func (c *Client) GetApp(ctx context.Context, appID string) (*GetAppResult, error
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
 	return &GetAppResult{
@@ -244,7 +332,7 @@ func (c *Client) GetFields(ctx context.Context, tableID string) ([]FieldDetails,
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
 	var fields []FieldDetails

@@ -244,7 +244,6 @@ package client
 import (
 	"context"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
@@ -260,7 +259,7 @@ func (c *Client) {{.Name}}(ctx context.Context{{range .PathParams}}, {{.Name}} {
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }

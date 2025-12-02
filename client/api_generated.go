@@ -5,7 +5,6 @@ package client
 import (
 	"context"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
@@ -21,7 +20,7 @@ func (c *Client) AddManagersToGroup(ctx context.Context, gid float32, body gener
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -33,7 +32,7 @@ func (c *Client) AddMembersToGroup(ctx context.Context, gid float32, body genera
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -45,7 +44,7 @@ func (c *Client) AddSubgroupsToGroup(ctx context.Context, gid float32, body gene
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -57,7 +56,7 @@ func (c *Client) Audit(ctx context.Context, body generated.AuditJSONRequestBody)
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -69,7 +68,7 @@ func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, param
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -81,7 +80,7 @@ func (c *Client) ChangesetSolutionFromRecord(ctx context.Context, solutionId str
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -93,7 +92,7 @@ func (c *Client) CloneUserToken(ctx context.Context, body generated.CloneUserTok
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -105,7 +104,7 @@ func (c *Client) CopyApp(ctx context.Context, appId string, body generated.CopyA
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -117,7 +116,7 @@ func (c *Client) CreateApp(ctx context.Context, body generated.CreateAppJSONRequ
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -129,7 +128,7 @@ func (c *Client) CreateField(ctx context.Context, params *generated.CreateFieldP
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -141,7 +140,7 @@ func (c *Client) CreateRelationship(ctx context.Context, tableId string, body ge
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -153,7 +152,7 @@ func (c *Client) CreateSolution(ctx context.Context, params *generated.CreateSol
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -165,7 +164,7 @@ func (c *Client) CreateSolutionFromRecord(ctx context.Context, params *generated
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -177,7 +176,7 @@ func (c *Client) CreateTable(ctx context.Context, params *generated.CreateTableP
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -189,7 +188,7 @@ func (c *Client) DeactivateUserToken(ctx context.Context) (*generated.Deactivate
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -201,7 +200,7 @@ func (c *Client) DeleteApp(ctx context.Context, appId string, body generated.Del
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -213,7 +212,7 @@ func (c *Client) DeleteFields(ctx context.Context, params *generated.DeleteField
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -225,7 +224,7 @@ func (c *Client) DeleteFile(ctx context.Context, tableId string, recordId int, f
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -237,7 +236,7 @@ func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relatio
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -249,7 +248,7 @@ func (c *Client) DeleteTable(ctx context.Context, tableId string, params *genera
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -261,7 +260,7 @@ func (c *Client) DeleteUserToken(ctx context.Context) (*generated.DeleteUserToke
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -273,7 +272,7 @@ func (c *Client) DenyUsers(ctx context.Context, params *generated.DenyUsersParam
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -285,7 +284,7 @@ func (c *Client) DenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups 
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -297,7 +296,7 @@ func (c *Client) DownloadFile(ctx context.Context, tableId string, recordId int,
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -309,7 +308,7 @@ func (c *Client) ExchangeSsoToken(ctx context.Context, body generated.ExchangeSs
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -321,7 +320,7 @@ func (c *Client) ExportSolution(ctx context.Context, solutionId string, params *
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -333,7 +332,7 @@ func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, 
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -345,7 +344,7 @@ func (c *Client) GenerateDocument(ctx context.Context, templateId float32, param
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -357,7 +356,7 @@ func (c *Client) GetAppEvents(ctx context.Context, appId string) (*generated.Get
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -369,7 +368,7 @@ func (c *Client) GetAppTables(ctx context.Context, params *generated.GetAppTable
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -381,7 +380,7 @@ func (c *Client) GetField(ctx context.Context, fieldId int, params *generated.Ge
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -393,7 +392,7 @@ func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, params *generat
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -405,7 +404,7 @@ func (c *Client) GetFieldsUsage(ctx context.Context, params *generated.GetFields
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -417,7 +416,7 @@ func (c *Client) GetRelationships(ctx context.Context, tableId string, params *g
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -429,7 +428,7 @@ func (c *Client) GetReport(ctx context.Context, reportId string, params *generat
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -441,7 +440,7 @@ func (c *Client) GetTable(ctx context.Context, tableId string, params *generated
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -453,7 +452,7 @@ func (c *Client) GetTableReports(ctx context.Context, params *generated.GetTable
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -465,7 +464,7 @@ func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, params *gene
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -477,7 +476,7 @@ func (c *Client) GetUsers(ctx context.Context, params *generated.GetUsersParams,
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -489,7 +488,7 @@ func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, params *gen
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -501,7 +500,7 @@ func (c *Client) PlatformAnalyticReads(ctx context.Context, params *generated.Pl
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -513,7 +512,7 @@ func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid float32, body 
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -525,7 +524,7 @@ func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid float32, body g
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -537,7 +536,7 @@ func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -549,7 +548,7 @@ func (c *Client) RunFormula(ctx context.Context, body generated.RunFormulaJSONRe
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -561,7 +560,7 @@ func (c *Client) RunReport(ctx context.Context, reportId string, params *generat
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -573,7 +572,7 @@ func (c *Client) TransferUserToken(ctx context.Context, body generated.TransferU
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -585,7 +584,7 @@ func (c *Client) UndenyUsers(ctx context.Context, params *generated.UndenyUsersP
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -597,7 +596,7 @@ func (c *Client) UpdateApp(ctx context.Context, appId string, body generated.Upd
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -609,7 +608,7 @@ func (c *Client) UpdateField(ctx context.Context, fieldId int, params *generated
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -621,7 +620,7 @@ func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relatio
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -633,7 +632,7 @@ func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params *
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -645,7 +644,7 @@ func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, 
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -657,7 +656,7 @@ func (c *Client) UpdateTable(ctx context.Context, tableId string, params *genera
 		return nil, err
 	}
 	if resp.JSON200 == nil {
-		return nil, &core.QuickbaseError{Message: "unexpected response", StatusCode: resp.StatusCode()}
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
 }
