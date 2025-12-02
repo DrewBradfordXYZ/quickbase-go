@@ -13,6 +13,7 @@ A Go client for the QuickBase JSON RESTful API.
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Optional client-side request throttling (100 req/10s)
 - **Custom Error Types** - Specific error types for 400, 401, 403, 404, 429, 5xx responses
+- **Monitoring Hooks** - Track request latency, retries, and errors for observability
 - **Full API Access** - Low-level generated client available via `client.API()`
 
 ## Installation
@@ -420,6 +421,100 @@ quickbase.WithIdleConnTimeout(2*time.Minute), // Keep connections warm
 - Report generation hitting multiple endpoints
 
 **Why the default is 6:** This matches browser standards and handles typical concurrent patterns (e.g., fetching app metadata + tables + fields simultaneously) without encouraging excessive parallelism.
+
+## Monitoring
+
+The SDK provides hooks for observability, allowing you to track request latency, errors, and retries for dashboards, logging, or metrics collection.
+
+### Request Hook
+
+Track every API request:
+
+```go
+client, _ := quickbase.New("realm",
+    quickbase.WithUserToken("token"),
+    quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
+        log.Printf("%s %s → %d (%dms)",
+            info.Method,
+            info.Path,
+            info.StatusCode,
+            info.Duration.Milliseconds(),
+        )
+    }),
+)
+```
+
+Output:
+```
+POST /v1/records/query → 200 (142ms)
+GET /v1/apps/bqxyz123 → 200 (87ms)
+POST /v1/records/query → 429 (12ms)
+```
+
+`RequestInfo` fields:
+| Field | Type | Description |
+|-------|------|-------------|
+| `Method` | string | HTTP method (GET, POST, etc.) |
+| `Path` | string | URL path (e.g., /v1/apps/bqxyz123) |
+| `StatusCode` | int | HTTP status code (0 if network error) |
+| `Duration` | time.Duration | Request latency |
+| `Attempt` | int | Attempt number (1 = first try, 2+ = retries) |
+| `Error` | error | Non-nil if request failed |
+
+### Retry Hook
+
+Track retry attempts:
+
+```go
+client, _ := quickbase.New("realm",
+    quickbase.WithUserToken("token"),
+    quickbase.WithOnRetry(func(info quickbase.RetryInfo) {
+        log.Printf("Retrying %s %s (attempt %d, reason: %s, wait: %v)",
+            info.Method, info.Path, info.Attempt, info.Reason, info.WaitTime)
+    }),
+)
+```
+
+`RetryInfo` fields:
+| Field | Type | Description |
+|-------|------|-------------|
+| `Method` | string | HTTP method |
+| `Path` | string | URL path |
+| `Attempt` | int | Which attempt is coming next (2 = first retry) |
+| `Reason` | string | Why retrying: "429", "503", "network error" |
+| `WaitTime` | time.Duration | How long until retry |
+
+### Prometheus Example
+
+```go
+import "github.com/prometheus/client_golang/prometheus"
+
+var (
+    requestDuration = prometheus.NewHistogramVec(
+        prometheus.HistogramOpts{
+            Name:    "quickbase_request_duration_seconds",
+            Buckets: []float64{.05, .1, .25, .5, 1, 2.5},
+        },
+        []string{"method", "path", "status"},
+    )
+    retryTotal = prometheus.NewCounterVec(
+        prometheus.CounterOpts{Name: "quickbase_retries_total"},
+        []string{"reason"},
+    )
+)
+
+client, _ := quickbase.New("realm",
+    quickbase.WithUserToken("token"),
+    quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
+        requestDuration.WithLabelValues(
+            info.Method, info.Path, strconv.Itoa(info.StatusCode),
+        ).Observe(info.Duration.Seconds())
+    }),
+    quickbase.WithOnRetry(func(info quickbase.RetryInfo) {
+        retryTotal.WithLabelValues(info.Reason).Inc()
+    }),
+)
+```
 
 ## Pagination
 
