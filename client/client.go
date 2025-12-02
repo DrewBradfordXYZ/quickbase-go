@@ -2,15 +2,21 @@
 package client
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"math"
+	"math/rand"
 	"net/http"
+	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
@@ -22,11 +28,25 @@ type Client struct {
 	baseURL   string
 
 	// Retry configuration
-	maxRetries int
-	retryDelay time.Duration
+	maxRetries     int
+	initialDelay   time.Duration
+	maxDelay       time.Duration
+	backoffMult    float64
 
-	// Rate limiting
-	rateLimiter *RateLimiter
+	// Request timeout
+	timeout time.Duration
+
+	// Rate limiting / throttling
+	throttle Throttle
+
+	// Logging
+	logger *core.Logger
+
+	// Date conversion
+	convertDates bool
+
+	// Callbacks
+	onRateLimit func(core.RateLimitInfo)
 }
 
 // Option configures a Client.
@@ -39,17 +59,66 @@ func WithMaxRetries(n int) Option {
 	}
 }
 
-// WithRetryDelay sets the base delay between retries (default 1s).
+// WithRetryDelay sets the initial delay between retries (default 1s).
 func WithRetryDelay(d time.Duration) Option {
 	return func(c *Client) {
-		c.retryDelay = d
+		c.initialDelay = d
 	}
 }
 
-// WithRateLimiter sets a custom rate limiter.
-func WithRateLimiter(rl *RateLimiter) Option {
+// WithMaxRetryDelay sets the maximum delay between retries (default 30s).
+func WithMaxRetryDelay(d time.Duration) Option {
 	return func(c *Client) {
-		c.rateLimiter = rl
+		c.maxDelay = d
+	}
+}
+
+// WithBackoffMultiplier sets the exponential backoff multiplier (default 2).
+func WithBackoffMultiplier(m float64) Option {
+	return func(c *Client) {
+		c.backoffMult = m
+	}
+}
+
+// WithTimeout sets the request timeout (default 30s).
+func WithTimeout(d time.Duration) Option {
+	return func(c *Client) {
+		c.timeout = d
+	}
+}
+
+// WithThrottle sets a custom throttle.
+func WithThrottle(t Throttle) Option {
+	return func(c *Client) {
+		c.throttle = t
+	}
+}
+
+// WithProactiveThrottle enables sliding window throttling (100 req/10s by default).
+func WithProactiveThrottle(requestsPer10Seconds int) Option {
+	return func(c *Client) {
+		c.throttle = NewSlidingWindowThrottle(requestsPer10Seconds)
+	}
+}
+
+// WithDebug enables debug logging.
+func WithDebug(enabled bool) Option {
+	return func(c *Client) {
+		c.logger = core.NewLogger(enabled)
+	}
+}
+
+// WithConvertDates enables/disables automatic ISO date string conversion (default true).
+func WithConvertDates(enabled bool) Option {
+	return func(c *Client) {
+		c.convertDates = enabled
+	}
+}
+
+// WithOnRateLimit sets a callback for rate limit events.
+func WithOnRateLimit(callback func(core.RateLimitInfo)) Option {
+	return func(c *Client) {
+		c.onRateLimit = callback
 	}
 }
 
@@ -60,30 +129,61 @@ func WithBaseURL(url string) Option {
 	}
 }
 
+// WithRateLimiter is deprecated, use WithThrottle or WithProactiveThrottle instead.
+func WithRateLimiter(rl *RateLimiter) Option {
+	return func(c *Client) {
+		// Legacy support - wrap in a throttle interface adapter
+		c.throttle = &rateLimiterAdapter{rl: rl}
+	}
+}
+
+// rateLimiterAdapter wraps the old RateLimiter to implement Throttle.
+type rateLimiterAdapter struct {
+	rl *RateLimiter
+}
+
+func (a *rateLimiterAdapter) Acquire(ctx context.Context) error {
+	return a.rl.Wait(ctx)
+}
+
+func (a *rateLimiterAdapter) GetWindowCount() int {
+	return 0
+}
+
+func (a *rateLimiterAdapter) GetRemaining() int {
+	return int(a.rl.tokens)
+}
+
+func (a *rateLimiterAdapter) Reset() {}
+
 // New creates a new QuickBase client.
 func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, error) {
 	c := &Client{
-		auth:       authStrategy,
-		realm:      realm,
-		baseURL:    "https://api.quickbase.com/v1",
-		maxRetries: 3,
-		retryDelay: time.Second,
+		auth:         authStrategy,
+		realm:        realm,
+		baseURL:      "https://api.quickbase.com/v1",
+		maxRetries:   3,
+		initialDelay: time.Second,
+		maxDelay:     30 * time.Second,
+		backoffMult:  2,
+		timeout:      30 * time.Second,
+		logger:       core.NewLogger(false),
+		convertDates: true,
 	}
 
 	for _, opt := range opts {
 		opt(c)
 	}
 
-	// Create rate limiter if not provided
-	if c.rateLimiter == nil {
-		c.rateLimiter = NewRateLimiter(5, 50) // 5 req/s, burst of 50
+	// Create throttle if not provided (disabled by default, like JS SDK)
+	if c.throttle == nil {
+		c.throttle = NewNoOpThrottle()
 	}
 
 	// Create the generated client with our custom HTTP doer
 	httpClient := &authHTTPClient{
-		client:      c,
-		httpClient:  http.DefaultClient,
-		rateLimiter: c.rateLimiter,
+		client:     c,
+		httpClient: &http.Client{Timeout: c.timeout},
 	}
 
 	genClient, err := generated.NewClientWithResponses(
@@ -111,90 +211,155 @@ func (c *Client) API() *generated.ClientWithResponses {
 	return c.generated
 }
 
+// Logger returns the client's logger.
+func (c *Client) Logger() *core.Logger {
+	return c.logger
+}
+
 // authHTTPClient wraps http.Client to add auth, retry, and rate limiting.
 type authHTTPClient struct {
-	client      *Client
-	httpClient  *http.Client
-	rateLimiter *RateLimiter
+	client     *Client
+	httpClient *http.Client
 }
 
 func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	ctx := req.Context()
+	c := h.client
+	startTime := time.Now()
 
 	// Extract dbid from request for temp token auth
 	dbid := extractDBID(req)
 
+	// Read body once for potential retries
+	var bodyBytes []byte
+	if req.Body != nil {
+		var err error
+		bodyBytes, err = io.ReadAll(req.Body)
+		if err != nil {
+			return nil, fmt.Errorf("reading request body: %w", err)
+		}
+		req.Body.Close()
+
+		// Also check body for dbid if not found elsewhere
+		if dbid == "" {
+			dbid = extractDBIDFromBody(bodyBytes)
+		}
+	}
+
 	var lastResp *http.Response
 	var lastErr error
 
-	for attempt := 0; attempt <= h.client.maxRetries; attempt++ {
-		// Rate limiting
-		if err := h.rateLimiter.Wait(ctx); err != nil {
-			return nil, fmt.Errorf("rate limiter: %w", err)
+	for attempt := 1; attempt <= c.maxRetries; attempt++ {
+		// Throttling
+		if err := c.throttle.Acquire(ctx); err != nil {
+			return nil, fmt.Errorf("throttle: %w", err)
 		}
 
 		// Get auth token
-		token, err := h.client.auth.GetToken(ctx, dbid)
+		token, err := c.auth.GetToken(ctx, dbid)
 		if err != nil {
 			return nil, fmt.Errorf("getting auth token: %w", err)
 		}
 
 		// Clone request for retry
 		reqCopy := req.Clone(ctx)
-		if req.Body != nil {
-			body, err := io.ReadAll(req.Body)
-			if err != nil {
-				return nil, fmt.Errorf("reading request body: %w", err)
-			}
-			req.Body = io.NopCloser(io.MultiReader(io.NopCloser(
-				&bytesReader{data: body, pos: 0},
-			)))
-			reqCopy.Body = io.NopCloser(&bytesReader{data: body, pos: 0})
+		if bodyBytes != nil {
+			reqCopy.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 		}
 
 		// Apply auth
-		h.client.auth.ApplyAuth(reqCopy, token)
+		c.auth.ApplyAuth(reqCopy, token)
 
 		// Make request
+		reqStartTime := time.Now()
 		resp, err := h.httpClient.Do(reqCopy)
+		duration := time.Since(reqStartTime)
+
 		if err != nil {
 			lastErr = err
-			if attempt < h.client.maxRetries {
-				time.Sleep(h.client.retryDelay * time.Duration(math.Pow(2, float64(attempt))))
+
+			// Check for timeout
+			if ctx.Err() != nil {
+				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
+			}
+
+			if attempt < c.maxRetries {
+				delay := h.calculateBackoff(attempt)
+				c.logger.Retry(attempt, c.maxRetries, delay, "network error")
+				time.Sleep(delay)
 				continue
 			}
 			return nil, err
 		}
 
+		c.logger.Timing(req.Method, req.URL.String(), duration)
+
 		// Handle 429 Too Many Requests
 		if resp.StatusCode == http.StatusTooManyRequests {
 			resp.Body.Close()
-			retryAfter := parseRetryAfter(resp.Header.Get("Retry-After"), h.client.retryDelay, attempt)
-			time.Sleep(retryAfter)
-			continue
+
+			info := core.RateLimitInfo{
+				Timestamp:  time.Now(),
+				RequestURL: req.URL.String(),
+				HTTPStatus: 429,
+				CFRay:      resp.Header.Get("cf-ray"),
+				TID:        resp.Header.Get("tid"),
+				QBAPIRay:   resp.Header.Get("qb-api-ray"),
+				Attempt:    attempt,
+			}
+
+			if ra := resp.Header.Get("Retry-After"); ra != "" {
+				info.RetryAfter, _ = strconv.Atoi(ra)
+			}
+
+			c.logger.RateLimit(info)
+
+			// Notify callback
+			if c.onRateLimit != nil {
+				c.onRateLimit(info)
+			}
+
+			if attempt < c.maxRetries {
+				var delay time.Duration
+				if info.RetryAfter > 0 {
+					delay = time.Duration(info.RetryAfter) * time.Second
+				} else {
+					delay = h.calculateBackoff(attempt)
+				}
+				c.logger.Retry(attempt, c.maxRetries, delay, "rate limited (429)")
+				time.Sleep(delay)
+				continue
+			}
+
+			return nil, core.NewRateLimitError(info, "")
 		}
 
 		// Handle 401 Unauthorized - try to refresh token
 		if resp.StatusCode == http.StatusUnauthorized {
 			resp.Body.Close()
-			newToken, err := h.client.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, h.client.maxRetries)
+			newToken, err := c.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, c.maxRetries)
 			if err != nil {
 				return nil, err
 			}
 			if newToken != "" {
+				c.logger.Debug("Token refreshed, retrying request")
 				continue
 			}
 		}
 
 		// Handle 5xx server errors with retry
-		if resp.StatusCode >= 500 && attempt < h.client.maxRetries {
+		if resp.StatusCode >= 500 && attempt < c.maxRetries {
 			resp.Body.Close()
-			time.Sleep(h.client.retryDelay * time.Duration(math.Pow(2, float64(attempt))))
+			delay := h.calculateBackoff(attempt)
+			c.logger.Retry(attempt, c.maxRetries, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
+			time.Sleep(delay)
 			continue
 		}
 
 		lastResp = resp
 		lastErr = nil
+
+		c.logger.Timing(req.Method, req.URL.String(), time.Since(startTime))
 		break
 	}
 
@@ -205,31 +370,74 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	return lastResp, nil
 }
 
-// bytesReader is a simple io.Reader for byte slices.
-type bytesReader struct {
-	data []byte
-	pos  int
-}
+// calculateBackoff calculates exponential backoff with jitter.
+func (h *authHTTPClient) calculateBackoff(attempt int) time.Duration {
+	c := h.client
+	delay := float64(c.initialDelay) * math.Pow(c.backoffMult, float64(attempt-1))
 
-func (r *bytesReader) Read(p []byte) (n int, err error) {
-	if r.pos >= len(r.data) {
-		return 0, io.EOF
+	// Add jitter: ±10%
+	jitter := delay * 0.1 * (rand.Float64()*2 - 1)
+	delay += jitter
+
+	if delay > float64(c.maxDelay) {
+		delay = float64(c.maxDelay)
 	}
-	n = copy(p, r.data[r.pos:])
-	r.pos += n
-	return n, nil
+
+	return time.Duration(delay)
 }
 
-// extractDBID extracts the table/app ID from a request URL for temp token auth.
+// Path patterns for extracting dbid
+var (
+	tableIDPattern = regexp.MustCompile(`/tables/([^/?]+)`)
+	appIDPattern   = regexp.MustCompile(`/apps/([^/?]+)`)
+)
+
+// extractDBID extracts the table/app ID from a request for temp token auth.
 func extractDBID(req *http.Request) string {
-	q := req.URL.Query()
-	if dbid := q.Get("tableId"); dbid != "" {
+	// 1. Check query params for tableId
+	if dbid := req.URL.Query().Get("tableId"); dbid != "" {
 		return dbid
 	}
-	if dbid := q.Get("appId"); dbid != "" {
+
+	// 2. Check query params for appId
+	if dbid := req.URL.Query().Get("appId"); dbid != "" {
 		return dbid
 	}
-	// TODO: Parse from path or body if needed
+
+	// 3. Check path for tableId (e.g., /v1/tables/{tableId}/...)
+	if matches := tableIDPattern.FindStringSubmatch(req.URL.Path); len(matches) > 1 {
+		return matches[1]
+	}
+
+	// 4. Check path for appId (e.g., /v1/apps/{appId}/...)
+	if matches := appIDPattern.FindStringSubmatch(req.URL.Path); len(matches) > 1 {
+		return matches[1]
+	}
+
+	return ""
+}
+
+// extractDBIDFromBody extracts dbid from request body JSON.
+func extractDBIDFromBody(body []byte) string {
+	if len(body) == 0 {
+		return ""
+	}
+
+	var data map[string]any
+	if err := json.Unmarshal(body, &data); err != nil {
+		return ""
+	}
+
+	// Check for 'from' field (runQuery, deleteRecords)
+	if from, ok := data["from"].(string); ok && from != "" {
+		return from
+	}
+
+	// Check for 'to' field (upsert)
+	if to, ok := data["to"].(string); ok && to != "" {
+		return to
+	}
+
 	return ""
 }
 
@@ -241,4 +449,15 @@ func parseRetryAfter(header string, baseDelay time.Duration, attempt int) time.D
 		}
 	}
 	return baseDelay * time.Duration(math.Pow(2, float64(attempt)))
+}
+
+// ValidateRealm validates the realm format.
+func ValidateRealm(realm string) error {
+	if realm == "" {
+		return fmt.Errorf("realm is required")
+	}
+	if strings.Contains(realm, ".") {
+		return fmt.Errorf("realm should be just the subdomain (e.g., \"mycompany\" not \"mycompany.quickbase.com\")")
+	}
+	return nil
 }
