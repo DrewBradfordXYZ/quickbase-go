@@ -121,13 +121,62 @@ func handleQuickBaseCallback(w http.ResponseWriter, r *http.Request) {
 
 See [QuickBase docs](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field) for configuring POST temp tokens.
 
-### SSO Token
+### SSO Token (SAML)
+
+SSO authentication lets your Go server make API calls *as a specific QuickBase user* rather than a shared service account. This is valuable when:
+
+- **Audit accuracy matters** - Fields like "Created By" and "Modified By" show the actual user, not a service account
+- **Security is critical** - No long-lived user token to leak; each user gets a short-lived token tied to their SSO session
+- **Per-user permissions** - API calls respect each user's individual QuickBase permissions
+
+**How it works:**
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Your IdP       │     │   Your Go       │     │   QuickBase     │
+│  (Okta, Azure)  │     │   Server        │     │   API           │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                       │                       │
+        │  1. User logs into    │                       │
+        │     your app via SSO  │                       │
+        │──────────────────────►│                       │
+        │                       │                       │
+        │  2. Generate SAML     │                       │
+        │     assertion for     │                       │
+        │     this user         │                       │
+        │◄──────────────────────│                       │
+        │                       │                       │
+        │  SAML assertion       │                       │
+        │──────────────────────►│                       │
+        │                       │                       │
+        │                       │  3. Exchange SAML     │
+        │                       │     for temp token    │
+        │                       │──────────────────────►│
+        │                       │                       │
+        │                       │  4. API calls as      │
+        │                       │     that user         │
+        │                       │──────────────────────►│
+```
+
+**Prerequisites:**
+- Your QuickBase realm has SAML SSO configured
+- You can generate SAML assertions from your IdP (Okta API, Azure AD, etc.)
+
+**Usage:**
 
 ```go
+// Get SAML assertion from your identity provider for this user
+samlAssertion := getAssertionFromIdP(userId) // base64url-encoded
+
 client, err := quickbase.New("mycompany",
-    quickbase.WithSSOTokenAuth("your-saml-token"),
+    quickbase.WithSSOTokenAuth(samlAssertion),
 )
+
+// API calls are now made as that specific user
+// "Created By" fields will show their name, not a service account
 ```
+
+The SDK exchanges the SAML assertion for a QuickBase temp token using [RFC 8693 token exchange](https://developer.quickbase.com/operation/exchangeSsoToken).
 
 ## Configuration Options
 
