@@ -81,6 +81,29 @@ type Client struct {
 
 	// Callbacks
 	onRateLimit func(core.RateLimitInfo)
+	onRequest   func(RequestInfo)
+	onRetry     func(RetryInfo)
+}
+
+// RequestInfo contains information about a completed API request.
+// This is passed to the OnRequest callback after each request completes.
+type RequestInfo struct {
+	Method     string        // HTTP method (GET, POST, etc.)
+	Path       string        // URL path (e.g., /v1/apps/bqxyz123)
+	StatusCode int           // HTTP status code
+	Duration   time.Duration // Total request duration
+	Attempt    int           // Attempt number (1 = first try, 2+ = retries)
+	Error      error         // Non-nil if request failed
+}
+
+// RetryInfo contains information about a retry attempt.
+// This is passed to the OnRetry callback before each retry.
+type RetryInfo struct {
+	Method     string        // HTTP method
+	Path       string        // URL path
+	Attempt    int           // Which attempt is about to happen (2 = first retry)
+	Reason     string        // Why we're retrying (e.g., "429", "503", "timeout")
+	WaitTime   time.Duration // How long we'll wait before retrying
 }
 
 // Option configures a Client.
@@ -177,6 +200,34 @@ func WithConvertDates(enabled bool) Option {
 func WithOnRateLimit(callback func(core.RateLimitInfo)) Option {
 	return func(c *Client) {
 		c.onRateLimit = callback
+	}
+}
+
+// WithOnRequest sets a callback that fires after every API request completes.
+// Use this for monitoring request latency, status codes, and errors.
+//
+// Example:
+//
+//	quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
+//	    log.Printf("%s %s → %d (%v)", info.Method, info.Path, info.StatusCode, info.Duration)
+//	})
+func WithOnRequest(callback func(RequestInfo)) Option {
+	return func(c *Client) {
+		c.onRequest = callback
+	}
+}
+
+// WithOnRetry sets a callback that fires before each retry attempt.
+// Use this for monitoring retry behavior and debugging transient failures.
+//
+// Example:
+//
+//	quickbase.WithOnRetry(func(info quickbase.RetryInfo) {
+//	    log.Printf("Retrying %s %s (attempt %d, reason: %s)", info.Method, info.Path, info.Attempt, info.Reason)
+//	})
+func WithOnRetry(callback func(RetryInfo)) Option {
+	return func(c *Client) {
+		c.onRetry = callback
 	}
 }
 
@@ -350,6 +401,18 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		if err != nil {
 			lastErr = err
 
+			// Notify onRequest callback (with error)
+			if c.onRequest != nil {
+				c.onRequest(RequestInfo{
+					Method:     req.Method,
+					Path:       req.URL.Path,
+					StatusCode: 0,
+					Duration:   duration,
+					Attempt:    attempt,
+					Error:      err,
+				})
+			}
+
 			// Check for timeout
 			if ctx.Err() != nil {
 				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
@@ -358,6 +421,18 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			if attempt < c.maxRetries {
 				delay := h.calculateBackoff(attempt)
 				c.logger.Retry(attempt, c.maxRetries, delay, "network error")
+
+				// Notify onRetry callback
+				if c.onRetry != nil {
+					c.onRetry(RetryInfo{
+						Method:   req.Method,
+						Path:     req.URL.Path,
+						Attempt:  attempt + 1,
+						Reason:   "network error",
+						WaitTime: delay,
+					})
+				}
+
 				time.Sleep(delay)
 				continue
 			}
@@ -368,6 +443,17 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 		// Handle 429 Too Many Requests
 		if resp.StatusCode == http.StatusTooManyRequests {
+			// Notify onRequest callback (429)
+			if c.onRequest != nil {
+				c.onRequest(RequestInfo{
+					Method:     req.Method,
+					Path:       req.URL.Path,
+					StatusCode: resp.StatusCode,
+					Duration:   duration,
+					Attempt:    attempt,
+				})
+			}
+
 			resp.Body.Close()
 
 			info := core.RateLimitInfo{
@@ -399,6 +485,18 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 					delay = h.calculateBackoff(attempt)
 				}
 				c.logger.Retry(attempt, c.maxRetries, delay, "rate limited (429)")
+
+				// Notify onRetry callback
+				if c.onRetry != nil {
+					c.onRetry(RetryInfo{
+						Method:   req.Method,
+						Path:     req.URL.Path,
+						Attempt:  attempt + 1,
+						Reason:   "429",
+						WaitTime: delay,
+					})
+				}
+
 				time.Sleep(delay)
 				continue
 			}
@@ -421,11 +519,45 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 		// Handle 5xx server errors with retry
 		if resp.StatusCode >= 500 && attempt < c.maxRetries {
+			// Notify onRequest callback (5xx)
+			if c.onRequest != nil {
+				c.onRequest(RequestInfo{
+					Method:     req.Method,
+					Path:       req.URL.Path,
+					StatusCode: resp.StatusCode,
+					Duration:   duration,
+					Attempt:    attempt,
+				})
+			}
+
 			resp.Body.Close()
 			delay := h.calculateBackoff(attempt)
 			c.logger.Retry(attempt, c.maxRetries, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
+
+			// Notify onRetry callback
+			if c.onRetry != nil {
+				c.onRetry(RetryInfo{
+					Method:   req.Method,
+					Path:     req.URL.Path,
+					Attempt:  attempt + 1,
+					Reason:   fmt.Sprintf("%d", resp.StatusCode),
+					WaitTime: delay,
+				})
+			}
+
 			time.Sleep(delay)
 			continue
+		}
+
+		// Notify onRequest callback (success or final attempt)
+		if c.onRequest != nil {
+			c.onRequest(RequestInfo{
+				Method:     req.Method,
+				Path:       req.URL.Path,
+				StatusCode: resp.StatusCode,
+				Duration:   duration,
+				Attempt:    attempt,
+			})
 		}
 
 		lastResp = resp

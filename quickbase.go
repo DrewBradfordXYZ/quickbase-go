@@ -81,6 +81,10 @@ type (
 	PaginationMetadata = client.PaginationMetadata
 	PaginationOptions  = client.PaginationOptions
 	PaginationType     = client.PaginationType
+
+	// Monitoring types
+	RequestInfo = client.RequestInfo
+	RetryInfo   = client.RetryInfo
 )
 
 // Pagination type constants
@@ -223,6 +227,34 @@ func WithConvertDates(enabled bool) Option {
 func WithOnRateLimit(callback func(RateLimitInfo)) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithOnRateLimit(callback))
+	}
+}
+
+// WithOnRequest sets a callback that fires after every API request completes.
+// Use this for monitoring request latency, status codes, and errors.
+//
+// Example:
+//
+//	quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
+//	    log.Printf("%s %s → %d (%v)", info.Method, info.Path, info.StatusCode, info.Duration)
+//	})
+func WithOnRequest(callback func(RequestInfo)) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithOnRequest(callback))
+	}
+}
+
+// WithOnRetry sets a callback that fires before each retry attempt.
+// Use this for monitoring retry behavior and debugging transient failures.
+//
+// Example:
+//
+//	quickbase.WithOnRetry(func(info quickbase.RetryInfo) {
+//	    log.Printf("Retrying %s %s (attempt %d, reason: %s)", info.Method, info.Path, info.Attempt, info.Reason)
+//	})
+func WithOnRetry(callback func(RetryInfo)) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithOnRetry(callback))
 	}
 }
 
