@@ -14,11 +14,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
 	"github.com/DrewBradfordXYZ/quickbase-go"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/joho/godotenv"
 )
 
 // Environment variables for credentials
@@ -64,6 +66,18 @@ func skipIfNoCredentials(t *testing.T) {
 
 // TestMain handles setup and teardown for all integration tests
 func TestMain(m *testing.M) {
+	// Load .env file from project root (try multiple locations)
+	envPaths := []string{
+		".env",                                // Current directory
+		"../../.env",                          // From tests/integration/
+		filepath.Join(os.Getenv("PWD"), ".env"), // Absolute from PWD
+	}
+	for _, path := range envPaths {
+		if err := godotenv.Load(path); err == nil {
+			break
+		}
+	}
+
 	// Load credentials from environment
 	qbRealm = os.Getenv(envRealm)
 	qbUserToken = os.Getenv(envUserToken)
