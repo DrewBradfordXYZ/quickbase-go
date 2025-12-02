@@ -120,6 +120,14 @@ type ssoTokenMarker struct {
 	opts      []auth.SSOTokenOption
 }
 
+// ticketMarker is used for ticket (XML API) authentication.
+// XML-API-TICKET: Remove this struct if XML API is discontinued.
+type ticketMarker struct {
+	username string
+	password string
+	opts     []auth.TicketOption
+}
+
 // WithTempTokenAuth configures temporary token authentication with options.
 func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
 	return func(c *clientConfig) {
@@ -131,6 +139,37 @@ func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
 func WithSSOTokenAuth(samlToken string, opts ...auth.SSOTokenOption) Option {
 	return func(c *clientConfig) {
 		c.authStrategy = &ssoTokenMarker{samlToken: samlToken, opts: opts}
+	}
+}
+
+// WithTicketAuth configures ticket authentication using username/password.
+//
+// This calls the XML API_Authenticate endpoint to obtain a ticket, which is then
+// used with REST API calls. Unlike user tokens, tickets properly attribute record
+// changes (createdBy/modifiedBy) to the authenticated user.
+//
+// The password is used once for authentication and then discarded from memory.
+// When the ticket expires (default 12 hours), an AuthenticationError is returned
+// and a new client must be created with fresh credentials.
+//
+// Example:
+//
+//	qb, err := quickbase.New("myrealm",
+//	    quickbase.WithTicketAuth("user@example.com", "password"),
+//	)
+//
+// With custom ticket validity (max ~6 months):
+//
+//	qb, err := quickbase.New("myrealm",
+//	    quickbase.WithTicketAuth("user@example.com", "password",
+//	        auth.WithTicketHours(24*7), // 1 week
+//	    ),
+//	)
+//
+// XML-API-TICKET: Remove this function if XML API is discontinued.
+func WithTicketAuth(username, password string, opts ...auth.TicketOption) Option {
+	return func(c *clientConfig) {
+		c.authStrategy = &ticketMarker{username: username, password: password, opts: opts}
 	}
 }
 
@@ -284,10 +323,12 @@ func New(realm string, opts ...Option) (*Client, error) {
 		authStrategy = auth.NewTempTokenStrategy(realm, s.opts...)
 	case *ssoTokenMarker:
 		authStrategy = auth.NewSSOTokenStrategy(s.samlToken, realm, s.opts...)
+	case *ticketMarker: // XML-API-TICKET: Remove this case if XML API is discontinued.
+		authStrategy = auth.NewTicketStrategy(s.username, s.password, realm, s.opts...)
 	case auth.Strategy:
 		authStrategy = s
 	case nil:
-		return nil, &Error{Message: "no authentication strategy configured; use WithUserToken, WithTempTokenAuth, or WithSSOTokenAuth"}
+		return nil, &Error{Message: "no authentication strategy configured; use WithUserToken, WithTempTokenAuth, WithSSOTokenAuth, or WithTicketAuth"}
 	default:
 		return nil, &Error{Message: fmt.Sprintf("unknown auth strategy type: %T", cfg.authStrategy)}
 	}

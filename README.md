@@ -9,7 +9,7 @@ A Go client for the QuickBase JSON RESTful API.
 - **Friendly API** - Clean wrapper methods like `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages automatically
 - **Helper Functions** - `Ptr()`, `Ints()` for cleaner code with optional fields
-- **Multiple Auth Methods** - User token, temporary token (via POST callback), and SSO
+- **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Optional client-side request throttling (100 req/10s)
 - **Custom Error Types** - Specific error types for 400, 401, 403, 404, 429, 5xx responses
@@ -120,6 +120,39 @@ func handleQuickBaseCallback(w http.ResponseWriter, r *http.Request) {
 - No need to store user credentials on your server
 
 See [QuickBase docs](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field) for configuring POST temp tokens.
+
+### Ticket Auth (Username/Password)
+
+Ticket authentication lets users log in with their QuickBase email and password. Unlike user tokens, tickets properly attribute record changes (`createdBy`/`modifiedBy`) to the authenticated user.
+
+```go
+client, err := quickbase.New("mycompany",
+    quickbase.WithTicketAuth("user@example.com", "password"),
+)
+```
+
+**Key behaviors:**
+- Authentication happens lazily on the first API call
+- Password is discarded from memory after authentication
+- Tickets are valid for 12 hours by default (configurable up to ~6 months)
+- When the ticket expires, an error is returned — create a new client with fresh credentials
+
+**With custom ticket validity:**
+
+```go
+import "github.com/DrewBradfordXYZ/quickbase-go/auth"
+
+client, err := quickbase.New("mycompany",
+    quickbase.WithTicketAuth("user@example.com", "password",
+        auth.WithTicketHours(24*7), // 1 week
+    ),
+)
+```
+
+**When to use ticket auth:**
+- Third-party services where users shouldn't share user tokens
+- Proper audit trails with correct `createdBy`/`modifiedBy` attribution
+- Session-based authentication flows
 
 ### SSO Token (SAML)
 
