@@ -267,6 +267,11 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	var lastErr error
 
 	for attempt := 1; attempt <= c.maxRetries; attempt++ {
+		// Check context before each attempt
+		if ctx.Err() != nil {
+			return nil, ctx.Err()
+		}
+
 		// Throttling
 		if err := c.throttle.Acquire(ctx); err != nil {
 			return nil, fmt.Errorf("throttle: %w", err)
@@ -456,16 +461,6 @@ func extractDBIDFromBody(body []byte) string {
 	}
 
 	return ""
-}
-
-// parseRetryAfter parses the Retry-After header or returns exponential backoff.
-func parseRetryAfter(header string, baseDelay time.Duration, attempt int) time.Duration {
-	if header != "" {
-		if seconds, err := strconv.Atoi(header); err == nil {
-			return time.Duration(seconds) * time.Second
-		}
-	}
-	return baseDelay * time.Duration(math.Pow(2, float64(attempt)))
 }
 
 // ValidateRealm validates the realm format.

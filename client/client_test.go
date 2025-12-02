@@ -252,44 +252,6 @@ func TestCalculateBackoff(t *testing.T) {
 	})
 }
 
-func TestParseRetryAfter(t *testing.T) {
-	tests := []struct {
-		name     string
-		header   string
-		expected time.Duration
-	}{
-		{
-			name:     "parses seconds",
-			header:   "30",
-			expected: 30 * time.Second,
-		},
-		{
-			name:     "parses single digit",
-			header:   "5",
-			expected: 5 * time.Second,
-		},
-		{
-			name:     "falls back on empty header",
-			header:   "",
-			expected: 2 * time.Second, // 1s * 2^1 for attempt 1
-		},
-		{
-			name:     "falls back on invalid header",
-			header:   "not-a-number",
-			expected: 2 * time.Second, // fallback
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := parseRetryAfter(tt.header, time.Second, 1)
-			if result != tt.expected {
-				t.Errorf("parseRetryAfter(%q) = %v, want %v", tt.header, result, tt.expected)
-			}
-		})
-	}
-}
-
 func TestBackoffJitter(t *testing.T) {
 	// Run multiple times to verify jitter introduces variation
 	client := &Client{

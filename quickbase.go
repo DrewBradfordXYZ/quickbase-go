@@ -106,22 +106,6 @@ func WithUserToken(token string) Option {
 	}
 }
 
-// WithTempToken configures temporary token authentication.
-func WithTempToken(opts ...auth.TempTokenOption) Option {
-	return func(c *clientConfig) {
-		// Realm will be set when New() is called
-		c.authStrategy = nil // Marker to create temp token strategy with realm
-	}
-}
-
-// WithSSOToken configures SSO token authentication.
-func WithSSOToken(samlToken string, opts ...auth.SSOTokenOption) Option {
-	return func(c *clientConfig) {
-		// Realm will be set when New() is called
-		c.authStrategy = nil // Marker to create SSO strategy with realm
-	}
-}
-
 // tempTokenMarker and ssoTokenMarker are used to identify auth strategy type
 type tempTokenMarker struct {
 	opts []auth.TempTokenOption
