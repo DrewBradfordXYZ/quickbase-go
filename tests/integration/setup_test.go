@@ -37,8 +37,8 @@ type TestContext struct {
 	CheckboxFieldID int    `json:"checkboxFieldId"`
 }
 
-// Path to test context file
-const testContextPath = "tests/integration/.test-context.json"
+// Path to test context file (relative to where tests run from)
+const testContextPath = ".test-context.json"
 
 // Test app prefix
 const testAppPrefix = "test-go-"
@@ -205,9 +205,7 @@ func cleanupOrphanedApp(ctx context.Context) {
 	fmt.Printf("   Found orphaned app: %s, deleting...\n", oldCtx.AppID)
 
 	// Get app name (required for deletion)
-	getAppResp, err := testClient.API().GetAppWithResponse(ctx, &generated.GetAppParams{
-		AppId: oldCtx.AppID,
-	})
+	getAppResp, err := testClient.API().GetAppWithResponse(ctx, oldCtx.AppID)
 	if err != nil || getAppResp.JSON200 == nil {
 		fmt.Println("   Could not fetch orphaned app (may already be deleted)")
 		os.Remove(testContextPath)
@@ -215,10 +213,8 @@ func cleanupOrphanedApp(ctx context.Context) {
 	}
 
 	// Delete the app
-	_, err = testClient.API().DeleteAppWithResponse(ctx, &generated.DeleteAppParams{
-		AppId: oldCtx.AppID,
-	}, generated.DeleteAppJSONRequestBody{
-		Name: *getAppResp.JSON200.Name,
+	_, err = testClient.API().DeleteAppWithResponse(ctx, oldCtx.AppID, generated.DeleteAppJSONRequestBody{
+		Name: getAppResp.JSON200.Name,
 	})
 	if err != nil {
 		fmt.Printf("   Could not delete orphaned app: %v\n", err)
@@ -233,8 +229,8 @@ func createField(ctx context.Context, tableID string, label string, fieldType st
 	resp, err := testClient.API().CreateFieldWithResponse(ctx, &generated.CreateFieldParams{
 		TableId: tableID,
 	}, generated.CreateFieldJSONRequestBody{
-		Label:     ptr(label),
-		FieldType: ptr(fieldType),
+		Label:     label,
+		FieldType: generated.CreateFieldJSONBodyFieldType(fieldType),
 	})
 	if err != nil {
 		return 0, err
@@ -242,7 +238,7 @@ func createField(ctx context.Context, tableID string, label string, fieldType st
 	if resp.JSON200 == nil {
 		return 0, fmt.Errorf("unexpected response %d", resp.StatusCode())
 	}
-	return *resp.JSON200.Id, nil
+	return int(resp.JSON200.Id), nil
 }
 
 func writeTestContext(ctx *TestContext) error {
@@ -292,7 +288,7 @@ func deleteAllRecords(t *testing.T, ctx context.Context) {
 
 	_, err := client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
 		From:  testCtx.TableID,
-		Where: ptr("{3.GT.0}"), // Record ID# > 0
+		Where: "{3.GT.0}", // Record ID# > 0
 	})
 	// Ignore errors (may be no records to delete)
 	_ = err

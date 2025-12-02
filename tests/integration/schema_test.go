@@ -22,10 +22,10 @@ func TestGetApp(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if *resp.JSON200.Id != testCtx.AppID {
-			t.Errorf("App ID = %s, want %s", *resp.JSON200.Id, testCtx.AppID)
+		if resp.JSON200.Id == nil || *resp.JSON200.Id != testCtx.AppID {
+			t.Errorf("App ID = %v, want %s", resp.JSON200.Id, testCtx.AppID)
 		}
-		if resp.JSON200.Name == nil || *resp.JSON200.Name == "" {
+		if resp.JSON200.Name == "" {
 			t.Error("Expected app name")
 		}
 	})
@@ -116,21 +116,21 @@ func TestGetFields(t *testing.T) {
 		}
 
 		// Check for our test fields
-		fieldIDs := make(map[int]bool)
+		fieldIDs := make(map[int64]bool)
 		for _, field := range *resp.JSON200 {
-			fieldIDs[*field.Id] = true
+			fieldIDs[field.Id] = true
 		}
 
-		if !fieldIDs[testCtx.TextFieldID] {
+		if !fieldIDs[int64(testCtx.TextFieldID)] {
 			t.Errorf("Text field %d not found", testCtx.TextFieldID)
 		}
-		if !fieldIDs[testCtx.NumberFieldID] {
+		if !fieldIDs[int64(testCtx.NumberFieldID)] {
 			t.Errorf("Number field %d not found", testCtx.NumberFieldID)
 		}
-		if !fieldIDs[testCtx.DateFieldID] {
+		if !fieldIDs[int64(testCtx.DateFieldID)] {
 			t.Errorf("Date field %d not found", testCtx.DateFieldID)
 		}
-		if !fieldIDs[testCtx.CheckboxFieldID] {
+		if !fieldIDs[int64(testCtx.CheckboxFieldID)] {
 			t.Errorf("Checkbox field %d not found", testCtx.CheckboxFieldID)
 		}
 	})
@@ -153,8 +153,8 @@ func TestGetField(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if *resp.JSON200.Id != testCtx.TextFieldID {
-			t.Errorf("Field ID = %d, want %d", *resp.JSON200.Id, testCtx.TextFieldID)
+		if resp.JSON200.Id != int64(testCtx.TextFieldID) {
+			t.Errorf("Field ID = %d, want %d", resp.JSON200.Id, testCtx.TextFieldID)
 		}
 		if resp.JSON200.Label == nil || *resp.JSON200.Label != "Name" {
 			t.Errorf("Field label = %v, want 'Name'", resp.JSON200.Label)
