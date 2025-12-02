@@ -6,12 +6,14 @@ A Go client for the QuickBase JSON RESTful API.
 
 ## Features
 
-- **Typed API Methods** - Full type safety with auto-generated types from OpenAPI spec
+- **Friendly API** - Clean wrapper methods like `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`
+- **Automatic Pagination** - `RunQueryAll` fetches all records across pages automatically
+- **Helper Functions** - `Ptr()`, `Ints()` for cleaner code with optional fields
 - **Multiple Auth Methods** - User token, temporary token (via POST callback), and SSO
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Optional client-side request throttling (100 req/10s)
 - **Custom Error Types** - Specific error types for 400, 401, 403, 404, 429, 5xx responses
-- **Debug Logging** - Optional request/response timing logs
+- **Full API Access** - Low-level generated client available via `client.API()`
 
 ## Installation
 
@@ -44,13 +46,21 @@ func main() {
     ctx := context.Background()
 
     // Get app details
-    resp, err := client.API().GetAppWithResponse(ctx, "your-app-id")
+    app, err := client.GetApp(ctx, "your-app-id")
     if err != nil {
         log.Fatal(err)
     }
-    if resp.JSON200 != nil {
-        fmt.Println("App name:", resp.JSON200.Name)
+    fmt.Println("App name:", app.Name)
+
+    // Query all records from a table
+    records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+        From:   "your-table-id",
+        Select: quickbase.Ints(3, 6, 7),
+    })
+    if err != nil {
+        log.Fatal(err)
     }
+    fmt.Printf("Found %d records\n", len(records))
 }
 ```
 
@@ -147,54 +157,81 @@ client, err := quickbase.New("mycompany",
 
 ## API Usage
 
-All QuickBase API endpoints are available through the generated client:
+The SDK provides friendly wrapper methods with cleaner types:
 
 ```go
 ctx := context.Background()
 
-// Apps
-app, _ := client.API().GetAppWithResponse(ctx, appId)
-tables, _ := client.API().GetAppTablesWithResponse(ctx, &generated.GetAppTablesParams{
-    AppId: appId,
-})
+// Get app details
+app, err := client.GetApp(ctx, appId)
+fmt.Println("App name:", app.Name)
 
-// Tables
-table, _ := client.API().GetTableWithResponse(ctx, tableId, &generated.GetTableParams{
-    AppId: appId,
-})
-
-// Fields
-fields, _ := client.API().GetFieldsWithResponse(ctx, &generated.GetFieldsParams{
-    TableId: tableId,
-})
-
-// Query records
-resp, _ := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
-    From:   tableId,
-    Select: &[]int{3, 6, 7},
-    Where:  ptr("{6.GT.100}"),
-})
-for _, record := range *resp.JSON200.Data {
-    fmt.Println(record)
+// Get fields for a table
+fields, err := client.GetFields(ctx, tableId)
+for _, f := range fields {
+    fmt.Printf("Field %d: %s (%s)\n", f.ID, f.Label, f.FieldType)
 }
+
+// Query records - IMPORTANT: QuickBase returns ~100 records per page by default
+// Use RunQueryAll to get all records, or RunQueryN to limit
+
+// Single page only
+result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
+    From:   tableId,
+    Select: quickbase.Ints(3, 6, 7),
+    Where:  quickbase.Ptr("{6.GT.100}"),
+})
+
+// All records (auto-paginates)
+allRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+    From: tableId,
+})
+
+// Up to N records (auto-paginates)
+first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
+    From: tableId,
+}, 500)
 
 // Insert/Update records
-data := []generated.QuickbaseRecord{
-    {
-        "6": generated.FieldValue{Value: toFieldValue("New Record")},
-        "7": generated.FieldValue{Value: toFieldValue(42)},
+upsertResult, err := client.Upsert(ctx, quickbase.UpsertBody{
+    To: tableId,
+    Data: &[]quickbase.Record{
+        {"6": quickbase.FieldValue{Value: fieldValue("New Record")}},
     },
-}
-result, _ := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
-    To:   tableId,
-    Data: &data,
 })
+fmt.Println("Created:", upsertResult.CreatedRecordIDs)
 
 // Delete records
-client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
+deleteResult, err := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{
     From:  tableId,
     Where: "{3.EX.123}",
 })
+fmt.Println("Deleted:", deleteResult.NumberDeleted)
+```
+
+### Helper Functions
+
+```go
+// Ptr returns a pointer (for optional string/int fields)
+quickbase.Ptr("some string")
+quickbase.Ptr(123)
+
+// Ints returns *[]int (for Select fields)
+quickbase.Ints(3, 6, 7)
+
+// Strings returns *[]string
+quickbase.Strings("a", "b", "c")
+```
+
+### Low-Level API Access
+
+For advanced use cases, you can access the full generated API:
+
+```go
+resp, err := client.API().GetAppWithResponse(ctx, appId)
+if resp.JSON200 != nil {
+    fmt.Println(resp.JSON200.Name)
+}
 ```
 
 ## Error Handling
@@ -202,13 +239,11 @@ client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBo
 The SDK provides specific error types for different HTTP status codes:
 
 ```go
-import "github.com/DrewBradfordXYZ/quickbase-go/core"
-
-resp, err := client.API().GetAppWithResponse(ctx, "invalid-id")
+app, err := client.GetApp(ctx, "invalid-id")
 if err != nil {
-    var rateLimitErr *core.RateLimitError
-    var notFoundErr *core.NotFoundError
-    var validationErr *core.ValidationError
+    var rateLimitErr *quickbase.RateLimitError
+    var notFoundErr *quickbase.NotFoundError
+    var validationErr *quickbase.ValidationError
 
     switch {
     case errors.As(err, &rateLimitErr):
@@ -272,6 +307,81 @@ client, _ := quickbase.New("realm",
     }),
 )
 ```
+
+## Pagination
+
+**Important:** QuickBase API endpoints like `RunQuery` do **not** return all records by default. They return a single page (typically ~100 records depending on record size). If you have 1,000 records and call `RunQuery` once, you'll only get the first ~100.
+
+### Available Methods
+
+| Method | Description |
+|--------|-------------|
+| `RunQuery(ctx, body)` | Single page only (~100 records) |
+| `RunQueryAll(ctx, body)` | All records (auto-paginates) |
+| `RunQueryN(ctx, body, n)` | Up to N records (auto-paginates) |
+| `client.Paginate(ctx, fetcher)` | Iterator for memory-efficient streaming |
+| `client.CollectAll(ctx, fetcher)` | Low-level: collect all into slice |
+| `client.CollectN(ctx, fetcher, n)` | Low-level: collect up to N |
+
+### Simple: Use RunQueryAll
+
+The easiest way to get all records:
+
+```go
+// Fetches ALL records automatically (handles pagination internally)
+allRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+    From:   tableId,
+    Select: quickbase.Ints(3, 6, 7),
+})
+fmt.Printf("Fetched %d records\n", len(allRecords))
+```
+
+### Fetch Limited Records
+
+```go
+// Fetch up to 500 records (across multiple pages if needed)
+records, err := client.RunQueryN(ctx, body, 500)
+```
+
+### Single Page (Default)
+
+```go
+// RunQuery returns just the first page
+result, err := client.RunQuery(ctx, body)
+fmt.Printf("Got %d of %d total records\n",
+    result.Metadata.NumRecords,
+    result.Metadata.TotalRecords)
+```
+
+### Advanced: Manual Pagination
+
+For custom pagination logic, use the low-level helpers:
+
+```go
+import "github.com/DrewBradfordXYZ/quickbase-go/client"
+
+// Define a page fetcher
+fetcher := func(ctx context.Context, skip int, nextToken string) (*Response, error) {
+    // Your custom fetch logic
+}
+
+// Iterate over records (memory-efficient for large datasets)
+for record, err := range client.Paginate(ctx, fetcher) {
+    if err != nil {
+        log.Fatal(err)
+    }
+    // Process each record
+}
+```
+
+### Pagination Types
+
+QuickBase uses two pagination styles depending on the endpoint:
+
+- **Skip-based**: Uses `skip` parameter (e.g., `RunQuery`)
+- **Token-based**: Uses `nextPageToken` or `nextToken` (e.g., `GetUsers`, `GetAuditLogs`)
+
+The SDK auto-detects which style to use based on the response metadata.
 
 ## Development
 

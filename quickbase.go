@@ -300,22 +300,157 @@ var (
 	HasMorePages = client.HasMorePages
 )
 
-// Note: The generic pagination functions (Paginate, CollectAll, CollectN,
-// NewPaginatedRequest) must be accessed via the client package directly:
+// --- Friendly Type Aliases ---
+// These provide cleaner names for the verbose oapi-codegen generated types.
+
+// Request body types
+type (
+	// RunQueryBody is the request body for RunQuery
+	RunQueryBody = generated.RunQueryJSONRequestBody
+
+	// UpsertBody is the request body for Upsert (insert/update records)
+	UpsertBody = generated.UpsertJSONRequestBody
+
+	// DeleteRecordsBody is the request body for DeleteRecords
+	DeleteRecordsBody = generated.DeleteRecordsJSONRequestBody
+
+	// CreateAppBody is the request body for CreateApp
+	CreateAppBody = generated.CreateAppJSONRequestBody
+
+	// UpdateAppBody is the request body for UpdateApp
+	UpdateAppBody = generated.UpdateAppJSONRequestBody
+
+	// CreateTableBody is the request body for CreateTable
+	CreateTableBody = generated.CreateTableJSONRequestBody
+
+	// UpdateTableBody is the request body for UpdateTable
+	UpdateTableBody = generated.UpdateTableJSONRequestBody
+
+	// CreateFieldBody is the request body for CreateField
+	CreateFieldBody = generated.CreateFieldJSONRequestBody
+
+	// UpdateFieldBody is the request body for UpdateField
+	UpdateFieldBody = generated.UpdateFieldJSONRequestBody
+)
+
+// Query options
+type (
+	// QueryOptions contains pagination and other options for RunQuery
+	QueryOptions = generated.RunQueryJSONBody_Options
+)
+
+// Param types
+type (
+	// GetFieldsParams are the parameters for GetFields
+	GetFieldsParams = generated.GetFieldsParams
+
+	// GetAppTablesParams are the parameters for GetAppTables
+	GetAppTablesParams = generated.GetAppTablesParams
+
+	// GetTableParams are the parameters for GetTable
+	GetTableParams = generated.GetTableParams
+
+	// CreateFieldParams are the parameters for CreateField
+	CreateFieldParams = generated.CreateFieldParams
+
+	// UpdateFieldParams are the parameters for UpdateField
+	UpdateFieldParams = generated.UpdateFieldParams
+)
+
+// Core types
+type (
+	// Record is a QuickBase record (map of field ID to value)
+	Record = generated.QuickbaseRecord
+
+	// FieldValue is a field value in a record
+	FieldValue = generated.FieldValue
+
+	// FieldValueUnion is the union type for field values
+	FieldValueUnion = generated.FieldValue_Value
+
+	// SortField specifies a field to sort by
+	SortField = generated.SortField
+)
+
+// Result types from wrapper methods
+type (
+	// RunQueryResult contains the result of a RunQuery call
+	RunQueryResult = client.RunQueryResult
+
+	// UpsertResult contains the result of an Upsert call
+	UpsertResult = client.UpsertResult
+
+	// DeleteRecordsResult contains the result of a DeleteRecords call
+	DeleteRecordsResult = client.DeleteRecordsResult
+
+	// GetAppResult contains the result of a GetApp call
+	GetAppResult = client.GetAppResult
+
+	// FieldDetails contains information about a field
+	FieldDetails = client.FieldDetails
+
+	// FieldInfo contains metadata about a field in query results
+	FieldInfo = client.FieldInfo
+
+	// QueryMetadata contains pagination metadata from a query
+	QueryMetadata = client.QueryMetadata
+)
+
+// FieldType is the type of a field for CreateField
+type FieldType = generated.CreateFieldJSONBodyFieldType
+
+// Field type constants
+const (
+	FieldTypeText          FieldType = "text"
+	FieldTypeMultiText     FieldType = "text-multi-line"
+	FieldTypeRichText      FieldType = "rich-text"
+	FieldTypeNumber        FieldType = "numeric"
+	FieldTypeCurrency      FieldType = "currency"
+	FieldTypePercent       FieldType = "percent"
+	FieldTypeRating        FieldType = "rating"
+	FieldTypeDate          FieldType = "date"
+	FieldTypeDateTime      FieldType = "datetime"
+	FieldTypeTimeOfDay     FieldType = "timeofday"
+	FieldTypeDuration      FieldType = "duration"
+	FieldTypeCheckbox      FieldType = "checkbox"
+	FieldTypeEmail         FieldType = "email"
+	FieldTypePhone         FieldType = "phone"
+	FieldTypeURL           FieldType = "url"
+	FieldTypeAddress       FieldType = "address"
+	FieldTypeFile          FieldType = "file"
+	FieldTypeUser          FieldType = "user"
+	FieldTypeMultiUser     FieldType = "multiuser"
+)
+
+// --- Helper Functions ---
+
+// Ptr returns a pointer to the given value.
+// Useful for optional fields that require pointers.
 //
-//     import "github.com/DrewBradfordXYZ/quickbase-go/client"
+// Example:
 //
-//     // Iterator pattern
-//     for record, err := range client.Paginate(ctx, fetcher) { ... }
+//	body := quickbase.RunQueryBody{
+//	    From:  tableId,
+//	    Where: quickbase.Ptr("{6.GT.100}"),
+//	}
+func Ptr[T any](v T) *T {
+	return &v
+}
+
+// Ints returns a pointer to a slice of ints.
+// Useful for the Select field in RunQuery.
 //
-//     // Collect all
-//     records, err := client.CollectAll(ctx, fetcher)
+// Example:
 //
-//     // Collect with limit
-//     records, err := client.CollectN(ctx, fetcher, 100)
-//
-//     // Fluent API
-//     req := client.NewPaginatedRequest(ctx, fetcher, autoPaginate)
-//     result, err := req.All()
-//     result, err := req.Paginate(client.PaginationOptions{Limit: 500})
-//     result, err := req.NoPaginate()
+//	body := quickbase.RunQueryBody{
+//	    From:   tableId,
+//	    Select: quickbase.Ints(3, 6, 7),
+//	}
+func Ints(ids ...int) *[]int {
+	return &ids
+}
+
+// Strings returns a pointer to a slice of strings.
+func Strings(strs ...string) *[]string {
+	return &strs
+}
