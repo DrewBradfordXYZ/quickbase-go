@@ -289,20 +289,47 @@ Available error types:
 
 QuickBase enforces a rate limit of **100 requests per 10 seconds** per user token.
 
-### Reactive (Default)
+### How 429 Errors Are Handled
 
-The SDK automatically retries on 429 responses with exponential backoff:
+When the SDK receives a 429 (Too Many Requests) response, it automatically:
+
+1. **Extracts rate limit info** from response headers (`Retry-After`, `cf-ray`, `qb-api-ray`)
+2. **Calls the `onRateLimit` callback** if configured, allowing you to log or monitor
+3. **Waits before retrying** - uses the `Retry-After` header if present, otherwise exponential backoff with jitter
+4. **Retries the request** up to `maxRetries` times (default: 3)
+5. **Returns a `RateLimitError`** if all retries are exhausted
+
+```
+Request fails with 429
+        ↓
+Extract Retry-After header
+        ↓
+Call onRateLimit callback (if set)
+        ↓
+Wait (Retry-After or exponential backoff)
+        ↓
+Retry request (up to maxRetries)
+        ↓
+Return RateLimitError if exhausted
+```
+
+### Retry Configuration
 
 ```go
 client, _ := quickbase.New("realm",
     quickbase.WithUserToken("token"),
-    quickbase.WithMaxRetries(5),
+    quickbase.WithMaxRetries(5),              // Default: 3
+    quickbase.WithRetryDelay(time.Second),    // Initial delay, default: 1s
+    quickbase.WithMaxRetryDelay(30*time.Second), // Max delay, default: 30s
+    quickbase.WithBackoffMultiplier(2.0),     // Exponential multiplier, default: 2
 )
 ```
 
+The backoff formula with jitter: `delay = initialDelay * (multiplier ^ attempt) ± 10%`
+
 ### Proactive Throttling
 
-Prevent 429 errors by throttling requests client-side:
+Prevent 429 errors entirely by throttling requests client-side using a sliding window algorithm:
 
 ```go
 client, _ := quickbase.New("realm",
@@ -311,9 +338,11 @@ client, _ := quickbase.New("realm",
 )
 ```
 
+This tracks request timestamps and blocks new requests when the limit would be exceeded, waiting until the oldest request exits the 10-second window.
+
 ### Rate Limit Callback
 
-Get notified when rate limited:
+Get notified when rate limited (called before retry):
 
 ```go
 client, _ := quickbase.New("realm",
@@ -322,8 +351,24 @@ client, _ := quickbase.New("realm",
         log.Printf("Rate limited on %s", info.RequestURL)
         log.Printf("Retry after: %d seconds", info.RetryAfter)
         log.Printf("Ray ID: %s", info.QBAPIRay)
+        log.Printf("Attempt: %d", info.Attempt)
     }),
 )
+```
+
+### Handling RateLimitError
+
+If retries are exhausted, a `*RateLimitError` is returned:
+
+```go
+app, err := client.GetApp(ctx, appId)
+if err != nil {
+    var rateLimitErr *quickbase.RateLimitError
+    if errors.As(err, &rateLimitErr) {
+        log.Printf("Rate limited after %d attempts", rateLimitErr.RateLimitInfo.Attempt)
+        log.Printf("Retry after: %d seconds", rateLimitErr.RetryAfter)
+    }
+}
 ```
 
 ## Pagination
