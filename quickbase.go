@@ -173,9 +173,9 @@ func WithMaxIdleConns(n int) Option {
 	}
 }
 
-// WithMaxIdleConnsPerHost sets maximum idle connections to QuickBase (default 2).
-// For high-throughput usage, set this to 10-20 to allow more concurrent requests.
-// This is the most impactful setting for concurrent request performance.
+// WithMaxIdleConnsPerHost sets maximum idle connections to QuickBase (default 6).
+// The default of 6 matches browser standards and handles typical concurrency.
+// For heavy batch operations, consider 10-20 alongside WithProactiveThrottle.
 func WithMaxIdleConnsPerHost(n int) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithMaxIdleConnsPerHost(n))

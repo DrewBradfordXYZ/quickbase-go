@@ -129,9 +129,9 @@ func WithMaxIdleConns(n int) Option {
 	}
 }
 
-// WithMaxIdleConnsPerHost sets maximum idle connections per host (default 2).
-// For high-throughput QuickBase usage, consider setting this to 10-20.
-// This is the most impactful setting for concurrent request performance.
+// WithMaxIdleConnsPerHost sets maximum idle connections per host (default 6).
+// The default of 6 matches browser standards and handles typical concurrency.
+// For heavy batch operations, consider 10-20 alongside WithProactiveThrottle.
 func WithMaxIdleConnsPerHost(n int) Option {
 	return func(c *Client) {
 		c.maxIdleConnsPerHost = n
@@ -212,9 +212,11 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 	}
 
 	// Create HTTP transport with connection pool settings
+	// Go's default MaxIdleConnsPerHost (2) is based on obsolete RFC 2616 (1999).
+	// We default to 6, matching browser standards, for reasonable concurrency.
 	transport := &http.Transport{
-		MaxIdleConns:        100, // default
-		MaxIdleConnsPerHost: 2,   // default (Go's default is too low for high-throughput)
+		MaxIdleConns:        100,
+		MaxIdleConnsPerHost: 6,
 		IdleConnTimeout:     90 * time.Second,
 	}
 	if c.maxIdleConns > 0 {
