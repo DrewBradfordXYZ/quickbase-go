@@ -320,6 +320,12 @@ type (
 	// UpdateAppBody is the request body for UpdateApp
 	UpdateAppBody = generated.UpdateAppJSONRequestBody
 
+	// DeleteAppBody is the request body for DeleteApp
+	DeleteAppBody = generated.DeleteAppJSONRequestBody
+
+	// CopyAppBody is the request body for CopyApp
+	CopyAppBody = generated.CopyAppJSONRequestBody
+
 	// CreateTableBody is the request body for CreateTable
 	CreateTableBody = generated.CreateTableJSONRequestBody
 
@@ -331,6 +337,27 @@ type (
 
 	// UpdateFieldBody is the request body for UpdateField
 	UpdateFieldBody = generated.UpdateFieldJSONRequestBody
+
+	// DeleteFieldsBody is the request body for DeleteFields
+	DeleteFieldsBody = generated.DeleteFieldsJSONRequestBody
+
+	// CreateRelationshipBody is the request body for CreateRelationship
+	CreateRelationshipBody = generated.CreateRelationshipJSONRequestBody
+
+	// UpdateRelationshipBody is the request body for UpdateRelationship
+	UpdateRelationshipBody = generated.UpdateRelationshipJSONRequestBody
+
+	// RunReportBody is the request body for RunReport
+	RunReportBody = generated.RunReportJSONRequestBody
+
+	// RunFormulaBody is the request body for RunFormula
+	RunFormulaBody = generated.RunFormulaJSONRequestBody
+
+	// GetUsersBody is the request body for GetUsers
+	GetUsersBody = generated.GetUsersJSONRequestBody
+
+	// AuditBody is the request body for Audit (get audit logs)
+	AuditBody = generated.AuditJSONRequestBody
 )
 
 // Query options
@@ -350,11 +377,41 @@ type (
 	// GetTableParams are the parameters for GetTable
 	GetTableParams = generated.GetTableParams
 
+	// DeleteTableParams are the parameters for DeleteTable
+	DeleteTableParams = generated.DeleteTableParams
+
+	// CreateTableParams are the parameters for CreateTable
+	CreateTableParams = generated.CreateTableParams
+
+	// UpdateTableParams are the parameters for UpdateTable
+	UpdateTableParams = generated.UpdateTableParams
+
+	// GetFieldParams are the parameters for GetField
+	GetFieldParams = generated.GetFieldParams
+
 	// CreateFieldParams are the parameters for CreateField
 	CreateFieldParams = generated.CreateFieldParams
 
 	// UpdateFieldParams are the parameters for UpdateField
 	UpdateFieldParams = generated.UpdateFieldParams
+
+	// DeleteFieldsParams are the parameters for DeleteFields
+	DeleteFieldsParams = generated.DeleteFieldsParams
+
+	// GetRelationshipsParams are the parameters for GetRelationships
+	GetRelationshipsParams = generated.GetRelationshipsParams
+
+	// GetReportParams are the parameters for GetReport
+	GetReportParams = generated.GetReportParams
+
+	// GetTableReportsParams are the parameters for GetTableReports
+	GetTableReportsParams = generated.GetTableReportsParams
+
+	// RunReportParams are the parameters for RunReport
+	RunReportParams = generated.RunReportParams
+
+	// GetUsersParams are the parameters for GetUsers
+	GetUsersParams = generated.GetUsersParams
 )
 
 // Core types

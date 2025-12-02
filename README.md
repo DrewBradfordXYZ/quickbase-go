@@ -223,9 +223,27 @@ quickbase.Ints(3, 6, 7)
 quickbase.Strings("a", "b", "c")
 ```
 
+### Available Methods
+
+All QuickBase API endpoints are available as wrapper methods:
+
+| Category | Methods |
+|----------|---------|
+| **Records** | `RunQuery`, `RunQueryAll`, `RunQueryN`, `Upsert`, `DeleteRecords` |
+| **Apps** | `GetApp`, `CreateApp`, `UpdateApp`, `DeleteApp`, `CopyApp`, `GetAppEvents` |
+| **Tables** | `GetTable`, `GetAppTables`, `CreateTable`, `UpdateTable`, `DeleteTable` |
+| **Fields** | `GetField`, `GetFields`, `CreateField`, `UpdateField`, `DeleteFields`, `GetFieldUsage`, `GetFieldsUsage` |
+| **Relationships** | `GetRelationships`, `CreateRelationship`, `UpdateRelationship`, `DeleteRelationship` |
+| **Reports** | `GetReport`, `GetTableReports`, `RunReport` |
+| **Files** | `DownloadFile`, `DeleteFile` |
+| **Users** | `GetUsers`, `DenyUsers`, `UndenyUsers`, `DenyUsersAndGroups` |
+| **Groups** | `AddMembersToGroup`, `RemoveMembersFromGroup`, `AddManagersToGroup`, `RemoveManagersFromGroup`, `AddSubgroupsToGroup`, `RemoveSubgroupsFromGroup` |
+| **User Tokens** | `CloneUserToken`, `DeleteUserToken`, `DeactivateUserToken`, `TransferUserToken` |
+| **Other** | `RunFormula`, `Audit`, `GenerateDocument` |
+
 ### Low-Level API Access
 
-For advanced use cases, you can access the full generated API:
+For endpoints not covered by wrapper methods or when you need full control, access the generated API directly:
 
 ```go
 resp, err := client.API().GetAppWithResponse(ctx, appId)
@@ -400,6 +418,16 @@ cp .env.example .env
 # Edit .env with your QB_REALM and QB_USER_TOKEN
 go test ./tests/integration/... -v
 ```
+
+### Regenerating Wrapper Methods
+
+After updating the OpenAPI spec, regenerate the wrapper methods:
+
+```bash
+go run ./cmd/generate-wrappers/main.go
+```
+
+This reads `spec/output/quickbase-patched.json` and generates `client/api_generated.go`.
 
 ## Related Projects
 
