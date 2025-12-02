@@ -88,12 +88,13 @@ type Client struct {
 // RequestInfo contains information about a completed API request.
 // This is passed to the OnRequest callback after each request completes.
 type RequestInfo struct {
-	Method     string        // HTTP method (GET, POST, etc.)
-	Path       string        // URL path (e.g., /v1/apps/bqxyz123)
-	StatusCode int           // HTTP status code
-	Duration   time.Duration // Total request duration
-	Attempt    int           // Attempt number (1 = first try, 2+ = retries)
-	Error      error         // Non-nil if request failed
+	Method      string        // HTTP method (GET, POST, etc.)
+	Path        string        // URL path (e.g., /v1/apps/bqxyz123)
+	StatusCode  int           // HTTP status code
+	Duration    time.Duration // Total request duration
+	Attempt     int           // Attempt number (1 = first try, 2+ = retries)
+	Error       error         // Non-nil if request failed
+	RequestBody []byte        // Request body bytes (for debugging failed requests)
 }
 
 // RetryInfo contains information about a retry attempt.
@@ -404,12 +405,13 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			// Notify onRequest callback (with error)
 			if c.onRequest != nil {
 				c.onRequest(RequestInfo{
-					Method:     req.Method,
-					Path:       req.URL.Path,
-					StatusCode: 0,
-					Duration:   duration,
-					Attempt:    attempt,
-					Error:      err,
+					Method:      req.Method,
+					Path:        req.URL.Path,
+					StatusCode:  0,
+					Duration:    duration,
+					Attempt:     attempt,
+					Error:       err,
+					RequestBody: bodyBytes,
 				})
 			}
 
@@ -446,11 +448,12 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			// Notify onRequest callback (429)
 			if c.onRequest != nil {
 				c.onRequest(RequestInfo{
-					Method:     req.Method,
-					Path:       req.URL.Path,
-					StatusCode: resp.StatusCode,
-					Duration:   duration,
-					Attempt:    attempt,
+					Method:      req.Method,
+					Path:        req.URL.Path,
+					StatusCode:  resp.StatusCode,
+					Duration:    duration,
+					Attempt:     attempt,
+					RequestBody: bodyBytes,
 				})
 			}
 
@@ -522,11 +525,12 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			// Notify onRequest callback (5xx)
 			if c.onRequest != nil {
 				c.onRequest(RequestInfo{
-					Method:     req.Method,
-					Path:       req.URL.Path,
-					StatusCode: resp.StatusCode,
-					Duration:   duration,
-					Attempt:    attempt,
+					Method:      req.Method,
+					Path:        req.URL.Path,
+					StatusCode:  resp.StatusCode,
+					Duration:    duration,
+					Attempt:     attempt,
+					RequestBody: bodyBytes,
 				})
 			}
 
@@ -552,11 +556,12 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		// Notify onRequest callback (success or final attempt)
 		if c.onRequest != nil {
 			c.onRequest(RequestInfo{
-				Method:     req.Method,
-				Path:       req.URL.Path,
-				StatusCode: resp.StatusCode,
-				Duration:   duration,
-				Attempt:    attempt,
+				Method:      req.Method,
+				Path:        req.URL.Path,
+				StatusCode:  resp.StatusCode,
+				Duration:    duration,
+				Attempt:     attempt,
+				RequestBody: bodyBytes,
 			})
 		}
 

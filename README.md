@@ -460,6 +460,18 @@ POST /v1/records/query → 429 (12ms)
 | `Duration` | time.Duration | Request latency |
 | `Attempt` | int | Attempt number (1 = first try, 2+ = retries) |
 | `Error` | error | Non-nil if request failed |
+| `RequestBody` | []byte | Request body (for debugging failed requests) |
+
+**Debugging failed requests:**
+
+```go
+quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
+    if info.StatusCode >= 400 {
+        log.Printf("Request failed: %s %s → %d\nBody: %s",
+            info.Method, info.Path, info.StatusCode, info.RequestBody)
+    }
+})
+```
 
 ### Retry Hook
 
