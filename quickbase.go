@@ -165,6 +165,31 @@ func WithTimeout(d time.Duration) Option {
 	}
 }
 
+// WithMaxIdleConns sets the maximum number of idle connections across all hosts.
+// Default is 100. This controls total connection pool size.
+func WithMaxIdleConns(n int) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithMaxIdleConns(n))
+	}
+}
+
+// WithMaxIdleConnsPerHost sets maximum idle connections to QuickBase (default 2).
+// For high-throughput usage, set this to 10-20 to allow more concurrent requests.
+// This is the most impactful setting for concurrent request performance.
+func WithMaxIdleConnsPerHost(n int) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithMaxIdleConnsPerHost(n))
+	}
+}
+
+// WithIdleConnTimeout sets how long idle connections stay in the pool.
+// Default is 90 seconds.
+func WithIdleConnTimeout(d time.Duration) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithIdleConnTimeout(d))
+	}
+}
+
 // WithProactiveThrottle enables sliding window throttling.
 // QuickBase's limit is 100 requests per 10 seconds per user token.
 func WithProactiveThrottle(requestsPer10Seconds int) Option {

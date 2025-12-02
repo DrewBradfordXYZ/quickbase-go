@@ -65,6 +65,11 @@ type Client struct {
 	// Request timeout
 	timeout time.Duration
 
+	// HTTP transport settings
+	maxIdleConns        int
+	maxIdleConnsPerHost int
+	idleConnTimeout     time.Duration
+
 	// Rate limiting / throttling
 	throttle Throttle
 
@@ -113,6 +118,30 @@ func WithBackoffMultiplier(m float64) Option {
 func WithTimeout(d time.Duration) Option {
 	return func(c *Client) {
 		c.timeout = d
+	}
+}
+
+// WithMaxIdleConns sets the maximum number of idle connections across all hosts (default 100).
+// This controls total connection pool size.
+func WithMaxIdleConns(n int) Option {
+	return func(c *Client) {
+		c.maxIdleConns = n
+	}
+}
+
+// WithMaxIdleConnsPerHost sets maximum idle connections per host (default 2).
+// For high-throughput QuickBase usage, consider setting this to 10-20.
+// This is the most impactful setting for concurrent request performance.
+func WithMaxIdleConnsPerHost(n int) Option {
+	return func(c *Client) {
+		c.maxIdleConnsPerHost = n
+	}
+}
+
+// WithIdleConnTimeout sets how long idle connections stay in the pool (default 90s).
+func WithIdleConnTimeout(d time.Duration) Option {
+	return func(c *Client) {
+		c.idleConnTimeout = d
 	}
 }
 
@@ -182,10 +211,29 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 		c.throttle = NewNoOpThrottle()
 	}
 
+	// Create HTTP transport with connection pool settings
+	transport := &http.Transport{
+		MaxIdleConns:        100, // default
+		MaxIdleConnsPerHost: 2,   // default (Go's default is too low for high-throughput)
+		IdleConnTimeout:     90 * time.Second,
+	}
+	if c.maxIdleConns > 0 {
+		transport.MaxIdleConns = c.maxIdleConns
+	}
+	if c.maxIdleConnsPerHost > 0 {
+		transport.MaxIdleConnsPerHost = c.maxIdleConnsPerHost
+	}
+	if c.idleConnTimeout > 0 {
+		transport.IdleConnTimeout = c.idleConnTimeout
+	}
+
 	// Create the generated client with our custom HTTP doer
 	httpClient := &authHTTPClient{
-		client:     c,
-		httpClient: &http.Client{Timeout: c.timeout},
+		client: c,
+		httpClient: &http.Client{
+			Timeout:   c.timeout,
+			Transport: transport,
+		},
 	}
 
 	genClient, err := generated.NewClientWithResponses(
