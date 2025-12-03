@@ -8,9 +8,11 @@ import (
 	"time"
 
 	"github.com/DrewBradfordXYZ/quickbase-go"
+	"github.com/DrewBradfordXYZ/quickbase-go/auth"
 )
 
 // Create a basic client with user token authentication.
+// This is the simplest and most common authentication method for server-side apps.
 func ExampleNew() {
 	client, err := quickbase.New("myrealm",
 		quickbase.WithUserToken("b9f3pk_xxxx_xxxxxxxxxxxxxxx"),
@@ -20,6 +22,73 @@ func ExampleNew() {
 	}
 
 	// Use client to make API calls
+	_ = client
+}
+
+// Authenticate with username/password using ticket authentication.
+// Unlike user tokens, tickets properly attribute record changes (createdBy/modifiedBy)
+// to the authenticated user.
+func ExampleWithTicketAuth() {
+	client, err := quickbase.New("myrealm",
+		quickbase.WithTicketAuth("user@example.com", "password"),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// The password is discarded after first authentication.
+	// Tickets are valid for 12 hours by default.
+	_ = client
+}
+
+// Configure ticket authentication with custom validity period.
+func ExampleWithTicketAuth_customHours() {
+	client, err := quickbase.New("myrealm",
+		quickbase.WithTicketAuth("user@example.com", "password",
+			auth.WithTicketHours(24*7), // Valid for 1 week
+		),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_ = client
+}
+
+// Authenticate using a SAML assertion for SSO.
+// This allows API calls to be made as a specific QuickBase user.
+func ExampleWithSSOTokenAuth() {
+	// Get SAML assertion from your identity provider (Okta, Azure AD, etc.)
+	samlAssertion := "base64url-encoded-saml-assertion"
+
+	client, err := quickbase.New("myrealm",
+		quickbase.WithSSOTokenAuth(samlAssertion),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// API calls now execute as the authenticated SSO user.
+	// "Created By" and "Modified By" fields will show their name.
+	_ = client
+}
+
+// Handle temp tokens received from QuickBase POST callbacks.
+// Use this when building integrations triggered by Formula-URL fields.
+func ExampleWithTempTokenAuth() {
+	// In a real handler, extract the token from the request:
+	//   token, _ := auth.ExtractPostTempToken(r)
+	tempToken := "token-received-from-quickbase"
+
+	client, err := quickbase.New("myrealm",
+		quickbase.WithTempTokenAuth(
+			auth.WithInitialTempToken(tempToken),
+		),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Use the client to make API calls back to QuickBase
 	_ = client
 }
 

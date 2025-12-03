@@ -128,14 +128,67 @@ type ticketMarker struct {
 	opts     []auth.TicketOption
 }
 
-// WithTempTokenAuth configures temporary token authentication with options.
+// WithTempTokenAuth configures temporary token authentication.
+//
+// Temp tokens are short-lived (~5 min), table-scoped tokens that verify a user
+// is logged into QuickBase. Unlike browser-based SDKs, Go servers cannot fetch
+// temp tokens directly—they must receive them from QuickBase (e.g., via POST
+// callbacks from Formula-URL fields).
+//
+// How it works:
+//  1. Configure a Formula-URL field in QuickBase with "POST temp token" option
+//  2. When a user clicks the link, QuickBase POSTs {"tempToken": "..."} to your server
+//  3. Extract the token with [auth.ExtractPostTempToken] and create a client
+//
+// Example:
+//
+//	func handler(w http.ResponseWriter, r *http.Request) {
+//	    token, err := auth.ExtractPostTempToken(r)
+//	    if err != nil {
+//	        http.Error(w, "Invalid request", http.StatusBadRequest)
+//	        return
+//	    }
+//
+//	    client, _ := quickbase.New("myrealm",
+//	        quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	    )
+//	    // Use client to make API calls back to QuickBase...
+//	}
+//
+// See https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field
 func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
 	return func(c *clientConfig) {
 		c.authStrategy = &tempTokenMarker{opts: opts}
 	}
 }
 
-// WithSSOTokenAuth configures SSO token authentication.
+// WithSSOTokenAuth configures SSO (SAML) token authentication.
+//
+// SSO authentication lets your Go server make API calls as a specific QuickBase
+// user rather than a shared service account. The SDK exchanges a SAML assertion
+// for a QuickBase temp token using RFC 8693 token exchange.
+//
+// Benefits:
+//   - Audit accuracy: "Created By" and "Modified By" show the actual user
+//   - Security: No long-lived user token; each user gets a short-lived token
+//   - Per-user permissions: API calls respect each user's individual QuickBase permissions
+//
+// Prerequisites:
+//   - Your QuickBase realm has SAML SSO configured
+//   - Your identity provider (Okta, Azure AD, etc.) can generate SAML assertions
+//
+// Example:
+//
+//	// Get SAML assertion from your IdP for the authenticated user
+//	samlAssertion := getAssertionFromIdP(userId) // base64url-encoded
+//
+//	client, err := quickbase.New("myrealm",
+//	    quickbase.WithSSOTokenAuth(samlAssertion),
+//	)
+//
+//	// API calls are now made as that specific user
+//
+// See https://developer.quickbase.com/operation/exchangeSsoToken
 func WithSSOTokenAuth(samlToken string, opts ...auth.SSOTokenOption) Option {
 	return func(c *clientConfig) {
 		c.authStrategy = &ssoTokenMarker{samlToken: samlToken, opts: opts}
