@@ -1,43 +1,72 @@
 // Package quickbase provides a Go SDK for the QuickBase API.
 //
 // This SDK provides:
-//   - Multiple authentication strategies (user token, temp token, SSO)
+//   - Multiple authentication strategies (user token, temp token, SSO, ticket)
 //   - Automatic retry with exponential backoff and jitter
 //   - Proactive rate limiting with sliding window throttle
 //   - Custom error types for different HTTP status codes
 //   - Debug logging
 //   - Date transformation (ISO strings to time.Time)
 //
-// Basic usage with user token:
+// # Authentication
 //
-//	qb, err := quickbase.New("your-realm", quickbase.WithUserToken("your-token"))
+// User token (recommended for server-side apps):
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithUserToken("b9f3pk_xxxx_xxxxxxxxxxxxxxx"),
+//	)
+//
+// Ticket auth (username/password with proper createdBy/modifiedBy attribution):
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithTicketAuth("user@example.com", "password"),
+//	)
+//
+// SSO/SAML (make API calls as a specific user):
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithSSOTokenAuth(samlAssertion),
+//	)
+//
+// Temp token (received from QuickBase POST callbacks):
+//
+//	token, _ := auth.ExtractPostTempToken(r)
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	)
+//
+// See the [auth] package for detailed documentation on each method.
+//
+// # Basic Usage
+//
+//	client, err := quickbase.New("myrealm",
+//	    quickbase.WithUserToken("your-token"),
+//	)
 //	if err != nil {
 //	    log.Fatal(err)
 //	}
 //
-//	resp, err := qb.API().GetAppWithResponse(ctx, &generated.GetAppParams{
-//	    AppId: "your-app-id",
-//	})
+//	// Use wrapper methods
+//	app, _ := client.GetApp(ctx, "bqxyz123")
+//	records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{From: tableId})
 //
-// With proactive rate limiting:
+//	// Or access the generated API directly
+//	resp, _ := client.API().GetAppWithResponse(ctx, appId)
 //
-//	qb, err := quickbase.New("your-realm",
+// # Rate Limiting
+//
+// Proactive throttling (100 req/10s is QuickBase's limit):
+//
+//	client, _ := quickbase.New("myrealm",
 //	    quickbase.WithUserToken("token"),
-//	    quickbase.WithProactiveThrottle(100), // 100 req/10s (QuickBase's limit)
+//	    quickbase.WithProactiveThrottle(100),
 //	)
 //
-// With debug logging:
+// Rate limit callback:
 //
-//	qb, err := quickbase.New("your-realm",
+//	client, _ := quickbase.New("myrealm",
 //	    quickbase.WithUserToken("token"),
-//	    quickbase.WithDebug(true),
-//	)
-//
-// With rate limit callback:
-//
-//	qb, err := quickbase.New("your-realm",
-//	    quickbase.WithUserToken("token"),
-//	    quickbase.WithOnRateLimit(func(info core.RateLimitInfo) {
+//	    quickbase.WithOnRateLimit(func(info quickbase.RateLimitInfo) {
 //	        log.Printf("Rate limited! Retry after %ds", info.RetryAfter)
 //	    }),
 //	)
