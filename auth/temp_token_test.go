@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 )
 
 func TestTempTokenStrategy_WithInitialToken(t *testing.T) {
@@ -22,13 +21,13 @@ func TestTempTokenStrategy_WithInitialToken(t *testing.T) {
 		t.Errorf("expected 'test-token-123', got '%s'", token)
 	}
 
-	// Second call should use cached token
+	// Second call should use stored token
 	token2, err := strategy.GetToken(ctx, "bqtest123")
 	if err != nil {
 		t.Fatalf("unexpected error on second call: %v", err)
 	}
 	if token2 != "test-token-123" {
-		t.Errorf("expected cached token 'test-token-123', got '%s'", token2)
+		t.Errorf("expected stored token 'test-token-123', got '%s'", token2)
 	}
 }
 
@@ -50,6 +49,39 @@ func TestTempTokenStrategy_WithInitialTokenForTable(t *testing.T) {
 	_, err = strategy.GetToken(ctx, "other-table")
 	if err == nil {
 		t.Error("expected error for different table without token")
+	}
+}
+
+func TestTempTokenStrategy_WithTempTokens(t *testing.T) {
+	strategy := NewTempTokenStrategy("testrealm",
+		WithTempTokens(map[string]string{
+			"table1": "token1",
+			"table2": "token2",
+		}),
+	)
+
+	ctx := context.Background()
+
+	token1, err := strategy.GetToken(ctx, "table1")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if token1 != "token1" {
+		t.Errorf("expected 'token1', got '%s'", token1)
+	}
+
+	token2, err := strategy.GetToken(ctx, "table2")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if token2 != "token2" {
+		t.Errorf("expected 'token2', got '%s'", token2)
+	}
+
+	// Non-existent table should fail
+	_, err = strategy.GetToken(ctx, "table3")
+	if err == nil {
+		t.Error("expected error for table without token")
 	}
 }
 
@@ -110,33 +142,6 @@ func TestTempTokenStrategy_Invalidate(t *testing.T) {
 	_, err = strategy.GetToken(ctx, "table1")
 	if err == nil {
 		t.Error("expected error after invalidation")
-	}
-}
-
-func TestTempTokenStrategy_TokenExpiry(t *testing.T) {
-	strategy := NewTempTokenStrategy("testrealm",
-		WithTempTokenLifespan(50*time.Millisecond),
-		WithInitialTempTokenForTable("expiring-token", "table1"),
-	)
-
-	ctx := context.Background()
-
-	// Token should exist
-	token, err := strategy.GetToken(ctx, "table1")
-	if err != nil {
-		t.Fatalf("expected token to exist: %v", err)
-	}
-	if token != "expiring-token" {
-		t.Errorf("expected 'expiring-token', got '%s'", token)
-	}
-
-	// Wait for expiry
-	time.Sleep(60 * time.Millisecond)
-
-	// Token should be expired
-	_, err = strategy.GetToken(ctx, "table1")
-	if err == nil {
-		t.Error("expected error after token expiry")
 	}
 }
 

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
-	"time"
 )
 
 // TempTokenStrategy authenticates using QuickBase temporary tokens.
@@ -13,51 +12,38 @@ import (
 // Temp tokens are short-lived (~5 min), table-scoped tokens that verify
 // a user is logged into QuickBase via their browser session.
 //
-// In a Go server, you receive temp tokens from QuickBase (e.g., via POST
-// from a Formula-URL field) rather than fetching them. Use ExtractPostTempToken
-// to extract tokens from incoming requests.
+// Go servers receive temp tokens from browser clients (e.g., Code Pages)
+// that fetch them using the user's QuickBase session. The browser sends
+// tokens via HTTP headers (e.g., X-QB-Token-{dbid}).
 //
 // Example:
 //
 //	func handler(w http.ResponseWriter, r *http.Request) {
-//	    token, _ := auth.ExtractPostTempToken(r)
+//	    tokens := map[string]string{
+//	        "bqr1111": r.Header.Get("X-QB-Token-bqr1111"),
+//	    }
 //	    client, _ := quickbase.New("realm",
-//	        quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	        quickbase.WithTempTokens(tokens),
 //	    )
 //	    // Use client...
 //	}
 type TempTokenStrategy struct {
-	realm    string
-	lifespan time.Duration
+	realm string
 
 	mu           sync.RWMutex
-	cache        map[string]*cachedToken
-	pendingToken *string // initial token not yet associated with a dbid
-}
-
-type cachedToken struct {
-	token     string
-	expiresAt time.Time
+	tokens       map[string]string // dbid → token
+	pendingToken *string           // initial token not yet associated with a dbid
 }
 
 // TempTokenOption configures a TempTokenStrategy.
 type TempTokenOption func(*TempTokenStrategy)
 
-// WithTempTokenLifespan sets the token cache lifespan (default 290 seconds).
-// QuickBase temp tokens expire after ~5 minutes.
-func WithTempTokenLifespan(d time.Duration) TempTokenOption {
-	return func(s *TempTokenStrategy) {
-		s.lifespan = d
-	}
-}
-
-// WithInitialTempToken sets an initial temp token received from QuickBase.
+// WithInitialTempToken sets an initial temp token received from a browser client.
 //
-// Use this when you've received a token from a POST callback (Formula-URL field)
-// or from a browser client. The token will be cached and used for API requests.
+// Use this when you've received a single token and don't know the dbid yet.
+// The token will be used for the first request and associated with that dbid.
 //
-// If dbid is not known at creation time, the token will be used for the first
-// request and cached with that request's dbid.
+// For multiple tokens with known dbids, use [WithTempTokens] instead.
 func WithInitialTempToken(token string) TempTokenOption {
 	return func(s *TempTokenStrategy) {
 		s.pendingToken = &token
@@ -68,9 +54,19 @@ func WithInitialTempToken(token string) TempTokenOption {
 func WithInitialTempTokenForTable(token string, dbid string) TempTokenOption {
 	return func(s *TempTokenStrategy) {
 		s.mu.Lock()
-		s.cache[dbid] = &cachedToken{
-			token:     token,
-			expiresAt: time.Now().Add(s.lifespan),
+		s.tokens[dbid] = token
+		s.mu.Unlock()
+	}
+}
+
+// WithTempTokens sets multiple temp tokens mapped by table ID.
+//
+// This is the preferred way to initialize tokens when you know the dbids.
+func WithTempTokens(tokens map[string]string) TempTokenOption {
+	return func(s *TempTokenStrategy) {
+		s.mu.Lock()
+		for dbid, token := range tokens {
+			s.tokens[dbid] = token
 		}
 		s.mu.Unlock()
 	}
@@ -79,9 +75,8 @@ func WithInitialTempTokenForTable(token string, dbid string) TempTokenOption {
 // NewTempTokenStrategy creates a new temporary token authentication strategy.
 func NewTempTokenStrategy(realm string, opts ...TempTokenOption) *TempTokenStrategy {
 	s := &TempTokenStrategy{
-		realm:    realm,
-		lifespan: 290 * time.Second,
-		cache:    make(map[string]*cachedToken),
+		realm:  realm,
+		tokens: make(map[string]string),
 	}
 	for _, opt := range opts {
 		opt(s)
@@ -92,44 +87,37 @@ func NewTempTokenStrategy(realm string, opts ...TempTokenOption) *TempTokenStrat
 // GetToken returns a temp token for the given table ID.
 //
 // Since Go servers can't fetch temp tokens (no browser cookies), this returns
-// a cached token that was set via WithInitialTempToken or SetToken.
+// a token that was set via WithInitialTempToken, WithTempTokens, or SetToken.
 func (s *TempTokenStrategy) GetToken(ctx context.Context, dbid string) (string, error) {
 	s.mu.Lock()
+	defer s.mu.Unlock()
+
 	// Check for pending initial token (set via WithInitialTempToken)
 	if s.pendingToken != nil {
 		token := *s.pendingToken
 		s.pendingToken = nil
 
-		// Cache it for this dbid
+		// Store it for this dbid
 		if dbid != "" {
-			s.cache[dbid] = &cachedToken{
-				token:     token,
-				expiresAt: time.Now().Add(s.lifespan),
-			}
+			s.tokens[dbid] = token
 		}
-		s.mu.Unlock()
 		return token, nil
 	}
 
-	// Check cache
-	if cached, ok := s.cache[dbid]; ok && time.Now().Before(cached.expiresAt) {
-		s.mu.Unlock()
-		return cached.token, nil
+	// Check tokens map
+	if token, ok := s.tokens[dbid]; ok {
+		return token, nil
 	}
-	s.mu.Unlock()
 
-	return "", fmt.Errorf("no temp token available for dbid %s; use WithInitialTempToken or SetToken", dbid)
+	return "", fmt.Errorf("no temp token available for dbid %s; use WithTempTokens or SetToken", dbid)
 }
 
-// SetToken caches a temp token for a specific table ID.
+// SetToken stores a temp token for a specific table ID.
 //
-// Use this to add tokens received from QuickBase during the request lifecycle.
+// Use this to add tokens received from the browser during the request lifecycle.
 func (s *TempTokenStrategy) SetToken(dbid string, token string) {
 	s.mu.Lock()
-	s.cache[dbid] = &cachedToken{
-		token:     token,
-		expiresAt: time.Now().Add(s.lifespan),
-	}
+	s.tokens[dbid] = token
 	s.mu.Unlock()
 }
 
@@ -139,16 +127,16 @@ func (s *TempTokenStrategy) ApplyAuth(req *http.Request, token string) {
 }
 
 // HandleAuthError handles 401 errors. For temp tokens, we can't refresh
-// server-side (no browser cookies), so we just invalidate the cache.
+// server-side (no browser cookies), so we just remove the invalid token.
 func (s *TempTokenStrategy) HandleAuthError(ctx context.Context, statusCode int, dbid string, attempt int, maxAttempts int) (string, error) {
 	if statusCode != http.StatusUnauthorized {
 		return "", nil
 	}
 
-	// Invalidate the cached token
+	// Remove the invalid token
 	if dbid != "" {
 		s.mu.Lock()
-		delete(s.cache, dbid)
+		delete(s.tokens, dbid)
 		s.mu.Unlock()
 	}
 
@@ -156,16 +144,16 @@ func (s *TempTokenStrategy) HandleAuthError(ctx context.Context, statusCode int,
 	return "", nil
 }
 
-// Invalidate removes a cached token.
+// Invalidate removes a token for a specific table.
 func (s *TempTokenStrategy) Invalidate(dbid string) {
 	s.mu.Lock()
-	delete(s.cache, dbid)
+	delete(s.tokens, dbid)
 	s.mu.Unlock()
 }
 
-// InvalidateAll removes all cached tokens.
+// InvalidateAll removes all tokens.
 func (s *TempTokenStrategy) InvalidateAll() {
 	s.mu.Lock()
-	s.cache = make(map[string]*cachedToken)
+	s.tokens = make(map[string]string)
 	s.mu.Unlock()
 }

@@ -144,12 +144,12 @@ const response = await this.fetchApi(url, {
 ### Go SDK (Server-Side)
 The Go SDK **receives** pre-existing temp tokens - it cannot fetch them:
 - No browser cookies available on server
-- The `fetchToken()` code was removed because it's dead code without cookies
-- Primary use case: receiving tokens from POST callbacks
+- Primary use case: receiving tokens from browser clients (e.g., Code Pages)
+- Browser fetches tokens using user's QuickBase session, sends via HTTP headers
 
 **Available options:**
-- `auth.ExtractPostTempToken(r)` - Extract token from incoming POST request
-- `auth.WithInitialTempToken(token)` - Create client with a received token
+- `quickbase.WithTempTokens(map[string]string{"dbid": token})` - Create client with tokens
+- `auth.WithInitialTempToken(token)` - Create client with a single token
 - `auth.WithInitialTempTokenForTable(token, dbid)` - When you know the table ID
 - `strategy.SetToken(dbid, token)` - Add tokens during request lifecycle
 
@@ -164,28 +164,33 @@ You technically CAN call `/auth/temporary/{dbid}` with a user token, but there's
 - If you have a user token, just use that directly
 - The benefit of temp tokens is proving browser session - if you're using a user token, you've already bypassed that
 
-### POST Temp Token Flow
+### Browser-to-Server Token Flow
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │  QuickBase  │     │   Browser   │     │  Go Server  │
 └─────────────┘     └─────────────┘     └─────────────┘
        │                   │                   │
-       │  User clicks      │                   │
-       │  Formula-URL      │                   │
+       │  User opens       │                   │
+       │  Code Page        │                   │
        │◄──────────────────│                   │
        │                   │                   │
-       │  POST {tempToken} │                   │
-       │───────────────────┼──────────────────►│
+       │  Browser fetches  │                   │
+       │  temp token       │                   │
+       │◄─────────────────►│                   │
+       │                   │                   │
+       │                   │  Request + token  │
+       │                   │  (via headers)    │
+       │                   │──────────────────►│
        │                   │                   │
        │                   │     API calls     │
        │◄──────────────────┼───────────────────│
        │                   │                   │
 ```
 
-1. Configure Formula-URL field with "POST temp token" option
-2. User clicks link in QuickBase
-3. QuickBase POSTs `{"tempToken": "..."}` to your Go server
-4. Go server extracts token with `auth.ExtractPostTempToken(r)`
+1. User opens Code Page in QuickBase (logged in)
+2. Browser JavaScript fetches temp token using session cookies
+3. Browser sends request to Go server with token in header (e.g., X-QB-Token-{dbid})
+4. Go server extracts token from header and creates client
 5. Go server makes API calls back to QuickBase using that token
 
 ## Related Repository

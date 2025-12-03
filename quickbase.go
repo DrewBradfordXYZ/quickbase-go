@@ -28,11 +28,10 @@
 //	    quickbase.WithSSOTokenAuth(samlAssertion),
 //	)
 //
-// Temp token (received from QuickBase POST callbacks):
+// Temp token (for browser-initiated requests with tokens):
 //
-//	token, _ := auth.ExtractPostTempToken(r)
 //	client, _ := quickbase.New("myrealm",
-//	    quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	    quickbase.WithTempTokens(map[string]string{"bqr1111": token}),
 //	)
 //
 // See the [auth] package for detailed documentation on each method.
@@ -160,31 +159,12 @@ type ticketMarker struct {
 // WithTempTokenAuth configures temporary token authentication.
 //
 // Temp tokens are short-lived (~5 min), table-scoped tokens that verify a user
-// is logged into QuickBase. Unlike browser-based SDKs, Go servers cannot fetch
-// temp tokens directly—they must receive them from QuickBase (e.g., via POST
-// callbacks from Formula-URL fields).
+// is logged into QuickBase. Go servers receive these tokens from browser clients
+// (e.g., Code Pages) that can fetch them using the user's browser session.
 //
-// How it works:
-//  1. Configure a Formula-URL field in QuickBase with "POST temp token" option
-//  2. When a user clicks the link, QuickBase POSTs {"tempToken": "..."} to your server
-//  3. Extract the token with [auth.ExtractPostTempToken] and create a client
+// For the simpler map-based API, see [WithTempTokens].
 //
-// Example:
-//
-//	func handler(w http.ResponseWriter, r *http.Request) {
-//	    token, err := auth.ExtractPostTempToken(r)
-//	    if err != nil {
-//	        http.Error(w, "Invalid request", http.StatusBadRequest)
-//	        return
-//	    }
-//
-//	    client, _ := quickbase.New("myrealm",
-//	        quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
-//	    )
-//	    // Use client to make API calls back to QuickBase...
-//	}
-//
-// See https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field
+// Deprecated: Use [WithTempTokens] instead for clearer token-to-table mapping.
 func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
 	return func(c *clientConfig) {
 		c.authStrategy = &tempTokenMarker{opts: opts}

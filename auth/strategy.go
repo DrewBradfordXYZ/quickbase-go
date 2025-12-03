@@ -3,7 +3,7 @@
 // QuickBase supports four authentication methods:
 //
 //   - User Token: Long-lived tokens for server-side applications
-//   - Temporary Token: Short-lived tokens received from QuickBase (e.g., POST callbacks)
+//   - Temporary Token: Short-lived tokens received from browser clients
 //   - SSO Token: SAML-based tokens for enterprise SSO integration
 //   - Ticket: Username/password authentication with proper user attribution
 //
@@ -16,17 +16,18 @@
 //	    quickbase.WithUserToken("b9f3pk_xxxx_xxxxxxxxxxxxxxx"),
 //	)
 //
-// # Temporary Token (POST Callbacks)
+// # Temporary Token (Browser-Initiated)
 //
 // Temp tokens are short-lived (~5 min), table-scoped tokens. Go servers receive
-// them from QuickBase via POST callbacks (Formula-URL fields), not by fetching.
+// them from browser clients (e.g., Code Pages) that fetch tokens using the user's
+// QuickBase session. The browser sends tokens via HTTP headers.
 //
-//	token, _ := auth.ExtractPostTempToken(r)
+//	tokens := map[string]string{
+//	    "bqr1111": r.Header.Get("X-QB-Token-bqr1111"),
+//	}
 //	client, _ := quickbase.New("myrealm",
-//	    quickbase.WithTempTokenAuth(auth.WithInitialTempToken(token)),
+//	    quickbase.WithTempTokens(tokens),
 //	)
-//
-// See: https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field
 //
 // # SSO Token (SAML)
 //

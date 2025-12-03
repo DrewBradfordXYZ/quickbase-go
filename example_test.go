@@ -72,12 +72,12 @@ func ExampleWithSSOTokenAuth() {
 	_ = client
 }
 
-// Handle temp tokens received from QuickBase POST callbacks.
-// Use this when building integrations triggered by Formula-URL fields.
+// Handle temp tokens received from browser clients (e.g., Code Pages via Datastar).
+// The browser fetches tokens using its QuickBase session and sends them to your server.
 func ExampleWithTempTokenAuth() {
-	// In a real handler, extract the token from the request:
-	//   token, _ := auth.ExtractPostTempToken(r)
-	tempToken := "token-received-from-quickbase"
+	// Tokens are received from browser via HTTP headers, e.g.:
+	//   token := r.Header.Get("X-QB-Token-bqr1111")
+	tempToken := "token-from-browser"
 
 	client, err := quickbase.New("myrealm",
 		quickbase.WithTempTokenAuth(
@@ -88,7 +88,7 @@ func ExampleWithTempTokenAuth() {
 		log.Fatal(err)
 	}
 
-	// Use the client to make API calls back to QuickBase
+	// Use the client to make API calls to QuickBase
 	_ = client
 }
 
