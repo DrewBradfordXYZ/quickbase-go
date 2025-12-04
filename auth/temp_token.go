@@ -2,9 +2,10 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"sync"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // TempTokenStrategy authenticates using QuickBase temporary tokens.
@@ -109,7 +110,7 @@ func (s *TempTokenStrategy) GetToken(ctx context.Context, dbid string) (string, 
 		return token, nil
 	}
 
-	return "", fmt.Errorf("no temp token available for dbid %s; use WithTempTokens or SetToken", dbid)
+	return "", core.NewMissingTokenError(dbid)
 }
 
 // SetToken stores a temp token for a specific table ID.

@@ -105,8 +105,12 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
     }
 
     // Use the client to make API calls back to QuickBase
-    resp, err := client.API().GetAppWithResponse(r.Context(), appId)
-    // ...
+    app, err := client.GetApp(r.Context(), "bqr1111")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    fmt.Fprintf(w, "App: %s", app.Name)
 }
 ```
 

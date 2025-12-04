@@ -193,9 +193,103 @@ You technically CAN call `/auth/temporary/{dbid}` with a user token, but there's
 4. Go server extracts token from header and creates client
 5. Go server makes API calls back to QuickBase using that token
 
-## Related Repository
+### Automatic DBID Extraction
 
-This SDK mirrors [quickbase-js](https://github.com/DrewBradfordXYZ/quickbase-js):
+Both the JS and Go SDKs automatically extract the dbid from API requests:
+- Query params: `tableId`, `appId`
+- Path: `/tables/{tableId}`, `/apps/{appId}`
+- Request body: `from` (runQuery, deleteRecords), `to` (upsert)
+
+This means the SDK knows which table you're accessing without explicit configuration.
+
+See `extractDBID()` and `extractDBIDFromBody()` in `client/client.go`.
+
+### Token Negotiation Pattern (Future Enhancement)
+
+Currently, the browser must know which tables it needs tokens for upfront. A better pattern:
+
+**Problem:** Browser doesn't know which tables the Go server will access.
+
+**Solution:** 401 negotiation - server tells browser what tokens it needs.
+
+```
+1. Browser sends request to Go server (no tokens)
+2. Go server creates client, makes API call
+3. SDK returns MissingTokensError with required dbids
+4. Go server returns 401 with X-QB-Tables-Needed header
+5. Browser fetches those tokens, retries request
+```
+
+**Handler pattern (not yet implemented):**
+
+```go
+func tempTokenHandler(w http.ResponseWriter, r *http.Request) {
+    // Extract whatever tokens the browser sent (header format is user-defined)
+    tokens := map[string]string{
+        r.Header.Get("X-QB-Table-ID"): r.Header.Get("X-QB-Temp-Token"),
+    }
+
+    client, _ := quickbase.New("myrealm", quickbase.WithTempTokens(tokens))
+
+    // Make API call - SDK extracts dbid from request body/path automatically
+    _, err := client.RunQuery(ctx, quickbase.RunQueryBody{From: "bqxyz123"})
+
+    // SDK returns structured error with missing dbids
+    var missing *quickbase.MissingTokensError
+    if errors.As(err, &missing) {
+        w.Header().Set("X-QB-Tables-Needed", strings.Join(missing.DBIDs, ","))
+        w.WriteHeader(401)
+        return
+    }
+
+    // Success - return data
+}
+```
+
+**Key decisions:**
+- Header format (how browser sends tokens) is user-defined, not SDK-defined
+- SDK provides `MissingTokensError` type for handlers to catch
+- One client per request for temp tokens (tokens are user-scoped, short-lived)
+
+**Related:** See `codepage-hypermedia` repo for browser-side handling. The Datastar adapter uses bracket syntax `[bqxyz123]` to pre-fetch tokens, but could fall back to 401 negotiation.
+
+### Auth-Agnostic Handlers
+
+Handlers shouldn't know or care about auth method. The same handler should work with user tokens, temp tokens, tickets, or SSO.
+
+**Solution:** Middleware injects the client into the request context. Handlers just retrieve it.
+
+```go
+// Handler is auth-agnostic - doesn't know how client was created
+func getRecords(w http.ResponseWriter, r *http.Request) {
+    client := getClient(r)  // from context
+    records, _ := client.RunQueryAll(r.Context(), body)
+    json.NewEncoder(w).Encode(records)
+}
+```
+
+The middleware varies by auth type:
+- **User token / Ticket / SSO**: Returns shared client (created at startup)
+- **Temp token**: Creates client per-request with tokens from headers
+
+This keeps handlers simple and testable. The auth complexity lives in middleware.
+
+See `docs/middleware-and-di.md` for a detailed explanation of these patterns.
+
+## Related Repositories
+
+**[quickbase-js](https://github.com/DrewBradfordXYZ/quickbase-js)** - TypeScript/JavaScript SDK
 - Same feature set (auth methods, throttling, retry, error types)
 - Same test patterns (unit + integration with ephemeral apps)
 - Shared OpenAPI spec (git submodule)
+
+**[codepage-go](https://github.com/DrewBradfordXYZ/codepage-go)** - HTTP middleware for this SDK
+- Auth-agnostic handlers (same handler works with any auth method)
+- Middleware injects QuickBase client into request context
+- Token negotiation for temp tokens (401 with X-QB-Tables-Needed header)
+- Works with datastar-go for SSE responses
+
+**[codepage-hypermedia](https://github.com/DrewBradfordXYZ/codepage-hypermedia)** - Browser-side companion
+- JavaScript client for Code Pages
+- Fetches temp tokens using browser session
+- Adapters for Datastar, HTMX, Lit

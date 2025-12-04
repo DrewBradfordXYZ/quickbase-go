@@ -98,6 +98,7 @@ type (
 	ValidationError     = core.ValidationError
 	TimeoutError        = core.TimeoutError
 	ServerError         = core.ServerError
+	MissingTokenError   = core.MissingTokenError
 	RateLimitInfo       = core.RateLimitInfo
 
 	// Schema types
@@ -177,6 +178,25 @@ func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
 	}
 }
 
+// WithTempTokens configures temporary token authentication with a map of tokens.
+//
+// This is the preferred way to configure temp token auth when you have tokens
+// mapped to table IDs (dbids).
+//
+// Example:
+//
+//	client, err := quickbase.New("myrealm",
+//	    quickbase.WithTempTokens(map[string]string{
+//	        "bqxyz123": tokenForTable1,
+//	        "bqabc456": tokenForTable2,
+//	    }),
+//	)
+func WithTempTokens(tokens map[string]string) Option {
+	return func(c *clientConfig) {
+		c.authStrategy = &tempTokenMarker{opts: []auth.TempTokenOption{auth.WithTempTokens(tokens)}}
+	}
+}
+
 // WithSSOTokenAuth configures SSO (SAML) token authentication.
 //
 // SSO authentication lets your Go server make API calls as a specific QuickBase
@@ -238,6 +258,30 @@ func WithSSOTokenAuth(samlToken string, opts ...auth.SSOTokenOption) Option {
 func WithTicketAuth(username, password string, opts ...auth.TicketOption) Option {
 	return func(c *clientConfig) {
 		c.authStrategy = &ticketMarker{username: username, password: password, opts: opts}
+	}
+}
+
+// WithTicket configures authentication using a pre-existing ticket.
+//
+// Use this when the ticket was obtained elsewhere (e.g., by a browser client
+// calling API_Authenticate directly). The server never sees user credentials.
+//
+// This is the recommended approach for Code Page cookie mode:
+//  1. Browser calls QuickBase API_Authenticate with user credentials
+//  2. Browser sends ticket to Go server
+//  3. Server stores encrypted ticket in HttpOnly cookie
+//  4. Server uses WithTicket for API calls
+//
+// Example:
+//
+//	qb, err := quickbase.New("myrealm",
+//	    quickbase.WithTicket(ticketFromCookie),
+//	)
+//
+// XML-API-TICKET: Remove this function if XML API is discontinued.
+func WithTicket(ticket string) Option {
+	return func(c *clientConfig) {
+		c.authStrategy = auth.NewExistingTicketStrategy(ticket)
 	}
 }
 

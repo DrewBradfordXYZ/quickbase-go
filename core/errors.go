@@ -280,3 +280,21 @@ func IsRetryableError(err error) bool {
 	}
 	return false
 }
+
+// MissingTokenError is returned when a temp token is not available for a table.
+//
+// This error is useful for 401 negotiation: the server can catch this error
+// and return the required table ID to the browser, which can then fetch
+// the token and retry.
+type MissingTokenError struct {
+	DBID string `json:"dbid"`
+}
+
+func (e *MissingTokenError) Error() string {
+	return fmt.Sprintf("no temp token available for table %s", e.DBID)
+}
+
+// NewMissingTokenError creates a new MissingTokenError.
+func NewMissingTokenError(dbid string) *MissingTokenError {
+	return &MissingTokenError{DBID: dbid}
+}
