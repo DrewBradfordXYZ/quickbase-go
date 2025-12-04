@@ -9,7 +9,7 @@
 //	if err != nil {
 //	    log.Fatal(err)
 //	}
-//	resp, err := client.API().GetAppWithResponse(ctx, appId)
+//	app, err := client.GetApp(ctx, appId)
 //
 // With options:
 //

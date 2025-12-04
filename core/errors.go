@@ -7,7 +7,7 @@
 //
 // Error types can be used for type assertions to handle specific error cases:
 //
-//	resp, err := client.API().GetAppWithResponse(ctx, appId)
+//	app, err := client.GetApp(ctx, appId)
 //	if err != nil {
 //	    var notFound *core.NotFoundError
 //	    if errors.As(err, &notFound) {

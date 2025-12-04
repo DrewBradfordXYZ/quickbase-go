@@ -49,7 +49,7 @@
 //	app, _ := client.GetApp(ctx, "bqxyz123")
 //	records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{From: tableId})
 //
-//	// Or access the generated API directly
+//	// Or access the generated API directly for full control
 //	resp, _ := client.API().GetAppWithResponse(ctx, appId)
 //
 // # Rate Limiting
