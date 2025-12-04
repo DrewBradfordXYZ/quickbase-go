@@ -100,6 +100,12 @@ type (
 	ServerError         = core.ServerError
 	RateLimitInfo       = core.RateLimitInfo
 
+	// Schema types
+	Schema         = core.Schema
+	TableSchema    = core.TableSchema
+	ResolvedSchema = core.ResolvedSchema
+	SchemaError    = core.SchemaError
+
 	// Throttle types
 	SlidingWindowThrottle = client.SlidingWindowThrottle
 	NoOpThrottle          = client.NoOpThrottle
@@ -363,6 +369,46 @@ func WithOnRetry(callback func(RetryInfo)) Option {
 func WithBaseURL(url string) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithBaseURL(url))
+	}
+}
+
+// WithSchema sets the schema for table and field aliases.
+//
+// When configured, the client automatically:
+//   - Transforms table aliases to IDs in requests (from, to fields)
+//   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
+//   - Transforms field IDs to aliases in responses
+//   - Unwraps { value: X } to just X in response records
+//
+// Example:
+//
+//	schema := &quickbase.Schema{
+//	    Tables: map[string]quickbase.TableSchema{
+//	        "projects": {
+//	            ID: "bqw3ryzab",
+//	            Fields: map[string]int{
+//	                "id":     3,
+//	                "name":   6,
+//	                "status": 7,
+//	            },
+//	        },
+//	    },
+//	}
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithUserToken("token"),
+//	    quickbase.WithSchema(schema),
+//	)
+//
+//	// Now use aliases in queries
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:   "projects",                    // alias instead of "bqw3ryzab"
+//	    Select: quickbase.Ints(6, 7),          // can also use aliases in wrapper
+//	    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),
+//	})
+func WithSchema(schema *Schema) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithSchema(schema))
 	}
 }
 

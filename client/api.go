@@ -121,8 +121,18 @@ type QueryMetadata struct {
 
 // RunQuery executes a query and returns the first page of results.
 // For all results, use RunQueryAll or RunQueryIterator.
+//
+// If a schema is configured, table and field aliases in the body are
+// automatically resolved to IDs, and response field IDs are converted
+// back to aliases with values unwrapped.
 func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONRequestBody) (*RunQueryResult, error) {
-	resp, err := c.API().RunQueryWithResponse(ctx, body)
+	// Transform request body if schema is configured
+	transformedBody, tableID, err := c.transformRunQueryBody(body)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.API().RunQueryWithResponse(ctx, transformedBody)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +143,8 @@ func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONReques
 	result := &RunQueryResult{}
 
 	if resp.JSON200.Data != nil {
-		result.Data = *resp.JSON200.Data
+		// Transform response data if schema is configured
+		result.Data = c.transformRecords(*resp.JSON200.Data, tableID)
 	}
 
 	if resp.JSON200.Fields != nil {
@@ -163,6 +174,88 @@ func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONReques
 	}
 
 	return result, nil
+}
+
+// transformRunQueryBody transforms a RunQuery body, resolving table alias to ID.
+// Also transforms where clause field aliases.
+func (c *Client) transformRunQueryBody(body generated.RunQueryJSONRequestBody) (generated.RunQueryJSONRequestBody, string, error) {
+	tableID := body.From
+
+	if c.schema == nil {
+		return body, tableID, nil
+	}
+
+	result := body
+
+	// Resolve table alias in 'from'
+	resolvedTableID, err := core.ResolveTableAlias(c.schema, body.From)
+	if err != nil {
+		return body, "", err
+	}
+	result.From = resolvedTableID
+	tableID = resolvedTableID
+
+	// Transform where clause field aliases
+	if body.Where != nil {
+		// Convert body to map for where transformation
+		bodyMap := map[string]any{
+			"from":  body.From,
+			"where": *body.Where,
+		}
+		transformed, _, _ := core.TransformRequest(bodyMap, c.schema)
+		if where, ok := transformed["where"].(string); ok {
+			result.Where = &where
+		}
+	}
+
+	return result, tableID, nil
+}
+
+// transformRecords transforms response records, converting field IDs to aliases and unwrapping values.
+func (c *Client) transformRecords(records []generated.QuickbaseRecord, tableID string) []generated.QuickbaseRecord {
+	if c.schema == nil || tableID == "" {
+		return records
+	}
+
+	result := make([]generated.QuickbaseRecord, len(records))
+	for i, record := range records {
+		// Convert record to map[string]any for transformation
+		recordMap := make(map[string]any)
+		for k, v := range record {
+			recordMap[k] = v
+		}
+
+		// Transform
+		response := map[string]any{"data": []any{recordMap}}
+		transformed := core.TransformResponse(response, c.schema, tableID)
+
+		// Convert back to QuickbaseRecord
+		if data, ok := transformed["data"].([]any); ok && len(data) > 0 {
+			if transformedRecord, ok := data[0].(map[string]any); ok {
+				newRecord := make(generated.QuickbaseRecord)
+				for k, v := range transformedRecord {
+					// Wrap value back into FieldValue format for type compatibility
+					newRecord[k] = wrapFieldValue(v)
+				}
+				result[i] = newRecord
+			}
+		} else {
+			result[i] = record
+		}
+	}
+
+	return result
+}
+
+// wrapFieldValue wraps an unwrapped value back into the FieldValue format.
+// The generated FieldValue has a union type for Value, so we store the raw value.
+func wrapFieldValue(v any) generated.FieldValue {
+	// Marshal and unmarshal to create proper FieldValue
+	wrapped := map[string]any{"value": v}
+	data, _ := json.Marshal(wrapped)
+	var fv generated.FieldValue
+	_ = json.Unmarshal(data, &fv)
+	return fv
 }
 
 // RunQueryAll fetches all records across all pages.

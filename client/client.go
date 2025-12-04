@@ -48,6 +48,7 @@ import (
 //   - Handles rate limiting (429) responses with automatic retry
 //   - Refreshes expired tokens for temp token and SSO authentication
 //   - Applies proactive throttling to avoid hitting rate limits
+//   - Transforms table/field aliases to IDs (if schema configured)
 //
 // Access the underlying generated API client via the API() method.
 type Client struct {
@@ -78,6 +79,9 @@ type Client struct {
 
 	// Date conversion
 	convertDates bool
+
+	// Schema for table/field aliases
+	schema *core.ResolvedSchema
 
 	// Callbacks
 	onRateLimit func(core.RateLimitInfo)
@@ -239,6 +243,18 @@ func WithBaseURL(url string) Option {
 	}
 }
 
+// WithSchema sets the schema for table and field aliases.
+// When configured, the client automatically:
+//   - Transforms table aliases to IDs in requests (from, to fields)
+//   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
+//   - Transforms field IDs to aliases in responses
+//   - Unwraps { value: X } to just X in response records
+func WithSchema(schema *core.Schema) Option {
+	return func(c *Client) {
+		c.schema = core.ResolveSchema(schema)
+	}
+}
+
 // New creates a new QuickBase client.
 func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, error) {
 	c := &Client{
@@ -333,6 +349,11 @@ func (c *Client) API() *generated.ClientWithResponses {
 // Logger returns the client's logger.
 func (c *Client) Logger() *core.Logger {
 	return c.logger
+}
+
+// Schema returns the resolved schema, if configured.
+func (c *Client) Schema() *core.ResolvedSchema {
+	return c.schema
 }
 
 // authHTTPClient wraps http.Client to add auth, retry, and rate limiting.

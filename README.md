@@ -7,6 +7,7 @@ A Go client for the QuickBase JSON RESTful API.
 ## Features
 
 - **Friendly API** - Clean wrapper methods like `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`
+- **Schema Aliases** - Use readable names for tables and fields instead of cryptic IDs
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages automatically
 - **Helper Functions** - `Ptr()`, `Ints()` for cleaner code with optional fields
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
@@ -231,6 +232,150 @@ client, err := quickbase.New("mycompany",
     quickbase.WithOnRateLimit(func(info quickbase.RateLimitInfo) {
         log.Printf("Rate limited! Retry after %ds", info.RetryAfter)
     }),
+)
+```
+
+## Schema Aliases
+
+Use readable names for tables and fields instead of cryptic IDs. The SDK transforms aliases to IDs in requests and IDs back to aliases in responses.
+
+### Defining a Schema
+
+```go
+schema := &quickbase.Schema{
+    Tables: map[string]quickbase.TableSchema{
+        "projects": {
+            ID: "bqw3ryzab",
+            Fields: map[string]int{
+                "id":       3,
+                "name":     6,
+                "status":   7,
+                "dueDate":  12,
+                "assignee": 15,
+            },
+        },
+        "tasks": {
+            ID: "bqw4xyzcd",
+            Fields: map[string]int{
+                "id":        3,
+                "title":     6,
+                "projectId": 8,
+                "completed": 10,
+            },
+        },
+    },
+}
+
+client, err := quickbase.New("mycompany",
+    quickbase.WithUserToken("token"),
+    quickbase.WithSchema(schema),
+)
+```
+
+### Using Aliases in Queries
+
+```go
+// Use table and field aliases instead of IDs
+result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
+    From:  "projects",                           // Instead of "bqw3ryzab"
+    Where: quickbase.Ptr("{'status'.EX.'Active'}"), // Field aliases in where clauses
+})
+
+// Response uses aliases and values are automatically unwrapped
+for _, record := range result.Data {
+    name := record["name"]     // "Project Alpha" (not map[value:Project Alpha])
+    status := record["status"] // "Active"
+}
+```
+
+### Upserting with Aliases
+
+Note: Upsert transformation currently requires using the low-level API with manual alias resolution.
+
+### Response Transformation
+
+Responses are automatically transformed:
+- Field ID keys (`"6"`) become aliases (`name`)
+- Values are unwrapped from `{"value": X}` to just `X`
+- Unknown fields (not in schema) keep their numeric key but are still unwrapped
+
+```go
+// Raw API response:
+// {"data": [{"6": {"value": "Alpha"}, "99": {"value": "Custom"}}]}
+
+// Transformed response (with schema):
+// {"data": [{"name": "Alpha", "99": "Custom"}]}
+```
+
+### Helpful Error Messages
+
+Typos in aliases return errors with suggestions:
+
+```go
+// Returns error: unknown field alias 'stauts' in table 'projects'. Did you mean 'status'?
+_, err := client.RunQuery(ctx, quickbase.RunQueryBody{
+    From:  "projects",
+    Where: quickbase.Ptr("{'stauts'.EX.'Active'}"), // Typo!
+})
+```
+
+### Generating Schema from QuickBase
+
+Use the CLI to generate a schema from an existing app:
+
+```bash
+# Generate Go schema to stdout
+go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN"
+
+# Generate and save to file
+go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN" -o schema.go
+
+# Generate JSON format
+go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN" -f json -o schema.json
+```
+
+### Loading Schema from JSON
+
+Store your schema in a JSON file and load it at runtime:
+
+```json
+// schema.json
+{
+  "tables": {
+    "projects": {
+      "id": "bqw3ryzab",
+      "fields": {
+        "id": 3,
+        "name": 6,
+        "status": 7
+      }
+    }
+  }
+}
+```
+
+```go
+import (
+    "encoding/json"
+    "os"
+
+    "github.com/DrewBradfordXYZ/quickbase-go"
+)
+
+// Load schema from JSON file
+data, err := os.ReadFile("schema.json")
+if err != nil {
+    log.Fatal(err)
+}
+
+var schema quickbase.Schema
+if err := json.Unmarshal(data, &schema); err != nil {
+    log.Fatal(err)
+}
+
+client, err := quickbase.New("mycompany",
+    quickbase.WithUserToken("token"),
+    quickbase.WithSchema(&schema),
 )
 ```
 
