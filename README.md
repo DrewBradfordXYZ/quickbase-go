@@ -334,6 +334,28 @@ go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN" -o schema
 go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN" -f json -o schema.json
 ```
 
+### Updating Schema with --merge
+
+When your QuickBase app changes (new tables, new fields), use `--merge` to update your schema while preserving any custom aliases you've set:
+
+```bash
+# Update schema, preserving custom aliases
+go run ./cmd/schema -r "$QB_REALM" -a "$QB_APP_ID" -t "$QB_USER_TOKEN" -o schema.go --merge
+```
+
+**What merge does:**
+- Preserves your custom table and field aliases (matched by ID, not name)
+- Adds new tables and fields with auto-generated aliases
+- Reports what changed:
+
+```
+Merge complete:
+  Tables: 2 preserved, 1 added, 0 removed
+  Fields: 15 preserved, 3 added, 0 removed
+```
+
+This lets you rename auto-generated aliases like `dateCreated` to `created` and keep them through updates.
+
 ### Loading Schema from JSON
 
 Store your schema in a JSON file and load it at runtime:
