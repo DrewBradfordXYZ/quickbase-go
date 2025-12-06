@@ -98,15 +98,26 @@ var paginatedOperations = map[string]bool{
 	"runReport": true,
 }
 
-// manualImplementations lists operations that have manual implementations in api.go
-// These provide additional features like schema transformation, pagination helpers,
-// or flattened result types that are better hand-coded.
+// manualImplementations lists operations that have fully manual implementations in api.go
+// These operations are completely skipped in code generation.
 //
 // Most operations are now auto-generated with response transformations defined in
-// transforms.go. Only runQuery remains manual due to its complex bidirectional
+// transforms.go. Only runQuery remains fully manual due to its complex bidirectional
 // schema transformation requirements.
 var manualImplementations = map[string]bool{
 	"runQuery": true, // Has schema transformation, record transformation, pagination
+}
+
+// skipResultType lists operations where we generate the builder but NOT a result type.
+// This is for operations that have manual result types in api.go but still benefit
+// from auto-generated builders.
+var skipResultType = map[string]bool{
+	"runReport": true, // Has RunReportResult defined manually in api.go
+}
+
+// shouldSkipResultType returns true if the operation should not generate a result type
+func shouldSkipResultType(opID string) bool {
+	return skipResultType[opID]
 }
 
 // hasManualImplementation returns true if the operation has a manual implementation

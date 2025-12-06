@@ -324,6 +324,12 @@ func extractBuilder(path string, op Operation) BuilderSpec {
 		}
 	}
 
+	// Skip result type generation for operations with manual result types
+	if shouldSkipResultType(op.OperationID) {
+		builder.ResponseFields = nil
+		builder.ResponseIsArray = false
+	}
+
 	// Check for response transformation config
 	if transform, ok := getResponseTransform(op.OperationID); ok {
 		builder.Transform = TransformSpec{
@@ -450,7 +456,8 @@ func extractResponseFields(schema *Schema, opName string) []ResponseField {
 			IsPointer: !isRequired,
 		}
 
-		// Only extract primitive types - complex types vary too much in oapi-codegen output
+		// Only extract primitive types - complex/nested types should use manual transforms
+		// This is conservative but reliable - oapi-codegen generates unpredictable types
 		switch propSchema.Type {
 		case "array":
 			// Only include arrays of primitives
@@ -475,11 +482,11 @@ func extractResponseFields(schema *Schema, opName string) []ResponseField {
 				field.IsArray = true
 				field.GoType = "[]bool"
 			default:
-				// Skip arrays of objects - too complex
+				// Skip arrays of objects - too complex, use manual transform
 				continue
 			}
 		case "object":
-			// Skip objects - generated types vary too much
+			// Skip objects - generated types vary too much, use manual transform
 			continue
 		case "integer":
 			if propSchema.Format == "int64" {
@@ -488,7 +495,8 @@ func extractResponseFields(schema *Schema, opName string) []ResponseField {
 				field.GoType = "int"
 			}
 		case "number":
-			field.GoType = "float64"
+			// Use float32 since that's what oapi-codegen typically generates
+			field.GoType = "float32"
 		case "boolean":
 			field.GoType = "bool"
 		case "string":
