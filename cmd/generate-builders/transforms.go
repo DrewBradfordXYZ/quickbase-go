@@ -90,6 +90,122 @@ var responseTransforms = map[string]ResponseTransform{
 		},
 	},
 
+	// getTable: Dereferences all optional pointer fields
+	"getTable": {
+		ResultType: "TableInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "alias", Target: "Alias", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "nextRecordId", Target: "NextRecordID", Type: "int", Dereference: true},
+			{Source: "nextFieldId", Target: "NextFieldID", Type: "int", Dereference: true},
+			{Source: "defaultSortFieldId", Target: "DefaultSortFieldID", Type: "int", Dereference: true},
+			{Source: "keyFieldId", Target: "KeyFieldID", Type: "int", Dereference: true},
+			{Source: "singleRecordName", Target: "SingleRecordName", Type: "string", Dereference: true},
+			{Source: "pluralRecordName", Target: "PluralRecordName", Type: "string", Dereference: true},
+			{Source: "sizeLimit", Target: "SizeLimit", Type: "string", Dereference: true},
+			{Source: "spaceUsed", Target: "SpaceUsed", Type: "string", Dereference: true},
+			{Source: "spaceRemaining", Target: "SpaceRemaining", Type: "string", Dereference: true},
+		},
+	},
+
+	// getAppTables: Array of tables with dereferenced fields
+	"getAppTables": {
+		ResultType:      "TableInfo",
+		IsArrayResponse: true,
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "alias", Target: "Alias", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "nextRecordId", Target: "NextRecordID", Type: "int", Dereference: true},
+			{Source: "nextFieldId", Target: "NextFieldID", Type: "int", Dereference: true},
+			{Source: "defaultSortFieldId", Target: "DefaultSortFieldID", Type: "int", Dereference: true},
+			{Source: "keyFieldId", Target: "KeyFieldID", Type: "int", Dereference: true},
+			{Source: "singleRecordName", Target: "SingleRecordName", Type: "string", Dereference: true},
+			{Source: "pluralRecordName", Target: "PluralRecordName", Type: "string", Dereference: true},
+			{Source: "sizeLimit", Target: "SizeLimit", Type: "string", Dereference: true},
+			{Source: "spaceUsed", Target: "SpaceUsed", Type: "string", Dereference: true},
+			{Source: "spaceRemaining", Target: "SpaceRemaining", Type: "string", Dereference: true},
+		},
+	},
+
+	// createApp: Returns app info with dereferenced fields (same as getApp)
+	"createApp": {
+		ResultType: "GetAppResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string"},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "dateFormat", Target: "DateFormat", Type: "string", Dereference: true},
+			{Source: "timeZone", Target: "TimeZone", Type: "string", Dereference: true},
+		},
+	},
+
+	// updateApp: Returns app info with dereferenced fields (same as getApp)
+	"updateApp": {
+		ResultType: "GetAppResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string"},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "dateFormat", Target: "DateFormat", Type: "string", Dereference: true},
+			{Source: "timeZone", Target: "TimeZone", Type: "string", Dereference: true},
+		},
+	},
+
+	// copyApp: Returns app info with dereferenced fields (same as getApp)
+	"copyApp": {
+		ResultType: "GetAppResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string"},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "dateFormat", Target: "DateFormat", Type: "string", Dereference: true},
+			{Source: "timeZone", Target: "TimeZone", Type: "string", Dereference: true},
+		},
+	},
+
+	// getReport: Report details with dereferenced fields
+	"getReport": {
+		ResultType: "ReportInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "type", Target: "Type", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "ownerId", Target: "OwnerID", Type: "int", Dereference: true},
+			{Source: "usedCount", Target: "UsedCount", Type: "int", Dereference: true},
+			{Source: "usedLast", Target: "UsedLast", Type: "string", Dereference: true},
+		},
+	},
+
+	// getTableReports: Array of reports with dereferenced fields
+	"getTableReports": {
+		ResultType:      "ReportInfo",
+		IsArrayResponse: true,
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "type", Target: "Type", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "ownerId", Target: "OwnerID", Type: "int", Dereference: true},
+			{Source: "usedCount", Target: "UsedCount", Type: "int", Dereference: true},
+			{Source: "usedLast", Target: "UsedLast", Type: "string", Dereference: true},
+		},
+	},
+
 	// runQuery: Complex transformation - kept as manual implementation
 	// See api.go for the full implementation including:
 	// - Bidirectional schema transformation (field aliases)

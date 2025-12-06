@@ -631,6 +631,7 @@ func generateCode(builders []BuilderSpec) error {
 		"assignmentCode":          assignmentCode,
 		"hasImportTime":           hasImportTime,
 		"hasImportTypes":          hasImportTypes,
+		"uniqueTransformTypes":    uniqueTransformTypes,
 	}
 
 	tmpl := template.Must(template.New("builders").Funcs(funcMap).Parse(buildersTemplate))
@@ -690,6 +691,45 @@ func transformAssignmentCode(tf TransformField, isArray bool) string {
 		return fmt.Sprintf("item.%s = %s(%s)", tf.Target, tf.TypeCast, accessor)
 	}
 	return fmt.Sprintf("item.%s = %s", tf.Target, accessor)
+}
+
+// UniqueTransformType represents a unique result type to generate
+type UniqueTransformType struct {
+	Name   string
+	Fields []TransformField
+}
+
+// uniqueTransformTypes returns deduplicated transform result types from all builders
+func uniqueTransformTypes(builders []BuilderSpec) []UniqueTransformType {
+	seen := make(map[string]bool)
+	var result []UniqueTransformType
+
+	for _, b := range builders {
+		if b.Transform.Enabled && !b.Transform.IsArrayResponse {
+			if !seen[b.Transform.ResultType] {
+				seen[b.Transform.ResultType] = true
+				result = append(result, UniqueTransformType{
+					Name:   b.Transform.ResultType,
+					Fields: b.Transform.Fields,
+				})
+			}
+		}
+	}
+
+	// Also get array element types (non-array result types from array responses)
+	for _, b := range builders {
+		if b.Transform.Enabled && b.Transform.IsArrayResponse {
+			if !seen[b.Transform.ResultType] {
+				seen[b.Transform.ResultType] = true
+				result = append(result, UniqueTransformType{
+					Name:   b.Transform.ResultType,
+					Fields: b.Transform.Fields,
+				})
+			}
+		}
+	}
+
+	return result
 }
 
 // hasImportTime checks if any builder needs the time package
@@ -764,15 +804,18 @@ type SortSpec struct {
 	Order generated.SortFieldOrder // ASC or DESC
 }
 
-{{range $b := .Builders}}
-{{- if hasTransform $b}}
-// {{$b.Transform.ResultType}} contains the result of a {{$b.OperationID}} call.
-type {{$b.Transform.ResultType}} struct {
-{{- range $b.Transform.Fields}}
+// --- Result types for transformed responses ---
+{{range $t := uniqueTransformTypes .Builders}}
+// {{$t.Name}} contains friendly result data with dereferenced fields.
+type {{$t.Name}} struct {
+{{- range $t.Fields}}
 	{{.Target}} {{.Type}}
 {{- end}}
 }
-{{- else if needsResultType $b}}
+{{end}}
+
+{{range $b := .Builders}}
+{{- if and (needsResultType $b) (not (hasTransform $b))}}
 // {{$b.ResultTypeName}} contains the result of a {{$b.OperationID}} call.
 type {{$b.ResultTypeName}} struct {
 {{- if $b.ResponseIsArray}}
