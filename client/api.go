@@ -605,3 +605,119 @@ func sumFieldUsage(u *generated.GetFieldsUsage_200_Usage) int {
 		u.TableRules.Count +
 		u.Webhooks.Count
 }
+
+// --- GetFields result types ---
+
+// FieldPermission represents a role's permission on a field.
+type FieldPermission struct {
+	RoleID         int
+	RoleName       string
+	PermissionType string // "None", "View", "Modify"
+}
+
+// SchemaFieldInfo contains comprehensive field information for schema discovery.
+type SchemaFieldInfo struct {
+	ID               int
+	Label            string
+	FieldType        string
+	Mode             string // "lookup", "summary", "formula", or "" for regular fields
+	Required         bool
+	Unique           bool
+	Permissions      []FieldPermission
+	Properties       *generated.GetFields_200_Properties // Full properties for advanced use
+	AppearsByDefault bool
+	FindEnabled      bool
+	NoWrap           bool
+	Bold             bool
+	Audited          bool
+	DoesDataCopy     bool
+	FieldHelp        string
+}
+
+// GetFieldsResult wraps the getFields response with helper methods.
+type GetFieldsResult struct {
+	raw *generated.GetFieldsResponse
+}
+
+// Fields returns the list of fields with comprehensive schema information.
+func (r *GetFieldsResult) Fields() []SchemaFieldInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	items := *r.raw.JSON200
+	results := make([]SchemaFieldInfo, len(items))
+	for i, f := range items {
+		info := SchemaFieldInfo{
+			ID:               int(f.Id),
+			Label:            derefString(f.Label),
+			FieldType:        derefString(f.FieldType),
+			Mode:             derefString(f.Mode),
+			Required:         derefBool(f.Required),
+			Unique:           derefBool(f.Unique),
+			Properties:       f.Properties,
+			AppearsByDefault: derefBool(f.AppearsByDefault),
+			FindEnabled:      derefBool(f.FindEnabled),
+			NoWrap:           derefBool(f.NoWrap),
+			Bold:             derefBool(f.Bold),
+			Audited:          derefBool(f.Audited),
+			DoesDataCopy:     derefBool(f.DoesDataCopy),
+			FieldHelp:        derefString(f.FieldHelp),
+		}
+		if f.Permissions != nil {
+			for _, p := range *f.Permissions {
+				info.Permissions = append(info.Permissions, FieldPermission{
+					RoleID:         derefInt(p.RoleId),
+					RoleName:       derefString(p.Role),
+					PermissionType: derefString(p.PermissionType),
+				})
+			}
+		}
+		results[i] = info
+	}
+	return results
+}
+
+// Roles returns a deduplicated list of all roles found across all fields.
+func (r *GetFieldsResult) Roles() []RoleInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	roleMap := make(map[int]RoleInfo)
+	for _, f := range *r.raw.JSON200 {
+		if f.Permissions == nil {
+			continue
+		}
+		for _, p := range *f.Permissions {
+			if p.RoleId != nil {
+				roleMap[*p.RoleId] = RoleInfo{
+					ID:   *p.RoleId,
+					Name: derefString(p.Role),
+				}
+			}
+		}
+	}
+	roles := make([]RoleInfo, 0, len(roleMap))
+	for _, r := range roleMap {
+		roles = append(roles, r)
+	}
+	return roles
+}
+
+// Raw returns the underlying generated response for advanced use cases.
+func (r *GetFieldsResult) Raw() *generated.GetFieldsResponse {
+	return r.raw
+}
+
+// RoleInfo contains basic role information extracted from field permissions.
+type RoleInfo struct {
+	ID   int
+	Name string
+}
+
+// helper
+func derefString(p *string) string {
+	if p == nil {
+		return ""
+	}
+	return *p
+}

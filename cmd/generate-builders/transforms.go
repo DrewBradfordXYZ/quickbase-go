@@ -80,15 +80,8 @@ var responseTransforms = map[string]ResponseTransform{
 	},
 
 	// getFields: Array response with selective field extraction
-	"getFields": {
-		ResultType:      "FieldDetails",
-		IsArrayResponse: true,
-		ResultFields: []FieldTransform{
-			{Source: "id", Target: "ID", Type: "int", TypeCast: "int"},
-			{Source: "label", Target: "Label", Type: "string", Dereference: true},
-			{Source: "fieldType", Target: "FieldType", Type: "string", Dereference: true},
-		},
-	},
+	// getFields: Manual implementation in api.go with role extraction
+	// See GetFieldsResult with Fields() []SchemaFieldInfo and Roles() []RoleInfo
 
 	// getTable: Dereferences all optional pointer fields
 	"getTable": {

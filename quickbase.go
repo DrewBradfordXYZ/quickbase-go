@@ -762,8 +762,17 @@ type (
 	// FormulaResult contains the result of RunFormula
 	FormulaResult = client.FormulaResult
 
-	// FieldDetails contains information about a field from GetFields
-	FieldDetails = client.FieldDetails
+	// SchemaFieldInfo contains comprehensive field information for schema discovery
+	SchemaFieldInfo = client.SchemaFieldInfo
+
+	// FieldPermission represents a role's permission on a field
+	FieldPermission = client.FieldPermission
+
+	// RoleInfo contains basic role information extracted from field permissions
+	RoleInfo = client.RoleInfo
+
+	// GetFieldsResult wraps the getFields response with helper methods
+	GetFieldsResult = client.GetFieldsResult
 
 	// FieldInfo contains metadata about a field in query results
 	FieldInfo = client.FieldInfo

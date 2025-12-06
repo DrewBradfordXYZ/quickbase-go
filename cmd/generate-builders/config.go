@@ -117,6 +117,7 @@ var skipResultType = map[string]bool{
 	"getRelationships": true, // Has GetRelationshipsResult with helper methods in api.go
 	"getFieldUsage":    true, // Has GetFieldUsageResult with helper methods in api.go
 	"getFieldsUsage":   true, // Has GetFieldsUsageResult with helper methods in api.go
+	"getFields":        true, // Has GetFieldsResult with role extraction in api.go
 }
 
 // shouldSkipResultType returns true if the operation should not generate a result type

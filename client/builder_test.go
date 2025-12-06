@@ -726,14 +726,21 @@ func TestResultTypes_Structure(t *testing.T) {
 		}
 	})
 
-	t.Run("FieldDetails", func(t *testing.T) {
-		result := FieldDetails{
+	t.Run("SchemaFieldInfo", func(t *testing.T) {
+		result := SchemaFieldInfo{
 			ID:        6,
 			Label:     "Name",
 			FieldType: "text",
+			Mode:      "lookup",
+			Permissions: []FieldPermission{
+				{RoleID: 1, RoleName: "Administrator", PermissionType: "Modify"},
+			},
 		}
 		if result.ID != 6 {
 			t.Errorf("ID = %d, want 6", result.ID)
+		}
+		if len(result.Permissions) != 1 {
+			t.Errorf("Permissions count = %d, want 1", len(result.Permissions))
 		}
 	})
 
