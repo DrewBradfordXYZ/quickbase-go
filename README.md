@@ -296,7 +296,7 @@ schema := &quickbase.Schema{
 // Use table and field aliases instead of IDs
 result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
     From:   "projects",                                              // Table alias
-    Select: quickbase.Fields(schema, "projects", "name", "status"),  // Field aliases
+    Select: quickbase.Fields(schema, "projects", "name", "status"),  // table, then fields
     Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                 // Aliases in where
 })
 
