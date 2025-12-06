@@ -4,6 +4,16 @@
 // for retrieving role and schema information. This package wraps those endpoints
 // while reusing the main client's authentication, retry, and throttling infrastructure.
 //
+// # Rate Limits
+//
+// The XML API has different rate limits than the JSON API:
+//   - XML API: 10 requests per second per table (dynamically enforced)
+//   - JSON API: 100 requests per 10 seconds per user token
+//
+// The SDK uses retry logic with exponential backoff for 429 responses.
+// Note that the proactive throttle (WithProactiveThrottle) is designed for
+// the JSON API and doesn't account for the XML API's per-table limits.
+//
 // # Deprecation Notice
 //
 // The QuickBase XML API is legacy and may be discontinued in the future.

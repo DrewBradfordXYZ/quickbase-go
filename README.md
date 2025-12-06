@@ -1042,6 +1042,21 @@ The QuickBase JSON API doesn't expose some endpoints available in the legacy XML
 
 > **Note:** The XML API is legacy and may be discontinued by QuickBase in the future. Use JSON API methods where possible. This sub-package will be removed when QuickBase discontinues the XML API.
 
+### Rate Limits
+
+The XML API has **different rate limits** than the JSON API:
+
+| API | Rate Limit | Scope |
+|-----|------------|-------|
+| JSON RESTful API | 100 requests per 10 seconds | Per user token |
+| XML API | 10 requests per second | Per table |
+
+**Important considerations:**
+- The XML API's per-table limit is dynamically enforced (may not immediately return 429)
+- The SDK uses retry logic with exponential backoff for 429 responses
+- The proactive throttle (`WithProactiveThrottle`) is designed for the JSON API and doesn't account for the XML API's per-table limits
+- If you're making heavy use of both APIs, be aware they have independent rate limits
+
 ### Installation
 
 The `xml` package is included with the SDK but imported separately:

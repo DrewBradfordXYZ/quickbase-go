@@ -12,6 +12,17 @@ This document provides a comprehensive comparison of QuickBase's legacy XML API 
 | **XML API** | 71 endpoints | Roles, Groups, DBVars, Code Pages, Webhooks, User Provisioning |
 | **Overlap** | ~20 operations | Apps, Tables, Fields, Records, Files, User Token Management |
 
+## Rate Limits
+
+The APIs have different rate limiting:
+
+| API | Rate Limit | Scope | Enforcement |
+|-----|------------|-------|-------------|
+| **JSON API** | 100 requests / 10 seconds | Per user token | Fixed, returns 429 |
+| **XML API** | 10 requests / second | Per table | Dynamic, may throttle |
+
+The XML API's per-table limit means you can make 10 req/s to table A and 10 req/s to table B simultaneously. The SDK handles 429 responses with exponential backoff.
+
 ## Implemented Endpoints
 
 These XML endpoints are available in the `xml` sub-package:
