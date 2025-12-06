@@ -247,6 +247,31 @@ Use readable names for tables and fields instead of cryptic IDs. The SDK transfo
 
 ### Defining a Schema
 
+**Using the fluent builder (recommended):**
+
+```go
+schema := quickbase.NewSchema().
+    Table("projects", "bqw3ryzab").
+        Field("id", 3).
+        Field("name", 6).
+        Field("status", 7).
+        Field("dueDate", 12).
+        Field("assignee", 15).
+    Table("tasks", "bqw4xyzcd").
+        Field("id", 3).
+        Field("title", 6).
+        Field("projectId", 8).
+        Field("completed", 10).
+    Build()
+
+client, err := quickbase.New("mycompany",
+    quickbase.WithUserToken("token"),
+    quickbase.WithSchema(schema),
+)
+```
+
+**Using a struct (alternative):**
+
 ```go
 schema := &quickbase.Schema{
     Tables: map[string]quickbase.TableSchema{
@@ -260,22 +285,8 @@ schema := &quickbase.Schema{
                 "assignee": 15,
             },
         },
-        "tasks": {
-            ID: "bqw4xyzcd",
-            Fields: map[string]int{
-                "id":        3,
-                "title":     6,
-                "projectId": 8,
-                "completed": 10,
-            },
-        },
     },
 }
-
-client, err := quickbase.New("mycompany",
-    quickbase.WithUserToken("token"),
-    quickbase.WithSchema(schema),
-)
 ```
 
 ### Using Aliases in Queries
@@ -283,8 +294,9 @@ client, err := quickbase.New("mycompany",
 ```go
 // Use table and field aliases instead of IDs
 result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
-    From:  "projects",                           // Instead of "bqw3ryzab"
-    Where: quickbase.Ptr("{'status'.EX.'Active'}"), // Field aliases in where clauses
+    From:   "projects",                                              // Table alias
+    Select: quickbase.Fields(schema, "projects", "name", "status"),  // Field aliases
+    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                 // Aliases in where
 })
 
 // Response uses aliases and values are automatically unwrapped
@@ -294,9 +306,34 @@ for _, record := range result.Data {
 }
 ```
 
+### The Fields() Helper
+
+Since `Select` expects `*[]int`, use `Fields()` to resolve aliases to IDs:
+
+```go
+// Returns *[]int{6, 7} for use in Select
+quickbase.Fields(schema, "projects", "name", "status")
+
+// You can also mix with Ints() if you prefer numeric IDs
+quickbase.Ints(3, 6, 7)
+```
+
 ### Upserting with Aliases
 
-Note: Upsert transformation currently requires using the low-level API with manual alias resolution.
+Use field aliases in record data with the `Row()` helper:
+
+```go
+data := []quickbase.Record{
+    quickbase.Row("name", "New Project", "status", "Active"),
+}
+
+result, err := client.Upsert(ctx, quickbase.UpsertBody{
+    To:   "projects",  // Table alias
+    Data: &data,
+})
+```
+
+The schema transforms `"name"` → `"6"` and `"status"` → `"7"` before sending to the API.
 
 ### Response Transformation
 
@@ -311,6 +348,21 @@ Responses are automatically transformed:
 
 // Transformed response (with schema):
 // {"data": [{"name": "Alpha", "99": "Custom"}]}
+```
+
+### Disabling Response Transformation
+
+If you prefer to keep field IDs in responses (e.g., for backwards compatibility), use `WithSchemaOptions`:
+
+```go
+client, err := quickbase.New("mycompany",
+    quickbase.WithUserToken("token"),
+    quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{
+        TransformResponses: false,  // Keep field IDs, only unwrap values
+    }),
+)
+
+// Now responses use field IDs: record["6"] instead of record["name"]
 ```
 
 ### Helpful Error Messages
@@ -474,6 +526,9 @@ quickbase.Value("text value")
 quickbase.Value(123)
 quickbase.Value(true)
 quickbase.Value([]string{"a", "b"})  // multi-select
+
+// Fields resolves aliases to IDs for Select (requires schema)
+quickbase.Fields(schema, "projects", "name", "status")  // returns *[]int{6, 7}
 
 // Sorting helpers
 quickbase.SortBy(quickbase.Asc(6), quickbase.Desc(7))  // sortBy parameter
