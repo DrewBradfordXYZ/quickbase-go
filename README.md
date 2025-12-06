@@ -6,7 +6,8 @@ A Go client for the QuickBase JSON RESTful API.
 
 ## Features
 
-- **Wrapper Methods** - `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`, and more
+- **Fluent Builders** - `client.GetApp(appId).Run(ctx)`, `client.CreateApp().Name("My App").Run(ctx)`
+- **Friendly Result Types** - Clean structs with dereferenced fields instead of pointer-heavy generated types
 - **Query Builder** - `client.Query("table").Select().Where().Run(ctx)`
 - **Schema Aliases** - Use readable names (`"projects"`, `"name"`) instead of IDs (`"bqxyz123"`, `6`)
 - **Fluent Schema Builder** - `NewSchema().Table().Field().Build()` for schema definition
@@ -50,8 +51,8 @@ func main() {
 
     ctx := context.Background()
 
-    // Get app details
-    app, err := client.GetApp(ctx, "your-app-id")
+    // Get app details (fluent builder pattern)
+    app, err := client.GetApp("your-app-id").Run(ctx)
     if err != nil {
         log.Fatal(err)
     }
@@ -108,7 +109,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
     }
 
     // Use the client to make API calls back to QuickBase
-    app, err := client.GetApp(r.Context(), "bqr1111")
+    app, err := client.GetApp("bqr1111").Run(r.Context())
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
@@ -523,17 +524,28 @@ quickbase.Desc("dueDate")
 
 ## API Usage
 
-The SDK provides friendly wrapper methods with cleaner types:
+The SDK provides fluent builders with friendly result types:
 
 ```go
 ctx := context.Background()
 
-// Get app details
-app, err := client.GetApp(ctx, appId)
+// Get app details - returns GetAppResult with dereferenced fields
+app, err := client.GetApp(appId).Run(ctx)
 fmt.Println("App name:", app.Name)
+fmt.Println("Created:", app.Created)  // string, not *string
 
-// Get fields for a table
-fields, err := client.GetFields(ctx, tableId)
+// Get table info - returns TableInfo
+table, err := client.GetTable(tableId).Run(ctx)
+fmt.Println("Table:", table.Name, "Alias:", table.Alias)
+
+// Get all tables in an app - returns []TableInfo
+tables, err := client.GetAppTables(appId).Run(ctx)
+for _, t := range tables {
+    fmt.Printf("Table %s: %s\n", t.ID, t.Name)
+}
+
+// Get fields for a table - returns []FieldDetails
+fields, err := client.GetFields(tableId).Run(ctx)
 for _, f := range fields {
     fmt.Printf("Field %d: %s (%s)\n", f.ID, f.Label, f.FieldType)
 }
@@ -558,23 +570,44 @@ first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
     From: tableId,
 }, 500)
 
-// Insert/Update records - using Row() helper for concise syntax
+// Insert/Update records - returns UpsertResult
 data := []quickbase.Record{
     quickbase.Row("name", "New Record", "count", 42),
 }
-upsertResult, err := client.Upsert(ctx, quickbase.UpsertBody{
-    To:   "projects",  // table alias (with schema) or table ID
-    Data: &data,
-})
+upsertResult, err := client.Upsert(tableId).Data(&data).Run(ctx)
 fmt.Println("Created:", upsertResult.CreatedRecordIDs)
+fmt.Println("Updated:", upsertResult.UpdatedRecordIDs)
 
-// Delete records
-deleteResult, err := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{
-    From:  tableId,
-    Where: "{3.EX.123}",
-})
+// Delete records - returns DeleteRecordsResult
+deleteResult, err := client.DeleteRecords(tableId).Where("{3.EX.123}").Run(ctx)
 fmt.Println("Deleted:", deleteResult.NumberDeleted)
+
+// Create an app - returns GetAppResult
+newApp, err := client.CreateApp().
+    Name("My New App").
+    Description("Created via API").
+    Run(ctx)
+fmt.Println("Created app:", newApp.ID)
+
+// Get report info - returns ReportInfo
+report, err := client.GetReport(tableId, reportId).Run(ctx)
+fmt.Println("Report:", report.Name, "Type:", report.Type)
 ```
+
+### Friendly Result Types
+
+The SDK provides clean result types that dereference pointers and flatten nested structures:
+
+| Operation | Result Type | Key Fields |
+|-----------|-------------|------------|
+| `GetApp`, `CreateApp`, `UpdateApp`, `CopyApp` | `GetAppResult` | ID, Name, Description, Created, Updated, DateFormat, TimeZone |
+| `GetTable`, `GetAppTables` | `TableInfo` | ID, Name, Alias, Description, NextRecordID, KeyFieldID, etc. |
+| `GetFields` | `[]FieldDetails` | ID, Label, FieldType |
+| `GetReport`, `GetTableReports` | `ReportInfo` | ID, Name, Type, Description, OwnerID, UsedCount |
+| `Upsert` | `UpsertResult` | CreatedRecordIDs, UpdatedRecordIDs, UnchangedRecordIDs, TotalNumberOfRecordsProcessed |
+| `DeleteRecords` | `DeleteRecordsResult` | NumberDeleted |
+
+These result types have non-pointer fields with sensible defaults for missing values, making them much easier to work with than the raw generated types.
 
 ### Helper Functions
 
@@ -648,7 +681,7 @@ if resp.JSON200 != nil {
 The SDK provides specific error types for different HTTP status codes:
 
 ```go
-app, err := client.GetApp(ctx, "invalid-id")
+app, err := client.GetApp("invalid-id").Run(ctx)
 if err != nil {
     var rateLimitErr *quickbase.RateLimitError
     var notFoundErr *quickbase.NotFoundError
@@ -752,7 +785,7 @@ client, _ := quickbase.New("realm",
 If retries are exhausted, a `*RateLimitError` is returned:
 
 ```go
-app, err := client.GetApp(ctx, appId)
+app, err := client.GetApp(appId).Run(ctx)
 if err != nil {
     var rateLimitErr *quickbase.RateLimitError
     if errors.As(err, &rateLimitErr) {
