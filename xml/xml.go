@@ -51,7 +51,7 @@
 //   - [Client.GetDBInfo]: Get app/table metadata (record count, manager, timestamps)
 //   - [Client.GetNumRecords]: Get total record count for a table
 //
-// Role Information:
+// Role Management:
 //   - [Client.GetRoleInfo]: Get all roles defined in an application
 //   - [Client.UserRoles]: Get all users and their role assignments
 //   - [Client.GetUserRole]: Get roles for a specific user
@@ -59,12 +59,35 @@
 //   - [Client.RemoveUserFromRole]: Remove a user from a role
 //   - [Client.ChangeUserRole]: Change a user's role or disable access
 //
-// User Information:
+// Group Management:
+//   - [Client.CreateGroup]: Create a new group
+//   - [Client.DeleteGroup]: Delete a group
+//   - [Client.GetUsersInGroup]: Get users and managers in a group
+//   - [Client.AddUserToGroup]: Add a user to a group
+//   - [Client.RemoveUserFromGroup]: Remove a user from a group
+//   - [Client.GetGroupRole]: Get roles assigned to a group
+//   - [Client.AddGroupToRole]: Assign a group to a role
+//   - [Client.RemoveGroupFromRole]: Remove a group from a role
+//
+// User Management:
 //   - [Client.GetUserInfo]: Get user info by email address
+//   - [Client.ProvisionUser]: Create a new unregistered user and assign to role
+//   - [Client.SendInvitation]: Send invitation email to a user
+//   - [Client.ChangeManager]: Change the app manager
+//   - [Client.ChangeRecordOwner]: Change the owner of a record
 //
 // Application Variables:
 //   - [Client.GetDBVar]: Get an application variable value
 //   - [Client.SetDBVar]: Set an application variable value
+//
+// Code Pages:
+//   - [Client.GetDBPage]: Get stored code page content
+//   - [Client.AddReplaceDBPage]: Create or update a code page
+//
+// Field Management:
+//   - [Client.FieldAddChoices]: Add choices to a multiple-choice field
+//   - [Client.FieldRemoveChoices]: Remove choices from a multiple-choice field
+//   - [Client.SetKeyField]: Set the key field for a table
 //
 // Schema Information:
 //   - [Client.GetSchema]: Get comprehensive app/table metadata including fields, reports, and variables

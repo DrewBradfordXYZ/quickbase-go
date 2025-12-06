@@ -1271,3 +1271,560 @@ func TestChangeUserRole(t *testing.T) {
 		}
 	})
 }
+
+// Group Management Tests
+
+func TestCreateGroup(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_CreateGroup</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <group id="1217.dgpt">
+      <name>MarketingSupport</name>
+      <description>Support staff for sr marketing group</description>
+      <managedByUser>true</managedByUser>
+   </group>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.CreateGroup(context.Background(), "MarketingSupport", "Support staff for sr marketing group", "")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_CreateGroup" {
+			t.Errorf("expected action API_CreateGroup, got %s", mock.lastAction)
+		}
+
+		if result.Group.ID != "1217.dgpt" {
+			t.Errorf("expected group ID 1217.dgpt, got %s", result.Group.ID)
+		}
+
+		if result.Group.Name != "MarketingSupport" {
+			t.Errorf("expected group name MarketingSupport, got %s", result.Group.Name)
+		}
+	})
+}
+
+func TestDeleteGroup(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_DeleteGroup</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.DeleteGroup(context.Background(), "1217.dgpt")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_DeleteGroup" {
+			t.Errorf("expected action API_DeleteGroup, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestGetUsersInGroup(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetUsersInGroup</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <group id="2345.sdfk">
+      <name>GroupInfoTestGroup</name>
+      <description>My Group description</description>
+      <users>
+         <user id="112149.bhsv">
+            <firstName>John</firstName>
+            <lastName>Doe</lastName>
+            <email>jdoe@example.com</email>
+            <screenName></screenName>
+            <isAdmin>false</isAdmin>
+         </user>
+      </users>
+      <managers>
+         <manager id="52731770.b82h">
+            <firstName>Angela</firstName>
+            <lastName>Leon</lastName>
+            <email>angela@example.com</email>
+            <screenName>aqleon</screenName>
+            <isMember>true</isMember>
+         </manager>
+      </managers>
+      <subgroups>
+         <subgroup id="3450.aefs"/>
+      </subgroups>
+   </group>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.GetUsersInGroup(context.Background(), "2345.sdfk", true)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if result.Name != "GroupInfoTestGroup" {
+			t.Errorf("expected group name GroupInfoTestGroup, got %s", result.Name)
+		}
+
+		if len(result.Users) != 1 {
+			t.Fatalf("expected 1 user, got %d", len(result.Users))
+		}
+
+		if result.Users[0].FirstName != "John" {
+			t.Errorf("expected first name John, got %s", result.Users[0].FirstName)
+		}
+
+		if len(result.Managers) != 1 {
+			t.Fatalf("expected 1 manager, got %d", len(result.Managers))
+		}
+
+		if result.Managers[0].FirstName != "Angela" {
+			t.Errorf("expected manager first name Angela, got %s", result.Managers[0].FirstName)
+		}
+
+		if len(result.Subgroups) != 1 {
+			t.Fatalf("expected 1 subgroup, got %d", len(result.Subgroups))
+		}
+	})
+}
+
+func TestAddUserToGroup(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_AddUserToGroup</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.AddUserToGroup(context.Background(), "1217.dgpt", "112149.bhsv", true)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_AddUserToGroup" {
+			t.Errorf("expected action API_AddUserToGroup, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestRemoveUserFromGroup(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_RemoveUserFromGroup</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.RemoveUserFromGroup(context.Background(), "1217.dgpt", "112149.bhsv")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_RemoveUserFromGroup" {
+			t.Errorf("expected action API_RemoveUserFromGroup, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestGetGroupRole(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetGroupRole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <roles>
+      <role id="11">
+         <name>Participant</name>
+      </role>
+   </roles>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.GetGroupRole(context.Background(), "bqxyz123", "1217.dgpt")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if len(result.Roles) != 1 {
+			t.Fatalf("expected 1 role, got %d", len(result.Roles))
+		}
+
+		if result.Roles[0].ID != 11 {
+			t.Errorf("expected role ID 11, got %d", result.Roles[0].ID)
+		}
+	})
+}
+
+func TestAddGroupToRole(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_AddGroupToRole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.AddGroupToRole(context.Background(), "bqxyz123", "1217.dgpt", 12)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_AddGroupToRole" {
+			t.Errorf("expected action API_AddGroupToRole, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestRemoveGroupFromRole(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_RemoveGroupFromRole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.RemoveGroupFromRole(context.Background(), "bqxyz123", "1217.dgpt", 12, false)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_RemoveGroupFromRole" {
+			t.Errorf("expected action API_RemoveGroupFromRole, got %s", mock.lastAction)
+		}
+	})
+}
+
+// Code Pages Tests
+
+func TestGetDBPage(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm:    "testrealm",
+			response: []byte(`<html><body>Hello World</body></html>`),
+		}
+
+		client := New(mock)
+		content, err := client.GetDBPage(context.Background(), "bqxyz123", "3")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GetDBPage" {
+			t.Errorf("expected action API_GetDBPage, got %s", mock.lastAction)
+		}
+
+		if content != "<html><body>Hello World</body></html>" {
+			t.Errorf("unexpected content: %s", content)
+		}
+	})
+
+	t.Run("error response", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetDBPage</action>
+   <errcode>24</errcode>
+   <errtext>No such page</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		_, err := client.GetDBPage(context.Background(), "bqxyz123", "999")
+
+		if err == nil {
+			t.Fatal("expected error, got nil")
+		}
+	})
+}
+
+func TestAddReplaceDBPage(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_AddReplaceDBPage</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <pageID>6</pageID>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.AddReplaceDBPage(context.Background(), "bqxyz123", "newpage.html", 0, PageTypeXSLOrHTML, "<html><body>Hello</body></html>")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_AddReplaceDBPage" {
+			t.Errorf("expected action API_AddReplaceDBPage, got %s", mock.lastAction)
+		}
+
+		if result.PageID != 6 {
+			t.Errorf("expected page ID 6, got %d", result.PageID)
+		}
+	})
+
+	t.Run("error no name or id", func(t *testing.T) {
+		mock := &mockCaller{realm: "testrealm"}
+		client := New(mock)
+
+		_, err := client.AddReplaceDBPage(context.Background(), "bqxyz123", "", 0, PageTypeXSLOrHTML, "content")
+
+		if err == nil {
+			t.Fatal("expected error, got nil")
+		}
+	})
+}
+
+// User Provisioning Tests
+
+func TestProvisionUser(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_provisionuser</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <userid>112248.5nzg</userid>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.ProvisionUser(context.Background(), "bqxyz123", "new@example.com", "John", "Doe", 11)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_ProvisionUser" {
+			t.Errorf("expected action API_ProvisionUser, got %s", mock.lastAction)
+		}
+
+		if result.UserID != "112248.5nzg" {
+			t.Errorf("expected user ID 112248.5nzg, got %s", result.UserID)
+		}
+	})
+}
+
+func TestSendInvitation(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_SendInvitation</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.SendInvitation(context.Background(), "bqxyz123", "112149.bhsv", "Welcome!")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_SendInvitation" {
+			t.Errorf("expected action API_SendInvitation, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestChangeManager(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_ChangeManager</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.ChangeManager(context.Background(), "bqxyz123", "newmanager@example.com")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_ChangeManager" {
+			t.Errorf("expected action API_ChangeManager, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestChangeRecordOwner(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_changerecordowner</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.ChangeRecordOwner(context.Background(), "bqxyz123", 123, "newowner@example.com")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_ChangeRecordOwner" {
+			t.Errorf("expected action API_ChangeRecordOwner, got %s", mock.lastAction)
+		}
+	})
+}
+
+// Field Management Tests
+
+func TestFieldAddChoices(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_FieldAddChoices</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <fid>11</fid>
+   <fname>Color</fname>
+   <numadded>3</numadded>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.FieldAddChoices(context.Background(), "bqxyz123", 11, []string{"Red", "Green", "Blue"})
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_FieldAddChoices" {
+			t.Errorf("expected action API_FieldAddChoices, got %s", mock.lastAction)
+		}
+
+		if result.FieldID != 11 {
+			t.Errorf("expected field ID 11, got %d", result.FieldID)
+		}
+
+		if result.NumAdded != 3 {
+			t.Errorf("expected 3 added, got %d", result.NumAdded)
+		}
+	})
+}
+
+func TestFieldRemoveChoices(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_FieldRemoveChoices</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <fid>11</fid>
+   <fname>Color</fname>
+   <numremoved>2</numremoved>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.FieldRemoveChoices(context.Background(), "bqxyz123", 11, []string{"Red", "Blue"})
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_FieldRemoveChoices" {
+			t.Errorf("expected action API_FieldRemoveChoices, got %s", mock.lastAction)
+		}
+
+		if result.NumRemoved != 2 {
+			t.Errorf("expected 2 removed, got %d", result.NumRemoved)
+		}
+	})
+}
+
+func TestSetKeyField(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_SetKeyField</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.SetKeyField(context.Background(), "bqxyz123", 6)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_SetKeyField" {
+			t.Errorf("expected action API_SetKeyField, got %s", mock.lastAction)
+		}
+	})
+}

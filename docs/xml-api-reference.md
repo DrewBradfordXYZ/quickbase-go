@@ -155,14 +155,16 @@ These features are **only available in the XML API**:
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_CreateGroup` | Create a new group | Not implemented |
-| `API_DeleteGroup` | Delete a group | Not implemented |
+| `API_CreateGroup` | Create a new group | **Implemented** |
+| `API_DeleteGroup` | Delete a group | **Implemented** |
 | `API_CopyGroup` | Copy a group | Not implemented |
 | `API_ChangeGroupInfo` | Update group name/description | Not implemented |
-| `API_GetGroupRole` | Get roles assigned to a group | Not implemented |
-| `API_AddGroupToRole` | Assign a group to a role | Not implemented |
-| `API_RemoveGroupFromRole` | Remove group from a role | Not implemented |
-| `API_GetUsersInGroup` | List all users in a group | Not implemented |
+| `API_GetGroupRole` | Get roles assigned to a group | **Implemented** |
+| `API_AddGroupToRole` | Assign a group to a role | **Implemented** |
+| `API_RemoveGroupFromRole` | Remove group from a role | **Implemented** |
+| `API_GetUsersInGroup` | List all users in a group | **Implemented** |
+| `API_AddUserToGroup` | Add a user to a group | **Implemented** |
+| `API_RemoveUserFromGroup` | Remove a user from a group | **Implemented** |
 | `API_GrantedGroups` | Get groups a user belongs to | Not implemented |
 | `API_GrantedDBsForGroup` | Get apps a group has access to | Not implemented |
 
@@ -191,8 +193,8 @@ These features are **only available in the XML API**:
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_GetDBPage` | Get stored code page content | Not implemented |
-| `API_AddReplaceDBPage` | Create or update a code page | Not implemented |
+| `API_GetDBPage` | Get stored code page content | **Implemented** |
+| `API_AddReplaceDBPage` | Create or update a code page | **Implemented** |
 
 ### Webhooks
 
@@ -210,18 +212,18 @@ These features are **only available in the XML API**:
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
 | `API_GetUserInfo` | Get user info by email | **Implemented** |
-| `API_ProvisionUser` | Create/provision a new user | Not implemented |
-| `API_SendInvitation` | Send invitation email | Not implemented |
-| `API_ChangeManager` | Change app/table manager | Not implemented |
-| `API_ChangeRecordOwner` | Change record owner | Not implemented |
+| `API_ProvisionUser` | Create/provision a new user | **Implemented** |
+| `API_SendInvitation` | Send invitation email | **Implemented** |
+| `API_ChangeManager` | Change app/table manager | **Implemented** |
+| `API_ChangeRecordOwner` | Change record owner | **Implemented** |
 
 ### Field Choice Management
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_FieldAddChoices` | Add choices to multiple-choice field | Not implemented |
-| `API_FieldRemoveChoices` | Remove choices from field | Not implemented |
-| `API_SetKeyField` | Set key field for table | Not implemented |
+| `API_FieldAddChoices` | Add choices to multiple-choice field | **Implemented** |
+| `API_FieldRemoveChoices` | Remove choices from field | **Implemented** |
+| `API_SetKeyField` | Set key field for table | **Implemented** |
 
 ### Record Operations (Unique)
 
@@ -337,38 +339,68 @@ These operations are available in **both APIs**:
 
 ### Currently Implemented
 
-1. `API_GetRoleInfo` - `xml.GetRoleInfo()`
-2. `API_UserRoles` - `xml.UserRoles()`
-3. `API_GetUserRole` - `xml.GetUserRole()`
-4. `API_GetSchema` - `xml.GetSchema()`
+**App Discovery:**
+- `API_GrantedDBs` - `xml.GrantedDBs()`
+- `API_FindDBByName` - `xml.FindDBByName()`
+- `API_GetDBInfo` - `xml.GetDBInfo()`
+- `API_GetNumRecords` - `xml.GetNumRecords()`
 
-### Recommended Next (High Value, No JSON Equivalent)
+**Role Management:**
+- `API_GetRoleInfo` - `xml.GetRoleInfo()`
+- `API_UserRoles` - `xml.UserRoles()`
+- `API_GetUserRole` - `xml.GetUserRole()`
+- `API_AddUserToRole` - `xml.AddUserToRole()`
+- `API_RemoveUserFromRole` - `xml.RemoveUserFromRole()`
+- `API_ChangeUserRole` - `xml.ChangeUserRole()`
 
-1. `API_GrantedDBs` - Discover all accessible apps
-2. `API_GetDBVar` / `API_SetDBVar` - Application variables
-3. `API_GetUserInfo` - Look up user by email
-4. `API_GetDBPage` / `API_AddReplaceDBPage` - Code page management
-5. `API_GetDBInfo` - Quick table stats (record count, manager)
-6. `API_FindDBByName` - Find app by name
+**Group Management:**
+- `API_CreateGroup` - `xml.CreateGroup()`
+- `API_DeleteGroup` - `xml.DeleteGroup()`
+- `API_GetUsersInGroup` - `xml.GetUsersInGroup()`
+- `API_AddUserToGroup` - `xml.AddUserToGroup()`
+- `API_RemoveUserFromGroup` - `xml.RemoveUserFromGroup()`
+- `API_GetGroupRole` - `xml.GetGroupRole()`
+- `API_AddGroupToRole` - `xml.AddGroupToRole()`
+- `API_RemoveGroupFromRole` - `xml.RemoveGroupFromRole()`
 
-### Role & Group Management
+**User Management:**
+- `API_GetUserInfo` - `xml.GetUserInfo()`
+- `API_ProvisionUser` - `xml.ProvisionUser()`
+- `API_SendInvitation` - `xml.SendInvitation()`
+- `API_ChangeManager` - `xml.ChangeManager()`
+- `API_ChangeRecordOwner` - `xml.ChangeRecordOwner()`
 
-7. `API_AddUserToRole` / `API_RemoveUserFromRole` / `API_ChangeUserRole`
-8. `API_CreateGroup` / `API_DeleteGroup`
-9. `API_GetGroupRole` / `API_AddGroupToRole` / `API_RemoveGroupFromRole`
-10. `API_GetUsersInGroup`
+**Application Variables:**
+- `API_GetDBVar` - `xml.GetDBVar()`
+- `API_SetDBVar` - `xml.SetDBVar()`
 
-### Utility
+**Code Pages:**
+- `API_GetDBPage` - `xml.GetDBPage()`
+- `API_AddReplaceDBPage` - `xml.AddReplaceDBPage()`
 
-11. `API_GetAppDTMInfo` - Fast change detection
-12. `API_GetAncestorInfo` - Template lineage
-13. `API_FieldAddChoices` / `API_FieldRemoveChoices`
+**Field Management:**
+- `API_FieldAddChoices` - `xml.FieldAddChoices()`
+- `API_FieldRemoveChoices` - `xml.FieldRemoveChoices()`
+- `API_SetKeyField` - `xml.SetKeyField()`
 
-### Niche Use Cases
+**Schema Information:**
+- `API_GetSchema` - `xml.GetSchema()`
 
-14. Webhook management (`API_Webhooks_*`)
-15. CSV import (`API_ImportFromCSV`, `API_RunImport`)
-16. HTML generation (`API_GenAddRecordForm`, `API_GenResultsTable`)
+**Record Information:**
+- `API_DoQueryCount` - `xml.DoQueryCount()`
+- `API_GetRecordInfo` - `xml.GetRecordInfo()`
+- `API_GetRecordInfoByKey` - `xml.GetRecordInfoByKey()`
+
+### Not Yet Implemented (Niche Use Cases)
+
+1. `API_GetAppDTMInfo` - Fast change detection (no auth required)
+2. `API_GetAncestorInfo` - Template lineage
+3. `API_CopyGroup` / `API_ChangeGroupInfo` - Group utilities
+4. `API_GrantedGroups` / `API_GrantedDBsForGroup` - Group discovery
+5. Webhook management (`API_Webhooks_*`)
+6. CSV import (`API_ImportFromCSV`, `API_RunImport`)
+7. HTML generation (`API_GenAddRecordForm`, `API_GenResultsTable`, `API_GetRecordAsHTML`)
+8. `API_CopyMasterDetail` - Copy master record with details
 
 ---
 

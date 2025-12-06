@@ -1126,11 +1126,28 @@ for _, field := range schema.Table.Fields {
 | `RemoveUserFromRole(ctx, appId, userId, roleId)` | API_RemoveUserFromRole | Remove a user from a role |
 | `ChangeUserRole(ctx, appId, userId, currentRole, newRole)` | API_ChangeUserRole | Change a user's role |
 
-**User Information:**
+**User Management:**
 
 | Method | XML Action | Description |
 |--------|------------|-------------|
 | `GetUserInfo(ctx, email)` | API_GetUserInfo | Get user info by email address |
+| `ProvisionUser(ctx, appId, email, firstName, lastName, roleId)` | API_ProvisionUser | Create a new unregistered user |
+| `SendInvitation(ctx, appId, userId, userText)` | API_SendInvitation | Send invitation email to a user |
+| `ChangeManager(ctx, appId, newManagerEmail)` | API_ChangeManager | Change the app manager |
+| `ChangeRecordOwner(ctx, tableId, recordId, newOwner)` | API_ChangeRecordOwner | Change record owner |
+
+**Group Management:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `CreateGroup(ctx, name, description, accountId)` | API_CreateGroup | Create a new group |
+| `DeleteGroup(ctx, groupId)` | API_DeleteGroup | Delete a group |
+| `GetUsersInGroup(ctx, groupId, includeManagers)` | API_GetUsersInGroup | Get users and managers in a group |
+| `AddUserToGroup(ctx, groupId, userId, allowAdminAccess)` | API_AddUserToGroup | Add a user to a group |
+| `RemoveUserFromGroup(ctx, groupId, userId)` | API_RemoveUserFromGroup | Remove a user from a group |
+| `GetGroupRole(ctx, appId, groupId)` | API_GetGroupRole | Get roles assigned to a group |
+| `AddGroupToRole(ctx, appId, groupId, roleId)` | API_AddGroupToRole | Assign a group to a role |
+| `RemoveGroupFromRole(ctx, appId, groupId, roleId, allRoles)` | API_RemoveGroupFromRole | Remove a group from a role |
 
 **Application Variables:**
 
@@ -1138,6 +1155,21 @@ for _, field := range schema.Table.Fields {
 |--------|------------|-------------|
 | `GetDBVar(ctx, appId, varName)` | API_GetDBVar | Get an application variable value |
 | `SetDBVar(ctx, appId, varName, value)` | API_SetDBVar | Set an application variable value |
+
+**Code Pages:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetDBPage(ctx, appId, pageIdOrName)` | API_GetDBPage | Get stored code page content |
+| `AddReplaceDBPage(ctx, appId, pageName, pageId, pageType, pageBody)` | API_AddReplaceDBPage | Create or update a code page |
+
+**Field Management:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `FieldAddChoices(ctx, tableId, fieldId, choices)` | API_FieldAddChoices | Add choices to a multiple-choice field |
+| `FieldRemoveChoices(ctx, tableId, fieldId, choices)` | API_FieldRemoveChoices | Remove choices from a field |
+| `SetKeyField(ctx, tableId, fieldId)` | API_SetKeyField | Set the key field for a table |
 
 **Schema Information:**
 
@@ -1179,14 +1211,15 @@ if err != nil {
 
 Each API has unique capabilities:
 
-| XML-Only | JSON-Only |
-|----------|-----------|
+| XML-Only (Implemented) | JSON-Only |
+|------------------------|-----------|
 | Roles & role assignments | Relationships |
-| Group creation/deletion | Solutions (app packaging) |
+| Group management (create, delete, membership, roles) | Solutions (app packaging) |
 | Application variables (DBVars) | Platform analytics |
-| Code pages | Audit logs |
-| Webhooks management | Field usage statistics |
-| User provisioning | Document templates |
+| Code pages (get, add/replace) | Audit logs |
+| User provisioning (provision, invite) | Field usage statistics |
+| Field choice management | Document templates |
+| Record ownership changes | |
 
 For a comprehensive comparison, see [docs/xml-api-reference.md](docs/xml-api-reference.md).
 
