@@ -475,6 +475,17 @@ quickbase.Value(123)
 quickbase.Value(true)
 quickbase.Value([]string{"a", "b"})  // multi-select
 
+// Sorting helpers
+quickbase.SortBy(quickbase.Asc(6), quickbase.Desc(7))  // sortBy parameter
+quickbase.Asc(6)   // ascending by field 6
+quickbase.Desc(7)  // descending by field 7
+
+// Query options
+quickbase.Options(100, 0)  // top=100, skip=0
+
+// GroupBy helper
+quickbase.GroupBy(6, 7)  // group by fields 6 and 7
+
 // Ptr returns a pointer (for optional string/int fields)
 quickbase.Ptr("some string")
 quickbase.Ptr(123)

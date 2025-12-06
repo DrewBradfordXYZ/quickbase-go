@@ -87,7 +87,11 @@ type Field struct {
 
 func main() {
 	// Read the OpenAPI spec
+	// Support running from repo root or from cmd/generate-wrappers
 	specPath := "spec/output/quickbase-patched.json"
+	if _, err := os.Stat(specPath); os.IsNotExist(err) {
+		specPath = "../../spec/output/quickbase-patched.json"
+	}
 	data, err := os.ReadFile(specPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading spec: %v\n", err)
@@ -224,7 +228,12 @@ func generateCode(methods []WrapperMethod) error {
 		filteredMethods = append(filteredMethods, m)
 	}
 
-	f, err := os.Create("client/api_generated.go")
+	// Support running from repo root or from cmd/generate-wrappers
+	outputPath := "client/api_generated.go"
+	if _, err := os.Stat("client"); os.IsNotExist(err) {
+		outputPath = "../../client/api_generated.go"
+	}
+	f, err := os.Create(outputPath)
 	if err != nil {
 		return err
 	}

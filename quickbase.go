@@ -662,6 +662,9 @@ type (
 
 	// SortField specifies a field to sort by
 	SortField = generated.SortField
+
+	// SortByUnion is the union type for sortBy ([]SortField or false)
+	SortByUnion = generated.SortByUnion
 )
 
 // Result types from wrapper methods
@@ -833,4 +836,115 @@ func Row(pairs ...any) Record {
 		record[keyStr] = Value(val)
 	}
 	return record
+}
+
+// --- Sorting Helpers ---
+
+// Sort order constants for use with Sort().
+const (
+	ASC  = generated.SortFieldOrderASC
+	DESC = generated.SortFieldOrderDESC
+)
+
+// Sort creates a SortField for use in sortBy arrays.
+// The order should be ASC or DESC.
+//
+// Example:
+//
+//	quickbase.Sort(6, quickbase.ASC)
+//	quickbase.Sort(7, quickbase.DESC)
+func Sort(fieldId int, order generated.SortFieldOrder) SortField {
+	return SortField{
+		FieldId: fieldId,
+		Order:   order,
+	}
+}
+
+// Asc creates a SortField for ascending order.
+//
+// Example:
+//
+//	quickbase.Asc(6)  // Sort by field 6 ascending
+func Asc(fieldId int) SortField {
+	return SortField{
+		FieldId: fieldId,
+		Order:   generated.SortFieldOrderASC,
+	}
+}
+
+// Desc creates a SortField for descending order.
+//
+// Example:
+//
+//	quickbase.Desc(6)  // Sort by field 6 descending
+func Desc(fieldId int) SortField {
+	return SortField{
+		FieldId: fieldId,
+		Order:   generated.SortFieldOrderDESC,
+	}
+}
+
+// SortBy creates a sortBy parameter for RunQuery from SortField values.
+// This wraps the fields in the union type required by the API.
+//
+// Example:
+//
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:   tableId,
+//	    Select: quickbase.Ints(3, 6, 7),
+//	    SortBy: quickbase.SortBy(quickbase.Asc(6), quickbase.Desc(7)),
+//	})
+func SortBy(fields ...SortField) *SortByUnion {
+	var sortBy SortByUnion
+	_ = sortBy.FromSortByUnion0(fields)
+	return &sortBy
+}
+
+// --- Query Options Helper ---
+
+// Options creates a QueryOptions with top (limit) and skip (offset).
+// Pass -1 for either value to omit it.
+//
+// Example:
+//
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:    tableId,
+//	    Options: quickbase.Options(100, 0),   // top=100, skip=0
+//	})
+//
+//	// Skip only:
+//	quickbase.Options(-1, 50)  // skip=50, no top limit
+func Options(top, skip int) *QueryOptions {
+	opts := &QueryOptions{}
+	if top >= 0 {
+		opts.Top = &top
+	}
+	if skip >= 0 {
+		opts.Skip = &skip
+	}
+	return opts
+}
+
+// --- GroupBy Helper ---
+
+// GroupByItem is an alias for the verbose generated type.
+type GroupByItem = generated.RunQueryJSONBody_GroupBy_Item
+
+// GroupBy creates a groupBy array for RunQuery from field IDs.
+//
+// Example:
+//
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:    tableId,
+//	    GroupBy: quickbase.GroupBy(6, 7),
+//	})
+func GroupBy(fieldIds ...int) *[]GroupByItem {
+	items := make([]GroupByItem, len(fieldIds))
+	for i, id := range fieldIds {
+		fid := id // avoid closure issue
+		items[i] = GroupByItem{
+			FieldId: &fid,
+		}
+	}
+	return &items
 }

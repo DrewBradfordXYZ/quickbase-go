@@ -22,6 +22,11 @@ const (
 	UserTokenScopes = "userToken.Scopes"
 )
 
+// Defines values for SortByUnion1.
+const (
+	False SortByUnion1 = false
+)
+
 // Defines values for SortFieldOrder.
 const (
 	SortFieldOrderASC         SortFieldOrder = "ASC"
@@ -179,11 +184,6 @@ const (
 	RunQueryJSONBodyGroupByGroupingEqualValues RunQueryJSONBodyGroupByGrouping = "equal-values"
 )
 
-// Defines values for RunQueryJSONBodySortBy1.
-const (
-	False RunQueryJSONBodySortBy1 = false
-)
-
 // Defines values for CreateRelationshipJSONBodySummaryFieldsAccumulationType.
 const (
 	CreateRelationshipJSONBodySummaryFieldsAccumulationTypeAVG           CreateRelationshipJSONBodySummaryFieldsAccumulationType = "AVG"
@@ -241,6 +241,17 @@ type FieldValue_Value struct {
 
 // QuickbaseRecord A QuickBase record where keys are field IDs (as strings) and values are FieldValue objects.
 type QuickbaseRecord map[string]FieldValue
+
+// SortByUnion An array of field IDs and sort directions. Set to false to disable sorting for better performance.
+type SortByUnion struct {
+	union json.RawMessage
+}
+
+// SortByUnion0 defines model for .
+type SortByUnion0 = []SortField
+
+// SortByUnion1 defines model for SortByUnion.1.
+type SortByUnion1 bool
 
 // SortField A field to sort by in a query.
 type SortField struct {
@@ -1142,8 +1153,8 @@ type RunQueryJSONBody struct {
 	// Select An array of field ids for the fields that should be returned in the response. If empty, the default columns on the table will be returned.
 	Select *[]int `json:"select,omitempty"`
 
-	// SortBy An array of field IDs and sort directions. If this attribute is not set or set to false, queries will be unsorted to improve performance.
-	SortBy *RunQueryJSONBody_SortBy `json:"sortBy,omitempty"`
+	// SortBy An array of field IDs and sort directions. Set to false to disable sorting for better performance.
+	SortBy *SortByUnion `json:"sortBy,omitempty"`
 
 	// Where The filter, using the Quickbase query language, which determines the records to return. If this parameter is omitted, the query will return all records.
 	Where                *string                `json:"where,omitempty"`
@@ -1174,17 +1185,6 @@ type RunQueryJSONBody_Options struct {
 	// Top The maximum number of records to display.
 	Top                  *int                   `json:"top,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunQueryJSONBodySortBy0 defines parameters for RunQuery.
-type RunQueryJSONBodySortBy0 = []SortField
-
-// RunQueryJSONBodySortBy1 defines parameters for RunQuery.
-type RunQueryJSONBodySortBy1 bool
-
-// RunQueryJSONBody_SortBy defines parameters for RunQuery.
-type RunQueryJSONBody_SortBy struct {
-	union json.RawMessage
 }
 
 // GetTableReportsParams defines parameters for GetTableReports.
@@ -2941,6 +2941,68 @@ func (t FieldValue_Value) MarshalJSON() ([]byte, error) {
 }
 
 func (t *FieldValue_Value) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsSortByUnion0 returns the union data inside the SortByUnion as a SortByUnion0
+func (t SortByUnion) AsSortByUnion0() (SortByUnion0, error) {
+	var body SortByUnion0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSortByUnion0 overwrites any union data inside the SortByUnion as the provided SortByUnion0
+func (t *SortByUnion) FromSortByUnion0(v SortByUnion0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSortByUnion0 performs a merge with any union data inside the SortByUnion, using the provided SortByUnion0
+func (t *SortByUnion) MergeSortByUnion0(v SortByUnion0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsSortByUnion1 returns the union data inside the SortByUnion as a SortByUnion1
+func (t SortByUnion) AsSortByUnion1() (SortByUnion1, error) {
+	var body SortByUnion1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSortByUnion1 overwrites any union data inside the SortByUnion as the provided SortByUnion1
+func (t *SortByUnion) FromSortByUnion1(v SortByUnion1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSortByUnion1 performs a merge with any union data inside the SortByUnion, using the provided SortByUnion1
+func (t *SortByUnion) MergeSortByUnion1(v SortByUnion1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t SortByUnion) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *SortByUnion) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -8017,11 +8079,11 @@ type PlatformAnalyticEventSummariesResponse struct {
 			Name string `json:"name"`
 
 			// Totals Totals by billing category for the event grouping.
-			Totals struct {
+			Totals *struct {
 				All         *float32 `json:"all,omitempty"`
 				Integration *float32 `json:"integration,omitempty"`
 				User        *float32 `json:"user,omitempty"`
-			} `json:"totals"`
+			} `json:"totals,omitempty"`
 		} `json:"results"`
 
 		// Start The start date and time of the requested summaries in ISO 8601 time format.
@@ -12910,11 +12972,11 @@ func ParsePlatformAnalyticEventSummariesResponse(rsp *http.Response) (*PlatformA
 				Name string `json:"name"`
 
 				// Totals Totals by billing category for the event grouping.
-				Totals struct {
+				Totals *struct {
 					All         *float32 `json:"all,omitempty"`
 					Integration *float32 `json:"integration,omitempty"`
 					User        *float32 `json:"user,omitempty"`
-				} `json:"totals"`
+				} `json:"totals,omitempty"`
 			} `json:"results"`
 
 			// Start The start date and time of the requested summaries in ISO 8601 time format.
