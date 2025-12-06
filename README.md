@@ -6,15 +6,16 @@ A Go client for the QuickBase JSON RESTful API.
 
 ## Features
 
-- **Friendly API** - Clean wrapper methods like `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`
-- **Schema Aliases** - Use readable names for tables and fields instead of cryptic IDs
-- **Automatic Pagination** - `RunQueryAll` fetches all records across pages automatically
-- **Helper Functions** - `Ptr()`, `Ints()` for cleaner code with optional fields
+- **Wrapper Methods** - `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`, and more
+- **Schema Aliases** - Use readable names (`"projects"`, `"name"`) instead of IDs (`"bqxyz123"`, `6`)
+- **Fluent Schema Builder** - `NewSchema().Table().Field().Build()` for schema definition
+- **Automatic Pagination** - `RunQueryAll` fetches all records across pages
+- **Helper Functions** - `Row()`, `Value()`, `Fields()`, `SortBy()`, `Ptr()`, `Ints()`
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
-- **Proactive Throttling** - Optional client-side request throttling (100 req/10s)
-- **Custom Error Types** - Specific error types for 400, 401, 403, 404, 429, 5xx responses
-- **Monitoring Hooks** - Track request latency, retries, and errors for observability
+- **Proactive Throttling** - Client-side request throttling (100 req/10s)
+- **Typed Errors** - `RateLimitError`, `NotFoundError`, `ValidationError`, etc.
+- **Monitoring Hooks** - Track request latency, retries, and errors
 - **Full API Access** - Low-level generated client available via `client.API()`
 
 ## Installation
