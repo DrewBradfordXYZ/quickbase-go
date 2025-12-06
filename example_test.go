@@ -256,7 +256,7 @@ func ExampleClient_GetApp_errorHandling() {
 	)
 
 	ctx := context.Background()
-	app, err := client.GetApp(ctx, "invalid-app-id")
+	app, err := client.GetApp("invalid-app-id").Run(ctx)
 	if err != nil {
 		var rateLimitErr *quickbase.RateLimitError
 		var notFoundErr *quickbase.NotFoundError

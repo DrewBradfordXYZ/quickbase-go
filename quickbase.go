@@ -711,6 +711,9 @@ type (
 	// SortField specifies a field to sort by
 	SortField = generated.SortField
 
+	// SortFieldOrder is the sort order (ASC, DESC)
+	SortFieldOrder = generated.SortFieldOrder
+
 	// SortByUnion is the union type for sortBy ([]SortField or false)
 	SortByUnion = generated.SortByUnion
 )
@@ -737,6 +740,176 @@ type (
 
 	// QueryMetadata contains pagination metadata from a query
 	QueryMetadata = client.QueryMetadata
+)
+
+// Builder types for fluent API
+// These are auto-generated from the OpenAPI spec and provide a chainable API
+// for building and executing API requests. Method names match QuickBase operation IDs.
+type (
+	// AddManagersToGroupBuilder provides a fluent API for adding managers to groups.
+	AddManagersToGroupBuilder = client.AddManagersToGroupBuilder
+
+	// AddMembersToGroupBuilder provides a fluent API for adding members to groups.
+	AddMembersToGroupBuilder = client.AddMembersToGroupBuilder
+
+	// AddSubgroupsToGroupBuilder provides a fluent API for adding subgroups to groups.
+	AddSubgroupsToGroupBuilder = client.AddSubgroupsToGroupBuilder
+
+	// AuditBuilder provides a fluent API for querying audit logs.
+	AuditBuilder = client.AuditBuilder
+
+	// ChangesetSolutionBuilder provides a fluent API for modifying solutions.
+	ChangesetSolutionBuilder = client.ChangesetSolutionBuilder
+
+	// ChangesetSolutionFromRecordBuilder provides a fluent API for solution changesets from records.
+	ChangesetSolutionFromRecordBuilder = client.ChangesetSolutionFromRecordBuilder
+
+	// CloneUserTokenBuilder provides a fluent API for cloning user tokens.
+	CloneUserTokenBuilder = client.CloneUserTokenBuilder
+
+	// CopyAppBuilder provides a fluent API for copying apps.
+	CopyAppBuilder = client.CopyAppBuilder
+
+	// CreateAppBuilder provides a fluent API for creating apps.
+	CreateAppBuilder = client.CreateAppBuilder
+
+	// CreateFieldBuilder provides a fluent API for creating fields.
+	CreateFieldBuilder = client.CreateFieldBuilder
+
+	// CreateRelationshipBuilder provides a fluent API for creating relationships.
+	CreateRelationshipBuilder = client.CreateRelationshipBuilder
+
+	// CreateSolutionBuilder provides a fluent API for creating solutions.
+	CreateSolutionBuilder = client.CreateSolutionBuilder
+
+	// CreateSolutionFromRecordBuilder provides a fluent API for creating solutions from records.
+	CreateSolutionFromRecordBuilder = client.CreateSolutionFromRecordBuilder
+
+	// CreateTableBuilder provides a fluent API for creating tables.
+	CreateTableBuilder = client.CreateTableBuilder
+
+	// DeactivateUserTokenBuilder provides a fluent API for deactivating user tokens.
+	DeactivateUserTokenBuilder = client.DeactivateUserTokenBuilder
+
+	// DeleteAppBuilder provides a fluent API for deleting apps.
+	DeleteAppBuilder = client.DeleteAppBuilder
+
+	// DeleteFieldsBuilder provides a fluent API for deleting fields.
+	DeleteFieldsBuilder = client.DeleteFieldsBuilder
+
+	// DeleteFileBuilder provides a fluent API for deleting files.
+	DeleteFileBuilder = client.DeleteFileBuilder
+
+	// DeleteRelationshipBuilder provides a fluent API for deleting relationships.
+	DeleteRelationshipBuilder = client.DeleteRelationshipBuilder
+
+	// DeleteTableBuilder provides a fluent API for deleting tables.
+	DeleteTableBuilder = client.DeleteTableBuilder
+
+	// DeleteUserTokenBuilder provides a fluent API for deleting user tokens.
+	DeleteUserTokenBuilder = client.DeleteUserTokenBuilder
+
+	// DenyUsersBuilder provides a fluent API for denying users.
+	DenyUsersBuilder = client.DenyUsersBuilder
+
+	// DenyUsersAndGroupsBuilder provides a fluent API for denying users and groups.
+	DenyUsersAndGroupsBuilder = client.DenyUsersAndGroupsBuilder
+
+	// DownloadFileBuilder provides a fluent API for downloading files.
+	DownloadFileBuilder = client.DownloadFileBuilder
+
+	// ExchangeSsoTokenBuilder provides a fluent API for exchanging SSO tokens.
+	ExchangeSsoTokenBuilder = client.ExchangeSsoTokenBuilder
+
+	// ExportSolutionBuilder provides a fluent API for exporting solutions.
+	ExportSolutionBuilder = client.ExportSolutionBuilder
+
+	// ExportSolutionToRecordBuilder provides a fluent API for exporting solutions to records.
+	ExportSolutionToRecordBuilder = client.ExportSolutionToRecordBuilder
+
+	// GenerateDocumentBuilder provides a fluent API for generating documents.
+	GenerateDocumentBuilder = client.GenerateDocumentBuilder
+
+	// GetAppEventsBuilder provides a fluent API for getting app events.
+	GetAppEventsBuilder = client.GetAppEventsBuilder
+
+	// GetAppTablesBuilder provides a fluent API for getting app tables.
+	GetAppTablesBuilder = client.GetAppTablesBuilder
+
+	// GetFieldBuilder provides a fluent API for getting a field.
+	GetFieldBuilder = client.GetFieldBuilder
+
+	// GetFieldUsageBuilder provides a fluent API for getting field usage.
+	GetFieldUsageBuilder = client.GetFieldUsageBuilder
+
+	// GetFieldsUsageBuilder provides a fluent API for getting fields usage.
+	GetFieldsUsageBuilder = client.GetFieldsUsageBuilder
+
+	// GetRelationshipsBuilder provides a fluent API for getting relationships.
+	GetRelationshipsBuilder = client.GetRelationshipsBuilder
+
+	// GetReportBuilder provides a fluent API for getting a report.
+	GetReportBuilder = client.GetReportBuilder
+
+	// GetTableBuilder provides a fluent API for getting a table.
+	GetTableBuilder = client.GetTableBuilder
+
+	// GetTableReportsBuilder provides a fluent API for getting table reports.
+	GetTableReportsBuilder = client.GetTableReportsBuilder
+
+	// GetTempTokenDBIDBuilder provides a fluent API for getting temp tokens.
+	GetTempTokenDBIDBuilder = client.GetTempTokenDBIDBuilder
+
+	// GetUsersBuilder provides a fluent API for getting users.
+	GetUsersBuilder = client.GetUsersBuilder
+
+	// PlatformAnalyticEventSummariesBuilder provides a fluent API for platform analytics.
+	PlatformAnalyticEventSummariesBuilder = client.PlatformAnalyticEventSummariesBuilder
+
+	// PlatformAnalyticReadsBuilder provides a fluent API for platform analytic reads.
+	PlatformAnalyticReadsBuilder = client.PlatformAnalyticReadsBuilder
+
+	// RemoveManagersFromGroupBuilder provides a fluent API for removing managers from groups.
+	RemoveManagersFromGroupBuilder = client.RemoveManagersFromGroupBuilder
+
+	// RemoveMembersFromGroupBuilder provides a fluent API for removing members from groups.
+	RemoveMembersFromGroupBuilder = client.RemoveMembersFromGroupBuilder
+
+	// RemoveSubgroupsFromGroupBuilder provides a fluent API for removing subgroups from groups.
+	RemoveSubgroupsFromGroupBuilder = client.RemoveSubgroupsFromGroupBuilder
+
+	// RunFormulaBuilder provides a fluent API for running formulas.
+	RunFormulaBuilder = client.RunFormulaBuilder
+
+	// RunReportBuilder provides a fluent API for running reports.
+	RunReportBuilder = client.RunReportBuilder
+
+	// TransferUserTokenBuilder provides a fluent API for transferring user tokens.
+	TransferUserTokenBuilder = client.TransferUserTokenBuilder
+
+	// UndenyUsersBuilder provides a fluent API for undenying users.
+	UndenyUsersBuilder = client.UndenyUsersBuilder
+
+	// UpdateAppBuilder provides a fluent API for updating apps.
+	UpdateAppBuilder = client.UpdateAppBuilder
+
+	// UpdateFieldBuilder provides a fluent API for updating fields.
+	UpdateFieldBuilder = client.UpdateFieldBuilder
+
+	// UpdateRelationshipBuilder provides a fluent API for updating relationships.
+	UpdateRelationshipBuilder = client.UpdateRelationshipBuilder
+
+	// UpdateSolutionBuilder provides a fluent API for updating solutions.
+	UpdateSolutionBuilder = client.UpdateSolutionBuilder
+
+	// UpdateSolutionToRecordBuilder provides a fluent API for updating solutions to records.
+	UpdateSolutionToRecordBuilder = client.UpdateSolutionToRecordBuilder
+
+	// UpdateTableBuilder provides a fluent API for updating tables.
+	UpdateTableBuilder = client.UpdateTableBuilder
+
+	// SortSpec specifies a sort field and order for RunQuery.
+	SortSpec = client.SortSpec
 )
 
 // FieldType is the type of a field for CreateField
@@ -908,27 +1081,31 @@ func Sort(fieldId int, order generated.SortFieldOrder) SortField {
 	}
 }
 
-// Asc creates a SortField for ascending order.
+// Asc creates a SortSpec for ascending order.
+// Accepts field ID (int) or alias (string) when used with schema.
 //
 // Example:
 //
-//	quickbase.Asc(6)  // Sort by field 6 ascending
-func Asc(fieldId int) SortField {
-	return SortField{
-		FieldId: fieldId,
-		Order:   generated.SortFieldOrderASC,
+//	quickbase.Asc(6)       // Sort by field 6 ascending
+//	quickbase.Asc("name")  // Sort by "name" alias ascending (with schema)
+func Asc(field any) SortSpec {
+	return SortSpec{
+		Field: field,
+		Order: generated.SortFieldOrderASC,
 	}
 }
 
-// Desc creates a SortField for descending order.
+// Desc creates a SortSpec for descending order.
+// Accepts field ID (int) or alias (string) when used with schema.
 //
 // Example:
 //
-//	quickbase.Desc(6)  // Sort by field 6 descending
-func Desc(fieldId int) SortField {
-	return SortField{
-		FieldId: fieldId,
-		Order:   generated.SortFieldOrderDESC,
+//	quickbase.Desc(6)        // Sort by field 6 descending
+//	quickbase.Desc("dueDate") // Sort by "dueDate" alias descending (with schema)
+func Desc(field any) SortSpec {
+	return SortSpec{
+		Field: field,
+		Order: generated.SortFieldOrderDESC,
 	}
 }
 

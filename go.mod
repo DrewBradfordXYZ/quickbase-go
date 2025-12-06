@@ -5,6 +5,7 @@ go 1.24.5
 require (
 	github.com/joho/godotenv v1.5.1
 	github.com/oapi-codegen/runtime v1.1.2
+	golang.org/x/text v0.14.0
 )
 
 require (

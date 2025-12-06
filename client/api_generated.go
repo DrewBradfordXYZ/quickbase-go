@@ -8,13 +8,14 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
-// --- Auto-generated wrapper methods ---
-// These provide a cleaner API over the generated oapi-codegen client.
-// For full control, use client.API() to access the underlying client.
+// --- Auto-generated Raw wrapper methods ---
+// These provide direct access to the QuickBase API matching the official documentation.
+// For a fluent builder API, use the builder methods (e.g., client.CreateApp() instead of client.RawCreateApp()).
+// For the underlying oapi-codegen client, use client.API().
 
 
-// AddManagersToGroup Add managers
-func (c *Client) AddManagersToGroup(ctx context.Context, gid float32, body generated.AddManagersToGroupJSONRequestBody) (*generated.AddManagersToGroupResponse, error) {
+// RawAddManagersToGroup Add managers
+func (c *Client) RawAddManagersToGroup(ctx context.Context, gid float32, body generated.AddManagersToGroupJSONRequestBody) (*generated.AddManagersToGroupResponse, error) {
 	resp, err := c.API().AddManagersToGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -25,8 +26,8 @@ func (c *Client) AddManagersToGroup(ctx context.Context, gid float32, body gener
 	return resp, nil
 }
 
-// AddMembersToGroup Add members
-func (c *Client) AddMembersToGroup(ctx context.Context, gid float32, body generated.AddMembersToGroupJSONRequestBody) (*generated.AddMembersToGroupResponse, error) {
+// RawAddMembersToGroup Add members
+func (c *Client) RawAddMembersToGroup(ctx context.Context, gid float32, body generated.AddMembersToGroupJSONRequestBody) (*generated.AddMembersToGroupResponse, error) {
 	resp, err := c.API().AddMembersToGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -37,8 +38,8 @@ func (c *Client) AddMembersToGroup(ctx context.Context, gid float32, body genera
 	return resp, nil
 }
 
-// AddSubgroupsToGroup Add child groups
-func (c *Client) AddSubgroupsToGroup(ctx context.Context, gid float32, body generated.AddSubgroupsToGroupJSONRequestBody) (*generated.AddSubgroupsToGroupResponse, error) {
+// RawAddSubgroupsToGroup Add child groups
+func (c *Client) RawAddSubgroupsToGroup(ctx context.Context, gid float32, body generated.AddSubgroupsToGroupJSONRequestBody) (*generated.AddSubgroupsToGroupResponse, error) {
 	resp, err := c.API().AddSubgroupsToGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -49,8 +50,8 @@ func (c *Client) AddSubgroupsToGroup(ctx context.Context, gid float32, body gene
 	return resp, nil
 }
 
-// Audit Get audit logs
-func (c *Client) Audit(ctx context.Context, body generated.AuditJSONRequestBody) (*generated.AuditResponse, error) {
+// RawAudit Get audit logs
+func (c *Client) RawAudit(ctx context.Context, body generated.AuditJSONRequestBody) (*generated.AuditResponse, error) {
 	resp, err := c.API().AuditWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -61,8 +62,8 @@ func (c *Client) Audit(ctx context.Context, body generated.AuditJSONRequestBody)
 	return resp, nil
 }
 
-// ChangesetSolution List solution changes
-func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, params *generated.ChangesetSolutionParams, body generated.ChangesetSolutionJSONRequestBody) (*generated.ChangesetSolutionResponse, error) {
+// RawChangesetSolution List solution changes
+func (c *Client) RawChangesetSolution(ctx context.Context, solutionId string, params *generated.ChangesetSolutionParams, body generated.ChangesetSolutionJSONRequestBody) (*generated.ChangesetSolutionResponse, error) {
 	resp, err := c.API().ChangesetSolutionWithResponse(ctx, solutionId, params, body)
 	if err != nil {
 		return nil, err
@@ -73,8 +74,8 @@ func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, param
 	return resp, nil
 }
 
-// ChangesetSolutionFromRecord List solution changes from record
-func (c *Client) ChangesetSolutionFromRecord(ctx context.Context, solutionId string, params *generated.ChangesetSolutionFromRecordParams) (*generated.ChangesetSolutionFromRecordResponse, error) {
+// RawChangesetSolutionFromRecord List solution changes from record
+func (c *Client) RawChangesetSolutionFromRecord(ctx context.Context, solutionId string, params *generated.ChangesetSolutionFromRecordParams) (*generated.ChangesetSolutionFromRecordResponse, error) {
 	resp, err := c.API().ChangesetSolutionFromRecordWithResponse(ctx, solutionId, params)
 	if err != nil {
 		return nil, err
@@ -85,8 +86,8 @@ func (c *Client) ChangesetSolutionFromRecord(ctx context.Context, solutionId str
 	return resp, nil
 }
 
-// CloneUserToken Clone a user token
-func (c *Client) CloneUserToken(ctx context.Context, body generated.CloneUserTokenJSONRequestBody) (*generated.CloneUserTokenResponse, error) {
+// RawCloneUserToken Clone a user token
+func (c *Client) RawCloneUserToken(ctx context.Context, body generated.CloneUserTokenJSONRequestBody) (*generated.CloneUserTokenResponse, error) {
 	resp, err := c.API().CloneUserTokenWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -97,8 +98,8 @@ func (c *Client) CloneUserToken(ctx context.Context, body generated.CloneUserTok
 	return resp, nil
 }
 
-// CopyApp Copy an app
-func (c *Client) CopyApp(ctx context.Context, appId string, body generated.CopyAppJSONRequestBody) (*generated.CopyAppResponse, error) {
+// RawCopyApp Copy an app
+func (c *Client) RawCopyApp(ctx context.Context, appId string, body generated.CopyAppJSONRequestBody) (*generated.CopyAppResponse, error) {
 	resp, err := c.API().CopyAppWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
@@ -109,8 +110,8 @@ func (c *Client) CopyApp(ctx context.Context, appId string, body generated.CopyA
 	return resp, nil
 }
 
-// CreateApp Create an app
-func (c *Client) CreateApp(ctx context.Context, body generated.CreateAppJSONRequestBody) (*generated.CreateAppResponse, error) {
+// RawCreateApp Create an app
+func (c *Client) RawCreateApp(ctx context.Context, body generated.CreateAppJSONRequestBody) (*generated.CreateAppResponse, error) {
 	resp, err := c.API().CreateAppWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -121,8 +122,8 @@ func (c *Client) CreateApp(ctx context.Context, body generated.CreateAppJSONRequ
 	return resp, nil
 }
 
-// CreateField Create a field
-func (c *Client) CreateField(ctx context.Context, params *generated.CreateFieldParams, body generated.CreateFieldJSONRequestBody) (*generated.CreateFieldResponse, error) {
+// RawCreateField Create a field
+func (c *Client) RawCreateField(ctx context.Context, params *generated.CreateFieldParams, body generated.CreateFieldJSONRequestBody) (*generated.CreateFieldResponse, error) {
 	resp, err := c.API().CreateFieldWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -133,8 +134,8 @@ func (c *Client) CreateField(ctx context.Context, params *generated.CreateFieldP
 	return resp, nil
 }
 
-// CreateRelationship Create a relationship
-func (c *Client) CreateRelationship(ctx context.Context, tableId string, body generated.CreateRelationshipJSONRequestBody) (*generated.CreateRelationshipResponse, error) {
+// RawCreateRelationship Create a relationship
+func (c *Client) RawCreateRelationship(ctx context.Context, tableId string, body generated.CreateRelationshipJSONRequestBody) (*generated.CreateRelationshipResponse, error) {
 	resp, err := c.API().CreateRelationshipWithResponse(ctx, tableId, body)
 	if err != nil {
 		return nil, err
@@ -145,8 +146,8 @@ func (c *Client) CreateRelationship(ctx context.Context, tableId string, body ge
 	return resp, nil
 }
 
-// CreateSolution Create a solution
-func (c *Client) CreateSolution(ctx context.Context, params *generated.CreateSolutionParams, body generated.CreateSolutionJSONRequestBody) (*generated.CreateSolutionResponse, error) {
+// RawCreateSolution Create a solution
+func (c *Client) RawCreateSolution(ctx context.Context, params *generated.CreateSolutionParams, body generated.CreateSolutionJSONRequestBody) (*generated.CreateSolutionResponse, error) {
 	resp, err := c.API().CreateSolutionWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -157,8 +158,8 @@ func (c *Client) CreateSolution(ctx context.Context, params *generated.CreateSol
 	return resp, nil
 }
 
-// CreateSolutionFromRecord Create solution from record
-func (c *Client) CreateSolutionFromRecord(ctx context.Context, params *generated.CreateSolutionFromRecordParams) (*generated.CreateSolutionFromRecordResponse, error) {
+// RawCreateSolutionFromRecord Create solution from record
+func (c *Client) RawCreateSolutionFromRecord(ctx context.Context, params *generated.CreateSolutionFromRecordParams) (*generated.CreateSolutionFromRecordResponse, error) {
 	resp, err := c.API().CreateSolutionFromRecordWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -169,8 +170,8 @@ func (c *Client) CreateSolutionFromRecord(ctx context.Context, params *generated
 	return resp, nil
 }
 
-// CreateTable Create a table
-func (c *Client) CreateTable(ctx context.Context, params *generated.CreateTableParams, body generated.CreateTableJSONRequestBody) (*generated.CreateTableResponse, error) {
+// RawCreateTable Create a table
+func (c *Client) RawCreateTable(ctx context.Context, params *generated.CreateTableParams, body generated.CreateTableJSONRequestBody) (*generated.CreateTableResponse, error) {
 	resp, err := c.API().CreateTableWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -181,8 +182,8 @@ func (c *Client) CreateTable(ctx context.Context, params *generated.CreateTableP
 	return resp, nil
 }
 
-// DeactivateUserToken Deactivate a user token
-func (c *Client) DeactivateUserToken(ctx context.Context) (*generated.DeactivateUserTokenResponse, error) {
+// RawDeactivateUserToken Deactivate a user token
+func (c *Client) RawDeactivateUserToken(ctx context.Context) (*generated.DeactivateUserTokenResponse, error) {
 	resp, err := c.API().DeactivateUserTokenWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -193,8 +194,8 @@ func (c *Client) DeactivateUserToken(ctx context.Context) (*generated.Deactivate
 	return resp, nil
 }
 
-// DeleteApp Delete an app
-func (c *Client) DeleteApp(ctx context.Context, appId string, body generated.DeleteAppJSONRequestBody) (*generated.DeleteAppResponse, error) {
+// RawDeleteApp Delete an app
+func (c *Client) RawDeleteApp(ctx context.Context, appId string, body generated.DeleteAppJSONRequestBody) (*generated.DeleteAppResponse, error) {
 	resp, err := c.API().DeleteAppWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
@@ -205,8 +206,8 @@ func (c *Client) DeleteApp(ctx context.Context, appId string, body generated.Del
 	return resp, nil
 }
 
-// DeleteFields Delete field(s)
-func (c *Client) DeleteFields(ctx context.Context, params *generated.DeleteFieldsParams, body generated.DeleteFieldsJSONRequestBody) (*generated.DeleteFieldsResponse, error) {
+// RawDeleteFields Delete field(s)
+func (c *Client) RawDeleteFields(ctx context.Context, params *generated.DeleteFieldsParams, body generated.DeleteFieldsJSONRequestBody) (*generated.DeleteFieldsResponse, error) {
 	resp, err := c.API().DeleteFieldsWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -217,8 +218,8 @@ func (c *Client) DeleteFields(ctx context.Context, params *generated.DeleteField
 	return resp, nil
 }
 
-// DeleteFile Delete file
-func (c *Client) DeleteFile(ctx context.Context, tableId string, recordId int, fieldId int, versionNumber int) (*generated.DeleteFileResponse, error) {
+// RawDeleteFile Delete file
+func (c *Client) RawDeleteFile(ctx context.Context, tableId string, recordId int, fieldId int, versionNumber int) (*generated.DeleteFileResponse, error) {
 	resp, err := c.API().DeleteFileWithResponse(ctx, tableId, recordId, fieldId, versionNumber)
 	if err != nil {
 		return nil, err
@@ -229,8 +230,8 @@ func (c *Client) DeleteFile(ctx context.Context, tableId string, recordId int, f
 	return resp, nil
 }
 
-// DeleteRelationship Delete a relationship
-func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relationshipId float32) (*generated.DeleteRelationshipResponse, error) {
+// RawDeleteRelationship Delete a relationship
+func (c *Client) RawDeleteRelationship(ctx context.Context, tableId string, relationshipId float32) (*generated.DeleteRelationshipResponse, error) {
 	resp, err := c.API().DeleteRelationshipWithResponse(ctx, tableId, relationshipId)
 	if err != nil {
 		return nil, err
@@ -241,8 +242,8 @@ func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relatio
 	return resp, nil
 }
 
-// DeleteTable Delete a table
-func (c *Client) DeleteTable(ctx context.Context, tableId string, params *generated.DeleteTableParams) (*generated.DeleteTableResponse, error) {
+// RawDeleteTable Delete a table
+func (c *Client) RawDeleteTable(ctx context.Context, tableId string, params *generated.DeleteTableParams) (*generated.DeleteTableResponse, error) {
 	resp, err := c.API().DeleteTableWithResponse(ctx, tableId, params)
 	if err != nil {
 		return nil, err
@@ -253,8 +254,8 @@ func (c *Client) DeleteTable(ctx context.Context, tableId string, params *genera
 	return resp, nil
 }
 
-// DeleteUserToken Delete a user token
-func (c *Client) DeleteUserToken(ctx context.Context) (*generated.DeleteUserTokenResponse, error) {
+// RawDeleteUserToken Delete a user token
+func (c *Client) RawDeleteUserToken(ctx context.Context) (*generated.DeleteUserTokenResponse, error) {
 	resp, err := c.API().DeleteUserTokenWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -265,8 +266,8 @@ func (c *Client) DeleteUserToken(ctx context.Context) (*generated.DeleteUserToke
 	return resp, nil
 }
 
-// DenyUsers Deny users
-func (c *Client) DenyUsers(ctx context.Context, params *generated.DenyUsersParams, body generated.DenyUsersJSONRequestBody) (*generated.DenyUsersResponse, error) {
+// RawDenyUsers Deny users
+func (c *Client) RawDenyUsers(ctx context.Context, params *generated.DenyUsersParams, body generated.DenyUsersJSONRequestBody) (*generated.DenyUsersResponse, error) {
 	resp, err := c.API().DenyUsersWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -277,8 +278,8 @@ func (c *Client) DenyUsers(ctx context.Context, params *generated.DenyUsersParam
 	return resp, nil
 }
 
-// DenyUsersAndGroups Deny and remove users from groups
-func (c *Client) DenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups bool, params *generated.DenyUsersAndGroupsParams, body generated.DenyUsersAndGroupsJSONRequestBody) (*generated.DenyUsersAndGroupsResponse, error) {
+// RawDenyUsersAndGroups Deny and remove users from groups
+func (c *Client) RawDenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups bool, params *generated.DenyUsersAndGroupsParams, body generated.DenyUsersAndGroupsJSONRequestBody) (*generated.DenyUsersAndGroupsResponse, error) {
 	resp, err := c.API().DenyUsersAndGroupsWithResponse(ctx, shouldDeleteFromGroups, params, body)
 	if err != nil {
 		return nil, err
@@ -289,8 +290,8 @@ func (c *Client) DenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups 
 	return resp, nil
 }
 
-// DownloadFile Download file
-func (c *Client) DownloadFile(ctx context.Context, tableId string, recordId int, fieldId int, versionNumber int) (*generated.DownloadFileResponse, error) {
+// RawDownloadFile Download file
+func (c *Client) RawDownloadFile(ctx context.Context, tableId string, recordId int, fieldId int, versionNumber int) (*generated.DownloadFileResponse, error) {
 	resp, err := c.API().DownloadFileWithResponse(ctx, tableId, recordId, fieldId, versionNumber)
 	if err != nil {
 		return nil, err
@@ -301,8 +302,8 @@ func (c *Client) DownloadFile(ctx context.Context, tableId string, recordId int,
 	return resp, nil
 }
 
-// ExchangeSsoToken Exchange an SSO token
-func (c *Client) ExchangeSsoToken(ctx context.Context, body generated.ExchangeSsoTokenJSONRequestBody) (*generated.ExchangeSsoTokenResponse, error) {
+// RawExchangeSsoToken Exchange an SSO token
+func (c *Client) RawExchangeSsoToken(ctx context.Context, body generated.ExchangeSsoTokenJSONRequestBody) (*generated.ExchangeSsoTokenResponse, error) {
 	resp, err := c.API().ExchangeSsoTokenWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -313,8 +314,8 @@ func (c *Client) ExchangeSsoToken(ctx context.Context, body generated.ExchangeSs
 	return resp, nil
 }
 
-// ExportSolution Export a solution
-func (c *Client) ExportSolution(ctx context.Context, solutionId string, params *generated.ExportSolutionParams) (*generated.ExportSolutionResponse, error) {
+// RawExportSolution Export a solution
+func (c *Client) RawExportSolution(ctx context.Context, solutionId string, params *generated.ExportSolutionParams) (*generated.ExportSolutionResponse, error) {
 	resp, err := c.API().ExportSolutionWithResponse(ctx, solutionId, params)
 	if err != nil {
 		return nil, err
@@ -325,8 +326,8 @@ func (c *Client) ExportSolution(ctx context.Context, solutionId string, params *
 	return resp, nil
 }
 
-// ExportSolutionToRecord Export solution to record
-func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, params *generated.ExportSolutionToRecordParams) (*generated.ExportSolutionToRecordResponse, error) {
+// RawExportSolutionToRecord Export solution to record
+func (c *Client) RawExportSolutionToRecord(ctx context.Context, solutionId string, params *generated.ExportSolutionToRecordParams) (*generated.ExportSolutionToRecordResponse, error) {
 	resp, err := c.API().ExportSolutionToRecordWithResponse(ctx, solutionId, params)
 	if err != nil {
 		return nil, err
@@ -337,8 +338,8 @@ func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, 
 	return resp, nil
 }
 
-// GenerateDocument Generate a document
-func (c *Client) GenerateDocument(ctx context.Context, templateId float32, params *generated.GenerateDocumentParams) (*generated.GenerateDocumentResponse, error) {
+// RawGenerateDocument Generate a document
+func (c *Client) RawGenerateDocument(ctx context.Context, templateId float32, params *generated.GenerateDocumentParams) (*generated.GenerateDocumentResponse, error) {
 	resp, err := c.API().GenerateDocumentWithResponse(ctx, templateId, params)
 	if err != nil {
 		return nil, err
@@ -349,8 +350,8 @@ func (c *Client) GenerateDocument(ctx context.Context, templateId float32, param
 	return resp, nil
 }
 
-// GetAppEvents Get app events
-func (c *Client) GetAppEvents(ctx context.Context, appId string) (*generated.GetAppEventsResponse, error) {
+// RawGetAppEvents Get app events
+func (c *Client) RawGetAppEvents(ctx context.Context, appId string) (*generated.GetAppEventsResponse, error) {
 	resp, err := c.API().GetAppEventsWithResponse(ctx, appId)
 	if err != nil {
 		return nil, err
@@ -361,8 +362,8 @@ func (c *Client) GetAppEvents(ctx context.Context, appId string) (*generated.Get
 	return resp, nil
 }
 
-// GetAppTables Get tables for an app
-func (c *Client) GetAppTables(ctx context.Context, params *generated.GetAppTablesParams) (*generated.GetAppTablesResponse, error) {
+// RawGetAppTables Get tables for an app
+func (c *Client) RawGetAppTables(ctx context.Context, params *generated.GetAppTablesParams) (*generated.GetAppTablesResponse, error) {
 	resp, err := c.API().GetAppTablesWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -373,8 +374,8 @@ func (c *Client) GetAppTables(ctx context.Context, params *generated.GetAppTable
 	return resp, nil
 }
 
-// GetField Get field
-func (c *Client) GetField(ctx context.Context, fieldId int, params *generated.GetFieldParams) (*generated.GetFieldResponse, error) {
+// RawGetField Get field
+func (c *Client) RawGetField(ctx context.Context, fieldId int, params *generated.GetFieldParams) (*generated.GetFieldResponse, error) {
 	resp, err := c.API().GetFieldWithResponse(ctx, fieldId, params)
 	if err != nil {
 		return nil, err
@@ -385,8 +386,8 @@ func (c *Client) GetField(ctx context.Context, fieldId int, params *generated.Ge
 	return resp, nil
 }
 
-// GetFieldUsage Get usage for a field
-func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, params *generated.GetFieldUsageParams) (*generated.GetFieldUsageResponse, error) {
+// RawGetFieldUsage Get usage for a field
+func (c *Client) RawGetFieldUsage(ctx context.Context, fieldId int, params *generated.GetFieldUsageParams) (*generated.GetFieldUsageResponse, error) {
 	resp, err := c.API().GetFieldUsageWithResponse(ctx, fieldId, params)
 	if err != nil {
 		return nil, err
@@ -397,8 +398,8 @@ func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, params *generat
 	return resp, nil
 }
 
-// GetFieldsUsage Get usage for all fields
-func (c *Client) GetFieldsUsage(ctx context.Context, params *generated.GetFieldsUsageParams) (*generated.GetFieldsUsageResponse, error) {
+// RawGetFieldsUsage Get usage for all fields
+func (c *Client) RawGetFieldsUsage(ctx context.Context, params *generated.GetFieldsUsageParams) (*generated.GetFieldsUsageResponse, error) {
 	resp, err := c.API().GetFieldsUsageWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -409,8 +410,8 @@ func (c *Client) GetFieldsUsage(ctx context.Context, params *generated.GetFields
 	return resp, nil
 }
 
-// GetRelationships Get all relationships
-func (c *Client) GetRelationships(ctx context.Context, tableId string, params *generated.GetRelationshipsParams) (*generated.GetRelationshipsResponse, error) {
+// RawGetRelationships Get all relationships
+func (c *Client) RawGetRelationships(ctx context.Context, tableId string, params *generated.GetRelationshipsParams) (*generated.GetRelationshipsResponse, error) {
 	resp, err := c.API().GetRelationshipsWithResponse(ctx, tableId, params)
 	if err != nil {
 		return nil, err
@@ -421,8 +422,8 @@ func (c *Client) GetRelationships(ctx context.Context, tableId string, params *g
 	return resp, nil
 }
 
-// GetReport Get a report
-func (c *Client) GetReport(ctx context.Context, reportId string, params *generated.GetReportParams) (*generated.GetReportResponse, error) {
+// RawGetReport Get a report
+func (c *Client) RawGetReport(ctx context.Context, reportId string, params *generated.GetReportParams) (*generated.GetReportResponse, error) {
 	resp, err := c.API().GetReportWithResponse(ctx, reportId, params)
 	if err != nil {
 		return nil, err
@@ -433,8 +434,8 @@ func (c *Client) GetReport(ctx context.Context, reportId string, params *generat
 	return resp, nil
 }
 
-// GetTable Get a table
-func (c *Client) GetTable(ctx context.Context, tableId string, params *generated.GetTableParams) (*generated.GetTableResponse, error) {
+// RawGetTable Get a table
+func (c *Client) RawGetTable(ctx context.Context, tableId string, params *generated.GetTableParams) (*generated.GetTableResponse, error) {
 	resp, err := c.API().GetTableWithResponse(ctx, tableId, params)
 	if err != nil {
 		return nil, err
@@ -445,8 +446,8 @@ func (c *Client) GetTable(ctx context.Context, tableId string, params *generated
 	return resp, nil
 }
 
-// GetTableReports Get reports for a table
-func (c *Client) GetTableReports(ctx context.Context, params *generated.GetTableReportsParams) (*generated.GetTableReportsResponse, error) {
+// RawGetTableReports Get reports for a table
+func (c *Client) RawGetTableReports(ctx context.Context, params *generated.GetTableReportsParams) (*generated.GetTableReportsResponse, error) {
 	resp, err := c.API().GetTableReportsWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -457,8 +458,8 @@ func (c *Client) GetTableReports(ctx context.Context, params *generated.GetTable
 	return resp, nil
 }
 
-// GetTempTokenDBID Get a temporary token for a dbid
-func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, params *generated.GetTempTokenDBIDParams) (*generated.GetTempTokenDBIDResponse, error) {
+// RawGetTempTokenDBID Get a temporary token for a dbid
+func (c *Client) RawGetTempTokenDBID(ctx context.Context, dbid string, params *generated.GetTempTokenDBIDParams) (*generated.GetTempTokenDBIDResponse, error) {
 	resp, err := c.API().GetTempTokenDBIDWithResponse(ctx, dbid, params)
 	if err != nil {
 		return nil, err
@@ -469,8 +470,8 @@ func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, params *gene
 	return resp, nil
 }
 
-// GetUsers Get users
-func (c *Client) GetUsers(ctx context.Context, params *generated.GetUsersParams, body generated.GetUsersJSONRequestBody) (*generated.GetUsersResponse, error) {
+// RawGetUsers Get users
+func (c *Client) RawGetUsers(ctx context.Context, params *generated.GetUsersParams, body generated.GetUsersJSONRequestBody) (*generated.GetUsersResponse, error) {
 	resp, err := c.API().GetUsersWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -481,8 +482,8 @@ func (c *Client) GetUsers(ctx context.Context, params *generated.GetUsersParams,
 	return resp, nil
 }
 
-// PlatformAnalyticEventSummaries Get event summaries
-func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, params *generated.PlatformAnalyticEventSummariesParams, body generated.PlatformAnalyticEventSummariesJSONRequestBody) (*generated.PlatformAnalyticEventSummariesResponse, error) {
+// RawPlatformAnalyticEventSummaries Get event summaries
+func (c *Client) RawPlatformAnalyticEventSummaries(ctx context.Context, params *generated.PlatformAnalyticEventSummariesParams, body generated.PlatformAnalyticEventSummariesJSONRequestBody) (*generated.PlatformAnalyticEventSummariesResponse, error) {
 	resp, err := c.API().PlatformAnalyticEventSummariesWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -493,8 +494,8 @@ func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, params *gen
 	return resp, nil
 }
 
-// PlatformAnalyticReads Get read summaries
-func (c *Client) PlatformAnalyticReads(ctx context.Context, params *generated.PlatformAnalyticReadsParams) (*generated.PlatformAnalyticReadsResponse, error) {
+// RawPlatformAnalyticReads Get read summaries
+func (c *Client) RawPlatformAnalyticReads(ctx context.Context, params *generated.PlatformAnalyticReadsParams) (*generated.PlatformAnalyticReadsResponse, error) {
 	resp, err := c.API().PlatformAnalyticReadsWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -505,8 +506,8 @@ func (c *Client) PlatformAnalyticReads(ctx context.Context, params *generated.Pl
 	return resp, nil
 }
 
-// RemoveManagersFromGroup Remove managers
-func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid float32, body generated.RemoveManagersFromGroupJSONRequestBody) (*generated.RemoveManagersFromGroupResponse, error) {
+// RawRemoveManagersFromGroup Remove managers
+func (c *Client) RawRemoveManagersFromGroup(ctx context.Context, gid float32, body generated.RemoveManagersFromGroupJSONRequestBody) (*generated.RemoveManagersFromGroupResponse, error) {
 	resp, err := c.API().RemoveManagersFromGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -517,8 +518,8 @@ func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid float32, body 
 	return resp, nil
 }
 
-// RemoveMembersFromGroup Remove members
-func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid float32, body generated.RemoveMembersFromGroupJSONRequestBody) (*generated.RemoveMembersFromGroupResponse, error) {
+// RawRemoveMembersFromGroup Remove members
+func (c *Client) RawRemoveMembersFromGroup(ctx context.Context, gid float32, body generated.RemoveMembersFromGroupJSONRequestBody) (*generated.RemoveMembersFromGroupResponse, error) {
 	resp, err := c.API().RemoveMembersFromGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -529,8 +530,8 @@ func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid float32, body g
 	return resp, nil
 }
 
-// RemoveSubgroupsFromGroup Remove child groups
-func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body generated.RemoveSubgroupsFromGroupJSONRequestBody) (*generated.RemoveSubgroupsFromGroupResponse, error) {
+// RawRemoveSubgroupsFromGroup Remove child groups
+func (c *Client) RawRemoveSubgroupsFromGroup(ctx context.Context, gid float32, body generated.RemoveSubgroupsFromGroupJSONRequestBody) (*generated.RemoveSubgroupsFromGroupResponse, error) {
 	resp, err := c.API().RemoveSubgroupsFromGroupWithResponse(ctx, gid, body)
 	if err != nil {
 		return nil, err
@@ -541,8 +542,8 @@ func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body
 	return resp, nil
 }
 
-// RunFormula Run a formula
-func (c *Client) RunFormula(ctx context.Context, body generated.RunFormulaJSONRequestBody) (*generated.RunFormulaResponse, error) {
+// RawRunFormula Run a formula
+func (c *Client) RawRunFormula(ctx context.Context, body generated.RunFormulaJSONRequestBody) (*generated.RunFormulaResponse, error) {
 	resp, err := c.API().RunFormulaWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -553,8 +554,8 @@ func (c *Client) RunFormula(ctx context.Context, body generated.RunFormulaJSONRe
 	return resp, nil
 }
 
-// RunReport Run a report
-func (c *Client) RunReport(ctx context.Context, reportId string, params *generated.RunReportParams, body generated.RunReportJSONRequestBody) (*generated.RunReportResponse, error) {
+// RawRunReport Run a report
+func (c *Client) RawRunReport(ctx context.Context, reportId string, params *generated.RunReportParams, body generated.RunReportJSONRequestBody) (*generated.RunReportResponse, error) {
 	resp, err := c.API().RunReportWithResponse(ctx, reportId, params, body)
 	if err != nil {
 		return nil, err
@@ -565,8 +566,8 @@ func (c *Client) RunReport(ctx context.Context, reportId string, params *generat
 	return resp, nil
 }
 
-// TransferUserToken Transfer a user token
-func (c *Client) TransferUserToken(ctx context.Context, body generated.TransferUserTokenJSONRequestBody) (*generated.TransferUserTokenResponse, error) {
+// RawTransferUserToken Transfer a user token
+func (c *Client) RawTransferUserToken(ctx context.Context, body generated.TransferUserTokenJSONRequestBody) (*generated.TransferUserTokenResponse, error) {
 	resp, err := c.API().TransferUserTokenWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -577,8 +578,8 @@ func (c *Client) TransferUserToken(ctx context.Context, body generated.TransferU
 	return resp, nil
 }
 
-// UndenyUsers Undeny users
-func (c *Client) UndenyUsers(ctx context.Context, params *generated.UndenyUsersParams, body generated.UndenyUsersJSONRequestBody) (*generated.UndenyUsersResponse, error) {
+// RawUndenyUsers Undeny users
+func (c *Client) RawUndenyUsers(ctx context.Context, params *generated.UndenyUsersParams, body generated.UndenyUsersJSONRequestBody) (*generated.UndenyUsersResponse, error) {
 	resp, err := c.API().UndenyUsersWithResponse(ctx, params, body)
 	if err != nil {
 		return nil, err
@@ -589,8 +590,8 @@ func (c *Client) UndenyUsers(ctx context.Context, params *generated.UndenyUsersP
 	return resp, nil
 }
 
-// UpdateApp Update an app
-func (c *Client) UpdateApp(ctx context.Context, appId string, body generated.UpdateAppJSONRequestBody) (*generated.UpdateAppResponse, error) {
+// RawUpdateApp Update an app
+func (c *Client) RawUpdateApp(ctx context.Context, appId string, body generated.UpdateAppJSONRequestBody) (*generated.UpdateAppResponse, error) {
 	resp, err := c.API().UpdateAppWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
@@ -601,8 +602,8 @@ func (c *Client) UpdateApp(ctx context.Context, appId string, body generated.Upd
 	return resp, nil
 }
 
-// UpdateField Update a field
-func (c *Client) UpdateField(ctx context.Context, fieldId int, params *generated.UpdateFieldParams, body generated.UpdateFieldJSONRequestBody) (*generated.UpdateFieldResponse, error) {
+// RawUpdateField Update a field
+func (c *Client) RawUpdateField(ctx context.Context, fieldId int, params *generated.UpdateFieldParams, body generated.UpdateFieldJSONRequestBody) (*generated.UpdateFieldResponse, error) {
 	resp, err := c.API().UpdateFieldWithResponse(ctx, fieldId, params, body)
 	if err != nil {
 		return nil, err
@@ -613,8 +614,8 @@ func (c *Client) UpdateField(ctx context.Context, fieldId int, params *generated
 	return resp, nil
 }
 
-// UpdateRelationship Update a relationship
-func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relationshipId float32, body generated.UpdateRelationshipJSONRequestBody) (*generated.UpdateRelationshipResponse, error) {
+// RawUpdateRelationship Update a relationship
+func (c *Client) RawUpdateRelationship(ctx context.Context, tableId string, relationshipId float32, body generated.UpdateRelationshipJSONRequestBody) (*generated.UpdateRelationshipResponse, error) {
 	resp, err := c.API().UpdateRelationshipWithResponse(ctx, tableId, relationshipId, body)
 	if err != nil {
 		return nil, err
@@ -625,8 +626,8 @@ func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relatio
 	return resp, nil
 }
 
-// UpdateSolution Update a solution
-func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params *generated.UpdateSolutionParams, body generated.UpdateSolutionJSONRequestBody) (*generated.UpdateSolutionResponse, error) {
+// RawUpdateSolution Update a solution
+func (c *Client) RawUpdateSolution(ctx context.Context, solutionId string, params *generated.UpdateSolutionParams, body generated.UpdateSolutionJSONRequestBody) (*generated.UpdateSolutionResponse, error) {
 	resp, err := c.API().UpdateSolutionWithResponse(ctx, solutionId, params, body)
 	if err != nil {
 		return nil, err
@@ -637,8 +638,8 @@ func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params *
 	return resp, nil
 }
 
-// UpdateSolutionToRecord Update solution from record
-func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, params *generated.UpdateSolutionToRecordParams) (*generated.UpdateSolutionToRecordResponse, error) {
+// RawUpdateSolutionToRecord Update solution from record
+func (c *Client) RawUpdateSolutionToRecord(ctx context.Context, solutionId string, params *generated.UpdateSolutionToRecordParams) (*generated.UpdateSolutionToRecordResponse, error) {
 	resp, err := c.API().UpdateSolutionToRecordWithResponse(ctx, solutionId, params)
 	if err != nil {
 		return nil, err
@@ -649,8 +650,8 @@ func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, 
 	return resp, nil
 }
 
-// UpdateTable Update a table
-func (c *Client) UpdateTable(ctx context.Context, tableId string, params *generated.UpdateTableParams, body generated.UpdateTableJSONRequestBody) (*generated.UpdateTableResponse, error) {
+// RawUpdateTable Update a table
+func (c *Client) RawUpdateTable(ctx context.Context, tableId string, params *generated.UpdateTableParams, body generated.UpdateTableJSONRequestBody) (*generated.UpdateTableResponse, error) {
 	resp, err := c.API().UpdateTableWithResponse(ctx, tableId, params, body)
 	if err != nil {
 		return nil, err

@@ -137,7 +137,7 @@ func buildWrapperMethod(path, httpMethod string, op Operation) *WrapperMethod {
 	name := toPascalCase(op.OperationID)
 
 	method := &WrapperMethod{
-		Name:         name,
+		Name:         "Raw" + name, // Add Raw prefix for escape hatch methods
 		Summary:      op.Summary,
 		APIMethod:    name + "WithResponse",
 		ResponseType: name + "Response",
@@ -206,13 +206,13 @@ func toPascalCase(s string) string {
 }
 
 func generateCode(methods []WrapperMethod) error {
-	// Skip methods we've already manually implemented
+	// Skip methods we've already manually implemented in client.go
 	skip := map[string]bool{
-		"RunQuery":      true,
-		"Upsert":        true,
-		"DeleteRecords": true,
-		"GetApp":        true,
-		"GetFields":     true,
+		"RawRunQuery":      true,
+		"RawUpsert":        true,
+		"RawDeleteRecords": true,
+		"RawGetApp":        true,
+		"RawGetFields":     true,
 	}
 
 	tmpl := template.Must(template.New("api").Funcs(template.FuncMap{
@@ -256,9 +256,10 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 )
 
-// --- Auto-generated wrapper methods ---
-// These provide a cleaner API over the generated oapi-codegen client.
-// For full control, use client.API() to access the underlying client.
+// --- Auto-generated Raw wrapper methods ---
+// These provide direct access to the QuickBase API matching the official documentation.
+// For a fluent builder API, use the builder methods (e.g., client.CreateApp() instead of client.RawCreateApp()).
+// For the underlying oapi-codegen client, use client.API().
 
 {{range .Methods}}
 // {{.Name}} {{.Summary}}

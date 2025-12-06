@@ -7,10 +7,11 @@ A Go client for the QuickBase JSON RESTful API.
 ## Features
 
 - **Wrapper Methods** - `RunQuery`, `RunQueryAll`, `Upsert`, `GetApp`, and more
+- **Query Builder** - `client.Query("table").Select().Where().Run(ctx)`
 - **Schema Aliases** - Use readable names (`"projects"`, `"name"`) instead of IDs (`"bqxyz123"`, `6`)
 - **Fluent Schema Builder** - `NewSchema().Table().Field().Build()` for schema definition
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages
-- **Helper Functions** - `Row()`, `Value()`, `Fields()`, `SortBy()`, `Ptr()`, `Ints()`
+- **Helper Functions** - `Row()`, `Value()`, `Fields()`, `Asc()`, `Desc()`, `Ptr()`, `Ints()`
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Prevents 429 errors with sliding window rate limiting
@@ -458,6 +459,66 @@ client, err := quickbase.New("mycompany",
     quickbase.WithUserToken("token"),
     quickbase.WithSchema(&schema),
 )
+```
+
+## Query Builder
+
+The fluent query builder eliminates repetition when using schema aliases:
+
+```go
+// Fluent builder - table specified once
+result, err := client.Query("projects").
+    Select("name", "status", "dueDate").
+    Where("{'status'.EX.'Active'}").
+    SortBy(quickbase.Asc("name"), quickbase.Desc("dueDate")).
+    Options(100, 0).  // top, skip
+    Run(ctx)
+
+// Fetch all records with automatic pagination
+records, err := client.Query("projects").
+    Select("name", "status").
+    RunAll(ctx)
+```
+
+### Query Methods
+
+```go
+qb := client.Query("projects")           // Start query for table (alias or ID)
+    .Select("name", "status")            // Fields to return (aliases or IDs)
+    .Where("{'status'.EX.'Active'}")     // Filter clause
+    .SortBy(quickbase.Asc("name"))       // Sort order
+    .GroupBy("status")                   // Group by fields
+    .Options(100, 0)                     // Pagination (top, skip)
+    .Run(ctx)                            // Execute and return first page
+    .RunAll(ctx)                         // Execute and return all pages
+```
+
+### Upsert Builder
+
+```go
+result, err := client.UpsertTo("projects").
+    MergeOn("externalId").                                    // Merge field for updates
+    Row("externalId", "EXT-001", "name", "Alpha", "status", "Active").
+    Row("externalId", "EXT-002", "name", "Beta", "status", "Pending").
+    Return("name", "status").                                 // Fields to return
+    Run(ctx)
+
+fmt.Printf("Created: %v, Updated: %v\n",
+    result.CreatedRecordIDs, result.UpdatedRecordIDs)
+```
+
+### Asc/Desc Helpers
+
+The `Asc()` and `Desc()` helpers accept both field IDs and aliases:
+
+```go
+// With field IDs (no schema needed)
+quickbase.Asc(6)
+quickbase.Desc(7)
+
+// With aliases (schema configured)
+quickbase.Asc("name")
+quickbase.Desc("dueDate")
 ```
 
 ## API Usage
