@@ -141,8 +141,8 @@ func (s *TicketStrategy) GetToken(ctx context.Context, dbid string) (string, err
 		s.ticket = ticket
 		s.userID = userID
 		s.authenticated = true
-		s.password = "" // Clear password from memory
 	}
+	s.password = "" // Clear password from memory regardless of success/failure
 	close(s.pending)
 	s.pending = nil
 	s.mu.Unlock()
@@ -244,10 +244,11 @@ func (s *TicketStrategy) UserID() string {
 }
 
 // xmlEscape escapes special XML characters in a string.
+// If escaping fails (invalid characters), returns empty string for safety.
 func xmlEscape(s string) string {
 	var buf bytes.Buffer
 	if err := xml.EscapeText(&buf, []byte(s)); err != nil {
-		return s
+		return ""
 	}
 	return buf.String()
 }

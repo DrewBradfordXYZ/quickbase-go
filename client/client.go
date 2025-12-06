@@ -87,6 +87,9 @@ type Client struct {
 	onRateLimit func(core.RateLimitInfo)
 	onRequest   func(RequestInfo)
 	onRetry     func(RetryInfo)
+
+	// Transport for cleanup
+	transport *http.Transport
 }
 
 // RequestInfo contains information about a completed API request.
@@ -316,6 +319,7 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 	}
 
 	c.generated = genClient
+	c.transport = transport
 	return c, nil
 }
 
@@ -354,6 +358,14 @@ func (c *Client) Logger() *core.Logger {
 // Schema returns the resolved schema, if configured.
 func (c *Client) Schema() *core.ResolvedSchema {
 	return c.schema
+}
+
+// Close closes idle connections and releases resources.
+// After calling Close, the client should not be used.
+func (c *Client) Close() {
+	if c.transport != nil {
+		c.transport.CloseIdleConnections()
+	}
 }
 
 // authHTTPClient wraps http.Client to add auth, retry, and rate limiting.
