@@ -73,6 +73,7 @@ package quickbase
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/auth"
@@ -746,29 +747,29 @@ func Strings(strs ...string) *[]string {
 	return &strs
 }
 
-// Field creates a FieldValue for use in record upserts.
+// Value creates a FieldValue for use in record upserts.
 // It accepts string, int, float, bool, or []string values.
 //
 // This helper hides the complexity of Go's lack of union types.
 // The QuickBase API allows field values to be different types (text, number,
 // boolean, multi-select), and oapi-codegen generates verbose wrapper types
-// to handle this. Field() provides a clean interface.
+// to handle this. Value() provides a clean interface.
 //
 // Example:
 //
 //	data := []quickbase.Record{
 //	    {
-//	        "6": quickbase.Field("Alice"),      // text field
-//	        "7": quickbase.Field(100),          // number field
-//	        "8": quickbase.Field(true),         // checkbox field
-//	        "9": quickbase.Field([]string{"a", "b"}), // multi-select
+//	        "name":   quickbase.Value("Alice"),
+//	        "age":    quickbase.Value(30),
+//	        "active": quickbase.Value(true),
+//	        "tags":   quickbase.Value([]string{"a", "b"}),
 //	    },
 //	}
 //	client.Upsert(ctx, quickbase.UpsertBody{
-//	    To:   tableId,
+//	    To:   "projects",
 //	    Data: &data,
 //	})
-func Field(v any) FieldValue {
+func Value(v any) FieldValue {
 	var fv generated.FieldValue_Value
 	switch val := v.(type) {
 	case string:
@@ -789,4 +790,47 @@ func Field(v any) FieldValue {
 		fv.FromFieldValueValue3(val)
 	}
 	return FieldValue{Value: fv}
+}
+
+// Row creates a Record from alternating key-value pairs.
+// Keys can be field IDs (int) or field aliases (string).
+// Values are automatically wrapped using Value().
+//
+// This provides a concise way to create records for upserts without
+// manually wrapping each value.
+//
+// Example:
+//
+//	data := []quickbase.Record{
+//	    quickbase.Row("name", "Alice", "age", 30, "active", true),
+//	    quickbase.Row("name", "Bob", "age", 25, "active", false),
+//	}
+//	client.Upsert(ctx, quickbase.UpsertBody{
+//	    To:   "projects",
+//	    Data: &data,
+//	})
+//
+// With numeric field IDs:
+//
+//	quickbase.Row(6, "Alice", 7, 30)
+func Row(pairs ...any) Record {
+	record := make(Record)
+	for i := 0; i < len(pairs)-1; i += 2 {
+		key := pairs[i]
+		val := pairs[i+1]
+
+		// Convert key to string
+		var keyStr string
+		switch k := key.(type) {
+		case string:
+			keyStr = k
+		case int:
+			keyStr = strconv.Itoa(k)
+		default:
+			continue // Skip invalid keys
+		}
+
+		record[keyStr] = Value(val)
+	}
+	return record
 }

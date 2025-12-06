@@ -444,15 +444,13 @@ first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
     From: tableId,
 }, 500)
 
-// Insert/Update records
+// Insert/Update records - using Row() helper for concise syntax
+data := []quickbase.Record{
+    quickbase.Row("name", "New Record", "count", 42),
+}
 upsertResult, err := client.Upsert(ctx, quickbase.UpsertBody{
-    To: tableId,
-    Data: &[]quickbase.Record{
-        {
-            "6": quickbase.Field("New Record"),  // text
-            "7": quickbase.Field(42),            // number
-        },
-    },
+    To:   "projects",  // table alias (with schema) or table ID
+    Data: &data,
 })
 fmt.Println("Created:", upsertResult.CreatedRecordIDs)
 
@@ -467,11 +465,15 @@ fmt.Println("Deleted:", deleteResult.NumberDeleted)
 ### Helper Functions
 
 ```go
-// Field creates a FieldValue for upserts (text, number, bool, []string)
-quickbase.Field("text value")
-quickbase.Field(123)
-quickbase.Field(true)
-quickbase.Field([]string{"a", "b"})  // multi-select
+// Row creates a Record from key-value pairs (most concise)
+quickbase.Row("name", "Alice", "age", 30, "active", true)
+quickbase.Row(6, "Alice", 7, 30)  // also works with field IDs
+
+// Value creates a FieldValue for upserts (when not using Row)
+quickbase.Value("text value")
+quickbase.Value(123)
+quickbase.Value(true)
+quickbase.Value([]string{"a", "b"})  // multi-select
 
 // Ptr returns a pointer (for optional string/int fields)
 quickbase.Ptr("some string")
