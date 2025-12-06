@@ -13,7 +13,7 @@ A Go client for the QuickBase JSON RESTful API.
 - **Helper Functions** - `Row()`, `Value()`, `Fields()`, `SortBy()`, `Ptr()`, `Ints()`
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
-- **Proactive Throttling** - Client-side request throttling (100 req/10s)
+- **Proactive Throttling** - Prevents 429 errors with sliding window rate limiting
 - **Typed Errors** - `RateLimitError`, `NotFoundError`, `ValidationError`, etc.
 - **Monitoring Hooks** - Track request latency, retries, and errors
 - **Full API Access** - Low-level generated client available via `client.API()`
