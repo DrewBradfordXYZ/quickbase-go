@@ -29,6 +29,16 @@ type SortSpec struct {
 
 // --- Result types for transformed responses ---
 
+// UserTokenResult contains friendly result data with dereferenced fields.
+type UserTokenResult struct {
+	ID int
+	Name string
+	Description string
+	Token string
+	Active bool
+	LastUsed string
+}
+
 // GetAppResult contains friendly result data with dereferenced fields.
 type GetAppResult struct {
 	ID string
@@ -75,6 +85,11 @@ type TableInfo struct {
 	SpaceRemaining string
 }
 
+// DeactivatedTokenResult contains friendly result data with dereferenced fields.
+type DeactivatedTokenResult struct {
+	ID int
+}
+
 // DeleteAppResult contains friendly result data with dereferenced fields.
 type DeleteAppResult struct {
 	DeletedAppID string
@@ -98,9 +113,33 @@ type DeleteRecordsResult struct {
 	NumberDeleted int
 }
 
+// DeleteRelationshipResult contains friendly result data with dereferenced fields.
+type DeleteRelationshipResult struct {
+	RelationshipID int
+}
+
 // DeleteTableResult contains friendly result data with dereferenced fields.
 type DeleteTableResult struct {
 	DeletedTableID string
+}
+
+// DeletedTokenResult contains friendly result data with dereferenced fields.
+type DeletedTokenResult struct {
+	ID int
+}
+
+// SsoTokenResult contains friendly result data with dereferenced fields.
+type SsoTokenResult struct {
+	AccessToken string
+	IssuedTokenType string
+	TokenType string
+}
+
+// GeneratedDocumentResult contains friendly result data with dereferenced fields.
+type GeneratedDocumentResult struct {
+	FileName string
+	Data string
+	ContentType string
 }
 
 // ReportInfo contains friendly result data with dereferenced fields.
@@ -112,6 +151,11 @@ type ReportInfo struct {
 	OwnerID int
 	UsedCount int
 	UsedLast string
+}
+
+// TempTokenResult contains friendly result data with dereferenced fields.
+type TempTokenResult struct {
+	TemporaryAuthorization string
 }
 
 // FormulaResult contains friendly result data with dereferenced fields.
@@ -127,6 +171,15 @@ type UpsertResult struct {
 	TotalNumberOfRecordsProcessed int
 }
 
+// AppEventInfo contains friendly result data with dereferenced fields.
+type AppEventInfo struct {
+	Type string
+	Name string
+	IsActive bool
+	TableID string
+	URL string
+}
+
 // FieldDetails contains friendly result data with dereferenced fields.
 type FieldDetails struct {
 	ID int
@@ -138,8 +191,8 @@ type FieldDetails struct {
 
 // AddManagersToGroupResult contains the result of a addManagersToGroup call.
 type AddManagersToGroupResult struct {
-	Failure []string
 	Success []string
+	Failure []string
 }
 
 
@@ -195,8 +248,8 @@ func (b *AddManagersToGroupBuilder) Run(ctx context.Context) (*AddManagersToGrou
 	}
 	// Build friendly result
 	result := &AddManagersToGroupResult{}
-	result.Failure = resp.JSON200.Failure
 	result.Success = resp.JSON200.Success
+	result.Failure = resp.JSON200.Failure
 
 	return result, nil
 }
@@ -359,6 +412,16 @@ func (c *Client) Audit() *AuditBuilder {
 }
 
 
+// NextToken Token specifying start of page. For first page don't supply this.
+func (b *AuditBuilder) NextToken(value string) *AuditBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["nextToken"] = value
+	return b
+}
+
+
 // NumRows Number of logs to return per page, default is 10000, minimum is 1000, max is 50000.
 func (b *AuditBuilder) NumRows(value int) *AuditBuilder {
 	if b.err != nil {
@@ -395,16 +458,6 @@ func (b *AuditBuilder) Topics(values ...string) *AuditBuilder {
 		return b
 	}
 	b.params["topics"] = values
-	return b
-}
-
-
-// NextToken Token specifying start of page. For first page don't supply this.
-func (b *AuditBuilder) NextToken(value string) *AuditBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["nextToken"] = value
 	return b
 }
 
@@ -606,16 +659,6 @@ func (b *ChangesetSolutionFromRecordBuilder) Run(ctx context.Context) (*generate
 }
 
 
-// CloneUserTokenResult contains the result of a cloneUserToken call.
-type CloneUserTokenResult struct {
-	Description string
-	Id int
-	Name string
-	Token string
-	Active bool
-	LastUsed string
-}
-
 
 // CloneUserTokenBuilder provides a fluent API for the cloneUserToken operation.
 // Clone a user token
@@ -657,7 +700,7 @@ func (b *CloneUserTokenBuilder) Description(value string) *CloneUserTokenBuilder
 
 
 // Run executes the cloneUserToken request.
-func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult, error) {
+func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*UserTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -686,15 +729,15 @@ func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult,
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &CloneUserTokenResult{}
-	if resp.JSON200.Description != nil {
-		result.Description = *resp.JSON200.Description
-	}
+	result := &UserTokenResult{}
 	if resp.JSON200.Id != nil {
-		result.Id = *resp.JSON200.Id
+		result.ID = *resp.JSON200.Id
 	}
 	if resp.JSON200.Name != nil {
 		result.Name = *resp.JSON200.Name
+	}
+	if resp.JSON200.Description != nil {
+		result.Description = *resp.JSON200.Description
 	}
 	if resp.JSON200.Token != nil {
 		result.Token = *resp.JSON200.Token
@@ -705,7 +748,6 @@ func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult,
 	if resp.JSON200.LastUsed != nil {
 		result.LastUsed = *resp.JSON200.LastUsed
 	}
-
 	return result, nil
 }
 
@@ -892,12 +934,62 @@ func (c *Client) CreateApp() *CreateAppBuilder {
 }
 
 
+// AssignToken Set to true if you would like to assign the app to the user token you used to create the application. The default is false.
+func (b *CreateAppBuilder) AssignToken(value bool) *CreateAppBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["assignToken"] = value
+	return b
+}
+
+
+// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+func (b *CreateAppBuilder) Variables(values ...map[string]any) *CreateAppBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["variables"] = values
+	return b
+}
+
+
 // Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
 func (b *CreateAppBuilder) Name(value string) *CreateAppBuilder {
 	if b.err != nil {
 		return b
 	}
 	b.params["name"] = value
+	return b
+}
+
+
+// MustBeRealmApproved Only "approved" users may access this application
+func (b *CreateAppBuilder) MustBeRealmApproved(value bool) *CreateAppBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["securityProperties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["mustBeRealmApproved"] = value
+	b.params["securityProperties"] = nested
+	return b
+}
+
+
+// AllowClone Allow users who are not administrators to copy
+func (b *CreateAppBuilder) AllowClone(value bool) *CreateAppBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["securityProperties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["allowClone"] = value
+	b.params["securityProperties"] = nested
 	return b
 }
 
@@ -962,62 +1054,12 @@ func (b *CreateAppBuilder) HideFromPublic(value bool) *CreateAppBuilder {
 }
 
 
-// MustBeRealmApproved Only "approved" users may access this application
-func (b *CreateAppBuilder) MustBeRealmApproved(value bool) *CreateAppBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["securityProperties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["mustBeRealmApproved"] = value
-	b.params["securityProperties"] = nested
-	return b
-}
-
-
-// AllowClone Allow users who are not administrators to copy
-func (b *CreateAppBuilder) AllowClone(value bool) *CreateAppBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["securityProperties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["allowClone"] = value
-	b.params["securityProperties"] = nested
-	return b
-}
-
-
 // Description The description for the app. If this property is left out, the app description will be blank.
 func (b *CreateAppBuilder) Description(value string) *CreateAppBuilder {
 	if b.err != nil {
 		return b
 	}
 	b.params["description"] = value
-	return b
-}
-
-
-// AssignToken Set to true if you would like to assign the app to the user token you used to create the application. The default is false.
-func (b *CreateAppBuilder) AssignToken(value bool) *CreateAppBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["assignToken"] = value
-	return b
-}
-
-
-// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-func (b *CreateAppBuilder) Variables(values ...map[string]any) *CreateAppBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["variables"] = values
 	return b
 }
 
@@ -1117,12 +1159,12 @@ func (c *Client) CreateField(table string) *CreateFieldBuilder {
 }
 
 
-// Permissions Field Permissions for different roles.
-func (b *CreateFieldBuilder) Permissions(values ...map[string]any) *CreateFieldBuilder {
+// AppearsByDefault Indicates if the field is marked as a default in reports. Defaults to true.
+func (b *CreateFieldBuilder) AppearsByDefault(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
-	b.params["permissions"] = values
+	b.params["appearsByDefault"] = value
 	return b
 }
 
@@ -1137,12 +1179,32 @@ func (b *CreateFieldBuilder) AddToForms(value bool) *CreateFieldBuilder {
 }
 
 
+// Label The label (name) of the field.
+func (b *CreateFieldBuilder) Label(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["label"] = value
+	return b
+}
+
+
 // Audited Indicates if the field is being tracked as part of Quickbase Audit Logs. You can only set this property to "true" if the app has audit logs enabled. See Enable data change logs under [Quickbase Audit Logs](https://help.quickbase.com/user-assistance/audit_logs.html). Defaults to false.
 func (b *CreateFieldBuilder) Audited(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
 	b.params["audited"] = value
+	return b
+}
+
+
+// FieldHelp The configured help text shown to users within the product.
+func (b *CreateFieldBuilder) FieldHelp(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["fieldHelp"] = value
 	return b
 }
 
@@ -1167,12 +1229,12 @@ func (b *CreateFieldBuilder) FieldType(value string) *CreateFieldBuilder {
 }
 
 
-// Label The label (name) of the field.
-func (b *CreateFieldBuilder) Label(value string) *CreateFieldBuilder {
+// Permissions Field Permissions for different roles.
+func (b *CreateFieldBuilder) Permissions(values ...map[string]any) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
-	b.params["label"] = value
+	b.params["permissions"] = values
 	return b
 }
 
@@ -1197,511 +1259,6 @@ func (b *CreateFieldBuilder) NoWrap(value bool) *CreateFieldBuilder {
 }
 
 
-// FieldHelp The configured help text shown to users within the product.
-func (b *CreateFieldBuilder) FieldHelp(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["fieldHelp"] = value
-	return b
-}
-
-
-// DisplayTimezone Indicates whether to display the timezone within the product.
-func (b *CreateFieldBuilder) DisplayTimezone(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayTimezone"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultToday Indicates if the field value is defaulted today for new records.
-func (b *CreateFieldBuilder) DefaultToday(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultToday"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Width The field's html input width in the product.
-func (b *CreateFieldBuilder) Width(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["width"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayTime Indicates whether to display the time, in addition to the date.
-func (b *CreateFieldBuilder) DisplayTime(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayTime"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-func (b *CreateFieldBuilder) Hours24(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["hours24"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Units The units label.
-func (b *CreateFieldBuilder) Units(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["units"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CoverText An alternate user friendly text that can be used to display a link in the browser.
-func (b *CreateFieldBuilder) CoverText(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["coverText"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// TargetFieldId The id of the target field.
-func (b *CreateFieldBuilder) TargetFieldId(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["targetFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AppendOnly Whether this field is append only.
-func (b *CreateFieldBuilder) AppendOnly(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["appendOnly"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Comments The comments entered on the field properties by an administrator.
-func (b *CreateFieldBuilder) Comments(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["comments"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultValueLuid Default user id value.
-func (b *CreateFieldBuilder) DefaultValueLuid(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultValueLuid"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CurrencyFormat The currency format used when displaying field values within the product.
-func (b *CreateFieldBuilder) CurrencyFormat(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["currencyFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DoesTotal Whether this field totals in reports within the product.
-func (b *CreateFieldBuilder) DoesTotal(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["doesTotal"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Abbreviate Don't show the URL protocol when showing the URL.
-func (b *CreateFieldBuilder) Abbreviate(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["abbreviate"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-func (b *CreateFieldBuilder) DisplayDayOfWeek(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayDayOfWeek"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AllowNewChoices Indicates if users can add new choices to a selection list.
-func (b *CreateFieldBuilder) AllowNewChoices(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["allowNewChoices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
-func (b *CreateFieldBuilder) OpenTargetIn(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["openTargetIn"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-func (b *CreateFieldBuilder) DefaultCountryCode(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultCountryCode"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// NumLines The number of lines shown in Quickbase for this text field.
-func (b *CreateFieldBuilder) NumLines(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["numLines"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayUser The configured option for how users display within the product.
-func (b *CreateFieldBuilder) DisplayUser(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayUser"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CompositeFields An array of the fields that make up a composite field (e.g., address).
-func (b *CreateFieldBuilder) CompositeFields(value []any) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["compositeFields"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// LinkText The configured text value that replaces the URL that users see within the product.
-func (b *CreateFieldBuilder) LinkText(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["linkText"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-func (b *CreateFieldBuilder) SnapFieldId(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["snapFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// UseI18NFormat Whether phone numbers should be in E.164 standard international format
-func (b *CreateFieldBuilder) UseI18NFormat(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["useI18NFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CarryChoices Whether the field should carry its multiple choice fields when copied.
-func (b *CreateFieldBuilder) CarryChoices(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["carryChoices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-func (b *CreateFieldBuilder) SeeVersions(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["seeVersions"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// TargetTableId The id of the target table.
-func (b *CreateFieldBuilder) TargetTableId(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["targetTableId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-func (b *CreateFieldBuilder) DisplayCheckboxAsText(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayCheckboxAsText"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// HasExtension Whether this field has a phone extension.
-func (b *CreateFieldBuilder) HasExtension(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["hasExtension"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
-func (b *CreateFieldBuilder) UseNewWindow(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["useNewWindow"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DoesAverage Whether this field averages in reports within the product.
-func (b *CreateFieldBuilder) DoesAverage(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["doesAverage"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-func (b *CreateFieldBuilder) NumberFormat(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["numberFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayRelative Whether to display time as relative.
-func (b *CreateFieldBuilder) DisplayRelative(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayRelative"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
 // ParentFieldId The id of the parent composite field, when applicable.
 func (b *CreateFieldBuilder) ParentFieldId(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1712,171 +1269,6 @@ func (b *CreateFieldBuilder) ParentFieldId(value int) *CreateFieldBuilder {
 		nested = make(map[string]any)
 	}
 	nested["parentFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Formula The formula of the field as configured in Quickbase.
-func (b *CreateFieldBuilder) Formula(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["formula"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DecimalPlaces The number of decimal places displayed in the product for this field.
-func (b *CreateFieldBuilder) DecimalPlaces(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["decimalPlaces"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// TargetTableName The field's target table name.
-func (b *CreateFieldBuilder) TargetTableName(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["targetTableName"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Format The format to display time.
-func (b *CreateFieldBuilder) Format(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["format"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayEmail How the email is displayed.
-func (b *CreateFieldBuilder) DisplayEmail(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayEmail"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
-func (b *CreateFieldBuilder) Choices(value []string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["choices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-func (b *CreateFieldBuilder) SortAsGiven(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["sortAsGiven"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CommaStart The number of digits before commas display in the product, when applicable.
-func (b *CreateFieldBuilder) CommaStart(value int) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["commaStart"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// VersionMode Version modes for files. Keep all versions vs keep last version.
-func (b *CreateFieldBuilder) VersionMode(value string) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["versionMode"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-func (b *CreateFieldBuilder) SortAlpha(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["sortAlpha"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AutoSave Whether the link field will auto save.
-func (b *CreateFieldBuilder) AutoSave(value bool) *CreateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["autoSave"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -1897,8 +1289,8 @@ func (b *CreateFieldBuilder) SourceFieldId(value int) *CreateFieldBuilder {
 }
 
 
-// DefaultValue The default value configured for a field when a new record is added.
-func (b *CreateFieldBuilder) DefaultValue(value string) *CreateFieldBuilder {
+// DoesAverage Whether this field averages in reports within the product.
+func (b *CreateFieldBuilder) DoesAverage(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1906,14 +1298,14 @@ func (b *CreateFieldBuilder) DefaultValue(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["defaultValue"] = value
+	nested["doesAverage"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// AppearsAs The link text, if empty, the url will be used as link text.
-func (b *CreateFieldBuilder) AppearsAs(value string) *CreateFieldBuilder {
+// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+func (b *CreateFieldBuilder) DefaultCountryCode(value string) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1921,14 +1313,14 @@ func (b *CreateFieldBuilder) AppearsAs(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["appearsAs"] = value
+	nested["defaultCountryCode"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// MaxVersions The maximum number of versions configured for a file attachment.
-func (b *CreateFieldBuilder) MaxVersions(value int) *CreateFieldBuilder {
+// DisplayEmail How the email is displayed.
+func (b *CreateFieldBuilder) DisplayEmail(value string) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1936,14 +1328,14 @@ func (b *CreateFieldBuilder) MaxVersions(value int) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["maxVersions"] = value
+	nested["displayEmail"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// Exact Whether an exact match is required for a report link.
-func (b *CreateFieldBuilder) Exact(value bool) *CreateFieldBuilder {
+// TargetTableName The field's target table name.
+func (b *CreateFieldBuilder) TargetTableName(value string) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1951,14 +1343,14 @@ func (b *CreateFieldBuilder) Exact(value bool) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["exact"] = value
+	nested["targetTableName"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// DefaultDomain Default email domain.
-func (b *CreateFieldBuilder) DefaultDomain(value string) *CreateFieldBuilder {
+// UseI18NFormat Whether phone numbers should be in E.164 standard international format
+func (b *CreateFieldBuilder) UseI18NFormat(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1966,14 +1358,14 @@ func (b *CreateFieldBuilder) DefaultDomain(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["defaultDomain"] = value
+	nested["useI18NFormat"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-func (b *CreateFieldBuilder) MaxLength(value int) *CreateFieldBuilder {
+// Units The units label.
+func (b *CreateFieldBuilder) Units(value string) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1981,14 +1373,14 @@ func (b *CreateFieldBuilder) MaxLength(value int) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["maxLength"] = value
+	nested["units"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// DisplayMonth How to display months.
-func (b *CreateFieldBuilder) DisplayMonth(value string) *CreateFieldBuilder {
+// AutoSave Whether the link field will auto save.
+func (b *CreateFieldBuilder) AutoSave(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -1996,14 +1388,14 @@ func (b *CreateFieldBuilder) DisplayMonth(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["displayMonth"] = value
+	nested["autoSave"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// DefaultKind The user default type.
-func (b *CreateFieldBuilder) DefaultKind(value string) *CreateFieldBuilder {
+// DefaultValueLuid Default user id value.
+func (b *CreateFieldBuilder) DefaultValueLuid(value int) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -2011,14 +1403,14 @@ func (b *CreateFieldBuilder) DefaultKind(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["defaultKind"] = value
+	nested["defaultValueLuid"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// CurrencySymbol The current symbol used when displaying field values within the product.
-func (b *CreateFieldBuilder) CurrencySymbol(value string) *CreateFieldBuilder {
+// NumLines The number of lines shown in Quickbase for this text field.
+func (b *CreateFieldBuilder) NumLines(value int) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -2026,14 +1418,14 @@ func (b *CreateFieldBuilder) CurrencySymbol(value string) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["currencySymbol"] = value
+	nested["numLines"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-func (b *CreateFieldBuilder) BlankIsZero(value bool) *CreateFieldBuilder {
+// CurrencyFormat The currency format used when displaying field values within the product.
+func (b *CreateFieldBuilder) CurrencyFormat(value string) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -2041,7 +1433,37 @@ func (b *CreateFieldBuilder) BlankIsZero(value bool) *CreateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["blankIsZero"] = value
+	nested["currencyFormat"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+func (b *CreateFieldBuilder) DisplayDayOfWeek(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayDayOfWeek"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// HasExtension Whether this field has a phone extension.
+func (b *CreateFieldBuilder) HasExtension(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["hasExtension"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -2062,6 +1484,321 @@ func (b *CreateFieldBuilder) DisplayAsLink(value bool) *CreateFieldBuilder {
 }
 
 
+// Format The format to display time.
+func (b *CreateFieldBuilder) Format(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["format"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+func (b *CreateFieldBuilder) SeeVersions(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["seeVersions"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+func (b *CreateFieldBuilder) DisplayCheckboxAsText(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayCheckboxAsText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+func (b *CreateFieldBuilder) Hours24(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["hours24"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+func (b *CreateFieldBuilder) SortAsGiven(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["sortAsGiven"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DecimalPlaces The number of decimal places displayed in the product for this field.
+func (b *CreateFieldBuilder) DecimalPlaces(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["decimalPlaces"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayMonth How to display months.
+func (b *CreateFieldBuilder) DisplayMonth(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayMonth"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultDomain Default email domain.
+func (b *CreateFieldBuilder) DefaultDomain(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultDomain"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Width The field's html input width in the product.
+func (b *CreateFieldBuilder) Width(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["width"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// VersionMode Version modes for files. Keep all versions vs keep last version.
+func (b *CreateFieldBuilder) VersionMode(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["versionMode"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayTimezone Indicates whether to display the timezone within the product.
+func (b *CreateFieldBuilder) DisplayTimezone(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayTimezone"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+func (b *CreateFieldBuilder) BlankIsZero(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["blankIsZero"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Abbreviate Don't show the URL protocol when showing the URL.
+func (b *CreateFieldBuilder) Abbreviate(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["abbreviate"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// TargetFieldId The id of the target field.
+func (b *CreateFieldBuilder) TargetFieldId(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["targetFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+func (b *CreateFieldBuilder) SnapFieldId(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["snapFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
+func (b *CreateFieldBuilder) UseNewWindow(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["useNewWindow"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// MaxVersions The maximum number of versions configured for a file attachment.
+func (b *CreateFieldBuilder) MaxVersions(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["maxVersions"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+func (b *CreateFieldBuilder) MaxLength(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["maxLength"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AppearsAs The link text, if empty, the url will be used as link text.
+func (b *CreateFieldBuilder) AppearsAs(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["appearsAs"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// TargetTableId The id of the target table.
+func (b *CreateFieldBuilder) TargetTableId(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["targetTableId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CompositeFields An array of the fields that make up a composite field (e.g., address).
+func (b *CreateFieldBuilder) CompositeFields(value []any) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["compositeFields"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
 // AllowMentions If someone can @mention users in the rich text field to generate an email notification.
 func (b *CreateFieldBuilder) AllowMentions(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -2077,12 +1814,317 @@ func (b *CreateFieldBuilder) AllowMentions(value bool) *CreateFieldBuilder {
 }
 
 
-// AppearsByDefault Indicates if the field is marked as a default in reports. Defaults to true.
-func (b *CreateFieldBuilder) AppearsByDefault(value bool) *CreateFieldBuilder {
+// CarryChoices Whether the field should carry its multiple choice fields when copied.
+func (b *CreateFieldBuilder) CarryChoices(value bool) *CreateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
-	b.params["appearsByDefault"] = value
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["carryChoices"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AllowNewChoices Indicates if users can add new choices to a selection list.
+func (b *CreateFieldBuilder) AllowNewChoices(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["allowNewChoices"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CoverText An alternate user friendly text that can be used to display a link in the browser.
+func (b *CreateFieldBuilder) CoverText(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["coverText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultValue The default value configured for a field when a new record is added.
+func (b *CreateFieldBuilder) DefaultValue(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultValue"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CommaStart The number of digits before commas display in the product, when applicable.
+func (b *CreateFieldBuilder) CommaStart(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["commaStart"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Comments The comments entered on the field properties by an administrator.
+func (b *CreateFieldBuilder) Comments(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["comments"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// LinkText The configured text value that replaces the URL that users see within the product.
+func (b *CreateFieldBuilder) LinkText(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["linkText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
+func (b *CreateFieldBuilder) OpenTargetIn(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["openTargetIn"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultKind The user default type.
+func (b *CreateFieldBuilder) DefaultKind(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultKind"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+func (b *CreateFieldBuilder) NumberFormat(value int) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["numberFormat"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+func (b *CreateFieldBuilder) SortAlpha(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["sortAlpha"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayUser The configured option for how users display within the product.
+func (b *CreateFieldBuilder) DisplayUser(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayUser"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AppendOnly Whether this field is append only.
+func (b *CreateFieldBuilder) AppendOnly(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["appendOnly"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DoesTotal Whether this field totals in reports within the product.
+func (b *CreateFieldBuilder) DoesTotal(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["doesTotal"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultToday Indicates if the field value is defaulted today for new records.
+func (b *CreateFieldBuilder) DefaultToday(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultToday"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Formula The formula of the field as configured in Quickbase.
+func (b *CreateFieldBuilder) Formula(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["formula"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CurrencySymbol The current symbol used when displaying field values within the product.
+func (b *CreateFieldBuilder) CurrencySymbol(value string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["currencySymbol"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Exact Whether an exact match is required for a report link.
+func (b *CreateFieldBuilder) Exact(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["exact"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayRelative Whether to display time as relative.
+func (b *CreateFieldBuilder) DisplayRelative(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayRelative"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayTime Indicates whether to display the time, in addition to the date.
+func (b *CreateFieldBuilder) DisplayTime(value bool) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayTime"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
+func (b *CreateFieldBuilder) Choices(value []string) *CreateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["choices"] = value
+	b.params["properties"] = nested
 	return b
 }
 
@@ -2593,11 +2635,6 @@ func (b *CreateTableBuilder) Run(ctx context.Context) (*TableInfo, error) {
 }
 
 
-// DeactivateUserTokenResult contains the result of a deactivateUserToken call.
-type DeactivateUserTokenResult struct {
-	Id int
-}
-
 
 // DeactivateUserTokenBuilder provides a fluent API for the deactivateUserToken operation.
 // Deactivate a user token
@@ -2619,7 +2656,7 @@ func (c *Client) DeactivateUserToken() *DeactivateUserTokenBuilder {
 
 
 // Run executes the deactivateUserToken request.
-func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivateUserTokenResult, error) {
+func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivatedTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -2632,11 +2669,10 @@ func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivateUserTo
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &DeactivateUserTokenResult{}
+	result := &DeactivatedTokenResult{}
 	if resp.JSON200.Id != nil {
-		result.Id = *resp.JSON200.Id
+		result.ID = *resp.JSON200.Id
 	}
-
 	return result, nil
 }
 
@@ -2969,11 +3005,6 @@ func (b *DeleteRecordsBuilder) Run(ctx context.Context) (*DeleteRecordsResult, e
 }
 
 
-// DeleteRelationshipResult contains the result of a deleteRelationship call.
-type DeleteRelationshipResult struct {
-	RelationshipId int
-}
-
 
 // DeleteRelationshipBuilder provides a fluent API for the deleteRelationship operation.
 // Delete a relationship
@@ -3026,8 +3057,7 @@ func (b *DeleteRelationshipBuilder) Run(ctx context.Context) (*DeleteRelationshi
 	}
 	// Build friendly result
 	result := &DeleteRelationshipResult{}
-	result.RelationshipId = resp.JSON200.RelationshipId
-
+	result.RelationshipID = resp.JSON200.RelationshipId
 	return result, nil
 }
 
@@ -3112,11 +3142,6 @@ func (b *DeleteTableBuilder) Run(ctx context.Context) (*DeleteTableResult, error
 }
 
 
-// DeleteUserTokenResult contains the result of a deleteUserToken call.
-type DeleteUserTokenResult struct {
-	Id int
-}
-
 
 // DeleteUserTokenBuilder provides a fluent API for the deleteUserToken operation.
 // Delete a user token
@@ -3138,7 +3163,7 @@ func (c *Client) DeleteUserToken() *DeleteUserTokenBuilder {
 
 
 // Run executes the deleteUserToken request.
-func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResult, error) {
+func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeletedTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -3151,11 +3176,10 @@ func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResul
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &DeleteUserTokenResult{}
+	result := &DeletedTokenResult{}
 	if resp.JSON200.Id != nil {
-		result.Id = *resp.JSON200.Id
+		result.ID = *resp.JSON200.Id
 	}
-
 	return result, nil
 }
 
@@ -3380,13 +3404,6 @@ func (b *DownloadFileBuilder) Run(ctx context.Context) (*generated.DownloadFileR
 }
 
 
-// ExchangeSsoTokenResult contains the result of a exchangeSsoToken call.
-type ExchangeSsoTokenResult struct {
-	AccessToken string
-	IssuedTokenType string
-	TokenType string
-}
-
 
 // ExchangeSsoTokenBuilder provides a fluent API for the exchangeSsoToken operation.
 // Exchange an SSO token
@@ -3402,6 +3419,16 @@ func (c *Client) ExchangeSsoToken() *ExchangeSsoTokenBuilder {
 		client: c,
 		params: make(map[string]any),
 	}
+	return b
+}
+
+
+// Subject_token_type An identifier that indicates the type of the security token in the `subject_token` parameter.
+func (b *ExchangeSsoTokenBuilder) Subject_token_type(value string) *ExchangeSsoTokenBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["subject_token_type"] = value
 	return b
 }
 
@@ -3436,19 +3463,9 @@ func (b *ExchangeSsoTokenBuilder) Subject_token(value string) *ExchangeSsoTokenB
 }
 
 
-// Subject_token_type An identifier that indicates the type of the security token in the `subject_token` parameter.
-func (b *ExchangeSsoTokenBuilder) Subject_token_type(value string) *ExchangeSsoTokenBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["subject_token_type"] = value
-	return b
-}
-
-
 
 // Run executes the exchangeSsoToken request.
-func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenResult, error) {
+func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*SsoTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -3505,7 +3522,7 @@ func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenRes
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &ExchangeSsoTokenResult{}
+	result := &SsoTokenResult{}
 	if resp.JSON200.AccessToken != nil {
 		result.AccessToken = *resp.JSON200.AccessToken
 	}
@@ -3515,7 +3532,6 @@ func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenRes
 	if resp.JSON200.TokenType != nil {
 		result.TokenType = string(*resp.JSON200.TokenType)
 	}
-
 	return result, nil
 }
 
@@ -3638,13 +3654,6 @@ func (b *ExportSolutionToRecordBuilder) Run(ctx context.Context) (*generated.Exp
 	return resp, nil
 }
 
-
-// GenerateDocumentResult contains the result of a generateDocument call.
-type GenerateDocumentResult struct {
-	ContentType string
-	FileName string
-	Data string
-}
 
 
 // GenerateDocumentBuilder provides a fluent API for the generateDocument operation.
@@ -3771,7 +3780,7 @@ func (b *GenerateDocumentBuilder) Realm(value string) *GenerateDocumentBuilder {
 
 
 // Run executes the generateDocument request.
-func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentResult, error) {
+func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GeneratedDocumentResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -3819,17 +3828,16 @@ func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentRes
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &GenerateDocumentResult{}
-	if resp.JSON200.ContentType != nil {
-		result.ContentType = *resp.JSON200.ContentType
-	}
+	result := &GeneratedDocumentResult{}
 	if resp.JSON200.FileName != nil {
 		result.FileName = *resp.JSON200.FileName
 	}
 	if resp.JSON200.Data != nil {
 		result.Data = *resp.JSON200.Data
 	}
-
+	if resp.JSON200.ContentType != nil {
+		result.ContentType = *resp.JSON200.ContentType
+	}
 	return result, nil
 }
 
@@ -3894,11 +3902,6 @@ func (b *GetAppBuilder) Run(ctx context.Context) (*GetAppResult, error) {
 }
 
 
-// GetAppEventsResult contains the result of a getAppEvents call.
-type GetAppEventsResult struct {
-	Items []generated.GetAppEvents_200_Item
-}
-
 
 // GetAppEventsBuilder provides a fluent API for the getAppEvents operation.
 // Get app events
@@ -3922,7 +3925,7 @@ func (c *Client) GetAppEvents(appId string) *GetAppEventsBuilder {
 
 
 // Run executes the getAppEvents request.
-func (b *GetAppEventsBuilder) Run(ctx context.Context) (*GetAppEventsResult, error) {
+func (b *GetAppEventsBuilder) Run(ctx context.Context) ([]AppEventInfo, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -3934,11 +3937,28 @@ func (b *GetAppEventsBuilder) Run(ctx context.Context) (*GetAppEventsResult, err
 	if resp.JSON200 == nil {
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
-	// Build friendly result
-	result := &GetAppEventsResult{}
-	result.Items = *resp.JSON200
-
-	return result, nil
+	// Build friendly result from array response
+	var results []AppEventInfo
+	for _, src := range *resp.JSON200 {
+		item := AppEventInfo{}
+		if src.Type != nil {
+			item.Type = string(*src.Type)
+		}
+		if src.Name != nil {
+			item.Name = *src.Name
+		}
+		if src.IsActive != nil {
+			item.IsActive = *src.IsActive
+		}
+		if src.TableId != nil {
+			item.TableID = *src.TableId
+		}
+		if src.Url != nil {
+			item.URL = *src.Url
+		}
+		results = append(results, item)
+	}
+	return results, nil
 }
 
 
@@ -4728,11 +4748,6 @@ func (b *GetTableReportsBuilder) Run(ctx context.Context) ([]ReportInfo, error) 
 }
 
 
-// GetTempTokenDBIDResult contains the result of a getTempTokenDBID call.
-type GetTempTokenDBIDResult struct {
-	TemporaryAuthorization string
-}
-
 
 // GetTempTokenDBIDBuilder provides a fluent API for the getTempTokenDBID operation.
 // Get a temporary token for a dbid
@@ -4756,7 +4771,7 @@ func (c *Client) GetTempTokenDBID(dbid string) *GetTempTokenDBIDBuilder {
 
 
 // Run executes the getTempTokenDBID request.
-func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*GetTempTokenDBIDResult, error) {
+func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*TempTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -4771,11 +4786,10 @@ func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*GetTempTokenDBIDRes
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &GetTempTokenDBIDResult{}
+	result := &TempTokenResult{}
 	if resp.JSON200.TemporaryAuthorization != nil {
 		result.TemporaryAuthorization = *resp.JSON200.TemporaryAuthorization
 	}
-
 	return result, nil
 }
 
@@ -4881,10 +4895,10 @@ func (b *GetUsersBuilder) Run(ctx context.Context) (*generated.GetUsersResponse,
 
 // PlatformAnalyticEventSummariesResult contains the result of a platformAnalyticEventSummaries call.
 type PlatformAnalyticEventSummariesResult struct {
-	AccountId string
 	Start time.Time
 	End time.Time
 	GroupBy string
+	AccountId string
 }
 
 
@@ -4903,26 +4917,6 @@ func (c *Client) PlatformAnalyticEventSummaries() *PlatformAnalyticEventSummarie
 		client: c,
 		params: make(map[string]any),
 	}
-	return b
-}
-
-
-// End The end date and time of the requested summaries in ISO 8601 time format.
-func (b *PlatformAnalyticEventSummariesBuilder) End(value string) *PlatformAnalyticEventSummariesBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["end"] = value
-	return b
-}
-
-
-// GroupBy How the events should be grouped.
-func (b *PlatformAnalyticEventSummariesBuilder) GroupBy(value string) *PlatformAnalyticEventSummariesBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["groupBy"] = value
 	return b
 }
 
@@ -4953,6 +4947,26 @@ func (b *PlatformAnalyticEventSummariesBuilder) Start(value string) *PlatformAna
 		return b
 	}
 	b.params["start"] = value
+	return b
+}
+
+
+// End The end date and time of the requested summaries in ISO 8601 time format.
+func (b *PlatformAnalyticEventSummariesBuilder) End(value string) *PlatformAnalyticEventSummariesBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["end"] = value
+	return b
+}
+
+
+// GroupBy How the events should be grouped.
+func (b *PlatformAnalyticEventSummariesBuilder) GroupBy(value string) *PlatformAnalyticEventSummariesBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["groupBy"] = value
 	return b
 }
 
@@ -5025,10 +5039,10 @@ func (b *PlatformAnalyticEventSummariesBuilder) Run(ctx context.Context) (*Platf
 	}
 	// Build friendly result
 	result := &PlatformAnalyticEventSummariesResult{}
-	result.AccountId = resp.JSON200.AccountId
 	result.Start = resp.JSON200.Start
 	result.End = resp.JSON200.End
 	result.GroupBy = string(resp.JSON200.GroupBy)
+	result.AccountId = resp.JSON200.AccountId
 
 	return result, nil
 }
@@ -5164,8 +5178,8 @@ func (b *RemoveManagersFromGroupBuilder) Run(ctx context.Context) (*RemoveManage
 
 // RemoveMembersFromGroupResult contains the result of a removeMembersFromGroup call.
 type RemoveMembersFromGroupResult struct {
-	Failure []string
 	Success []string
+	Failure []string
 }
 
 
@@ -5221,8 +5235,8 @@ func (b *RemoveMembersFromGroupBuilder) Run(ctx context.Context) (*RemoveMembers
 	}
 	// Build friendly result
 	result := &RemoveMembersFromGroupResult{}
-	result.Failure = resp.JSON200.Failure
 	result.Success = resp.JSON200.Success
+	result.Failure = resp.JSON200.Failure
 
 	return result, nil
 }
@@ -5313,16 +5327,6 @@ func (c *Client) RunFormula() *RunFormulaBuilder {
 }
 
 
-// From The unique identifier (dbid) of the table.
-func (b *RunFormulaBuilder) From(value string) *RunFormulaBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["from"] = value
-	return b
-}
-
-
 // Formula The formula to run. This must be a valid Quickbase formula.
 func (b *RunFormulaBuilder) Formula(value string) *RunFormulaBuilder {
 	if b.err != nil {
@@ -5339,6 +5343,16 @@ func (b *RunFormulaBuilder) Rid(value int) *RunFormulaBuilder {
 		return b
 	}
 	b.params["rid"] = value
+	return b
+}
+
+
+// From The unique identifier (dbid) of the table.
+func (b *RunFormulaBuilder) From(value string) *RunFormulaBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["from"] = value
 	return b
 }
 
@@ -5490,15 +5504,6 @@ func (b *RunReportBuilder) Run(ctx context.Context) (*generated.RunReportRespons
 }
 
 
-// TransferUserTokenResult contains the result of a transferUserToken call.
-type TransferUserTokenResult struct {
-	Active bool
-	LastUsed string
-	Description string
-	Id int
-	Name string
-}
-
 
 // TransferUserTokenBuilder provides a fluent API for the transferUserToken operation.
 // Transfer a user token
@@ -5550,7 +5555,7 @@ func (b *TransferUserTokenBuilder) To(value string) *TransferUserTokenBuilder {
 
 
 // Run executes the transferUserToken request.
-func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenResult, error) {
+func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*UserTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -5579,23 +5584,22 @@ func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenR
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	// Build friendly result
-	result := &TransferUserTokenResult{}
+	result := &UserTokenResult{}
+	if resp.JSON200.Id != nil {
+		result.ID = *resp.JSON200.Id
+	}
+	if resp.JSON200.Name != nil {
+		result.Name = *resp.JSON200.Name
+	}
+	if resp.JSON200.Description != nil {
+		result.Description = *resp.JSON200.Description
+	}
 	if resp.JSON200.Active != nil {
 		result.Active = *resp.JSON200.Active
 	}
 	if resp.JSON200.LastUsed != nil {
 		result.LastUsed = *resp.JSON200.LastUsed
 	}
-	if resp.JSON200.Description != nil {
-		result.Description = *resp.JSON200.Description
-	}
-	if resp.JSON200.Id != nil {
-		result.Id = *resp.JSON200.Id
-	}
-	if resp.JSON200.Name != nil {
-		result.Name = *resp.JSON200.Name
-	}
-
 	return result, nil
 }
 
@@ -5721,6 +5725,21 @@ func (b *UpdateAppBuilder) Name(value string) *UpdateAppBuilder {
 }
 
 
+// HideFromPublic Hide from public application searches
+func (b *UpdateAppBuilder) HideFromPublic(value bool) *UpdateAppBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["securityProperties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["hideFromPublic"] = value
+	b.params["securityProperties"] = nested
+	return b
+}
+
+
 // MustBeRealmApproved Only "approved" users may access this application
 func (b *UpdateAppBuilder) MustBeRealmApproved(value bool) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5791,21 +5810,6 @@ func (b *UpdateAppBuilder) EnableAppTokens(value bool) *UpdateAppBuilder {
 		nested = make(map[string]any)
 	}
 	nested["enableAppTokens"] = value
-	b.params["securityProperties"] = nested
-	return b
-}
-
-
-// HideFromPublic Hide from public application searches
-func (b *UpdateAppBuilder) HideFromPublic(value bool) *UpdateAppBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["securityProperties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["hideFromPublic"] = value
 	b.params["securityProperties"] = nested
 	return b
 }
@@ -5941,531 +5945,6 @@ func (b *UpdateFieldBuilder) Bold(value bool) *UpdateFieldBuilder {
 }
 
 
-// ParentFieldId The id of the parent composite field, when applicable.
-func (b *UpdateFieldBuilder) ParentFieldId(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["parentFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DoesAverage Whether this field averages in reports within the product.
-func (b *UpdateFieldBuilder) DoesAverage(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["doesAverage"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CurrencySymbol The current symbol used when displaying field values within the product.
-func (b *UpdateFieldBuilder) CurrencySymbol(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["currencySymbol"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SummaryQuery The summary query.
-func (b *UpdateFieldBuilder) SummaryQuery(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["summaryQuery"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Width The field's html input width in the product.
-func (b *UpdateFieldBuilder) Width(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["width"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
-func (b *UpdateFieldBuilder) UseNewWindow(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["useNewWindow"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultToday Indicates if the field value is defaulted today for new records.
-func (b *UpdateFieldBuilder) DefaultToday(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultToday"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SummaryFunction The accumulation type for the summary field.
-func (b *UpdateFieldBuilder) SummaryFunction(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["summaryFunction"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Exact Whether an exact match is required for a report link.
-func (b *UpdateFieldBuilder) Exact(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["exact"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayRelative Whether to display time as relative.
-func (b *UpdateFieldBuilder) DisplayRelative(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayRelative"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DoesTotal Whether this field totals in reports within the product.
-func (b *UpdateFieldBuilder) DoesTotal(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["doesTotal"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-func (b *UpdateFieldBuilder) DefaultCountryCode(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultCountryCode"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-func (b *UpdateFieldBuilder) DisplayDayOfWeek(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayDayOfWeek"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
-func (b *UpdateFieldBuilder) Choices(value []string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["choices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AutoSave Whether the link field will auto save.
-func (b *UpdateFieldBuilder) AutoSave(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["autoSave"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// LinkText The configured text value that replaces the URL that users see within the product.
-func (b *UpdateFieldBuilder) LinkText(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["linkText"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayUser The configured option for how users display within the product.
-func (b *UpdateFieldBuilder) DisplayUser(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayUser"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// VersionMode Version modes for files. Keep all versions vs keep last version.
-func (b *UpdateFieldBuilder) VersionMode(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["versionMode"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultValueLuid Default user id value.
-func (b *UpdateFieldBuilder) DefaultValueLuid(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultValueLuid"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// UseI18NFormat Whether phone numbers should be in E.164 standard international format
-func (b *UpdateFieldBuilder) UseI18NFormat(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["useI18NFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AllowNewChoices Indicates if users can add new choices to a selection list.
-func (b *UpdateFieldBuilder) AllowNewChoices(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["allowNewChoices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// NumLines The number of lines shown in Quickbase for this text field.
-func (b *UpdateFieldBuilder) NumLines(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["numLines"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SummaryTableId The table the summary field references fields from.
-func (b *UpdateFieldBuilder) SummaryTableId(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["summaryTableId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
-func (b *UpdateFieldBuilder) AllowMentions(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["allowMentions"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CarryChoices Whether the field should carry its multiple choice fields when copied.
-func (b *UpdateFieldBuilder) CarryChoices(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["carryChoices"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-func (b *UpdateFieldBuilder) SeeVersions(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["seeVersions"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DefaultValue The default value configured for a field when a new record is added.
-func (b *UpdateFieldBuilder) DefaultValue(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["defaultValue"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CurrencyFormat The currency format used when displaying field values within the product.
-func (b *UpdateFieldBuilder) CurrencyFormat(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["currencyFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-func (b *UpdateFieldBuilder) Hours24(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["hours24"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Units The units label.
-func (b *UpdateFieldBuilder) Units(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["units"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DecimalPlaces The number of decimal places displayed in the product for this field.
-func (b *UpdateFieldBuilder) DecimalPlaces(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["decimalPlaces"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// HasExtension Whether this field has a phone extension.
-func (b *UpdateFieldBuilder) HasExtension(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["hasExtension"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// MaxVersions The maximum number of versions configured for a file attachment.
-func (b *UpdateFieldBuilder) MaxVersions(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["maxVersions"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-func (b *UpdateFieldBuilder) MaxLength(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["maxLength"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayTimezone Indicates whether to display the timezone within the product.
-func (b *UpdateFieldBuilder) DisplayTimezone(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayTimezone"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
 // SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn’t require a field selection (like count).
 func (b *UpdateFieldBuilder) SummaryTargetFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6476,276 +5955,6 @@ func (b *UpdateFieldBuilder) SummaryTargetFieldId(value int) *UpdateFieldBuilder
 		nested = make(map[string]any)
 	}
 	nested["summaryTargetFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-func (b *UpdateFieldBuilder) SortAlpha(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["sortAlpha"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AppendOnly Whether this field is append only.
-func (b *UpdateFieldBuilder) AppendOnly(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["appendOnly"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Comments The comments entered on the field properties by an administrator.
-func (b *UpdateFieldBuilder) Comments(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["comments"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayEmail How the email is displayed.
-func (b *UpdateFieldBuilder) DisplayEmail(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayEmail"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-func (b *UpdateFieldBuilder) SortAsGiven(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["sortAsGiven"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// LookupTargetFieldId The id of the field that is the target on the parent table for this lookup.
-func (b *UpdateFieldBuilder) LookupTargetFieldId(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["lookupTargetFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// CompositeFields An array of the fields that make up a composite field (e.g., address).
-func (b *UpdateFieldBuilder) CompositeFields(value []any) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["compositeFields"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-func (b *UpdateFieldBuilder) DisplayCheckboxAsText(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayCheckboxAsText"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayTime Indicates whether to display the time, in addition to the date.
-func (b *UpdateFieldBuilder) DisplayTime(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayTime"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
-func (b *UpdateFieldBuilder) DisplayAsLink(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayAsLink"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// TargetFieldId The id of the target field.
-func (b *UpdateFieldBuilder) TargetFieldId(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["targetFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-func (b *UpdateFieldBuilder) NumberFormat(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["numberFormat"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// AppearsAs The link text, if empty, the url will be used as link text.
-func (b *UpdateFieldBuilder) AppearsAs(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["appearsAs"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// TargetTableId The id of the target table.
-func (b *UpdateFieldBuilder) TargetTableId(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["targetTableId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-func (b *UpdateFieldBuilder) SnapFieldId(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["snapFieldId"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// Formula The formula of the field as configured in Quickbase.
-func (b *UpdateFieldBuilder) Formula(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["formula"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// DisplayMonth How to display months.
-func (b *UpdateFieldBuilder) DisplayMonth(value string) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["displayMonth"] = value
-	b.params["properties"] = nested
-	return b
-}
-
-
-// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
-func (b *UpdateFieldBuilder) SummaryReferenceFieldId(value int) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	nested, _ := b.params["properties"].(map[string]any)
-	if nested == nil {
-		nested = make(map[string]any)
-	}
-	nested["summaryReferenceFieldId"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -6766,8 +5975,8 @@ func (b *UpdateFieldBuilder) CommaStart(value int) *UpdateFieldBuilder {
 }
 
 
-// OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
-func (b *UpdateFieldBuilder) OpenTargetIn(value string) *UpdateFieldBuilder {
+// CompositeFields An array of the fields that make up a composite field (e.g., address).
+func (b *UpdateFieldBuilder) CompositeFields(value []any) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6775,7 +5984,67 @@ func (b *UpdateFieldBuilder) OpenTargetIn(value string) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["openTargetIn"] = value
+	nested["compositeFields"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// VersionMode Version modes for files. Keep all versions vs keep last version.
+func (b *UpdateFieldBuilder) VersionMode(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["versionMode"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+func (b *UpdateFieldBuilder) SortAsGiven(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["sortAsGiven"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
+func (b *UpdateFieldBuilder) DisplayAsLink(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayAsLink"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DoesTotal Whether this field totals in reports within the product.
+func (b *UpdateFieldBuilder) DoesTotal(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["doesTotal"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -6811,8 +6080,8 @@ func (b *UpdateFieldBuilder) DefaultKind(value string) *UpdateFieldBuilder {
 }
 
 
-// CoverText An alternate user friendly text that can be used to display a link in the browser.
-func (b *UpdateFieldBuilder) CoverText(value string) *UpdateFieldBuilder {
+// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+func (b *UpdateFieldBuilder) SortAlpha(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6820,14 +6089,14 @@ func (b *UpdateFieldBuilder) CoverText(value string) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["coverText"] = value
+	nested["sortAlpha"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// Abbreviate Don't show the URL protocol when showing the URL.
-func (b *UpdateFieldBuilder) Abbreviate(value bool) *UpdateFieldBuilder {
+// AutoSave Whether the link field will auto save.
+func (b *UpdateFieldBuilder) AutoSave(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6835,7 +6104,67 @@ func (b *UpdateFieldBuilder) Abbreviate(value bool) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["abbreviate"] = value
+	nested["autoSave"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// MaxVersions The maximum number of versions configured for a file attachment.
+func (b *UpdateFieldBuilder) MaxVersions(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["maxVersions"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// NumLines The number of lines shown in Quickbase for this text field.
+func (b *UpdateFieldBuilder) NumLines(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["numLines"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CurrencyFormat The currency format used when displaying field values within the product.
+func (b *UpdateFieldBuilder) CurrencyFormat(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["currencyFormat"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
+func (b *UpdateFieldBuilder) UseNewWindow(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["useNewWindow"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -6856,8 +6185,8 @@ func (b *UpdateFieldBuilder) Format(value int) *UpdateFieldBuilder {
 }
 
 
-// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-func (b *UpdateFieldBuilder) BlankIsZero(value bool) *UpdateFieldBuilder {
+// ParentFieldId The id of the parent composite field, when applicable.
+func (b *UpdateFieldBuilder) ParentFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6865,14 +6194,14 @@ func (b *UpdateFieldBuilder) BlankIsZero(value bool) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["blankIsZero"] = value
+	nested["parentFieldId"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// DefaultDomain Default email domain.
-func (b *UpdateFieldBuilder) DefaultDomain(value string) *UpdateFieldBuilder {
+// SummaryQuery The summary query.
+func (b *UpdateFieldBuilder) SummaryQuery(value string) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6880,14 +6209,14 @@ func (b *UpdateFieldBuilder) DefaultDomain(value string) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["defaultDomain"] = value
+	nested["summaryQuery"] = value
 	b.params["properties"] = nested
 	return b
 }
 
 
-// TargetTableName The field's target table name.
-func (b *UpdateFieldBuilder) TargetTableName(value string) *UpdateFieldBuilder {
+// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+func (b *UpdateFieldBuilder) SnapFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6895,7 +6224,232 @@ func (b *UpdateFieldBuilder) TargetTableName(value string) *UpdateFieldBuilder {
 	if nested == nil {
 		nested = make(map[string]any)
 	}
-	nested["targetTableName"] = value
+	nested["snapFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultValueLuid Default user id value.
+func (b *UpdateFieldBuilder) DefaultValueLuid(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultValueLuid"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Formula The formula of the field as configured in Quickbase.
+func (b *UpdateFieldBuilder) Formula(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["formula"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AllowNewChoices Indicates if users can add new choices to a selection list.
+func (b *UpdateFieldBuilder) AllowNewChoices(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["allowNewChoices"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Abbreviate Don't show the URL protocol when showing the URL.
+func (b *UpdateFieldBuilder) Abbreviate(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["abbreviate"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
+func (b *UpdateFieldBuilder) SummaryReferenceFieldId(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["summaryReferenceFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Exact Whether an exact match is required for a report link.
+func (b *UpdateFieldBuilder) Exact(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["exact"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayTimezone Indicates whether to display the timezone within the product.
+func (b *UpdateFieldBuilder) DisplayTimezone(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayTimezone"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayTime Indicates whether to display the time, in addition to the date.
+func (b *UpdateFieldBuilder) DisplayTime(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayTime"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+func (b *UpdateFieldBuilder) Hours24(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["hours24"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DecimalPlaces The number of decimal places displayed in the product for this field.
+func (b *UpdateFieldBuilder) DecimalPlaces(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["decimalPlaces"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayEmail How the email is displayed.
+func (b *UpdateFieldBuilder) DisplayEmail(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayEmail"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayRelative Whether to display time as relative.
+func (b *UpdateFieldBuilder) DisplayRelative(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayRelative"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// UseI18NFormat Whether phone numbers should be in E.164 standard international format
+func (b *UpdateFieldBuilder) UseI18NFormat(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["useI18NFormat"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultToday Indicates if the field value is defaulted today for new records.
+func (b *UpdateFieldBuilder) DefaultToday(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultToday"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// TargetTableId The id of the target table.
+func (b *UpdateFieldBuilder) TargetTableId(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["targetTableId"] = value
 	b.params["properties"] = nested
 	return b
 }
@@ -6916,22 +6470,462 @@ func (b *UpdateFieldBuilder) LookupReferenceFieldId(value int) *UpdateFieldBuild
 }
 
 
+// Units The units label.
+func (b *UpdateFieldBuilder) Units(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["units"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// LookupTargetFieldId The id of the field that is the target on the parent table for this lookup.
+func (b *UpdateFieldBuilder) LookupTargetFieldId(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["lookupTargetFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayMonth How to display months.
+func (b *UpdateFieldBuilder) DisplayMonth(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayMonth"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayUser The configured option for how users display within the product.
+func (b *UpdateFieldBuilder) DisplayUser(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayUser"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AppearsAs The link text, if empty, the url will be used as link text.
+func (b *UpdateFieldBuilder) AppearsAs(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["appearsAs"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+func (b *UpdateFieldBuilder) DisplayCheckboxAsText(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayCheckboxAsText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Comments The comments entered on the field properties by an administrator.
+func (b *UpdateFieldBuilder) Comments(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["comments"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CarryChoices Whether the field should carry its multiple choice fields when copied.
+func (b *UpdateFieldBuilder) CarryChoices(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["carryChoices"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DoesAverage Whether this field averages in reports within the product.
+func (b *UpdateFieldBuilder) DoesAverage(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["doesAverage"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CoverText An alternate user friendly text that can be used to display a link in the browser.
+func (b *UpdateFieldBuilder) CoverText(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["coverText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
+func (b *UpdateFieldBuilder) AllowMentions(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["allowMentions"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+func (b *UpdateFieldBuilder) MaxLength(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["maxLength"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+func (b *UpdateFieldBuilder) NumberFormat(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["numberFormat"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SummaryTableId The table the summary field references fields from.
+func (b *UpdateFieldBuilder) SummaryTableId(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["summaryTableId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// HasExtension Whether this field has a phone extension.
+func (b *UpdateFieldBuilder) HasExtension(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["hasExtension"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SummaryFunction The accumulation type for the summary field.
+func (b *UpdateFieldBuilder) SummaryFunction(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["summaryFunction"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// CurrencySymbol The current symbol used when displaying field values within the product.
+func (b *UpdateFieldBuilder) CurrencySymbol(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["currencySymbol"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultValue The default value configured for a field when a new record is added.
+func (b *UpdateFieldBuilder) DefaultValue(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultValue"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// AppendOnly Whether this field is append only.
+func (b *UpdateFieldBuilder) AppendOnly(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["appendOnly"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+func (b *UpdateFieldBuilder) DefaultCountryCode(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultCountryCode"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+func (b *UpdateFieldBuilder) SeeVersions(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["seeVersions"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// TargetFieldId The id of the target field.
+func (b *UpdateFieldBuilder) TargetFieldId(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["targetFieldId"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DefaultDomain Default email domain.
+func (b *UpdateFieldBuilder) DefaultDomain(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["defaultDomain"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Width The field's html input width in the product.
+func (b *UpdateFieldBuilder) Width(value int) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["width"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
+func (b *UpdateFieldBuilder) Choices(value []string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["choices"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// LinkText The configured text value that replaces the URL that users see within the product.
+func (b *UpdateFieldBuilder) LinkText(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["linkText"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
+func (b *UpdateFieldBuilder) OpenTargetIn(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["openTargetIn"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+func (b *UpdateFieldBuilder) BlankIsZero(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["blankIsZero"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// TargetTableName The field's target table name.
+func (b *UpdateFieldBuilder) TargetTableName(value string) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["targetTableName"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
+// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+func (b *UpdateFieldBuilder) DisplayDayOfWeek(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	nested, _ := b.params["properties"].(map[string]any)
+	if nested == nil {
+		nested = make(map[string]any)
+	}
+	nested["displayDayOfWeek"] = value
+	b.params["properties"] = nested
+	return b
+}
+
+
 // AppearsByDefault Indicates if the field is marked as a default in reports.
 func (b *UpdateFieldBuilder) AppearsByDefault(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
 	b.params["appearsByDefault"] = value
-	return b
-}
-
-
-// AddToForms Whether the field you are adding should appear on forms.
-func (b *UpdateFieldBuilder) AddToForms(value bool) *UpdateFieldBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["addToForms"] = value
 	return b
 }
 
@@ -6946,12 +6940,12 @@ func (b *UpdateFieldBuilder) Label(value string) *UpdateFieldBuilder {
 }
 
 
-// FindEnabled Indicates if the field is marked as searchable.
-func (b *UpdateFieldBuilder) FindEnabled(value bool) *UpdateFieldBuilder {
+// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+func (b *UpdateFieldBuilder) NoWrap(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
-	b.params["findEnabled"] = value
+	b.params["noWrap"] = value
 	return b
 }
 
@@ -6986,12 +6980,22 @@ func (b *UpdateFieldBuilder) Permissions(values ...map[string]any) *UpdateFieldB
 }
 
 
-// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
-func (b *UpdateFieldBuilder) NoWrap(value bool) *UpdateFieldBuilder {
+// AddToForms Whether the field you are adding should appear on forms.
+func (b *UpdateFieldBuilder) AddToForms(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
 		return b
 	}
-	b.params["noWrap"] = value
+	b.params["addToForms"] = value
+	return b
+}
+
+
+// FindEnabled Indicates if the field is marked as searchable.
+func (b *UpdateFieldBuilder) FindEnabled(value bool) *UpdateFieldBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["findEnabled"] = value
 	return b
 }
 
@@ -7334,16 +7338,6 @@ func (c *Client) UpdateTable(table string) *UpdateTableBuilder {
 }
 
 
-// Name The name for the table.
-func (b *UpdateTableBuilder) Name(value string) *UpdateTableBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["name"] = value
-	return b
-}
-
-
 // PluralRecordName The plural noun for records in the table. If this value is not passed the default value is 'Records'.
 func (b *UpdateTableBuilder) PluralRecordName(value string) *UpdateTableBuilder {
 	if b.err != nil {
@@ -7370,6 +7364,16 @@ func (b *UpdateTableBuilder) Description(value string) *UpdateTableBuilder {
 		return b
 	}
 	b.params["description"] = value
+	return b
+}
+
+
+// Name The name for the table.
+func (b *UpdateTableBuilder) Name(value string) *UpdateTableBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["name"] = value
 	return b
 }
 
@@ -7511,16 +7515,6 @@ func (c *Client) Upsert(table string) *UpsertBuilder {
 }
 
 
-// Data Record data array, where each record contains key-value mappings of fields to be defined/updated and their values.
-func (b *UpsertBuilder) Data(values ...any) *UpsertBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.params["data"] = values
-	return b
-}
-
-
 // MergeFieldId The merge field id.
 func (b *UpsertBuilder) MergeFieldId(value int) *UpsertBuilder {
 	if b.err != nil {
@@ -7537,6 +7531,16 @@ func (b *UpsertBuilder) FieldsToReturn(values ...int) *UpsertBuilder {
 		return b
 	}
 	b.params["fieldsToReturn"] = values
+	return b
+}
+
+
+// Data Record data array, where each record contains key-value mappings of fields to be defined/updated and their values.
+func (b *UpsertBuilder) Data(values ...any) *UpsertBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.params["data"] = values
 	return b
 }
 

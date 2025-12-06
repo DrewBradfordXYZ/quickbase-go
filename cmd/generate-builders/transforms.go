@@ -348,6 +348,136 @@ var responseTransforms = map[string]ResponseTransform{
 		},
 	},
 
+	// =========================================================================
+	// Auth operations
+	// =========================================================================
+
+	// getTempTokenDBID: Returns temporary authorization token
+	"getTempTokenDBID": {
+		ResultType: "TempTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "temporaryAuthorization", Target: "TemporaryAuthorization", Type: "string", Dereference: true},
+		},
+	},
+
+	// exchangeSsoToken: Returns access token from SSO exchange
+	// Note: IssuedTokenType and TokenType are typed strings, need string() cast
+	"exchangeSsoToken": {
+		ResultType: "SsoTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "accessToken", Target: "AccessToken", Type: "string", Dereference: true},
+			{Source: "issuedTokenType", Target: "IssuedTokenType", Type: "string", Dereference: true, TypeCast: "string"},
+			{Source: "tokenType", Target: "TokenType", Type: "string", Dereference: true, TypeCast: "string"},
+		},
+	},
+
+	// =========================================================================
+	// User token operations
+	// =========================================================================
+
+	// cloneUserToken: Returns cloned token info
+	"cloneUserToken": {
+		ResultType: "UserTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "token", Target: "Token", Type: "string", Dereference: true},
+			{Source: "active", Target: "Active", Type: "bool", Dereference: true},
+			{Source: "lastUsed", Target: "LastUsed", Type: "string", Dereference: true},
+		},
+	},
+
+	// transferUserToken: Returns transferred token info
+	"transferUserToken": {
+		ResultType: "UserTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "active", Target: "Active", Type: "bool", Dereference: true},
+			{Source: "lastUsed", Target: "LastUsed", Type: "string", Dereference: true},
+		},
+	},
+
+	// deactivateUserToken: Returns deactivated token ID
+	"deactivateUserToken": {
+		ResultType: "DeactivatedTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", Dereference: true},
+		},
+	},
+
+	// deleteUserToken: Returns deleted token ID
+	"deleteUserToken": {
+		ResultType: "DeletedTokenResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", Dereference: true},
+		},
+	},
+
+	// =========================================================================
+	// Relationship operations
+	// =========================================================================
+
+	// deleteRelationship: Returns deleted relationship ID
+	"deleteRelationship": {
+		ResultType: "DeleteRelationshipResult",
+		ResultFields: []FieldTransform{
+			{Source: "relationshipId", Target: "RelationshipID", Type: "int"},
+		},
+	},
+
+	// =========================================================================
+	// App events
+	// =========================================================================
+
+	// getAppEvents: Array of app events (webhooks, automations, etc.)
+	// Note: Type field is *GetAppEvents200Type (typed string), needs string() cast
+	"getAppEvents": {
+		ResultType:      "AppEventInfo",
+		IsArrayResponse: true,
+		ResultFields: []FieldTransform{
+			{Source: "type", Target: "Type", Type: "string", Dereference: true, TypeCast: "string"},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "isActive", Target: "IsActive", Type: "bool", Dereference: true},
+			{Source: "tableId", Target: "TableID", Type: "string", Dereference: true},
+			{Source: "url", Target: "URL", Type: "string", Dereference: true},
+		},
+	},
+
+	// =========================================================================
+	// File operations
+	// =========================================================================
+
+	// downloadFile: Returns file content info (actual binary handled separately)
+	// Note: This returns binary data, so we just extract metadata if available
+	// The actual file content is in the response body
+
+	// =========================================================================
+	// Document templates
+	// =========================================================================
+
+	// generateDocument: Returns generated document info
+	"generateDocument": {
+		ResultType: "GeneratedDocumentResult",
+		ResultFields: []FieldTransform{
+			{Source: "fileName", Target: "FileName", Type: "string", Dereference: true},
+			{Source: "data", Target: "Data", Type: "string", Dereference: true},
+			{Source: "contentType", Target: "ContentType", Type: "string", Dereference: true},
+		},
+	},
+
+	// =========================================================================
+	// Analytics operations
+	// =========================================================================
+
+	// platformAnalyticReads: Complex nested type with openapi_types.Date
+	// Keep as raw generated type - the response has nested reads structure
+
+	// platformAnalyticEventSummaries: Complex paginated response with nested structures
+	// Keep as raw generated type
+
 	// runQuery: Complex transformation - kept as manual implementation
 	// See api.go for the full implementation including:
 	// - Bidirectional schema transformation (field aliases)
