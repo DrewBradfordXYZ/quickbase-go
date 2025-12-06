@@ -115,6 +115,8 @@ var skipResultType = map[string]bool{
 	"runReport":        true, // Has RunReportResult defined manually in api.go
 	"getUsers":         true, // Has GetUsersResult with helper methods in api.go
 	"getRelationships": true, // Has GetRelationshipsResult with helper methods in api.go
+	"getFieldUsage":    true, // Has GetFieldUsageResult with helper methods in api.go
+	"getFieldsUsage":   true, // Has GetFieldsUsageResult with helper methods in api.go
 }
 
 // shouldSkipResultType returns true if the operation should not generate a result type

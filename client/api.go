@@ -486,3 +486,122 @@ func (r *GetRelationshipsResult) Relationships() []RelationshipInfo {
 func (r *GetRelationshipsResult) Raw() *generated.GetRelationshipsResponse {
 	return r.raw
 }
+
+// --- GetFieldUsage / GetFieldsUsage result types ---
+
+// FieldUsageInfo contains field information with usage summary.
+type FieldUsageInfo struct {
+	ID         int
+	Name       string
+	Type       string
+	TotalUsage int                          // Sum of all usage counts
+	Usage      *generated.GetFieldsUsage_200_Usage // Full usage details
+}
+
+// GetFieldUsageResult wraps the getFieldUsage response with helper methods.
+type GetFieldUsageResult struct {
+	raw *generated.GetFieldUsageResponse
+}
+
+// Fields returns the field usage information.
+// Note: getFieldUsage returns an array but typically contains one item.
+func (r *GetFieldUsageResult) Fields() []FieldUsageInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	return convertFieldUsageItems(*r.raw.JSON200)
+}
+
+// Raw returns the underlying generated response for advanced use cases.
+func (r *GetFieldUsageResult) Raw() *generated.GetFieldUsageResponse {
+	return r.raw
+}
+
+// GetFieldsUsageResult wraps the getFieldsUsage response with helper methods.
+type GetFieldsUsageResult struct {
+	raw *generated.GetFieldsUsageResponse
+}
+
+// Fields returns the list of field usage information.
+func (r *GetFieldsUsageResult) Fields() []FieldUsageInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	items := *r.raw.JSON200
+	results := make([]FieldUsageInfo, len(items))
+	for i, item := range items {
+		results[i] = FieldUsageInfo{
+			ID:         item.Field.Id,
+			Name:       item.Field.Name,
+			Type:       item.Field.Type,
+			TotalUsage: sumFieldUsage(&item.Usage),
+			Usage:      &item.Usage,
+		}
+	}
+	return results
+}
+
+// Raw returns the underlying generated response for advanced use cases.
+func (r *GetFieldsUsageResult) Raw() *generated.GetFieldsUsageResponse {
+	return r.raw
+}
+
+// convertFieldUsageItems converts GetFieldUsage items to FieldUsageInfo.
+// The types are slightly different between GetFieldUsage and GetFieldsUsage.
+func convertFieldUsageItems(items []generated.GetFieldUsage_200_Item) []FieldUsageInfo {
+	results := make([]FieldUsageInfo, len(items))
+	for i, item := range items {
+		// Convert the usage type
+		usage := generated.GetFieldsUsage_200_Usage{
+			Actions:         generated.GetFieldsUsage_200_Usage_Actions{Count: item.Usage.Actions.Count},
+			AppHomePages:    generated.GetFieldsUsage_200_Usage_AppHomePages{Count: item.Usage.AppHomePages.Count},
+			Dashboards:      struct{ Count int `json:"count"` }{Count: item.Usage.Dashboards.Count},
+			DefaultReports:  generated.GetFieldsUsage_200_Usage_DefaultReports{Count: item.Usage.DefaultReports.Count},
+			ExactForms:      generated.GetFieldsUsage_200_Usage_ExactForms{Count: item.Usage.ExactForms.Count},
+			Fields:          generated.GetFieldsUsage_200_Usage_Fields{Count: item.Usage.Fields.Count},
+			Forms:           generated.GetFieldsUsage_200_Usage_Forms{Count: item.Usage.Forms.Count},
+			Notifications:   generated.GetFieldsUsage_200_Usage_Notifications{Count: item.Usage.Notifications.Count},
+			PersonalReports: generated.GetFieldsUsage_200_Usage_PersonalReports{Count: item.Usage.PersonalReports.Count},
+			Pipelines:       generated.GetFieldsUsage_200_Usage_Pipelines{Count: item.Usage.Pipelines.Count},
+			Relationships:   generated.GetFieldsUsage_200_Usage_Relationships{Count: item.Usage.Relationships.Count},
+			Reminders:       generated.GetFieldsUsage_200_Usage_Reminders{Count: item.Usage.Reminders.Count},
+			Reports:         generated.GetFieldsUsage_200_Usage_Reports{Count: item.Usage.Reports.Count},
+			Roles:           generated.GetFieldsUsage_200_Usage_Roles{Count: item.Usage.Roles.Count},
+			TableImports:    struct{ Count int `json:"count"` }{Count: item.Usage.TableImports.Count},
+			TableRules:      struct{ Count int `json:"count"` }{Count: item.Usage.TableRules.Count},
+			Webhooks:        generated.GetFieldsUsage_200_Usage_Webhooks{Count: item.Usage.Webhooks.Count},
+		}
+		results[i] = FieldUsageInfo{
+			ID:         item.Field.Id,
+			Name:       item.Field.Name,
+			Type:       item.Field.Type,
+			TotalUsage: sumFieldUsage(&usage),
+			Usage:      &usage,
+		}
+	}
+	return results
+}
+
+// sumFieldUsage calculates the total usage count across all usage types.
+func sumFieldUsage(u *generated.GetFieldsUsage_200_Usage) int {
+	if u == nil {
+		return 0
+	}
+	return u.Actions.Count +
+		u.AppHomePages.Count +
+		u.Dashboards.Count +
+		u.DefaultReports.Count +
+		u.ExactForms.Count +
+		u.Fields.Count +
+		u.Forms.Count +
+		u.Notifications.Count +
+		u.PersonalReports.Count +
+		u.Pipelines.Count +
+		u.Relationships.Count +
+		u.Reminders.Count +
+		u.Reports.Count +
+		u.Roles.Count +
+		u.TableImports.Count +
+		u.TableRules.Count +
+		u.Webhooks.Count
+}
