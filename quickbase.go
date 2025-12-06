@@ -723,16 +723,46 @@ type (
 	// RunQueryResult contains the result of a RunQuery call
 	RunQueryResult = client.RunQueryResult
 
+	// RunReportResult contains the result of a RunReport call
+	RunReportResult = client.RunReportResult
+
 	// UpsertResult contains the result of an Upsert call
 	UpsertResult = client.UpsertResult
 
 	// DeleteRecordsResult contains the result of a DeleteRecords call
 	DeleteRecordsResult = client.DeleteRecordsResult
 
-	// GetAppResult contains the result of a GetApp call
+	// GetAppResult contains the result of GetApp, CreateApp, UpdateApp, CopyApp
 	GetAppResult = client.GetAppResult
 
-	// FieldDetails contains information about a field
+	// TableInfo contains the result of GetTable, CreateTable, UpdateTable, GetAppTables
+	TableInfo = client.TableInfo
+
+	// ReportInfo contains the result of GetReport, GetTableReports
+	ReportInfo = client.ReportInfo
+
+	// CreateFieldResult contains the result of CreateField, UpdateField, GetField
+	CreateFieldResult = client.CreateFieldResult
+
+	// DeleteFieldsResult contains the result of DeleteFields
+	DeleteFieldsResult = client.DeleteFieldsResult
+
+	// DeleteAppResult contains the result of DeleteApp
+	DeleteAppResult = client.DeleteAppResult
+
+	// DeleteTableResult contains the result of DeleteTable
+	DeleteTableResult = client.DeleteTableResult
+
+	// DeleteFileResult contains the result of DeleteFile
+	DeleteFileResult = client.DeleteFileResult
+
+	// RelationshipInfo contains the result of CreateRelationship, UpdateRelationship
+	RelationshipInfo = client.RelationshipInfo
+
+	// FormulaResult contains the result of RunFormula
+	FormulaResult = client.FormulaResult
+
+	// FieldDetails contains information about a field from GetFields
 	FieldDetails = client.FieldDetails
 
 	// FieldInfo contains metadata about a field in query results

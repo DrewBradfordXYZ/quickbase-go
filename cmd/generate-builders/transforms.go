@@ -206,6 +206,148 @@ var responseTransforms = map[string]ResponseTransform{
 		},
 	},
 
+	// createTable: Returns table info (same as getTable)
+	"createTable": {
+		ResultType: "TableInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "alias", Target: "Alias", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "nextRecordId", Target: "NextRecordID", Type: "int", Dereference: true},
+			{Source: "nextFieldId", Target: "NextFieldID", Type: "int", Dereference: true},
+			{Source: "defaultSortFieldId", Target: "DefaultSortFieldID", Type: "int", Dereference: true},
+			{Source: "keyFieldId", Target: "KeyFieldID", Type: "int", Dereference: true},
+			{Source: "singleRecordName", Target: "SingleRecordName", Type: "string", Dereference: true},
+			{Source: "pluralRecordName", Target: "PluralRecordName", Type: "string", Dereference: true},
+			{Source: "sizeLimit", Target: "SizeLimit", Type: "string", Dereference: true},
+			{Source: "spaceUsed", Target: "SpaceUsed", Type: "string", Dereference: true},
+			{Source: "spaceRemaining", Target: "SpaceRemaining", Type: "string", Dereference: true},
+		},
+	},
+
+	// updateTable: Returns table info (same as getTable)
+	"updateTable": {
+		ResultType: "TableInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "string", Dereference: true},
+			{Source: "name", Target: "Name", Type: "string", Dereference: true},
+			{Source: "alias", Target: "Alias", Type: "string", Dereference: true},
+			{Source: "description", Target: "Description", Type: "string", Dereference: true},
+			{Source: "created", Target: "Created", Type: "string", Dereference: true},
+			{Source: "updated", Target: "Updated", Type: "string", Dereference: true},
+			{Source: "nextRecordId", Target: "NextRecordID", Type: "int", Dereference: true},
+			{Source: "nextFieldId", Target: "NextFieldID", Type: "int", Dereference: true},
+			{Source: "defaultSortFieldId", Target: "DefaultSortFieldID", Type: "int", Dereference: true},
+			{Source: "keyFieldId", Target: "KeyFieldID", Type: "int", Dereference: true},
+			{Source: "singleRecordName", Target: "SingleRecordName", Type: "string", Dereference: true},
+			{Source: "pluralRecordName", Target: "PluralRecordName", Type: "string", Dereference: true},
+			{Source: "sizeLimit", Target: "SizeLimit", Type: "string", Dereference: true},
+			{Source: "spaceUsed", Target: "SpaceUsed", Type: "string", Dereference: true},
+			{Source: "spaceRemaining", Target: "SpaceRemaining", Type: "string", Dereference: true},
+		},
+	},
+
+	// deleteFields: Result with deleted field IDs and any errors
+	"deleteFields": {
+		ResultType: "DeleteFieldsResult",
+		ResultFields: []FieldTransform{
+			{Source: "deletedFieldIds", Target: "DeletedFieldIDs", Type: "[]int"},
+			{Source: "errors", Target: "Errors", Type: "[]string"},
+		},
+	},
+
+	// createField: Essential field info after creation
+	"createField": {
+		ResultType: "CreateFieldResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", TypeCast: "int"}, // int64 -> int, not a pointer
+			{Source: "label", Target: "Label", Type: "string", Dereference: true},
+			{Source: "fieldType", Target: "FieldType", Type: "string", Dereference: true},
+			{Source: "mode", Target: "Mode", Type: "string", Dereference: true},
+		},
+	},
+
+	// updateField: Returns field info (same as createField)
+	"updateField": {
+		ResultType: "CreateFieldResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", TypeCast: "int"}, // int64 -> int, not a pointer
+			{Source: "label", Target: "Label", Type: "string", Dereference: true},
+			{Source: "fieldType", Target: "FieldType", Type: "string", Dereference: true},
+			{Source: "mode", Target: "Mode", Type: "string", Dereference: true},
+		},
+	},
+
+	// getField: Returns field info (same as createField)
+	"getField": {
+		ResultType: "CreateFieldResult",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int", TypeCast: "int"}, // int64 -> int, not a pointer
+			{Source: "label", Target: "Label", Type: "string", Dereference: true},
+			{Source: "fieldType", Target: "FieldType", Type: "string", Dereference: true},
+			{Source: "mode", Target: "Mode", Type: "string", Dereference: true},
+		},
+	},
+
+	// deleteFile: Info about the deleted file version
+	"deleteFile": {
+		ResultType: "DeleteFileResult",
+		ResultFields: []FieldTransform{
+			{Source: "fileName", Target: "FileName", Type: "string", Dereference: true},
+			{Source: "versionNumber", Target: "VersionNumber", Type: "int", Dereference: true},
+			{Source: "uploaded", Target: "Uploaded", Type: "string", Dereference: true},
+		},
+	},
+
+	// createRelationship: Relationship info after creation
+	"createRelationship": {
+		ResultType: "RelationshipInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int"},
+			{Source: "parentTableId", Target: "ParentTableID", Type: "string"},
+			{Source: "childTableId", Target: "ChildTableID", Type: "string"},
+			{Source: "isCrossApp", Target: "IsCrossApp", Type: "bool"},
+		},
+	},
+
+	// updateRelationship: Returns relationship info (same as createRelationship)
+	"updateRelationship": {
+		ResultType: "RelationshipInfo",
+		ResultFields: []FieldTransform{
+			{Source: "id", Target: "ID", Type: "int"},
+			{Source: "parentTableId", Target: "ParentTableID", Type: "string"},
+			{Source: "childTableId", Target: "ChildTableID", Type: "string"},
+			{Source: "isCrossApp", Target: "IsCrossApp", Type: "bool"},
+		},
+	},
+
+	// deleteApp: Simple result with deleted app ID
+	"deleteApp": {
+		ResultType: "DeleteAppResult",
+		ResultFields: []FieldTransform{
+			{Source: "deletedAppId", Target: "DeletedAppID", Type: "string", Dereference: true},
+		},
+	},
+
+	// deleteTable: Simple result with deleted table ID
+	"deleteTable": {
+		ResultType: "DeleteTableResult",
+		ResultFields: []FieldTransform{
+			{Source: "deletedTableId", Target: "DeletedTableID", Type: "string", Dereference: true},
+		},
+	},
+
+	// runFormula: Result of formula execution
+	"runFormula": {
+		ResultType: "FormulaResult",
+		ResultFields: []FieldTransform{
+			{Source: "result", Target: "Result", Type: "string", Dereference: true},
+		},
+	},
+
 	// runQuery: Complex transformation - kept as manual implementation
 	// See api.go for the full implementation including:
 	// - Bidirectional schema transformation (field aliases)

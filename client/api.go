@@ -322,7 +322,78 @@ func (r *runQueryPageResponse) GetMetadata() PaginationMetadata {
 	return r.metadata
 }
 
-// helper functions used by RunQuery
+// --- RunReport pagination helpers ---
+
+// RunReportResult contains the result of a RunReport call
+type RunReportResult struct {
+	Data     []generated.QuickbaseRecord
+	Fields   []FieldInfo
+	Metadata QueryMetadata
+}
+
+// RunReportAll fetches all records from a report across all pages.
+// This automatically handles pagination.
+func (c *Client) RunReportAll(ctx context.Context, reportID string, tableID string) ([]generated.QuickbaseRecord, error) {
+	fetcher := c.runReportFetcher(reportID, tableID)
+	return CollectAll(ctx, fetcher)
+}
+
+// RunReportN fetches up to n records from a report across pages.
+func (c *Client) RunReportN(ctx context.Context, reportID string, tableID string, n int) ([]generated.QuickbaseRecord, error) {
+	fetcher := c.runReportFetcher(reportID, tableID)
+	return CollectN(ctx, fetcher, n)
+}
+
+// runReportFetcher creates a page fetcher for RunReport
+func (c *Client) runReportFetcher(reportID string, tableID string) PageFetcher[generated.QuickbaseRecord, *runReportPageResponse] {
+	return func(ctx context.Context, skip int, nextToken string) (*runReportPageResponse, error) {
+		params := &generated.RunReportParams{
+			TableId: tableID,
+			Skip:    &skip,
+		}
+
+		resp, err := c.API().RunReportWithResponse(ctx, reportID, params, nil)
+		if err != nil {
+			return nil, err
+		}
+		if resp.JSON200 == nil {
+			return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+		}
+
+		var data []generated.QuickbaseRecord
+		if resp.JSON200.Data != nil {
+			data = *resp.JSON200.Data
+		}
+
+		var metadata PaginationMetadata
+		if resp.JSON200.Metadata != nil {
+			m := resp.JSON200.Metadata
+			metadata = PaginationMetadata{
+				TotalRecords: &m.TotalRecords,
+				NumRecords:   &m.NumRecords,
+				Skip:         m.Skip,
+			}
+		}
+
+		return &runReportPageResponse{data: data, metadata: metadata}, nil
+	}
+}
+
+// runReportPageResponse adapts the generated response to PaginatedResponse interface
+type runReportPageResponse struct {
+	data     []generated.QuickbaseRecord
+	metadata PaginationMetadata
+}
+
+func (r *runReportPageResponse) GetData() []generated.QuickbaseRecord {
+	return r.data
+}
+
+func (r *runReportPageResponse) GetMetadata() PaginationMetadata {
+	return r.metadata
+}
+
+// helper functions
 
 func derefInt(p *int) int {
 	if p == nil {
