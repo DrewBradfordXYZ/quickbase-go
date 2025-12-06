@@ -745,3 +745,48 @@ func Ints(ids ...int) *[]int {
 func Strings(strs ...string) *[]string {
 	return &strs
 }
+
+// Field creates a FieldValue for use in record upserts.
+// It accepts string, int, float, bool, or []string values.
+//
+// This helper hides the complexity of Go's lack of union types.
+// The QuickBase API allows field values to be different types (text, number,
+// boolean, multi-select), and oapi-codegen generates verbose wrapper types
+// to handle this. Field() provides a clean interface.
+//
+// Example:
+//
+//	data := []quickbase.Record{
+//	    {
+//	        "6": quickbase.Field("Alice"),      // text field
+//	        "7": quickbase.Field(100),          // number field
+//	        "8": quickbase.Field(true),         // checkbox field
+//	        "9": quickbase.Field([]string{"a", "b"}), // multi-select
+//	    },
+//	}
+//	client.Upsert(ctx, quickbase.UpsertBody{
+//	    To:   tableId,
+//	    Data: &data,
+//	})
+func Field(v any) FieldValue {
+	var fv generated.FieldValue_Value
+	switch val := v.(type) {
+	case string:
+		fv.FromFieldValueValue0(val)
+	case int:
+		fv.FromFieldValueValue1(float32(val))
+	case int32:
+		fv.FromFieldValueValue1(float32(val))
+	case int64:
+		fv.FromFieldValueValue1(float32(val))
+	case float32:
+		fv.FromFieldValueValue1(val)
+	case float64:
+		fv.FromFieldValueValue1(float32(val))
+	case bool:
+		fv.FromFieldValueValue2(val)
+	case []string:
+		fv.FromFieldValueValue3(val)
+	}
+	return FieldValue{Value: fv}
+}

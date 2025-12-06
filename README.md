@@ -44,6 +44,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
+    defer client.Close()
 
     ctx := context.Background()
 
@@ -237,6 +238,7 @@ client, err := quickbase.New("mycompany",
         log.Printf("Rate limited! Retry after %ds", info.RetryAfter)
     }),
 )
+defer client.Close()  // Release idle connections when done
 ```
 
 ## Schema Aliases
@@ -446,7 +448,10 @@ first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
 upsertResult, err := client.Upsert(ctx, quickbase.UpsertBody{
     To: tableId,
     Data: &[]quickbase.Record{
-        {"6": quickbase.FieldValue{Value: fieldValue("New Record")}},
+        {
+            "6": quickbase.Field("New Record"),  // text
+            "7": quickbase.Field(42),            // number
+        },
     },
 })
 fmt.Println("Created:", upsertResult.CreatedRecordIDs)
@@ -462,6 +467,12 @@ fmt.Println("Deleted:", deleteResult.NumberDeleted)
 ### Helper Functions
 
 ```go
+// Field creates a FieldValue for upserts (text, number, bool, []string)
+quickbase.Field("text value")
+quickbase.Field(123)
+quickbase.Field(true)
+quickbase.Field([]string{"a", "b"})  // multi-select
+
 // Ptr returns a pointer (for optional string/int fields)
 quickbase.Ptr("some string")
 quickbase.Ptr(123)
