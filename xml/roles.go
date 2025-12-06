@@ -253,3 +253,108 @@ func (c *Client) GetUserRole(ctx context.Context, appId, userId string, includeG
 		Roles:    resp.User.Roles,
 	}, nil
 }
+
+// AddUserToRole assigns a user to a role in the application.
+//
+// You can call this multiple times to give a user multiple roles.
+// After assigning, use SendInvitation to invite the user to the app.
+//
+// Requires Basic Access with Sharing or Full Administration access.
+// Users with Basic Access cannot add users to admin roles.
+//
+// Example:
+//
+//	// Get user ID first
+//	user, _ := xmlClient.GetUserInfo(ctx, "user@example.com")
+//
+//	// Assign them to role 10
+//	err := xmlClient.AddUserToRole(ctx, appId, user.ID, 10)
+//
+// See: https://help.quickbase.com/docs/api-addusertorole
+func (c *Client) AddUserToRole(ctx context.Context, appId, userId string, roleId int) error {
+	inner := "<userid>" + xmlEscape(userId) + "</userid>"
+	inner += fmt.Sprintf("<roleid>%d</roleid>", roleId)
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, appId, "API_AddUserToRole", body)
+	if err != nil {
+		return fmt.Errorf("API_AddUserToRole: %w", err)
+	}
+
+	var resp BaseResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return fmt.Errorf("parsing API_AddUserToRole response: %w", err)
+	}
+
+	return checkError(&resp)
+}
+
+// RemoveUserFromRole removes a user from a specific role.
+//
+// If this is the user's only role, they lose all access to the app
+// and are removed from the app's user list.
+//
+// To temporarily disable access while keeping the user in the app,
+// use ChangeUserRole with newRoleId=0 instead.
+//
+// Example:
+//
+//	err := xmlClient.RemoveUserFromRole(ctx, appId, "112149.bhsv", 10)
+//
+// See: https://help.quickbase.com/docs/api-removeuserfromrole
+func (c *Client) RemoveUserFromRole(ctx context.Context, appId, userId string, roleId int) error {
+	inner := "<userid>" + xmlEscape(userId) + "</userid>"
+	inner += fmt.Sprintf("<roleid>%d</roleid>", roleId)
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, appId, "API_RemoveUserFromRole", body)
+	if err != nil {
+		return fmt.Errorf("API_RemoveUserFromRole: %w", err)
+	}
+
+	var resp BaseResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return fmt.Errorf("parsing API_RemoveUserFromRole response: %w", err)
+	}
+
+	return checkError(&resp)
+}
+
+// ChangeUserRole changes a user's role or disables their access.
+//
+// This is preferred over RemoveUserFromRole when you want to keep the
+// user in the app's user list but change/disable their access.
+//
+// Pass newRoleId=0 to set the role to "None" (role ID 9), which disables
+// access while keeping the user on the app's user list for future reinstatement.
+//
+// Example:
+//
+//	// Change user from role 10 to role 11
+//	err := xmlClient.ChangeUserRole(ctx, appId, "112149.bhsv", 10, 11)
+//
+//	// Disable access (set to None role)
+//	err := xmlClient.ChangeUserRole(ctx, appId, "112149.bhsv", 10, 0)
+//
+// See: https://help.quickbase.com/docs/api-changeuserrole
+func (c *Client) ChangeUserRole(ctx context.Context, appId, userId string, currentRoleId, newRoleId int) error {
+	inner := "<userid>" + xmlEscape(userId) + "</userid>"
+	inner += fmt.Sprintf("<roleid>%d</roleid>", currentRoleId)
+	if newRoleId > 0 {
+		inner += fmt.Sprintf("<newRoleid>%d</newRoleid>", newRoleId)
+	}
+	// If newRoleId is 0, omit it and QuickBase sets role to None (9)
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, appId, "API_ChangeUserRole", body)
+	if err != nil {
+		return fmt.Errorf("API_ChangeUserRole: %w", err)
+	}
+
+	var resp BaseResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return fmt.Errorf("parsing API_ChangeUserRole response: %w", err)
+	}
+
+	return checkError(&resp)
+}

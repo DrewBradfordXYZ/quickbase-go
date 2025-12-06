@@ -35,10 +35,26 @@
 //
 // # Available Endpoints
 //
+// App Discovery:
+//   - [Client.GrantedDBs]: List all apps/tables the user can access
+//   - [Client.FindDBByName]: Find an app by its name
+//   - [Client.GetDBInfo]: Get app/table metadata (record count, manager, timestamps)
+//   - [Client.GetNumRecords]: Get total record count for a table
+//
 // Role Information:
 //   - [Client.GetRoleInfo]: Get all roles defined in an application
 //   - [Client.UserRoles]: Get all users and their role assignments
 //   - [Client.GetUserRole]: Get roles for a specific user
+//   - [Client.AddUserToRole]: Assign a user to a role
+//   - [Client.RemoveUserFromRole]: Remove a user from a role
+//   - [Client.ChangeUserRole]: Change a user's role or disable access
+//
+// User Information:
+//   - [Client.GetUserInfo]: Get user info by email address
+//
+// Application Variables:
+//   - [Client.GetDBVar]: Get an application variable value
+//   - [Client.SetDBVar]: Set an application variable value
 //
 // Schema Information:
 //   - [Client.GetSchema]: Get comprehensive app/table metadata including fields, reports, and variables
@@ -50,7 +66,9 @@
 package xml
 
 import (
+	"bytes"
 	"context"
+	"encoding/xml"
 )
 
 // Caller defines the minimal interface required to make XML API calls.
@@ -93,4 +111,14 @@ func New(caller Caller) *Client {
 // It wraps the content in <qdbapi> tags.
 func buildRequest(inner string) []byte {
 	return []byte("<qdbapi>" + inner + "</qdbapi>")
+}
+
+// xmlEscape escapes special XML characters in a string.
+// Returns empty string if escaping fails (invalid characters).
+func xmlEscape(s string) string {
+	var buf bytes.Buffer
+	if err := xml.EscapeText(&buf, []byte(s)); err != nil {
+		return ""
+	}
+	return buf.String()
 }

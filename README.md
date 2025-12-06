@@ -1091,12 +1091,49 @@ for _, field := range schema.Table.Fields {
 
 ### Available Methods
 
+**App Discovery:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GrantedDBs(ctx, opts)` | API_GrantedDBs | List all apps/tables user can access |
+| `FindDBByName(ctx, name, parentsOnly)` | API_FindDBByName | Find an app by name |
+| `GetDBInfo(ctx, dbid)` | API_GetDBInfo | Get app/table metadata (record count, manager, timestamps) |
+| `GetNumRecords(ctx, tableId)` | API_GetNumRecords | Get total record count for a table |
+
+**Role Management:**
+
 | Method | XML Action | Description |
 |--------|------------|-------------|
 | `GetRoleInfo(ctx, appId)` | API_GetRoleInfo | Get all roles defined in an application |
 | `UserRoles(ctx, appId)` | API_UserRoles | Get all users and their role assignments |
 | `GetUserRole(ctx, appId, userId, includeGroups)` | API_GetUserRole | Get roles for a specific user |
+| `AddUserToRole(ctx, appId, userId, roleId)` | API_AddUserToRole | Assign a user to a role |
+| `RemoveUserFromRole(ctx, appId, userId, roleId)` | API_RemoveUserFromRole | Remove a user from a role |
+| `ChangeUserRole(ctx, appId, userId, currentRole, newRole)` | API_ChangeUserRole | Change a user's role |
+
+**User Information:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetUserInfo(ctx, email)` | API_GetUserInfo | Get user info by email address |
+
+**Application Variables:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetDBVar(ctx, appId, varName)` | API_GetDBVar | Get an application variable value |
+| `SetDBVar(ctx, appId, varName, value)` | API_SetDBVar | Set an application variable value |
+
+**Schema Information:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
 | `GetSchema(ctx, dbid)` | API_GetSchema | Get comprehensive app/table metadata |
+
+**Record Information:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
 | `DoQueryCount(ctx, tableId, query)` | API_DoQueryCount | Get count of matching records (no data fetch) |
 | `GetRecordInfo(ctx, tableId, recordId)` | API_GetRecordInfo | Get record with field metadata |
 | `GetRecordInfoByKey(ctx, tableId, keyValue)` | API_GetRecordInfo | Get record by key field value |

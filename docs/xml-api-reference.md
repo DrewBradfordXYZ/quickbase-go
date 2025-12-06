@@ -16,12 +16,43 @@ This document provides a comprehensive comparison of QuickBase's legacy XML API 
 
 These XML endpoints are available in the `xml` sub-package:
 
+### App Discovery
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GrantedDBs(ctx, opts)` | `API_GrantedDBs` | List all apps/tables user can access |
+| `FindDBByName(ctx, name, parentsOnly)` | `API_FindDBByName` | Find an app by name |
+| `GetDBInfo(ctx, dbid)` | `API_GetDBInfo` | Get app/table metadata (record count, manager, timestamps) |
+| `GetNumRecords(ctx, tableId)` | `API_GetNumRecords` | Get total record count for a table |
+
+### Role Management
 | Method | XML Action | Description |
 |--------|------------|-------------|
 | `GetRoleInfo(ctx, appId)` | `API_GetRoleInfo` | Get all roles defined in an application |
 | `UserRoles(ctx, appId)` | `API_UserRoles` | Get all users and their role assignments |
 | `GetUserRole(ctx, appId, userId, includeGroups)` | `API_GetUserRole` | Get roles for a specific user |
+| `AddUserToRole(ctx, appId, userId, roleId)` | `API_AddUserToRole` | Assign a user to a role |
+| `RemoveUserFromRole(ctx, appId, userId, roleId)` | `API_RemoveUserFromRole` | Remove a user from a role |
+| `ChangeUserRole(ctx, appId, userId, currentRole, newRole)` | `API_ChangeUserRole` | Change a user's role |
+
+### User Information
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetUserInfo(ctx, email)` | `API_GetUserInfo` | Get user info by email address |
+
+### Application Variables
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetDBVar(ctx, appId, varName)` | `API_GetDBVar` | Get an application variable value |
+| `SetDBVar(ctx, appId, varName, value)` | `API_SetDBVar` | Set an application variable value |
+
+### Schema Information
+| Method | XML Action | Description |
+|--------|------------|-------------|
 | `GetSchema(ctx, dbid)` | `API_GetSchema` | Get comprehensive app/table metadata |
+
+### Record Information
+| Method | XML Action | Description |
+|--------|------------|-------------|
 | `DoQueryCount(ctx, tableId, query)` | `API_DoQueryCount` | Get count of matching records without fetching data |
 | `GetRecordInfo(ctx, tableId, recordId)` | `API_GetRecordInfo` | Get a record with full field metadata |
 | `GetRecordInfoByKey(ctx, tableId, keyValue)` | `API_GetRecordInfo` | Get a record by key field value |
@@ -105,9 +136,9 @@ These features are **only available in the XML API**:
 | `API_GetRoleInfo` | Get all roles defined in an application | **Implemented** |
 | `API_UserRoles` | Get all users and their role assignments | **Implemented** |
 | `API_GetUserRole` | Get roles for a specific user | **Implemented** |
-| `API_AddUserToRole` | Assign a user to a role | Not implemented |
-| `API_RemoveUserFromRole` | Remove a user from a role | Not implemented |
-| `API_ChangeUserRole` | Change a user's role | Not implemented |
+| `API_AddUserToRole` | Assign a user to a role | **Implemented** |
+| `API_RemoveUserFromRole` | Remove a user from a role | **Implemented** |
+| `API_ChangeUserRole` | Change a user's role | **Implemented** |
 
 ### Group Management (Create, Delete, Query)
 
@@ -128,8 +159,8 @@ These features are **only available in the XML API**:
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_GetDBVar` | Get an application variable value | Not implemented |
-| `API_SetDBVar` | Set an application variable value | Not implemented |
+| `API_GetDBVar` | Get an application variable value | **Implemented** |
+| `API_SetDBVar` | Set an application variable value | **Implemented** |
 
 > Note: JSON API can read/write variables during app create/update, but cannot read individual variables.
 
@@ -138,12 +169,12 @@ These features are **only available in the XML API**:
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
 | `API_GetSchema` | Comprehensive schema (fields, reports, DBVars, child tables) | **Implemented** |
-| `API_GrantedDBs` | List all apps user can access (across realms) | Not implemented |
-| `API_FindDBByName` | Find an app by name | Not implemented |
+| `API_GrantedDBs` | List all apps user can access (across realms) | **Implemented** |
+| `API_FindDBByName` | Find an app by name | **Implemented** |
 | `API_GetAncestorInfo` | Get app template/copy lineage | Not implemented |
 | `API_GetAppDTMInfo` | Get modification timestamps (fast, no auth) | Not implemented |
-| `API_GetDBInfo` | Get table metadata (record count, manager, timestamps) | Not implemented |
-| `API_GetNumRecords` | Get record count for a table | Not implemented |
+| `API_GetDBInfo` | Get table metadata (record count, manager, timestamps) | **Implemented** |
+| `API_GetNumRecords` | Get record count for a table | **Implemented** |
 
 ### Code Pages
 
@@ -167,7 +198,7 @@ These features are **only available in the XML API**:
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_GetUserInfo` | Get user info by email | Not implemented |
+| `API_GetUserInfo` | Get user info by email | **Implemented** |
 | `API_ProvisionUser` | Create/provision a new user | Not implemented |
 | `API_SendInvitation` | Send invitation email | Not implemented |
 | `API_ChangeManager` | Change app/table manager | Not implemented |

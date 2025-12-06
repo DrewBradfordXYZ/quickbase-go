@@ -864,3 +864,410 @@ func TestGetRecordInfoByKey(t *testing.T) {
 		}
 	})
 }
+
+func TestGrantedDBs(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GrantedDBs</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <databases>
+      <dbinfo>
+         <dbname>MyApp</dbname>
+         <dbid>bdzk2ecg5</dbid>
+         <ancestorappid>beaa6db7t</ancestorappid>
+         <oldestancestorappid>bd9jbshim</oldestancestorappid>
+      </dbinfo>
+      <dbinfo>
+         <dbname>MyApp:Table1</dbname>
+         <dbid>bdzuh4nj5</dbid>
+      </dbinfo>
+   </databases>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.GrantedDBs(context.Background(), GrantedDBsOptions{
+			RealmAppsOnly:    true,
+			IncludeAncestors: true,
+		})
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GrantedDBs" {
+			t.Errorf("expected action API_GrantedDBs, got %s", mock.lastAction)
+		}
+
+		if mock.lastDBID != "main" {
+			t.Errorf("expected dbid main, got %s", mock.lastDBID)
+		}
+
+		if len(result.Databases) != 2 {
+			t.Fatalf("expected 2 databases, got %d", len(result.Databases))
+		}
+
+		db1 := result.Databases[0]
+		if db1.DBID != "bdzk2ecg5" {
+			t.Errorf("expected dbid bdzk2ecg5, got %s", db1.DBID)
+		}
+		if db1.Name != "MyApp" {
+			t.Errorf("expected name MyApp, got %s", db1.Name)
+		}
+		if db1.AncestorAppID != "beaa6db7t" {
+			t.Errorf("expected ancestorappid beaa6db7t, got %s", db1.AncestorAppID)
+		}
+
+		db2 := result.Databases[1]
+		if db2.Name != "MyApp:Table1" {
+			t.Errorf("expected name MyApp:Table1, got %s", db2.Name)
+		}
+	})
+}
+
+func TestFindDBByName(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_FindDBByName</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <dbid>bdcagynhs</dbid>
+   <dbname>TestApp</dbname>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.FindDBByName(context.Background(), "TestApp", true)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_FindDBByName" {
+			t.Errorf("expected action API_FindDBByName, got %s", mock.lastAction)
+		}
+
+		if result.DBID != "bdcagynhs" {
+			t.Errorf("expected dbid bdcagynhs, got %s", result.DBID)
+		}
+		if result.Name != "TestApp" {
+			t.Errorf("expected name TestApp, got %s", result.Name)
+		}
+	})
+}
+
+func TestGetDBInfo(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetDBInfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <dbname>test</dbname>
+   <lastRecModTime>1205806751959</lastRecModTime>
+   <lastModifiedTime>1205877093679</lastModifiedTime>
+   <createdTime>1204745351407</createdTime>
+   <numRecords>42</numRecords>
+   <mgrID>112149.bhsv</mgrID>
+   <mgrName>AppBoss</mgrName>
+   <time_zone>(UTC-08:00) Pacific Time (US &amp; Canada)</time_zone>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.GetDBInfo(context.Background(), "bqxyz123")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GetDBInfo" {
+			t.Errorf("expected action API_GetDBInfo, got %s", mock.lastAction)
+		}
+
+		if result.Name != "test" {
+			t.Errorf("expected name test, got %s", result.Name)
+		}
+		if result.NumRecords != 42 {
+			t.Errorf("expected 42 records, got %d", result.NumRecords)
+		}
+		if result.ManagerID != "112149.bhsv" {
+			t.Errorf("expected manager ID 112149.bhsv, got %s", result.ManagerID)
+		}
+		if result.ManagerName != "AppBoss" {
+			t.Errorf("expected manager name AppBoss, got %s", result.ManagerName)
+		}
+		if result.LastRecModTime != 1205806751959 {
+			t.Errorf("expected lastRecModTime 1205806751959, got %d", result.LastRecModTime)
+		}
+	})
+}
+
+func TestGetNumRecords(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetNumRecords</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <num_records>17</num_records>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		count, err := client.GetNumRecords(context.Background(), "bqxyz123")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GetNumRecords" {
+			t.Errorf("expected action API_GetNumRecords, got %s", mock.lastAction)
+		}
+
+		if count != 17 {
+			t.Errorf("expected 17 records, got %d", count)
+		}
+	})
+}
+
+func TestGetUserInfo(t *testing.T) {
+	t.Run("success with email", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_getuserinfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <user id="112149.bhsv">
+      <firstName>Ragnar</firstName>
+      <lastName>Lodbrok</lastName>
+      <login>Ragnar</login>
+      <email>Ragnar-Lodbrok@paris.net</email>
+      <screenName>Ragnar</screenName>
+      <isVerified>1</isVerified>
+      <externalAuth>0</externalAuth>
+   </user>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		result, err := client.GetUserInfo(context.Background(), "Ragnar-Lodbrok@paris.net")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GetUserInfo" {
+			t.Errorf("expected action API_GetUserInfo, got %s", mock.lastAction)
+		}
+
+		if result.ID != "112149.bhsv" {
+			t.Errorf("expected ID 112149.bhsv, got %s", result.ID)
+		}
+		if result.FirstName != "Ragnar" {
+			t.Errorf("expected firstName Ragnar, got %s", result.FirstName)
+		}
+		if result.LastName != "Lodbrok" {
+			t.Errorf("expected lastName Lodbrok, got %s", result.LastName)
+		}
+		if result.Email != "Ragnar-Lodbrok@paris.net" {
+			t.Errorf("expected email Ragnar-Lodbrok@paris.net, got %s", result.Email)
+		}
+		if !result.IsVerified {
+			t.Error("expected IsVerified to be true")
+		}
+		if result.ExternalAuth {
+			t.Error("expected ExternalAuth to be false")
+		}
+	})
+}
+
+func TestGetDBVar(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_getDBvar</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <value>42</value>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		value, err := client.GetDBVar(context.Background(), "bqxyz123", "myVar")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_GetDBVar" {
+			t.Errorf("expected action API_GetDBVar, got %s", mock.lastAction)
+		}
+
+		if value != "42" {
+			t.Errorf("expected value 42, got %s", value)
+		}
+	})
+}
+
+func TestSetDBVar(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_SetDBVar</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.SetDBVar(context.Background(), "bqxyz123", "myVar", "newValue")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_SetDBVar" {
+			t.Errorf("expected action API_SetDBVar, got %s", mock.lastAction)
+		}
+
+		// Verify request body
+		body := string(mock.lastBody)
+		expected := "<qdbapi><varname>myVar</varname><value>newValue</value></qdbapi>"
+		if body != expected {
+			t.Errorf("expected body %s, got %s", expected, body)
+		}
+	})
+}
+
+func TestAddUserToRole(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_AddUserToRole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.AddUserToRole(context.Background(), "bqxyz123", "112149.bhsv", 10)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_AddUserToRole" {
+			t.Errorf("expected action API_AddUserToRole, got %s", mock.lastAction)
+		}
+
+		// Verify request body
+		body := string(mock.lastBody)
+		expected := "<qdbapi><userid>112149.bhsv</userid><roleid>10</roleid></qdbapi>"
+		if body != expected {
+			t.Errorf("expected body %s, got %s", expected, body)
+		}
+	})
+}
+
+func TestRemoveUserFromRole(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_RemoveUserFromRole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.RemoveUserFromRole(context.Background(), "bqxyz123", "112149.bhsv", 10)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_RemoveUserFromRole" {
+			t.Errorf("expected action API_RemoveUserFromRole, got %s", mock.lastAction)
+		}
+	})
+}
+
+func TestChangeUserRole(t *testing.T) {
+	t.Run("change to new role", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_changeuserrole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.ChangeUserRole(context.Background(), "bqxyz123", "112149.bhsv", 10, 11)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastAction != "API_ChangeUserRole" {
+			t.Errorf("expected action API_ChangeUserRole, got %s", mock.lastAction)
+		}
+
+		// Verify request body
+		body := string(mock.lastBody)
+		expected := "<qdbapi><userid>112149.bhsv</userid><roleid>10</roleid><newRoleid>11</newRoleid></qdbapi>"
+		if body != expected {
+			t.Errorf("expected body %s, got %s", expected, body)
+		}
+	})
+
+	t.Run("disable access (role=None)", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_changeuserrole</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+</qdbapi>`),
+		}
+
+		client := New(mock)
+		err := client.ChangeUserRole(context.Background(), "bqxyz123", "112149.bhsv", 10, 0)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Verify request body does NOT contain newRoleid
+		body := string(mock.lastBody)
+		expected := "<qdbapi><userid>112149.bhsv</userid><roleid>10</roleid></qdbapi>"
+		if body != expected {
+			t.Errorf("expected body %s, got %s", expected, body)
+		}
+	})
+}
