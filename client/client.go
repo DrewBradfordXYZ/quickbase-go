@@ -250,11 +250,25 @@ func WithBaseURL(url string) Option {
 // When configured, the client automatically:
 //   - Transforms table aliases to IDs in requests (from, to fields)
 //   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
-//   - Transforms field IDs to aliases in responses
+//   - Transforms field IDs to aliases in responses (unless disabled via WithSchemaOptions)
 //   - Unwraps { value: X } to just X in response records
 func WithSchema(schema *core.Schema) Option {
 	return func(c *Client) {
 		c.schema = core.ResolveSchema(schema)
+	}
+}
+
+// WithSchemaOptions sets the schema with custom options.
+// Use this to control schema behavior, such as disabling response transformation.
+//
+// Example:
+//
+//	quickbase.WithSchemaOptions(schema, core.SchemaOptions{
+//	    TransformResponses: false, // Keep field IDs in responses
+//	})
+func WithSchemaOptions(schema *core.Schema, opts core.SchemaOptions) Option {
+	return func(c *Client) {
+		c.schema = core.ResolveSchemaWithOptions(schema, opts)
 	}
 }
 

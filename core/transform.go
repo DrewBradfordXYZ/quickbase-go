@@ -170,6 +170,8 @@ func transformRecordForRequest(record map[string]any, schema *ResolvedSchema, ta
 }
 
 // TransformResponse transforms a response, converting field IDs to aliases and unwrapping values.
+// Respects the TransformResponses option in SchemaOptions - if false, only unwraps values
+// without converting field IDs to aliases.
 func TransformResponse(response map[string]any, schema *ResolvedSchema, tableID string) map[string]any {
 	if response == nil {
 		return nil
@@ -182,10 +184,18 @@ func TransformResponse(response map[string]any, schema *ResolvedSchema, tableID 
 
 	// Handle data array (runQuery, upsert responses)
 	if data, ok := result["data"].([]any); ok && tableID != "" {
+		// Determine if we should transform field IDs to aliases
+		transformAliases := schema != nil && schema.Options.TransformResponses
+
 		transformed := make([]any, 0, len(data))
 		for _, item := range data {
 			if record, ok := item.(map[string]any); ok {
-				transformed = append(transformed, transformRecordForResponse(record, schema, tableID))
+				if transformAliases {
+					transformed = append(transformed, transformRecordForResponse(record, schema, tableID))
+				} else {
+					// Still unwrap values, but keep field IDs as keys
+					transformed = append(transformed, unwrapRecordValues(record))
+				}
 			} else {
 				transformed = append(transformed, item)
 			}
@@ -218,6 +228,15 @@ func transformRecordForResponse(record map[string]any, schema *ResolvedSchema, t
 		result[outputKey] = unwrappedValue
 	}
 
+	return result
+}
+
+// unwrapRecordValues unwraps all field values in a record without aliasing keys.
+func unwrapRecordValues(record map[string]any) map[string]any {
+	result := make(map[string]any)
+	for key, value := range record {
+		result[key] = unwrapFieldValue(value)
+	}
 	return result
 }
 

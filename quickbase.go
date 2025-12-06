@@ -105,8 +105,10 @@ type (
 	// Schema types
 	Schema         = core.Schema
 	TableSchema    = core.TableSchema
+	SchemaOptions  = core.SchemaOptions
 	ResolvedSchema = core.ResolvedSchema
 	SchemaError    = core.SchemaError
+	SchemaBuilder  = core.SchemaBuilder
 
 	// Throttle types
 	SlidingWindowThrottle = client.SlidingWindowThrottle
@@ -425,7 +427,7 @@ func WithBaseURL(url string) Option {
 //   - Transforms field IDs to aliases in responses
 //   - Unwraps { value: X } to just X in response records
 //
-// Example:
+// Example with struct:
 //
 //	schema := &quickbase.Schema{
 //	    Tables: map[string]quickbase.TableSchema{
@@ -440,6 +442,15 @@ func WithBaseURL(url string) Option {
 //	    },
 //	}
 //
+// Example with builder:
+//
+//	schema := quickbase.NewSchema().
+//	    Table("projects", "bqw3ryzab").
+//	        Field("id", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Build()
+//
 //	client, _ := quickbase.New("myrealm",
 //	    quickbase.WithUserToken("token"),
 //	    quickbase.WithSchema(schema),
@@ -447,13 +458,27 @@ func WithBaseURL(url string) Option {
 //
 //	// Now use aliases in queries
 //	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
-//	    From:   "projects",                    // alias instead of "bqw3ryzab"
-//	    Select: quickbase.Ints(6, 7),          // can also use aliases in wrapper
-//	    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),
+//	    From:   "projects",                                            // alias instead of "bqw3ryzab"
+//	    Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
+//	    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                // aliases in where
 //	})
 func WithSchema(schema *Schema) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithSchema(schema))
+	}
+}
+
+// WithSchemaOptions sets the schema with custom options.
+// Use this to control schema behavior, such as disabling response transformation.
+//
+// Example:
+//
+//	quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{
+//	    TransformResponses: false, // Keep field IDs in responses
+//	})
+func WithSchemaOptions(schema *Schema, opts SchemaOptions) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithSchemaOptions(schema, opts))
 	}
 }
 
@@ -524,6 +549,29 @@ func NewSlidingWindowThrottle(requestsPer10Seconds int) *SlidingWindowThrottle {
 // NewNoOpThrottle creates a no-op throttle.
 func NewNoOpThrottle() *NoOpThrottle {
 	return client.NewNoOpThrottle()
+}
+
+// NewSchema creates a new SchemaBuilder for fluent schema definition.
+//
+// Example:
+//
+//	schema := quickbase.NewSchema().
+//	    Table("projects", "bqxyz123").
+//	        Field("recordId", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Table("tasks", "bqabc456").
+//	        Field("recordId", 3).
+//	        Field("title", 6).
+//	    Build()
+func NewSchema() *SchemaBuilder {
+	return core.NewSchema()
+}
+
+// DefaultSchemaOptions returns the default schema options.
+// Response transformation is enabled by default.
+func DefaultSchemaOptions() SchemaOptions {
+	return core.DefaultSchemaOptions()
 }
 
 // Pagination helper functions re-exported from client
@@ -947,4 +995,69 @@ func GroupBy(fieldIds ...int) *[]GroupByItem {
 		}
 	}
 	return &items
+}
+
+// --- Schema Resolution Helpers ---
+
+// Schema resolution functions re-exported from core
+var (
+	// ResolveSchema builds lookup maps from a schema definition.
+	ResolveSchema = core.ResolveSchema
+
+	// ResolveSchemaWithOptions builds lookup maps with custom options.
+	ResolveSchemaWithOptions = core.ResolveSchemaWithOptions
+
+	// ResolveTableAlias resolves a table alias to its ID.
+	ResolveTableAlias = core.ResolveTableAlias
+
+	// ResolveFieldAlias resolves a field alias to its ID.
+	ResolveFieldAlias = core.ResolveFieldAlias
+
+	// GetTableAlias returns the alias for a table ID.
+	GetTableAlias = core.GetTableAlias
+
+	// GetFieldAlias returns the alias for a field ID.
+	GetFieldAlias = core.GetFieldAlias
+)
+
+// Fields resolves field aliases to IDs for use in Select arrays.
+// This allows using readable field names instead of numeric IDs.
+//
+// Example:
+//
+//	schema := quickbase.NewSchema().
+//	    Table("projects", "bqxyz123").
+//	        Field("recordId", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Build()
+//
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:   "projects",
+//	    Select: quickbase.Fields(schema, "projects", "recordId", "name", "status"),
+//	    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),
+//	})
+//
+// Returns nil if schema is nil or if any alias cannot be resolved.
+// For error details, use ResolveFieldAlias directly.
+func Fields(schema *Schema, table string, aliases ...string) *[]int {
+	if schema == nil {
+		return nil
+	}
+
+	resolved := core.ResolveSchema(schema)
+	tableID, err := core.ResolveTableAlias(resolved, table)
+	if err != nil {
+		return nil
+	}
+
+	ids := make([]int, len(aliases))
+	for i, alias := range aliases {
+		id, err := core.ResolveFieldAlias(resolved, tableID, alias)
+		if err != nil {
+			return nil
+		}
+		ids[i] = id
+	}
+	return &ids
 }

@@ -327,3 +327,106 @@ func TestSchemaError(t *testing.T) {
 		}
 	})
 }
+
+func TestSchemaBuilder(t *testing.T) {
+	t.Run("builds schema with single table", func(t *testing.T) {
+		schema := NewSchema().
+			Table("projects", "bqxyz123").
+			Field("id", 3).
+			Field("name", 6).
+			Build()
+
+		if len(schema.Tables) != 1 {
+			t.Fatalf("expected 1 table, got %d", len(schema.Tables))
+		}
+
+		table, ok := schema.Tables["projects"]
+		if !ok {
+			t.Fatal("expected 'projects' table")
+		}
+		if table.ID != "bqxyz123" {
+			t.Errorf("table ID = %q, want %q", table.ID, "bqxyz123")
+		}
+		if table.Fields["id"] != 3 {
+			t.Errorf("field 'id' = %d, want 3", table.Fields["id"])
+		}
+		if table.Fields["name"] != 6 {
+			t.Errorf("field 'name' = %d, want 6", table.Fields["name"])
+		}
+	})
+
+	t.Run("builds schema with multiple tables", func(t *testing.T) {
+		schema := NewSchema().
+			Table("projects", "bqxyz123").
+			Field("id", 3).
+			Field("name", 6).
+			Table("tasks", "bqabc456").
+			Field("id", 3).
+			Field("title", 7).
+			Build()
+
+		if len(schema.Tables) != 2 {
+			t.Fatalf("expected 2 tables, got %d", len(schema.Tables))
+		}
+
+		projects := schema.Tables["projects"]
+		if projects.Fields["name"] != 6 {
+			t.Errorf("projects.name = %d, want 6", projects.Fields["name"])
+		}
+
+		tasks := schema.Tables["tasks"]
+		if tasks.Fields["title"] != 7 {
+			t.Errorf("tasks.title = %d, want 7", tasks.Fields["title"])
+		}
+	})
+
+	t.Run("Field without Table is ignored", func(t *testing.T) {
+		schema := NewSchema().
+			Field("orphan", 99). // No table set yet
+			Table("projects", "bqxyz123").
+			Build()
+
+		// Should only have the projects table, orphan field ignored
+		if len(schema.Tables) != 1 {
+			t.Fatalf("expected 1 table, got %d", len(schema.Tables))
+		}
+	})
+}
+
+func TestSchemaOptions(t *testing.T) {
+	t.Run("default options enable response transformation", func(t *testing.T) {
+		opts := DefaultSchemaOptions()
+		if !opts.TransformResponses {
+			t.Error("TransformResponses should be true by default")
+		}
+	})
+
+	t.Run("ResolveSchemaWithOptions applies options", func(t *testing.T) {
+		schema := &Schema{
+			Tables: map[string]TableSchema{
+				"test": {ID: "bq123", Fields: map[string]int{}},
+			},
+		}
+
+		opts := SchemaOptions{TransformResponses: false}
+		resolved := ResolveSchemaWithOptions(schema, opts)
+
+		if resolved.Options.TransformResponses {
+			t.Error("Options.TransformResponses should be false")
+		}
+	})
+
+	t.Run("ResolveSchema uses default options", func(t *testing.T) {
+		schema := &Schema{
+			Tables: map[string]TableSchema{
+				"test": {ID: "bq123", Fields: map[string]int{}},
+			},
+		}
+
+		resolved := ResolveSchema(schema)
+
+		if !resolved.Options.TransformResponses {
+			t.Error("Default Options.TransformResponses should be true")
+		}
+	})
+}

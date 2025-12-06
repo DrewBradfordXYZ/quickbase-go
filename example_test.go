@@ -300,3 +300,63 @@ func ExampleInts() {
 	}
 	_ = body
 }
+
+// Use schema aliases for readable table and field names.
+func ExampleWithSchema() {
+	// Define schema with readable names
+	schema := quickbase.NewSchema().
+		Table("projects", "bqxyz123").
+		Field("recordId", 3).
+		Field("name", 6).
+		Field("status", 7).
+		Build()
+
+	client, _ := quickbase.New("myrealm",
+		quickbase.WithUserToken("token"),
+		quickbase.WithSchema(schema),
+	)
+
+	ctx := context.Background()
+	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+		From:   "projects",                                             // alias instead of "bqxyz123"
+		Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
+		Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                // aliases in where
+	})
+
+	// Response data uses aliases too
+	for _, record := range result.Data {
+		fmt.Printf("Name: %v, Status: %v\n", record["name"], record["status"])
+	}
+}
+
+// Use Fields helper to resolve field aliases to IDs.
+func ExampleFields() {
+	schema := quickbase.NewSchema().
+		Table("projects", "bqxyz123").
+		Field("recordId", 3).
+		Field("name", 6).
+		Field("status", 7).
+		Build()
+
+	// Fields returns *[]int for use in Select
+	fieldIds := quickbase.Fields(schema, "projects", "recordId", "name", "status")
+	fmt.Printf("Field IDs: %v\n", *fieldIds)
+	// Output: Field IDs: [3 6 7]
+}
+
+// Build schema using the fluent builder API.
+func ExampleNewSchema() {
+	schema := quickbase.NewSchema().
+		Table("projects", "bqxyz123").
+		Field("recordId", 3).
+		Field("name", 6).
+		Field("status", 7).
+		Table("tasks", "bqabc456").
+		Field("recordId", 3).
+		Field("title", 8).
+		Field("projectId", 9).
+		Build()
+
+	fmt.Printf("Tables: %d\n", len(schema.Tables))
+	// Output: Tables: 2
+}

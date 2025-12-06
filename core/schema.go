@@ -26,6 +26,16 @@ import (
 )
 
 // Schema defines table and field aliases for a QuickBase application.
+// Use NewSchema() builder or define directly as a struct.
+//
+// Example with builder:
+//
+//	schema := core.NewSchema().
+//	    Table("projects", "bqxyz123").
+//	        Field("recordId", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Build()
 type Schema struct {
 	Tables map[string]TableSchema `json:"tables"`
 }
@@ -36,9 +46,24 @@ type TableSchema struct {
 	Fields map[string]int `json:"fields"`
 }
 
+// SchemaOptions configures schema behavior.
+type SchemaOptions struct {
+	// TransformResponses controls whether response data keys are converted
+	// from field IDs to aliases. Default is true when schema is provided.
+	TransformResponses bool
+}
+
+// DefaultSchemaOptions returns the default schema options.
+func DefaultSchemaOptions() SchemaOptions {
+	return SchemaOptions{
+		TransformResponses: true,
+	}
+}
+
 // ResolvedSchema contains precomputed lookup maps for efficient alias resolution.
 type ResolvedSchema struct {
 	Original *Schema
+	Options  SchemaOptions
 
 	// Forward lookups (alias → ID)
 	TableAliasToID map[string]string            // table alias → table ID
@@ -61,12 +86,19 @@ func (e *SchemaError) Error() string {
 // ResolveSchema builds lookup maps from a schema definition.
 // Returns nil if schema is nil.
 func ResolveSchema(schema *Schema) *ResolvedSchema {
+	return ResolveSchemaWithOptions(schema, DefaultSchemaOptions())
+}
+
+// ResolveSchemaWithOptions builds lookup maps from a schema definition with custom options.
+// Returns nil if schema is nil.
+func ResolveSchemaWithOptions(schema *Schema, opts SchemaOptions) *ResolvedSchema {
 	if schema == nil {
 		return nil
 	}
 
 	resolved := &ResolvedSchema{
 		Original:       schema,
+		Options:        opts,
 		TableAliasToID: make(map[string]string),
 		TableIDToAlias: make(map[string]string),
 		FieldAliasToID: make(map[string]map[string]int),
@@ -278,4 +310,59 @@ func min(values ...int) int {
 		}
 	}
 	return m
+}
+
+// SchemaBuilder provides a fluent API for building Schema definitions.
+type SchemaBuilder struct {
+	schema       *Schema
+	currentTable string
+}
+
+// NewSchema creates a new SchemaBuilder for fluent schema definition.
+//
+// Example:
+//
+//	schema := core.NewSchema().
+//	    Table("projects", "bqxyz123").
+//	        Field("recordId", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Table("tasks", "bqabc456").
+//	        Field("recordId", 3).
+//	        Field("title", 6).
+//	    Build()
+func NewSchema() *SchemaBuilder {
+	return &SchemaBuilder{
+		schema: &Schema{
+			Tables: make(map[string]TableSchema),
+		},
+	}
+}
+
+// Table adds a new table to the schema and sets it as the current table
+// for subsequent Field() calls.
+func (b *SchemaBuilder) Table(alias, tableID string) *SchemaBuilder {
+	b.schema.Tables[alias] = TableSchema{
+		ID:     tableID,
+		Fields: make(map[string]int),
+	}
+	b.currentTable = alias
+	return b
+}
+
+// Field adds a field mapping to the current table.
+// Must be called after Table().
+func (b *SchemaBuilder) Field(alias string, fieldID int) *SchemaBuilder {
+	if b.currentTable == "" {
+		return b
+	}
+	table := b.schema.Tables[b.currentTable]
+	table.Fields[alias] = fieldID
+	b.schema.Tables[b.currentTable] = table
+	return b
+}
+
+// Build returns the constructed Schema.
+func (b *SchemaBuilder) Build() *Schema {
+	return b.schema
 }

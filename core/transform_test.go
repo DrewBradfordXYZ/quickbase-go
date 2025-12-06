@@ -477,3 +477,76 @@ func TestExtractTableIDFromBody(t *testing.T) {
 		})
 	}
 }
+
+func TestTransformResponseWithOptions(t *testing.T) {
+	schema := &Schema{
+		Tables: map[string]TableSchema{
+			"projects": {
+				ID: "bqw3ryzab",
+				Fields: map[string]int{
+					"id":     3,
+					"name":   6,
+					"status": 7,
+				},
+			},
+		},
+	}
+
+	t.Run("transforms to aliases when TransformResponses is true", func(t *testing.T) {
+		resolved := ResolveSchemaWithOptions(schema, SchemaOptions{TransformResponses: true})
+
+		response := map[string]any{
+			"data": []any{
+				map[string]any{
+					"3": map[string]any{"value": 123},
+					"6": map[string]any{"value": "Project A"},
+				},
+			},
+		}
+
+		result := TransformResponse(response, resolved, "bqw3ryzab")
+		data := result["data"].([]any)
+		record := data[0].(map[string]any)
+
+		// Should transform to aliases
+		if record["id"] != 123 {
+			t.Errorf("record['id'] = %v, want 123", record["id"])
+		}
+		if record["name"] != "Project A" {
+			t.Errorf("record['name'] = %v, want 'Project A'", record["name"])
+		}
+	})
+
+	t.Run("keeps field IDs when TransformResponses is false", func(t *testing.T) {
+		resolved := ResolveSchemaWithOptions(schema, SchemaOptions{TransformResponses: false})
+
+		response := map[string]any{
+			"data": []any{
+				map[string]any{
+					"3": map[string]any{"value": 123},
+					"6": map[string]any{"value": "Project A"},
+				},
+			},
+		}
+
+		result := TransformResponse(response, resolved, "bqw3ryzab")
+		data := result["data"].([]any)
+		record := data[0].(map[string]any)
+
+		// Should keep field IDs but still unwrap values
+		if record["3"] != 123 {
+			t.Errorf("record['3'] = %v, want 123", record["3"])
+		}
+		if record["6"] != "Project A" {
+			t.Errorf("record['6'] = %v, want 'Project A'", record["6"])
+		}
+
+		// Should NOT have aliases
+		if _, ok := record["id"]; ok {
+			t.Error("should not have 'id' key when TransformResponses is false")
+		}
+		if _, ok := record["name"]; ok {
+			t.Error("should not have 'name' key when TransformResponses is false")
+		}
+	})
+}
