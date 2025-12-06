@@ -112,7 +112,9 @@ var manualImplementations = map[string]bool{
 // This is for operations that have manual result types in api.go but still benefit
 // from auto-generated builders.
 var skipResultType = map[string]bool{
-	"runReport": true, // Has RunReportResult defined manually in api.go
+	"runReport":        true, // Has RunReportResult defined manually in api.go
+	"getUsers":         true, // Has GetUsersResult with helper methods in api.go
+	"getRelationships": true, // Has GetRelationshipsResult with helper methods in api.go
 }
 
 // shouldSkipResultType returns true if the operation should not generate a result type

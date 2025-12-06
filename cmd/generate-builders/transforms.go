@@ -478,6 +478,14 @@ var responseTransforms = map[string]ResponseTransform{
 	// platformAnalyticEventSummaries: Complex paginated response with nested structures
 	// Keep as raw generated type
 
+	// =========================================================================
+	// Field usage operations
+	// =========================================================================
+
+	// getFieldUsage / getFieldsUsage: Complex nested usage structures
+	// Keep as raw generated types - the usage object has many nested count fields
+	// Users can access field.id, field.name, field.type and usage.* directly
+
 	// runQuery: Complex transformation - kept as manual implementation
 	// See api.go for the full implementation including:
 	// - Bidirectional schema transformation (field aliases)

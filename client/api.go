@@ -401,3 +401,88 @@ func derefInt(p *int) int {
 	}
 	return *p
 }
+
+func derefBool(p *bool) bool {
+	if p == nil {
+		return false
+	}
+	return *p
+}
+
+// --- GetUsers result types ---
+
+// UserInfo contains simplified user information.
+type UserInfo struct {
+	ID        string // HashId - unique identifier
+	Email     string
+	FirstName string
+	LastName  string
+	UserName  string
+}
+
+// GetUsersResult wraps the getUsers response with helper methods.
+type GetUsersResult struct {
+	raw *generated.GetUsersResponse
+}
+
+// Users returns the list of users as simplified UserInfo structs.
+func (r *GetUsersResult) Users() []UserInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	users := make([]UserInfo, len(r.raw.JSON200.Users))
+	for i, u := range r.raw.JSON200.Users {
+		users[i] = UserInfo{
+			ID:        u.HashId,
+			Email:     u.EmailAddress,
+			FirstName: u.FirstName,
+			LastName:  u.LastName,
+			UserName:  u.UserName,
+		}
+	}
+	return users
+}
+
+// NextPageToken returns the pagination token for the next page.
+// Returns empty string if there are no more pages.
+func (r *GetUsersResult) NextPageToken() string {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return ""
+	}
+	return r.raw.JSON200.Metadata.NextPageToken
+}
+
+// Raw returns the underlying generated response for advanced use cases.
+func (r *GetUsersResult) Raw() *generated.GetUsersResponse {
+	return r.raw
+}
+
+// --- GetRelationships result types ---
+
+// GetRelationshipsResult wraps the getRelationships response with helper methods.
+type GetRelationshipsResult struct {
+	raw *generated.GetRelationshipsResponse
+}
+
+// Relationships returns the list of relationships as simplified RelationshipInfo structs.
+// Note: RelationshipInfo is defined in builders_generated.go
+func (r *GetRelationshipsResult) Relationships() []RelationshipInfo {
+	if r.raw == nil || r.raw.JSON200 == nil {
+		return nil
+	}
+	rels := make([]RelationshipInfo, len(r.raw.JSON200.Relationships))
+	for i, rel := range r.raw.JSON200.Relationships {
+		rels[i] = RelationshipInfo{
+			ID:            rel.Id,
+			ParentTableID: rel.ParentTableId,
+			ChildTableID:  rel.ChildTableId,
+			IsCrossApp:    rel.IsCrossApp,
+		}
+	}
+	return rels
+}
+
+// Raw returns the underlying generated response for advanced use cases.
+func (r *GetRelationshipsResult) Raw() *generated.GetRelationshipsResponse {
+	return r.raw
+}
