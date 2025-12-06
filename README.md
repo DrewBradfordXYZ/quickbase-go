@@ -1,6 +1,6 @@
 # QuickBase Go SDK
 
-A Go client for the QuickBase JSON RESTful API.
+A Go client for the QuickBase JSON RESTful API, with optional support for legacy XML API endpoints.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/DrewBradfordXYZ/quickbase-go.svg)](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go)
 
@@ -19,6 +19,7 @@ A Go client for the QuickBase JSON RESTful API.
 - **Typed Errors** - `RateLimitError`, `NotFoundError`, `ValidationError`, etc.
 - **Monitoring Hooks** - Track request latency, retries, and errors
 - **Full API Access** - Low-level generated client available via `client.API()`
+- **Legacy XML API** - Optional `xml` sub-package for endpoints with no JSON equivalent (roles, schema)
 
 ## Installation
 
@@ -155,6 +156,18 @@ client, err := quickbase.New("mycompany",
 - Third-party services where users shouldn't share user tokens
 - Proper audit trails with correct `createdBy`/`modifiedBy` attribution
 - Session-based authentication flows
+
+**Signing out:**
+
+```go
+// Clear credentials from memory (e.g., when user logs out)
+client.SignOut()
+
+// After SignOut, API calls will fail.
+// Create a new client with fresh credentials to continue.
+```
+
+Note: `SignOut()` clears credentials from local memory only. QuickBase doesn't provide a server-side ticket revocation API — the XML `API_SignOut` endpoint is designed for browser cookie clearing and redirects, not ticket invalidation. Tickets remain valid until they expire naturally.
 
 ### SSO Token (SAML)
 
@@ -1022,6 +1035,108 @@ QuickBase uses two pagination styles depending on the endpoint:
 - **Token-based**: Uses `nextPageToken` or `nextToken` (e.g., `GetUsers`, `GetAuditLogs`)
 
 The SDK auto-detects which style to use based on the response metadata.
+
+## Legacy XML API
+
+The QuickBase JSON API doesn't expose some endpoints available in the legacy XML API, particularly for **roles** and **comprehensive schema information**. The optional `xml` sub-package provides access to these endpoints while reusing the main client's authentication, retry, and throttling infrastructure.
+
+> **Note:** The XML API is legacy and may be discontinued by QuickBase in the future. Use JSON API methods where possible. This sub-package will be removed when QuickBase discontinues the XML API.
+
+### Installation
+
+The `xml` package is included with the SDK but imported separately:
+
+```go
+import (
+    "github.com/DrewBradfordXYZ/quickbase-go"
+    "github.com/DrewBradfordXYZ/quickbase-go/xml"
+)
+```
+
+### Usage
+
+```go
+// Create main client (JSON API)
+qb, err := quickbase.New("myrealm", quickbase.WithUserToken("token"))
+if err != nil {
+    log.Fatal(err)
+}
+
+// Create XML client from main client
+xmlClient := xml.New(qb)
+
+ctx := context.Background()
+
+// Get all roles defined in an app
+roles, err := xmlClient.GetRoleInfo(ctx, appId)
+if err != nil {
+    log.Fatal(err)
+}
+for _, role := range roles.Roles {
+    fmt.Printf("Role %d: %s (%s)\n", role.ID, role.Name, role.Access.Description)
+}
+
+// Get all users and their role assignments
+users, err := xmlClient.UserRoles(ctx, appId)
+for _, user := range users.Users {
+    fmt.Printf("%s: %v\n", user.Name, user.Roles)
+}
+
+// Get comprehensive schema (fields, reports, variables)
+schema, err := xmlClient.GetSchema(ctx, tableId)
+for _, field := range schema.Table.Fields {
+    fmt.Printf("Field %d: %s (%s)\n", field.ID, field.Label, field.FieldType)
+}
+```
+
+### Available Methods
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetRoleInfo(ctx, appId)` | API_GetRoleInfo | Get all roles defined in an application |
+| `UserRoles(ctx, appId)` | API_UserRoles | Get all users and their role assignments |
+| `GetUserRole(ctx, appId, userId, includeGroups)` | API_GetUserRole | Get roles for a specific user |
+| `GetSchema(ctx, dbid)` | API_GetSchema | Get comprehensive app/table metadata |
+| `DoQueryCount(ctx, tableId, query)` | API_DoQueryCount | Get count of matching records (no data fetch) |
+| `GetRecordInfo(ctx, tableId, recordId)` | API_GetRecordInfo | Get record with field metadata |
+| `GetRecordInfoByKey(ctx, tableId, keyValue)` | API_GetRecordInfo | Get record by key field value |
+
+### Error Handling
+
+XML API errors are returned as `*xml.Error` with error codes:
+
+```go
+roles, err := xmlClient.GetRoleInfo(ctx, appId)
+if err != nil {
+    var xmlErr *xml.Error
+    if errors.As(err, &xmlErr) {
+        fmt.Printf("XML API error %d: %s\n", xmlErr.Code, xmlErr.Text)
+    }
+
+    // Helper functions for common error types
+    if xml.IsUnauthorized(err) {
+        fmt.Println("Not authorized")
+    }
+    if xml.IsNotFound(err) {
+        fmt.Println("Resource not found")
+    }
+}
+```
+
+### Why Use XML API?
+
+Each API has unique capabilities:
+
+| XML-Only | JSON-Only |
+|----------|-----------|
+| Roles & role assignments | Relationships |
+| Group creation/deletion | Solutions (app packaging) |
+| Application variables (DBVars) | Platform analytics |
+| Code pages | Audit logs |
+| Webhooks management | Field usage statistics |
+| User provisioning | Document templates |
+
+For a comprehensive comparison, see [docs/xml-api-reference.md](docs/xml-api-reference.md).
 
 ## Development
 

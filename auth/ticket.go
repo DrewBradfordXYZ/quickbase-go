@@ -243,6 +243,32 @@ func (s *TicketStrategy) UserID() string {
 	return s.userID
 }
 
+// SignOut clears the stored ticket from memory, preventing further API calls.
+//
+// This does NOT invalidate the ticket on QuickBase's servers - tickets remain
+// valid until they expire. However, this client will no longer be able to make
+// API calls after SignOut is called.
+//
+// To make API calls again, create a new client with fresh credentials.
+//
+// Use this when:
+//   - A user logs out of your application
+//   - You want to force re-authentication
+//   - You're done with a session and want to clear credentials from memory
+//
+// Example:
+//
+//	// User clicks "logout"
+//	client.SignOut()
+//	// Next API call will fail with "signed out" error
+func (s *TicketStrategy) SignOut() {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.ticket = ""
+	s.password = ""
+	s.authenticated = true // Prevents re-authentication (password is gone)
+}
+
 // xmlEscape escapes special XML characters in a string.
 // If escaping fails (invalid characters), returns empty string for safety.
 func xmlEscape(s string) string {

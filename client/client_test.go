@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"math"
 	"net/http"
 	"net/url"
@@ -331,5 +332,72 @@ func TestExponentialFormula(t *testing.T) {
 	for attempt := 1; attempt <= 5; attempt++ {
 		expected := initialDelay * math.Pow(multiplier, float64(attempt-1))
 		t.Logf("Attempt %d: expected base delay = %.0fms", attempt, expected)
+	}
+}
+
+// mockSignOuter is a mock auth strategy that implements SignOuter
+type mockSignOuter struct {
+	signOutCalled bool
+}
+
+func (m *mockSignOuter) GetToken(_ context.Context, _ string) (string, error) {
+	return "mock-token", nil
+}
+
+func (m *mockSignOuter) ApplyAuth(req *http.Request, token string) {
+	req.Header.Set("Authorization", "QB-TICKET "+token)
+}
+
+func (m *mockSignOuter) HandleAuthError(_ context.Context, _ int, _ string, _ int, _ int) (string, error) {
+	return "", nil
+}
+
+func (m *mockSignOuter) SignOut() {
+	m.signOutCalled = true
+}
+
+// mockNoSignOut is a mock auth strategy that does NOT implement SignOuter
+type mockNoSignOut struct{}
+
+func (m *mockNoSignOut) GetToken(_ context.Context, _ string) (string, error) {
+	return "mock-token", nil
+}
+
+func (m *mockNoSignOut) ApplyAuth(req *http.Request, token string) {
+	req.Header.Set("Authorization", "QB-USER-TOKEN "+token)
+}
+
+func (m *mockNoSignOut) HandleAuthError(_ context.Context, _ int, _ string, _ int, _ int) (string, error) {
+	return "", nil
+}
+
+func TestClient_SignOut_WithSignOuter(t *testing.T) {
+	mock := &mockSignOuter{}
+	client, err := New("testrealm", mock)
+	if err != nil {
+		t.Fatalf("New() error: %v", err)
+	}
+
+	result := client.SignOut()
+
+	if !result {
+		t.Error("SignOut() returned false, expected true for SignOuter strategy")
+	}
+	if !mock.signOutCalled {
+		t.Error("SignOut() did not call strategy.SignOut()")
+	}
+}
+
+func TestClient_SignOut_WithoutSignOuter(t *testing.T) {
+	mock := &mockNoSignOut{}
+	client, err := New("testrealm", mock)
+	if err != nil {
+		t.Fatalf("New() error: %v", err)
+	}
+
+	result := client.SignOut()
+
+	if result {
+		t.Error("SignOut() returned true, expected false for non-SignOuter strategy")
 	}
 }

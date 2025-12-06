@@ -374,12 +374,154 @@ func (c *Client) Schema() *core.ResolvedSchema {
 	return c.schema
 }
 
+// Realm returns the QuickBase realm name.
+func (c *Client) Realm() string {
+	return c.realm
+}
+
+// DoXML makes an XML API request to the legacy QuickBase XML API.
+//
+// This method is used by the xml sub-package to call legacy XML API endpoints
+// that have no JSON API equivalent (e.g., API_GetRoleInfo, API_GetSchema).
+// It uses the client's existing auth, retry, and throttling infrastructure.
+//
+// Parameters:
+//   - ctx: Context for cancellation and timeouts
+//   - dbid: The database/table ID to call (e.g., app ID or table ID)
+//   - action: The XML API action (e.g., "API_GetRoleInfo", "API_GetSchema")
+//   - body: The XML request body (without the outer <qdbapi> tags, which are added automatically)
+//
+// Returns the raw XML response body.
+//
+// Deprecated: This method supports legacy XML API endpoints. Use JSON API methods
+// where possible. This will be removed when QuickBase discontinues the XML API.
+func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([]byte, error) {
+	url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, dbid)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		return nil, fmt.Errorf("creating XML request: %w", err)
+	}
+
+	req.Header.Set("Content-Type", "application/xml")
+	req.Header.Set("QUICKBASE-ACTION", action)
+
+	// Use the same retry/throttle logic as JSON API
+	var lastErr error
+	for attempt := 1; attempt <= c.maxRetries; attempt++ {
+		if ctx.Err() != nil {
+			return nil, ctx.Err()
+		}
+
+		// Throttling
+		if err := c.throttle.Acquire(ctx); err != nil {
+			return nil, fmt.Errorf("throttle: %w", err)
+		}
+
+		// Get auth token
+		token, err := c.auth.GetToken(ctx, dbid)
+		if err != nil {
+			return nil, fmt.Errorf("getting auth token: %w", err)
+		}
+
+		// Clone request for retry
+		reqCopy := req.Clone(ctx)
+		reqCopy.Body = io.NopCloser(bytes.NewReader(body))
+
+		// Apply auth
+		c.auth.ApplyAuth(reqCopy, token)
+
+		// Make request using the transport directly (not authHTTPClient to avoid double-auth)
+		httpClient := &http.Client{
+			Timeout:   c.timeout,
+			Transport: c.transport,
+		}
+		resp, err := httpClient.Do(reqCopy)
+		if err != nil {
+			lastErr = err
+			if attempt < c.maxRetries {
+				delay := c.calculateXMLBackoff(attempt)
+				c.logger.Retry(attempt, c.maxRetries, delay, "network error")
+				time.Sleep(delay)
+				continue
+			}
+			return nil, err
+		}
+		defer resp.Body.Close()
+
+		// Read response body
+		respBody, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("reading XML response: %w", err)
+		}
+
+		// Handle 429 rate limiting
+		if resp.StatusCode == http.StatusTooManyRequests {
+			if attempt < c.maxRetries {
+				delay := c.calculateXMLBackoff(attempt)
+				if ra := resp.Header.Get("Retry-After"); ra != "" {
+					if seconds, err := strconv.Atoi(ra); err == nil {
+						delay = time.Duration(seconds) * time.Second
+					}
+				}
+				c.logger.Retry(attempt, c.maxRetries, delay, "rate limited (429)")
+				time.Sleep(delay)
+				continue
+			}
+			return nil, fmt.Errorf("rate limited after %d attempts", c.maxRetries)
+		}
+
+		// Handle 5xx server errors
+		if resp.StatusCode >= 500 && attempt < c.maxRetries {
+			delay := c.calculateXMLBackoff(attempt)
+			c.logger.Retry(attempt, c.maxRetries, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
+			time.Sleep(delay)
+			continue
+		}
+
+		return respBody, nil
+	}
+
+	return nil, lastErr
+}
+
+// calculateXMLBackoff calculates exponential backoff with jitter for XML requests.
+func (c *Client) calculateXMLBackoff(attempt int) time.Duration {
+	delay := float64(c.initialDelay) * math.Pow(c.backoffMult, float64(attempt-1))
+	jitter := delay * 0.1 * (rand.Float64()*2 - 1)
+	delay += jitter
+	if delay > float64(c.maxDelay) {
+		delay = float64(c.maxDelay)
+	}
+	return time.Duration(delay)
+}
+
 // Close closes idle connections and releases resources.
 // After calling Close, the client should not be used.
 func (c *Client) Close() {
 	if c.transport != nil {
 		c.transport.CloseIdleConnections()
 	}
+}
+
+// SignOut clears credentials from memory if the auth strategy supports it.
+//
+// Currently only [auth.TicketStrategy] supports signing out. For other strategies
+// (user token, temp token, SSO), this method returns false and has no effect.
+//
+// After signing out, API calls will fail with an authentication error.
+// Create a new client with fresh credentials to continue making API calls.
+//
+// This does NOT invalidate tokens on QuickBase's servers - tickets remain
+// valid until they expire. This only clears credentials from local memory.
+//
+// Returns true if sign out was performed, false if the strategy doesn't support it.
+func (c *Client) SignOut() bool {
+	if signOuter, ok := c.auth.(auth.SignOuter); ok {
+		signOuter.SignOut()
+		return true
+	}
+	return false
 }
 
 // authHTTPClient wraps http.Client to add auth, retry, and rate limiting.

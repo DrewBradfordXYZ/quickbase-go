@@ -96,3 +96,11 @@ type Strategy interface {
 	// This is called when the API returns 401 Unauthorized.
 	HandleAuthError(ctx context.Context, statusCode int, dbid string, attempt int, maxAttempts int) (string, error)
 }
+
+// SignOuter is an optional interface for strategies that support signing out.
+// Currently only [TicketStrategy] implements this interface.
+type SignOuter interface {
+	// SignOut clears credentials from memory, preventing further API calls.
+	// This does NOT invalidate tokens on QuickBase's servers.
+	SignOut()
+}

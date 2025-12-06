@@ -485,3 +485,71 @@ func TestTicketStrategy_UserID(t *testing.T) {
 		t.Errorf("UserID after auth = %q, want 99999.wxyz", strategy.UserID())
 	}
 }
+
+// TestTicketStrategy_SignOut verifies SignOut clears credentials and prevents further use.
+func TestTicketStrategy_SignOut(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/xml")
+		w.Write([]byte(`<?xml version="1.0" ?>
+<qdbapi>
+	<errcode>0</errcode>
+	<ticket>test_ticket</ticket>
+	<userid>12345.test</userid>
+</qdbapi>`))
+	}))
+	defer server.Close()
+
+	strategy := &TicketStrategy{
+		username: "test@example.com",
+		password: "testpass",
+		realm:    "testrealm",
+		hours:    12,
+		client:   server.Client(),
+	}
+	strategy.testURL = server.URL + "/db/main"
+
+	// Authenticate first
+	ticket, err := strategy.GetToken(context.Background(), "bqxyz123")
+	if err != nil {
+		t.Fatalf("GetToken failed: %v", err)
+	}
+	if ticket != "test_ticket" {
+		t.Errorf("ticket = %q, want test_ticket", ticket)
+	}
+
+	// Sign out
+	strategy.SignOut()
+
+	// Verify ticket is cleared
+	if strategy.ticket != "" {
+		t.Errorf("ticket should be empty after SignOut, got %q", strategy.ticket)
+	}
+
+	// Verify password is cleared
+	if strategy.password != "" {
+		t.Errorf("password should be empty after SignOut, got %q", strategy.password)
+	}
+
+	// Subsequent GetToken should fail (can't re-authenticate without password)
+	_, err = strategy.GetToken(context.Background(), "bqxyz123")
+	if err == nil {
+		t.Error("expected error after SignOut, got nil")
+	}
+	if !strings.Contains(err.Error(), "expired") {
+		t.Errorf("error should mention expired, got: %v", err)
+	}
+}
+
+// TestTicketStrategy_SignOut_BeforeAuth verifies SignOut works even before authentication.
+func TestTicketStrategy_SignOut_BeforeAuth(t *testing.T) {
+	strategy := NewTicketStrategy("user@example.com", "password", "testrealm")
+
+	// Sign out before any auth
+	strategy.SignOut()
+
+	// Should not be able to authenticate (password is cleared, marked as authenticated)
+	_, err := strategy.GetToken(context.Background(), "bqxyz123")
+	if err == nil {
+		t.Error("expected error after SignOut before auth, got nil")
+	}
+}
