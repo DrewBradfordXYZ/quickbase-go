@@ -29,7 +29,10 @@ func parseAPIError(statusCode int, body []byte, httpResp *http.Response) error {
 		Errors      []core.FieldError `json:"errors"`
 	}
 	if len(body) > 0 {
-		_ = json.Unmarshal(body, &errBody) // ignore parse errors, use what we got
+		if err := json.Unmarshal(body, &errBody); err != nil {
+			// If JSON parsing fails, use raw body as message
+			errBody.Message = string(body)
+		}
 	}
 
 	message := errBody.Message

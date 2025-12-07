@@ -56,8 +56,17 @@ func (s *SSOTokenStrategy) GetToken(ctx context.Context, dbid string) (string, e
 	}
 	s.mu.RUnlock()
 
-	// Check if there's a pending fetch
+	// Acquire write lock and re-check state (double-check locking pattern)
 	s.mu.Lock()
+
+	// Re-check token - another goroutine may have set it
+	if s.currentToken != "" {
+		token := s.currentToken
+		s.mu.Unlock()
+		return token, nil
+	}
+
+	// Check if there's a pending fetch
 	if s.pending != nil {
 		pending := s.pending
 		s.mu.Unlock()
@@ -113,10 +122,9 @@ func (s *SSOTokenStrategy) exchangeToken(ctx context.Context) (string, error) {
 		var errResp struct {
 			Message string `json:"message"`
 		}
-		json.NewDecoder(resp.Body).Decode(&errResp)
-		msg := errResp.Message
-		if msg == "" {
-			msg = "unknown error"
+		msg := "unknown error"
+		if err := json.NewDecoder(resp.Body).Decode(&errResp); err == nil && errResp.Message != "" {
+			msg = errResp.Message
 		}
 		return "", fmt.Errorf("SSO token exchange failed: %s (status: %d)", msg, resp.StatusCode)
 	}
