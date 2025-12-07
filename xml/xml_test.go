@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"testing"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // mockCaller implements the Caller interface for testing.
@@ -1825,6 +1827,430 @@ func TestSetKeyField(t *testing.T) {
 
 		if mock.lastAction != "API_SetKeyField" {
 			t.Errorf("expected action API_SetKeyField, got %s", mock.lastAction)
+		}
+	})
+}
+
+// =============================================================================
+// Schema Helper Tests
+// =============================================================================
+
+func TestWithSchema(t *testing.T) {
+	t.Run("resolves table alias in API call", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetDBInfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <dbname>Projects</dbname>
+   <numRecords>10</numRecords>
+   <mgrID>1234</mgrID>
+   <mgrName>Manager</mgrName>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123", Fields: map[string]int{"name": 6, "status": 7}},
+			},
+		})
+
+		client := New(mock, WithSchema(schema))
+		_, err := client.GetDBInfo(context.Background(), "projects")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Verify the resolved ID was used in the API call
+		if mock.lastDBID != "bqxyz123" {
+			t.Errorf("expected resolved dbid bqxyz123, got %s", mock.lastDBID)
+		}
+	})
+
+	t.Run("passes through unknown alias as literal ID", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetDBInfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <dbname>Test</dbname>
+   <numRecords>0</numRecords>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{},
+		})
+
+		client := New(mock, WithSchema(schema))
+		_, err := client.GetDBInfo(context.Background(), "literal_dbid")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		if mock.lastDBID != "literal_dbid" {
+			t.Errorf("expected literal dbid, got %s", mock.lastDBID)
+		}
+	})
+}
+
+func TestGetRecordInfoResultField(t *testing.T) {
+	t.Run("access field by alias", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_getrecordinfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <rid>20</rid>
+   <num_fields>2</num_fields>
+   <update_id>1234567890</update_id>
+   <field>
+      <fid>6</fid>
+      <name>Name</name>
+      <type>Text</type>
+      <value>Test Project</value>
+   </field>
+   <field>
+      <fid>7</fid>
+      <name>Status</name>
+      <type>Text</type>
+      <value>Active</value>
+   </field>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123", Fields: map[string]int{"name": 6, "status": 7}},
+			},
+		})
+
+		client := New(mock, WithSchema(schema))
+		result, err := client.GetRecordInfo(context.Background(), "projects", 20)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Test Field helper with alias
+		nameField := result.Field("name")
+		if nameField == nil {
+			t.Fatal("expected to find 'name' field, got nil")
+		}
+		if nameField.Value != "Test Project" {
+			t.Errorf("expected value 'Test Project', got %s", nameField.Value)
+		}
+
+		statusField := result.Field("status")
+		if statusField == nil {
+			t.Fatal("expected to find 'status' field, got nil")
+		}
+		if statusField.Value != "Active" {
+			t.Errorf("expected value 'Active', got %s", statusField.Value)
+		}
+
+		// Test Field helper with ID as string
+		field6 := result.Field("6")
+		if field6 == nil {
+			t.Fatal("expected to find field '6', got nil")
+		}
+		if field6.Value != "Test Project" {
+			t.Errorf("expected value 'Test Project', got %s", field6.Value)
+		}
+
+		// Test FieldByID helper
+		field7 := result.FieldByID(7)
+		if field7 == nil {
+			t.Fatal("expected to find field ID 7, got nil")
+		}
+		if field7.Value != "Active" {
+			t.Errorf("expected value 'Active', got %s", field7.Value)
+		}
+
+		// Test unknown field returns nil
+		unknown := result.Field("unknown")
+		if unknown != nil {
+			t.Errorf("expected nil for unknown field, got %v", unknown)
+		}
+	})
+
+	t.Run("access field by ID without schema", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>api_getrecordinfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <rid>20</rid>
+   <num_fields>1</num_fields>
+   <update_id>1234567890</update_id>
+   <field>
+      <fid>6</fid>
+      <name>Name</name>
+      <type>Text</type>
+      <value>Test</value>
+   </field>
+</qdbapi>`),
+		}
+
+		client := New(mock) // No schema
+		result, err := client.GetRecordInfo(context.Background(), "bqxyz123", 20)
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Access by ID string works without schema
+		field := result.Field("6")
+		if field == nil {
+			t.Fatal("expected to find field '6', got nil")
+		}
+		if field.Value != "Test" {
+			t.Errorf("expected value 'Test', got %s", field.Value)
+		}
+
+		// FieldByID works without schema
+		fieldByID := result.FieldByID(6)
+		if fieldByID == nil {
+			t.Fatal("expected to find field ID 6, got nil")
+		}
+	})
+}
+
+func TestGrantedDBsResultDatabase(t *testing.T) {
+	t.Run("access database by alias", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GrantedDBs</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <databases>
+      <dbinfo>
+         <dbname>Projects</dbname>
+         <dbid>bqxyz123</dbid>
+      </dbinfo>
+      <dbinfo>
+         <dbname>Tasks</dbname>
+         <dbid>bqabc456</dbid>
+      </dbinfo>
+   </databases>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123", Fields: map[string]int{}},
+				"tasks":    {ID: "bqabc456", Fields: map[string]int{}},
+			},
+		})
+
+		client := New(mock, WithSchema(schema))
+		result, err := client.GrantedDBs(context.Background(), GrantedDBsOptions{})
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Access by alias
+		projects := result.Database("projects")
+		if projects == nil {
+			t.Fatal("expected to find 'projects' database, got nil")
+		}
+		if projects.Name != "Projects" {
+			t.Errorf("expected name 'Projects', got %s", projects.Name)
+		}
+
+		// Access by DBID
+		tasks := result.Database("bqabc456")
+		if tasks == nil {
+			t.Fatal("expected to find tasks by DBID, got nil")
+		}
+		if tasks.Name != "Tasks" {
+			t.Errorf("expected name 'Tasks', got %s", tasks.Name)
+		}
+
+		// Unknown returns nil
+		unknown := result.Database("unknown")
+		if unknown != nil {
+			t.Errorf("expected nil for unknown database, got %v", unknown)
+		}
+	})
+}
+
+func TestGetAppDTMInfoResultTable(t *testing.T) {
+	t.Run("access table by alias", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetAppDTMInfo</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <RequestTime>1234567890</RequestTime>
+   <RequestNextAllowedTime>1234567895</RequestNextAllowedTime>
+   <app id="bqapp123">
+      <lastModifiedTime>1234567800</lastModifiedTime>
+      <lastRecModTime>1234567700</lastRecModTime>
+   </app>
+   <tables>
+      <table id="bqtable1">
+         <lastModifiedTime>1234567600</lastModifiedTime>
+         <lastRecModTime>1234567500</lastRecModTime>
+      </table>
+      <table id="bqtable2">
+         <lastModifiedTime>1234567400</lastModifiedTime>
+         <lastRecModTime>1234567300</lastRecModTime>
+      </table>
+   </tables>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{
+				"projects": {ID: "bqtable1", Fields: map[string]int{}},
+				"tasks":    {ID: "bqtable2", Fields: map[string]int{}},
+			},
+		})
+
+		client := New(mock, WithSchema(schema))
+		result, err := client.GetAppDTMInfo(context.Background(), "bqapp123")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Access by alias
+		projects := result.Table("projects")
+		if projects == nil {
+			t.Fatal("expected to find 'projects' table, got nil")
+		}
+		if projects.ID != "bqtable1" {
+			t.Errorf("expected ID 'bqtable1', got %s", projects.ID)
+		}
+
+		// Access by ID
+		table2 := result.Table("bqtable2")
+		if table2 == nil {
+			t.Fatal("expected to find table by ID, got nil")
+		}
+		if table2.ID != "bqtable2" {
+			t.Errorf("expected ID 'bqtable2', got %s", table2.ID)
+		}
+
+		// Unknown returns nil
+		unknown := result.Table("unknown")
+		if unknown != nil {
+			t.Errorf("expected nil for unknown table, got %v", unknown)
+		}
+	})
+}
+
+func TestSchemaResultField(t *testing.T) {
+	t.Run("access field by alias", func(t *testing.T) {
+		mock := &mockCaller{
+			realm: "testrealm",
+			response: []byte(`<?xml version="1.0" ?>
+<qdbapi>
+   <action>API_GetSchema</action>
+   <errcode>0</errcode>
+   <errtext>No error</errtext>
+   <time_zone>(UTC-08:00) Pacific</time_zone>
+   <date_format>MM-DD-YYYY</date_format>
+   <table>
+      <name>Projects</name>
+      <fields>
+         <field id="6" field_type="text" base_type="text">
+            <label>Name</label>
+         </field>
+         <field id="7" field_type="text" base_type="text">
+            <label>Status</label>
+         </field>
+      </fields>
+      <chdbids>
+         <chdbid name="_dbid_tasks">bqtasks123</chdbid>
+      </chdbids>
+   </table>
+</qdbapi>`),
+		}
+
+		schema := core.ResolveSchema(&core.Schema{
+			Tables: map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123", Fields: map[string]int{"name": 6, "status": 7}},
+				"tasks":    {ID: "bqtasks123", Fields: map[string]int{}},
+			},
+		})
+
+		client := New(mock, WithSchema(schema))
+		result, err := client.GetSchema(context.Background(), "projects")
+
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+
+		// Verify table alias was resolved
+		if mock.lastDBID != "bqxyz123" {
+			t.Errorf("expected resolved dbid bqxyz123, got %s", mock.lastDBID)
+		}
+
+		// Access field by alias
+		nameField := result.Field("name")
+		if nameField == nil {
+			t.Fatal("expected to find 'name' field, got nil")
+		}
+		if nameField.Label != "Name" {
+			t.Errorf("expected label 'Name', got %s", nameField.Label)
+		}
+
+		// Access field by ID string
+		field7 := result.Field("7")
+		if field7 == nil {
+			t.Fatal("expected to find field '7', got nil")
+		}
+		if field7.Label != "Status" {
+			t.Errorf("expected label 'Status', got %s", field7.Label)
+		}
+
+		// Access field by ID
+		fieldByID := result.FieldByID(6)
+		if fieldByID == nil {
+			t.Fatal("expected to find field ID 6, got nil")
+		}
+
+		// Access child table by alias
+		tasksTable := result.ChildTable("tasks")
+		if tasksTable == nil {
+			t.Fatal("expected to find 'tasks' child table, got nil")
+		}
+		if tasksTable.DBID != "bqtasks123" {
+			t.Errorf("expected DBID 'bqtasks123', got %s", tasksTable.DBID)
+		}
+
+		// Access child table by DBID
+		childByID := result.ChildTable("bqtasks123")
+		if childByID == nil {
+			t.Fatal("expected to find child table by DBID, got nil")
+		}
+
+		// Unknown returns nil
+		unknownField := result.Field("unknown")
+		if unknownField != nil {
+			t.Errorf("expected nil for unknown field, got %v", unknownField)
+		}
+
+		unknownChild := result.ChildTable("unknown")
+		if unknownChild != nil {
+			t.Errorf("expected nil for unknown child table, got %v", unknownChild)
 		}
 	})
 }

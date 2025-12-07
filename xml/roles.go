@@ -47,6 +47,8 @@ type getRoleInfoResponse struct {
 // This calls the legacy API_GetRoleInfo XML endpoint. The appId should be
 // the application-level dbid (not a table dbid).
 //
+// If a schema was configured with [WithSchema], app aliases can be used.
+//
 // Example:
 //
 //	roles, err := xmlClient.GetRoleInfo(ctx, "bqxyz123")
@@ -56,9 +58,10 @@ type getRoleInfoResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getroleinfo
 func (c *Client) GetRoleInfo(ctx context.Context, appId string) (*GetRoleInfoResult, error) {
+	resolvedID := c.resolveTable(appId)
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_GetRoleInfo", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetRoleInfo", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetRoleInfo: %w", err)
 	}
@@ -122,6 +125,8 @@ type userRolesResponse struct {
 // the application-level dbid. You must have Basic Access with Sharing or
 // Full Administration access to use this call.
 //
+// If a schema was configured with [WithSchema], app aliases can be used.
+//
 // Example:
 //
 //	result, err := xmlClient.UserRoles(ctx, "bqxyz123")
@@ -134,9 +139,10 @@ type userRolesResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-userroles
 func (c *Client) UserRoles(ctx context.Context, appId string) (*UserRolesResult, error) {
+	resolvedID := c.resolveTable(appId)
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_UserRoles", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_UserRoles", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_UserRoles: %w", err)
 	}
@@ -224,6 +230,7 @@ type getUserRoleResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getuserrole
 func (c *Client) GetUserRole(ctx context.Context, appId, userId string, includeGroups bool) (*GetUserRoleResult, error) {
+	resolvedID := c.resolveTable(appId)
 	inner := ""
 	if userId != "" {
 		inner += "<userid>" + userId + "</userid>"
@@ -233,7 +240,7 @@ func (c *Client) GetUserRole(ctx context.Context, appId, userId string, includeG
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_GetUserRole", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetUserRole", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetUserRole: %w", err)
 	}
@@ -272,11 +279,12 @@ func (c *Client) GetUserRole(ctx context.Context, appId, userId string, includeG
 //
 // See: https://help.quickbase.com/docs/api-addusertorole
 func (c *Client) AddUserToRole(ctx context.Context, appId, userId string, roleId int) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<userid>" + xmlEscape(userId) + "</userid>"
 	inner += fmt.Sprintf("<roleid>%d</roleid>", roleId)
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_AddUserToRole", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_AddUserToRole", body)
 	if err != nil {
 		return fmt.Errorf("API_AddUserToRole: %w", err)
 	}
@@ -303,11 +311,12 @@ func (c *Client) AddUserToRole(ctx context.Context, appId, userId string, roleId
 //
 // See: https://help.quickbase.com/docs/api-removeuserfromrole
 func (c *Client) RemoveUserFromRole(ctx context.Context, appId, userId string, roleId int) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<userid>" + xmlEscape(userId) + "</userid>"
 	inner += fmt.Sprintf("<roleid>%d</roleid>", roleId)
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_RemoveUserFromRole", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_RemoveUserFromRole", body)
 	if err != nil {
 		return fmt.Errorf("API_RemoveUserFromRole: %w", err)
 	}
@@ -338,6 +347,7 @@ func (c *Client) RemoveUserFromRole(ctx context.Context, appId, userId string, r
 //
 // See: https://help.quickbase.com/docs/api-changeuserrole
 func (c *Client) ChangeUserRole(ctx context.Context, appId, userId string, currentRoleId, newRoleId int) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<userid>" + xmlEscape(userId) + "</userid>"
 	inner += fmt.Sprintf("<roleid>%d</roleid>", currentRoleId)
 	if newRoleId > 0 {
@@ -346,7 +356,7 @@ func (c *Client) ChangeUserRole(ctx context.Context, appId, userId string, curre
 	// If newRoleId is 0, omit it and QuickBase sets role to None (9)
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_ChangeUserRole", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_ChangeUserRole", body)
 	if err != nil {
 		return fmt.Errorf("API_ChangeUserRole: %w", err)
 	}

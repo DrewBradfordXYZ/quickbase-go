@@ -146,6 +146,7 @@ type provisionUserResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-provisionuser
 func (c *Client) ProvisionUser(ctx context.Context, appId, email, firstName, lastName string, roleId int) (*ProvisionUserResult, error) {
+	resolvedID := c.resolveTable(appId)
 	inner := "<email>" + xmlEscape(email) + "</email>"
 	inner += "<fname>" + xmlEscape(firstName) + "</fname>"
 	inner += "<lname>" + xmlEscape(lastName) + "</lname>"
@@ -154,7 +155,7 @@ func (c *Client) ProvisionUser(ctx context.Context, appId, email, firstName, las
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_ProvisionUser", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_ProvisionUser", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_ProvisionUser: %w", err)
 	}
@@ -188,13 +189,14 @@ func (c *Client) ProvisionUser(ctx context.Context, appId, email, firstName, las
 //
 // See: https://help.quickbase.com/docs/api-sendinvitation
 func (c *Client) SendInvitation(ctx context.Context, appId, userId, userText string) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<userid>" + xmlEscape(userId) + "</userid>"
 	if userText != "" {
 		inner += "<usertext>" + xmlEscape(userText) + "</usertext>"
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_SendInvitation", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_SendInvitation", body)
 	if err != nil {
 		return fmt.Errorf("API_SendInvitation: %w", err)
 	}
@@ -217,10 +219,11 @@ func (c *Client) SendInvitation(ctx context.Context, appId, userId, userText str
 //
 // See: https://help.quickbase.com/docs/api-changemanager
 func (c *Client) ChangeManager(ctx context.Context, appId, newManagerEmail string) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<newmgr>" + xmlEscape(newManagerEmail) + "</newmgr>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_ChangeManager", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_ChangeManager", body)
 	if err != nil {
 		return fmt.Errorf("API_ChangeManager: %w", err)
 	}
@@ -251,11 +254,12 @@ func (c *Client) ChangeManager(ctx context.Context, appId, newManagerEmail strin
 //
 // See: https://help.quickbase.com/docs/api-changerecordowner
 func (c *Client) ChangeRecordOwner(ctx context.Context, tableId string, recordId int, newOwner string) error {
+	resolvedID := c.resolveTable(tableId)
 	inner := fmt.Sprintf("<rid>%d</rid>", recordId)
 	inner += "<newowner>" + xmlEscape(newOwner) + "</newowner>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_ChangeRecordOwner", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_ChangeRecordOwner", body)
 	if err != nil {
 		return fmt.Errorf("API_ChangeRecordOwner: %w", err)
 	}

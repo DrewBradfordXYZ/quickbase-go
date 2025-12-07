@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/xml"
 	"fmt"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // GrantedDBInfo contains information about an accessible app or table.
@@ -25,6 +27,42 @@ type GrantedDBInfo struct {
 type GrantedDBsResult struct {
 	// Databases is the list of accessible apps and tables
 	Databases []GrantedDBInfo
+
+	// schema is used for Database() lookups (set internally)
+	schema *core.ResolvedSchema
+}
+
+// Database returns a database by alias or DBID.
+// If a schema was provided to the XML client, aliases are resolved first.
+// Returns nil if not found.
+//
+// Example:
+//
+//	// With schema
+//	result.Database("projects").Name
+//
+//	// Without schema or for unknown tables
+//	result.Database("bqxyz123").Name
+func (r *GrantedDBsResult) Database(key string) *GrantedDBInfo {
+	// Try to resolve alias to ID if schema exists
+	if r.schema != nil {
+		if dbid, err := core.ResolveTableAlias(r.schema, key); err == nil {
+			for i := range r.Databases {
+				if r.Databases[i].DBID == dbid {
+					return &r.Databases[i]
+				}
+			}
+		}
+	}
+
+	// Fallback: try direct DBID match
+	for i := range r.Databases {
+		if r.Databases[i].DBID == key {
+			return &r.Databases[i]
+		}
+	}
+
+	return nil
 }
 
 // GrantedDBsOptions configures the GrantedDBs call.
@@ -138,6 +176,7 @@ func (c *Client) GrantedDBs(ctx context.Context, opts GrantedDBsOptions) (*Grant
 
 	return &GrantedDBsResult{
 		Databases: databases,
+		schema:    c.schema,
 	}, nil
 }
 
@@ -249,6 +288,8 @@ type getDBInfoResponse struct {
 //   - How many records are in the table?
 //   - Who is the manager?
 //
+// If a schema was configured with [WithSchema], table aliases can be used.
+//
 // Example:
 //
 //	info, err := xmlClient.GetDBInfo(ctx, tableId)
@@ -258,9 +299,10 @@ type getDBInfoResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getdbinfo
 func (c *Client) GetDBInfo(ctx context.Context, dbid string) (*GetDBInfoResult, error) {
+	resolvedID := c.resolveTable(dbid)
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, dbid, "API_GetDBInfo", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetDBInfo", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetDBInfo: %w", err)
 	}
@@ -291,6 +333,8 @@ func (c *Client) GetDBInfo(ctx context.Context, dbid string) (*GetDBInfoResult, 
 // This is a lightweight call that only returns the count.
 // For counting records that match a query, use DoQueryCount instead.
 //
+// If a schema was configured with [WithSchema], table aliases can be used.
+//
 // Example:
 //
 //	count, err := xmlClient.GetNumRecords(ctx, tableId)
@@ -298,9 +342,10 @@ func (c *Client) GetDBInfo(ctx context.Context, dbid string) (*GetDBInfoResult, 
 //
 // See: https://help.quickbase.com/docs/api-getnumrecords
 func (c *Client) GetNumRecords(ctx context.Context, tableId string) (int, error) {
+	resolvedID := c.resolveTable(tableId)
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_GetNumRecords", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetNumRecords", body)
 	if err != nil {
 		return 0, fmt.Errorf("API_GetNumRecords: %w", err)
 	}
@@ -348,6 +393,42 @@ type GetAppDTMInfoResult struct {
 
 	// Tables contains modification info for each table in the app
 	Tables []TableDTMInfo
+
+	// schema is used for Table() lookups (set internally)
+	schema *core.ResolvedSchema
+}
+
+// Table returns a table by alias or DBID.
+// If a schema was provided to the XML client, aliases are resolved first.
+// Returns nil if not found.
+//
+// Example:
+//
+//	// With schema
+//	result.Table("projects").LastModifiedTime
+//
+//	// Without schema or for unknown tables
+//	result.Table("bqxyz123").LastModifiedTime
+func (r *GetAppDTMInfoResult) Table(key string) *TableDTMInfo {
+	// Try to resolve alias to ID if schema exists
+	if r.schema != nil {
+		if tableID, err := core.ResolveTableAlias(r.schema, key); err == nil {
+			for i := range r.Tables {
+				if r.Tables[i].ID == tableID {
+					return &r.Tables[i]
+				}
+			}
+		}
+	}
+
+	// Fallback: try direct ID match
+	for i := range r.Tables {
+		if r.Tables[i].ID == key {
+			return &r.Tables[i]
+		}
+	}
+
+	return nil
 }
 
 // getAppDTMInfoResponse is the XML response structure for API_GetAppDTMInfo.
@@ -381,6 +462,8 @@ type getAppDTMInfoResponse struct {
 //
 // Note: The dbid must be an application ID, not a table ID.
 //
+// If a schema was configured with [WithSchema], app aliases can be used.
+//
 // Example:
 //
 //	info, err := xmlClient.GetAppDTMInfo(ctx, appId)
@@ -395,7 +478,8 @@ type getAppDTMInfoResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getappdtminfo
 func (c *Client) GetAppDTMInfo(ctx context.Context, appId string) (*GetAppDTMInfoResult, error) {
-	inner := "<dbid>" + xmlEscape(appId) + "</dbid>"
+	resolvedID := c.resolveTable(appId)
+	inner := "<dbid>" + xmlEscape(resolvedID) + "</dbid>"
 	body := buildRequest(inner)
 
 	// GetAppDTMInfo is invoked on db/main
@@ -428,6 +512,7 @@ func (c *Client) GetAppDTMInfo(ctx context.Context, appId string) (*GetAppDTMInf
 		AppLastModifiedTime:    resp.App.LastModifiedTime,
 		AppLastRecModTime:      resp.App.LastRecModTime,
 		Tables:                 tables,
+		schema:                 c.schema,
 	}, nil
 }
 
@@ -455,6 +540,8 @@ type getAncestorInfoResponse struct {
 // For grandchildren and later, AncestorAppID is the immediate parent and
 // OldestAncestorAppID is the original template.
 //
+// If a schema was configured with [WithSchema], app aliases can be used.
+//
 // Example:
 //
 //	info, err := xmlClient.GetAncestorInfo(ctx, appId)
@@ -466,9 +553,10 @@ type getAncestorInfoResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getancestorinfo
 func (c *Client) GetAncestorInfo(ctx context.Context, appId string) (*GetAncestorInfoResult, error) {
+	resolvedID := c.resolveTable(appId)
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_GetAncestorInfo", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetAncestorInfo", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetAncestorInfo: %w", err)
 	}

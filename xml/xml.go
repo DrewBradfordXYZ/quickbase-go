@@ -102,6 +102,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/xml"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // Caller defines the minimal interface required to make XML API calls.
@@ -125,6 +127,36 @@ type Caller interface {
 // Create a Client using [New] with an existing quickbase.Client or client.Client.
 type Client struct {
 	caller Caller
+	schema *core.ResolvedSchema
+}
+
+// Option configures the XML client.
+type Option func(*Client)
+
+// WithSchema configures the XML client to use schema aliases.
+// When provided, table and field aliases can be used in method parameters,
+// and result types gain helper methods for accessing data by alias.
+//
+// Example:
+//
+//	schema := core.NewSchema().
+//	    Table("projects", "bqxyz123").
+//	        Field("id", 3).
+//	        Field("name", 6).
+//	        Field("status", 7).
+//	    Build()
+//
+//	xmlClient := xml.New(qb, xml.WithSchema(core.ResolveSchema(schema)))
+//
+//	// Use table alias
+//	result, _ := xmlClient.GetRecordInfo(ctx, "projects", 123)
+//
+//	// Access fields by alias
+//	fmt.Println(result.Field("name").Value)
+func WithSchema(schema *core.ResolvedSchema) Option {
+	return func(c *Client) {
+		c.schema = schema
+	}
 }
 
 // New creates an XML API client from an existing QuickBase client.
@@ -136,8 +168,48 @@ type Client struct {
 //
 //	qb, _ := quickbase.New("myrealm", quickbase.WithUserToken("..."))
 //	xmlClient := xml.New(qb)
-func New(caller Caller) *Client {
-	return &Client{caller: caller}
+//
+//	// With schema for alias support:
+//	xmlClient := xml.New(qb, xml.WithSchema(resolvedSchema))
+func New(caller Caller, opts ...Option) *Client {
+	c := &Client{caller: caller}
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c
+}
+
+// resolveTable resolves a table alias to its ID.
+// If no schema is configured or the input is already an ID, returns the input unchanged.
+func (c *Client) resolveTable(tableRef string) string {
+	if c.schema == nil {
+		return tableRef
+	}
+	resolved, err := core.ResolveTableAlias(c.schema, tableRef)
+	if err != nil {
+		// If resolution fails, return original (might be a raw ID)
+		return tableRef
+	}
+	return resolved
+}
+
+// resolveField resolves a field alias to its ID for a given table.
+// If no schema is configured or the input is already an ID, returns the input unchanged.
+func (c *Client) resolveField(tableID string, fieldRef any) int {
+	if c.schema == nil {
+		if id, ok := fieldRef.(int); ok {
+			return id
+		}
+		return 0
+	}
+	resolved, err := core.ResolveFieldAlias(c.schema, tableID, fieldRef)
+	if err != nil {
+		if id, ok := fieldRef.(int); ok {
+			return id
+		}
+		return 0
+	}
+	return resolved
 }
 
 // buildRequest creates an XML request body with the given inner content.

@@ -1162,6 +1162,69 @@ for _, field := range schema.Table.Fields {
 }
 ```
 
+### Schema Aliases in XML API
+
+The XML client supports the same schema aliases as the JSON API. Use `xml.WithSchema()` to enable alias resolution for table/field parameters and helper methods on result types:
+
+```go
+import (
+    "github.com/DrewBradfordXYZ/quickbase-go"
+    "github.com/DrewBradfordXYZ/quickbase-go/core"
+    "github.com/DrewBradfordXYZ/quickbase-go/xml"
+)
+
+// Define schema (same as JSON API)
+schema := core.NewSchema().
+    Table("projects", "bqxyz123").
+        Field("name", 6).
+        Field("status", 7).
+    Table("tasks", "bqabc456").
+        Field("title", 6).
+    Build()
+
+// Create XML client with schema
+xmlClient := xml.New(qb, xml.WithSchema(core.ResolveSchema(schema)))
+
+// Use table aliases in method calls
+info, _ := xmlClient.GetDBInfo(ctx, "projects")  // Resolves to "bqxyz123"
+count, _ := xmlClient.GetNumRecords(ctx, "projects")
+
+// Use helper methods on result types
+record, _ := xmlClient.GetRecordInfo(ctx, "projects", 123)
+
+// Access fields by alias
+nameField := record.Field("name")
+fmt.Println(nameField.Value)
+
+// Or by ID
+statusField := record.FieldByID(7)
+fmt.Println(statusField.Value)
+
+// Helper methods on other result types
+dbs, _ := xmlClient.GrantedDBs(ctx, xml.GrantedDBsOptions{})
+projects := dbs.Database("projects")  // Access by alias
+fmt.Println(projects.Name)
+
+dtm, _ := xmlClient.GetAppDTMInfo(ctx, appId)
+tasksTable := dtm.Table("tasks")  // Access by alias
+fmt.Println(tasksTable.LastModifiedTime)
+
+schema, _ := xmlClient.GetSchema(ctx, "projects")
+nameField := schema.Field("name")    // Access field by alias
+childTable := schema.ChildTable("tasks")  // Access child table by alias
+```
+
+**Supported helper methods:**
+
+| Result Type | Helper Methods |
+|-------------|----------------|
+| `GetRecordInfoResult` | `Field(key)`, `FieldByID(id)` |
+| `GrantedDBsResult` | `Database(key)` |
+| `GetAppDTMInfoResult` | `Table(key)` |
+| `SchemaResult` | `Field(key)`, `FieldByID(id)`, `ChildTable(key)` |
+
+All helper methods accept either an alias (if schema configured) or the raw ID as a fallback.
+
 ### Available Methods
 
 **App Discovery:**

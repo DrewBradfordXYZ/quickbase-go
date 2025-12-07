@@ -47,13 +47,15 @@ type fieldAddChoicesResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-fieldaddchoices
 func (c *Client) FieldAddChoices(ctx context.Context, tableId string, fieldId int, choices []string) (*FieldAddChoicesResult, error) {
-	inner := fmt.Sprintf("<fid>%d</fid>", fieldId)
+	resolvedTableID := c.resolveTable(tableId)
+	resolvedFieldID := c.resolveField(resolvedTableID, fieldId)
+	inner := fmt.Sprintf("<fid>%d</fid>", resolvedFieldID)
 	for _, choice := range choices {
 		inner += "<choice>" + xmlEscape(choice) + "</choice>"
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_FieldAddChoices", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedTableID, "API_FieldAddChoices", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_FieldAddChoices: %w", err)
 	}
@@ -112,13 +114,15 @@ type fieldRemoveChoicesResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-fieldremovechoices
 func (c *Client) FieldRemoveChoices(ctx context.Context, tableId string, fieldId int, choices []string) (*FieldRemoveChoicesResult, error) {
-	inner := fmt.Sprintf("<fid>%d</fid>", fieldId)
+	resolvedTableID := c.resolveTable(tableId)
+	resolvedFieldID := c.resolveField(resolvedTableID, fieldId)
+	inner := fmt.Sprintf("<fid>%d</fid>", resolvedFieldID)
 	for _, choice := range choices {
 		inner += "<choice>" + xmlEscape(choice) + "</choice>"
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_FieldRemoveChoices", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedTableID, "API_FieldRemoveChoices", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_FieldRemoveChoices: %w", err)
 	}
@@ -160,10 +164,12 @@ func (c *Client) FieldRemoveChoices(ctx context.Context, tableId string, fieldId
 //
 // See: https://help.quickbase.com/docs/api-setkeyfield
 func (c *Client) SetKeyField(ctx context.Context, tableId string, fieldId int) error {
-	inner := fmt.Sprintf("<fid>%d</fid>", fieldId)
+	resolvedTableID := c.resolveTable(tableId)
+	resolvedFieldID := c.resolveField(resolvedTableID, fieldId)
+	inner := fmt.Sprintf("<fid>%d</fid>", resolvedFieldID)
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_SetKeyField", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedTableID, "API_SetKeyField", body)
 	if err != nil {
 		return fmt.Errorf("API_SetKeyField: %w", err)
 	}

@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/xml"
 	"fmt"
+	"strconv"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // SchemaResult contains the response from API_GetSchema.
@@ -16,6 +19,95 @@ type SchemaResult struct {
 
 	// Table contains the schema information
 	Table TableSchema
+
+	// schema is used for Field/ChildTable lookups (set internally)
+	schema *core.ResolvedSchema
+
+	// tableID is the table ID used for field alias resolution
+	tableID string
+}
+
+// Field returns a field by alias or ID.
+// If a schema was provided to the XML client, aliases are resolved first.
+// Returns nil if not found.
+//
+// Example:
+//
+//	// With schema
+//	result.Field("name").Label
+//
+//	// By field ID (as string)
+//	result.Field("6").Label
+func (r *SchemaResult) Field(key string) *SchemaField {
+	// Try to resolve alias to ID if schema exists
+	if r.schema != nil {
+		if fieldID, err := core.ResolveFieldAlias(r.schema, r.tableID, key); err == nil {
+			for i := range r.Table.Fields {
+				if r.Table.Fields[i].ID == fieldID {
+					return &r.Table.Fields[i]
+				}
+			}
+		}
+	}
+
+	// Fallback: try parsing as numeric ID
+	if id, err := strconv.Atoi(key); err == nil {
+		for i := range r.Table.Fields {
+			if r.Table.Fields[i].ID == id {
+				return &r.Table.Fields[i]
+			}
+		}
+	}
+
+	return nil
+}
+
+// FieldByID returns a field by its numeric ID.
+// Returns nil if not found.
+//
+// Example:
+//
+//	result.FieldByID(6).Label
+func (r *SchemaResult) FieldByID(id int) *SchemaField {
+	for i := range r.Table.Fields {
+		if r.Table.Fields[i].ID == id {
+			return &r.Table.Fields[i]
+		}
+	}
+	return nil
+}
+
+// ChildTable returns a child table by alias or DBID.
+// If a schema was provided to the XML client, aliases are resolved first.
+// Returns nil if not found.
+//
+// Example:
+//
+//	// With schema
+//	result.ChildTable("tasks").DBID
+//
+//	// By DBID
+//	result.ChildTable("bqxyz123").DBID
+func (r *SchemaResult) ChildTable(key string) *ChildTable {
+	// Try to resolve alias to ID if schema exists
+	if r.schema != nil {
+		if tableID, err := core.ResolveTableAlias(r.schema, key); err == nil {
+			for i := range r.Table.ChildTables {
+				if r.Table.ChildTables[i].DBID == tableID {
+					return &r.Table.ChildTables[i]
+				}
+			}
+		}
+	}
+
+	// Fallback: try direct DBID match
+	for i := range r.Table.ChildTables {
+		if r.Table.ChildTables[i].DBID == key {
+			return &r.Table.ChildTables[i]
+		}
+	}
+
+	return nil
 }
 
 // TableSchema contains schema information for an app or table.
@@ -190,6 +282,15 @@ type getSchemaResponse struct {
 // When called with a table dbid, returns table-level information including
 // field definitions, saved queries/reports, and table variables.
 //
+// If a schema was configured with [WithSchema], table aliases can be used
+// as input and result helper methods become available:
+//
+//	// Use table alias instead of DBID
+//	result, _ := xmlClient.GetSchema(ctx, "projects")
+//
+//	// Access fields by alias
+//	result.Field("name").Label
+//
 // Example (app-level):
 //
 //	schema, err := xmlClient.GetSchema(ctx, appId)
@@ -208,9 +309,12 @@ type getSchemaResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getschema
 func (c *Client) GetSchema(ctx context.Context, dbid string) (*SchemaResult, error) {
+	// Resolve table alias if schema is configured
+	resolvedID := c.resolveTable(dbid)
+
 	body := buildRequest("")
 
-	respBody, err := c.caller.DoXML(ctx, dbid, "API_GetSchema", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetSchema", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetSchema: %w", err)
 	}
@@ -228,5 +332,7 @@ func (c *Client) GetSchema(ctx context.Context, dbid string) (*SchemaResult, err
 		TimeZone:   resp.TimeZone,
 		DateFormat: resp.DateFormat,
 		Table:      resp.Table,
+		schema:     c.schema,
+		tableID:    resolvedID,
 	}, nil
 }

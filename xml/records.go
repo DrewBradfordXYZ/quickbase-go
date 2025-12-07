@@ -5,6 +5,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 // DoQueryCountResult contains the response from API_DoQueryCount.
@@ -24,6 +26,8 @@ type doQueryCountResponse struct {
 // This is more efficient than running a full query when you only need to know
 // how many records match. The query parameter uses the same syntax as API_DoQuery.
 //
+// If a schema was configured with [WithSchema], table aliases can be used.
+//
 // Example:
 //
 //	// Count all records
@@ -36,13 +40,14 @@ type doQueryCountResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-doquerycount
 func (c *Client) DoQueryCount(ctx context.Context, tableId, query string) (*DoQueryCountResult, error) {
+	resolvedID := c.resolveTable(tableId)
 	inner := ""
 	if query != "" {
 		inner = "<query>" + query + "</query>"
 	}
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_DoQueryCount", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_DoQueryCount", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_DoQueryCount: %w", err)
 	}
@@ -93,6 +98,56 @@ type GetRecordInfoResult struct {
 
 	// Fields contains all field values with their metadata
 	Fields []RecordField
+
+	// schema and tableID are used for Field() lookups (set internally)
+	schema  *core.ResolvedSchema
+	tableID string
+}
+
+// Field returns a field by alias or ID string.
+// If a schema was provided to the XML client, aliases are resolved first.
+// Returns nil if not found.
+//
+// Example:
+//
+//	// With schema
+//	result.Field("name").Value   // Access by alias
+//
+//	// Without schema or for unknown fields
+//	result.Field("6").Value      // Access by ID string
+func (r *GetRecordInfoResult) Field(key string) *RecordField {
+	// Try to resolve alias to ID if schema exists
+	if r.schema != nil {
+		if fieldID, err := core.ResolveFieldAlias(r.schema, r.tableID, key); err == nil {
+			for i := range r.Fields {
+				if r.Fields[i].ID == fieldID {
+					return &r.Fields[i]
+				}
+			}
+		}
+	}
+
+	// Fallback: try parsing as int
+	if id, err := strconv.Atoi(key); err == nil {
+		for i := range r.Fields {
+			if r.Fields[i].ID == id {
+				return &r.Fields[i]
+			}
+		}
+	}
+
+	return nil
+}
+
+// FieldByID returns a field by its numeric ID.
+// Returns nil if not found.
+func (r *GetRecordInfoResult) FieldByID(id int) *RecordField {
+	for i := range r.Fields {
+		if r.Fields[i].ID == id {
+			return &r.Fields[i]
+		}
+	}
+	return nil
 }
 
 // recordFieldXML is the XML structure for a field in API_GetRecordInfo response.
@@ -119,6 +174,7 @@ type getRecordInfoResponse struct {
 // each field's name, type, value, and human-readable printable format.
 // This is useful for building generic record viewers or debugging.
 //
+// The tableId can be a table alias (if schema is configured) or a raw table ID.
 // The recordId can be either the record ID (rid) or a value from a custom key field.
 //
 // Example:
@@ -132,12 +188,17 @@ type getRecordInfoResponse struct {
 //	    }
 //	}
 //
+//	// With schema - access fields by alias:
+//	result.Field("name").Value
+//
 // See: https://help.quickbase.com/docs/api-getrecordinfo
 func (c *Client) GetRecordInfo(ctx context.Context, tableId string, recordId int) (*GetRecordInfoResult, error) {
+	resolvedTableId := c.resolveTable(tableId)
+
 	inner := "<rid>" + strconv.Itoa(recordId) + "</rid>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_GetRecordInfo", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedTableId, "API_GetRecordInfo", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetRecordInfo: %w", err)
 	}
@@ -168,12 +229,15 @@ func (c *Client) GetRecordInfo(ctx context.Context, tableId string, recordId int
 		NumFields: resp.NumFields,
 		UpdateID:  resp.UpdateID,
 		Fields:    fields,
+		schema:    c.schema,
+		tableID:   resolvedTableId,
 	}, nil
 }
 
 // GetRecordInfoByKey returns a single record using a custom key field value.
 //
 // This is similar to GetRecordInfo but uses a key field value instead of record ID.
+// The tableId can be a table alias (if schema is configured) or a raw table ID.
 // The keyValue should be the value from the table's designated key field.
 //
 // Example:
@@ -181,12 +245,17 @@ func (c *Client) GetRecordInfo(ctx context.Context, tableId string, recordId int
 //	// If "Order Number" (field 6) is the key field
 //	result, err := xmlClient.GetRecordInfoByKey(ctx, tableId, "ORD-12345")
 //
+//	// With schema - access fields by alias:
+//	result.Field("name").Value
+//
 // See: https://help.quickbase.com/docs/api-getrecordinfo
 func (c *Client) GetRecordInfoByKey(ctx context.Context, tableId string, keyValue string) (*GetRecordInfoResult, error) {
+	resolvedTableId := c.resolveTable(tableId)
+
 	inner := "<key>" + keyValue + "</key>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, tableId, "API_GetRecordInfo", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedTableId, "API_GetRecordInfo", body)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetRecordInfo: %w", err)
 	}
@@ -217,6 +286,8 @@ func (c *Client) GetRecordInfoByKey(ctx context.Context, tableId string, keyValu
 		NumFields: resp.NumFields,
 		UpdateID:  resp.UpdateID,
 		Fields:    fields,
+		schema:    c.schema,
+		tableID:   resolvedTableId,
 	}, nil
 }
 

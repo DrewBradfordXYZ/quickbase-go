@@ -27,10 +27,11 @@ type getDBVarResponse struct {
 //
 // See: https://help.quickbase.com/docs/api-getdbvar
 func (c *Client) GetDBVar(ctx context.Context, appId, varName string) (string, error) {
+	resolvedID := c.resolveTable(appId)
 	inner := "<varname>" + xmlEscape(varName) + "</varname>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_GetDBVar", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_GetDBVar", body)
 	if err != nil {
 		return "", fmt.Errorf("API_GetDBVar: %w", err)
 	}
@@ -62,11 +63,12 @@ func (c *Client) GetDBVar(ctx context.Context, appId, varName string) (string, e
 //
 // See: https://help.quickbase.com/docs/api-setdbvar
 func (c *Client) SetDBVar(ctx context.Context, appId, varName, value string) error {
+	resolvedID := c.resolveTable(appId)
 	inner := "<varname>" + xmlEscape(varName) + "</varname>"
 	inner += "<value>" + xmlEscape(value) + "</value>"
 	body := buildRequest(inner)
 
-	respBody, err := c.caller.DoXML(ctx, appId, "API_SetDBVar", body)
+	respBody, err := c.caller.DoXML(ctx, resolvedID, "API_SetDBVar", body)
 	if err != nil {
 		return fmt.Errorf("API_SetDBVar: %w", err)
 	}
