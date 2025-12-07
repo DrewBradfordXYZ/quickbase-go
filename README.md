@@ -1142,12 +1142,23 @@ for _, field := range schema.Table.Fields {
 |--------|------------|-------------|
 | `CreateGroup(ctx, name, description, accountId)` | API_CreateGroup | Create a new group |
 | `DeleteGroup(ctx, groupId)` | API_DeleteGroup | Delete a group |
+| `CopyGroup(ctx, groupId, name, description, accountId)` | API_CopyGroup | Copy a group |
+| `ChangeGroupInfo(ctx, groupId, name, description, accountId)` | API_ChangeGroupInfo | Update group name/description |
 | `GetUsersInGroup(ctx, groupId, includeManagers)` | API_GetUsersInGroup | Get users and managers in a group |
 | `AddUserToGroup(ctx, groupId, userId, allowAdminAccess)` | API_AddUserToGroup | Add a user to a group |
 | `RemoveUserFromGroup(ctx, groupId, userId)` | API_RemoveUserFromGroup | Remove a user from a group |
 | `GetGroupRole(ctx, appId, groupId)` | API_GetGroupRole | Get roles assigned to a group |
 | `AddGroupToRole(ctx, appId, groupId, roleId)` | API_AddGroupToRole | Assign a group to a role |
 | `RemoveGroupFromRole(ctx, appId, groupId, roleId, allRoles)` | API_RemoveGroupFromRole | Remove a group from a role |
+| `GrantedGroups(ctx, userId, adminOnly)` | API_GrantedGroups | Get groups a user belongs to |
+| `GrantedDBsForGroup(ctx, groupId)` | API_GrantedDBsForGroup | Get apps a group can access |
+
+**App Metadata:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GetAppDTMInfo(ctx, appId)` | API_GetAppDTMInfo | Get modification timestamps (fast, no auth required) |
+| `GetAncestorInfo(ctx, appId)` | API_GetAncestorInfo | Get app copy/template lineage info |
 
 **Application Variables:**
 
@@ -1185,6 +1196,39 @@ for _, field := range schema.Table.Fields {
 | `GetRecordInfo(ctx, tableId, recordId)` | API_GetRecordInfo | Get record with field metadata |
 | `GetRecordInfoByKey(ctx, tableId, keyValue)` | API_GetRecordInfo | Get record by key field value |
 
+**Record Operations:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `CopyMasterDetail(ctx, tableId, opts)` | API_CopyMasterDetail | Copy a master record with its detail records |
+| `ImportFromCSV(ctx, tableId, opts)` | API_ImportFromCSV | Bulk import/update records from CSV data |
+| `RunImport(ctx, tableId, importId)` | API_RunImport | Execute a saved import definition |
+
+**Webhooks:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `WebhooksCreate(ctx, tableId, opts)` | API_Webhooks_Create | Create a webhook |
+| `WebhooksEdit(ctx, tableId, webhookId, opts)` | API_Webhooks_Edit | Edit a webhook |
+| `WebhooksDelete(ctx, tableId, webhookId)` | API_Webhooks_Delete | Delete a webhook |
+| `WebhooksActivate(ctx, tableId, webhookId)` | API_Webhooks_Activate | Activate a webhook |
+| `WebhooksDeactivate(ctx, tableId, webhookId)` | API_Webhooks_Deactivate | Deactivate a webhook |
+| `WebhooksCopy(ctx, tableId, webhookId, name)` | API_Webhooks_Copy | Copy a webhook |
+
+**HTML Generation:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `GenAddRecordForm(ctx, tableId, fields)` | API_GenAddRecordForm | Generate HTML form for adding a record |
+| `GenResultsTable(ctx, tableId, opts)` | API_GenResultsTable | Generate HTML/JS/CSV table of query results |
+| `GetRecordAsHTML(ctx, tableId, opts)` | API_GetRecordAsHTML | Get a record rendered as HTML |
+
+**Authentication:**
+
+| Method | XML Action | Description |
+|--------|------------|-------------|
+| `SignOut(ctx)` | API_SignOut | Clear ticket cookie (browser-focused) |
+
 ### Error Handling
 
 XML API errors are returned as `*xml.Error` with error codes:
@@ -1214,12 +1258,17 @@ Each API has unique capabilities:
 | XML-Only (Implemented) | JSON-Only |
 |------------------------|-----------|
 | Roles & role assignments | Relationships |
-| Group management (create, delete, membership, roles) | Solutions (app packaging) |
+| Group management (create, delete, copy, membership, roles) | Solutions (app packaging) |
 | Application variables (DBVars) | Platform analytics |
 | Code pages (get, add/replace) | Audit logs |
 | User provisioning (provision, invite) | Field usage statistics |
 | Field choice management | Document templates |
 | Record ownership changes | |
+| Webhooks (create, edit, delete, activate/deactivate, copy) | |
+| CSV import (ImportFromCSV, RunImport) | |
+| Copy master/detail records | |
+| App metadata (GetAppDTMInfo, GetAncestorInfo) | |
+| HTML generation (forms, tables, record views) | |
 
 For a comprehensive comparison, see [docs/xml-api-reference.md](docs/xml-api-reference.md).
 

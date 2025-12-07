@@ -400,3 +400,208 @@ func (c *Client) RemoveGroupFromRole(ctx context.Context, appId, groupId string,
 
 	return checkError(&resp)
 }
+
+// GrantedGroupsResult contains the response from API_GrantedGroups.
+type GrantedGroupsResult struct {
+	// Groups is the list of groups the user has access to
+	Groups []Group
+}
+
+// grantedGroupsResponse is the XML response structure for API_GrantedGroups.
+type grantedGroupsResponse struct {
+	BaseResponse
+	Groups []Group `xml:"groups>group"`
+}
+
+// GrantedGroups returns the list of groups a user has access to.
+//
+// If adminOnly is true, only groups where the user has admin rights are returned.
+//
+// Note: The caller must be a Realm admin to use this call.
+//
+// Example:
+//
+//	result, err := xmlClient.GrantedGroups(ctx, "112149.bhsv", false)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	for _, group := range result.Groups {
+//	    fmt.Printf("Group: %s (ID: %s)\n", group.Name, group.ID)
+//	}
+//
+// See: https://help.quickbase.com/docs/api-grantedgroups
+func (c *Client) GrantedGroups(ctx context.Context, userId string, adminOnly bool) (*GrantedGroupsResult, error) {
+	inner := "<userid>" + xmlEscape(userId) + "</userid>"
+	if adminOnly {
+		inner += "<adminonly>1</adminonly>"
+	}
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, "main", "API_GrantedGroups", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_GrantedGroups: %w", err)
+	}
+
+	var resp grantedGroupsResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_GrantedGroups response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &GrantedGroupsResult{
+		Groups: resp.Groups,
+	}, nil
+}
+
+// GroupDBInfo represents information about a database a group can access.
+type GroupDBInfo struct {
+	// Name is the database name
+	Name string `xml:"dbname"`
+
+	// ID is the database ID
+	ID string `xml:"dbid"`
+}
+
+// GrantedDBsForGroupResult contains the response from API_GrantedDBsForGroup.
+type GrantedDBsForGroupResult struct {
+	// Databases is the list of databases the group can access
+	Databases []GroupDBInfo
+}
+
+// grantedDBsForGroupResponse is the XML response structure for API_GrantedDBsForGroup.
+type grantedDBsForGroupResponse struct {
+	BaseResponse
+	Databases []GroupDBInfo `xml:"databases>dbinfo"`
+}
+
+// GrantedDBsForGroup returns the list of databases (apps/tables) a group can access.
+//
+// Example:
+//
+//	result, err := xmlClient.GrantedDBsForGroup(ctx, "1217.dgpt")
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	for _, db := range result.Databases {
+//	    fmt.Printf("Database: %s (ID: %s)\n", db.Name, db.ID)
+//	}
+//
+// See: https://help.quickbase.com/docs/api-granteddbsforgroup
+func (c *Client) GrantedDBsForGroup(ctx context.Context, groupId string) (*GrantedDBsForGroupResult, error) {
+	inner := "<gid>" + xmlEscape(groupId) + "</gid>"
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, "main", "API_GrantedDBsForGroup", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_GrantedDBsForGroup: %w", err)
+	}
+
+	var resp grantedDBsForGroupResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_GrantedDBsForGroup response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &GrantedDBsForGroupResult{
+		Databases: resp.Databases,
+	}, nil
+}
+
+// CopyGroupResult contains the response from API_CopyGroup.
+type CopyGroupResult struct {
+	// Group is the newly created group
+	Group Group
+}
+
+// copyGroupResponse is the XML response structure for API_CopyGroup.
+type copyGroupResponse struct {
+	BaseResponse
+	Group Group `xml:"group"`
+}
+
+// CopyGroup duplicates an existing group with the same users and subgroups.
+//
+// The new group will have the specified name and a new ID.
+//
+// Example:
+//
+//	result, err := xmlClient.CopyGroup(ctx, "1217.dgpt", "CopiedGroup", "Copy of original group", "")
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	fmt.Printf("Created group: %s (ID: %s)\n", result.Group.Name, result.Group.ID)
+//
+// See: https://help.quickbase.com/docs/api-copygroup
+func (c *Client) CopyGroup(ctx context.Context, groupId, name, description, accountId string) (*CopyGroupResult, error) {
+	inner := "<gid>" + xmlEscape(groupId) + "</gid>"
+	inner += "<name>" + xmlEscape(name) + "</name>"
+	if description != "" {
+		inner += "<description>" + xmlEscape(description) + "</description>"
+	}
+	if accountId != "" {
+		inner += "<gacct>" + xmlEscape(accountId) + "</gacct>"
+	}
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, "main", "API_CopyGroup", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_CopyGroup: %w", err)
+	}
+
+	var resp copyGroupResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_CopyGroup response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &CopyGroupResult{
+		Group: resp.Group,
+	}, nil
+}
+
+// ChangeGroupInfo modifies metadata for a group.
+//
+// Any of name, description, or accountId can be empty to leave unchanged.
+// At least one must be provided.
+//
+// Note: The name may not contain spaces or punctuation.
+//
+// Example:
+//
+//	err := xmlClient.ChangeGroupInfo(ctx, "1217.dgpt", "NewName", "New description", "")
+//
+// See: https://help.quickbase.com/docs/api-changegroupinfo
+func (c *Client) ChangeGroupInfo(ctx context.Context, groupId, name, description, accountId string) error {
+	inner := "<gid>" + xmlEscape(groupId) + "</gid>"
+	if name != "" {
+		inner += "<name>" + xmlEscape(name) + "</name>"
+	}
+	if description != "" {
+		inner += "<description>" + xmlEscape(description) + "</description>"
+	}
+	if accountId != "" {
+		inner += "<accountId>" + xmlEscape(accountId) + "</accountId>"
+	}
+	body := buildRequest(inner)
+
+	respBody, err := c.caller.DoXML(ctx, "main", "API_ChangeGroupInfo", body)
+	if err != nil {
+		return fmt.Errorf("API_ChangeGroupInfo: %w", err)
+	}
+
+	var resp BaseResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return fmt.Errorf("parsing API_ChangeGroupInfo response: %w", err)
+	}
+
+	return checkError(&resp)
+}

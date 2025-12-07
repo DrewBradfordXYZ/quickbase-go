@@ -267,3 +267,43 @@ func (c *Client) ChangeRecordOwner(ctx context.Context, tableId string, recordId
 
 	return checkError(&resp)
 }
+
+// SignOut clears the ticket cookie for API clients using cookie-based authentication.
+//
+// This call is primarily for API client implementations that use the ticket cookie
+// rather than the <ticket> parameter. It returns a null ticket cookie (named TICKET).
+//
+// Important notes:
+//   - This does NOT invalidate any tickets
+//   - This does NOT log off the caller from QuickBase applications
+//   - Callers with a saved valid ticket can continue using it after SignOut
+//   - Some local applications may be unable to access QuickBase until
+//     API_Authenticate is called for a new ticket cookie
+//
+// For most server-side SDK usage with user tokens, this call has no practical effect.
+// It may be useful in edge cases involving browser-based ticket authentication.
+//
+// Example:
+//
+//	err := xmlClient.SignOut(ctx)
+//	if err != nil {
+//	    log.Printf("SignOut failed: %v", err)
+//	}
+//
+// See: https://help.quickbase.com/docs/api-signout
+func (c *Client) SignOut(ctx context.Context) error {
+	body := buildRequest("")
+
+	// SignOut is invoked on db/main
+	respBody, err := c.caller.DoXML(ctx, "main", "API_SignOut", body)
+	if err != nil {
+		return fmt.Errorf("API_SignOut: %w", err)
+	}
+
+	var resp BaseResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return fmt.Errorf("parsing API_SignOut response: %w", err)
+	}
+
+	return checkError(&resp)
+}

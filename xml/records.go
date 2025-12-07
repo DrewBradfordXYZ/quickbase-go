@@ -219,3 +219,326 @@ func (c *Client) GetRecordInfoByKey(ctx context.Context, tableId string, keyValu
 		Fields:    fields,
 	}, nil
 }
+
+// ImportFromCSVOptions configures the CSV import operation.
+type ImportFromCSVOptions struct {
+	// RecordsCSV is the CSV data to import (required).
+	// Use CDATA wrapper for complex data.
+	RecordsCSV string
+
+	// CList is a period-delimited list of field IDs mapping CSV columns to fields.
+	// Use 0 to skip a column. Required when updating records or mapping specific fields.
+	// Example: "6.7.8" maps columns 1-3 to fields 6, 7, 8.
+	CList string
+
+	// CListOutput specifies which fields to return in the response.
+	// Period-delimited field IDs.
+	CListOutput string
+
+	// SkipFirst skips the first row (header row) if true.
+	SkipFirst bool
+
+	// DecimalPercent when true interprets 0.50 as 50% instead of 0.50%.
+	DecimalPercent bool
+
+	// MsInUTC when true interprets date/times as UTC milliseconds.
+	MsInUTC bool
+
+	// MergeFieldId uses a different field as the merge key instead of the table key.
+	// The field must be unique.
+	MergeFieldId int
+}
+
+// ImportFromCSVRecord represents a record that was added or updated.
+type ImportFromCSVRecord struct {
+	// RecordID is the record's unique ID
+	RecordID int
+
+	// UpdateID is used for optimistic concurrency control in subsequent edits
+	UpdateID string
+}
+
+// ImportFromCSVResult contains the response from API_ImportFromCSV.
+type ImportFromCSVResult struct {
+	// NumRecsInput is the total number of records in the CSV
+	NumRecsInput int
+
+	// NumRecsAdded is the number of new records created
+	NumRecsAdded int
+
+	// NumRecsUpdated is the number of existing records updated
+	NumRecsUpdated int
+
+	// Records contains the record IDs and update IDs for all affected records
+	Records []ImportFromCSVRecord
+}
+
+// ridXML is the XML structure for a record ID in import responses.
+type ridXML struct {
+	RID      int    `xml:",chardata"`
+	UpdateID string `xml:"update_id,attr"`
+}
+
+// importFromCSVResponse is the XML response structure for API_ImportFromCSV.
+type importFromCSVResponse struct {
+	BaseResponse
+	NumRecsInput   int      `xml:"num_recs_input"`
+	NumRecsAdded   int      `xml:"num_recs_added"`
+	NumRecsUpdated int      `xml:"num_recs_updated"`
+	RIDs           []ridXML `xml:"rids>rid"`
+}
+
+// ImportFromCSV adds or updates multiple records from CSV data.
+//
+// You can add new records and update existing records in the same request.
+// For adds, leave the record ID column empty. For updates, include the
+// key field (usually field 3, Record ID#) in the clist and CSV data.
+//
+// Example - Add new records:
+//
+//	result, err := xmlClient.ImportFromCSV(ctx, tableId, xml.ImportFromCSVOptions{
+//	    RecordsCSV: "Name,Status\nJohn,Active\nJane,Pending",
+//	    CList:      "6.7",
+//	    SkipFirst:  true,
+//	})
+//	fmt.Printf("Added %d records\n", result.NumRecsAdded)
+//
+// Example - Update existing records:
+//
+//	result, err := xmlClient.ImportFromCSV(ctx, tableId, xml.ImportFromCSVOptions{
+//	    RecordsCSV: "Record ID,Status\n1,Complete\n2,Active",
+//	    CList:      "3.7",
+//	    SkipFirst:  true,
+//	})
+//	fmt.Printf("Updated %d records\n", result.NumRecsUpdated)
+//
+// See: https://help.quickbase.com/docs/api-importfromcsv
+func (c *Client) ImportFromCSV(ctx context.Context, tableId string, opts ImportFromCSVOptions) (*ImportFromCSVResult, error) {
+	inner := "<records_csv><![CDATA[" + opts.RecordsCSV + "]]></records_csv>"
+
+	if opts.CList != "" {
+		inner += "<clist>" + opts.CList + "</clist>"
+	}
+	if opts.CListOutput != "" {
+		inner += "<clist_output>" + opts.CListOutput + "</clist_output>"
+	}
+	if opts.SkipFirst {
+		inner += "<skipfirst>1</skipfirst>"
+	}
+	if opts.DecimalPercent {
+		inner += "<decimalPercent>1</decimalPercent>"
+	}
+	if opts.MsInUTC {
+		inner += "<msInUTC>1</msInUTC>"
+	}
+	if opts.MergeFieldId > 0 {
+		inner += "<mergeFieldId>" + strconv.Itoa(opts.MergeFieldId) + "</mergeFieldId>"
+	}
+
+	body := buildRequest(inner)
+	respBody, err := c.caller.DoXML(ctx, tableId, "API_ImportFromCSV", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_ImportFromCSV: %w", err)
+	}
+
+	var resp importFromCSVResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_ImportFromCSV response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	records := make([]ImportFromCSVRecord, len(resp.RIDs))
+	for i, rid := range resp.RIDs {
+		records[i] = ImportFromCSVRecord{
+			RecordID: rid.RID,
+			UpdateID: rid.UpdateID,
+		}
+	}
+
+	return &ImportFromCSVResult{
+		NumRecsInput:   resp.NumRecsInput,
+		NumRecsAdded:   resp.NumRecsAdded,
+		NumRecsUpdated: resp.NumRecsUpdated,
+		Records:        records,
+	}, nil
+}
+
+// RunImportResult contains the response from API_RunImport.
+type RunImportResult struct {
+	// ImportStatus describes the result, e.g., "3 new records were created"
+	ImportStatus string
+}
+
+// runImportResponse is the XML response structure for API_RunImport.
+type runImportResponse struct {
+	BaseResponse
+	ImportStatus string `xml:"import_status"`
+}
+
+// RunImport executes a saved import definition.
+//
+// Saved imports are configured in the QuickBase UI under Import/Export.
+// This allows you to run predefined imports from table to table.
+//
+// To find the import ID:
+//  1. Open the application and click Import/Export
+//  2. Select "Import into a table from another table"
+//  3. Click the saved import name
+//  4. Look for &id=X in the URL - X is the import ID
+//
+// Example:
+//
+//	result, err := xmlClient.RunImport(ctx, tableId, 10)
+//	fmt.Println(result.ImportStatus) // "3 new records were created"
+//
+// See: https://help.quickbase.com/docs/api-runimport
+func (c *Client) RunImport(ctx context.Context, tableId string, importId int) (*RunImportResult, error) {
+	inner := "<id>" + strconv.Itoa(importId) + "</id>"
+
+	body := buildRequest(inner)
+	respBody, err := c.caller.DoXML(ctx, tableId, "API_RunImport", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_RunImport: %w", err)
+	}
+
+	var resp runImportResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_RunImport response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &RunImportResult{
+		ImportStatus: resp.ImportStatus,
+	}, nil
+}
+
+// CopyMasterDetailOptions configures the master-detail copy operation.
+type CopyMasterDetailOptions struct {
+	// DestRecordID is the destination master record ID.
+	// Set to 0 to copy the source master record and create a new one.
+	// Set to an existing record ID to import detail records into that master.
+	DestRecordID int
+
+	// SourceRecordID is the source master record ID to copy from (required).
+	SourceRecordID int
+
+	// CopyFieldID is the field ID to use for naming the copied record.
+	// Only required when DestRecordID is 0 (creating a new master record).
+	// The new record name will be "Copy of [field value]".
+	// Must be a text field, not a lookup/formula/unique field.
+	CopyFieldID int
+
+	// Recurse copies detail records of detail records recursively.
+	// Supports up to 10 levels. Default is true.
+	Recurse *bool
+
+	// RelFieldIDs limits copying to specific relationships by report link field IDs.
+	// Leave empty or set to "all" to copy all relationships.
+	RelFieldIDs []int
+}
+
+// CopyMasterDetailResult contains the response from API_CopyMasterDetail.
+type CopyMasterDetailResult struct {
+	// ParentRecordID is the record ID of the destination master record.
+	// Either the existing destrid or the newly created master record.
+	ParentRecordID int
+
+	// NumCreated is the total number of new records created.
+	NumCreated int
+}
+
+// copyMasterDetailResponse is the XML response structure for API_CopyMasterDetail.
+type copyMasterDetailResponse struct {
+	BaseResponse
+	ParentRID  int `xml:"parentrid"`
+	NumCreated int `xml:"numcreated"`
+}
+
+// CopyMasterDetail copies a master record with its detail records, or imports
+// detail records from one master into another.
+//
+// This is useful for:
+// - Cloning a project with all its tasks
+// - Creating templates from existing records
+// - Copying detail records between master records
+//
+// Example - Copy master and all details:
+//
+//	result, err := xmlClient.CopyMasterDetail(ctx, tableId, xml.CopyMasterDetailOptions{
+//	    DestRecordID:   0,        // Create new master
+//	    SourceRecordID: 1,        // Copy from record 1
+//	    CopyFieldID:    6,        // Use field 6 for "Copy of [name]"
+//	})
+//	fmt.Printf("Created master record %d with %d total records\n",
+//	    result.ParentRecordID, result.NumCreated)
+//
+// Example - Import details into existing master:
+//
+//	result, err := xmlClient.CopyMasterDetail(ctx, tableId, xml.CopyMasterDetailOptions{
+//	    DestRecordID:   3,        // Import into existing record 3
+//	    SourceRecordID: 1,        // Copy details from record 1
+//	})
+//
+// See: https://help.quickbase.com/docs/api-copymasterdetail
+func (c *Client) CopyMasterDetail(ctx context.Context, tableId string, opts CopyMasterDetailOptions) (*CopyMasterDetailResult, error) {
+	inner := "<destrid>" + strconv.Itoa(opts.DestRecordID) + "</destrid>"
+	inner += "<sourcerid>" + strconv.Itoa(opts.SourceRecordID) + "</sourcerid>"
+
+	if opts.DestRecordID == 0 && opts.CopyFieldID > 0 {
+		inner += "<copyfid>" + strconv.Itoa(opts.CopyFieldID) + "</copyfid>"
+	}
+
+	if opts.Recurse != nil {
+		if *opts.Recurse {
+			inner += "<recurse>true</recurse>"
+		} else {
+			inner += "<recurse>false</recurse>"
+		}
+	}
+
+	if len(opts.RelFieldIDs) > 0 {
+		relIds := make([]string, len(opts.RelFieldIDs))
+		for i, id := range opts.RelFieldIDs {
+			relIds[i] = strconv.Itoa(id)
+		}
+		inner += "<relfids>" + joinStrings(relIds, ",") + "</relfids>"
+	}
+
+	body := buildRequest(inner)
+	respBody, err := c.caller.DoXML(ctx, tableId, "API_CopyMasterDetail", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_CopyMasterDetail: %w", err)
+	}
+
+	var resp copyMasterDetailResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_CopyMasterDetail response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &CopyMasterDetailResult{
+		ParentRecordID: resp.ParentRID,
+		NumCreated:     resp.NumCreated,
+	}, nil
+}
+
+// joinStrings joins strings with a separator (simple helper to avoid importing strings)
+func joinStrings(strs []string, sep string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+	result := strs[0]
+	for i := 1; i < len(strs); i++ {
+		result += sep + strs[i]
+	}
+	return result
+}

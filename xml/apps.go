@@ -319,3 +319,171 @@ func (c *Client) GetNumRecords(ctx context.Context, tableId string) (int, error)
 
 	return resp.NumRecords, nil
 }
+
+// TableDTMInfo contains modification timestamps for a table.
+type TableDTMInfo struct {
+	// ID is the table DBID
+	ID string
+
+	// LastModifiedTime is when the table schema was last modified (Unix ms)
+	LastModifiedTime int64
+
+	// LastRecModTime is when records were last modified (Unix ms)
+	LastRecModTime int64
+}
+
+// GetAppDTMInfoResult contains the response from API_GetAppDTMInfo.
+type GetAppDTMInfoResult struct {
+	// RequestTime is when the server received this request (Unix ms)
+	RequestTime int64
+
+	// RequestNextAllowedTime is the earliest time another request is allowed (Unix ms)
+	RequestNextAllowedTime int64
+
+	// AppLastModifiedTime is when the app schema was last modified (Unix ms)
+	AppLastModifiedTime int64
+
+	// AppLastRecModTime is when app records were last modified (Unix ms)
+	AppLastRecModTime int64
+
+	// Tables contains modification info for each table in the app
+	Tables []TableDTMInfo
+}
+
+// getAppDTMInfoResponse is the XML response structure for API_GetAppDTMInfo.
+type getAppDTMInfoResponse struct {
+	BaseResponse
+	RequestTime            int64 `xml:"RequestTime"`
+	RequestNextAllowedTime int64 `xml:"RequestNextAllowedTime"`
+	App                    struct {
+		ID               string `xml:"id,attr"`
+		LastModifiedTime int64  `xml:"lastModifiedTime"`
+		LastRecModTime   int64  `xml:"lastRecModTime"`
+	} `xml:"app"`
+	Tables struct {
+		Table []struct {
+			ID               string `xml:"id,attr"`
+			LastModifiedTime int64  `xml:"lastModifiedTime"`
+			LastRecModTime   int64  `xml:"lastRecModTime"`
+		} `xml:"table"`
+	} `xml:"tables"`
+}
+
+// GetAppDTMInfo returns modification timestamps for an app and its tables.
+//
+// This is a fast, unobtrusive call for detecting changes:
+//   - No authentication ticket required
+//   - Doesn't load the app into memory
+//   - Returns timestamps as Unix milliseconds
+//
+// The response includes RequestNextAllowedTime to prevent abuse.
+// Calling again before that time returns error code 77.
+//
+// Note: The dbid must be an application ID, not a table ID.
+//
+// Example:
+//
+//	info, err := xmlClient.GetAppDTMInfo(ctx, appId)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	fmt.Printf("App last modified: %d\n", info.AppLastModifiedTime)
+//	for _, table := range info.Tables {
+//	    fmt.Printf("Table %s: schema=%d, records=%d\n",
+//	        table.ID, table.LastModifiedTime, table.LastRecModTime)
+//	}
+//
+// See: https://help.quickbase.com/docs/api-getappdtminfo
+func (c *Client) GetAppDTMInfo(ctx context.Context, appId string) (*GetAppDTMInfoResult, error) {
+	inner := "<dbid>" + xmlEscape(appId) + "</dbid>"
+	body := buildRequest(inner)
+
+	// GetAppDTMInfo is invoked on db/main
+	respBody, err := c.caller.DoXML(ctx, "main", "API_GetAppDTMInfo", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_GetAppDTMInfo: %w", err)
+	}
+
+	var resp getAppDTMInfoResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_GetAppDTMInfo response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	tables := make([]TableDTMInfo, len(resp.Tables.Table))
+	for i, t := range resp.Tables.Table {
+		tables[i] = TableDTMInfo{
+			ID:               t.ID,
+			LastModifiedTime: t.LastModifiedTime,
+			LastRecModTime:   t.LastRecModTime,
+		}
+	}
+
+	return &GetAppDTMInfoResult{
+		RequestTime:            resp.RequestTime,
+		RequestNextAllowedTime: resp.RequestNextAllowedTime,
+		AppLastModifiedTime:    resp.App.LastModifiedTime,
+		AppLastRecModTime:      resp.App.LastRecModTime,
+		Tables:                 tables,
+	}, nil
+}
+
+// GetAncestorInfoResult contains the response from API_GetAncestorInfo.
+type GetAncestorInfoResult struct {
+	// AncestorAppID is the DBID of the app this was copied from
+	AncestorAppID string
+
+	// OldestAncestorAppID is the DBID of the original app in the copy chain
+	OldestAncestorAppID string
+}
+
+// getAncestorInfoResponse is the XML response structure for API_GetAncestorInfo.
+type getAncestorInfoResponse struct {
+	BaseResponse
+	AncestorAppID       string `xml:"ancestorappid"`
+	OldestAncestorAppID string `xml:"oldestancestorappid"`
+}
+
+// GetAncestorInfo returns information about an app's copy lineage.
+//
+// This call must be invoked on an app DBID (not a table DBID).
+//
+// For first-generation copies, AncestorAppID and OldestAncestorAppID are the same.
+// For grandchildren and later, AncestorAppID is the immediate parent and
+// OldestAncestorAppID is the original template.
+//
+// Example:
+//
+//	info, err := xmlClient.GetAncestorInfo(ctx, appId)
+//	if err != nil {
+//	    log.Fatal(err)
+//	}
+//	fmt.Printf("Copied from: %s\n", info.AncestorAppID)
+//	fmt.Printf("Original template: %s\n", info.OldestAncestorAppID)
+//
+// See: https://help.quickbase.com/docs/api-getancestorinfo
+func (c *Client) GetAncestorInfo(ctx context.Context, appId string) (*GetAncestorInfoResult, error) {
+	body := buildRequest("")
+
+	respBody, err := c.caller.DoXML(ctx, appId, "API_GetAncestorInfo", body)
+	if err != nil {
+		return nil, fmt.Errorf("API_GetAncestorInfo: %w", err)
+	}
+
+	var resp getAncestorInfoResponse
+	if err := xml.Unmarshal(respBody, &resp); err != nil {
+		return nil, fmt.Errorf("parsing API_GetAncestorInfo response: %w", err)
+	}
+
+	if err := checkError(&resp.BaseResponse); err != nil {
+		return nil, err
+	}
+
+	return &GetAncestorInfoResult{
+		AncestorAppID:       resp.AncestorAppID,
+		OldestAncestorAppID: resp.OldestAncestorAppID,
+	}, nil
+}

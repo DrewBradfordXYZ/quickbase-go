@@ -157,16 +157,16 @@ These features are **only available in the XML API**:
 |--------------|-------------|------------|
 | `API_CreateGroup` | Create a new group | **Implemented** |
 | `API_DeleteGroup` | Delete a group | **Implemented** |
-| `API_CopyGroup` | Copy a group | Not implemented |
-| `API_ChangeGroupInfo` | Update group name/description | Not implemented |
+| `API_CopyGroup` | Copy a group | **Implemented** |
+| `API_ChangeGroupInfo` | Update group name/description | **Implemented** |
 | `API_GetGroupRole` | Get roles assigned to a group | **Implemented** |
 | `API_AddGroupToRole` | Assign a group to a role | **Implemented** |
 | `API_RemoveGroupFromRole` | Remove group from a role | **Implemented** |
 | `API_GetUsersInGroup` | List all users in a group | **Implemented** |
 | `API_AddUserToGroup` | Add a user to a group | **Implemented** |
 | `API_RemoveUserFromGroup` | Remove a user from a group | **Implemented** |
-| `API_GrantedGroups` | Get groups a user belongs to | Not implemented |
-| `API_GrantedDBsForGroup` | Get apps a group has access to | Not implemented |
+| `API_GrantedGroups` | Get groups a user belongs to | **Implemented** |
+| `API_GrantedDBsForGroup` | Get apps a group has access to | **Implemented** |
 
 ### Application Variables (DBVars)
 
@@ -184,8 +184,8 @@ These features are **only available in the XML API**:
 | `API_GetSchema` | Comprehensive schema (fields, reports, DBVars, child tables) | **Implemented** |
 | `API_GrantedDBs` | List all apps user can access (across realms) | **Implemented** |
 | `API_FindDBByName` | Find an app by name | **Implemented** |
-| `API_GetAncestorInfo` | Get app template/copy lineage | Not implemented |
-| `API_GetAppDTMInfo` | Get modification timestamps (fast, no auth) | Not implemented |
+| `API_GetAncestorInfo` | Get app template/copy lineage | **Implemented** |
+| `API_GetAppDTMInfo` | Get modification timestamps (fast, no auth) | **Implemented** |
 | `API_GetDBInfo` | Get table metadata (record count, manager, timestamps) | **Implemented** |
 | `API_GetNumRecords` | Get record count for a table | **Implemented** |
 
@@ -200,12 +200,12 @@ These features are **only available in the XML API**:
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
-| `API_Webhooks_Create` | Create a webhook | Not implemented |
-| `API_Webhooks_Edit` | Edit a webhook | Not implemented |
-| `API_Webhooks_Delete` | Delete a webhook | Not implemented |
-| `API_Webhooks_Activate` | Activate a webhook | Not implemented |
-| `API_Webhooks_Deactivate` | Deactivate a webhook | Not implemented |
-| `API_Webhooks_Copy` | Copy a webhook | Not implemented |
+| `API_Webhooks_Create` | Create a webhook | **Implemented** |
+| `API_Webhooks_Edit` | Edit a webhook | **Implemented** |
+| `API_Webhooks_Delete` | Delete a webhook | **Implemented** |
+| `API_Webhooks_Activate` | Activate a webhook | **Implemented** |
+| `API_Webhooks_Deactivate` | Deactivate a webhook | **Implemented** |
+| `API_Webhooks_Copy` | Copy a webhook | **Implemented** |
 
 ### User Provisioning
 
@@ -231,19 +231,19 @@ These features are **only available in the XML API**:
 |--------------|-------------|------------|
 | `API_DoQueryCount` | Get count without fetching data | **Implemented** |
 | `API_GetRecordInfo` | Get record with full field metadata | **Implemented** |
-| `API_GetRecordAsHTML` | Get record rendered as HTML | Not implemented |
-| `API_CopyMasterDetail` | Copy master record with details | Not implemented |
-| `API_ImportFromCSV` | Import data from CSV | Not implemented |
-| `API_RunImport` | Execute a saved import | Not implemented |
-| `API_GenAddRecordForm` | Generate HTML add record form | Not implemented |
-| `API_GenResultsTable` | Generate HTML results table | Not implemented |
+| `API_GetRecordAsHTML` | Get record rendered as HTML | **Implemented** |
+| `API_CopyMasterDetail` | Copy master record with details | **Implemented** |
+| `API_ImportFromCSV` | Import data from CSV | **Implemented** |
+| `API_RunImport` | Execute a saved import | **Implemented** |
+| `API_GenAddRecordForm` | Generate HTML add record form | **Implemented** |
+| `API_GenResultsTable` | Generate HTML results table | **Implemented** |
 
 ### Authentication
 
 | XML Endpoint | Description | SDK Status |
 |--------------|-------------|------------|
 | `API_Authenticate` | Get ticket from username/password | Used internally |
-| `API_SignOut` | Sign out / invalidate session | Not implemented |
+| `API_SignOut` | Clear ticket cookie (browser-focused) | **Implemented** |
 
 ---
 
@@ -356,12 +356,16 @@ These operations are available in **both APIs**:
 **Group Management:**
 - `API_CreateGroup` - `xml.CreateGroup()`
 - `API_DeleteGroup` - `xml.DeleteGroup()`
+- `API_CopyGroup` - `xml.CopyGroup()`
+- `API_ChangeGroupInfo` - `xml.ChangeGroupInfo()`
 - `API_GetUsersInGroup` - `xml.GetUsersInGroup()`
 - `API_AddUserToGroup` - `xml.AddUserToGroup()`
 - `API_RemoveUserFromGroup` - `xml.RemoveUserFromGroup()`
 - `API_GetGroupRole` - `xml.GetGroupRole()`
 - `API_AddGroupToRole` - `xml.AddGroupToRole()`
 - `API_RemoveGroupFromRole` - `xml.RemoveGroupFromRole()`
+- `API_GrantedGroups` - `xml.GrantedGroups()`
+- `API_GrantedDBsForGroup` - `xml.GrantedDBsForGroup()`
 
 **User Management:**
 - `API_GetUserInfo` - `xml.GetUserInfo()`
@@ -390,17 +394,31 @@ These operations are available in **both APIs**:
 - `API_DoQueryCount` - `xml.DoQueryCount()`
 - `API_GetRecordInfo` - `xml.GetRecordInfo()`
 - `API_GetRecordInfoByKey` - `xml.GetRecordInfoByKey()`
+- `API_ImportFromCSV` - `xml.ImportFromCSV()`
+- `API_RunImport` - `xml.RunImport()`
+- `API_CopyMasterDetail` - `xml.CopyMasterDetail()`
+- `API_GetRecordAsHTML` - `xml.GetRecordAsHTML()`
+- `API_GenAddRecordForm` - `xml.GenAddRecordForm()`
+- `API_GenResultsTable` - `xml.GenResultsTable()`
 
-### Not Yet Implemented (Niche Use Cases)
+**App Metadata:**
+- `API_GetAppDTMInfo` - `xml.GetAppDTMInfo()`
+- `API_GetAncestorInfo` - `xml.GetAncestorInfo()`
 
-1. `API_GetAppDTMInfo` - Fast change detection (no auth required)
-2. `API_GetAncestorInfo` - Template lineage
-3. `API_CopyGroup` / `API_ChangeGroupInfo` - Group utilities
-4. `API_GrantedGroups` / `API_GrantedDBsForGroup` - Group discovery
-5. Webhook management (`API_Webhooks_*`)
-6. CSV import (`API_ImportFromCSV`, `API_RunImport`)
-7. HTML generation (`API_GenAddRecordForm`, `API_GenResultsTable`, `API_GetRecordAsHTML`)
-8. `API_CopyMasterDetail` - Copy master record with details
+**Webhooks:**
+- `API_Webhooks_Create` - `xml.WebhooksCreate()`
+- `API_Webhooks_Edit` - `xml.WebhooksEdit()`
+- `API_Webhooks_Delete` - `xml.WebhooksDelete()`
+- `API_Webhooks_Activate` - `xml.WebhooksActivate()`
+- `API_Webhooks_Deactivate` - `xml.WebhooksDeactivate()`
+- `API_Webhooks_Copy` - `xml.WebhooksCopy()`
+
+**Authentication:**
+- `API_SignOut` - `xml.SignOut()`
+
+### Not Yet Implemented
+
+All XML API endpoints are now implemented.
 
 ---
 
