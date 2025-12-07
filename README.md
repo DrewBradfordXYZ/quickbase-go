@@ -14,7 +14,7 @@ A Go client for the QuickBase JSON RESTful API, with optional support for legacy
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages
 - **Helper Functions** - `Row()`, `Value()`, `Fields()`, `Asc()`, `Desc()`, `Ptr()`, `Ints()`
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
-- **Read-Only Mode** - `WithReadOnly()` blocks all writes for safe MCP server usage
+- **Read-Only Mode** - `WithReadOnly()` blocks all writes for safe data extraction
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Prevents 429 errors with sliding window rate limiting
 - **Typed Errors** - `RateLimitError`, `NotFoundError`, `ValidationError`, etc.
@@ -726,7 +726,7 @@ Available error types:
 
 ## Read-Only Mode
 
-Enable read-only mode to guarantee the client can only read data, never modify it. This is essential for MCP servers, data extraction tools, or any context where accidental writes could be catastrophic.
+Enable read-only mode to guarantee the client can only read data, never modify it. This is essential for data extraction tools, reporting systems, or any context where accidental writes could be catastrophic.
 
 ```go
 client, err := quickbase.New("myrealm",
