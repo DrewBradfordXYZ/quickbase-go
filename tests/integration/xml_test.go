@@ -3,9 +3,11 @@ package integration
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 
+	"github.com/DrewBradfordXYZ/quickbase-go"
 	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
 	"github.com/DrewBradfordXYZ/quickbase-go/xml"
 )
@@ -313,15 +315,84 @@ func TestXMLDBVars(t *testing.T) {
 }
 
 // TestXMLGetAppDTMInfo tests the GetAppDTMInfo API
-// NOTE: This API cannot be called with user tokens, only with tickets or temp tokens.
+// NOTE: This API cannot be called with user tokens, requires ticket auth.
 func TestXMLGetAppDTMInfo(t *testing.T) {
-	t.Skip("GetAppDTMInfo cannot be called with user tokens - requires ticket auth")
+	skipIfNoCredentials(t)
+
+	username := os.Getenv("QB_USERNAME")
+	password := os.Getenv("QB_PASSWORD")
+	if username == "" || password == "" {
+		t.Skip("Skipping: QB_USERNAME or QB_PASSWORD not set (required for ticket auth)")
+	}
+
+	ctx := context.Background()
+	testCtx := getTestContext(t)
+
+	// Create a client with ticket auth
+	ticketClient, err := quickbase.New(qbRealm, quickbase.WithTicketAuth(username, password))
+	if err != nil {
+		t.Fatalf("Failed to create ticket auth client: %v", err)
+	}
+	xmlClient := xml.New(ticketClient)
+
+	t.Run("gets app modification info", func(t *testing.T) {
+		result, err := xmlClient.GetAppDTMInfo(ctx, testCtx.AppID)
+		if err != nil {
+			t.Fatalf("GetAppDTMInfo failed: %v", err)
+		}
+
+		if result.RequestTime == 0 {
+			t.Error("Expected RequestTime to be set")
+		}
+		if result.AppLastModifiedTime == 0 {
+			t.Error("Expected AppLastModifiedTime to be set")
+		}
+
+		t.Logf("RequestTime: %d, NextAllowed: %d", result.RequestTime, result.RequestNextAllowedTime)
+		t.Logf("App last modified: %d, last record mod: %d", result.AppLastModifiedTime, result.AppLastRecModTime)
+		t.Logf("Tables: %d", len(result.Tables))
+	})
 }
 
 // TestXMLFindDBByName tests the FindDBByName API
-// NOTE: This API cannot be called with user tokens, only with tickets or temp tokens.
+// NOTE: This API cannot be called with user tokens, requires ticket auth.
 func TestXMLFindDBByName(t *testing.T) {
-	t.Skip("FindDBByName cannot be called with user tokens - requires ticket auth")
+	skipIfNoCredentials(t)
+
+	username := os.Getenv("QB_USERNAME")
+	password := os.Getenv("QB_PASSWORD")
+	if username == "" || password == "" {
+		t.Skip("Skipping: QB_USERNAME or QB_PASSWORD not set (required for ticket auth)")
+	}
+
+	ctx := context.Background()
+	testCtx := getTestContext(t)
+
+	// Create a client with ticket auth
+	ticketClient, err := quickbase.New(qbRealm, quickbase.WithTicketAuth(username, password))
+	if err != nil {
+		t.Fatalf("Failed to create ticket auth client: %v", err)
+	}
+	xmlClient := xml.New(ticketClient)
+
+	// First get the app name using user token client (GetDBInfo works with user tokens)
+	userTokenXML := getXMLClient(t)
+	info, err := userTokenXML.GetDBInfo(ctx, testCtx.AppID)
+	if err != nil {
+		t.Fatalf("GetDBInfo failed: %v", err)
+	}
+
+	t.Run("finds app by name", func(t *testing.T) {
+		result, err := xmlClient.FindDBByName(ctx, info.Name, true)
+		if err != nil {
+			t.Fatalf("FindDBByName failed: %v", err)
+		}
+
+		if result.DBID != testCtx.AppID {
+			t.Errorf("Got DBID %s, want %s", result.DBID, testCtx.AppID)
+		}
+		t.Logf("Found app: %s (DBID: %s)", result.Name, result.DBID)
+	})
 }
 
 // TestXMLGenResultsTable tests the GenResultsTable API
