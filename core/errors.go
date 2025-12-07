@@ -298,3 +298,38 @@ func (e *MissingTokenError) Error() string {
 func NewMissingTokenError(dbid string) *MissingTokenError {
 	return &MissingTokenError{DBID: dbid}
 }
+
+// ReadOnlyError is returned when a write operation is attempted in read-only mode.
+//
+// This error is returned when the client is configured with WithReadOnly() and
+// a write operation (POST, PUT, DELETE, PATCH for JSON API, or write actions
+// for XML API) is attempted.
+//
+// Example handling:
+//
+//	_, err := client.Upsert(tableId).Data(records).Run(ctx)
+//	var readOnlyErr *core.ReadOnlyError
+//	if errors.As(err, &readOnlyErr) {
+//	    log.Printf("Write blocked: %s %s", readOnlyErr.Method, readOnlyErr.Path)
+//	}
+type ReadOnlyError struct {
+	Method string `json:"method"`
+	Path   string `json:"path"`
+	Action string `json:"action,omitempty"` // For XML API actions
+}
+
+func (e *ReadOnlyError) Error() string {
+	if e.Action != "" {
+		return fmt.Sprintf("read-only mode: write operation blocked (XML action: %s)", e.Action)
+	}
+	return fmt.Sprintf("read-only mode: write operation blocked (%s %s)", e.Method, e.Path)
+}
+
+// NewReadOnlyError creates a new ReadOnlyError.
+func NewReadOnlyError(method, path, action string) *ReadOnlyError {
+	return &ReadOnlyError{
+		Method: method,
+		Path:   path,
+		Action: action,
+	}
+}

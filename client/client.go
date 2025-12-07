@@ -90,6 +90,9 @@ type Client struct {
 
 	// Transport for cleanup
 	transport *http.Transport
+
+	// Read-only mode blocks all write operations
+	readOnly bool
 }
 
 // RequestInfo contains information about a completed API request.
@@ -246,6 +249,34 @@ func WithBaseURL(url string) Option {
 	}
 }
 
+// WithReadOnly enables read-only mode, blocking all write operations.
+//
+// When enabled, any attempt to make a write request (POST, PUT, DELETE, PATCH
+// for JSON API, or write actions for XML API) returns a [core.ReadOnlyError].
+//
+// This is useful for MCP servers or other contexts where you want to ensure
+// the client can only read data, never modify it.
+//
+// Example:
+//
+//	client, _ := quickbase.New(realm,
+//	    quickbase.WithUserToken(token),
+//	    quickbase.WithReadOnly(),
+//	)
+//
+//	// These work:
+//	app, _ := client.GetApp(appId).Run(ctx)
+//	fields, _ := client.GetFields(tableId).Run(ctx)
+//
+//	// These fail with ReadOnlyError:
+//	_, err := client.Upsert(tableId).Data(records).Run(ctx)
+//	// err = &core.ReadOnlyError{Method: "POST", Path: "/v1/records"}
+func WithReadOnly() Option {
+	return func(c *Client) {
+		c.readOnly = true
+	}
+}
+
 // WithSchema sets the schema for table and field aliases.
 // When configured, the client automatically:
 //   - Transforms table aliases to IDs in requests (from, to fields)
@@ -396,6 +427,11 @@ func (c *Client) Realm() string {
 // Deprecated: This method supports legacy XML API endpoints. Use JSON API methods
 // where possible. This will be removed when QuickBase discontinues the XML API.
 func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([]byte, error) {
+	// Check read-only mode for XML write actions
+	if c.readOnly && isXMLWriteAction(action) {
+		return nil, core.NewReadOnlyError(http.MethodPost, "/db/"+dbid, action)
+	}
+
 	url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, dbid)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
@@ -534,6 +570,11 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	ctx := req.Context()
 	c := h.client
 	startTime := time.Now()
+
+	// Check read-only mode before making request
+	if err := c.checkReadOnly(req); err != nil {
+		return nil, err
+	}
 
 	// Extract dbid from request for temp token auth
 	dbid := extractDBID(req)
@@ -850,5 +891,224 @@ func ValidateRealm(realm string) error {
 	if strings.Contains(realm, ".") {
 		return fmt.Errorf("realm should be just the subdomain (e.g., \"mycompany\" not \"mycompany.quickbase.com\")")
 	}
+	return nil
+}
+
+// jsonWriteEndpoints contains all JSON API endpoints that modify data.
+// This provides defense-in-depth beyond HTTP method checking.
+// Format: "METHOD /path" or "METHOD /path/" for prefix matching.
+var jsonWriteEndpoints = map[string]bool{
+	// Records
+	"POST /v1/records":   true, // Upsert
+	"DELETE /v1/records": true, // DeleteRecords
+
+	// Apps
+	"POST /v1/apps":   true, // CreateApp
+	"DELETE /v1/apps": true, // DeleteApp (prefix)
+
+	// App operations (with appId)
+	"POST /v1/apps/":   true, // UpdateApp, CopyApp (prefix)
+	"DELETE /v1/apps/": true, // DeleteApp (prefix)
+
+	// Tables
+	"POST /v1/tables":   true, // CreateTable
+	"DELETE /v1/tables": true, // DeleteTable (prefix)
+	"POST /v1/tables/":  true, // UpdateTable, relationships (prefix)
+
+	// Relationships
+	"DELETE /v1/tables/": true, // DeleteRelationship (covered above)
+
+	// Fields
+	"POST /v1/fields":   true, // CreateField
+	"DELETE /v1/fields": true, // DeleteFields
+	"POST /v1/fields/":  true, // UpdateField (prefix)
+
+	// Files
+	"DELETE /v1/files/": true, // DeleteFile (prefix)
+
+	// User tokens
+	"POST /v1/usertoken":   true, // Clone, Transfer, Deactivate
+	"DELETE /v1/usertoken": true, // Delete
+
+	// Users and groups
+	"POST /v1/users":     true, // GetUsers is POST but read-only - handled specially
+	"PUT /v1/users":      true, // DenyUsers, UndenyUsers (prefix)
+	"PUT /v1/users/":     true, // DenyUsersAndGroups (prefix)
+	"POST /v1/groups/":   true, // AddMembers, AddManagers, AddSubgroups (prefix)
+	"DELETE /v1/groups/": true, // RemoveMembers, RemoveManagers, RemoveSubgroups (prefix)
+
+	// Solutions
+	"POST /v1/solutions": true, // CreateSolution
+	"PUT /v1/solutions/": true, // UpdateSolution, ChangesetSolution (prefix)
+
+	// Document generation (GET but writes)
+	"GET /v1/docTemplates/": true, // GenerateDocument (prefix)
+
+	// Solution from/to record (GET but writes)
+	"GET /v1/solutions/fromrecord": true, // CreateSolutionFromRecord
+}
+
+// jsonReadOnlyPOSTEndpoints are POST endpoints that are actually read-only.
+// These are exceptions to the "POST = write" rule.
+var jsonReadOnlyPOSTEndpoints = map[string]bool{
+	"POST /v1/records/query": true, // RunQuery - read-only
+	"POST /v1/reports/":      true, // RunReport - read-only (prefix)
+	"POST /v1/formula/run":   true, // RunFormula - read-only
+	"POST /v1/audit":         true, // Audit logs - read-only
+	"POST /v1/users":         true, // GetUsers - read-only despite POST
+	"POST /v1/analytics/":    true, // Analytics - read-only (prefix)
+}
+
+// xmlWriteActions contains all XML API actions that modify data.
+// These are blocked when the client is in read-only mode.
+var xmlWriteActions = map[string]bool{
+	// User/Role management
+	"API_AddUserToRole":       true,
+	"API_RemoveUserFromRole":  true,
+	"API_ChangeUserRole":      true,
+	"API_ProvisionUser":       true,
+	"API_SendInvitation":      true,
+	"API_ChangeManager":       true,
+	"API_ChangeRecordOwner":   true,
+
+	// Group management
+	"API_CreateGroup":         true,
+	"API_DeleteGroup":         true,
+	"API_AddUserToGroup":      true,
+	"API_RemoveUserFromGroup": true,
+	"API_AddGroupToRole":      true,
+	"API_RemoveGroupFromRole": true,
+	"API_CopyGroup":           true,
+	"API_ChangeGroupInfo":     true,
+	"API_AddSubGroup":         true,
+	"API_RemoveSubGroup":      true,
+
+	// Variables
+	"API_SetDBVar": true,
+
+	// Code pages
+	"API_AddReplaceDBPage": true,
+
+	// Fields
+	"API_FieldAddChoices":    true,
+	"API_FieldRemoveChoices": true,
+	"API_SetKeyField":        true,
+
+	// Webhooks
+	"API_Webhooks_Create":     true,
+	"API_Webhooks_Edit":       true,
+	"API_Webhooks_Delete":     true,
+	"API_Webhooks_Activate":   true,
+	"API_Webhooks_Deactivate": true,
+	"API_Webhooks_Copy":       true,
+
+	// Records/Import
+	"API_ImportFromCSV":    true,
+	"API_RunImport":        true,
+	"API_CopyMasterDetail": true,
+	"API_PurgeRecords":     true,
+	"API_AddRecord":        true,
+	"API_EditRecord":       true,
+	"API_DeleteRecord":     true,
+
+	// Auth (clears session state)
+	"API_SignOut": true,
+}
+
+// isWriteMethod returns true if the HTTP method is a write operation.
+func isWriteMethod(method string) bool {
+	switch method {
+	case http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch:
+		return true
+	}
+	return false
+}
+
+// isXMLWriteAction returns true if the XML API action modifies data.
+func isXMLWriteAction(action string) bool {
+	return xmlWriteActions[action]
+}
+
+// isJSONWriteEndpoint checks if the request matches a known write endpoint.
+// Uses both exact matching and prefix matching for paths with IDs.
+func isJSONWriteEndpoint(method, path string) bool {
+	key := method + " " + path
+
+	// Exact match
+	if jsonWriteEndpoints[key] {
+		return true
+	}
+
+	// Prefix match for paths with IDs (e.g., "POST /v1/apps/" matches "POST /v1/apps/abc123")
+	// Try progressively shorter prefixes
+	for i := len(path) - 1; i >= 0; i-- {
+		if path[i] == '/' {
+			prefixKey := method + " " + path[:i+1]
+			if jsonWriteEndpoints[prefixKey] {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+// isJSONReadOnlyPOSTEndpoint checks if a POST request is actually read-only.
+func isJSONReadOnlyPOSTEndpoint(path string) bool {
+	key := "POST " + path
+
+	// Exact match
+	if jsonReadOnlyPOSTEndpoints[key] {
+		return true
+	}
+
+	// Prefix match
+	for i := len(path) - 1; i >= 0; i-- {
+		if path[i] == '/' {
+			prefixKey := "POST " + path[:i+1]
+			if jsonReadOnlyPOSTEndpoints[prefixKey] {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+// checkReadOnly returns an error if the request is a write operation and read-only mode is enabled.
+func (c *Client) checkReadOnly(req *http.Request) error {
+	if !c.readOnly {
+		return nil
+	}
+
+	method := req.Method
+	path := req.URL.Path
+
+	// Check for XML API requests first (they use POST for everything)
+	if action := req.Header.Get("QUICKBASE-ACTION"); action != "" {
+		if isXMLWriteAction(action) {
+			return core.NewReadOnlyError(method, path, action)
+		}
+		return nil // Allow read-only XML actions
+	}
+
+	// Layer 1: Explicit blocklist check (defense-in-depth)
+	if isJSONWriteEndpoint(method, path) {
+		// Exception: Some POST endpoints are read-only (RunQuery, RunReport, etc.)
+		if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
+			return nil
+		}
+		return core.NewReadOnlyError(method, path, "")
+	}
+
+	// Layer 2: HTTP method check (catch-all for any endpoints not in blocklist)
+	if isWriteMethod(method) {
+		// Exception: Some POST endpoints are read-only
+		if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
+			return nil
+		}
+		return core.NewReadOnlyError(method, path, "")
+	}
+
 	return nil
 }

@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"testing"
 	"time"
+
+	"github.com/DrewBradfordXYZ/quickbase-go/core"
 )
 
 func TestExtractDBID(t *testing.T) {
@@ -399,5 +401,524 @@ func TestClient_SignOut_WithoutSignOuter(t *testing.T) {
 
 	if result {
 		t.Error("SignOut() returned true, expected false for non-SignOuter strategy")
+	}
+}
+
+func TestIsWriteMethod(t *testing.T) {
+	tests := []struct {
+		method   string
+		expected bool
+	}{
+		{"GET", false},
+		{"HEAD", false},
+		{"OPTIONS", false},
+		{"POST", true},
+		{"PUT", true},
+		{"DELETE", true},
+		{"PATCH", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.method, func(t *testing.T) {
+			result := isWriteMethod(tt.method)
+			if result != tt.expected {
+				t.Errorf("isWriteMethod(%q) = %v, want %v", tt.method, result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestIsXMLWriteAction(t *testing.T) {
+	// Write actions should return true
+	writeActions := []string{
+		"API_AddUserToRole",
+		"API_RemoveUserFromRole",
+		"API_ChangeUserRole",
+		"API_ProvisionUser",
+		"API_SendInvitation",
+		"API_ChangeManager",
+		"API_ChangeRecordOwner",
+		"API_CreateGroup",
+		"API_DeleteGroup",
+		"API_AddUserToGroup",
+		"API_RemoveUserFromGroup",
+		"API_AddGroupToRole",
+		"API_RemoveGroupFromRole",
+		"API_CopyGroup",
+		"API_ChangeGroupInfo",
+		"API_AddSubGroup",
+		"API_RemoveSubGroup",
+		"API_SetDBVar",
+		"API_AddReplaceDBPage",
+		"API_FieldAddChoices",
+		"API_FieldRemoveChoices",
+		"API_SetKeyField",
+		"API_Webhooks_Create",
+		"API_Webhooks_Edit",
+		"API_Webhooks_Delete",
+		"API_Webhooks_Activate",
+		"API_Webhooks_Deactivate",
+		"API_Webhooks_Copy",
+		"API_ImportFromCSV",
+		"API_RunImport",
+		"API_CopyMasterDetail",
+		"API_PurgeRecords",
+		"API_AddRecord",
+		"API_EditRecord",
+		"API_DeleteRecord",
+		"API_SignOut",
+	}
+
+	for _, action := range writeActions {
+		t.Run(action+" is write", func(t *testing.T) {
+			if !isXMLWriteAction(action) {
+				t.Errorf("isXMLWriteAction(%q) = false, want true", action)
+			}
+		})
+	}
+
+	// Read actions should return false
+	readActions := []string{
+		"API_GetRoleInfo",
+		"API_GetUserRole",
+		"API_GetSchema",
+		"API_GrantedDBs",
+		"API_GetDBInfo",
+		"API_GetNumRecords",
+		"API_DoQueryCount",
+		"API_DoQuery",
+		"API_GenResultsTable",
+		"API_GetRecordInfo",
+		"API_GetRecordAsHTML",
+		"API_GetUserInfo",
+		"API_GetDBVar",
+		"API_GetAppDTMInfo",
+		"API_FindDBByName",
+		"API_Authenticate",
+	}
+
+	for _, action := range readActions {
+		t.Run(action+" is read", func(t *testing.T) {
+			if isXMLWriteAction(action) {
+				t.Errorf("isXMLWriteAction(%q) = true, want false", action)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_Disabled(t *testing.T) {
+	client := &Client{readOnly: false}
+
+	// All methods should be allowed when read-only is disabled
+	methods := []string{"GET", "POST", "PUT", "DELETE", "PATCH"}
+	for _, method := range methods {
+		req := &http.Request{
+			Method: method,
+			URL:    mustParseURL("https://api.quickbase.com/v1/records"),
+		}
+		if err := client.checkReadOnly(req); err != nil {
+			t.Errorf("checkReadOnly() with readOnly=false returned error for %s: %v", method, err)
+		}
+	}
+}
+
+func TestCheckReadOnly_BlocksJSONWrites(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// Write methods should be blocked
+	writeTests := []struct {
+		method string
+		path   string
+	}{
+		{"POST", "/v1/records"},
+		{"PUT", "/v1/apps/bqxyz123"},
+		{"DELETE", "/v1/tables/bqtable/records"},
+		{"PATCH", "/v1/fields/6"},
+	}
+
+	for _, tt := range writeTests {
+		t.Run(tt.method+" "+tt.path, func(t *testing.T) {
+			req := &http.Request{
+				Method: tt.method,
+				URL:    mustParseURL("https://api.quickbase.com" + tt.path),
+				Header: make(http.Header),
+			}
+			err := client.checkReadOnly(req)
+			if err == nil {
+				t.Errorf("checkReadOnly() returned nil, expected ReadOnlyError for %s %s", tt.method, tt.path)
+				return
+			}
+
+			// Verify it's a ReadOnlyError with correct fields
+			roErr, ok := err.(*core.ReadOnlyError)
+			if !ok {
+				t.Errorf("checkReadOnly() returned %T, expected *core.ReadOnlyError", err)
+				return
+			}
+			if roErr.Method != tt.method {
+				t.Errorf("ReadOnlyError.Method = %q, want %q", roErr.Method, tt.method)
+			}
+			if roErr.Path != tt.path {
+				t.Errorf("ReadOnlyError.Path = %q, want %q", roErr.Path, tt.path)
+			}
+			if roErr.Action != "" {
+				t.Errorf("ReadOnlyError.Action = %q, want empty for JSON API", roErr.Action)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_AllowsJSONReads(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// Read methods should be allowed
+	readTests := []struct {
+		method string
+		path   string
+	}{
+		{"GET", "/v1/apps/bqxyz123"},
+		{"GET", "/v1/tables/bqtable/fields"},
+		{"GET", "/v1/reports/123"},
+		{"HEAD", "/v1/files/bqtable/1/6/0"},
+	}
+
+	for _, tt := range readTests {
+		t.Run(tt.method+" "+tt.path, func(t *testing.T) {
+			req := &http.Request{
+				Method: tt.method,
+				URL:    mustParseURL("https://api.quickbase.com" + tt.path),
+			}
+			if err := client.checkReadOnly(req); err != nil {
+				t.Errorf("checkReadOnly() returned error for read %s %s: %v", tt.method, tt.path, err)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_XMLWriteActions(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// XML API write actions should be blocked
+	writeActions := []string{
+		"API_AddUserToRole",
+		"API_SetDBVar",
+		"API_ImportFromCSV",
+		"API_SignOut",
+	}
+
+	for _, action := range writeActions {
+		t.Run(action, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodPost,
+				URL:    mustParseURL("https://myrealm.quickbase.com/db/bqxyz123"),
+				Header: make(http.Header),
+			}
+			req.Header.Set("QUICKBASE-ACTION", action)
+
+			err := client.checkReadOnly(req)
+			if err == nil {
+				t.Errorf("checkReadOnly() returned nil, expected ReadOnlyError for XML action %s", action)
+				return
+			}
+
+			roErr, ok := err.(*core.ReadOnlyError)
+			if !ok {
+				t.Errorf("checkReadOnly() returned %T, expected *core.ReadOnlyError", err)
+				return
+			}
+			if roErr.Action != action {
+				t.Errorf("ReadOnlyError.Action = %q, want %q", roErr.Action, action)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_XMLReadActions(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// XML API read actions should be allowed
+	readActions := []string{
+		"API_GetRoleInfo",
+		"API_GetSchema",
+		"API_DoQueryCount",
+		"API_GetRecordInfo",
+		"API_GetUserInfo",
+		"API_GrantedDBs",
+		"API_GetDBInfo",
+		"API_GetNumRecords",
+	}
+
+	for _, action := range readActions {
+		t.Run(action, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodPost,
+				URL:    mustParseURL("https://myrealm.quickbase.com/db/bqxyz123"),
+				Header: make(http.Header),
+			}
+			req.Header.Set("QUICKBASE-ACTION", action)
+
+			if err := client.checkReadOnly(req); err != nil {
+				t.Errorf("checkReadOnly() returned error for read XML action %s: %v", action, err)
+			}
+		})
+	}
+}
+
+func TestReadOnlyError_Format(t *testing.T) {
+	t.Run("JSON API error message", func(t *testing.T) {
+		err := core.NewReadOnlyError("POST", "/v1/records", "")
+		msg := err.Error()
+		expected := "read-only mode: write operation blocked (POST /v1/records)"
+		if msg != expected {
+			t.Errorf("Error() = %q, want %q", msg, expected)
+		}
+	})
+
+	t.Run("XML API error message", func(t *testing.T) {
+		err := core.NewReadOnlyError("POST", "/db/bqxyz123", "API_AddUserToRole")
+		msg := err.Error()
+		expected := "read-only mode: write operation blocked (XML action: API_AddUserToRole)"
+		if msg != expected {
+			t.Errorf("Error() = %q, want %q", msg, expected)
+		}
+	})
+}
+
+func TestWithReadOnly_Option(t *testing.T) {
+	mock := &mockNoSignOut{}
+
+	// Without WithReadOnly
+	client1, err := New("testrealm", mock)
+	if err != nil {
+		t.Fatalf("New() error: %v", err)
+	}
+	if client1.readOnly {
+		t.Error("Client without WithReadOnly() should have readOnly=false")
+	}
+
+	// With WithReadOnly
+	client2, err := New("testrealm", mock, WithReadOnly())
+	if err != nil {
+		t.Fatalf("New() with WithReadOnly() error: %v", err)
+	}
+	if !client2.readOnly {
+		t.Error("Client with WithReadOnly() should have readOnly=true")
+	}
+}
+
+func TestIsJSONWriteEndpoint(t *testing.T) {
+	// Write endpoints that should be blocked
+	writeEndpoints := []struct {
+		method string
+		path   string
+	}{
+		// Exact matches
+		{"POST", "/v1/records"},
+		{"DELETE", "/v1/records"},
+		{"POST", "/v1/apps"},
+		{"POST", "/v1/tables"},
+		{"POST", "/v1/fields"},
+		{"DELETE", "/v1/fields"},
+		{"POST", "/v1/usertoken"},
+		{"DELETE", "/v1/usertoken"},
+		{"POST", "/v1/solutions"},
+
+		// Prefix matches (with IDs)
+		{"POST", "/v1/apps/abc123"},
+		{"POST", "/v1/apps/abc123/copy"},
+		{"DELETE", "/v1/apps/abc123"},
+		{"POST", "/v1/tables/abc123"},
+		{"DELETE", "/v1/tables/abc123"},
+		{"POST", "/v1/tables/abc123/relationship"},
+		{"POST", "/v1/fields/6"},
+		{"DELETE", "/v1/files/abc/1/6/0"},
+		{"PUT", "/v1/users/deny"},
+		{"PUT", "/v1/users/deny/true"},
+		{"POST", "/v1/groups/123/members"},
+		{"DELETE", "/v1/groups/123/managers"},
+		{"PUT", "/v1/solutions/abc123"},
+
+		// GET endpoints that write (non-RESTful)
+		{"GET", "/v1/docTemplates/123/generate"},
+		{"GET", "/v1/solutions/fromrecord"},
+	}
+
+	for _, tt := range writeEndpoints {
+		t.Run(tt.method+" "+tt.path, func(t *testing.T) {
+			if !isJSONWriteEndpoint(tt.method, tt.path) {
+				t.Errorf("isJSONWriteEndpoint(%q, %q) = false, want true", tt.method, tt.path)
+			}
+		})
+	}
+
+	// Read endpoints that should be allowed
+	readEndpoints := []struct {
+		method string
+		path   string
+	}{
+		{"GET", "/v1/apps/abc123"},
+		{"GET", "/v1/tables/abc123"},
+		{"GET", "/v1/fields"},
+		{"GET", "/v1/reports/123"},
+		{"GET", "/v1/solutions/abc123"}, // Export solution (read-only)
+		{"GET", "/v1/auth/temporary/abc123"},
+		{"GET", "/v1/files/abc/1/6/0"}, // Download file
+		{"GET", "/v1/fields/usage/6"},
+	}
+
+	for _, tt := range readEndpoints {
+		t.Run(tt.method+" "+tt.path, func(t *testing.T) {
+			if isJSONWriteEndpoint(tt.method, tt.path) {
+				t.Errorf("isJSONWriteEndpoint(%q, %q) = true, want false", tt.method, tt.path)
+			}
+		})
+	}
+}
+
+func TestIsJSONReadOnlyPOSTEndpoint(t *testing.T) {
+	// POST endpoints that are actually read-only
+	readOnlyPOSTs := []string{
+		"/v1/records/query",
+		"/v1/reports/123/run",
+		"/v1/formula/run",
+		"/v1/audit",
+		"/v1/users",
+		"/v1/analytics/events/summaries",
+	}
+
+	for _, path := range readOnlyPOSTs {
+		t.Run("read-only: "+path, func(t *testing.T) {
+			if !isJSONReadOnlyPOSTEndpoint(path) {
+				t.Errorf("isJSONReadOnlyPOSTEndpoint(%q) = false, want true", path)
+			}
+		})
+	}
+
+	// POST endpoints that are writes
+	writePOSTs := []string{
+		"/v1/records",
+		"/v1/apps",
+		"/v1/tables",
+		"/v1/fields",
+	}
+
+	for _, path := range writePOSTs {
+		t.Run("write: "+path, func(t *testing.T) {
+			if isJSONReadOnlyPOSTEndpoint(path) {
+				t.Errorf("isJSONReadOnlyPOSTEndpoint(%q) = true, want false", path)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_BlocksWriteGETs(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// GET requests that perform write operations should be blocked
+	writeGETs := []string{
+		"/v1/docTemplates/123/generate",
+		"/v1/solutions/fromrecord",
+	}
+
+	for _, path := range writeGETs {
+		t.Run(path, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodGet,
+				URL:    mustParseURL("https://api.quickbase.com" + path),
+				Header: make(http.Header),
+			}
+			err := client.checkReadOnly(req)
+			if err == nil {
+				t.Errorf("checkReadOnly() returned nil, expected ReadOnlyError for GET %s", path)
+				return
+			}
+
+			roErr, ok := err.(*core.ReadOnlyError)
+			if !ok {
+				t.Errorf("checkReadOnly() returned %T, expected *core.ReadOnlyError", err)
+				return
+			}
+			if roErr.Method != http.MethodGet {
+				t.Errorf("ReadOnlyError.Method = %q, want GET", roErr.Method)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_AllowsReadGETs(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// Regular GET requests should be allowed
+	readGETs := []string{
+		"/v1/apps/abc123",
+		"/v1/solutions/abc123", // Export solution is read-only
+		"/v1/fields",
+		"/v1/reports/123",
+	}
+
+	for _, path := range readGETs {
+		t.Run(path, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodGet,
+				URL:    mustParseURL("https://api.quickbase.com" + path),
+				Header: make(http.Header),
+			}
+			if err := client.checkReadOnly(req); err != nil {
+				t.Errorf("checkReadOnly() returned error for GET %s: %v", path, err)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_AllowsReadOnlyPOSTs(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// POST endpoints that are read-only should be allowed
+	readOnlyPOSTs := []string{
+		"/v1/records/query",
+		"/v1/reports/123/run",
+		"/v1/formula/run",
+		"/v1/audit",
+		"/v1/users",
+	}
+
+	for _, path := range readOnlyPOSTs {
+		t.Run(path, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodPost,
+				URL:    mustParseURL("https://api.quickbase.com" + path),
+				Header: make(http.Header),
+			}
+			if err := client.checkReadOnly(req); err != nil {
+				t.Errorf("checkReadOnly() returned error for read-only POST %s: %v", path, err)
+			}
+		})
+	}
+}
+
+func TestCheckReadOnly_BlocksWritePOSTs(t *testing.T) {
+	client := &Client{readOnly: true}
+
+	// POST endpoints that write should be blocked
+	writePOSTs := []string{
+		"/v1/records",
+		"/v1/apps",
+		"/v1/apps/abc123",
+		"/v1/tables",
+		"/v1/fields",
+	}
+
+	for _, path := range writePOSTs {
+		t.Run(path, func(t *testing.T) {
+			req := &http.Request{
+				Method: http.MethodPost,
+				URL:    mustParseURL("https://api.quickbase.com" + path),
+				Header: make(http.Header),
+			}
+			err := client.checkReadOnly(req)
+			if err == nil {
+				t.Errorf("checkReadOnly() returned nil, expected ReadOnlyError for POST %s", path)
+			}
+		})
 	}
 }

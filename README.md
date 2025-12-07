@@ -14,6 +14,7 @@ A Go client for the QuickBase JSON RESTful API, with optional support for legacy
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages
 - **Helper Functions** - `Row()`, `Value()`, `Fields()`, `Asc()`, `Desc()`, `Ptr()`, `Ints()`
 - **Multiple Auth Methods** - User token, temporary token, SSO, and ticket (username/password)
+- **Read-Only Mode** - `WithReadOnly()` blocks all writes for safe MCP server usage
 - **Automatic Retry** - Exponential backoff with jitter for rate limits and server errors
 - **Proactive Throttling** - Prevents 429 errors with sliding window rate limiting
 - **Typed Errors** - `RateLimitError`, `NotFoundError`, `ValidationError`, etc.
@@ -721,6 +722,63 @@ Available error types:
 - `ValidationError` - HTTP 400
 - `ServerError` - HTTP 5xx
 - `TimeoutError` - Request timeout
+- `ReadOnlyError` - Write operation blocked (read-only mode)
+
+## Read-Only Mode
+
+Enable read-only mode to guarantee the client can only read data, never modify it. This is essential for MCP servers, data extraction tools, or any context where accidental writes could be catastrophic.
+
+```go
+client, err := quickbase.New("myrealm",
+    quickbase.WithUserToken(token),
+    quickbase.WithReadOnly(),
+)
+
+// These work (read operations):
+app, _ := client.GetApp("bqxyz123").Run(ctx)
+fields, _ := client.GetFields("bqtable").Run(ctx)
+records, _ := client.RunQueryAll(ctx, body)
+
+// These fail with ReadOnlyError (write operations):
+_, err := client.Upsert("bqtable").Data(records).Run(ctx)
+// err = &ReadOnlyError{Method: "POST", Path: "/v1/records"}
+```
+
+### What's Blocked
+
+The read-only mode uses defense-in-depth with multiple layers of protection:
+
+**JSON API:**
+- All POST, PUT, DELETE, PATCH methods (except read-only POSTs like RunQuery)
+- Explicit blocklist of all write endpoints
+- Non-RESTful GET endpoints that modify data (GenerateDocument, CreateSolutionFromRecord, etc.)
+
+**XML API:**
+- All write actions (API_AddUserToRole, API_SetDBVar, API_ImportFromCSV, etc.)
+- 35+ XML actions are blocked
+
+**Read-only POST endpoints (allowed):**
+- `POST /v1/records/query` - RunQuery
+- `POST /v1/reports/{id}/run` - RunReport
+- `POST /v1/formula/run` - RunFormula
+- `POST /v1/audit` - Audit logs
+- `POST /v1/users` - GetUsers
+- `POST /v1/analytics/*` - Analytics
+
+### Handling ReadOnlyError
+
+```go
+_, err := client.Upsert("bqtable").Data(records).Run(ctx)
+if err != nil {
+    var readOnlyErr *quickbase.ReadOnlyError
+    if errors.As(err, &readOnlyErr) {
+        log.Printf("Write blocked: %s %s", readOnlyErr.Method, readOnlyErr.Path)
+        if readOnlyErr.Action != "" {
+            log.Printf("XML action: %s", readOnlyErr.Action)
+        }
+    }
+}
+```
 
 ## Rate Limiting
 

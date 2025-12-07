@@ -100,6 +100,7 @@ type (
 	TimeoutError        = core.TimeoutError
 	ServerError         = core.ServerError
 	MissingTokenError   = core.MissingTokenError
+	ReadOnlyError       = core.ReadOnlyError
 	RateLimitInfo       = core.RateLimitInfo
 
 	// Schema types
@@ -416,6 +417,41 @@ func WithOnRetry(callback func(RetryInfo)) Option {
 func WithBaseURL(url string) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithBaseURL(url))
+	}
+}
+
+// WithReadOnly enables read-only mode, blocking all write operations.
+//
+// When enabled, any attempt to make a write request returns a [ReadOnlyError]:
+//   - JSON API: POST, PUT, DELETE, PATCH methods are blocked
+//   - JSON API: GET endpoints that modify data are also blocked (GenerateDocument,
+//     CreateSolutionFromRecord, UpdateSolutionFromRecord, ExportSolutionToRecord)
+//   - XML API: Write actions like API_AddUserToRole, API_SetDBVar, etc. are blocked
+//
+// This is useful for MCP servers or other contexts where you want to ensure
+// the client can only read data, never modify it.
+//
+// Example:
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithUserToken(token),
+//	    quickbase.WithReadOnly(),
+//	)
+//
+//	// These work:
+//	app, _ := client.GetApp("bqxyz123").Run(ctx)
+//	fields, _ := client.GetFields("bqtable").Run(ctx)
+//
+//	// These fail with ReadOnlyError:
+//	_, err := client.Upsert("bqtable").Data(records).Run(ctx)
+//	// err = &ReadOnlyError{Method: "POST", Path: "/v1/records"}
+//
+//	// XML API writes are also blocked:
+//	err = xmlClient.AddUserToRole(ctx, appId, "user@example.com", 10)
+//	// err = &ReadOnlyError{Method: "POST", Path: "/db/...", Action: "API_AddUserToRole"}
+func WithReadOnly() Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithReadOnly())
 	}
 }
 
