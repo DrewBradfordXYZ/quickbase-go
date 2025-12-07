@@ -254,8 +254,8 @@ func WithBaseURL(url string) Option {
 // When enabled, any attempt to make a write request (POST, PUT, DELETE, PATCH
 // for JSON API, or write actions for XML API) returns a [core.ReadOnlyError].
 //
-// This is useful for MCP servers or other contexts where you want to ensure
-// the client can only read data, never modify it.
+// This is useful for data extraction tools, reporting systems, or any context
+// where you want to ensure the client can only read data, never modify it.
 //
 // Example:
 //

@@ -428,8 +428,8 @@ func WithBaseURL(url string) Option {
 //     CreateSolutionFromRecord, UpdateSolutionFromRecord, ExportSolutionToRecord)
 //   - XML API: Write actions like API_AddUserToRole, API_SetDBVar, etc. are blocked
 //
-// This is useful for MCP servers or other contexts where you want to ensure
-// the client can only read data, never modify it.
+// This is useful for data extraction tools, reporting systems, or any context
+// where you want to ensure the client can only read data, never modify it.
 //
 // Example:
 //
