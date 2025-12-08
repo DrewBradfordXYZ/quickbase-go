@@ -119,6 +119,46 @@ func toFieldValue(v any) generated.FieldValue_Value {
 - `github.com/oapi-codegen/runtime` - OpenAPI runtime for generated client
 - `github.com/joho/godotenv` - Load .env files for integration tests
 
+## Application Tokens (XML API Only)
+
+Application tokens are an additional security layer for QuickBase apps. When an app has
+"Require Application Tokens" enabled, API calls must include a valid app token.
+
+### Key Points
+
+| Auth Method | App Token Required? | Why |
+|-------------|---------------------|-----|
+| User Token | **No** | User tokens bypass app token checks entirely |
+| Temp Token | Only for XML API | JSON API doesn't use app tokens |
+| Ticket Auth | Only for XML API | JSON API doesn't use app tokens |
+| SSO Token | Only for XML API | JSON API doesn't use app tokens |
+
+### JSON API vs XML API
+
+- **JSON API**: Does not use app tokens. User tokens and temp tokens provide sufficient authentication.
+- **XML API**: Uses `<apptoken>` element in request bodies when the app requires them.
+
+The SDK only injects app tokens into XML API requests (via the `xml` sub-package).
+
+### Usage
+
+```go
+// For apps requiring application tokens when using ticket auth
+client, _ := quickbase.New("myrealm",
+    quickbase.WithTicketAuth("user@example.com", "password"),
+    quickbase.WithAppToken("your-app-token"),
+)
+
+// XML API calls will include the app token
+xmlClient := xml.New(client)
+roles, _ := xmlClient.GetRoleInfo(ctx, appId)
+```
+
+### When You DON'T Need App Tokens
+
+If you're using `WithUserToken()`, you never need to specify an app token - QuickBase
+bypasses app token checks for user token authentication.
+
 ## Temporary Token Authentication
 
 **This is a key architectural difference between the Go and JS SDKs.**

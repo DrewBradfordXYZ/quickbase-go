@@ -922,3 +922,68 @@ func TestCheckReadOnly_BlocksWritePOSTs(t *testing.T) {
 		})
 	}
 }
+
+func TestInjectAppToken(t *testing.T) {
+	tests := []struct {
+		name     string
+		body     string
+		token    string
+		expected string
+	}{
+		{
+			name:     "injects token after opening tag",
+			body:     "<qdbapi><query>{}</query></qdbapi>",
+			token:    "abc123",
+			expected: "<qdbapi><apptoken>abc123</apptoken><query>{}</query></qdbapi>",
+		},
+		{
+			name:     "handles empty body",
+			body:     "<qdbapi></qdbapi>",
+			token:    "token",
+			expected: "<qdbapi><apptoken>token</apptoken></qdbapi>",
+		},
+		{
+			name:     "returns unchanged if no qdbapi tag",
+			body:     "<other>content</other>",
+			token:    "token",
+			expected: "<other>content</other>",
+		},
+		{
+			name:     "handles complex body",
+			body:     "<qdbapi><udata>test</udata><rid>123</rid></qdbapi>",
+			token:    "mytoken",
+			expected: "<qdbapi><apptoken>mytoken</apptoken><udata>test</udata><rid>123</rid></qdbapi>",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := injectAppToken([]byte(tt.body), tt.token)
+			if string(result) != tt.expected {
+				t.Errorf("injectAppToken() = %q, want %q", string(result), tt.expected)
+			}
+		})
+	}
+}
+
+func TestWithAppToken_Option(t *testing.T) {
+	mock := &mockNoSignOut{}
+
+	// Without WithAppToken
+	client1, err := New("testrealm", mock)
+	if err != nil {
+		t.Fatalf("New() error: %v", err)
+	}
+	if client1.appToken != "" {
+		t.Error("Client without WithAppToken() should have empty appToken")
+	}
+
+	// With WithAppToken
+	client2, err := New("testrealm", mock, WithAppToken("test-token"))
+	if err != nil {
+		t.Fatalf("New() with WithAppToken() error: %v", err)
+	}
+	if client2.appToken != "test-token" {
+		t.Errorf("Client with WithAppToken() should have appToken=%q, got %q", "test-token", client2.appToken)
+	}
+}

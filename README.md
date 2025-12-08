@@ -227,6 +227,29 @@ client, err := quickbase.New("mycompany",
 
 The SDK exchanges the SAML assertion for a QuickBase temp token using [RFC 8693 token exchange](https://developer.quickbase.com/operation/exchangeSsoToken).
 
+### Application Tokens (XML API Only)
+
+Application tokens are an additional security layer for QuickBase apps. If an app has "Require Application Tokens" enabled, XML API calls must include a valid app token.
+
+**Important:** User tokens bypass app token checks entirely. You only need app tokens when:
+- Using ticket auth (`WithTicketAuth`) with the XML API
+- Using temp tokens (`WithTempTokens`) with the XML API
+- The target app has "Require Application Tokens" enabled
+
+The JSON API does not use app tokens.
+
+```go
+// For apps requiring application tokens when using ticket auth
+client, err := quickbase.New("myrealm",
+    quickbase.WithTicketAuth("user@example.com", "password"),
+    quickbase.WithAppToken("your-app-token"),
+)
+
+// XML API calls will include the app token
+xmlClient := xml.New(client)
+roles, _ := xmlClient.GetRoleInfo(ctx, appId)
+```
+
 ## Configuration Options
 
 ```go

@@ -93,6 +93,10 @@ type Client struct {
 
 	// Read-only mode blocks all write operations
 	readOnly bool
+
+	// App token for apps requiring application tokens
+	// Only needed when NOT using user tokens (which bypass app token checks)
+	appToken string
 }
 
 // RequestInfo contains information about a completed API request.
@@ -277,6 +281,36 @@ func WithReadOnly() Option {
 	}
 }
 
+// WithAppToken sets an application token for XML API calls.
+//
+// App tokens are only needed for the XML API when:
+//   - The app has "Require Application Tokens" enabled, AND
+//   - You're NOT using user token authentication (which bypasses app token checks)
+//
+// Common scenarios requiring app tokens:
+//   - Using ticket auth (WithTicketAuth) with XML API methods
+//   - Using temp tokens (WithTempTokens) with XML API methods
+//
+// The JSON API does not use app tokens - user tokens and temp tokens provide
+// sufficient authentication. This option only affects XML API calls made via
+// the xml sub-package.
+//
+// Example:
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithTicketAuth("user@example.com", "password"),
+//	    quickbase.WithAppToken("your-app-token"),
+//	)
+//
+//	// XML API calls will include the app token
+//	xmlClient := xml.New(client)
+//	roles, _ := xmlClient.GetRoleInfo(ctx, appId)
+func WithAppToken(token string) Option {
+	return func(c *Client) {
+		c.appToken = token
+	}
+}
+
 // WithSchema sets the schema for table and field aliases.
 // When configured, the client automatically:
 //   - Transforms table aliases to IDs in requests (from, to fields)
@@ -432,6 +466,11 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 		return nil, core.NewReadOnlyError(http.MethodPost, "/db/"+dbid, action)
 	}
 
+	// Inject app token into XML body if configured
+	if c.appToken != "" {
+		body = injectAppToken(body, c.appToken)
+	}
+
 	url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, dbid)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
@@ -530,6 +569,21 @@ func (c *Client) calculateXMLBackoff(attempt int) time.Duration {
 		delay = float64(c.maxDelay)
 	}
 	return time.Duration(delay)
+}
+
+// injectAppToken inserts an <apptoken> element into an XML request body.
+// The body is expected to have the format <qdbapi>...</qdbapi>.
+// The apptoken is inserted right after the opening <qdbapi> tag.
+func injectAppToken(body []byte, token string) []byte {
+	const openTag = "<qdbapi>"
+	bodyStr := string(body)
+	idx := strings.Index(bodyStr, openTag)
+	if idx == -1 {
+		return body // Can't find tag, return unchanged
+	}
+	insertPos := idx + len(openTag)
+	appTokenElem := "<apptoken>" + token + "</apptoken>"
+	return []byte(bodyStr[:insertPos] + appTokenElem + bodyStr[insertPos:])
 }
 
 // Close closes idle connections and releases resources.

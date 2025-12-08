@@ -455,6 +455,36 @@ func WithReadOnly() Option {
 	}
 }
 
+// WithAppToken sets an application token for XML API calls.
+//
+// App tokens are only needed for the XML API when:
+//   - The app has "Require Application Tokens" enabled, AND
+//   - You're NOT using user token authentication (which bypasses app token checks)
+//
+// Common scenarios requiring app tokens:
+//   - Using ticket auth ([WithTicketAuth]) with XML API methods
+//   - Using temp tokens ([WithTempTokens]) with XML API methods
+//
+// The JSON API does not use app tokens - user tokens and temp tokens provide
+// sufficient authentication. This option only affects XML API calls made via
+// the xml sub-package.
+//
+// Example:
+//
+//	client, _ := quickbase.New("myrealm",
+//	    quickbase.WithTicketAuth("user@example.com", "password"),
+//	    quickbase.WithAppToken("your-app-token"),
+//	)
+//
+//	// XML API calls will include the app token
+//	xmlClient := xml.New(client)
+//	roles, _ := xmlClient.GetRoleInfo(ctx, appId)
+func WithAppToken(token string) Option {
+	return func(c *clientConfig) {
+		c.clientOpts = append(c.clientOpts, client.WithAppToken(token))
+	}
+}
+
 // WithSchema sets the schema for table and field aliases.
 //
 // When configured, the client automatically:
