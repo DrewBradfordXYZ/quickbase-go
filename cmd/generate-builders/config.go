@@ -108,21 +108,32 @@ var manualImplementations = map[string]bool{
 	"runQuery": true, // Has schema transformation, record transformation, pagination
 }
 
-// skipResultType lists operations where we generate the builder but NOT a result type.
-// This is for operations that have manual result types in api.go but still benefit
-// from auto-generated builders.
-var skipResultType = map[string]bool{
-	"runReport":        true, // Has RunReportResult defined manually in api.go
-	"getUsers":         true, // Has GetUsersResult with helper methods in api.go
-	"getRelationships": true, // Has GetRelationshipsResult with helper methods in api.go
-	"getFieldUsage":    true, // Has GetFieldUsageResult with helper methods in api.go
-	"getFieldsUsage":   true, // Has GetFieldsUsageResult with helper methods in api.go
-	"getFields":        true, // Has GetFieldsResult with role extraction in api.go
+// manualResultTypes maps operation IDs to their manual result type names in api.go.
+// These operations have hand-written result wrappers that provide helper methods
+// beyond what the generator can produce. The builder will return the wrapper type
+// instead of the raw generated response.
+//
+// Note: runReport is in manualImplementations (fully hand-written builder),
+// so it doesn't need to be here.
+var manualResultTypes = map[string]string{
+	"getFields":        "GetFieldsResult",
+	"getFieldUsage":    "GetFieldUsageResult",
+	"getFieldsUsage":   "GetFieldsUsageResult",
+	"getUsers":         "GetUsersResult",
+	"getRelationships": "GetRelationshipsResult",
+}
+
+// getManualResultType returns the manual result type name for an operation, if any.
+func getManualResultType(opID string) (string, bool) {
+	t, ok := manualResultTypes[opID]
+	return t, ok
 }
 
 // shouldSkipResultType returns true if the operation should not generate a result type
+// (because it has a manual result type instead)
 func shouldSkipResultType(opID string) bool {
-	return skipResultType[opID]
+	_, ok := manualResultTypes[opID]
+	return ok
 }
 
 // hasManualImplementation returns true if the operation has a manual implementation

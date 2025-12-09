@@ -629,6 +629,8 @@ func generateCode(builders []BuilderSpec) error {
 		"toPascal":                toPascalCase,
 		"split":                   strings.Split,
 		"isTableParam":            isTableParam,
+		"getManualResultType":     func(opID string) string { t, _ := getManualResultType(opID); return t },
+		"hasManualResultType":     func(opID string) bool { _, ok := getManualResultType(opID); return ok },
 		"isFieldParam":            isFieldParam,
 		"isFieldArrayParam":       isFieldArrayParam,
 		"needsResultType":         needsResultType,
@@ -937,6 +939,8 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{$b.Transform.ResultTyp
 {{- end}}
 {{- else if needsResultType $b}}
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{$b.ResultTypeName}}, error) {
+{{- else if hasManualResultType $b.OperationID}}
+func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getManualResultType $b.OperationID}}, error) {
 {{- else}}
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*generated.{{$b.MethodName}}Response, error) {
 {{- end}}
@@ -1094,6 +1098,8 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*generated.{{$b.MethodNam
 {{- end}}
 
 	return result, nil
+{{- else if hasManualResultType $b.OperationID}}
+	return &{{getManualResultType $b.OperationID}}{raw: resp}, nil
 {{- else}}
 	return resp, nil
 {{- end}}

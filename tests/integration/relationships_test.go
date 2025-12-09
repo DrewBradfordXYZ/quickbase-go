@@ -56,23 +56,21 @@ func TestRelationships(t *testing.T) {
 		if err != nil {
 			t.Fatalf("GetRelationships failed: %v", err)
 		}
-		if resp.JSON200 == nil {
-			t.Fatalf("Expected JSON200 response, got status %d: %s", resp.StatusCode(), string(resp.Body))
-		}
 
-		// Should have at least our relationship
-		if len(resp.JSON200.Relationships) == 0 {
+		// Use wrapper's helper method
+		rels := resp.Relationships()
+		if len(rels) == 0 {
 			t.Error("Expected at least one relationship")
 		}
 
 		// Find our relationship
 		found := false
-		for _, rel := range resp.JSON200.Relationships {
-			if float32(rel.Id) == relationshipID {
+		for _, rel := range rels {
+			if float32(rel.ID) == relationshipID {
 				found = true
 				// Verify parent table ID
-				if rel.ParentTableId != testCtx.TableID {
-					t.Errorf("ParentTableId = %s, want %s", rel.ParentTableId, testCtx.TableID)
+				if rel.ParentTableID != testCtx.TableID {
+					t.Errorf("ParentTableID = %s, want %s", rel.ParentTableID, testCtx.TableID)
 				}
 				break
 			}
@@ -92,12 +90,10 @@ func TestRelationships(t *testing.T) {
 		if err != nil {
 			t.Fatalf("GetRelationships builder failed: %v", err)
 		}
-		if resp.JSON200 == nil {
-			t.Fatalf("Expected JSON200 response")
-		}
 
-		// Verify we got relationships
-		if len(resp.JSON200.Relationships) == 0 {
+		// Verify we got relationships using wrapper method
+		rels := resp.Relationships()
+		if len(rels) == 0 {
 			t.Error("Expected relationships from builder")
 		}
 	})
@@ -148,11 +144,9 @@ func TestRelationships(t *testing.T) {
 			t.Fatalf("GetRelationships after delete failed: %v", err)
 		}
 
-		if getResp.JSON200 != nil {
-			for _, rel := range getResp.JSON200.Relationships {
-				if float32(rel.Id) == relationshipID {
-					t.Error("Relationship still exists after delete")
-				}
+		for _, rel := range getResp.Relationships() {
+			if float32(rel.ID) == relationshipID {
+				t.Error("Relationship still exists after delete")
 			}
 		}
 	})
@@ -170,12 +164,10 @@ func TestGetRelationships_NoRelationships(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetRelationships failed: %v", err)
 	}
-	if resp.JSON200 == nil {
-		t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
-	}
 
 	// Should return empty relationships array, not an error
-	t.Logf("Relationships count: %d", len(resp.JSON200.Relationships))
+	rels := resp.Relationships()
+	t.Logf("Relationships count: %d", len(rels))
 }
 
 // createChildTable creates a temporary child table for relationship testing
