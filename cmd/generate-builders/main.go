@@ -845,7 +845,9 @@ type {{$b.BuilderName}} struct {
 	tableID string
 {{- end}}
 {{- range $b.PathParams}}
+{{- if not (isTableParam .Name)}}
 	{{toCamel .Name}} {{.Type}}
+{{- end}}
 {{- end}}
 {{- range $b.QueryParams}}
 {{- if not (isTableParam .Name)}}
@@ -1009,7 +1011,7 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*generated.{{$b.MethodNam
 {{- end}}
 {{- end}}
 
-	resp, err := b.client.API().{{$b.MethodName}}WithResponse(ctx{{range $b.PathParams}}, b.{{toCamel .Name}}{{end}}{{if $b.HasQueryParams}}, params{{end}}{{if $b.HasBody}}, reqBody{{end}})
+	resp, err := b.client.API().{{$b.MethodName}}WithResponse(ctx{{range $b.PathParams}}, {{if isTableParam .Name}}b.tableID{{else}}b.{{toCamel .Name}}{{end}}{{end}}{{if $b.HasQueryParams}}, params{{end}}{{if $b.HasBody}}, reqBody{{end}})
 	if err != nil {
 		return nil, err
 	}

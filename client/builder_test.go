@@ -246,6 +246,110 @@ func TestCreateRelationshipBuilder_TableResolution(t *testing.T) {
 	}
 }
 
+func TestGetRelationshipsBuilder_TableResolution(t *testing.T) {
+	tests := []struct {
+		name      string
+		schema    *core.ResolvedSchema
+		table     string
+		wantErr   bool
+		wantTable string
+	}{
+		{
+			name:      "no schema - table ID passthrough",
+			schema:    nil,
+			table:     "bqxyz123",
+			wantTable: "bqxyz123",
+		},
+		{
+			name: "with schema - alias resolved",
+			schema: testSchema(map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123"},
+			}),
+			table:     "projects",
+			wantTable: "bqxyz123",
+		},
+		{
+			name: "with schema - unknown alias errors",
+			schema: testSchema(map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123"},
+			}),
+			table:   "unknown",
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &Client{schema: tt.schema}
+			b := c.GetRelationships(tt.table)
+
+			if tt.wantErr {
+				if b.err == nil {
+					t.Error("expected error, got nil")
+				}
+				return
+			}
+
+			if b.err != nil {
+				t.Errorf("unexpected error: %v", b.err)
+				return
+			}
+
+			if b.tableID != tt.wantTable {
+				t.Errorf("tableID = %q, want %q", b.tableID, tt.wantTable)
+			}
+		})
+	}
+}
+
+func TestDeleteRelationshipBuilder_TableResolution(t *testing.T) {
+	tests := []struct {
+		name      string
+		schema    *core.ResolvedSchema
+		table     string
+		wantErr   bool
+		wantTable string
+	}{
+		{
+			name:      "no schema - table ID passthrough",
+			schema:    nil,
+			table:     "bqxyz123",
+			wantTable: "bqxyz123",
+		},
+		{
+			name: "with schema - alias resolved",
+			schema: testSchema(map[string]core.TableSchema{
+				"projects": {ID: "bqxyz123"},
+			}),
+			table:     "projects",
+			wantTable: "bqxyz123",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &Client{schema: tt.schema}
+			b := c.DeleteRelationship(tt.table, 1)
+
+			if tt.wantErr {
+				if b.err == nil {
+					t.Error("expected error, got nil")
+				}
+				return
+			}
+
+			if b.err != nil {
+				t.Errorf("unexpected error: %v", b.err)
+				return
+			}
+
+			if b.tableID != tt.wantTable {
+				t.Errorf("tableID = %q, want %q", b.tableID, tt.wantTable)
+			}
+		})
+	}
+}
+
 func TestUpdateRelationshipBuilder_TableResolution(t *testing.T) {
 	tests := []struct {
 		name      string
