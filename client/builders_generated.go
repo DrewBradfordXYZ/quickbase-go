@@ -4398,7 +4398,7 @@ func (b *GetRelationshipsBuilder) Skip(value int) *GetRelationshipsBuilder {
 }
 
 
-// Run executes the getRelationships request.
+// Run executes the getRelationships request (single page).
 func (b *GetRelationshipsBuilder) Run(ctx context.Context) (*GetRelationshipsResult, error) {
 	if b.err != nil {
 		return nil, b.err
@@ -4419,6 +4419,58 @@ func (b *GetRelationshipsBuilder) Run(ctx context.Context) (*GetRelationshipsRes
 	return &GetRelationshipsResult{raw: resp}, nil
 }
 
+// All fetches all pages of relationships using skip-based pagination.
+func (b *GetRelationshipsBuilder) All(ctx context.Context) (*GetRelationshipsResult, error) {
+	if b.err != nil {
+		return nil, b.err
+	}
+
+	var allRelationships []generated.GetRelationships_200_Relationships_Item
+	var lastResp *generated.GetRelationshipsResponse
+	skip := 0
+
+	for {
+		params := &generated.GetRelationshipsParams{
+			Skip: &skip,
+		}
+
+		resp, err := b.client.API().GetRelationshipsWithResponse(ctx, b.tableID, params)
+		if err != nil {
+			return nil, err
+		}
+		if resp.JSON200 == nil {
+			return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+		}
+
+		lastResp = resp
+		allRelationships = append(allRelationships, resp.JSON200.Relationships...)
+
+		// Check if we have more pages
+		meta := resp.JSON200.Metadata
+		if meta == nil || meta.TotalRelationships == nil || meta.NumRelationships == nil {
+			// No pagination metadata, assume single page
+			break
+		}
+
+		currentEnd := skip + *meta.NumRelationships
+		if currentEnd >= *meta.TotalRelationships {
+			// No more pages
+			break
+		}
+		skip = currentEnd
+	}
+
+	// Update the last response with all collected relationships
+	if lastResp != nil && lastResp.JSON200 != nil {
+		lastResp.JSON200.Relationships = allRelationships
+		total := len(allRelationships)
+		lastResp.JSON200.Metadata.NumRelationships = &total
+		zero := 0
+		lastResp.JSON200.Metadata.Skip = &zero
+	}
+
+	return &GetRelationshipsResult{raw: lastResp}, nil
+}
 
 
 // GetReportBuilder provides a fluent API for the getReport operation.
