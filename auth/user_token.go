@@ -43,3 +43,10 @@ func (s *UserTokenStrategy) HandleAuthError(ctx context.Context, statusCode int,
 	// Return the same token for retry - user tokens can't be refreshed
 	return s.token, nil
 }
+
+// XMLAuthElement returns the XML element for user token authentication.
+// The XML API requires tokens as body elements, not headers.
+// See: https://help.quickbase.com/docs/api-getdbpage
+func (s *UserTokenStrategy) XMLAuthElement(token string) (string, string) {
+	return "usertoken", token
+}

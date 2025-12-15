@@ -471,6 +471,19 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 		body = injectAppToken(body, c.appToken)
 	}
 
+	// Get auth token early so we can inject it into body for XML API
+	token, err := c.auth.GetToken(ctx, dbid)
+	if err != nil {
+		return nil, fmt.Errorf("getting auth token: %w", err)
+	}
+
+	// Inject auth token into XML body if the strategy supports it
+	// The XML API requires tokens as body elements, not Authorization headers
+	if xmlAuth, ok := c.auth.(auth.XMLAuthProvider); ok {
+		elemName, elemValue := xmlAuth.XMLAuthElement(token)
+		body = injectXMLAuth(body, elemName, elemValue)
+	}
+
 	url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, dbid)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
@@ -480,6 +493,9 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 
 	req.Header.Set("Content-Type", "application/xml")
 	req.Header.Set("QUICKBASE-ACTION", action)
+
+	// Check if we need to apply auth via header (for strategies that don't support XML auth)
+	_, usesXMLAuth := c.auth.(auth.XMLAuthProvider)
 
 	// Use the same retry/throttle logic as JSON API
 	var lastErr error
@@ -493,18 +509,15 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 			return nil, fmt.Errorf("throttle: %w", err)
 		}
 
-		// Get auth token
-		token, err := c.auth.GetToken(ctx, dbid)
-		if err != nil {
-			return nil, fmt.Errorf("getting auth token: %w", err)
-		}
-
 		// Clone request for retry
 		reqCopy := req.Clone(ctx)
 		reqCopy.Body = io.NopCloser(bytes.NewReader(body))
 
-		// Apply auth
-		c.auth.ApplyAuth(reqCopy, token)
+		// Apply auth via header only if strategy doesn't support XML body auth
+		// (XMLAuthProvider strategies inject auth into the body instead)
+		if !usesXMLAuth {
+			c.auth.ApplyAuth(reqCopy, token)
+		}
 
 		// Make request using the transport directly (not authHTTPClient to avoid double-auth)
 		httpClient := &http.Client{
@@ -584,6 +597,24 @@ func injectAppToken(body []byte, token string) []byte {
 	insertPos := idx + len(openTag)
 	appTokenElem := "<apptoken>" + token + "</apptoken>"
 	return []byte(bodyStr[:insertPos] + appTokenElem + bodyStr[insertPos:])
+}
+
+// injectXMLAuth inserts an authentication element into an XML request body.
+// The body is expected to have the format <qdbapi>...</qdbapi>.
+// The element is inserted right after the opening <qdbapi> tag.
+//
+// The XML API requires tokens as body parameters, not Authorization headers.
+// See: https://help.quickbase.com/docs/api-getdbpage
+func injectXMLAuth(body []byte, elemName, elemValue string) []byte {
+	const openTag = "<qdbapi>"
+	bodyStr := string(body)
+	idx := strings.Index(bodyStr, openTag)
+	if idx == -1 {
+		return body // Can't find tag, return unchanged
+	}
+	insertPos := idx + len(openTag)
+	authElem := "<" + elemName + ">" + elemValue + "</" + elemName + ">"
+	return []byte(bodyStr[:insertPos] + authElem + bodyStr[insertPos:])
 }
 
 // Close closes idle connections and releases resources.

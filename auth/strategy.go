@@ -104,3 +104,16 @@ type SignOuter interface {
 	// This does NOT invalidate tokens on QuickBase's servers.
 	SignOut()
 }
+
+// XMLAuthProvider is an optional interface for strategies that support XML API authentication.
+// The XML API uses different authentication than the JSON API - tokens must be included
+// in the request body as XML elements, not in HTTP headers.
+//
+// Strategies that implement this interface will have their tokens injected into
+// XML request bodies automatically when using the xml sub-package.
+type XMLAuthProvider interface {
+	// XMLAuthElement returns the XML element name and token value for XML API auth.
+	// For user tokens, returns ("usertoken", "token-value").
+	// For tickets, returns ("ticket", "ticket-value").
+	XMLAuthElement(token string) (elementName string, elementValue string)
+}
