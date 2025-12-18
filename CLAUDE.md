@@ -316,6 +316,49 @@ This keeps handlers simple and testable. The auth complexity lives in middleware
 
 See `docs/middleware-and-di.md` for a detailed explanation of these patterns.
 
+## Known Design Issues
+
+### Generated Types Strip API Response Data
+
+**Problem:** The oapi-codegen generated types (`GetTableReportsResponse`, etc.) only include fields explicitly defined in the OpenAPI spec. But the actual QuickBase API returns additional useful data that gets lost.
+
+**Example: Get Reports API**
+
+The generated `GetTableReportsWithResponse()` returns typed `Report` objects with:
+- `Id`, `Name`, `Type`, `UsedCount`, `UsedLast`
+
+But the raw API response also includes:
+- `query.filter` - The report's filter criteria (e.g., `{'6'.EX.'active'}`)
+- `query.formulaFields` - Dynamic formula columns
+- `properties.columnProperties` - Which fields are displayed as columns
+
+**Workaround in quickbase-mcp-core:**
+```go
+// Instead of this (loses data):
+resp, _ := client.GetTableReports(ctx, params)
+reports := resp.JSON200  // Missing query and properties!
+
+// Use raw API (preserves all data):
+resp, _ := client.RawGetTableReports(ctx, params)
+reports := resp.JSON200  // Has query.filter, properties, etc.
+```
+
+**Root Cause:** The OpenAPI spec doesn't fully describe the response schema, or oapi-codegen is configured to strip unknown fields.
+
+**TODO:** Investigate options:
+1. Update OpenAPI spec to include all response fields
+2. Configure oapi-codegen to preserve extra fields (if possible)
+3. Add `Raw*` wrapper methods for commonly-used endpoints
+4. Use `map[string]any` for responses where full data is needed
+
+**Affected Endpoints (known):**
+- `GET /reports` - Missing `query`, `properties`
+- Possibly others - audit as issues arise
+
+**Reference:** This was discovered in quickbase-mcp-core when implementing field-to-report mapping. Reports.json needed query filters to extract which fields each report uses.
+
+---
+
 ## Related Repositories
 
 **[quickbase-js](https://github.com/DrewBradfordXYZ/quickbase-js)** - TypeScript/JavaScript SDK
