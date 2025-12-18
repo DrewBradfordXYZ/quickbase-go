@@ -239,6 +239,9 @@ type FieldValue_Value struct {
 	union json.RawMessage
 }
 
+// OwnerId The user ID of the owner. May be returned as integer or string depending on context.
+type OwnerId = interface{}
+
 // QuickbaseRecord A QuickBase record where keys are field IDs (as strings) and values are FieldValue objects.
 type QuickbaseRecord map[string]FieldValue
 
@@ -10861,8 +10864,8 @@ type GetTableReports_200_Item struct {
 	// Name The configured name of the report.
 	Name *string `json:"name,omitempty"`
 
-	// OwnerId Optional, showed only for personal reports. The user ID of report owner.
-	OwnerId *int `json:"ownerId,omitempty"`
+	// OwnerId The user ID of the owner. May be returned as integer or string depending on context.
+	OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 	// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
 	Properties *map[string]interface{} `json:"properties,omitempty"`
@@ -10910,8 +10913,8 @@ type GetReportResponse struct {
 		// Name The configured name of the report.
 		Name *string `json:"name,omitempty"`
 
-		// OwnerId Optional, showed only for personal reports. The user ID of report owner.
-		OwnerId *int `json:"ownerId,omitempty"`
+		// OwnerId The user ID of the owner. May be returned as integer or string depending on context.
+		OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 		// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
 		Properties *map[string]interface{} `json:"properties,omitempty"`
@@ -14342,8 +14345,8 @@ func ParseGetReportResponse(rsp *http.Response) (*GetReportResponse, error) {
 			// Name The configured name of the report.
 			Name *string `json:"name,omitempty"`
 
-			// OwnerId Optional, showed only for personal reports. The user ID of report owner.
-			OwnerId *int `json:"ownerId,omitempty"`
+			// OwnerId The user ID of the owner. May be returned as integer or string depending on context.
+			OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 			// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
 			Properties *map[string]interface{} `json:"properties,omitempty"`
