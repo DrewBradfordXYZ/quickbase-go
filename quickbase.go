@@ -124,6 +124,7 @@ type (
 	// Monitoring types
 	RequestInfo = client.RequestInfo
 	RetryInfo   = client.RetryInfo
+
 )
 
 // Pagination type constants
@@ -761,6 +762,44 @@ type (
 
 	// GetUsersParams are the parameters for GetUsers
 	GetUsersParams = generated.GetUsersParams
+
+	// GetFieldsUsageParams are the parameters for GetFieldsUsage
+	GetFieldsUsageParams = generated.GetFieldsUsageParams
+
+	// GetFieldUsageParams are the parameters for GetFieldUsage
+	GetFieldUsageParams = generated.GetFieldUsageParams
+)
+
+// Nested response types (for accessing Raw API response data)
+type (
+	// Field usage types
+	GetFieldsUsage_200_Item  = generated.GetFieldsUsage_200_Item
+	GetFieldsUsage_200_Field = generated.GetFieldsUsage_200_Field
+	GetFieldsUsage_200_Usage = generated.GetFieldsUsage_200_Usage
+	GetFieldUsage_200_Item   = generated.GetFieldUsage_200_Item
+	GetFieldUsage_200_Field  = generated.GetFieldUsage_200_Field
+	GetFieldUsage_200_Usage  = generated.GetFieldUsage_200_Usage
+
+	// Table types
+	GetAppTables_200_Item = generated.GetAppTables_200_Item
+
+	// Field types
+	GetFields_200_Item       = generated.GetFields_200_Item
+	GetFields_200_Properties = generated.GetFields_200_Properties
+
+	// Relationship types
+	GetRelationships_200_Relationships_Item             = generated.GetRelationships_200_Relationships_Item
+	GetRelationships_200_Relationships_ForeignKeyField  = generated.GetRelationships_200_Relationships_ForeignKeyField
+	GetRelationships_200_Relationships_LookupFields_Item  = generated.GetRelationships_200_Relationships_LookupFields_Item
+	GetRelationships_200_Relationships_SummaryFields_Item = generated.GetRelationships_200_Relationships_SummaryFields_Item
+
+	// Report types
+	GetTableReports_200_Item  = generated.GetTableReports_200_Item
+	GetTableReports_200_Query = generated.GetTableReports_200_Query
+
+	// Event types
+	GetAppEvents_200_Item = generated.GetAppEvents_200_Item
+	GetAppEvents200Type   = generated.GetAppEvents200Type
 )
 
 // Core types
