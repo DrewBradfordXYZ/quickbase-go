@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 func TestGetApp(t *testing.T) {

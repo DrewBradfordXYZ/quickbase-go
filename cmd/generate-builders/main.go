@@ -642,6 +642,9 @@ func generateCode(builders []BuilderSpec) error {
 		"hasImportTime":           hasImportTime,
 		"hasImportTypes":          hasImportTypes,
 		"uniqueTransformTypes":    uniqueTransformTypes,
+		"getDataTypeName":         getDataTypeName,
+		"getWrapperTypeName":      getWrapperTypeName,
+		"shouldReturnRawResponse": shouldReturnRawResponse,
 	}
 
 	tmpl := template.Must(template.New("builders").Funcs(funcMap).Parse(buildersTemplate))
@@ -660,9 +663,35 @@ func generateCode(builders []BuilderSpec) error {
 	})
 }
 
-// needsResultType returns true if we should generate a friendly result type
+// needsResultType returns true if we should generate a friendly result type.
+// In v2.0, this always returns false - all builders return raw generated types.
+// Users can use opt-in helpers when they want friendlier access patterns.
 func needsResultType(b BuilderSpec) bool {
-	return b.Transform.Enabled || len(b.ResponseFields) > 0 || b.ResponseIsArray
+	return false
+}
+
+// getDataTypeName returns the generated data type name for a builder's response.
+// For object responses: {PascalCaseOperationId}Data (e.g., GetAppData)
+// For array responses: {PascalCaseOperationId}Item (e.g., GetFieldsItem)
+func getDataTypeName(b BuilderSpec) string {
+	pascalOp := toPascalCase(b.OperationID)
+	if b.ResponseIsArray {
+		return pascalOp + "Item"
+	}
+	return pascalOp + "Data"
+}
+
+// getWrapperTypeName returns the wrapper type name for a builder's response.
+// For object responses: {MethodName}Result (e.g., AppResult from GetApp)
+// For array responses: {MethodName}Item (e.g., FieldsItem from GetFields)
+func getWrapperTypeName(b BuilderSpec) string {
+	methodName := toPascalCase(b.OperationID)
+	// Strip "Get" prefix for cleaner names
+	name := strings.TrimPrefix(methodName, "Get")
+	if b.ResponseIsArray {
+		return name + "Item"
+	}
+	return name + "Result"
 }
 
 // hasTransform returns true if the builder has a transform config
@@ -798,7 +827,7 @@ import (
 	"time"
 {{end}}
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 {{if hasImportTypes .Builders}}
 	"github.com/oapi-codegen/runtime/types"
 {{end}}
@@ -930,7 +959,7 @@ func (b *{{$b.BuilderName}}) {{$qp.GoName}}(value {{$qp.GenType}}) *{{$b.Builder
 
 {{end}}
 {{- end}}
-// Run executes the {{$b.OperationID}} request.
+// Run executes the {{$b.OperationID}} request and returns the response data directly.
 {{- if hasTransform $b}}
 {{- if $b.Transform.IsArrayResponse}}
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) ([]{{$b.Transform.ResultType}}, error) {
@@ -941,8 +970,12 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{$b.Transform.ResultTyp
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{$b.ResultTypeName}}, error) {
 {{- else if hasManualResultType $b.OperationID}}
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getManualResultType $b.OperationID}}, error) {
-{{- else}}
+{{- else if shouldReturnRawResponse $b.OperationID}}
 func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*generated.{{$b.MethodName}}Response, error) {
+{{- else if $b.ResponseIsArray}}
+func (b *{{$b.BuilderName}}) Run(ctx context.Context) ([]*{{getWrapperTypeName $b}}, error) {
+{{- else}}
+func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getWrapperTypeName $b}}, error) {
 {{- end}}
 	if b.err != nil {
 		return nil, b.err
@@ -1100,8 +1133,17 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*generated.{{$b.MethodNam
 	return result, nil
 {{- else if hasManualResultType $b.OperationID}}
 	return &{{getManualResultType $b.OperationID}}{raw: resp}, nil
-{{- else}}
+{{- else if shouldReturnRawResponse $b.OperationID}}
 	return resp, nil
+{{- else if $b.ResponseIsArray}}
+	// Wrap each item in the result wrapper
+	items := make([]*{{getWrapperTypeName $b}}, len(*resp.JSON200))
+	for i := range *resp.JSON200 {
+		items[i] = &{{getWrapperTypeName $b}}{&(*resp.JSON200)[i]}
+	}
+	return items, nil
+{{- else}}
+	return &{{getWrapperTypeName $b}}{resp.JSON200}, nil
 {{- end}}
 }
 

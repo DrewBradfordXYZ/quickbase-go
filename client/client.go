@@ -36,7 +36,7 @@ import (
 
 	"github.com/DrewBradfordXYZ/quickbase-go/auth"
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 // Client wraps the generated QuickBase client with authentication, automatic retry,

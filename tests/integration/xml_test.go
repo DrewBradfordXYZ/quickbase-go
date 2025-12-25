@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 	"github.com/DrewBradfordXYZ/quickbase-go/xml"
 )
 

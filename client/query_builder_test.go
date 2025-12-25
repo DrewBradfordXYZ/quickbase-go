@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 func TestQueryBuilder_Select(t *testing.T) {
@@ -77,8 +77,14 @@ func TestQueryBuilder_Where(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected build error: %v", err)
 	}
-	if body.Where == nil || *body.Where != "{6.EX.'Active'}" {
+	if body.Where == nil {
 		t.Error("expected Where to be set in body")
+	} else {
+		// Extract the where string from the union type
+		whereStr, ok := extractWhereString(body.Where)
+		if !ok || whereStr != "{6.EX.'Active'}" {
+			t.Errorf("expected where '{6.EX.'Active'}', got '%s'", whereStr)
+		}
 	}
 }
 
@@ -136,7 +142,7 @@ func TestQueryBuilder_SortByWithSchema(t *testing.T) {
 	}
 
 	// Extract sort fields from union
-	sortFields, err := body.SortBy.AsSortByUnion0()
+	sortFields, err := ExtractSortFields(body.SortBy)
 	if err != nil {
 		t.Fatalf("failed to extract sort fields: %v", err)
 	}

@@ -79,7 +79,7 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/auth"
 	"github.com/DrewBradfordXYZ/quickbase-go/client"
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 // Client is the main QuickBase API client.
@@ -770,36 +770,110 @@ type (
 	GetFieldUsageParams = generated.GetFieldUsageParams
 )
 
-// Nested response types (for accessing Raw API response data)
+// Named response data types (extracted from inline schemas)
 type (
-	// Field usage types
-	GetFieldsUsage_200_Item  = generated.GetFieldsUsage_200_Item
-	GetFieldsUsage_200_Field = generated.GetFieldsUsage_200_Field
-	GetFieldsUsage_200_Usage = generated.GetFieldsUsage_200_Usage
-	GetFieldUsage_200_Item   = generated.GetFieldUsage_200_Item
-	GetFieldUsage_200_Field  = generated.GetFieldUsage_200_Field
-	GetFieldUsage_200_Usage  = generated.GetFieldUsage_200_Usage
+	// App types
+	GetAppData                   = generated.GetAppData
+	GetAppData_SecurityProperties = generated.GetAppData_SecurityProperties
+	GetAppData_Variables_Item    = generated.GetAppData_Variables_Item
+	CreateAppData                = generated.CreateAppData
+	UpdateAppData                = generated.UpdateAppData
+	DeleteAppData                = generated.DeleteAppData
+	CopyAppData                  = generated.CopyAppData
+
+	// App events types
+	GetAppEventsItem       = generated.GetAppEventsItem
+	GetAppEventsItemType   = generated.GetAppEventsItemType
+	GetAppEventsItem_Owner = generated.GetAppEventsItem_Owner
 
 	// Table types
-	GetAppTables_200_Item = generated.GetAppTables_200_Item
+	GetAppTablesItem = generated.GetAppTablesItem
+	GetTableData     = generated.GetTableData
+	CreateTableData  = generated.CreateTableData
+	UpdateTableData  = generated.UpdateTableData
+	DeleteTableData  = generated.DeleteTableData
+
+	// Roles types
+	GetRolesItem = generated.GetRolesItem
 
 	// Field types
-	GetFields_200_Item       = generated.GetFields_200_Item
-	GetFields_200_Properties = generated.GetFields_200_Properties
+	GetFieldsItem                           = generated.GetFieldsItem
+	GetFieldsItem_Properties                = generated.GetFieldsItem_Properties
+	GetFieldsItem_Properties_CompositeFields_Item = generated.GetFieldsItem_Properties_CompositeFields_Item
+	GetFieldData                            = generated.GetFieldData
+	GetFieldData_Properties                 = generated.GetFieldData_Properties
+	GetFieldData_Properties_CompositeFields_Item = generated.GetFieldData_Properties_CompositeFields_Item
+	CreateFieldData                         = generated.CreateFieldData
+	UpdateFieldData                         = generated.UpdateFieldData
+	DeleteFieldsData                        = generated.DeleteFieldsData
+
+	// Field usage types
+	GetFieldsUsageItem                    = generated.GetFieldsUsageItem
+	GetFieldsUsageItem_Field              = generated.GetFieldsUsageItem_Field
+	GetFieldsUsageItem_Usage              = generated.GetFieldsUsageItem_Usage
+	GetFieldUsageItem                     = generated.GetFieldUsageItem
+	GetFieldUsageItem_Field               = generated.GetFieldUsageItem_Field
+	GetFieldUsageItem_Usage               = generated.GetFieldUsageItem_Usage
 
 	// Relationship types
-	GetRelationships_200_Relationships_Item             = generated.GetRelationships_200_Relationships_Item
-	GetRelationships_200_Relationships_ForeignKeyField  = generated.GetRelationships_200_Relationships_ForeignKeyField
-	GetRelationships_200_Relationships_LookupFields_Item  = generated.GetRelationships_200_Relationships_LookupFields_Item
-	GetRelationships_200_Relationships_SummaryFields_Item = generated.GetRelationships_200_Relationships_SummaryFields_Item
+	GetRelationshipsData                              = generated.GetRelationshipsData
+	GetRelationshipsData_Metadata                     = generated.GetRelationshipsData_Metadata
+	GetRelationshipsData_Relationships_Item           = generated.GetRelationshipsData_Relationships_Item
+	GetRelationshipsData_Relationships_ForeignKeyField = generated.GetRelationshipsData_Relationships_ForeignKeyField
+	GetRelationshipsData_Relationships_LookupFields_Item = generated.GetRelationshipsData_Relationships_LookupFields_Item
+	GetRelationshipsData_Relationships_SummaryFields_Item = generated.GetRelationshipsData_Relationships_SummaryFields_Item
+	CreateRelationshipData                            = generated.CreateRelationshipData
+	UpdateRelationshipData                            = generated.UpdateRelationshipData
+	DeleteRelationshipData                            = generated.DeleteRelationshipData
 
 	// Report types
-	GetTableReports_200_Item  = generated.GetTableReports_200_Item
-	GetTableReports_200_Query = generated.GetTableReports_200_Query
+	GetTableReportsItem                       = generated.GetTableReportsItem
+	GetTableReportsItem_Query                 = generated.GetTableReportsItem_Query
+	GetTableReportsItem_Query_FormulaFields_Item = generated.GetTableReportsItem_Query_FormulaFields_Item
+	GetReportData                             = generated.GetReportData
+	GetReportData_Query                       = generated.GetReportData_Query
+	RunReportData                             = generated.RunReportData
 
-	// Event types
-	GetAppEvents_200_Item = generated.GetAppEvents_200_Item
-	GetAppEvents200Type   = generated.GetAppEvents200Type
+	// Query types
+	RunQueryData       = generated.RunQueryData
+	DeleteRecordsData  = generated.DeleteRecordsData
+	UpsertData         = generated.UpsertData
+
+	// Users types
+	GetUsersData           = generated.GetUsersData
+	DenyUsersData          = generated.DenyUsersData
+	UndenyUsersData        = generated.UndenyUsersData
+	DenyUsersAndGroupsData = generated.DenyUsersAndGroupsData
+
+	// Auth types
+	GetTempTokenDBIDData    = generated.GetTempTokenDBIDData
+	ExchangeSsoTokenData    = generated.ExchangeSsoTokenData
+	CloneUserTokenData      = generated.CloneUserTokenData
+	TransferUserTokenData   = generated.TransferUserTokenData
+	DeactivateUserTokenData = generated.DeactivateUserTokenData
+	DeleteUserTokenData     = generated.DeleteUserTokenData
+
+	// Formula types
+	RunFormulaData = generated.RunFormulaData
+
+	// File types
+	DeleteFileData = generated.DeleteFileData
+
+	// Audit types
+	AuditData = generated.AuditData
+
+	// Analytics types
+	PlatformAnalyticReadsData           = generated.PlatformAnalyticReadsData
+	PlatformAnalyticEventSummariesData  = generated.PlatformAnalyticEventSummariesData
+
+	// Trustees types
+	GetTrusteesItem    = generated.GetTrusteesItem
+	AddTrusteesData    = generated.AddTrusteesData
+	RemoveTrusteesData = generated.RemoveTrusteesData
+	UpdateTrusteesData = generated.UpdateTrusteesData
+
+	// Document types
+	GenerateDocumentData = generated.GenerateDocumentData
 )
 
 // Core types
@@ -820,70 +894,7 @@ type (
 	SortFieldOrder = generated.SortFieldOrder
 
 	// SortByUnion is the union type for sortBy ([]SortField or false)
-	SortByUnion = generated.SortByUnion
-)
-
-// Result types from wrapper methods
-type (
-	// RunQueryResult contains the result of a RunQuery call
-	RunQueryResult = client.RunQueryResult
-
-	// RunReportResult contains the result of a RunReport call
-	RunReportResult = client.RunReportResult
-
-	// UpsertResult contains the result of an Upsert call
-	UpsertResult = client.UpsertResult
-
-	// DeleteRecordsResult contains the result of a DeleteRecords call
-	DeleteRecordsResult = client.DeleteRecordsResult
-
-	// GetAppResult contains the result of GetApp, CreateApp, UpdateApp, CopyApp
-	GetAppResult = client.GetAppResult
-
-	// TableInfo contains the result of GetTable, CreateTable, UpdateTable, GetAppTables
-	TableInfo = client.TableInfo
-
-	// ReportInfo contains the result of GetReport, GetTableReports
-	ReportInfo = client.ReportInfo
-
-	// CreateFieldResult contains the result of CreateField, UpdateField, GetField
-	CreateFieldResult = client.CreateFieldResult
-
-	// DeleteFieldsResult contains the result of DeleteFields
-	DeleteFieldsResult = client.DeleteFieldsResult
-
-	// DeleteAppResult contains the result of DeleteApp
-	DeleteAppResult = client.DeleteAppResult
-
-	// DeleteTableResult contains the result of DeleteTable
-	DeleteTableResult = client.DeleteTableResult
-
-	// DeleteFileResult contains the result of DeleteFile
-	DeleteFileResult = client.DeleteFileResult
-
-	// RelationshipInfo contains the result of CreateRelationship, UpdateRelationship
-	RelationshipInfo = client.RelationshipInfo
-
-	// FormulaResult contains the result of RunFormula
-	FormulaResult = client.FormulaResult
-
-	// SchemaFieldInfo contains comprehensive field information for schema discovery
-	SchemaFieldInfo = client.SchemaFieldInfo
-
-	// FieldPermission represents a role's permission on a field
-	FieldPermission = client.FieldPermission
-
-	// RoleInfo contains basic role information extracted from field permissions
-	RoleInfo = client.RoleInfo
-
-	// GetFieldsResult wraps the getFields response with helper methods
-	GetFieldsResult = client.GetFieldsResult
-
-	// FieldInfo contains metadata about a field in query results
-	FieldInfo = client.FieldInfo
-
-	// QueryMetadata contains pagination metadata from a query
-	QueryMetadata = client.QueryMetadata
+	SortByUnion = generated.RunQueryJSONBody_SortBy
 )
 
 // Builder types for fluent API
@@ -1097,6 +1108,47 @@ func Ptr[T any](v T) *T {
 	return &v
 }
 
+// --- v2.0 Raw-First Helpers ---
+// These opt-in helpers make working with raw generated types more convenient.
+
+// UnwrapRecords converts QuickbaseRecord slices to []map[string]any.
+// This extracts the actual field values from FieldValue wrappers.
+//
+// Example:
+//
+//	resp, _ := client.RunQuery(ctx, body)
+//	if resp.JSON200.Data != nil {
+//	    records := quickbase.UnwrapRecords(*resp.JSON200.Data)
+//	    for _, rec := range records {
+//	        name := rec["6"] // access by field ID
+//	    }
+//	}
+var UnwrapRecords = client.UnwrapRecords
+
+// UnwrapRecord converts a single QuickbaseRecord to map[string]any.
+var UnwrapRecord = client.UnwrapRecord
+
+// Deref returns the value of a pointer, or zero value if nil.
+// Use this to safely access optional (pointer) fields in generated types.
+//
+// Example:
+//
+//	resp, _ := client.GetApp(appId).Run(ctx)
+//	name := quickbase.Deref(resp.JSON200.Name) // string, not *string
+func Deref[T any](ptr *T) T {
+	return client.Deref(ptr)
+}
+
+// DerefOr returns the value of a pointer, or the default if nil.
+//
+// Example:
+//
+//	resp, _ := client.GetApp(appId).Run(ctx)
+//	name := quickbase.DerefOr(resp.JSON200.Name, "Unknown")
+func DerefOr[T any](ptr *T, defaultVal T) T {
+	return client.DerefOr(ptr, defaultVal)
+}
+
 // Ints returns a pointer to a slice of ints.
 // Useful for the Select field in RunQuery.
 //
@@ -1264,9 +1316,50 @@ func Desc(field any) SortSpec {
 //	    SortBy: quickbase.SortBy(quickbase.Asc(6), quickbase.Desc(7)),
 //	})
 func SortBy(fields ...SortField) *SortByUnion {
-	var sortBy SortByUnion
-	_ = sortBy.FromSortByUnion0(fields)
-	return &sortBy
+	sortBy, err := client.SortFieldsToSortByUnion(fields)
+	if err != nil {
+		return nil
+	}
+	return sortBy
+}
+
+// --- Where Helper ---
+
+// WhereUnion is the union type for where (query string or []int record IDs)
+type WhereUnion = generated.RunQueryJSONBody_Where
+
+// Where creates a where parameter for RunQuery from a query string.
+// This wraps the string in the union type required by the API.
+//
+// Example:
+//
+//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+//	    From:   tableId,
+//	    Where:  quickbase.Where("{6.EX.'Active'}"),
+//	})
+func Where(query string) *WhereUnion {
+	where, err := client.StringToWhereUnion(query)
+	if err != nil {
+		return nil
+	}
+	return where
+}
+
+// DeleteWhereUnion is the union type for DeleteRecords where clause
+type DeleteWhereUnion = generated.DeleteRecordsJSONBody_Where
+
+// DeleteWhere creates a where parameter for DeleteRecords from a query string.
+// This wraps the string in the union type required by the API.
+//
+// Example:
+//
+//	result, _ := client.DeleteRecords(ctx, tableId, quickbase.DeleteWhere("{6.EX.'Deleted'}"))
+func DeleteWhere(query string) DeleteWhereUnion {
+	where, err := client.StringToDeleteWhereUnion(query)
+	if err != nil {
+		return DeleteWhereUnion{}
+	}
+	return where
 }
 
 // --- Query Options Helper ---

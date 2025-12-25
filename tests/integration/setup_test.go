@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 	"github.com/joho/godotenv"
 )
 
@@ -302,7 +302,7 @@ func deleteAllRecords(t *testing.T, ctx context.Context) {
 
 	_, err := client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
 		From:  testCtx.TableID,
-		Where: "{3.GT.0}", // Record ID# > 0
+		Where: quickbase.DeleteWhere("{3.GT.0}"), // Record ID# > 0
 	})
 	// Ignore errors (may be no records to delete)
 	_ = err

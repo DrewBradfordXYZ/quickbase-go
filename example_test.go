@@ -199,14 +199,20 @@ func ExampleClient_RunQuery() {
 
 	ctx := context.Background()
 	result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
-		From:   "bqxyz123",                     // table ID
-		Select: quickbase.Ints(3, 6, 7),        // field IDs
-		Where:  quickbase.Ptr("{6.GT.100}"),    // optional filter
+		From:   "bqxyz123",                    // table ID
+		Select: quickbase.Ints(3, 6, 7),       // field IDs
+		Where:  quickbase.Where("{6.GT.100}"), // optional filter
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Use Records() convenience method for unwrapped record data
+	for _, rec := range result.Records() {
+		fmt.Printf("Record: %v\n", rec)
+	}
+
+	// Direct access to all fields still works via embedding
 	fmt.Printf("Got %d of %d total records\n",
 		result.Metadata.NumRecords,
 		result.Metadata.TotalRecords,
@@ -249,6 +255,32 @@ func ExampleClient_RunQueryN() {
 	fmt.Printf("Fetched %d records\n", len(records))
 }
 
+// Get app details using the fluent builder API.
+// Wrapper types provide nil-safe accessor methods for optional fields.
+func ExampleClient_GetApp() {
+	client, _ := quickbase.New("myrealm",
+		quickbase.WithUserToken("token"),
+	)
+
+	ctx := context.Background()
+	app, err := client.GetApp("bqxyz123").Run(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Required fields are accessed directly (embedding exposes all fields)
+	fmt.Printf("App: %s\n", app.Name)
+
+	// Optional fields have nil-safe accessor methods (returns zero value if nil)
+	fmt.Printf("Description: %s\n", app.Description())
+	fmt.Printf("Created: %s\n", app.Created())
+
+	// Direct pointer access still available for full control
+	if app.GetAppData.Description != nil {
+		fmt.Printf("Description (direct): %s\n", *app.GetAppData.Description)
+	}
+}
+
 // Handle different error types from API responses.
 func ExampleClient_GetApp_errorHandling() {
 	client, _ := quickbase.New("myrealm",
@@ -278,6 +310,7 @@ func ExampleClient_GetApp_errorHandling() {
 		return
 	}
 
+	// Access response directly - Name is a required field so it's not a pointer
 	fmt.Printf("App: %s\n", app.Name)
 }
 
@@ -320,12 +353,13 @@ func ExampleWithSchema() {
 	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
 		From:   "projects",                                             // alias instead of "bqxyz123"
 		Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
-		Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                // aliases in where
+		Where:  quickbase.Where("{'status'.EX.'Active'}"),              // aliases in where
 	})
 
-	// Response data uses aliases too
-	for _, record := range result.Data {
-		fmt.Printf("Name: %v, Status: %v\n", record["name"], record["status"])
+	// Use Records() convenience method for unwrapped record data
+	for _, record := range result.Records() {
+		// Field IDs are the keys (as strings)
+		fmt.Printf("Name: %v, Status: %v\n", record["6"], record["7"])
 	}
 }
 

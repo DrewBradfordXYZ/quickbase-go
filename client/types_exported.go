@@ -1,10 +1,10 @@
 // Package client provides a QuickBase API client.
 //
-// This file re-exports types from internal/generated to make them available
+// This file re-exports types from generated to make them available
 // for consumers who need direct access to the Raw* API methods.
 package client
 
-import "github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+import "github.com/DrewBradfordXYZ/quickbase-go/generated"
 
 // =============================================================================
 // Parameter Types (for Raw* method calls)
@@ -139,77 +139,146 @@ type UpdateSolutionToRecordResponse = generated.UpdateSolutionToRecordResponse
 type UpdateTableResponse = generated.UpdateTableResponse
 
 // =============================================================================
-// Nested Types (for accessing response data)
+// Named Response Data Types (extracted from inline schemas)
 // =============================================================================
 
 // App types
-type GetApp_200_SecurityProperties = generated.GetApp_200_SecurityProperties
-type GetApp_200_Variables_Item = generated.GetApp_200_Variables_Item
+type GetAppData = generated.GetAppData
+type GetAppData_SecurityProperties = generated.GetAppData_SecurityProperties
+type GetAppData_Variables_Item = generated.GetAppData_Variables_Item
+type CreateAppData = generated.CreateAppData
+type UpdateAppData = generated.UpdateAppData
+type DeleteAppData = generated.DeleteAppData
+type CopyAppData = generated.CopyAppData
 
 // App events types
-type GetAppEvents200Type = generated.GetAppEvents200Type
-type GetAppEvents_200_Owner = generated.GetAppEvents_200_Owner
-type GetAppEvents_200_Item = generated.GetAppEvents_200_Item
+type GetAppEventsItem = generated.GetAppEventsItem
+type GetAppEventsItemType = generated.GetAppEventsItemType
+type GetAppEventsItem_Owner = generated.GetAppEventsItem_Owner
 
 // Tables types
-type GetAppTables_200_Item = generated.GetAppTables_200_Item
+type GetAppTablesItem = generated.GetAppTablesItem
+type GetTableData = generated.GetTableData
+type CreateTableData = generated.CreateTableData
+type UpdateTableData = generated.UpdateTableData
+type DeleteTableData = generated.DeleteTableData
+
+// Roles types
+type GetRolesItem = generated.GetRolesItem
 
 // Fields types
-type GetFields_200_Properties_CompositeFields_Item = generated.GetFields_200_Properties_CompositeFields_Item
-type GetFields_200_Properties = generated.GetFields_200_Properties
-type GetFields_200_Item = generated.GetFields_200_Item
-type GetField_200_Properties_CompositeFields_Item = generated.GetField_200_Properties_CompositeFields_Item
-type GetField_200_Properties = generated.GetField_200_Properties
+type GetFieldsItem = generated.GetFieldsItem
+type GetFieldsItem_Properties = generated.GetFieldsItem_Properties
+type GetFieldsItem_Properties_CompositeFields_Item = generated.GetFieldsItem_Properties_CompositeFields_Item
+type GetFieldData = generated.GetFieldData
+type GetFieldData_Properties = generated.GetFieldData_Properties
+type GetFieldData_Properties_CompositeFields_Item = generated.GetFieldData_Properties_CompositeFields_Item
+type CreateFieldData = generated.CreateFieldData
+type UpdateFieldData = generated.UpdateFieldData
+type DeleteFieldsData = generated.DeleteFieldsData
 
-// Field usage types (GetFieldsUsage)
-type GetFieldsUsage_200_Field = generated.GetFieldsUsage_200_Field
-type GetFieldsUsage_200_Usage_Actions = generated.GetFieldsUsage_200_Usage_Actions
-type GetFieldsUsage_200_Usage_AppHomePages = generated.GetFieldsUsage_200_Usage_AppHomePages
-type GetFieldsUsage_200_Usage_DefaultReports = generated.GetFieldsUsage_200_Usage_DefaultReports
-type GetFieldsUsage_200_Usage_ExactForms = generated.GetFieldsUsage_200_Usage_ExactForms
-type GetFieldsUsage_200_Usage_Fields = generated.GetFieldsUsage_200_Usage_Fields
-type GetFieldsUsage_200_Usage_Forms = generated.GetFieldsUsage_200_Usage_Forms
-type GetFieldsUsage_200_Usage_Notifications = generated.GetFieldsUsage_200_Usage_Notifications
-type GetFieldsUsage_200_Usage_PersonalReports = generated.GetFieldsUsage_200_Usage_PersonalReports
-type GetFieldsUsage_200_Usage_Pipelines = generated.GetFieldsUsage_200_Usage_Pipelines
-type GetFieldsUsage_200_Usage_Relationships = generated.GetFieldsUsage_200_Usage_Relationships
-type GetFieldsUsage_200_Usage_Reminders = generated.GetFieldsUsage_200_Usage_Reminders
-type GetFieldsUsage_200_Usage_Reports = generated.GetFieldsUsage_200_Usage_Reports
-type GetFieldsUsage_200_Usage_Roles = generated.GetFieldsUsage_200_Usage_Roles
-type GetFieldsUsage_200_Usage_Webhooks = generated.GetFieldsUsage_200_Usage_Webhooks
-type GetFieldsUsage_200_Usage = generated.GetFieldsUsage_200_Usage
-type GetFieldsUsage_200_Item = generated.GetFieldsUsage_200_Item
+// Field usage types
+type GetFieldsUsageItem = generated.GetFieldsUsageItem
+type GetFieldsUsageItem_Field = generated.GetFieldsUsageItem_Field
+type GetFieldsUsageItem_Usage = generated.GetFieldsUsageItem_Usage
+type GetFieldsUsageItem_Usage_Actions = generated.GetFieldsUsageItem_Usage_Actions
+type GetFieldsUsageItem_Usage_AppHomePages = generated.GetFieldsUsageItem_Usage_AppHomePages
+type GetFieldsUsageItem_Usage_DefaultReports = generated.GetFieldsUsageItem_Usage_DefaultReports
+type GetFieldsUsageItem_Usage_ExactForms = generated.GetFieldsUsageItem_Usage_ExactForms
+type GetFieldsUsageItem_Usage_Fields = generated.GetFieldsUsageItem_Usage_Fields
+type GetFieldsUsageItem_Usage_Forms = generated.GetFieldsUsageItem_Usage_Forms
+type GetFieldsUsageItem_Usage_Notifications = generated.GetFieldsUsageItem_Usage_Notifications
+type GetFieldsUsageItem_Usage_PersonalReports = generated.GetFieldsUsageItem_Usage_PersonalReports
+type GetFieldsUsageItem_Usage_Pipelines = generated.GetFieldsUsageItem_Usage_Pipelines
+type GetFieldsUsageItem_Usage_Relationships = generated.GetFieldsUsageItem_Usage_Relationships
+type GetFieldsUsageItem_Usage_Reminders = generated.GetFieldsUsageItem_Usage_Reminders
+type GetFieldsUsageItem_Usage_Reports = generated.GetFieldsUsageItem_Usage_Reports
+type GetFieldsUsageItem_Usage_Roles = generated.GetFieldsUsageItem_Usage_Roles
+type GetFieldsUsageItem_Usage_Webhooks = generated.GetFieldsUsageItem_Usage_Webhooks
 
-// Field usage types (GetFieldUsage - single field)
-type GetFieldUsage_200_Field = generated.GetFieldUsage_200_Field
-type GetFieldUsage_200_Usage_Actions = generated.GetFieldUsage_200_Usage_Actions
-type GetFieldUsage_200_Usage_AppHomePages = generated.GetFieldUsage_200_Usage_AppHomePages
-type GetFieldUsage_200_Usage_DefaultReports = generated.GetFieldUsage_200_Usage_DefaultReports
-type GetFieldUsage_200_Usage_ExactForms = generated.GetFieldUsage_200_Usage_ExactForms
-type GetFieldUsage_200_Usage_Fields = generated.GetFieldUsage_200_Usage_Fields
-type GetFieldUsage_200_Usage_Forms = generated.GetFieldUsage_200_Usage_Forms
-type GetFieldUsage_200_Usage_Notifications = generated.GetFieldUsage_200_Usage_Notifications
-type GetFieldUsage_200_Usage_PersonalReports = generated.GetFieldUsage_200_Usage_PersonalReports
-type GetFieldUsage_200_Usage_Pipelines = generated.GetFieldUsage_200_Usage_Pipelines
-type GetFieldUsage_200_Usage_Relationships = generated.GetFieldUsage_200_Usage_Relationships
-type GetFieldUsage_200_Usage_Reminders = generated.GetFieldUsage_200_Usage_Reminders
-type GetFieldUsage_200_Usage_Reports = generated.GetFieldUsage_200_Usage_Reports
-type GetFieldUsage_200_Usage_Roles = generated.GetFieldUsage_200_Usage_Roles
-type GetFieldUsage_200_Usage_Webhooks = generated.GetFieldUsage_200_Usage_Webhooks
-type GetFieldUsage_200_Usage = generated.GetFieldUsage_200_Usage
-type GetFieldUsage_200_Item = generated.GetFieldUsage_200_Item
+type GetFieldUsageItem = generated.GetFieldUsageItem
+type GetFieldUsageItem_Field = generated.GetFieldUsageItem_Field
+type GetFieldUsageItem_Usage = generated.GetFieldUsageItem_Usage
+type GetFieldUsageItem_Usage_Actions = generated.GetFieldUsageItem_Usage_Actions
+type GetFieldUsageItem_Usage_AppHomePages = generated.GetFieldUsageItem_Usage_AppHomePages
+type GetFieldUsageItem_Usage_DefaultReports = generated.GetFieldUsageItem_Usage_DefaultReports
+type GetFieldUsageItem_Usage_ExactForms = generated.GetFieldUsageItem_Usage_ExactForms
+type GetFieldUsageItem_Usage_Fields = generated.GetFieldUsageItem_Usage_Fields
+type GetFieldUsageItem_Usage_Forms = generated.GetFieldUsageItem_Usage_Forms
+type GetFieldUsageItem_Usage_Notifications = generated.GetFieldUsageItem_Usage_Notifications
+type GetFieldUsageItem_Usage_PersonalReports = generated.GetFieldUsageItem_Usage_PersonalReports
+type GetFieldUsageItem_Usage_Pipelines = generated.GetFieldUsageItem_Usage_Pipelines
+type GetFieldUsageItem_Usage_Relationships = generated.GetFieldUsageItem_Usage_Relationships
+type GetFieldUsageItem_Usage_Reminders = generated.GetFieldUsageItem_Usage_Reminders
+type GetFieldUsageItem_Usage_Reports = generated.GetFieldUsageItem_Usage_Reports
+type GetFieldUsageItem_Usage_Roles = generated.GetFieldUsageItem_Usage_Roles
+type GetFieldUsageItem_Usage_Webhooks = generated.GetFieldUsageItem_Usage_Webhooks
 
 // Relationships types
-type GetRelationships_200_Metadata = generated.GetRelationships_200_Metadata
-type GetRelationships_200_Relationships_ForeignKeyField = generated.GetRelationships_200_Relationships_ForeignKeyField
-type GetRelationships_200_Relationships_LookupFields_Item = generated.GetRelationships_200_Relationships_LookupFields_Item
-type GetRelationships_200_Relationships_SummaryFields_Item = generated.GetRelationships_200_Relationships_SummaryFields_Item
-type GetRelationships_200_Relationships_Item = generated.GetRelationships_200_Relationships_Item
+type GetRelationshipsData = generated.GetRelationshipsData
+type GetRelationshipsData_Metadata = generated.GetRelationshipsData_Metadata
+type GetRelationshipsData_Relationships_Item = generated.GetRelationshipsData_Relationships_Item
+type GetRelationshipsData_Relationships_ForeignKeyField = generated.GetRelationshipsData_Relationships_ForeignKeyField
+type GetRelationshipsData_Relationships_LookupFields_Item = generated.GetRelationshipsData_Relationships_LookupFields_Item
+type GetRelationshipsData_Relationships_SummaryFields_Item = generated.GetRelationshipsData_Relationships_SummaryFields_Item
+type CreateRelationshipData = generated.CreateRelationshipData
+type UpdateRelationshipData = generated.UpdateRelationshipData
+type DeleteRelationshipData = generated.DeleteRelationshipData
 
 // Reports types
-type GetTableReports_200_Query_FormulaFields_Item = generated.GetTableReports_200_Query_FormulaFields_Item
-type GetTableReports_200_Query = generated.GetTableReports_200_Query
-type GetTableReports_200_Item = generated.GetTableReports_200_Item
-type GetReport_200_Query_FormulaFields_Item = generated.GetReport_200_Query_FormulaFields_Item
-type GetReport_200_Query = generated.GetReport_200_Query
+type GetTableReportsItem = generated.GetTableReportsItem
+type GetTableReportsItem_Query = generated.GetTableReportsItem_Query
+type GetTableReportsItem_Query_FormulaFields_Item = generated.GetTableReportsItem_Query_FormulaFields_Item
+type GetReportData = generated.GetReportData
+type GetReportData_Query = generated.GetReportData_Query
+type GetReportData_Query_FormulaFields_Item = generated.GetReportData_Query_FormulaFields_Item
+type RunReportData = generated.RunReportData
 
+// Query types
+type RunQueryData = generated.RunQueryData
+type DeleteRecordsData = generated.DeleteRecordsData
+type UpsertData = generated.UpsertData
+
+// Users types
+type GetUsersData = generated.GetUsersData
+type DenyUsersData = generated.DenyUsersData
+type UndenyUsersData = generated.UndenyUsersData
+type DenyUsersAndGroupsData = generated.DenyUsersAndGroupsData
+
+// Group types
+type AddMembersToGroupData = generated.AddMembersToGroupData
+type RemoveMembersFromGroupData = generated.RemoveMembersFromGroupData
+type AddManagersToGroupData = generated.AddManagersToGroupData
+type RemoveManagersFromGroupData = generated.RemoveManagersFromGroupData
+type AddSubgroupsToGroupData = generated.AddSubgroupsToGroupData
+type RemoveSubgroupsFromGroupData = generated.RemoveSubgroupsFromGroupData
+
+// Auth types
+type GetTempTokenDBIDData = generated.GetTempTokenDBIDData
+type ExchangeSsoTokenData = generated.ExchangeSsoTokenData
+type CloneUserTokenData = generated.CloneUserTokenData
+type TransferUserTokenData = generated.TransferUserTokenData
+type DeactivateUserTokenData = generated.DeactivateUserTokenData
+type DeleteUserTokenData = generated.DeleteUserTokenData
+
+// File types
+type DeleteFileData = generated.DeleteFileData
+
+// Formula types
+type RunFormulaData = generated.RunFormulaData
+
+// Audit types
+type AuditData = generated.AuditData
+
+// Analytics types
+type PlatformAnalyticReadsData = generated.PlatformAnalyticReadsData
+type PlatformAnalyticEventSummariesData = generated.PlatformAnalyticEventSummariesData
+
+// Trustees types
+type GetTrusteesItem = generated.GetTrusteesItem
+type AddTrusteesData = generated.AddTrusteesData
+type RemoveTrusteesData = generated.RemoveTrusteesData
+type UpdateTrusteesData = generated.UpdateTrusteesData
+
+// Document types
+type GenerateDocumentData = generated.GenerateDocumentData

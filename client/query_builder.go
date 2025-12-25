@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 // QueryBuilder provides a fluent API for building and executing RunQuery requests.
@@ -171,7 +171,11 @@ func (b *QueryBuilder) buildBody() (generated.RunQueryJSONRequestBody, error) {
 
 	// Set where clause (transformation happens in RunQuery)
 	if b.where != "" {
-		body.Where = &b.where
+		whereUnion, err := StringToWhereUnion(b.where)
+		if err != nil {
+			return body, err
+		}
+		body.Where = whereUnion
 	}
 
 	// Resolve and set sortBy
@@ -180,9 +184,9 @@ func (b *QueryBuilder) buildBody() (generated.RunQueryJSONRequestBody, error) {
 		if err != nil {
 			return body, err
 		}
-		// Create SortByUnion from sort fields
-		sortByUnion := &generated.SortByUnion{}
-		if err := sortByUnion.FromSortByUnion0(sortFields); err != nil {
+		// Create SortBy union from sort fields
+		sortByUnion, err := SortFieldsToSortByUnion(sortFields)
+		if err != nil {
 			return body, err
 		}
 		body.SortBy = sortByUnion
@@ -292,9 +296,30 @@ func (b *QueryBuilder) resolveSortFields() ([]generated.SortField, error) {
 	return sortFields, nil
 }
 
-// Run executes the query and returns the first page of results.
-// For all records, use RunAll.
-func (b *QueryBuilder) Run(ctx context.Context) (*RunQueryResult, error) {
+// Run executes the query and returns all records as unwrapped maps.
+// This is a convenience method that auto-unwraps records since you're opting
+// into the Query builder's fluent API. For raw generated types, use RunRaw().
+func (b *QueryBuilder) Run(ctx context.Context) ([]Record, error) {
+	if b.err != nil {
+		return nil, b.err
+	}
+
+	body, err := b.buildBody()
+	if err != nil {
+		return nil, err
+	}
+
+	records, err := b.client.RunQueryAll(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+
+	return unwrapRecords(records), nil
+}
+
+// RunRaw executes the query and returns the result with convenience methods.
+// Use this when you need access to the full response including metadata.
+func (b *QueryBuilder) RunRaw(ctx context.Context) (*RunQueryResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -307,9 +332,9 @@ func (b *QueryBuilder) Run(ctx context.Context) (*RunQueryResult, error) {
 	return b.client.RunQuery(ctx, body)
 }
 
-// RunAll executes the query and returns all records across all pages.
-// This automatically handles pagination.
-func (b *QueryBuilder) RunAll(ctx context.Context) ([]generated.QuickbaseRecord, error) {
+// RunN executes the query and returns up to n records as unwrapped maps.
+// This is a convenience method that auto-unwraps records.
+func (b *QueryBuilder) RunN(ctx context.Context, n int) ([]Record, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
@@ -319,19 +344,10 @@ func (b *QueryBuilder) RunAll(ctx context.Context) ([]generated.QuickbaseRecord,
 		return nil, err
 	}
 
-	return b.client.RunQueryAll(ctx, body)
-}
-
-// RunN executes the query and returns up to n records across pages.
-func (b *QueryBuilder) RunN(ctx context.Context, n int) ([]generated.QuickbaseRecord, error) {
-	if b.err != nil {
-		return nil, b.err
-	}
-
-	body, err := b.buildBody()
+	records, err := b.client.RunQueryN(ctx, body, n)
 	if err != nil {
 		return nil, err
 	}
 
-	return b.client.RunQueryN(ctx, body, n)
+	return unwrapRecords(records), nil
 }

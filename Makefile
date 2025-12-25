@@ -45,7 +45,7 @@ test-integration:
 
 # Clean generated files
 clean:
-	rm -f internal/generated/quickbase.gen.go
+	rm -f generated/quickbase.gen.go
 	rm -f client/api_generated.go
 
 # Install development tools

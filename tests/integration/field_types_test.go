@@ -6,7 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	quickbase "github.com/DrewBradfordXYZ/quickbase-go"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 func TestDateFields(t *testing.T) {
@@ -102,11 +103,11 @@ func TestDateFields(t *testing.T) {
 		}
 
 		// Query dates after June 1st
-		where := fmt.Sprintf("{%d.AF.2024-06-01}", testCtx.DateFieldID)
+		whereStr := fmt.Sprintf("{%d.AF.2024-06-01}", testCtx.DateFieldID)
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.DateFieldID},
-			Where:  &where,
+			Where:  quickbase.Where(whereStr),
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -204,11 +205,11 @@ func TestCheckboxFields(t *testing.T) {
 		}
 
 		// Query only checked items
-		where := fmt.Sprintf("{%d.EX.true}", testCtx.CheckboxFieldID)
+		whereStr := fmt.Sprintf("{%d.EX.true}", testCtx.CheckboxFieldID)
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.CheckboxFieldID},
-			Where:  &where,
+			Where:  quickbase.Where(whereStr),
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)

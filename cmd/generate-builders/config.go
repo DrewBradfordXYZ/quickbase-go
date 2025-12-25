@@ -109,19 +109,10 @@ var manualImplementations = map[string]bool{
 }
 
 // manualResultTypes maps operation IDs to their manual result type names in api.go.
-// These operations have hand-written result wrappers that provide helper methods
-// beyond what the generator can produce. The builder will return the wrapper type
-// instead of the raw generated response.
-//
-// Note: runReport is in manualImplementations (fully hand-written builder),
-// so it doesn't need to be here.
-var manualResultTypes = map[string]string{
-	"getFields":        "GetFieldsResult",
-	"getFieldUsage":    "GetFieldUsageResult",
-	"getFieldsUsage":   "GetFieldsUsageResult",
-	"getUsers":         "GetUsersResult",
-	"getRelationships": "GetRelationshipsResult",
-}
+// In v2.0, this is empty - all builders return raw generated types directly.
+// Users can use opt-in helpers like quickbase.UnwrapRecords() when they want
+// friendlier access patterns.
+var manualResultTypes = map[string]string{}
 
 // getManualResultType returns the manual result type name for an operation, if any.
 func getManualResultType(opID string) (string, bool) {
@@ -188,4 +179,26 @@ func getConstructorParams(operationID string, pathParams []string) []string {
 	}
 	// Default: use path params as constructor params
 	return pathParams
+}
+
+// rawResponseOperations lists operations that should return the raw response type
+// instead of the extracted data type. This includes:
+// - Operations with primitive responses (downloadFile returns a string)
+// - Operations with malformed spec (solutions endpoints have no type, only examples)
+var rawResponseOperations = map[string]bool{
+	"downloadFile":               true, // Returns base64 string, not object
+	"exportSolution":             true, // Returns YAML string
+	"updateSolution":             true, // Malformed spec - no type, only example
+	"createSolution":             true, // Malformed spec - no type, only example
+	"exportSolutionToRecord":     true, // Malformed spec - no type, only example
+	"createSolutionFromRecord":   true, // Malformed spec - no type, only example
+	"updateSolutionToRecord":     true, // Malformed spec - no type, only example
+	"changesetSolution":          true, // Malformed spec - no type, only example
+	"changesetSolutionFromRecord": true, // Malformed spec - no type, only example
+	"getSolutionPublic":          true, // Malformed spec - no type, only example
+}
+
+// shouldReturnRawResponse returns true if the operation should return the raw response type
+func shouldReturnRawResponse(opID string) bool {
+	return rawResponseOperations[opID]
 }

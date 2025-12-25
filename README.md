@@ -6,9 +6,10 @@ A Go client for the QuickBase JSON RESTful API, with optional support for legacy
 
 ## Features
 
+- **Raw-First Architecture (v2.0)** - All operations return generated types directly; full API access with no information loss
+- **Opt-in Helpers** - `UnwrapRecords()`, `Deref()`, `DerefOr()` for convenience when you want it
 - **Fluent Builders** - `client.GetApp(appId).Run(ctx)`, `client.CreateApp().Name("My App").Run(ctx)`
-- **Friendly Result Types** - Clean structs with dereferenced fields instead of pointer-heavy generated types
-- **Query Builder** - `client.Query("table").Select().Where().Run(ctx)`
+- **Query Builder** - `client.Query("table").Select().Where().Run(ctx)` with auto-unwrapped records
 - **Schema Aliases** - Use readable names (`"projects"`, `"name"`) instead of IDs (`"bqxyz123"`, `6`)
 - **Fluent Schema Builder** - `NewSchema().Table().Field().Build()` for schema definition
 - **Automatic Pagination** - `RunQueryAll` fetches all records across pages
@@ -53,7 +54,7 @@ func main() {
 
     ctx := context.Background()
 
-    // Get app details (fluent builder pattern)
+    // Get app details (fluent builder pattern) - returns generated data type directly
     app, err := client.GetApp("your-app-id").Run(ctx)
     if err != nil {
         log.Fatal(err)
@@ -61,14 +62,20 @@ func main() {
     fmt.Println("App name:", app.Name)
 
     // Query all records from a table
-    records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+    rawRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
         From:   "your-table-id",
         Select: quickbase.Ints(3, 6, 7),
     })
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("Found %d records\n", len(records))
+    fmt.Printf("Found %d records\n", len(rawRecords))
+
+    // Use UnwrapRecords helper for friendlier access
+    records := quickbase.UnwrapRecords(rawRecords)
+    for _, rec := range records {
+        fmt.Println(rec["6"])  // Field values by ID
+    }
 }
 ```
 
@@ -339,10 +346,17 @@ result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
     Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                 // Aliases in where
 })
 
-// Response uses aliases and values are automatically unwrapped
-for _, record := range result.Data {
-    name := record["name"]     // "Project Alpha" (not map[value:Project Alpha])
-    status := record["status"] // "Active"
+// Access metadata directly
+fmt.Printf("Total: %d\n", result.Metadata.TotalRecords)
+
+// Use UnwrapRecords helper to access field values
+if result.Data != nil {
+    records := quickbase.UnwrapRecords(*result.Data)
+    for _, record := range records {
+        name := record["6"]     // Field values by ID
+        status := record["7"]
+        _, _ = name, status
+    }
 }
 ```
 
@@ -375,34 +389,18 @@ result, err := client.Upsert(ctx, quickbase.UpsertBody{
 
 The schema transforms `"name"` → `"6"` and `"status"` → `"7"` before sending to the API.
 
-### Response Transformation
+### Using UnwrapRecords Helper
 
-Responses are automatically transformed:
-- Field ID keys (`"6"`) become aliases (`name`)
-- Values are unwrapped from `{"value": X}` to just `X`
-- Unknown fields (not in schema) keep their numeric key but are still unwrapped
+The raw API returns records with FieldValue wrappers. Use `UnwrapRecords()` to extract the actual values:
 
 ```go
-// Raw API response:
-// {"data": [{"6": {"value": "Alpha"}, "99": {"value": "Custom"}}]}
-
-// Transformed response (with schema):
-// {"data": [{"name": "Alpha", "99": "Custom"}]}
-```
-
-### Disabling Response Transformation
-
-If you prefer to keep field IDs in responses (e.g., for backwards compatibility), use `WithSchemaOptions`:
-
-```go
-client, err := quickbase.New("mycompany",
-    quickbase.WithUserToken("token"),
-    quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{
-        TransformResponses: false,  // Keep field IDs, only unwrap values
-    }),
-)
-
-// Now responses use field IDs: record["6"] instead of record["name"]
+resp, _ := client.RunQuery(ctx, body)
+if resp.JSON200.Data != nil {
+    records := quickbase.UnwrapRecords(*resp.JSON200.Data)
+    for _, rec := range records {
+        name := rec["6"]  // Actual value, not {"value": "..."}
+    }
+}
 ```
 
 ### Helpful Error Messages
@@ -561,90 +559,94 @@ quickbase.Desc("dueDate")
 
 ## API Usage
 
-The SDK provides fluent builders with friendly result types:
+The SDK provides fluent builders that return generated data types directly (v2.0 raw-first architecture):
 
 ```go
 ctx := context.Background()
 
-// Get app details - returns GetAppResult with dereferenced fields
+// Get app details - returns *generated.GetAppData
 app, err := client.GetApp(appId).Run(ctx)
 fmt.Println("App name:", app.Name)
-fmt.Println("Created:", app.Created)  // string, not *string
+fmt.Println("Created:", quickbase.Deref(app.Created))  // *string → string
 
-// Get table info - returns TableInfo
+// Get table info - returns *generated.GetTableData
 table, err := client.GetTable(tableId).Run(ctx)
-fmt.Println("Table:", table.Name, "Alias:", table.Alias)
+fmt.Println("Table:", *table.Name)
 
-// Get all tables in an app - returns []TableInfo
+// Get all tables in an app - returns []generated.GetAppTablesItem
 tables, err := client.GetAppTables(appId).Run(ctx)
 for _, t := range tables {
-    fmt.Printf("Table %s: %s\n", t.ID, t.Name)
+    fmt.Printf("Table %s: %s\n", quickbase.Deref(t.Id), quickbase.Deref(t.Name))
 }
 
-// Get fields for a table - returns []FieldDetails
+// Get fields for a table - returns []generated.GetFieldsItem
 fields, err := client.GetFields(tableId).Run(ctx)
 for _, f := range fields {
-    fmt.Printf("Field %d: %s (%s)\n", f.ID, f.Label, f.FieldType)
+    fmt.Printf("Field %d: %s (%s)\n", f.Id, quickbase.Deref(f.Label), quickbase.Deref(f.FieldType))
 }
 
 // Query records - IMPORTANT: QuickBase returns ~100 records per page by default
 // Use RunQueryAll to get all records, or RunQueryN to limit
 
-// Single page only
-result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
+// Single page only - returns *generated.RunQueryData
+query, err := client.RunQuery(ctx, quickbase.RunQueryBody{
     From:   tableId,
     Select: quickbase.Ints(3, 6, 7),
     Where:  quickbase.Ptr("{6.GT.100}"),
 })
+fmt.Printf("Got %d of %d records\n",
+    query.Metadata.NumRecords,
+    query.Metadata.TotalRecords)
 
-// All records (auto-paginates)
-allRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+// All records (auto-paginates) - returns []generated.QuickbaseRecord
+rawRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
     From: tableId,
 })
+records := quickbase.UnwrapRecords(rawRecords)  // Convert to []map[string]any
 
 // Up to N records (auto-paginates)
 first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
     From: tableId,
 }, 500)
 
-// Insert/Update records - returns UpsertResult
+// Insert/Update records - returns *generated.UpsertData
 data := []quickbase.Record{
     quickbase.Row("name", "New Record", "count", 42),
 }
-upsertResult, err := client.Upsert(tableId).Data(&data).Run(ctx)
-fmt.Println("Created:", upsertResult.CreatedRecordIDs)
-fmt.Println("Updated:", upsertResult.UpdatedRecordIDs)
+upsertResp, err := client.Upsert(tableId).Data(&data).Run(ctx)
+fmt.Println("Created:", upsertResp.Metadata.CreatedRecordIds)
+fmt.Println("Updated:", upsertResp.Metadata.UpdatedRecordIds)
 
-// Delete records - returns DeleteRecordsResult
-deleteResult, err := client.DeleteRecords(tableId).Where("{3.EX.123}").Run(ctx)
-fmt.Println("Deleted:", deleteResult.NumberDeleted)
+// Delete records - returns *generated.DeleteRecordsData
+deleteResp, err := client.DeleteRecords(tableId).Where("{3.EX.123}").Run(ctx)
+fmt.Println("Deleted:", deleteResp.NumberDeleted)
 
-// Create an app - returns GetAppResult
+// Create an app - returns *generated.CreateAppData
 newApp, err := client.CreateApp().
     Name("My New App").
     Description("Created via API").
     Run(ctx)
-fmt.Println("Created app:", newApp.ID)
+fmt.Println("Created app:", newApp.Id)
 
-// Get report info - returns ReportInfo
+// Get report info - returns *generated.GetReportData
 report, err := client.GetReport(tableId, reportId).Run(ctx)
-fmt.Println("Report:", report.Name, "Type:", report.Type)
+fmt.Println("Report:", quickbase.Deref(report.Name))
 ```
 
-### Friendly Result Types
+### Raw-First Architecture (v2.0)
 
-The SDK provides clean result types that dereference pointers and flatten nested structures:
+All operations return generated data types directly (e.g., `*generated.GetAppData`, `*generated.RunQueryData`). This provides:
+- **Full API access** - No fields are hidden or transformed away
+- **No information loss** - You see exactly what the API returns
+- **Clean API** - Direct access to data, no `.JSON200` indirection
+- **Explicit transformations** - Use helpers when you want convenience
 
-| Operation | Result Type | Key Fields |
-|-----------|-------------|------------|
-| `GetApp`, `CreateApp`, `UpdateApp`, `CopyApp` | `GetAppResult` | ID, Name, Description, Created, Updated, DateFormat, TimeZone |
-| `GetTable`, `GetAppTables` | `TableInfo` | ID, Name, Alias, Description, NextRecordID, KeyFieldID, etc. |
-| `GetFields` | `[]FieldDetails` | ID, Label, FieldType |
-| `GetReport`, `GetTableReports` | `ReportInfo` | ID, Name, Type, Description, OwnerID, UsedCount |
-| `Upsert` | `UpsertResult` | CreatedRecordIDs, UpdatedRecordIDs, UnchangedRecordIDs, TotalNumberOfRecordsProcessed |
-| `DeleteRecords` | `DeleteRecordsResult` | NumberDeleted |
+**Opt-in helpers:**
+- `quickbase.UnwrapRecords(records)` - Convert `[]QuickbaseRecord` to `[]map[string]any`
+- `quickbase.Deref(ptr)` - Safely dereference pointer, returns zero value if nil
+- `quickbase.DerefOr(ptr, default)` - Dereference with custom default
 
-These result types have non-pointer fields with sensible defaults for missing values, making them much easier to work with than the raw generated types.
+See [MIGRATION.md](MIGRATION.md) for migration guide from v1.x.
 
 ### Helper Functions
 
@@ -1081,10 +1083,10 @@ records, err := client.RunQueryN(ctx, body, 500)
 
 ```go
 // RunQuery returns just the first page
-result, err := client.RunQuery(ctx, body)
+resp, err := client.RunQuery(ctx, body)
 fmt.Printf("Got %d of %d total records\n",
-    result.Metadata.NumRecords,
-    result.Metadata.TotalRecords)
+    resp.JSON200.Metadata.NumRecords,
+    resp.JSON200.Metadata.TotalRecords)
 ```
 
 ### Advanced: Manual Pagination

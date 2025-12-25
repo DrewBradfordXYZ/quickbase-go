@@ -5,7 +5,7 @@ package client
 import (
 	"context"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/internal/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/generated"
 )
 
 // --- Auto-generated Raw wrapper methods ---
@@ -41,6 +41,18 @@ func (c *Client) RawAddMembersToGroup(ctx context.Context, gid float32, body gen
 // RawAddSubgroupsToGroup Add child groups
 func (c *Client) RawAddSubgroupsToGroup(ctx context.Context, gid float32, body generated.AddSubgroupsToGroupJSONRequestBody) (*generated.AddSubgroupsToGroupResponse, error) {
 	resp, err := c.API().AddSubgroupsToGroupWithResponse(ctx, gid, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// RawAddTrustees Add trustees to an app
+func (c *Client) RawAddTrustees(ctx context.Context, appId string, body generated.AddTrusteesJSONRequestBody) (*generated.AddTrusteesResponse, error) {
+	resp, err := c.API().AddTrusteesWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -434,6 +446,30 @@ func (c *Client) RawGetReport(ctx context.Context, reportId string, params *gene
 	return resp, nil
 }
 
+// RawGetRoles Get app roles
+func (c *Client) RawGetRoles(ctx context.Context, appId string) (*generated.GetRolesResponse, error) {
+	resp, err := c.API().GetRolesWithResponse(ctx, appId)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// RawGetSolutionPublic Get solution information
+func (c *Client) RawGetSolutionPublic(ctx context.Context, solutionId string, params *generated.GetSolutionPublicParams) (*generated.GetSolutionPublicResponse, error) {
+	resp, err := c.API().GetSolutionPublicWithResponse(ctx, solutionId, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
 // RawGetTable Get a table
 func (c *Client) RawGetTable(ctx context.Context, tableId string, params *generated.GetTableParams) (*generated.GetTableResponse, error) {
 	resp, err := c.API().GetTableWithResponse(ctx, tableId, params)
@@ -461,6 +497,18 @@ func (c *Client) RawGetTableReports(ctx context.Context, params *generated.GetTa
 // RawGetTempTokenDBID Get a temporary token for a dbid
 func (c *Client) RawGetTempTokenDBID(ctx context.Context, dbid string, params *generated.GetTempTokenDBIDParams) (*generated.GetTempTokenDBIDResponse, error) {
 	resp, err := c.API().GetTempTokenDBIDWithResponse(ctx, dbid, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// RawGetTrustees Get trustees for an app
+func (c *Client) RawGetTrustees(ctx context.Context, appId string) (*generated.GetTrusteesResponse, error) {
+	resp, err := c.API().GetTrusteesWithResponse(ctx, appId)
 	if err != nil {
 		return nil, err
 	}
@@ -506,6 +554,18 @@ func (c *Client) RawPlatformAnalyticReads(ctx context.Context, params *generated
 	return resp, nil
 }
 
+// RawRecordsModifiedSince Get records modified since
+func (c *Client) RawRecordsModifiedSince(ctx context.Context, body generated.RecordsModifiedSinceJSONRequestBody) (*generated.RecordsModifiedSinceResponse, error) {
+	resp, err := c.API().RecordsModifiedSinceWithResponse(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
 // RawRemoveManagersFromGroup Remove managers
 func (c *Client) RawRemoveManagersFromGroup(ctx context.Context, gid float32, body generated.RemoveManagersFromGroupJSONRequestBody) (*generated.RemoveManagersFromGroupResponse, error) {
 	resp, err := c.API().RemoveManagersFromGroupWithResponse(ctx, gid, body)
@@ -533,6 +593,18 @@ func (c *Client) RawRemoveMembersFromGroup(ctx context.Context, gid float32, bod
 // RawRemoveSubgroupsFromGroup Remove child groups
 func (c *Client) RawRemoveSubgroupsFromGroup(ctx context.Context, gid float32, body generated.RemoveSubgroupsFromGroupJSONRequestBody) (*generated.RemoveSubgroupsFromGroupResponse, error) {
 	resp, err := c.API().RemoveSubgroupsFromGroupWithResponse(ctx, gid, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// RawRemoveTrustees Remove trustees from an app
+func (c *Client) RawRemoveTrustees(ctx context.Context, appId string, body generated.RemoveTrusteesJSONRequestBody) (*generated.RemoveTrusteesResponse, error) {
+	resp, err := c.API().RemoveTrusteesWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -653,6 +725,18 @@ func (c *Client) RawUpdateSolutionToRecord(ctx context.Context, solutionId strin
 // RawUpdateTable Update a table
 func (c *Client) RawUpdateTable(ctx context.Context, tableId string, params *generated.UpdateTableParams, body generated.UpdateTableJSONRequestBody) (*generated.UpdateTableResponse, error) {
 	resp, err := c.API().UpdateTableWithResponse(ctx, tableId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// RawUpdateTrustees Update trustees of an app
+func (c *Client) RawUpdateTrustees(ctx context.Context, appId string, body generated.UpdateTrusteesJSONRequestBody) (*generated.UpdateTrusteesResponse, error) {
+	resp, err := c.API().UpdateTrusteesWithResponse(ctx, appId, body)
 	if err != nil {
 		return nil, err
 	}

@@ -1,5 +1,5 @@
 package: generated
-output: internal/generated/quickbase.gen.go
+output: generated/quickbase.gen.go
 generate:
   models: true
   client: true
