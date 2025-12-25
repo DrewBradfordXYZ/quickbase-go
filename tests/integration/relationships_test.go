@@ -57,8 +57,8 @@ func TestRelationships(t *testing.T) {
 			t.Fatalf("GetRelationships failed: %v", err)
 		}
 
-		// Access response directly (v2.0 returns data type, not wrapper)
-		rels := resp.Relationships
+		// Access response via accessor method
+		rels := resp.Relationships()
 		if len(rels) == 0 {
 			t.Error("Expected at least one relationship")
 		}
@@ -66,11 +66,11 @@ func TestRelationships(t *testing.T) {
 		// Find our relationship
 		found := false
 		for _, rel := range rels {
-			if float32(rel.Id) == relationshipID {
+			if float32(rel.Id()) == relationshipID {
 				found = true
 				// Verify parent table ID
-				if rel.ParentTableId != testCtx.TableID {
-					t.Errorf("ParentTableId = %s, want %s", rel.ParentTableId, testCtx.TableID)
+				if rel.ParentTableId() != testCtx.TableID {
+					t.Errorf("ParentTableId = %s, want %s", rel.ParentTableId(), testCtx.TableID)
 				}
 				break
 			}
@@ -91,8 +91,8 @@ func TestRelationships(t *testing.T) {
 			t.Fatalf("GetRelationships builder failed: %v", err)
 		}
 
-		// Verify we got relationships (v2.0 returns data type directly)
-		rels := resp.Relationships
+		// Verify we got relationships via accessor method
+		rels := resp.Relationships()
 		if len(rels) == 0 {
 			t.Error("Expected relationships from builder")
 		}
@@ -144,8 +144,8 @@ func TestRelationships(t *testing.T) {
 			t.Fatalf("GetRelationships after delete failed: %v", err)
 		}
 
-		for _, rel := range getResp.Relationships {
-			if float32(rel.Id) == relationshipID {
+		for _, rel := range getResp.Relationships() {
+			if float32(rel.Id()) == relationshipID {
 				t.Error("Relationship still exists after delete")
 			}
 		}
@@ -166,7 +166,7 @@ func TestGetRelationships_NoRelationships(t *testing.T) {
 	}
 
 	// Should return empty relationships array, not an error
-	rels := resp.Relationships
+	rels := resp.Relationships()
 	t.Logf("Relationships count: %d", len(rels))
 }
 

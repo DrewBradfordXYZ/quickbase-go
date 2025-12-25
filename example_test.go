@@ -212,10 +212,10 @@ func ExampleClient_RunQuery() {
 		fmt.Printf("Record: %v\n", rec)
 	}
 
-	// Direct access to all fields still works via embedding
+	// Use Metadata() accessor for pagination info
 	fmt.Printf("Got %d of %d total records\n",
-		result.Metadata.NumRecords,
-		result.Metadata.TotalRecords,
+		result.Metadata().NumRecords(),
+		result.Metadata().TotalRecords(),
 	)
 }
 
@@ -268,15 +268,13 @@ func ExampleClient_GetApp() {
 		log.Fatal(err)
 	}
 
-	// Required fields are accessed directly (embedding exposes all fields)
-	fmt.Printf("App: %s\n", app.Name)
-
-	// Optional fields have nil-safe accessor methods (returns zero value if nil)
+	// All fields have nil-safe accessor methods (returns zero value if nil)
+	fmt.Printf("App: %s\n", app.Name())
 	fmt.Printf("Description: %s\n", app.Description())
 	fmt.Printf("Created: %s\n", app.Created())
 
-	// Direct pointer access still available for full control
-	if app.GetAppData.Description != nil {
+	// Direct pointer access available via embedding for full control
+	if app.GetAppData != nil && app.GetAppData.Description != nil {
 		fmt.Printf("Description (direct): %s\n", *app.GetAppData.Description)
 	}
 }
@@ -310,8 +308,8 @@ func ExampleClient_GetApp_errorHandling() {
 		return
 	}
 
-	// Access response directly - Name is a required field so it's not a pointer
-	fmt.Printf("App: %s\n", app.Name)
+	// Access response via accessor methods
+	fmt.Printf("App: %s\n", app.Name())
 }
 
 // Use the Ptr helper to create pointers for optional fields.
