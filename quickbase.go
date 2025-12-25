@@ -76,10 +76,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/client"
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/client"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 // Client is the main QuickBase API client.

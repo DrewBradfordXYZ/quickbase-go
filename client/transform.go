@@ -3,7 +3,7 @@ package client
 import (
 	"encoding/json"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 // --- Union Type Helpers ---

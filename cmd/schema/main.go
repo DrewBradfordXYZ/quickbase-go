@@ -28,7 +28,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/DrewBradfordXYZ/quickbase-go"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2"
 )
 
 func main() {

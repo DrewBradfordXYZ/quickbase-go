@@ -5,7 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
 
 // GrantedDBInfo contains information about an accessible app or table.

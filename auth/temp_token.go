@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
 
 // TempTokenStrategy authenticates using QuickBase temporary tokens.

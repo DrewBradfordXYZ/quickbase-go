@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
-	"github.com/DrewBradfordXYZ/quickbase-go/xml"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
 )
 
 // getXMLClient creates an XML client from the test client

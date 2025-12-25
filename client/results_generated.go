@@ -3,7 +3,7 @@
 package client
 
 import (
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 

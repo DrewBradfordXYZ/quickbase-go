@@ -34,9 +34,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 // Client wraps the generated QuickBase client with authentication, automatic retry,

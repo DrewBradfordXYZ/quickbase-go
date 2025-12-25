@@ -4,7 +4,7 @@
 // for consumers who need direct access to the Raw* API methods.
 package client
 
-import "github.com/DrewBradfordXYZ/quickbase-go/generated"
+import "github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 
 // =============================================================================
 // Parameter Types (for Raw* method calls)

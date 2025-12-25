@@ -3,8 +3,8 @@ package client
 import (
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 func TestQueryBuilder_Select(t *testing.T) {

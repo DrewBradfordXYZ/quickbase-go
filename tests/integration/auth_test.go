@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
 )
 
 func TestUserTokenAuth(t *testing.T) {

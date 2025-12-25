@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 func TestNotFoundErrors(t *testing.T) {

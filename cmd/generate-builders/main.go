@@ -826,8 +826,8 @@ import (
 {{if hasImportTime .Builders}}
 	"time"
 {{end}}
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 {{if hasImportTypes .Builders}}
 	"github.com/oapi-codegen/runtime/types"
 {{end}}

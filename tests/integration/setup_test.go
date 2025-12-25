@@ -18,8 +18,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 	"github.com/joho/godotenv"
 )
 

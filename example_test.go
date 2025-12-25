@@ -7,8 +7,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go"
-	"github.com/DrewBradfordXYZ/quickbase-go/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
 )
 
 // Create a basic client with user token authentication.

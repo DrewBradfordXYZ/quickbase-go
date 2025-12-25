@@ -3,8 +3,8 @@ package client
 import (
 	"context"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
 // QueryBuilder provides a fluent API for building and executing RunQuery requests.

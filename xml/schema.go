@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
 
 // SchemaResult contains the response from API_GetSchema.

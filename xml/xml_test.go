@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
 
 // mockCaller implements the Caller interface for testing.
