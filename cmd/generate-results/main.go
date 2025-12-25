@@ -44,6 +44,7 @@ type FieldInfo struct {
 	WrapperTypeName  string // Name of the wrapper type for this field
 	IsSlice          bool   // Whether field is a slice
 	SliceElement     string // Element type if slice
+	IsEnum           bool   // Whether this is an enum type (string-based typedef)
 }
 
 // Global map of all struct types found in the AST
@@ -51,6 +52,9 @@ var allStructTypes = make(map[string]*ast.StructType)
 
 // Map of generated type name -> wrapper type name
 var wrapperNames = make(map[string]string)
+
+// Map of enum type names (string-based type aliases like "type SomeEnum string")
+var enumTypes = make(map[string]bool)
 
 func main() {
 	// Parse the generated file
@@ -61,8 +65,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	// First pass: collect all struct types
+	// First pass: collect all struct types and enum types
 	collectAllStructTypes(file)
+	collectEnumTypes(file)
 
 	// Find all Data and Item types (top-level wrappers)
 	types := extractTypes(file)
@@ -115,6 +120,34 @@ func collectAllStructTypes(file *ast.File) {
 			}
 
 			allStructTypes[typeSpec.Name.Name] = structType
+		}
+	}
+}
+
+// collectEnumTypes finds all string-based type aliases (enum types)
+// These are types like "type GetAppEventsItemType string"
+func collectEnumTypes(file *ast.File) {
+	for _, decl := range file.Decls {
+		genDecl, ok := decl.(*ast.GenDecl)
+		if !ok || genDecl.Tok != token.TYPE {
+			continue
+		}
+
+		for _, spec := range genDecl.Specs {
+			typeSpec, ok := spec.(*ast.TypeSpec)
+			if !ok {
+				continue
+			}
+
+			// Check if this is a type alias to string (e.g., "type SomeEnum string")
+			ident, ok := typeSpec.Type.(*ast.Ident)
+			if !ok {
+				continue
+			}
+
+			if ident.Name == "string" {
+				enumTypes[typeSpec.Name.Name] = true
+			}
 		}
 	}
 }
@@ -290,6 +323,9 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 		// Check if this is a required (non-pointer) simple type
 		isSimpleRequired := !isPtr && !isSlice && isPrimitive(baseType)
 
+		// Check if this is an enum type (string-based typedef)
+		isEnum := isPtr && !isSlice && enumTypes[baseType]
+
 		fieldInfo := FieldInfo{
 			Name:             fieldName,
 			Type:             fieldType,
@@ -300,6 +336,7 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 			IsPrimitiveSlice: isPrimitiveSlice,
 			IsSlice:          isSlice,
 			SliceElement:     sliceElement,
+			IsEnum:           isEnum,
 		}
 
 		fields = append(fields, fieldInfo)
@@ -472,6 +509,14 @@ func (r *{{$type.WrapperName}}) {{$field.Name}}() []*{{$field.WrapperTypeName}} 
 		items[i] = &{{$field.WrapperTypeName}}{&r.{{$type.EmbeddedField}}.{{$field.Name}}[i]}
 	}{{end}}
 	return items
+}
+{{end}}{{if $field.IsEnum}}
+// {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.
+func (r *{{$type.WrapperName}}) {{$field.Name}}() string {
+	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+		return ""
+	}
+	return string(*r.{{$type.EmbeddedField}}.{{$field.Name}})
 }
 {{end}}{{end}}
 {{if $type.HasRecordData}}

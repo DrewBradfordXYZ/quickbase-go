@@ -872,6 +872,14 @@ func (r *CreateFieldProperties) CoverText() string {
 	return *r.CreateFieldData_Properties.CoverText
 }
 
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) CurrencyFormat() string {
+	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.CreateFieldData_Properties.CurrencyFormat)
+}
+
 // CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
 func (r *CreateFieldProperties) CurrencySymbol() string {
 	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CurrencySymbol == nil {
@@ -1224,6 +1232,14 @@ func (r *CreateFieldProperties) StartField() int {
 	return *r.CreateFieldData_Properties.StartField
 }
 
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) SummaryFunction() string {
+	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.CreateFieldData_Properties.SummaryFunction)
+}
+
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
 func (r *CreateFieldProperties) SummaryReferenceFieldId() int64 {
 	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SummaryReferenceFieldId == nil {
@@ -1286,6 +1302,14 @@ func (r *CreateFieldProperties) UseNewWindow() bool {
 		return false
 	}
 	return *r.CreateFieldData_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) VersionMode() string {
+	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.CreateFieldData_Properties.VersionMode)
 }
 
 // Width returns the Width field value, or zero value if nil.
@@ -1524,6 +1548,14 @@ func (r *CreateTableResult) DefaultSortFieldId() int {
 		return 0
 	}
 	return *r.CreateTableData.DefaultSortFieldId
+}
+
+// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
+func (r *CreateTableResult) DefaultSortOrder() string {
+	if r == nil || r.CreateTableData == nil || r.CreateTableData.DefaultSortOrder == nil {
+		return ""
+	}
+	return string(*r.CreateTableData.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
@@ -1838,6 +1870,22 @@ func (r *ExchangeSsoTokenResult) AccessToken() string {
 	return *r.ExchangeSsoTokenData.AccessToken
 }
 
+// IssuedTokenType returns the IssuedTokenType field value as a string, or empty string if nil.
+func (r *ExchangeSsoTokenResult) IssuedTokenType() string {
+	if r == nil || r.ExchangeSsoTokenData == nil || r.ExchangeSsoTokenData.IssuedTokenType == nil {
+		return ""
+	}
+	return string(*r.ExchangeSsoTokenData.IssuedTokenType)
+}
+
+// TokenType returns the TokenType field value as a string, or empty string if nil.
+func (r *ExchangeSsoTokenResult) TokenType() string {
+	if r == nil || r.ExchangeSsoTokenData == nil || r.ExchangeSsoTokenData.TokenType == nil {
+		return ""
+	}
+	return string(*r.ExchangeSsoTokenData.TokenType)
+}
+
 
 
 // GenerateDocumentResult wraps GenerateDocumentData with convenience methods.
@@ -2101,6 +2149,14 @@ func (r *AppEventsItem) TableId() string {
 	return *r.GetAppEventsItem.TableId
 }
 
+// Type returns the Type field value as a string, or empty string if nil.
+func (r *AppEventsItem) Type() string {
+	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Type == nil {
+		return ""
+	}
+	return string(*r.GetAppEventsItem.Type)
+}
+
 // Url returns the Url field value, or zero value if nil.
 func (r *AppEventsItem) Url() string {
 	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Url == nil {
@@ -2179,6 +2235,14 @@ func (r *AppTablesItem) DefaultSortFieldId() int {
 		return 0
 	}
 	return *r.GetAppTablesItem.DefaultSortFieldId
+}
+
+// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
+func (r *AppTablesItem) DefaultSortOrder() string {
+	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.DefaultSortOrder == nil {
+		return ""
+	}
+	return string(*r.GetAppTablesItem.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
@@ -2530,6 +2594,14 @@ func (r *FieldProperties) CoverText() string {
 		return ""
 	}
 	return *r.GetFieldData_Properties.CoverText
+}
+
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *FieldProperties) CurrencyFormat() string {
+	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.GetFieldData_Properties.CurrencyFormat)
 }
 
 // CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
@@ -2884,6 +2956,14 @@ func (r *FieldProperties) StartField() int {
 	return *r.GetFieldData_Properties.StartField
 }
 
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *FieldProperties) SummaryFunction() string {
+	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.GetFieldData_Properties.SummaryFunction)
+}
+
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
 func (r *FieldProperties) SummaryReferenceFieldId() int64 {
 	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SummaryReferenceFieldId == nil {
@@ -2946,6 +3026,14 @@ func (r *FieldProperties) UseNewWindow() bool {
 		return false
 	}
 	return *r.GetFieldData_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *FieldProperties) VersionMode() string {
+	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.GetFieldData_Properties.VersionMode)
 }
 
 // Width returns the Width field value, or zero value if nil.
@@ -3507,6 +3595,14 @@ func (r *FieldsProperties) CoverText() string {
 	return *r.GetFieldsItem_Properties.CoverText
 }
 
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *FieldsProperties) CurrencyFormat() string {
+	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.GetFieldsItem_Properties.CurrencyFormat)
+}
+
 // CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
 func (r *FieldsProperties) CurrencySymbol() string {
 	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CurrencySymbol == nil {
@@ -3859,6 +3955,14 @@ func (r *FieldsProperties) StartField() int {
 	return *r.GetFieldsItem_Properties.StartField
 }
 
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *FieldsProperties) SummaryFunction() string {
+	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.GetFieldsItem_Properties.SummaryFunction)
+}
+
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
 func (r *FieldsProperties) SummaryReferenceFieldId() int64 {
 	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SummaryReferenceFieldId == nil {
@@ -3921,6 +4025,14 @@ func (r *FieldsProperties) UseNewWindow() bool {
 		return false
 	}
 	return *r.GetFieldsItem_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *FieldsProperties) VersionMode() string {
+	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.GetFieldsItem_Properties.VersionMode)
 }
 
 // Width returns the Width field value, or zero value if nil.
@@ -4588,6 +4700,14 @@ func (r *ReportQueryFormulaFieldsItem) DecimalPrecision() int {
 	return *r.GetReportData_Query_FormulaFields_Item.DecimalPrecision
 }
 
+// FieldType returns the FieldType field value as a string, or empty string if nil.
+func (r *ReportQueryFormulaFieldsItem) FieldType() string {
+	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.FieldType == nil {
+		return ""
+	}
+	return string(*r.GetReportData_Query_FormulaFields_Item.FieldType)
+}
+
 // Formula returns the Formula field value, or zero value if nil.
 func (r *ReportQueryFormulaFieldsItem) Formula() string {
 	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.Formula == nil {
@@ -4660,6 +4780,14 @@ func (r *RolesAccess) Id() int {
 	return *r.GetRolesItem_Access.Id
 }
 
+// Type returns the Type field value as a string, or empty string if nil.
+func (r *RolesAccess) Type() string {
+	if r == nil || r.GetRolesItem_Access == nil || r.GetRolesItem_Access.Type == nil {
+		return ""
+	}
+	return string(*r.GetRolesItem_Access.Type)
+}
+
 
 
 // TableResult wraps GetTableData with convenience methods.
@@ -4690,6 +4818,14 @@ func (r *TableResult) DefaultSortFieldId() int {
 		return 0
 	}
 	return *r.GetTableData.DefaultSortFieldId
+}
+
+// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
+func (r *TableResult) DefaultSortOrder() string {
+	if r == nil || r.GetTableData == nil || r.GetTableData.DefaultSortOrder == nil {
+		return ""
+	}
+	return string(*r.GetTableData.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
@@ -4913,6 +5049,14 @@ func (r *TableReportsQueryFormulaFieldsItem) DecimalPrecision() int {
 		return 0
 	}
 	return *r.GetTableReportsItem_Query_FormulaFields_Item.DecimalPrecision
+}
+
+// FieldType returns the FieldType field value as a string, or empty string if nil.
+func (r *TableReportsQueryFormulaFieldsItem) FieldType() string {
+	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.FieldType == nil {
+		return ""
+	}
+	return string(*r.GetTableReportsItem_Query_FormulaFields_Item.FieldType)
 }
 
 // Formula returns the Formula field value, or zero value if nil.
@@ -5188,6 +5332,14 @@ func (r *RecordsModifiedSinceResult) DeletesTruncated() bool {
 // All fields from RecordsModifiedSinceData_Changes_Item are accessible via embedding.
 type RecordsModifiedSinceChangesItem struct {
 	*generated.RecordsModifiedSinceData_Changes_Item
+}
+
+// ChangeType returns the ChangeType field value as a string, or empty string if nil.
+func (r *RecordsModifiedSinceChangesItem) ChangeType() string {
+	if r == nil || r.RecordsModifiedSinceData_Changes_Item == nil || r.RecordsModifiedSinceData_Changes_Item.ChangeType == nil {
+		return ""
+	}
+	return string(*r.RecordsModifiedSinceData_Changes_Item.ChangeType)
 }
 
 // RecordId returns the RecordId field value, or zero value if nil.
@@ -6035,6 +6187,14 @@ func (r *UpdateFieldProperties) CoverText() string {
 	return *r.UpdateFieldData_Properties.CoverText
 }
 
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) CurrencyFormat() string {
+	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.UpdateFieldData_Properties.CurrencyFormat)
+}
+
 // CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
 func (r *UpdateFieldProperties) CurrencySymbol() string {
 	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CurrencySymbol == nil {
@@ -6387,6 +6547,14 @@ func (r *UpdateFieldProperties) StartField() int {
 	return *r.UpdateFieldData_Properties.StartField
 }
 
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) SummaryFunction() string {
+	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.UpdateFieldData_Properties.SummaryFunction)
+}
+
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
 func (r *UpdateFieldProperties) SummaryReferenceFieldId() int64 {
 	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SummaryReferenceFieldId == nil {
@@ -6449,6 +6617,14 @@ func (r *UpdateFieldProperties) UseNewWindow() bool {
 		return false
 	}
 	return *r.UpdateFieldData_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) VersionMode() string {
+	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.UpdateFieldData_Properties.VersionMode)
 }
 
 // Width returns the Width field value, or zero value if nil.
@@ -6687,6 +6863,14 @@ func (r *UpdateTableResult) DefaultSortFieldId() int {
 		return 0
 	}
 	return *r.UpdateTableData.DefaultSortFieldId
+}
+
+// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
+func (r *UpdateTableResult) DefaultSortOrder() string {
+	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.DefaultSortOrder == nil {
+		return ""
+	}
+	return string(*r.UpdateTableData.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
