@@ -1,5 +1,5 @@
-// Command generate-results generates wrapper types that embed generated types
-// and add convenience methods for nil-safe field access.
+// Command generate-results generates wrapper types for Response types
+// with convenience methods for nil-safe field access.
 //
 // Usage:
 //
@@ -19,16 +19,16 @@ import (
 	"text/template"
 )
 
-// TypeInfo holds information about a generated type
-type TypeInfo struct {
-	Name           string      // e.g., "GetAppData"
+// ResponseInfo holds information about a Response type
+type ResponseInfo struct {
+	Name           string      // e.g., "GetAppResponse"
 	WrapperName    string      // e.g., "AppResult"
-	EmbeddedField  string      // e.g., "GetAppData" (for embedding)
-	Fields         []FieldInfo // All fields in the type
-	HasMetadata    bool        // Whether type has a Metadata field
-	HasRecordData  bool        // Whether type has Data *[]QuickbaseRecord
-	IsArrayItem    bool        // Whether this is an array item type (ends in "Item")
-	IsNested       bool        // Whether this is a nested type (has _ in name)
+	OperationName  string      // e.g., "GetApp"
+	Fields         []FieldInfo // Fields from JSON200 struct
+	HasJSON200     bool        // Whether response has JSON200 field
+	JSON200IsArray bool        // Whether JSON200 is an array type
+	ItemTypeName   string      // For arrays, the item type name (if named)
+	HasRecordData  bool        // Whether response has Data *[]QuickbaseRecord field
 }
 
 // FieldInfo holds information about a field
@@ -37,24 +37,38 @@ type FieldInfo struct {
 	Type             string // Go type, e.g., "*string"
 	BaseType         string // Base type without pointer, e.g., "string"
 	IsPtr            bool   // Whether field is a pointer
-	IsSimple         bool   // Whether the base type is simple enough for scalar accessor (pointer)
+	IsSimple         bool   // Whether the base type is simple enough for scalar accessor
 	IsSimpleRequired bool   // Whether this is a required (non-pointer) simple type
-	IsPrimitiveSlice bool   // Whether this is a slice of primitives ([]string, []int, etc)
+	IsPrimitiveSlice bool   // Whether this is a slice of primitives
 	IsWrappedType    bool   // Whether the base type has a wrapper we generated
 	WrapperTypeName  string // Name of the wrapper type for this field
 	IsSlice          bool   // Whether field is a slice
 	SliceElement     string // Element type if slice
-	IsEnum           bool   // Whether this is an enum type (string-based typedef)
+	IsEnum           bool   // Whether this is an enum type
+	IsNestedStruct   bool   // Whether this is a nested named struct
+	NestedTypeName   string // The named type for nested structs
 }
 
-// Global map of all struct types found in the AST
+// NestedTypeInfo holds info about nested types that need wrappers
+type NestedTypeInfo struct {
+	Name        string
+	WrapperName string
+	Fields      []FieldInfo
+}
+
+// ItemTypeInfo holds info about array item types that need wrappers
+type ItemTypeInfo struct {
+	Name        string
+	WrapperName string
+	Fields      []FieldInfo
+}
+
+// Global maps
 var allStructTypes = make(map[string]*ast.StructType)
-
-// Map of generated type name -> wrapper type name
-var wrapperNames = make(map[string]string)
-
-// Map of enum type names (string-based type aliases like "type SomeEnum string")
 var enumTypes = make(map[string]bool)
+var wrapperNames = make(map[string]string)
+var nestedTypes []NestedTypeInfo
+var itemTypes []ItemTypeInfo
 
 func main() {
 	// Parse the generated file
@@ -69,23 +83,29 @@ func main() {
 	collectAllStructTypes(file)
 	collectEnumTypes(file)
 
-	// Find all Data and Item types (top-level wrappers)
-	types := extractTypes(file)
-
-	// Second pass: find nested types that need wrappers
-	nestedTypes := findNestedTypesToWrap(types)
-	types = append(types, nestedTypes...)
+	// Find all Response types
+	responses := extractResponses(file)
 
 	// Sort by name for consistent output
-	sort.Slice(types, func(i, j int) bool {
-		return types[i].Name < types[j].Name
+	sort.Slice(responses, func(i, j int) bool {
+		return responses[i].Name < responses[j].Name
+	})
+
+	// Sort nested types
+	sort.Slice(nestedTypes, func(i, j int) bool {
+		return nestedTypes[i].Name < nestedTypes[j].Name
+	})
+
+	// Sort item types
+	sort.Slice(itemTypes, func(i, j int) bool {
+		return itemTypes[i].Name < itemTypes[j].Name
 	})
 
 	// Now resolve which fields reference wrapped types
-	resolveWrappedFields(types)
+	resolveWrappedFields(responses)
 
 	// Generate wrapper code
-	code, err := generateWrappers(types)
+	code, err := generateWrappers(responses)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error generating wrappers: %v\n", err)
 		os.Exit(1)
@@ -97,7 +117,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Generated %d wrapper types in client/results_generated.go\n", len(types))
+	fmt.Printf("Generated %d wrapper types + %d item types + %d nested types in client/results_generated.go\n",
+		len(responses), len(itemTypes), len(nestedTypes))
 }
 
 // collectAllStructTypes builds a map of all struct types in the file
@@ -125,7 +146,6 @@ func collectAllStructTypes(file *ast.File) {
 }
 
 // collectEnumTypes finds all string-based type aliases (enum types)
-// These are types like "type GetAppEventsItemType string"
 func collectEnumTypes(file *ast.File) {
 	for _, decl := range file.Decls {
 		genDecl, ok := decl.(*ast.GenDecl)
@@ -139,7 +159,6 @@ func collectEnumTypes(file *ast.File) {
 				continue
 			}
 
-			// Check if this is a type alias to string (e.g., "type SomeEnum string")
 			ident, ok := typeSpec.Type.(*ast.Ident)
 			if !ok {
 				continue
@@ -152,16 +171,15 @@ func collectEnumTypes(file *ast.File) {
 	}
 }
 
-// extractTypes finds all Data and Item types in the AST (top-level types to wrap)
-func extractTypes(file *ast.File) []TypeInfo {
-	var types []TypeInfo
+// extractResponses finds all Response types and extracts their JSON200 field info
+func extractResponses(file *ast.File) []ResponseInfo {
+	var responses []ResponseInfo
+	seenNested := make(map[string]bool)
 
-	// Patterns for types we want to wrap
-	dataPattern := regexp.MustCompile(`^[A-Z]\w+Data$`)
-	itemPattern := regexp.MustCompile(`^(Get\w+Item|[A-Z]\w+Item)$`)
+	// Pattern for Response types we want to wrap
+	responsePattern := regexp.MustCompile(`^[A-Z]\w+Response$`)
 
-	// Skip patterns - internal/nested types we don't want at top level
-	skipPattern := regexp.MustCompile(`^(\w+Data_\w+|\w+Item_\w+|\w+JSONBody\w*)$`)
+	// No skip patterns - generate wrappers for all Response types
 
 	for _, decl := range file.Decls {
 		genDecl, ok := decl.(*ast.GenDecl)
@@ -177,16 +195,8 @@ func extractTypes(file *ast.File) []TypeInfo {
 
 			name := typeSpec.Name.Name
 
-			// Skip internal/nested types at top level
-			if skipPattern.MatchString(name) {
-				continue
-			}
-
-			// Check if it's a Data or Item type
-			isData := dataPattern.MatchString(name)
-			isItem := itemPattern.MatchString(name) && !strings.Contains(name, "_")
-
-			if !isData && !isItem {
+			// Must match Response pattern
+			if !responsePattern.MatchString(name) {
 				continue
 			}
 
@@ -195,97 +205,91 @@ func extractTypes(file *ast.File) []TypeInfo {
 				continue
 			}
 
-			wrapperName := generateWrapperName(name, isItem, false)
-			wrapperNames[name] = wrapperName
-
-			typeInfo := TypeInfo{
-				Name:          name,
-				WrapperName:   wrapperName,
-				EmbeddedField: name,
-				IsArrayItem:   isItem,
-				IsNested:      false,
-			}
-
-			// Extract fields
-			typeInfo.Fields = extractFields(structType, name)
-
-			// Check for special fields
-			for _, f := range typeInfo.Fields {
-				if f.Name == "Metadata" {
-					typeInfo.HasMetadata = true
-				}
-				if f.Name == "Data" && strings.Contains(f.Type, "QuickbaseRecord") {
-					typeInfo.HasRecordData = true
+			// Find JSON200 field
+			var json200Field *ast.Field
+			for _, field := range structType.Fields.List {
+				if len(field.Names) > 0 && field.Names[0].Name == "JSON200" {
+					json200Field = field
+					break
 				}
 			}
 
-			types = append(types, typeInfo)
-		}
-	}
-
-	return types
-}
-
-// findNestedTypesToWrap finds nested types referenced by top-level types
-func findNestedTypesToWrap(topLevelTypes []TypeInfo) []TypeInfo {
-	var nestedTypes []TypeInfo
-	seen := make(map[string]bool)
-
-	// Mark top-level types as seen
-	for _, t := range topLevelTypes {
-		seen[t.Name] = true
-	}
-
-	var findNested func(typeName string)
-	findNested = func(typeName string) {
-		structType, exists := allStructTypes[typeName]
-		if !exists {
-			return
-		}
-
-		for _, field := range structType.Fields.List {
-			if len(field.Names) == 0 {
+			if json200Field == nil {
 				continue
 			}
 
-			fieldType := typeToString(field.Type)
-			baseType := strings.TrimPrefix(fieldType, "*")
-			baseType = strings.TrimPrefix(baseType, "[]")
+			operationName := strings.TrimSuffix(name, "Response")
+			wrapperName := generateWrapperName(operationName)
+			wrapperNames[name] = wrapperName
 
-			// Check if this references a nested struct type (has _ in name)
-			if strings.Contains(baseType, "_") && !seen[baseType] {
-				if nestedStruct, exists := allStructTypes[baseType]; exists {
-					seen[baseType] = true
+			resp := ResponseInfo{
+				Name:          name,
+				WrapperName:   wrapperName,
+				OperationName: operationName,
+				HasJSON200:    true,
+			}
 
-					wrapperName := generateWrapperName(baseType, false, true)
-					wrapperNames[baseType] = wrapperName
+			// Parse JSON200 field type
+			json200Type := json200Field.Type
 
-					nestedType := TypeInfo{
-						Name:          baseType,
-						WrapperName:   wrapperName,
-						EmbeddedField: baseType,
-						IsNested:      true,
-						Fields:        extractFields(nestedStruct, baseType),
+			// Check if it's a pointer
+			if starExpr, ok := json200Type.(*ast.StarExpr); ok {
+				json200Type = starExpr.X
+			}
+
+			// Check if it's an array
+			if arrayType, ok := json200Type.(*ast.ArrayType); ok {
+				resp.JSON200IsArray = true
+				// Get the element type
+				var itemTypeName string
+				if starExpr, ok := arrayType.Elt.(*ast.StarExpr); ok {
+					if ident, ok := starExpr.X.(*ast.Ident); ok {
+						itemTypeName = ident.Name
 					}
-					nestedTypes = append(nestedTypes, nestedType)
+				} else if ident, ok := arrayType.Elt.(*ast.Ident); ok {
+					itemTypeName = ident.Name
+				}
 
-					// Recurse into this nested type
-					findNested(baseType)
+				if itemTypeName != "" {
+					resp.ItemTypeName = itemTypeName
+					itemWrapperName := generateItemWrapperName(itemTypeName)
+					wrapperNames[itemTypeName] = itemWrapperName
+
+					// Add item type to the list if we haven't seen it
+					if itemStruct, exists := allStructTypes[itemTypeName]; exists {
+						itemTypes = append(itemTypes, ItemTypeInfo{
+							Name:        itemTypeName,
+							WrapperName: itemWrapperName,
+							Fields:      extractFields(itemStruct, itemTypeName, seenNested),
+						})
+					}
 				}
 			}
+
+			// Check if it's an inline struct
+			if structExpr, ok := json200Type.(*ast.StructType); ok {
+				resp.Fields = extractFields(structExpr, operationName, seenNested)
+				// Check for Data *[]QuickbaseRecord field
+				resp.HasRecordData = hasQuickbaseRecordData(structExpr)
+			}
+
+			// Check if it references a named type
+			if ident, ok := json200Type.(*ast.Ident); ok {
+				if namedStruct, exists := allStructTypes[ident.Name]; exists {
+					resp.Fields = extractFields(namedStruct, operationName, seenNested)
+					resp.HasRecordData = hasQuickbaseRecordData(namedStruct)
+				}
+			}
+
+			responses = append(responses, resp)
 		}
 	}
 
-	// Find nested types for all top-level types
-	for _, t := range topLevelTypes {
-		findNested(t.Name)
-	}
-
-	return nestedTypes
+	return responses
 }
 
 // extractFields extracts field info from a struct type
-func extractFields(structType *ast.StructType, parentTypeName string) []FieldInfo {
+func extractFields(structType *ast.StructType, parentName string, seenNested map[string]bool) []FieldInfo {
 	var fields []FieldInfo
 
 	for _, field := range structType.Fields.List {
@@ -295,7 +299,7 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 
 		fieldName := field.Names[0].Name
 		if fieldName == "AdditionalProperties" {
-			continue // Skip this internal field
+			continue
 		}
 
 		fieldType := typeToString(field.Type)
@@ -306,7 +310,6 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 
 		sliceElement := ""
 		if isSlice {
-			// Extract element type from slice
 			if strings.HasPrefix(fieldType, "*[]") {
 				sliceElement = strings.TrimPrefix(fieldType, "*[]")
 			} else {
@@ -314,16 +317,8 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 			}
 		}
 
-		// Check if this is a pointer to a slice of primitives (*[]string, *[]int)
-		isPrimitiveSlice := false
-		if isSlice && isPrimitive(sliceElement) && strings.HasPrefix(fieldType, "*[]") {
-			isPrimitiveSlice = true
-		}
-
-		// Check if this is a required (non-pointer) simple type
+		isPrimitiveSlice := isSlice && isPrimitive(sliceElement) && strings.HasPrefix(fieldType, "*[]")
 		isSimpleRequired := !isPtr && !isSlice && isPrimitive(baseType)
-
-		// Check if this is an enum type (string-based typedef)
 		isEnum := isPtr && !isSlice && enumTypes[baseType]
 
 		fieldInfo := FieldInfo{
@@ -339,6 +334,30 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 			IsEnum:           isEnum,
 		}
 
+		// Check if this references a named nested struct (like GetApp_200_SecurityProperties)
+		typeToCheck := baseType
+		if isSlice {
+			typeToCheck = sliceElement
+		}
+		if strings.Contains(typeToCheck, "_200_") && !seenNested[typeToCheck] {
+			if nestedStruct, exists := allStructTypes[typeToCheck]; exists {
+				seenNested[typeToCheck] = true
+				nestedWrapperName := generateNestedWrapperName(typeToCheck)
+				wrapperNames[typeToCheck] = nestedWrapperName
+
+				nestedTypes = append(nestedTypes, NestedTypeInfo{
+					Name:        typeToCheck,
+					WrapperName: nestedWrapperName,
+					Fields:      extractFields(nestedStruct, typeToCheck, seenNested),
+				})
+
+				fieldInfo.IsNestedStruct = true
+				fieldInfo.NestedTypeName = typeToCheck
+				fieldInfo.IsWrappedType = true
+				fieldInfo.WrapperTypeName = nestedWrapperName
+			}
+		}
+
 		fields = append(fields, fieldInfo)
 	}
 
@@ -346,12 +365,28 @@ func extractFields(structType *ast.StructType, parentTypeName string) []FieldInf
 }
 
 // resolveWrappedFields updates fields to mark which ones reference wrapped types
-func resolveWrappedFields(types []TypeInfo) {
-	for i := range types {
-		for j := range types[i].Fields {
-			field := &types[i].Fields[j]
+func resolveWrappedFields(responses []ResponseInfo) {
+	for i := range responses {
+		for j := range responses[i].Fields {
+			field := &responses[i].Fields[j]
 
-			// Check if the base type (or slice element) has a wrapper
+			typeToCheck := field.BaseType
+			if field.IsSlice {
+				typeToCheck = field.SliceElement
+			}
+
+			if wrapperName, exists := wrapperNames[typeToCheck]; exists {
+				field.IsWrappedType = true
+				field.WrapperTypeName = wrapperName
+			}
+		}
+	}
+
+	// Also resolve for nested types
+	for i := range nestedTypes {
+		for j := range nestedTypes[i].Fields {
+			field := &nestedTypes[i].Fields[j]
+
 			typeToCheck := field.BaseType
 			if field.IsSlice {
 				typeToCheck = field.SliceElement
@@ -365,38 +400,31 @@ func resolveWrappedFields(types []TypeInfo) {
 	}
 }
 
-// generateWrapperName creates a wrapper type name from a generated type name
-func generateWrapperName(name string, isItem bool, isNested bool) string {
-	if isNested {
-		// GetTableReportsItem_Query -> TableReportsQuery
-		// GetFieldData_Properties -> FieldProperties
-		// First remove Get prefix if present
-		name = strings.TrimPrefix(name, "Get")
-
-		// Replace _ with nothing, but handle the parts
-		parts := strings.Split(name, "_")
-		result := ""
-		for i, part := range parts {
-			if i == 0 {
-				// First part: remove Data/Item suffix
-				part = strings.TrimSuffix(part, "Data")
-				part = strings.TrimSuffix(part, "Item")
-			}
-			result += part
-		}
-		return result
-	}
-
-	if isItem {
-		// GetFieldsItem -> FieldsItem, GetAppTablesItem -> AppTablesItem
-		name = strings.TrimPrefix(name, "Get")
-		return name
-	}
-
-	// GetAppData -> AppResult, RunQueryData -> QueryResult
-	name = strings.TrimPrefix(name, "Get")
-	name = strings.TrimSuffix(name, "Data")
+// generateWrapperName creates wrapper name from operation name
+func generateWrapperName(operationName string) string {
+	// GetApp -> AppResult, RunQuery -> RunQueryResult
+	name := strings.TrimPrefix(operationName, "Get")
 	return name + "Result"
+}
+
+// generateItemWrapperName creates wrapper name for array item types
+func generateItemWrapperName(typeName string) string {
+	// GetFields_200_Item -> FieldsItem
+	name := strings.TrimPrefix(typeName, "Get")
+	parts := strings.Split(name, "_")
+	if len(parts) >= 1 {
+		return parts[0] + "Item"
+	}
+	return name + "Item"
+}
+
+// generateNestedWrapperName creates wrapper name for nested types
+func generateNestedWrapperName(typeName string) string {
+	// GetApp_200_SecurityProperties -> AppSecurityProperties
+	name := strings.TrimPrefix(typeName, "Get")
+	name = strings.ReplaceAll(name, "_200_", "")
+	name = strings.ReplaceAll(name, "_", "")
+	return name
 }
 
 // typeToString converts an AST type to a string representation
@@ -421,9 +449,8 @@ func typeToString(expr ast.Expr) string {
 	}
 }
 
-// isSimpleType returns true if the type is simple enough for scalar accessor methods.
+// isSimpleType returns true if the type is simple enough for scalar accessor methods
 func isSimpleType(t string) bool {
-	// Check for slices of primitives
 	if strings.HasPrefix(t, "[]") {
 		elementType := strings.TrimPrefix(t, "[]")
 		return isPrimitive(elementType)
@@ -444,8 +471,25 @@ func isPrimitive(t string) bool {
 	}
 }
 
+// hasQuickbaseRecordData checks if a struct has a Data field of type *[]QuickbaseRecord
+func hasQuickbaseRecordData(structType *ast.StructType) bool {
+	for _, field := range structType.Fields.List {
+		if len(field.Names) == 0 {
+			continue
+		}
+		if field.Names[0].Name != "Data" {
+			continue
+		}
+		fieldType := typeToString(field.Type)
+		if fieldType == "*[]QuickbaseRecord" {
+			return true
+		}
+	}
+	return false
+}
+
 // generateWrappers generates the wrapper code
-func generateWrappers(types []TypeInfo) (string, error) {
+func generateWrappers(responses []ResponseInfo) (string, error) {
 	const tmpl = `// Code generated by generate-results. DO NOT EDIT.
 
 package client
@@ -454,81 +498,152 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
-{{range $type := .}}
-// {{$type.WrapperName}} wraps {{$type.Name}} with convenience methods.
-// All fields from {{$type.Name}} are accessible via embedding.
-type {{$type.WrapperName}} struct {
-	*generated.{{$type.Name}}
+{{range $resp := .Responses}}
+// {{$resp.WrapperName}} wraps {{$resp.Name}} with convenience methods.
+type {{$resp.WrapperName}} struct {
+	resp *generated.{{$resp.Name}}
 }
-{{range $field := $type.Fields}}{{if and $field.IsPtr $field.IsSimple}}
+
+// Raw returns the underlying generated response.
+func (r *{{$resp.WrapperName}}) Raw() *generated.{{$resp.Name}} {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+{{range $field := $resp.Fields}}{{if and $field.IsPtr $field.IsSimple}}
 // {{$field.Name}} returns the {{$field.Name}} field value, or zero value if nil.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
-	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.{{$field.Name}} == nil {
 		return {{zeroValue $field.BaseType}}
 	}
-	return *r.{{$type.EmbeddedField}}.{{$field.Name}}
+	return *r.resp.JSON200.{{$field.Name}}
 }
 {{end}}{{if $field.IsSimpleRequired}}
 // {{$field.Name}} returns the {{$field.Name}} field value.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
-	if r == nil || r.{{$type.EmbeddedField}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return {{zeroValue $field.BaseType}}
 	}
-	return r.{{$type.EmbeddedField}}.{{$field.Name}}
+	return r.resp.JSON200.{{$field.Name}}
 }
 {{end}}{{if $field.IsPrimitiveSlice}}
 // {{$field.Name}} returns the {{$field.Name}} field value, or nil if not set.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() []{{$field.SliceElement}} {
-	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() []{{$field.SliceElement}} {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.{{$field.Name}} == nil {
 		return nil
 	}
-	return *r.{{$type.EmbeddedField}}.{{$field.Name}}
+	return *r.resp.JSON200.{{$field.Name}}
 }
 {{end}}{{if and $field.IsPtr $field.IsWrappedType (not $field.IsSlice)}}
 // {{$field.Name}} returns the {{$field.Name}} field as a wrapped type, or nil if not set.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() *{{$field.WrapperTypeName}} {
-	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() *{{$field.WrapperTypeName}} {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.{{$field.Name}} == nil {
 		return nil
 	}
-	return &{{$field.WrapperTypeName}}{r.{{$type.EmbeddedField}}.{{$field.Name}}}
+	return &{{$field.WrapperTypeName}}{r.resp.JSON200.{{$field.Name}}}
 }
 {{end}}{{if and $field.IsSlice $field.IsWrappedType}}
 // {{$field.Name}} returns the {{$field.Name}} field as wrapped types, or nil if not set.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() []*{{$field.WrapperTypeName}} {
-	if r == nil || r.{{$type.EmbeddedField}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() []*{{$field.WrapperTypeName}} {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	{{if hasPrefix $field.Type "*[]"}}if r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+	{{if hasPrefix $field.Type "*[]"}}if r.resp.JSON200.{{$field.Name}} == nil {
 		return nil
 	}
-	items := make([]*{{$field.WrapperTypeName}}, len(*r.{{$type.EmbeddedField}}.{{$field.Name}}))
-	for i := range *r.{{$type.EmbeddedField}}.{{$field.Name}} {
-		items[i] = &{{$field.WrapperTypeName}}{&(*r.{{$type.EmbeddedField}}.{{$field.Name}})[i]}
-	}{{else}}items := make([]*{{$field.WrapperTypeName}}, len(r.{{$type.EmbeddedField}}.{{$field.Name}}))
-	for i := range r.{{$type.EmbeddedField}}.{{$field.Name}} {
-		items[i] = &{{$field.WrapperTypeName}}{&r.{{$type.EmbeddedField}}.{{$field.Name}}[i]}
+	items := make([]*{{$field.WrapperTypeName}}, len(*r.resp.JSON200.{{$field.Name}}))
+	for i := range *r.resp.JSON200.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&(*r.resp.JSON200.{{$field.Name}})[i]}
+	}{{else}}items := make([]*{{$field.WrapperTypeName}}, len(r.resp.JSON200.{{$field.Name}}))
+	for i := range r.resp.JSON200.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&r.resp.JSON200.{{$field.Name}}[i]}
 	}{{end}}
 	return items
 }
 {{end}}{{if $field.IsEnum}}
 // {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.
-func (r *{{$type.WrapperName}}) {{$field.Name}}() string {
-	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.{{$field.Name}} == nil {
+func (r *{{$resp.WrapperName}}) {{$field.Name}}() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.{{$field.Name}} == nil {
 		return ""
 	}
-	return string(*r.{{$type.EmbeddedField}}.{{$field.Name}})
+	return string(*r.resp.JSON200.{{$field.Name}})
 }
 {{end}}{{end}}
-{{if $type.HasRecordData}}
+{{if $resp.HasRecordData}}
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
-func (r *{{$type.WrapperName}}) Records() []map[string]any {
-	if r == nil || r.{{$type.EmbeddedField}} == nil || r.{{$type.EmbeddedField}}.Data == nil {
+func (r *{{$resp.WrapperName}}) Records() []Record {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Data == nil {
 		return nil
 	}
-	return unwrapRecords(*r.{{$type.EmbeddedField}}.Data)
+	return unwrapRecords(*r.resp.JSON200.Data)
 }
 {{end}}
+{{end}}
+
+{{range $item := .ItemTypes}}
+// {{$item.WrapperName}} wraps {{$item.Name}} with convenience methods.
+type {{$item.WrapperName}} struct {
+	*generated.{{$item.Name}}
+}
+{{range $field := $item.Fields}}{{if and $field.IsPtr $field.IsSimple}}
+// {{$field.Name}} returns the {{$field.Name}} field value, or zero value if nil.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.{{$item.Name}} == nil || r.{{$item.Name}}.{{$field.Name}} == nil {
+		return {{zeroValue $field.BaseType}}
+	}
+	return *r.{{$item.Name}}.{{$field.Name}}
+}
+{{end}}{{if $field.IsSimpleRequired}}
+// {{$field.Name}} returns the {{$field.Name}} field value.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.{{$item.Name}} == nil {
+		return {{zeroValue $field.BaseType}}
+	}
+	return r.{{$item.Name}}.{{$field.Name}}
+}
+{{end}}{{if $field.IsEnum}}
+// {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() string {
+	if r == nil || r.{{$item.Name}} == nil || r.{{$item.Name}}.{{$field.Name}} == nil {
+		return ""
+	}
+	return string(*r.{{$item.Name}}.{{$field.Name}})
+}
+{{end}}{{end}}
+{{end}}
+
+{{range $nested := .NestedTypes}}
+// {{$nested.WrapperName}} wraps {{$nested.Name}} with convenience methods.
+type {{$nested.WrapperName}} struct {
+	*generated.{{$nested.Name}}
+}
+{{range $field := $nested.Fields}}{{if and $field.IsPtr $field.IsSimple}}
+// {{$field.Name}} returns the {{$field.Name}} field value, or zero value if nil.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.{{$nested.Name}} == nil || r.{{$nested.Name}}.{{$field.Name}} == nil {
+		return {{zeroValue $field.BaseType}}
+	}
+	return *r.{{$nested.Name}}.{{$field.Name}}
+}
+{{end}}{{if $field.IsSimpleRequired}}
+// {{$field.Name}} returns the {{$field.Name}} field value.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
+	if r == nil || r.{{$nested.Name}} == nil {
+		return {{zeroValue $field.BaseType}}
+	}
+	return r.{{$nested.Name}}.{{$field.Name}}
+}
+{{end}}{{if $field.IsEnum}}
+// {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() string {
+	if r == nil || r.{{$nested.Name}} == nil || r.{{$nested.Name}}.{{$field.Name}} == nil {
+		return ""
+	}
+	return string(*r.{{$nested.Name}}.{{$field.Name}})
+}
+{{end}}{{end}}
 {{end}}
 `
 
@@ -556,8 +671,18 @@ func (r *{{$type.WrapperName}}) Records() []map[string]any {
 		return "", err
 	}
 
+	data := struct {
+		Responses   []ResponseInfo
+		ItemTypes   []ItemTypeInfo
+		NestedTypes []NestedTypeInfo
+	}{
+		Responses:   responses,
+		ItemTypes:   itemTypes,
+		NestedTypes: nestedTypes,
+	}
+
 	var buf bytes.Buffer
-	if err := t.Execute(&buf, types); err != nil {
+	if err := t.Execute(&buf, data); err != nil {
 		return "", err
 	}
 

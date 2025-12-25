@@ -1143,7 +1143,7 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getWrapperTypeName $b}
 	}
 	return items, nil
 {{- else}}
-	return &{{getWrapperTypeName $b}}{resp.JSON200}, nil
+	return &{{getWrapperTypeName $b}}{resp: resp}, nil
 {{- end}}
 }
 

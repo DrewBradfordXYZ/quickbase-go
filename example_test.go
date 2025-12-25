@@ -273,9 +273,9 @@ func ExampleClient_GetApp() {
 	fmt.Printf("Description: %s\n", app.Description())
 	fmt.Printf("Created: %s\n", app.Created())
 
-	// Direct pointer access available via embedding for full control
-	if app.GetAppData != nil && app.GetAppData.Description != nil {
-		fmt.Printf("Description (direct): %s\n", *app.GetAppData.Description)
+	// Direct pointer access available via Raw() for full control
+	if app.Raw() != nil && app.Raw().JSON200 != nil && app.Raw().JSON200.Description != nil {
+		fmt.Printf("Description (direct): %s\n", *app.Raw().JSON200.Description)
 	}
 }
 

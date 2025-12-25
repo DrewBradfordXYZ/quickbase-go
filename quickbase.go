@@ -770,111 +770,11 @@ type (
 	GetFieldUsageParams = generated.GetFieldUsageParams
 )
 
-// Named response data types (extracted from inline schemas)
-type (
-	// App types
-	GetAppData                   = generated.GetAppData
-	GetAppData_SecurityProperties = generated.GetAppData_SecurityProperties
-	GetAppData_Variables_Item    = generated.GetAppData_Variables_Item
-	CreateAppData                = generated.CreateAppData
-	UpdateAppData                = generated.UpdateAppData
-	DeleteAppData                = generated.DeleteAppData
-	CopyAppData                  = generated.CopyAppData
-
-	// App events types
-	GetAppEventsItem       = generated.GetAppEventsItem
-	GetAppEventsItemType   = generated.GetAppEventsItemType
-	GetAppEventsItem_Owner = generated.GetAppEventsItem_Owner
-
-	// Table types
-	GetAppTablesItem = generated.GetAppTablesItem
-	GetTableData     = generated.GetTableData
-	CreateTableData  = generated.CreateTableData
-	UpdateTableData  = generated.UpdateTableData
-	DeleteTableData  = generated.DeleteTableData
-
-	// Roles types
-	GetRolesItem = generated.GetRolesItem
-
-	// Field types
-	GetFieldsItem                           = generated.GetFieldsItem
-	GetFieldsItem_Properties                = generated.GetFieldsItem_Properties
-	GetFieldsItem_Properties_CompositeFields_Item = generated.GetFieldsItem_Properties_CompositeFields_Item
-	GetFieldData                            = generated.GetFieldData
-	GetFieldData_Properties                 = generated.GetFieldData_Properties
-	GetFieldData_Properties_CompositeFields_Item = generated.GetFieldData_Properties_CompositeFields_Item
-	CreateFieldData                         = generated.CreateFieldData
-	UpdateFieldData                         = generated.UpdateFieldData
-	DeleteFieldsData                        = generated.DeleteFieldsData
-
-	// Field usage types
-	GetFieldsUsageItem                    = generated.GetFieldsUsageItem
-	GetFieldsUsageItem_Field              = generated.GetFieldsUsageItem_Field
-	GetFieldsUsageItem_Usage              = generated.GetFieldsUsageItem_Usage
-	GetFieldUsageItem                     = generated.GetFieldUsageItem
-	GetFieldUsageItem_Field               = generated.GetFieldUsageItem_Field
-	GetFieldUsageItem_Usage               = generated.GetFieldUsageItem_Usage
-
-	// Relationship types
-	GetRelationshipsData                              = generated.GetRelationshipsData
-	GetRelationshipsData_Metadata                     = generated.GetRelationshipsData_Metadata
-	GetRelationshipsData_Relationships_Item           = generated.GetRelationshipsData_Relationships_Item
-	GetRelationshipsData_Relationships_ForeignKeyField = generated.GetRelationshipsData_Relationships_ForeignKeyField
-	GetRelationshipsData_Relationships_LookupFields_Item = generated.GetRelationshipsData_Relationships_LookupFields_Item
-	GetRelationshipsData_Relationships_SummaryFields_Item = generated.GetRelationshipsData_Relationships_SummaryFields_Item
-	CreateRelationshipData                            = generated.CreateRelationshipData
-	UpdateRelationshipData                            = generated.UpdateRelationshipData
-	DeleteRelationshipData                            = generated.DeleteRelationshipData
-
-	// Report types
-	GetTableReportsItem                       = generated.GetTableReportsItem
-	GetTableReportsItem_Query                 = generated.GetTableReportsItem_Query
-	GetTableReportsItem_Query_FormulaFields_Item = generated.GetTableReportsItem_Query_FormulaFields_Item
-	GetReportData                             = generated.GetReportData
-	GetReportData_Query                       = generated.GetReportData_Query
-	RunReportData                             = generated.RunReportData
-
-	// Query types
-	RunQueryData       = generated.RunQueryData
-	DeleteRecordsData  = generated.DeleteRecordsData
-	UpsertData         = generated.UpsertData
-
-	// Users types
-	GetUsersData           = generated.GetUsersData
-	DenyUsersData          = generated.DenyUsersData
-	UndenyUsersData        = generated.UndenyUsersData
-	DenyUsersAndGroupsData = generated.DenyUsersAndGroupsData
-
-	// Auth types
-	GetTempTokenDBIDData    = generated.GetTempTokenDBIDData
-	ExchangeSsoTokenData    = generated.ExchangeSsoTokenData
-	CloneUserTokenData      = generated.CloneUserTokenData
-	TransferUserTokenData   = generated.TransferUserTokenData
-	DeactivateUserTokenData = generated.DeactivateUserTokenData
-	DeleteUserTokenData     = generated.DeleteUserTokenData
-
-	// Formula types
-	RunFormulaData = generated.RunFormulaData
-
-	// File types
-	DeleteFileData = generated.DeleteFileData
-
-	// Audit types
-	AuditData = generated.AuditData
-
-	// Analytics types
-	PlatformAnalyticReadsData           = generated.PlatformAnalyticReadsData
-	PlatformAnalyticEventSummariesData  = generated.PlatformAnalyticEventSummariesData
-
-	// Trustees types
-	GetTrusteesItem    = generated.GetTrusteesItem
-	AddTrusteesData    = generated.AddTrusteesData
-	RemoveTrusteesData = generated.RemoveTrusteesData
-	UpdateTrusteesData = generated.UpdateTrusteesData
-
-	// Document types
-	GenerateDocumentData = generated.GenerateDocumentData
-)
+// NOTE: Named response data types (GetAppData, RunQueryData, etc.) were removed
+// in v2.1 due to oapi-codegen generating inline anonymous structs instead of named types.
+// Use the wrapper types from the client package instead:
+//   - AppResult, FieldsItem, etc. for nil-safe access
+//   - Use result.Raw().JSON200 for direct access to the response data
 
 // Core types
 type (

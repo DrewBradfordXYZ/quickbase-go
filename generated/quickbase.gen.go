@@ -22,283 +22,11 @@ const (
 	UserTokenScopes = "userToken.Scopes"
 )
 
-// Defines values for AddTrusteesDataFailureTrusteeType.
-const (
-	AddTrusteesDataFailureTrusteeTypeDomGroup AddTrusteesDataFailureTrusteeType = "dom-group"
-	AddTrusteesDataFailureTrusteeTypeGroup    AddTrusteesDataFailureTrusteeType = "group"
-	AddTrusteesDataFailureTrusteeTypeUser     AddTrusteesDataFailureTrusteeType = "user"
-)
-
-// Defines values for AddTrusteesDataSuccessType.
-const (
-	AddTrusteesDataSuccessTypeDomGroup AddTrusteesDataSuccessType = "dom-group"
-	AddTrusteesDataSuccessTypeGroup    AddTrusteesDataSuccessType = "group"
-	AddTrusteesDataSuccessTypeUser     AddTrusteesDataSuccessType = "user"
-)
-
-// Defines values for CreateFieldDataPropertiesCurrencyFormat.
-const (
-	CreateFieldDataPropertiesCurrencyFormatLeft   CreateFieldDataPropertiesCurrencyFormat = "left"
-	CreateFieldDataPropertiesCurrencyFormatMiddle CreateFieldDataPropertiesCurrencyFormat = "middle"
-	CreateFieldDataPropertiesCurrencyFormatRight  CreateFieldDataPropertiesCurrencyFormat = "right"
-)
-
-// Defines values for CreateFieldDataPropertiesSummaryFunction.
-const (
-	CreateFieldDataPropertiesSummaryFunctionAVG           CreateFieldDataPropertiesSummaryFunction = "AVG"
-	CreateFieldDataPropertiesSummaryFunctionCOMBINEDTEXT  CreateFieldDataPropertiesSummaryFunction = "COMBINED-TEXT"
-	CreateFieldDataPropertiesSummaryFunctionCOMBINEDUSER  CreateFieldDataPropertiesSummaryFunction = "COMBINED-USER"
-	CreateFieldDataPropertiesSummaryFunctionCOUNT         CreateFieldDataPropertiesSummaryFunction = "COUNT"
-	CreateFieldDataPropertiesSummaryFunctionDISTINCTCOUNT CreateFieldDataPropertiesSummaryFunction = "DISTINCT-COUNT"
-	CreateFieldDataPropertiesSummaryFunctionMAX           CreateFieldDataPropertiesSummaryFunction = "MAX"
-	CreateFieldDataPropertiesSummaryFunctionMIN           CreateFieldDataPropertiesSummaryFunction = "MIN"
-	CreateFieldDataPropertiesSummaryFunctionSTDDEV        CreateFieldDataPropertiesSummaryFunction = "STD-DEV"
-	CreateFieldDataPropertiesSummaryFunctionSUM           CreateFieldDataPropertiesSummaryFunction = "SUM"
-)
-
-// Defines values for CreateFieldDataPropertiesVersionMode.
-const (
-	CreateFieldDataPropertiesVersionModeKeepallversions  CreateFieldDataPropertiesVersionMode = "keepallversions"
-	CreateFieldDataPropertiesVersionModeKeeplastversions CreateFieldDataPropertiesVersionMode = "keeplastversions"
-)
-
-// Defines values for CreateTableDataDefaultSortOrder.
-const (
-	CreateTableDataDefaultSortOrderASC  CreateTableDataDefaultSortOrder = "ASC"
-	CreateTableDataDefaultSortOrderDESC CreateTableDataDefaultSortOrder = "DESC"
-)
-
-// Defines values for ExchangeSsoTokenDataIssuedTokenType.
-const (
-	ExchangeSsoTokenDataIssuedTokenTypeUrnQuickbaseParamsOauthTokenTypeTempTicket ExchangeSsoTokenDataIssuedTokenType = "urn:quickbase:params:oauth:token-type:temp_ticket"
-	ExchangeSsoTokenDataIssuedTokenTypeUrnQuickbaseParamsOauthTokenTypeTempToken  ExchangeSsoTokenDataIssuedTokenType = "urn:quickbase:params:oauth:token-type:temp_token"
-)
-
-// Defines values for ExchangeSsoTokenDataTokenType.
-const (
-	NA ExchangeSsoTokenDataTokenType = "N_A"
-)
-
-// Defines values for GetAppEventsItemType.
-const (
-	Automation        GetAppEventsItemType = "automation"
-	EmailNotification GetAppEventsItemType = "email-notification"
-	QbAction          GetAppEventsItemType = "qb-action"
-	Reminder          GetAppEventsItemType = "reminder"
-	Subscription      GetAppEventsItemType = "subscription"
-	Webhook           GetAppEventsItemType = "webhook"
-)
-
-// Defines values for GetAppTablesItemDefaultSortOrder.
-const (
-	GetAppTablesItemDefaultSortOrderASC  GetAppTablesItemDefaultSortOrder = "ASC"
-	GetAppTablesItemDefaultSortOrderDESC GetAppTablesItemDefaultSortOrder = "DESC"
-)
-
-// Defines values for GetFieldDataPropertiesCurrencyFormat.
-const (
-	GetFieldDataPropertiesCurrencyFormatLeft   GetFieldDataPropertiesCurrencyFormat = "left"
-	GetFieldDataPropertiesCurrencyFormatMiddle GetFieldDataPropertiesCurrencyFormat = "middle"
-	GetFieldDataPropertiesCurrencyFormatRight  GetFieldDataPropertiesCurrencyFormat = "right"
-)
-
-// Defines values for GetFieldDataPropertiesSummaryFunction.
-const (
-	GetFieldDataPropertiesSummaryFunctionAVG           GetFieldDataPropertiesSummaryFunction = "AVG"
-	GetFieldDataPropertiesSummaryFunctionCOMBINEDTEXT  GetFieldDataPropertiesSummaryFunction = "COMBINED-TEXT"
-	GetFieldDataPropertiesSummaryFunctionCOMBINEDUSER  GetFieldDataPropertiesSummaryFunction = "COMBINED-USER"
-	GetFieldDataPropertiesSummaryFunctionCOUNT         GetFieldDataPropertiesSummaryFunction = "COUNT"
-	GetFieldDataPropertiesSummaryFunctionDISTINCTCOUNT GetFieldDataPropertiesSummaryFunction = "DISTINCT-COUNT"
-	GetFieldDataPropertiesSummaryFunctionMAX           GetFieldDataPropertiesSummaryFunction = "MAX"
-	GetFieldDataPropertiesSummaryFunctionMIN           GetFieldDataPropertiesSummaryFunction = "MIN"
-	GetFieldDataPropertiesSummaryFunctionSTDDEV        GetFieldDataPropertiesSummaryFunction = "STD-DEV"
-	GetFieldDataPropertiesSummaryFunctionSUM           GetFieldDataPropertiesSummaryFunction = "SUM"
-)
-
-// Defines values for GetFieldDataPropertiesVersionMode.
-const (
-	GetFieldDataPropertiesVersionModeKeepallversions  GetFieldDataPropertiesVersionMode = "keepallversions"
-	GetFieldDataPropertiesVersionModeKeeplastversions GetFieldDataPropertiesVersionMode = "keeplastversions"
-)
-
-// Defines values for GetFieldsItemPropertiesCurrencyFormat.
-const (
-	GetFieldsItemPropertiesCurrencyFormatLeft   GetFieldsItemPropertiesCurrencyFormat = "left"
-	GetFieldsItemPropertiesCurrencyFormatMiddle GetFieldsItemPropertiesCurrencyFormat = "middle"
-	GetFieldsItemPropertiesCurrencyFormatRight  GetFieldsItemPropertiesCurrencyFormat = "right"
-)
-
-// Defines values for GetFieldsItemPropertiesSummaryFunction.
-const (
-	GetFieldsItemPropertiesSummaryFunctionAVG           GetFieldsItemPropertiesSummaryFunction = "AVG"
-	GetFieldsItemPropertiesSummaryFunctionCOMBINEDTEXT  GetFieldsItemPropertiesSummaryFunction = "COMBINED-TEXT"
-	GetFieldsItemPropertiesSummaryFunctionCOMBINEDUSER  GetFieldsItemPropertiesSummaryFunction = "COMBINED-USER"
-	GetFieldsItemPropertiesSummaryFunctionCOUNT         GetFieldsItemPropertiesSummaryFunction = "COUNT"
-	GetFieldsItemPropertiesSummaryFunctionDISTINCTCOUNT GetFieldsItemPropertiesSummaryFunction = "DISTINCT-COUNT"
-	GetFieldsItemPropertiesSummaryFunctionMAX           GetFieldsItemPropertiesSummaryFunction = "MAX"
-	GetFieldsItemPropertiesSummaryFunctionMIN           GetFieldsItemPropertiesSummaryFunction = "MIN"
-	GetFieldsItemPropertiesSummaryFunctionSTDDEV        GetFieldsItemPropertiesSummaryFunction = "STD-DEV"
-	GetFieldsItemPropertiesSummaryFunctionSUM           GetFieldsItemPropertiesSummaryFunction = "SUM"
-)
-
-// Defines values for GetFieldsItemPropertiesVersionMode.
-const (
-	GetFieldsItemPropertiesVersionModeKeepallversions  GetFieldsItemPropertiesVersionMode = "keepallversions"
-	GetFieldsItemPropertiesVersionModeKeeplastversions GetFieldsItemPropertiesVersionMode = "keeplastversions"
-)
-
-// Defines values for GetReportDataQueryFormulaFieldsFieldType.
-const (
-	GetReportDataQueryFormulaFieldsFieldTypeCheckbox  GetReportDataQueryFormulaFieldsFieldType = "checkbox"
-	GetReportDataQueryFormulaFieldsFieldTypeCurrency  GetReportDataQueryFormulaFieldsFieldType = "currency"
-	GetReportDataQueryFormulaFieldsFieldTypeDate      GetReportDataQueryFormulaFieldsFieldType = "date"
-	GetReportDataQueryFormulaFieldsFieldTypeDuration  GetReportDataQueryFormulaFieldsFieldType = "duration"
-	GetReportDataQueryFormulaFieldsFieldTypeEmail     GetReportDataQueryFormulaFieldsFieldType = "email"
-	GetReportDataQueryFormulaFieldsFieldTypeMultiuser GetReportDataQueryFormulaFieldsFieldType = "multiuser"
-	GetReportDataQueryFormulaFieldsFieldTypeNumeric   GetReportDataQueryFormulaFieldsFieldType = "numeric"
-	GetReportDataQueryFormulaFieldsFieldTypePercent   GetReportDataQueryFormulaFieldsFieldType = "percent"
-	GetReportDataQueryFormulaFieldsFieldTypePhone     GetReportDataQueryFormulaFieldsFieldType = "phone"
-	GetReportDataQueryFormulaFieldsFieldTypeRating    GetReportDataQueryFormulaFieldsFieldType = "rating"
-	GetReportDataQueryFormulaFieldsFieldTypeRichText  GetReportDataQueryFormulaFieldsFieldType = "rich-text"
-	GetReportDataQueryFormulaFieldsFieldTypeText      GetReportDataQueryFormulaFieldsFieldType = "text"
-	GetReportDataQueryFormulaFieldsFieldTypeTimeofday GetReportDataQueryFormulaFieldsFieldType = "timeofday"
-	GetReportDataQueryFormulaFieldsFieldTypeTimestamp GetReportDataQueryFormulaFieldsFieldType = "timestamp"
-	GetReportDataQueryFormulaFieldsFieldTypeUrl       GetReportDataQueryFormulaFieldsFieldType = "url"
-	GetReportDataQueryFormulaFieldsFieldTypeUser      GetReportDataQueryFormulaFieldsFieldType = "user"
-)
-
-// Defines values for GetRolesItemAccessType.
-const (
-	Administrator        GetRolesItemAccessType = "Administrator"
-	BasicAccess          GetRolesItemAccessType = "Basic Access"
-	BasicAccessWithShare GetRolesItemAccessType = "Basic Access with Share"
-	None                 GetRolesItemAccessType = "None"
-	PartialAdministrator GetRolesItemAccessType = "Partial Administrator"
-)
-
-// Defines values for GetTableDataDefaultSortOrder.
-const (
-	GetTableDataDefaultSortOrderASC  GetTableDataDefaultSortOrder = "ASC"
-	GetTableDataDefaultSortOrderDESC GetTableDataDefaultSortOrder = "DESC"
-)
-
-// Defines values for GetTableReportsItemQueryFormulaFieldsFieldType.
-const (
-	GetTableReportsItemQueryFormulaFieldsFieldTypeCheckbox  GetTableReportsItemQueryFormulaFieldsFieldType = "checkbox"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeCurrency  GetTableReportsItemQueryFormulaFieldsFieldType = "currency"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeDate      GetTableReportsItemQueryFormulaFieldsFieldType = "date"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeDuration  GetTableReportsItemQueryFormulaFieldsFieldType = "duration"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeEmail     GetTableReportsItemQueryFormulaFieldsFieldType = "email"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeMultiuser GetTableReportsItemQueryFormulaFieldsFieldType = "multiuser"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeNumeric   GetTableReportsItemQueryFormulaFieldsFieldType = "numeric"
-	GetTableReportsItemQueryFormulaFieldsFieldTypePercent   GetTableReportsItemQueryFormulaFieldsFieldType = "percent"
-	GetTableReportsItemQueryFormulaFieldsFieldTypePhone     GetTableReportsItemQueryFormulaFieldsFieldType = "phone"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeRating    GetTableReportsItemQueryFormulaFieldsFieldType = "rating"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeRichText  GetTableReportsItemQueryFormulaFieldsFieldType = "rich-text"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeText      GetTableReportsItemQueryFormulaFieldsFieldType = "text"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeTimeofday GetTableReportsItemQueryFormulaFieldsFieldType = "timeofday"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeTimestamp GetTableReportsItemQueryFormulaFieldsFieldType = "timestamp"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeUrl       GetTableReportsItemQueryFormulaFieldsFieldType = "url"
-	GetTableReportsItemQueryFormulaFieldsFieldTypeUser      GetTableReportsItemQueryFormulaFieldsFieldType = "user"
-)
-
-// Defines values for GetTrusteesItemType.
-const (
-	GetTrusteesItemTypeDomGroup GetTrusteesItemType = "dom-group"
-	GetTrusteesItemTypeGroup    GetTrusteesItemType = "group"
-	GetTrusteesItemTypeUser     GetTrusteesItemType = "user"
-)
-
-// Defines values for PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy.
-const (
-	PlatformAnalyticEventSummariesDataDataEventsSummariesGroupByApp  PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy = "app"
-	PlatformAnalyticEventSummariesDataDataEventsSummariesGroupByUser PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy = "user"
-)
-
-// Defines values for PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory.
-const (
-	PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategoryIntegration PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory = "integration"
-	PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategoryUser        PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory = "user"
-)
-
-// Defines values for PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType.
-const (
-	PlatformAnalyticEventSummariesDataDataEventsSummariesWhereTypeApp  PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType = "app"
-	PlatformAnalyticEventSummariesDataDataEventsSummariesWhereTypeUser PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType = "user"
-)
-
-// Defines values for RecordsModifiedSinceDataChangesChangeType.
-const (
-	CREATE RecordsModifiedSinceDataChangesChangeType = "CREATE"
-	DELETE RecordsModifiedSinceDataChangesChangeType = "DELETE"
-	MODIFY RecordsModifiedSinceDataChangesChangeType = "MODIFY"
-)
-
-// Defines values for RemoveTrusteesDataFailureTrusteeType.
-const (
-	RemoveTrusteesDataFailureTrusteeTypeDomGroup RemoveTrusteesDataFailureTrusteeType = "dom-group"
-	RemoveTrusteesDataFailureTrusteeTypeGroup    RemoveTrusteesDataFailureTrusteeType = "group"
-	RemoveTrusteesDataFailureTrusteeTypeUser     RemoveTrusteesDataFailureTrusteeType = "user"
-)
-
-// Defines values for RemoveTrusteesDataSuccessType.
-const (
-	RemoveTrusteesDataSuccessTypeDomGroup RemoveTrusteesDataSuccessType = "dom-group"
-	RemoveTrusteesDataSuccessTypeGroup    RemoveTrusteesDataSuccessType = "group"
-	RemoveTrusteesDataSuccessTypeUser     RemoveTrusteesDataSuccessType = "user"
-)
-
 // Defines values for SortFieldOrder.
 const (
 	SortFieldOrderASC         SortFieldOrder = "ASC"
 	SortFieldOrderDESC        SortFieldOrder = "DESC"
 	SortFieldOrderEqualValues SortFieldOrder = "equal-values"
-)
-
-// Defines values for UpdateFieldDataPropertiesCurrencyFormat.
-const (
-	UpdateFieldDataPropertiesCurrencyFormatLeft   UpdateFieldDataPropertiesCurrencyFormat = "left"
-	UpdateFieldDataPropertiesCurrencyFormatMiddle UpdateFieldDataPropertiesCurrencyFormat = "middle"
-	UpdateFieldDataPropertiesCurrencyFormatRight  UpdateFieldDataPropertiesCurrencyFormat = "right"
-)
-
-// Defines values for UpdateFieldDataPropertiesSummaryFunction.
-const (
-	UpdateFieldDataPropertiesSummaryFunctionAVG           UpdateFieldDataPropertiesSummaryFunction = "AVG"
-	UpdateFieldDataPropertiesSummaryFunctionCOMBINEDTEXT  UpdateFieldDataPropertiesSummaryFunction = "COMBINED-TEXT"
-	UpdateFieldDataPropertiesSummaryFunctionCOMBINEDUSER  UpdateFieldDataPropertiesSummaryFunction = "COMBINED-USER"
-	UpdateFieldDataPropertiesSummaryFunctionCOUNT         UpdateFieldDataPropertiesSummaryFunction = "COUNT"
-	UpdateFieldDataPropertiesSummaryFunctionDISTINCTCOUNT UpdateFieldDataPropertiesSummaryFunction = "DISTINCT-COUNT"
-	UpdateFieldDataPropertiesSummaryFunctionMAX           UpdateFieldDataPropertiesSummaryFunction = "MAX"
-	UpdateFieldDataPropertiesSummaryFunctionMIN           UpdateFieldDataPropertiesSummaryFunction = "MIN"
-	UpdateFieldDataPropertiesSummaryFunctionSTDDEV        UpdateFieldDataPropertiesSummaryFunction = "STD-DEV"
-	UpdateFieldDataPropertiesSummaryFunctionSUM           UpdateFieldDataPropertiesSummaryFunction = "SUM"
-)
-
-// Defines values for UpdateFieldDataPropertiesVersionMode.
-const (
-	UpdateFieldDataPropertiesVersionModeKeepallversions  UpdateFieldDataPropertiesVersionMode = "keepallversions"
-	UpdateFieldDataPropertiesVersionModeKeeplastversions UpdateFieldDataPropertiesVersionMode = "keeplastversions"
-)
-
-// Defines values for UpdateTableDataDefaultSortOrder.
-const (
-	ASC  UpdateTableDataDefaultSortOrder = "ASC"
-	DESC UpdateTableDataDefaultSortOrder = "DESC"
-)
-
-// Defines values for UpdateTrusteesDataFailureTrusteeType.
-const (
-	UpdateTrusteesDataFailureTrusteeTypeDomGroup UpdateTrusteesDataFailureTrusteeType = "dom-group"
-	UpdateTrusteesDataFailureTrusteeTypeGroup    UpdateTrusteesDataFailureTrusteeType = "group"
-	UpdateTrusteesDataFailureTrusteeTypeUser     UpdateTrusteesDataFailureTrusteeType = "user"
-)
-
-// Defines values for UpdateTrusteesDataSuccessType.
-const (
-	UpdateTrusteesDataSuccessTypeDomGroup UpdateTrusteesDataSuccessType = "dom-group"
-	UpdateTrusteesDataSuccessTypeGroup    UpdateTrusteesDataSuccessType = "group"
-	UpdateTrusteesDataSuccessTypeUser     UpdateTrusteesDataSuccessType = "user"
 )
 
 // Defines values for PlatformAnalyticEventSummariesJSONBodyGroupBy.
@@ -341,8 +69,8 @@ const (
 
 // Defines values for ExchangeSsoTokenJSONBodyRequestedTokenType.
 const (
-	ExchangeSsoTokenJSONBodyRequestedTokenTypeUrnQuickbaseParamsOauthTokenTypeTempTicket ExchangeSsoTokenJSONBodyRequestedTokenType = "urn:quickbase:params:oauth:token-type:temp_ticket"
-	ExchangeSsoTokenJSONBodyRequestedTokenTypeUrnQuickbaseParamsOauthTokenTypeTempToken  ExchangeSsoTokenJSONBodyRequestedTokenType = "urn:quickbase:params:oauth:token-type:temp_token"
+	UrnQuickbaseParamsOauthTokenTypeTempTicket ExchangeSsoTokenJSONBodyRequestedTokenType = "urn:quickbase:params:oauth:token-type:temp_ticket"
+	UrnQuickbaseParamsOauthTokenTypeTempToken  ExchangeSsoTokenJSONBodyRequestedTokenType = "urn:quickbase:params:oauth:token-type:temp_token"
 )
 
 // Defines values for ExchangeSsoTokenJSONBodySubjectTokenType.
@@ -469,7 +197,7 @@ const (
 
 // Defines values for RunQueryJSONBodyGroupByGrouping.
 const (
-	EqualValues RunQueryJSONBodyGroupByGrouping = "equal-values"
+	RunQueryJSONBodyGroupByGroupingEqualValues RunQueryJSONBodyGroupByGrouping = "equal-values"
 )
 
 // Defines values for RunQueryJSONBodySortBy1.
@@ -503,857 +231,6 @@ const (
 	SUM           UpdateRelationshipJSONBodySummaryFieldsAccumulationType = "SUM"
 )
 
-// AddManagersToGroupData defines model for AddManagersToGroupData.
-type AddManagersToGroupData struct {
-	// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have been added to the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AddMembersToGroupData defines model for AddMembersToGroupData.
-type AddMembersToGroupData struct {
-	// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have been added to the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AddSubgroupsToGroupData defines model for AddSubgroupsToGroupData.
-type AddSubgroupsToGroupData struct {
-	// Failure A list of child groups that couldn't be added to the group. This includes a list of IDs that represent invalid groups and groups that have already been added to the group.
-	Failure []string `json:"failure"`
-
-	// Success A list of child groups that have been added to the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AddTrusteesData defines model for AddTrusteesData.
-type AddTrusteesData struct {
-	// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-	Failure []struct {
-		// Error The error message associated with the trustee that could not be updated.
-		Error *string `json:"error,omitempty"`
-
-		// Trustee Object used for operations to read, create, or update trustees in an app.
-		Trustee *struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type AddTrusteesDataFailureTrusteeType `json:"type"`
-		} `json:"trustee,omitempty"`
-	} `json:"failure"`
-
-	// Success A list of trustees that have been successfully updated.
-	Success []struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type AddTrusteesDataSuccessType `json:"type"`
-	} `json:"success"`
-}
-
-// AddTrusteesDataFailureTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
-type AddTrusteesDataFailureTrusteeType string
-
-// AddTrusteesDataSuccessType The type of trustee being added. This can be a user, group, or email domain group.
-type AddTrusteesDataSuccessType string
-
-// AuditData defines model for AuditData.
-type AuditData struct {
-	// Events All events of the audit log.
-	Events *[]AuditData_Events_Item `json:"events,omitempty"`
-
-	// NextToken Token to fetch the next 1000 logs.
-	NextToken *string `json:"nextToken,omitempty"`
-
-	// QueryId Query id of the requested audit log.
-	QueryId              string                 `json:"queryId"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AuditData_Events_PayloadChanges_Changes An object describing the changes that occured on record changes.
-type AuditData_Events_PayloadChanges_Changes struct {
-	// Current The current value of the fields that have been changed.
-	Current []interface{} `json:"current"`
-
-	// Fields The list of fields and their types that have been changed.
-	Fields []interface{} `json:"fields"`
-
-	// Previous The previous value of the fields that have been changed.
-	Previous             []interface{}          `json:"previous"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AuditData_Events_PayloadChanges The data changes that have occured to a field that has been marked as audited.
-type AuditData_Events_PayloadChanges struct {
-	// ChangeType The change type that occured for a record. Could be one of add, edit, delete.
-	ChangeType string `json:"changeType"`
-
-	// Changes An object describing the changes that occured on record changes.
-	Changes AuditData_Events_PayloadChanges_Changes `json:"changes"`
-
-	// Rid The recordId that has been edited.
-	Rid int `json:"rid"`
-
-	// Type A placeholder for type changes.
-	Type                 string                 `json:"type"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// AuditData_Events_Item defines model for AuditData.events.Item.
-type AuditData_Events_Item struct {
-	// Application UI for user interface or API for an API call.
-	Application string `json:"application"`
-
-	// Description A brief description of the action that you can click to see additional details.
-	Description string `json:"description"`
-
-	// Email User's email address.
-	Email string `json:"email"`
-
-	// Firstname User's first name.
-	Firstname string `json:"firstname"`
-
-	// Id Log ID.
-	Id string `json:"id"`
-
-	// Ipaddress The IP address the action was taken from.
-	Ipaddress string `json:"ipaddress"`
-
-	// Lastname User's last name.
-	Lastname string `json:"lastname"`
-
-	// PayloadChanges The data changes that have occured to a field that has been marked as audited.
-	PayloadChanges *AuditData_Events_PayloadChanges `json:"payloadChanges,omitempty"`
-
-	// Time Exact time the action was taken, including date, and time with hour, minutes and seconds. Time zone is the browser time zone.
-	Time string `json:"time"`
-
-	// Topic What action was taken, such as log in, create app, report access, or table search.
-	Topic string `json:"topic"`
-
-	// Useragent The browser and OS the action was taken from.
-	Useragent            string                 `json:"useragent"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CloneUserTokenData defines model for CloneUserTokenData.
-type CloneUserTokenData struct {
-	// Active Whether the user token is active.
-	Active *bool `json:"active,omitempty"`
-
-	// Apps The list of apps this user token is assigned to.
-	Apps *[]CloneUserTokenData_Apps_Item `json:"apps,omitempty"`
-
-	// Description User Token description.
-	Description *string `json:"description,omitempty"`
-
-	// Id User Token id.
-	Id *int `json:"id,omitempty"`
-
-	// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	LastUsed *string `json:"lastUsed,omitempty"`
-
-	// Name User Token name.
-	Name *string `json:"name,omitempty"`
-
-	// Token User Token value.
-	Token                *string                `json:"token,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CloneUserTokenData_Apps_Item defines model for CloneUserTokenData.apps.Item.
-type CloneUserTokenData_Apps_Item struct {
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// Name The application's name.
-	Name                 *string                `json:"name,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CopyAppData defines model for CopyAppData.
-type CopyAppData struct {
-	// AncestorId The id of the app from which this app was copied
-	AncestorId *string `json:"ancestorId,omitempty"`
-
-	// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
-	DataClassification *string `json:"dataClassification,omitempty"`
-
-	// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
-	DateFormat *string `json:"dateFormat,omitempty"`
-
-	// Description The description for the app
-	Description *string `json:"description,omitempty"`
-
-	// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
-	HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
-
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-	Name string `json:"name"`
-
-	// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated *string `json:"updated,omitempty"`
-
-	// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-	Variables            *[]CopyAppData_Variables_Item `json:"variables,omitempty"`
-	AdditionalProperties map[string]interface{}        `json:"-"`
-}
-
-// CopyAppData_Variables_Item defines model for CopyAppData.variables.Item.
-type CopyAppData_Variables_Item struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
-
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateAppData defines model for CreateAppData.
-type CreateAppData struct {
-	// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
-	DataClassification *string `json:"dataClassification,omitempty"`
-
-	// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
-	DateFormat *string `json:"dateFormat,omitempty"`
-
-	// Description The description for the app. If this property is left out, the app description will be blank.
-	Description *string `json:"description,omitempty"`
-
-	// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
-	HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
-
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// MemoryInfo Application memory info
-	MemoryInfo *struct {
-		// EstMemory The estimated memory of this application in gigabytes
-		EstMemory *float32 `json:"estMemory,omitempty"`
-
-		// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-		EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
-	} `json:"memoryInfo,omitempty"`
-
-	// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-	Name string `json:"name"`
-
-	// SecurityProperties Security properties of the application
-	SecurityProperties *CreateAppData_SecurityProperties `json:"securityProperties,omitempty"`
-
-	// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated *string `json:"updated,omitempty"`
-
-	// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-	Variables            *[]CreateAppData_Variables_Item `json:"variables,omitempty"`
-	AdditionalProperties map[string]interface{}          `json:"-"`
-}
-
-// CreateAppData_SecurityProperties Security properties of the application
-type CreateAppData_SecurityProperties struct {
-	// AllowClone Allow users who are not administrators to copy
-	AllowClone *bool `json:"allowClone,omitempty"`
-
-	// AllowExport Allow users who are not administrators to export data
-	AllowExport *bool `json:"allowExport,omitempty"`
-
-	// EnableAppTokens Require Application Tokens
-	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
-
-	// HideFromPublic Hide from public application searches
-	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
-
-	// MustBeRealmApproved Only "approved" users may access this application
-	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
-
-	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
-	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateAppData_Variables_Item defines model for CreateAppData.variables.Item.
-type CreateAppData_Variables_Item struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
-
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateFieldData defines model for CreateFieldData.
-type CreateFieldData struct {
-	// AppearsByDefault Indicates if the field is marked as a default in reports.
-	AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
-
-	// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
-	Audited *bool `json:"audited,omitempty"`
-
-	// Bold Indicates if the field is configured to display in bold in the product.
-	Bold *bool `json:"bold,omitempty"`
-
-	// DoesDataCopy Indicates if the field data will copy when a user copies the record.
-	DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
-
-	// FieldHelp The configured help text shown to users within the product.
-	FieldHelp *string `json:"fieldHelp,omitempty"`
-
-	// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
-	FieldType *string `json:"fieldType,omitempty"`
-
-	// FindEnabled Indicates if the field is marked as searchable.
-	FindEnabled *bool `json:"findEnabled,omitempty"`
-
-	// Id The id of the field, unique to this table.
-	Id int64 `json:"id"`
-
-	// Label The label (name) of the field.
-	Label *string `json:"label,omitempty"`
-
-	// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
-	Mode *string `json:"mode,omitempty"`
-
-	// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
-	NoWrap *bool `json:"noWrap,omitempty"`
-
-	// Permissions Field Permissions for different roles.
-	Permissions *[]struct {
-		// PermissionType The permission given to the role for this field
-		PermissionType *string `json:"permissionType,omitempty"`
-
-		// Role The role associated with a given permission for the field
-		Role *string `json:"role,omitempty"`
-
-		// RoleId The Id of the given role
-		RoleId *int `json:"roleId,omitempty"`
-	} `json:"permissions,omitempty"`
-
-	// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-	Properties *CreateFieldData_Properties `json:"properties,omitempty"`
-
-	// Required Indicates if the field is marked required.
-	Required *bool `json:"required,omitempty"`
-
-	// Unique Indicates if the field is marked unique.
-	Unique               *bool                  `json:"unique,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateFieldDataPropertiesCompositeFields0 defines model for .
-type CreateFieldDataPropertiesCompositeFields0 = int
-
-// CreateFieldDataPropertiesCompositeFields1 defines model for .
-type CreateFieldDataPropertiesCompositeFields1 = map[string]interface{}
-
-// CreateFieldData_Properties_CompositeFields_Item defines model for CreateFieldData.Properties.CompositeFields.Item.
-type CreateFieldData_Properties_CompositeFields_Item struct {
-	union json.RawMessage
-}
-
-// CreateFieldDataPropertiesCurrencyFormat The currency format used when displaying field values within the product.
-type CreateFieldDataPropertiesCurrencyFormat string
-
-// CreateFieldDataPropertiesSummaryFunction The summary accumulation function type.
-type CreateFieldDataPropertiesSummaryFunction string
-
-// CreateFieldDataPropertiesVersionMode Version modes for files. Keep all versions vs keep last version.
-type CreateFieldDataPropertiesVersionMode string
-
-// CreateFieldData_Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-type CreateFieldData_Properties struct {
-	// Abbreviate Don't show the URL protocol when showing the URL.
-	Abbreviate *bool `json:"abbreviate,omitempty"`
-
-	// AllowHTML Whether this field allows html.
-	AllowHTML *bool `json:"allowHTML,omitempty"`
-
-	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
-	AllowMentions *bool `json:"allowMentions,omitempty"`
-
-	// AllowNewChoices Indicates if users can add new choices to a selection list.
-	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
-
-	// AppearsAs The link text, if empty, the url will be used as link text.
-	AppearsAs *string `json:"appearsAs,omitempty"`
-
-	// AppendOnly Whether this field is append only.
-	AppendOnly *bool `json:"appendOnly,omitempty"`
-
-	// AutoSave Whether the link field will auto save.
-	AutoSave *bool `json:"autoSave,omitempty"`
-
-	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-	BlankIsZero *bool `json:"blankIsZero,omitempty"`
-
-	// CarryChoices Whether the field should carry its multiple choice fields when copied.
-	CarryChoices *bool `json:"carryChoices,omitempty"`
-
-	// Choices An array of entries that exist for a field that offers choices to the user.
-	Choices *[]string `json:"choices,omitempty"`
-
-	// ChoicesLuid List of user choices.
-	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
-
-	// CommaStart The number of digits before commas display in the product, when applicable.
-	CommaStart *int `json:"commaStart,omitempty"`
-
-	// Comments The comments entered on the field properties by an administrator.
-	Comments *string `json:"comments,omitempty"`
-
-	// CompositeFields An array of the fields that make up a composite field (e.g., address).
-	CompositeFields *[]CreateFieldData_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
-
-	// CoverText An alternate user friendly text that can be used to display a link in the browser.
-	CoverText *string `json:"coverText,omitempty"`
-
-	// CurrencyFormat The currency format used when displaying field values within the product.
-	CurrencyFormat *CreateFieldDataPropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
-
-	// CurrencySymbol The current symbol used when displaying field values within the product.
-	CurrencySymbol *string `json:"currencySymbol,omitempty"`
-
-	// DecimalPlaces The number of decimal places displayed in the product for this field.
-	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
-
-	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
-
-	// DefaultDomain Default email domain.
-	DefaultDomain *string `json:"defaultDomain,omitempty"`
-
-	// DefaultKind The user default type.
-	DefaultKind *string `json:"defaultKind,omitempty"`
-
-	// DefaultToday Indicates if the field value is defaulted today for new records.
-	DefaultToday *bool `json:"defaultToday,omitempty"`
-
-	// DefaultValue The default value configured for a field when a new record is added.
-	DefaultValue *string `json:"defaultValue,omitempty"`
-
-	// DefaultValueLuid Default user id value.
-	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
-
-	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
-	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
-
-	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
-
-	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
-
-	// DisplayEmail How the email is displayed.
-	DisplayEmail *string `json:"displayEmail,omitempty"`
-
-	// DisplayMonth How to display months.
-	DisplayMonth *string `json:"displayMonth,omitempty"`
-
-	// DisplayRelative Whether to display time as relative.
-	DisplayRelative *bool `json:"displayRelative,omitempty"`
-
-	// DisplayTime Indicates whether to display the time, in addition to the date.
-	DisplayTime *bool `json:"displayTime,omitempty"`
-
-	// DisplayTimezone Indicates whether to display the timezone within the product.
-	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
-
-	// DisplayUser The configured option for how users display within the product.
-	DisplayUser *string `json:"displayUser,omitempty"`
-
-	// DoesAverage Whether this field averages in reports within the product.
-	DoesAverage *bool `json:"doesAverage,omitempty"`
-
-	// DoesTotal Whether this field totals in reports within the product.
-	DoesTotal *bool `json:"doesTotal,omitempty"`
-
-	// DurationField The duration field id.
-	DurationField *int `json:"durationField,omitempty"`
-
-	// Exact Whether an exact match is required for a report link.
-	Exact *bool `json:"exact,omitempty"`
-
-	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
-	ForeignKey *bool `json:"foreignKey,omitempty"`
-
-	// Format The format to display time.
-	Format *int `json:"format,omitempty"`
-
-	// Formula The formula of the field as configured in Quickbase.
-	Formula *string `json:"formula,omitempty"`
-
-	// HasExtension Whether this field has a phone extension.
-	HasExtension *bool `json:"hasExtension,omitempty"`
-
-	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-	Hours24 *bool `json:"hours24,omitempty"`
-
-	// LinkText The configured text value that replaces the URL that users see within the product.
-	LinkText *string `json:"linkText,omitempty"`
-
-	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
-	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
-
-	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
-	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
-
-	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
-	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
-
-	// MasterChoiceTableId The id of the table that is the master in this relationship.
-	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
-
-	// MasterTableTag The table alias for the master table in the relationship this field is part of.
-	MasterTableTag *string `json:"masterTableTag,omitempty"`
-
-	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-	MaxLength *int `json:"maxLength,omitempty"`
-
-	// MaxVersions The maximum number of versions configured for a file attachment.
-	MaxVersions *int `json:"maxVersions,omitempty"`
-
-	// NumLines The number of lines shown in Quickbase for this text field.
-	NumLines *int `json:"numLines,omitempty"`
-
-	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-	NumberFormat *int `json:"numberFormat,omitempty"`
-
-	// ParentFieldId The id of the parent composite field, when applicable.
-	ParentFieldId *int `json:"parentFieldId,omitempty"`
-
-	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
-	PostTempToken *bool `json:"postTempToken,omitempty"`
-
-	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-	SeeVersions *bool `json:"seeVersions,omitempty"`
-
-	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-	SnapFieldId *int `json:"snapFieldId,omitempty"`
-
-	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-	SortAlpha *bool `json:"sortAlpha,omitempty"`
-
-	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
-
-	// SourceFieldId The id of the source field.
-	SourceFieldId *int `json:"sourceFieldId,omitempty"`
-
-	// StartField The start field id.
-	StartField *int `json:"startField,omitempty"`
-
-	// SummaryFunction The summary accumulation function type.
-	SummaryFunction *CreateFieldDataPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
-
-	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
-	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
-
-	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
-	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
-
-	// TargetFieldId The id of the target field.
-	TargetFieldId *int `json:"targetFieldId,omitempty"`
-
-	// TargetTableId The id of the target table.
-	TargetTableId *string `json:"targetTableId,omitempty"`
-
-	// TargetTableName The field's target table name.
-	TargetTableName *string `json:"targetTableName,omitempty"`
-
-	// Units The units label.
-	Units *string `json:"units,omitempty"`
-
-	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
-	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
-
-	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
-	UseNewWindow *bool `json:"useNewWindow,omitempty"`
-
-	// VersionMode Version modes for files. Keep all versions vs keep last version.
-	VersionMode *CreateFieldDataPropertiesVersionMode `json:"versionMode,omitempty"`
-
-	// Width The field's html input width in the product.
-	Width *int `json:"width,omitempty"`
-
-	// WorkWeek The work week type.
-	WorkWeek *int `json:"workWeek,omitempty"`
-
-	// XmlTag The field's xml tag.
-	XmlTag               *string                `json:"xmlTag,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateRelationshipData defines model for CreateRelationshipData.
-type CreateRelationshipData struct {
-	// ChildTableId The child table id of the relationship.
-	ChildTableId string `json:"childTableId"`
-
-	// ForeignKeyField The foreign key field information.
-	ForeignKeyField *CreateRelationshipData_ForeignKeyField `json:"foreignKeyField,omitempty"`
-
-	// Id The relationship id (foreign key field id).
-	Id int `json:"id"`
-
-	// IsCrossApp Whether this is a cross-app relationship.
-	IsCrossApp bool `json:"isCrossApp"`
-
-	// LookupFields The lookup fields array.
-	LookupFields *[]CreateRelationshipData_LookupFields_Item `json:"lookupFields,omitempty"`
-
-	// ParentTableId The parent table id of the relationship.
-	ParentTableId string `json:"parentTableId"`
-
-	// SummaryFields The summary fields array.
-	SummaryFields        *[]CreateRelationshipData_SummaryFields_Item `json:"summaryFields,omitempty"`
-	AdditionalProperties map[string]interface{}                       `json:"-"`
-}
-
-// CreateRelationshipData_ForeignKeyField The foreign key field information.
-type CreateRelationshipData_ForeignKeyField struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateRelationshipData_LookupFields_Item defines model for CreateRelationshipData.lookupFields.Item.
-type CreateRelationshipData_LookupFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateRelationshipData_SummaryFields_Item defines model for CreateRelationshipData.summaryFields.Item.
-type CreateRelationshipData_SummaryFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateTableData defines model for CreateTableData.
-type CreateTableData struct {
-	// Alias The automatically-created table alias for the table.
-	Alias *string `json:"alias,omitempty"`
-
-	// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DefaultSortFieldId The id of the field that is configured for default sorting.
-	DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
-
-	// DefaultSortOrder The configuration of the default sort order on the table.
-	DefaultSortOrder *CreateTableDataDefaultSortOrder `json:"defaultSortOrder,omitempty"`
-
-	// Description The description of the table, as configured by an application administrator.
-	Description *string `json:"description,omitempty"`
-
-	// Id The unique identifier (dbid) of the table.
-	Id *string `json:"id,omitempty"`
-
-	// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
-	KeyFieldId *int `json:"keyFieldId,omitempty"`
-
-	// Name The name of the table.
-	Name *string `json:"name,omitempty"`
-
-	// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
-	NextFieldId *int `json:"nextFieldId,omitempty"`
-
-	// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
-	NextRecordId *int `json:"nextRecordId,omitempty"`
-
-	// PluralRecordName The builder-configured plural noun of the table.
-	PluralRecordName *string `json:"pluralRecordName,omitempty"`
-
-	// SingleRecordName The builder-configured singular noun of the table.
-	SingleRecordName *string `json:"singleRecordName,omitempty"`
-
-	// SizeLimit The size limit for the table.
-	SizeLimit *string `json:"sizeLimit,omitempty"`
-
-	// SpaceRemaining The amount of space remaining for use by the table.
-	SpaceRemaining *string `json:"spaceRemaining,omitempty"`
-
-	// SpaceUsed The amount of space currently being used by the table.
-	SpaceUsed *string `json:"spaceUsed,omitempty"`
-
-	// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated              *string                `json:"updated,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// CreateTableDataDefaultSortOrder The configuration of the default sort order on the table.
-type CreateTableDataDefaultSortOrder string
-
-// DeactivateUserTokenData defines model for DeactivateUserTokenData.
-type DeactivateUserTokenData struct {
-	// Id The user token id.
-	Id                   *int                   `json:"id,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteAppData defines model for DeleteAppData.
-type DeleteAppData struct {
-	// DeletedAppId An ID of deleted application.
-	DeletedAppId         *string                `json:"deletedAppId,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteFieldsData defines model for DeleteFieldsData.
-type DeleteFieldsData struct {
-	// DeletedFieldIds List of field IDs to were deleted.
-	DeletedFieldIds []int `json:"deletedFieldIds"`
-
-	// Errors List of errors found.
-	Errors               []string               `json:"errors"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteFileData defines model for DeleteFileData.
-type DeleteFileData struct {
-	// Creator The user that uploaded version.
-	Creator *DeleteFileData_Creator `json:"creator,omitempty"`
-
-	// FileName The name of file associated with deleted version.
-	FileName *string `json:"fileName,omitempty"`
-
-	// Uploaded The timestamp when the version was originally uploaded.
-	Uploaded *string `json:"uploaded,omitempty"`
-
-	// VersionNumber The number of deleted version.
-	VersionNumber        *int                   `json:"versionNumber,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteFileData_Creator The user that uploaded version.
-type DeleteFileData_Creator struct {
-	// Email User email.
-	Email *string `json:"email,omitempty"`
-
-	// Id User Id.
-	Id *string `json:"id,omitempty"`
-
-	// Name User full name.
-	Name *string `json:"name,omitempty"`
-
-	// UserName User Name as updated in user properties. Optional, appears if not the same as user email.
-	UserName             *string                `json:"userName,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteRecordsData defines model for DeleteRecordsData.
-type DeleteRecordsData struct {
-	// NumberDeleted The number of records deleted.
-	NumberDeleted        *int                   `json:"numberDeleted,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteRelationshipData defines model for DeleteRelationshipData.
-type DeleteRelationshipData struct {
-	// RelationshipId The relationship id.
-	RelationshipId       int                    `json:"relationshipId"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteTableData defines model for DeleteTableData.
-type DeleteTableData struct {
-	// DeletedTableId The deleted table id.
-	DeletedTableId       *string                `json:"deletedTableId,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DeleteUserTokenData defines model for DeleteUserTokenData.
-type DeleteUserTokenData struct {
-	// Id The user token id.
-	Id                   *int                   `json:"id,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DenyUsersAndGroupsData defines model for DenyUsersAndGroupsData.
-type DenyUsersAndGroupsData struct {
-	// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have successfully been denied.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// DenyUsersData defines model for DenyUsersData.
-type DenyUsersData struct {
-	// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have successfully been denied.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// ExchangeSsoTokenData defines model for ExchangeSsoTokenData.
-type ExchangeSsoTokenData struct {
-	// AccessToken The security token issued by the authorization server in response to the token exchange request. The identifier `access_token` is used for historical reasons and the issued token need not be an OAuth access token.
-	AccessToken *string `json:"access_token,omitempty"`
-
-	// IssuedTokenType An identifier for the representation of the issued security token.
-	IssuedTokenType *ExchangeSsoTokenDataIssuedTokenType `json:"issued_token_type,omitempty"`
-
-	// TokenType Will always return `N_A`
-	TokenType            *ExchangeSsoTokenDataTokenType `json:"token_type,omitempty"`
-	AdditionalProperties map[string]interface{}         `json:"-"`
-}
-
-// ExchangeSsoTokenDataIssuedTokenType An identifier for the representation of the issued security token.
-type ExchangeSsoTokenDataIssuedTokenType string
-
-// ExchangeSsoTokenDataTokenType Will always return `N_A`
-type ExchangeSsoTokenDataTokenType string
-
 // FieldValue A field value in a QuickBase record. The value type depends on the field type.
 type FieldValue struct {
 	// Value The field value. Type depends on field type: string (text, email, URL, date), number (numeric fields), boolean (checkbox), string[] (multi-select), or object[] (file attachments).
@@ -1383,1839 +260,8 @@ type FieldValue_Value struct {
 	union json.RawMessage
 }
 
-// GenerateDocumentData defines model for GenerateDocumentData.
-type GenerateDocumentData struct {
-	// ContentType The document content type.
-	ContentType *string `json:"contentType,omitempty"`
-
-	// Data Base64 encoded file content.
-	Data *string `json:"data,omitempty"`
-
-	// FileName The file name.
-	FileName             *string                `json:"fileName,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppData defines model for GetAppData.
-type GetAppData struct {
-	// AncestorId The id of the app from which this app was copied
-	AncestorId *string `json:"ancestorId,omitempty"`
-
-	// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
-	DataClassification *string `json:"dataClassification,omitempty"`
-
-	// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
-	DateFormat *string `json:"dateFormat,omitempty"`
-
-	// Description The description for the app. If this property is left out, the app description will be blank.
-	Description *string `json:"description,omitempty"`
-
-	// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
-	HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
-
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// MemoryInfo Application memory info
-	MemoryInfo *struct {
-		// EstMemory The estimated memory of this application in gigabytes
-		EstMemory *float32 `json:"estMemory,omitempty"`
-
-		// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-		EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
-	} `json:"memoryInfo,omitempty"`
-
-	// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-	Name string `json:"name"`
-
-	// SecurityProperties Security properties of the application
-	SecurityProperties *GetAppData_SecurityProperties `json:"securityProperties,omitempty"`
-
-	// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated *string `json:"updated,omitempty"`
-
-	// Variables The app variables. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
-	Variables            *[]GetAppData_Variables_Item `json:"variables,omitempty"`
-	AdditionalProperties map[string]interface{}       `json:"-"`
-}
-
-// GetAppData_SecurityProperties Security properties of the application
-type GetAppData_SecurityProperties struct {
-	// AllowClone Allow users who are not administrators to copy
-	AllowClone *bool `json:"allowClone,omitempty"`
-
-	// AllowExport Allow users who are not administrators to export data
-	AllowExport *bool `json:"allowExport,omitempty"`
-
-	// EnableAppTokens Require Application Tokens
-	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
-
-	// HideFromPublic Hide from public application searches
-	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
-
-	// MustBeRealmApproved Only "approved" users may access this application
-	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
-
-	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
-	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppData_Variables_Item defines model for GetAppData.variables.Item.
-type GetAppData_Variables_Item struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
-
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppEventsItem defines model for GetAppEventsItem.
-type GetAppEventsItem struct {
-	// IsActive Indication of whether current event is active.
-	IsActive *bool `json:"isActive,omitempty"`
-
-	// Name The name of the event. This property is not returned for automations.
-	Name *string `json:"name,omitempty"`
-
-	// Owner The user that owns the event.
-	Owner *GetAppEventsItem_Owner `json:"owner,omitempty"`
-
-	// TableId The unique identifier of the table to which event belongs to.
-	TableId *string `json:"tableId,omitempty"`
-
-	// Type Type of an event.
-	Type *GetAppEventsItemType `json:"type,omitempty"`
-
-	// Url The url to automation that can be accessed from the browser. Only returned for automations.
-	Url                  *string                `json:"url,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppEventsItem_Owner The user that owns the event.
-type GetAppEventsItem_Owner struct {
-	// Email User email.
-	Email *string `json:"email,omitempty"`
-
-	// Id User Id.
-	Id *string `json:"id,omitempty"`
-
-	// Name User full name.
-	Name *string `json:"name,omitempty"`
-
-	// UserName User Name as updated in user properties. Optional, appears if not the same as user email.
-	UserName             *string                `json:"userName,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppEventsItemType Type of an event.
-type GetAppEventsItemType string
-
-// GetAppTablesItem defines model for GetAppTablesItem.
-type GetAppTablesItem struct {
-	// Alias The automatically-created table alias for the table.
-	Alias *string `json:"alias,omitempty"`
-
-	// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DefaultSortFieldId The id of the field that is configured for default sorting.
-	DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
-
-	// DefaultSortOrder The configuration of the default sort order on the table.
-	DefaultSortOrder *GetAppTablesItemDefaultSortOrder `json:"defaultSortOrder,omitempty"`
-
-	// Description The description of the table, as configured by an application administrator.
-	Description *string `json:"description,omitempty"`
-
-	// Id The unique identifier (dbid) of the table.
-	Id *string `json:"id,omitempty"`
-
-	// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
-	KeyFieldId *int `json:"keyFieldId,omitempty"`
-
-	// Name The name of the table.
-	Name *string `json:"name,omitempty"`
-
-	// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
-	NextFieldId *int `json:"nextFieldId,omitempty"`
-
-	// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
-	NextRecordId *int `json:"nextRecordId,omitempty"`
-
-	// PluralRecordName The builder-configured plural noun of the table.
-	PluralRecordName *string `json:"pluralRecordName,omitempty"`
-
-	// SingleRecordName The builder-configured singular noun of the table.
-	SingleRecordName *string `json:"singleRecordName,omitempty"`
-
-	// SizeLimit The size limit for the table.
-	SizeLimit *string `json:"sizeLimit,omitempty"`
-
-	// SpaceRemaining The amount of space remaining for use by the table.
-	SpaceRemaining *string `json:"spaceRemaining,omitempty"`
-
-	// SpaceUsed The amount of space currently being used by the table.
-	SpaceUsed *string `json:"spaceUsed,omitempty"`
-
-	// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated              *string                `json:"updated,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetAppTablesItemDefaultSortOrder The configuration of the default sort order on the table.
-type GetAppTablesItemDefaultSortOrder string
-
-// GetFieldData defines model for GetFieldData.
-type GetFieldData struct {
-	// AppearsByDefault Indicates if the field is marked as a default in reports.
-	AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
-
-	// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
-	Audited *bool `json:"audited,omitempty"`
-
-	// Bold Indicates if the field is configured to display in bold in the product.
-	Bold *bool `json:"bold,omitempty"`
-
-	// DoesDataCopy Indicates if the field data will copy when a user copies the record.
-	DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
-
-	// FieldHelp The configured help text shown to users within the product.
-	FieldHelp *string `json:"fieldHelp,omitempty"`
-
-	// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
-	FieldType *string `json:"fieldType,omitempty"`
-
-	// FindEnabled Indicates if the field is marked as searchable.
-	FindEnabled *bool `json:"findEnabled,omitempty"`
-
-	// Id The id of the field, unique to this table.
-	Id int64 `json:"id"`
-
-	// Label The label (name) of the field.
-	Label *string `json:"label,omitempty"`
-
-	// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
-	Mode *string `json:"mode,omitempty"`
-
-	// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
-	NoWrap *bool `json:"noWrap,omitempty"`
-
-	// Permissions Field Permissions for different roles.
-	Permissions *[]struct {
-		// PermissionType The permission given to the role for this field
-		PermissionType *string `json:"permissionType,omitempty"`
-
-		// Role The role associated with a given permission for the field
-		Role *string `json:"role,omitempty"`
-
-		// RoleId The Id of the given role
-		RoleId *int `json:"roleId,omitempty"`
-	} `json:"permissions,omitempty"`
-
-	// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-	Properties *GetFieldData_Properties `json:"properties,omitempty"`
-
-	// Required Indicates if the field is marked required.
-	Required *bool `json:"required,omitempty"`
-
-	// Unique Indicates if the field is marked unique.
-	Unique               *bool                  `json:"unique,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldDataPropertiesCompositeFields0 defines model for .
-type GetFieldDataPropertiesCompositeFields0 = int
-
-// GetFieldDataPropertiesCompositeFields1 defines model for .
-type GetFieldDataPropertiesCompositeFields1 = map[string]interface{}
-
-// GetFieldData_Properties_CompositeFields_Item defines model for GetFieldData.Properties.CompositeFields.Item.
-type GetFieldData_Properties_CompositeFields_Item struct {
-	union json.RawMessage
-}
-
-// GetFieldDataPropertiesCurrencyFormat The currency format used when displaying field values within the product.
-type GetFieldDataPropertiesCurrencyFormat string
-
-// GetFieldDataPropertiesSummaryFunction The summary accumulation function type.
-type GetFieldDataPropertiesSummaryFunction string
-
-// GetFieldDataPropertiesVersionMode Version modes for files. Keep all versions vs keep last version.
-type GetFieldDataPropertiesVersionMode string
-
-// GetFieldData_Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-type GetFieldData_Properties struct {
-	// Abbreviate Don't show the URL protocol when showing the URL.
-	Abbreviate *bool `json:"abbreviate,omitempty"`
-
-	// AllowHTML Whether this field allows html.
-	AllowHTML *bool `json:"allowHTML,omitempty"`
-
-	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
-	AllowMentions *bool `json:"allowMentions,omitempty"`
-
-	// AllowNewChoices Indicates if users can add new choices to a selection list.
-	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
-
-	// AppearsAs The link text, if empty, the url will be used as link text.
-	AppearsAs *string `json:"appearsAs,omitempty"`
-
-	// AppendOnly Whether this field is append only.
-	AppendOnly *bool `json:"appendOnly,omitempty"`
-
-	// AutoSave Whether the link field will auto save.
-	AutoSave *bool `json:"autoSave,omitempty"`
-
-	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-	BlankIsZero *bool `json:"blankIsZero,omitempty"`
-
-	// CarryChoices Whether the field should carry its multiple choice fields when copied.
-	CarryChoices *bool `json:"carryChoices,omitempty"`
-
-	// Choices An array of entries that exist for a field that offers choices to the user.
-	Choices *[]string `json:"choices,omitempty"`
-
-	// ChoicesLuid List of user choices.
-	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
-
-	// CommaStart The number of digits before commas display in the product, when applicable.
-	CommaStart *int `json:"commaStart,omitempty"`
-
-	// Comments The comments entered on the field properties by an administrator.
-	Comments *string `json:"comments,omitempty"`
-
-	// CompositeFields An array of the fields that make up a composite field (e.g., address).
-	CompositeFields *[]GetFieldData_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
-
-	// CoverText An alternate user friendly text that can be used to display a link in the browser.
-	CoverText *string `json:"coverText,omitempty"`
-
-	// CurrencyFormat The currency format used when displaying field values within the product.
-	CurrencyFormat *GetFieldDataPropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
-
-	// CurrencySymbol The current symbol used when displaying field values within the product.
-	CurrencySymbol *string `json:"currencySymbol,omitempty"`
-
-	// DecimalPlaces The number of decimal places displayed in the product for this field.
-	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
-
-	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
-
-	// DefaultDomain Default email domain.
-	DefaultDomain *string `json:"defaultDomain,omitempty"`
-
-	// DefaultKind The user default type.
-	DefaultKind *string `json:"defaultKind,omitempty"`
-
-	// DefaultToday Indicates if the field value is defaulted today for new records.
-	DefaultToday *bool `json:"defaultToday,omitempty"`
-
-	// DefaultValue The default value configured for a field when a new record is added.
-	DefaultValue *string `json:"defaultValue,omitempty"`
-
-	// DefaultValueLuid Default user id value.
-	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
-
-	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
-	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
-
-	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
-
-	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
-
-	// DisplayEmail How the email is displayed.
-	DisplayEmail *string `json:"displayEmail,omitempty"`
-
-	// DisplayMonth How to display months.
-	DisplayMonth *string `json:"displayMonth,omitempty"`
-
-	// DisplayRelative Whether to display time as relative.
-	DisplayRelative *bool `json:"displayRelative,omitempty"`
-
-	// DisplayTime Indicates whether to display the time, in addition to the date.
-	DisplayTime *bool `json:"displayTime,omitempty"`
-
-	// DisplayTimezone Indicates whether to display the timezone within the product.
-	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
-
-	// DisplayUser The configured option for how users display within the product.
-	DisplayUser *string `json:"displayUser,omitempty"`
-
-	// DoesAverage Whether this field averages in reports within the product.
-	DoesAverage *bool `json:"doesAverage,omitempty"`
-
-	// DoesTotal Whether this field totals in reports within the product.
-	DoesTotal *bool `json:"doesTotal,omitempty"`
-
-	// DurationField The duration field id.
-	DurationField *int `json:"durationField,omitempty"`
-
-	// Exact Whether an exact match is required for a report link.
-	Exact *bool `json:"exact,omitempty"`
-
-	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
-	ForeignKey *bool `json:"foreignKey,omitempty"`
-
-	// Format The format to display time.
-	Format *int `json:"format,omitempty"`
-
-	// Formula The formula of the field as configured in Quickbase.
-	Formula *string `json:"formula,omitempty"`
-
-	// HasExtension Whether this field has a phone extension.
-	HasExtension *bool `json:"hasExtension,omitempty"`
-
-	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-	Hours24 *bool `json:"hours24,omitempty"`
-
-	// LinkText The configured text value that replaces the URL that users see within the product.
-	LinkText *string `json:"linkText,omitempty"`
-
-	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
-	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
-
-	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
-	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
-
-	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
-	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
-
-	// MasterChoiceTableId The id of the table that is the master in this relationship.
-	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
-
-	// MasterTableTag The table alias for the master table in the relationship this field is part of.
-	MasterTableTag *string `json:"masterTableTag,omitempty"`
-
-	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-	MaxLength *int `json:"maxLength,omitempty"`
-
-	// MaxVersions The maximum number of versions configured for a file attachment.
-	MaxVersions *int `json:"maxVersions,omitempty"`
-
-	// NumLines The number of lines shown in Quickbase for this text field.
-	NumLines *int `json:"numLines,omitempty"`
-
-	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-	NumberFormat *int `json:"numberFormat,omitempty"`
-
-	// ParentFieldId The id of the parent composite field, when applicable.
-	ParentFieldId *int `json:"parentFieldId,omitempty"`
-
-	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
-	PostTempToken *bool `json:"postTempToken,omitempty"`
-
-	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-	SeeVersions *bool `json:"seeVersions,omitempty"`
-
-	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-	SnapFieldId *int `json:"snapFieldId,omitempty"`
-
-	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-	SortAlpha *bool `json:"sortAlpha,omitempty"`
-
-	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
-
-	// SourceFieldId The id of the source field.
-	SourceFieldId *int `json:"sourceFieldId,omitempty"`
-
-	// StartField The start field id.
-	StartField *int `json:"startField,omitempty"`
-
-	// SummaryFunction The summary accumulation function type.
-	SummaryFunction *GetFieldDataPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
-
-	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
-	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
-
-	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
-	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
-
-	// TargetFieldId The id of the target field.
-	TargetFieldId *int `json:"targetFieldId,omitempty"`
-
-	// TargetTableId The id of the target table.
-	TargetTableId *string `json:"targetTableId,omitempty"`
-
-	// TargetTableName The field's target table name.
-	TargetTableName *string `json:"targetTableName,omitempty"`
-
-	// Units The units label.
-	Units *string `json:"units,omitempty"`
-
-	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
-	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
-
-	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
-	UseNewWindow *bool `json:"useNewWindow,omitempty"`
-
-	// VersionMode Version modes for files. Keep all versions vs keep last version.
-	VersionMode *GetFieldDataPropertiesVersionMode `json:"versionMode,omitempty"`
-
-	// Width The field's html input width in the product.
-	Width *int `json:"width,omitempty"`
-
-	// WorkWeek The work week type.
-	WorkWeek *int `json:"workWeek,omitempty"`
-
-	// XmlTag The field's xml tag.
-	XmlTag               *string                `json:"xmlTag,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem defines model for GetFieldUsageItem.
-type GetFieldUsageItem struct {
-	// Field Basic information about the field.
-	Field GetFieldUsageItem_Field `json:"field"`
-
-	// Usage Usage Information about the field.
-	Usage                GetFieldUsageItem_Usage `json:"usage"`
-	AdditionalProperties map[string]interface{}  `json:"-"`
-}
-
-// GetFieldUsageItem_Field Basic information about the field.
-type GetFieldUsageItem_Field struct {
-	// Id Field id.
-	Id int `json:"id"`
-
-	// Name Field name.
-	Name string `json:"name"`
-
-	// Type Field type.
-	Type                 string                 `json:"type"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Actions The number of quickbase actions where the given field is referenced.
-type GetFieldUsageItem_Usage_Actions struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_AppHomePages The number of app home pages where the given field is referenced.
-type GetFieldUsageItem_Usage_AppHomePages struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_DefaultReports The number of default reports where the given field is referenced.
-type GetFieldUsageItem_Usage_DefaultReports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_ExactForms The number of exact forms where the given field is referenced.
-type GetFieldUsageItem_Usage_ExactForms struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Fields The number of fields where the given field is referenced.
-type GetFieldUsageItem_Usage_Fields struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Forms The number of forms where the given field is referenced.
-type GetFieldUsageItem_Usage_Forms struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Notifications The number of notifications where the given field is referenced.
-type GetFieldUsageItem_Usage_Notifications struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_PersonalReports The number of personal reports where the given field is referenced.
-type GetFieldUsageItem_Usage_PersonalReports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Pipelines The number of pipelines where the given field is referenced.
-type GetFieldUsageItem_Usage_Pipelines struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Relationships The number of relationships where the given field is referenced.
-type GetFieldUsageItem_Usage_Relationships struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Reminders The number of reminders where the given field is referenced.
-type GetFieldUsageItem_Usage_Reminders struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Reports The number of reports where the given field is referenced.
-type GetFieldUsageItem_Usage_Reports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Roles The number of roles where the given field is referenced.
-type GetFieldUsageItem_Usage_Roles struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage_Webhooks The number of webhooks where the given field is referenced.
-type GetFieldUsageItem_Usage_Webhooks struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldUsageItem_Usage Usage Information about the field.
-type GetFieldUsageItem_Usage struct {
-	// Actions The number of quickbase actions where the given field is referenced.
-	Actions GetFieldUsageItem_Usage_Actions `json:"actions"`
-
-	// AppHomePages The number of app home pages where the given field is referenced.
-	AppHomePages GetFieldUsageItem_Usage_AppHomePages `json:"appHomePages"`
-
-	// Dashboards The number of dashboards where the given field is referenced.
-	Dashboards struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"dashboards"`
-
-	// DefaultReports The number of default reports where the given field is referenced.
-	DefaultReports GetFieldUsageItem_Usage_DefaultReports `json:"defaultReports"`
-
-	// ExactForms The number of exact forms where the given field is referenced.
-	ExactForms GetFieldUsageItem_Usage_ExactForms `json:"exactForms"`
-
-	// Fields The number of fields where the given field is referenced.
-	Fields GetFieldUsageItem_Usage_Fields `json:"fields"`
-
-	// Forms The number of forms where the given field is referenced.
-	Forms GetFieldUsageItem_Usage_Forms `json:"forms"`
-
-	// Notifications The number of notifications where the given field is referenced.
-	Notifications GetFieldUsageItem_Usage_Notifications `json:"notifications"`
-
-	// PersonalReports The number of personal reports where the given field is referenced.
-	PersonalReports GetFieldUsageItem_Usage_PersonalReports `json:"personalReports"`
-
-	// Pipelines The number of pipelines where the given field is referenced.
-	Pipelines GetFieldUsageItem_Usage_Pipelines `json:"pipelines"`
-
-	// Relationships The number of relationships where the given field is referenced.
-	Relationships GetFieldUsageItem_Usage_Relationships `json:"relationships"`
-
-	// Reminders The number of reminders where the given field is referenced.
-	Reminders GetFieldUsageItem_Usage_Reminders `json:"reminders"`
-
-	// Reports The number of reports where the given field is referenced.
-	Reports GetFieldUsageItem_Usage_Reports `json:"reports"`
-
-	// Roles The number of roles where the given field is referenced.
-	Roles GetFieldUsageItem_Usage_Roles `json:"roles"`
-
-	// TableImports The number of table imports where the given field is referenced.
-	TableImports struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableImports"`
-
-	// TableRules The number of table rules where the given field is referenced.
-	TableRules struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableRules"`
-
-	// Webhooks The number of webhooks where the given field is referenced.
-	Webhooks             GetFieldUsageItem_Usage_Webhooks `json:"webhooks"`
-	AdditionalProperties map[string]interface{}           `json:"-"`
-}
-
-// GetFieldsItem defines model for GetFieldsItem.
-type GetFieldsItem struct {
-	// AppearsByDefault Indicates if the field is marked as a default in reports.
-	AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
-
-	// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
-	Audited *bool `json:"audited,omitempty"`
-
-	// Bold Indicates if the field is configured to display in bold in the product.
-	Bold *bool `json:"bold,omitempty"`
-
-	// DoesDataCopy Indicates if the field data will copy when a user copies the record.
-	DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
-
-	// FieldHelp The configured help text shown to users within the product.
-	FieldHelp *string `json:"fieldHelp,omitempty"`
-
-	// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
-	FieldType *string `json:"fieldType,omitempty"`
-
-	// FindEnabled Indicates if the field is marked as searchable.
-	FindEnabled *bool `json:"findEnabled,omitempty"`
-
-	// Id The id of the field, unique to this table.
-	Id int64 `json:"id"`
-
-	// Label The label (name) of the field.
-	Label *string `json:"label,omitempty"`
-
-	// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
-	Mode *string `json:"mode,omitempty"`
-
-	// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
-	NoWrap *bool `json:"noWrap,omitempty"`
-
-	// Permissions Field Permissions for different roles.
-	Permissions *[]struct {
-		// PermissionType The permission given to the role for this field
-		PermissionType *string `json:"permissionType,omitempty"`
-
-		// Role The role associated with a given permission for the field
-		Role *string `json:"role,omitempty"`
-
-		// RoleId The Id of the given role
-		RoleId *int `json:"roleId,omitempty"`
-	} `json:"permissions,omitempty"`
-
-	// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-	Properties *GetFieldsItem_Properties `json:"properties,omitempty"`
-
-	// Required Indicates if the field is marked required.
-	Required *bool `json:"required,omitempty"`
-
-	// Unique Indicates if the field is marked unique.
-	Unique               *bool                  `json:"unique,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsItemPropertiesCompositeFields0 defines model for .
-type GetFieldsItemPropertiesCompositeFields0 = int
-
-// GetFieldsItemPropertiesCompositeFields1 defines model for .
-type GetFieldsItemPropertiesCompositeFields1 = map[string]interface{}
-
-// GetFieldsItem_Properties_CompositeFields_Item defines model for GetFieldsItem.Properties.CompositeFields.Item.
-type GetFieldsItem_Properties_CompositeFields_Item struct {
-	union json.RawMessage
-}
-
-// GetFieldsItemPropertiesCurrencyFormat The currency format used when displaying field values within the product.
-type GetFieldsItemPropertiesCurrencyFormat string
-
-// GetFieldsItemPropertiesSummaryFunction The summary accumulation function type.
-type GetFieldsItemPropertiesSummaryFunction string
-
-// GetFieldsItemPropertiesVersionMode Version modes for files. Keep all versions vs keep last version.
-type GetFieldsItemPropertiesVersionMode string
-
-// GetFieldsItem_Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-type GetFieldsItem_Properties struct {
-	// Abbreviate Don't show the URL protocol when showing the URL.
-	Abbreviate *bool `json:"abbreviate,omitempty"`
-
-	// AllowHTML Whether this field allows html.
-	AllowHTML *bool `json:"allowHTML,omitempty"`
-
-	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
-	AllowMentions *bool `json:"allowMentions,omitempty"`
-
-	// AllowNewChoices Indicates if users can add new choices to a selection list.
-	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
-
-	// AppearsAs The link text, if empty, the url will be used as link text.
-	AppearsAs *string `json:"appearsAs,omitempty"`
-
-	// AppendOnly Whether this field is append only.
-	AppendOnly *bool `json:"appendOnly,omitempty"`
-
-	// AutoSave Whether the link field will auto save.
-	AutoSave *bool `json:"autoSave,omitempty"`
-
-	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-	BlankIsZero *bool `json:"blankIsZero,omitempty"`
-
-	// CarryChoices Whether the field should carry its multiple choice fields when copied.
-	CarryChoices *bool `json:"carryChoices,omitempty"`
-
-	// Choices An array of entries that exist for a field that offers choices to the user.
-	Choices *[]string `json:"choices,omitempty"`
-
-	// ChoicesLuid List of user choices.
-	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
-
-	// CommaStart The number of digits before commas display in the product, when applicable.
-	CommaStart *int `json:"commaStart,omitempty"`
-
-	// Comments The comments entered on the field properties by an administrator.
-	Comments *string `json:"comments,omitempty"`
-
-	// CompositeFields An array of the fields that make up a composite field (e.g., address).
-	CompositeFields *[]GetFieldsItem_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
-
-	// CoverText An alternate user friendly text that can be used to display a link in the browser.
-	CoverText *string `json:"coverText,omitempty"`
-
-	// CurrencyFormat The currency format used when displaying field values within the product.
-	CurrencyFormat *GetFieldsItemPropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
-
-	// CurrencySymbol The current symbol used when displaying field values within the product.
-	CurrencySymbol *string `json:"currencySymbol,omitempty"`
-
-	// DecimalPlaces The number of decimal places displayed in the product for this field.
-	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
-
-	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
-
-	// DefaultDomain Default email domain.
-	DefaultDomain *string `json:"defaultDomain,omitempty"`
-
-	// DefaultKind The user default type.
-	DefaultKind *string `json:"defaultKind,omitempty"`
-
-	// DefaultToday Indicates if the field value is defaulted today for new records.
-	DefaultToday *bool `json:"defaultToday,omitempty"`
-
-	// DefaultValue The default value configured for a field when a new record is added.
-	DefaultValue *string `json:"defaultValue,omitempty"`
-
-	// DefaultValueLuid Default user id value.
-	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
-
-	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
-	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
-
-	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
-
-	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
-
-	// DisplayEmail How the email is displayed.
-	DisplayEmail *string `json:"displayEmail,omitempty"`
-
-	// DisplayMonth How to display months.
-	DisplayMonth *string `json:"displayMonth,omitempty"`
-
-	// DisplayRelative Whether to display time as relative.
-	DisplayRelative *bool `json:"displayRelative,omitempty"`
-
-	// DisplayTime Indicates whether to display the time, in addition to the date.
-	DisplayTime *bool `json:"displayTime,omitempty"`
-
-	// DisplayTimezone Indicates whether to display the timezone within the product.
-	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
-
-	// DisplayUser The configured option for how users display within the product.
-	DisplayUser *string `json:"displayUser,omitempty"`
-
-	// DoesAverage Whether this field averages in reports within the product.
-	DoesAverage *bool `json:"doesAverage,omitempty"`
-
-	// DoesTotal Whether this field totals in reports within the product.
-	DoesTotal *bool `json:"doesTotal,omitempty"`
-
-	// DurationField The duration field id.
-	DurationField *int `json:"durationField,omitempty"`
-
-	// Exact Whether an exact match is required for a report link.
-	Exact *bool `json:"exact,omitempty"`
-
-	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
-	ForeignKey *bool `json:"foreignKey,omitempty"`
-
-	// Format The format to display time.
-	Format *int `json:"format,omitempty"`
-
-	// Formula The formula of the field as configured in Quickbase.
-	Formula *string `json:"formula,omitempty"`
-
-	// HasExtension Whether this field has a phone extension.
-	HasExtension *bool `json:"hasExtension,omitempty"`
-
-	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-	Hours24 *bool `json:"hours24,omitempty"`
-
-	// LinkText The configured text value that replaces the URL that users see within the product.
-	LinkText *string `json:"linkText,omitempty"`
-
-	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
-	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
-
-	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
-	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
-
-	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
-	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
-
-	// MasterChoiceTableId The id of the table that is the master in this relationship.
-	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
-
-	// MasterTableTag The table alias for the master table in the relationship this field is part of.
-	MasterTableTag *string `json:"masterTableTag,omitempty"`
-
-	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-	MaxLength *int `json:"maxLength,omitempty"`
-
-	// MaxVersions The maximum number of versions configured for a file attachment.
-	MaxVersions *int `json:"maxVersions,omitempty"`
-
-	// NumLines The number of lines shown in Quickbase for this text field.
-	NumLines *int `json:"numLines,omitempty"`
-
-	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-	NumberFormat *int `json:"numberFormat,omitempty"`
-
-	// ParentFieldId The id of the parent composite field, when applicable.
-	ParentFieldId *int `json:"parentFieldId,omitempty"`
-
-	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
-	PostTempToken *bool `json:"postTempToken,omitempty"`
-
-	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-	SeeVersions *bool `json:"seeVersions,omitempty"`
-
-	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-	SnapFieldId *int `json:"snapFieldId,omitempty"`
-
-	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-	SortAlpha *bool `json:"sortAlpha,omitempty"`
-
-	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
-
-	// SourceFieldId The id of the source field.
-	SourceFieldId *int `json:"sourceFieldId,omitempty"`
-
-	// StartField The start field id.
-	StartField *int `json:"startField,omitempty"`
-
-	// SummaryFunction The summary accumulation function type.
-	SummaryFunction *GetFieldsItemPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
-
-	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
-	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
-
-	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
-	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
-
-	// TargetFieldId The id of the target field.
-	TargetFieldId *int `json:"targetFieldId,omitempty"`
-
-	// TargetTableId The id of the target table.
-	TargetTableId *string `json:"targetTableId,omitempty"`
-
-	// TargetTableName The field's target table name.
-	TargetTableName *string `json:"targetTableName,omitempty"`
-
-	// Units The units label.
-	Units *string `json:"units,omitempty"`
-
-	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
-	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
-
-	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
-	UseNewWindow *bool `json:"useNewWindow,omitempty"`
-
-	// VersionMode Version modes for files. Keep all versions vs keep last version.
-	VersionMode *GetFieldsItemPropertiesVersionMode `json:"versionMode,omitempty"`
-
-	// Width The field's html input width in the product.
-	Width *int `json:"width,omitempty"`
-
-	// WorkWeek The work week type.
-	WorkWeek *int `json:"workWeek,omitempty"`
-
-	// XmlTag The field's xml tag.
-	XmlTag               *string                `json:"xmlTag,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem defines model for GetFieldsUsageItem.
-type GetFieldsUsageItem struct {
-	// Field Basic information about the field.
-	Field GetFieldsUsageItem_Field `json:"field"`
-
-	// Usage Usage Information about the field.
-	Usage                GetFieldsUsageItem_Usage `json:"usage"`
-	AdditionalProperties map[string]interface{}   `json:"-"`
-}
-
-// GetFieldsUsageItem_Field Basic information about the field.
-type GetFieldsUsageItem_Field struct {
-	// Id Field id.
-	Id int `json:"id"`
-
-	// Name Field name.
-	Name string `json:"name"`
-
-	// Type Field type.
-	Type                 string                 `json:"type"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Actions The number of quickbase actions where the given field is referenced.
-type GetFieldsUsageItem_Usage_Actions struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_AppHomePages The number of app home pages where the given field is referenced.
-type GetFieldsUsageItem_Usage_AppHomePages struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_DefaultReports The number of default reports where the given field is referenced.
-type GetFieldsUsageItem_Usage_DefaultReports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_ExactForms The number of exact forms where the given field is referenced.
-type GetFieldsUsageItem_Usage_ExactForms struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Fields The number of fields where the given field is referenced.
-type GetFieldsUsageItem_Usage_Fields struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Forms The number of forms where the given field is referenced.
-type GetFieldsUsageItem_Usage_Forms struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Notifications The number of notifications where the given field is referenced.
-type GetFieldsUsageItem_Usage_Notifications struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_PersonalReports The number of personal reports where the given field is referenced.
-type GetFieldsUsageItem_Usage_PersonalReports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Pipelines The number of pipelines where the given field is referenced.
-type GetFieldsUsageItem_Usage_Pipelines struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Relationships The number of relationships where the given field is referenced.
-type GetFieldsUsageItem_Usage_Relationships struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Reminders The number of reminders where the given field is referenced.
-type GetFieldsUsageItem_Usage_Reminders struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Reports The number of reports where the given field is referenced.
-type GetFieldsUsageItem_Usage_Reports struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Roles The number of roles where the given field is referenced.
-type GetFieldsUsageItem_Usage_Roles struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage_Webhooks The number of webhooks where the given field is referenced.
-type GetFieldsUsageItem_Usage_Webhooks struct {
-	// Count the number of times a field has been used for the given item.
-	Count                int                    `json:"count"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetFieldsUsageItem_Usage Usage Information about the field.
-type GetFieldsUsageItem_Usage struct {
-	// Actions The number of quickbase actions where the given field is referenced.
-	Actions GetFieldsUsageItem_Usage_Actions `json:"actions"`
-
-	// AppHomePages The number of app home pages where the given field is referenced.
-	AppHomePages GetFieldsUsageItem_Usage_AppHomePages `json:"appHomePages"`
-
-	// Dashboards The number of dashboards where the given field is referenced.
-	Dashboards struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"dashboards"`
-
-	// DefaultReports The number of default reports where the given field is referenced.
-	DefaultReports GetFieldsUsageItem_Usage_DefaultReports `json:"defaultReports"`
-
-	// ExactForms The number of exact forms where the given field is referenced.
-	ExactForms GetFieldsUsageItem_Usage_ExactForms `json:"exactForms"`
-
-	// Fields The number of fields where the given field is referenced.
-	Fields GetFieldsUsageItem_Usage_Fields `json:"fields"`
-
-	// Forms The number of forms where the given field is referenced.
-	Forms GetFieldsUsageItem_Usage_Forms `json:"forms"`
-
-	// Notifications The number of notifications where the given field is referenced.
-	Notifications GetFieldsUsageItem_Usage_Notifications `json:"notifications"`
-
-	// PersonalReports The number of personal reports where the given field is referenced.
-	PersonalReports GetFieldsUsageItem_Usage_PersonalReports `json:"personalReports"`
-
-	// Pipelines The number of pipelines where the given field is referenced.
-	Pipelines GetFieldsUsageItem_Usage_Pipelines `json:"pipelines"`
-
-	// Relationships The number of relationships where the given field is referenced.
-	Relationships GetFieldsUsageItem_Usage_Relationships `json:"relationships"`
-
-	// Reminders The number of reminders where the given field is referenced.
-	Reminders GetFieldsUsageItem_Usage_Reminders `json:"reminders"`
-
-	// Reports The number of reports where the given field is referenced.
-	Reports GetFieldsUsageItem_Usage_Reports `json:"reports"`
-
-	// Roles The number of roles where the given field is referenced.
-	Roles GetFieldsUsageItem_Usage_Roles `json:"roles"`
-
-	// TableImports The number of table imports where the given field is referenced.
-	TableImports struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableImports"`
-
-	// TableRules The number of table rules where the given field is referenced.
-	TableRules struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableRules"`
-
-	// Webhooks The number of webhooks where the given field is referenced.
-	Webhooks             GetFieldsUsageItem_Usage_Webhooks `json:"webhooks"`
-	AdditionalProperties map[string]interface{}            `json:"-"`
-}
-
-// GetRelationshipsData defines model for GetRelationshipsData.
-type GetRelationshipsData struct {
-	// Metadata Additional information about the results that may be helpful.
-	Metadata *GetRelationshipsData_Metadata `json:"metadata,omitempty"`
-
-	// Relationships The relationships in a table.
-	Relationships        []GetRelationshipsData_Relationships_Item `json:"relationships"`
-	AdditionalProperties map[string]interface{}                    `json:"-"`
-}
-
-// GetRelationshipsData_Metadata Additional information about the results that may be helpful.
-type GetRelationshipsData_Metadata struct {
-	// NumRelationships The number of relationships in the current response object.
-	NumRelationships *int `json:"numRelationships,omitempty"`
-
-	// Skip The number of relationships to skip.
-	Skip *int `json:"skip,omitempty"`
-
-	// TotalRelationships The total number of relationships.
-	TotalRelationships   *int                   `json:"totalRelationships,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRelationshipsData_Relationships_ForeignKeyField The foreign key field information.
-type GetRelationshipsData_Relationships_ForeignKeyField struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRelationshipsData_Relationships_LookupFields_Item defines model for GetRelationshipsData.Relationships.LookupFields.Item.
-type GetRelationshipsData_Relationships_LookupFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRelationshipsData_Relationships_SummaryFields_Item defines model for GetRelationshipsData.Relationships.SummaryFields.Item.
-type GetRelationshipsData_Relationships_SummaryFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRelationshipsData_Relationships_Item defines model for GetRelationshipsData.relationships.Item.
-type GetRelationshipsData_Relationships_Item struct {
-	// ChildTableId The child table id of the relationship.
-	ChildTableId string `json:"childTableId"`
-
-	// ForeignKeyField The foreign key field information.
-	ForeignKeyField *GetRelationshipsData_Relationships_ForeignKeyField `json:"foreignKeyField,omitempty"`
-
-	// Id The relationship id (foreign key field id).
-	Id int `json:"id"`
-
-	// IsCrossApp Whether this is a cross-app relationship.
-	IsCrossApp bool `json:"isCrossApp"`
-
-	// LookupFields The lookup fields array.
-	LookupFields *[]GetRelationshipsData_Relationships_LookupFields_Item `json:"lookupFields,omitempty"`
-
-	// ParentTableId The parent table id of the relationship.
-	ParentTableId string `json:"parentTableId"`
-
-	// SummaryFields The summary fields array.
-	SummaryFields        *[]GetRelationshipsData_Relationships_SummaryFields_Item `json:"summaryFields,omitempty"`
-	AdditionalProperties map[string]interface{}                                   `json:"-"`
-}
-
-// GetReportData defines model for GetReportData.
-type GetReportData struct {
-	// Description The configured description of a report.
-	Description *string `json:"description,omitempty"`
-
-	// Id The identifier of the report, unique to the table.
-	Id *string `json:"id,omitempty"`
-
-	// Name The configured name of the report.
-	Name *string `json:"name,omitempty"`
-
-	// OwnerId Optional, showed only for personal reports. The user ID of report owner.
-	OwnerId *int `json:"ownerId,omitempty"`
-
-	// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
-	Properties *map[string]interface{} `json:"properties,omitempty"`
-
-	// Query The query definition as configured in Quickbase that gets executed when the report is run.
-	Query *GetReportData_Query `json:"query,omitempty"`
-
-	// Type The type of report in Quickbase (e.g., chart).
-	Type *string `json:"type,omitempty"`
-
-	// UsedCount The number of times a report has been used.
-	UsedCount *int `json:"usedCount,omitempty"`
-
-	// UsedLast The instant at which a report was last used.
-	UsedLast             *string                `json:"usedLast,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetReportDataQueryFormulaFieldsFieldType Resulting formula value type.
-type GetReportDataQueryFormulaFieldsFieldType string
-
-// GetReportData_Query_FormulaFields_Item defines model for GetReportData.Query.FormulaFields.Item.
-type GetReportData_Query_FormulaFields_Item struct {
-	// DecimalPrecision For numeric formula the number precision.
-	DecimalPrecision *int `json:"decimalPrecision,omitempty"`
-
-	// FieldType Resulting formula value type.
-	FieldType *GetReportDataQueryFormulaFieldsFieldType `json:"fieldType,omitempty"`
-
-	// Formula Formula text.
-	Formula *string `json:"formula,omitempty"`
-
-	// Id Formula field identifier.
-	Id *int `json:"id,omitempty"`
-
-	// Label Formula field label.
-	Label                *string                `json:"label,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetReportData_Query The query definition as configured in Quickbase that gets executed when the report is run.
-type GetReportData_Query struct {
-	// Filter Filter used to query for data.
-	Filter *string `json:"filter,omitempty"`
-
-	// FormulaFields Calculated formula fields.
-	FormulaFields *[]GetReportData_Query_FormulaFields_Item `json:"formulaFields,omitempty"`
-
-	// TableId The table identifier for the report.
-	TableId              *string                `json:"tableId,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRolesItem defines model for GetRolesItem.
-type GetRolesItem struct {
-	// Access The role access properties.
-	Access *GetRolesItem_Access `json:"access,omitempty"`
-
-	// Id The role id.
-	Id *int `json:"id,omitempty"`
-
-	// Name The role name.
-	Name                 *string                `json:"name,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetRolesItemAccessType The type of access the role is given.
-type GetRolesItemAccessType string
-
-// GetRolesItem_Access The role access properties.
-type GetRolesItem_Access struct {
-	// Id The ID of the access type the role is given. (0 = None, 1 = Administrator, 2 = Basic Access with Share, 3 = Basic Access, 4 = Partial Administrator).
-	Id *int `json:"id,omitempty"`
-
-	// Type The type of access the role is given.
-	Type                 *GetRolesItemAccessType `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{}  `json:"-"`
-}
-
-// GetTableData defines model for GetTableData.
-type GetTableData struct {
-	// Alias The automatically-created table alias for the table.
-	Alias *string `json:"alias,omitempty"`
-
-	// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DefaultSortFieldId The id of the field that is configured for default sorting.
-	DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
-
-	// DefaultSortOrder The configuration of the default sort order on the table.
-	DefaultSortOrder *GetTableDataDefaultSortOrder `json:"defaultSortOrder,omitempty"`
-
-	// Description The description of the table, as configured by an application administrator.
-	Description *string `json:"description,omitempty"`
-
-	// Id The unique identifier (dbid) of the table.
-	Id *string `json:"id,omitempty"`
-
-	// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
-	KeyFieldId *int `json:"keyFieldId,omitempty"`
-
-	// Name The name of the table.
-	Name *string `json:"name,omitempty"`
-
-	// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
-	NextFieldId *int `json:"nextFieldId,omitempty"`
-
-	// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
-	NextRecordId *int `json:"nextRecordId,omitempty"`
-
-	// PluralRecordName The builder-configured plural noun of the table.
-	PluralRecordName *string `json:"pluralRecordName,omitempty"`
-
-	// SingleRecordName The builder-configured singular noun of the table.
-	SingleRecordName *string `json:"singleRecordName,omitempty"`
-
-	// SizeLimit The size limit for the table.
-	SizeLimit *string `json:"sizeLimit,omitempty"`
-
-	// SpaceRemaining The amount of space remaining for use by the table.
-	SpaceRemaining *string `json:"spaceRemaining,omitempty"`
-
-	// SpaceUsed The amount of space currently being used by the table.
-	SpaceUsed *string `json:"spaceUsed,omitempty"`
-
-	// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated              *string                `json:"updated,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetTableDataDefaultSortOrder The configuration of the default sort order on the table.
-type GetTableDataDefaultSortOrder string
-
-// GetTableReportsItem defines model for GetTableReportsItem.
-type GetTableReportsItem struct {
-	// Description The configured description of a report.
-	Description *string `json:"description,omitempty"`
-
-	// Id The identifier of the report, unique to the table.
-	Id *string `json:"id,omitempty"`
-
-	// Name The configured name of the report.
-	Name *string `json:"name,omitempty"`
-
-	// OwnerId Optional, showed only for personal reports. The user ID of report owner.
-	OwnerId *int `json:"ownerId,omitempty"`
-
-	// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
-	Properties *map[string]interface{} `json:"properties,omitempty"`
-
-	// Query The query definition as configured in Quickbase that gets executed when the report is run.
-	Query *GetTableReportsItem_Query `json:"query,omitempty"`
-
-	// Type The type of report in Quickbase (e.g., chart).
-	Type *string `json:"type,omitempty"`
-
-	// UsedCount The number of times a report has been used.
-	UsedCount *int `json:"usedCount,omitempty"`
-
-	// UsedLast The instant at which a report was last used.
-	UsedLast             *string                `json:"usedLast,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetTableReportsItemQueryFormulaFieldsFieldType Resulting formula value type.
-type GetTableReportsItemQueryFormulaFieldsFieldType string
-
-// GetTableReportsItem_Query_FormulaFields_Item defines model for GetTableReportsItem.Query.FormulaFields.Item.
-type GetTableReportsItem_Query_FormulaFields_Item struct {
-	// DecimalPrecision For numeric formula the number precision.
-	DecimalPrecision *int `json:"decimalPrecision,omitempty"`
-
-	// FieldType Resulting formula value type.
-	FieldType *GetTableReportsItemQueryFormulaFieldsFieldType `json:"fieldType,omitempty"`
-
-	// Formula Formula text.
-	Formula *string `json:"formula,omitempty"`
-
-	// Id Formula field identifier.
-	Id *int `json:"id,omitempty"`
-
-	// Label Formula field label.
-	Label                *string                `json:"label,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetTableReportsItem_Query The query definition as configured in Quickbase that gets executed when the report is run.
-type GetTableReportsItem_Query struct {
-	// Filter Filter used to query for data.
-	Filter *string `json:"filter,omitempty"`
-
-	// FormulaFields Calculated formula fields.
-	FormulaFields *[]GetTableReportsItem_Query_FormulaFields_Item `json:"formulaFields,omitempty"`
-
-	// TableId The table identifier for the report.
-	TableId              *string                `json:"tableId,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetTempTokenDBIDData defines model for GetTempTokenDBIDData.
-type GetTempTokenDBIDData struct {
-	// TemporaryAuthorization Temporary authorization token.
-	TemporaryAuthorization *string                `json:"temporaryAuthorization,omitempty"`
-	AdditionalProperties   map[string]interface{} `json:"-"`
-}
-
-// GetTrusteesItem Object used for operations to read, create, or update trustees in an app.
-type GetTrusteesItem struct {
-	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-	Id string `json:"id"`
-
-	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-	RoleId int `json:"roleId"`
-
-	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type GetTrusteesItemType `json:"type"`
-}
-
-// GetTrusteesItemType The type of trustee being added. This can be a user, group, or email domain group.
-type GetTrusteesItemType string
-
-// GetUsersData defines model for GetUsersData.
-type GetUsersData struct {
-	// Metadata Additional request information
-	Metadata GetUsersData_Metadata `json:"metadata"`
-
-	// Users A list of users found in an account with the given criterias
-	Users                []GetUsersData_Users_Item `json:"users"`
-	AdditionalProperties map[string]interface{}    `json:"-"`
-}
-
-// GetUsersData_Metadata Additional request information
-type GetUsersData_Metadata struct {
-	NextPageToken        string                 `json:"nextPageToken"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// GetUsersData_Users_Item defines model for GetUsersData.users.Item.
-type GetUsersData_Users_Item struct {
-	EmailAddress         string                 `json:"emailAddress"`
-	FirstName            string                 `json:"firstName"`
-	HashId               string                 `json:"hashId"`
-	LastName             string                 `json:"lastName"`
-	UserName             string                 `json:"userName"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// PlatformAnalyticEventSummariesData defines model for PlatformAnalyticEventSummariesData.
-type PlatformAnalyticEventSummariesData struct {
-	Data struct {
-		EventsSummaries struct {
-			// AccountId The ID of the account the events are associated with.
-			AccountId string `json:"accountId"`
-
-			// End The end date and time of the requested summaries in ISO 8601 time format.
-			End time.Time `json:"end"`
-
-			// GroupBy How the events should be grouped.
-			GroupBy PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy `json:"groupBy"`
-
-			// Metadata Additional information about the results that may be helpful.
-			Metadata struct {
-				// NextToken Supply this token in a subsequent request to fetch the next page of results.
-				NextToken string `json:"nextToken"`
-			} `json:"metadata"`
-
-			// Results An array of objects that contains Application/User information and an events object with summaries by event type.
-			Results []struct {
-				// EventTypes An array of events that contains specific information associated with an Application/User broken down by event type.
-				EventTypes []struct {
-					// BillingCategory Billing category of the event type.
-					BillingCategory *PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory `json:"billingCategory,omitempty"`
-
-					// Count Count of events associated with that event type and Application/User.
-					Count *int `json:"count,omitempty"`
-
-					// EventType Event type
-					EventType *string `json:"eventType,omitempty"`
-				} `json:"eventTypes"`
-
-				// Id Id of the Application/User.
-				Id string `json:"id"`
-
-				// Name Name of the Application/User.
-				Name string `json:"name"`
-
-				// Totals Totals by billing category for the event grouping.
-				Totals struct {
-					All         *float32 `json:"all,omitempty"`
-					Integration *float32 `json:"integration,omitempty"`
-					User        *float32 `json:"user,omitempty"`
-				} `json:"totals"`
-			} `json:"results"`
-
-			// Start The start date and time of the requested summaries in ISO 8601 time format.
-			Start time.Time `json:"start"`
-
-			// Totals Totals by billing category for all queried events.
-			Totals struct {
-				All         *float32 `json:"all,omitempty"`
-				Integration *float32 `json:"integration,omitempty"`
-				User        *float32 `json:"user,omitempty"`
-			} `json:"totals"`
-			Where []struct {
-				// Id Id of the item to filter by.
-				Id string `json:"id"`
-
-				// Type The type of item to filter by.
-				Type PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType `json:"type"`
-			} `json:"where"`
-		} `json:"eventsSummaries"`
-	} `json:"data"`
-}
-
-// PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy How the events should be grouped.
-type PlatformAnalyticEventSummariesDataDataEventsSummariesGroupBy string
-
-// PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory Billing category of the event type.
-type PlatformAnalyticEventSummariesDataDataEventsSummariesResultsEventTypesBillingCategory string
-
-// PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType The type of item to filter by.
-type PlatformAnalyticEventSummariesDataDataEventsSummariesWhereType string
-
-// PlatformAnalyticReadsData defines model for PlatformAnalyticReadsData.
-type PlatformAnalyticReadsData struct {
-	// Data The data object containing the read summaries.
-	Data                 PlatformAnalyticReadsData_Data `json:"data"`
-	AdditionalProperties map[string]interface{}         `json:"-"`
-}
-
-// PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations Total integration reads for the realm on the specified date.
-type PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations struct {
-	// Api Total API reads for the realm on the specified date.
-	Api int `json:"api"`
-
-	// Eoti Total reads by anonymous users for the realm on the specified date.
-	Eoti int `json:"eoti"`
-
-	// Pipelines Total pipeline reads for the realm on the specified date.
-	Pipelines            int                    `json:"pipelines"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads Total reads for the specified date.
-type PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads struct {
-	// Integrations Total integration reads for the realm on the specified date.
-	Integrations PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations `json:"integrations"`
-
-	// User Total user reads for the realm on the specified date.
-	User                 int                    `json:"user"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// PlatformAnalyticReadsData_Data_DailyDetailedReads Detailed read summaries for a specific date.
-type PlatformAnalyticReadsData_Data_DailyDetailedReads struct {
-	// Date The date of the requested summary.
-	Date openapi_types.Date `json:"date"`
-
-	// Reads Total reads for the specified date.
-	Reads                PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads `json:"reads"`
-	AdditionalProperties map[string]interface{}                                  `json:"-"`
-}
-
-// PlatformAnalyticReadsData_Data The data object containing the read summaries.
-type PlatformAnalyticReadsData_Data struct {
-	// DailyDetailedReads Detailed read summaries for a specific date.
-	DailyDetailedReads   PlatformAnalyticReadsData_Data_DailyDetailedReads `json:"dailyDetailedReads"`
-	AdditionalProperties map[string]interface{}                            `json:"-"`
-}
-
 // QuickbaseRecord A QuickBase record where keys are field IDs (as strings) and values are FieldValue objects.
 type QuickbaseRecord map[string]FieldValue
-
-// RecordsModifiedSinceData defines model for RecordsModifiedSinceData.
-type RecordsModifiedSinceData struct {
-	// Changes When includeDetails is true, this array contains the individual record changes. If includeDetails is false, this array will not be returned.
-	Changes *[]RecordsModifiedSinceData_Changes_Item `json:"changes,omitempty"`
-
-	// Count The count of changes found.
-	Count int `json:"count"`
-
-	// DeletesTruncated When true, this indicates that the number of deletes detected exceeded the limit and details could not be returned.
-	DeletesTruncated     *bool                  `json:"deletesTruncated,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RecordsModifiedSinceDataChangesChangeType The type of change that was detected.
-type RecordsModifiedSinceDataChangesChangeType string
-
-// RecordsModifiedSinceData_Changes_Item defines model for RecordsModifiedSinceData.changes.Item.
-type RecordsModifiedSinceData_Changes_Item struct {
-	// ChangeType The type of change that was detected.
-	ChangeType *RecordsModifiedSinceDataChangesChangeType `json:"changeType,omitempty"`
-
-	// RecordId A record whose dependencies were found to have been updated after the time provided.
-	RecordId *int `json:"recordId,omitempty"`
-
-	// Timestamp The timestamp that Quickbase found that exceeded the after time. This does not represent the latest date modified in the record graph.
-	Timestamp            *time.Time             `json:"timestamp,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RemoveManagersFromGroupData defines model for RemoveManagersFromGroupData.
-type RemoveManagersFromGroupData struct {
-	// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have been removed from the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RemoveMembersFromGroupData defines model for RemoveMembersFromGroupData.
-type RemoveMembersFromGroupData struct {
-	// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have been removed from the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RemoveSubgroupsFromGroupData defines model for RemoveSubgroupsFromGroupData.
-type RemoveSubgroupsFromGroupData struct {
-	// Failure A list of child groups that couldn't be removed from the group. This includes a list of IDs that represent invalid groups.
-	Failure []string `json:"failure"`
-
-	// Success A list of child groups that have been removed from the group successfully.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RemoveTrusteesData defines model for RemoveTrusteesData.
-type RemoveTrusteesData struct {
-	// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-	Failure []struct {
-		// Error The error message associated with the trustee that could not be updated.
-		Error *string `json:"error,omitempty"`
-
-		// Trustee Object used for operations to read, create, or update trustees in an app.
-		Trustee *struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type RemoveTrusteesDataFailureTrusteeType `json:"type"`
-		} `json:"trustee,omitempty"`
-	} `json:"failure"`
-
-	// Success A list of trustees that have been successfully updated.
-	Success []struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type RemoveTrusteesDataSuccessType `json:"type"`
-	} `json:"success"`
-}
-
-// RemoveTrusteesDataFailureTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
-type RemoveTrusteesDataFailureTrusteeType string
-
-// RemoveTrusteesDataSuccessType The type of trustee being added. This can be a user, group, or email domain group.
-type RemoveTrusteesDataSuccessType string
-
-// RunFormulaData defines model for RunFormulaData.
-type RunFormulaData struct {
-	// Result The formula execution result.
-	Result               *string                `json:"result,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunQueryData defines model for RunQueryData.
-type RunQueryData struct {
-	// Data An array of objects that either represents the record data or summarized values, depending on the report type.
-	Data *[]QuickbaseRecord `json:"data,omitempty"`
-
-	// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
-	Fields *[]RunQueryData_Fields_Item `json:"fields,omitempty"`
-
-	// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
-	Metadata             *RunQueryData_Metadata `json:"metadata,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunQueryData_Fields_Item defines model for RunQueryData.fields.Item.
-type RunQueryData_Fields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunQueryData_Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
-type RunQueryData_Metadata struct {
-	// NumFields The number of fields in each record in the current response object
-	NumFields int `json:"numFields"`
-
-	// NumRecords The number of records in the current response object
-	NumRecords int `json:"numRecords"`
-
-	// Skip The number of records to skip
-	Skip *int `json:"skip,omitempty"`
-
-	// Top If present, the maximum number of records requested by the caller
-	Top *int `json:"top,omitempty"`
-
-	// TotalRecords The total number of records in the result set
-	TotalRecords         int                    `json:"totalRecords"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunReportData defines model for RunReportData.
-type RunReportData struct {
-	// Data An array of objects that either represents the record data or summarized values, depending on the report type.
-	Data *[]QuickbaseRecord `json:"data,omitempty"`
-
-	// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
-	Fields *[]RunReportData_Fields_Item `json:"fields,omitempty"`
-
-	// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
-	Metadata             *RunReportData_Metadata `json:"metadata,omitempty"`
-	AdditionalProperties map[string]interface{}  `json:"-"`
-}
-
-// RunReportData_Fields_Item defines model for RunReportData.fields.Item.
-type RunReportData_Fields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// LabelOverride Column heading label override for field in report.
-	LabelOverride *string `json:"labelOverride,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunReportData_Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
-type RunReportData_Metadata struct {
-	// NumFields The number of fields in each record in the current response object
-	NumFields int `json:"numFields"`
-
-	// NumRecords The number of records in the current response object
-	NumRecords int `json:"numRecords"`
-
-	// Skip The number of records to skip
-	Skip *int `json:"skip,omitempty"`
-
-	// Top If present, the maximum number of records requested by the caller
-	Top *int `json:"top,omitempty"`
-
-	// TotalRecords The total number of records in the result set
-	TotalRecords         int                    `json:"totalRecords"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
 
 // SortField A field to sort by in a query.
 type SortField struct {
@@ -3228,623 +274,6 @@ type SortField struct {
 
 // SortFieldOrder Sort based on ascending order (ASC), descending order (DESC) or equal values (equal-values).
 type SortFieldOrder string
-
-// TransferUserTokenData defines model for TransferUserTokenData.
-type TransferUserTokenData struct {
-	// Active Whether the user token is active.
-	Active *bool `json:"active,omitempty"`
-
-	// Apps The list of apps this user token is assigned to.
-	Apps *[]TransferUserTokenData_Apps_Item `json:"apps,omitempty"`
-
-	// Description User Token description.
-	Description *string `json:"description,omitempty"`
-
-	// Id User Token id.
-	Id *int `json:"id,omitempty"`
-
-	// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	LastUsed *string `json:"lastUsed,omitempty"`
-
-	// Name User Token name.
-	Name                 *string                `json:"name,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// TransferUserTokenData_Apps_Item defines model for TransferUserTokenData.apps.Item.
-type TransferUserTokenData_Apps_Item struct {
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// Name The application's name.
-	Name                 *string                `json:"name,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UndenyUsersData defines model for UndenyUsersData.
-type UndenyUsersData struct {
-	// Failure A list of users that couldn't be undenied. This also includes the ID's of users that are not valid.
-	Failure []string `json:"failure"`
-
-	// Success A list of users that have successfully been undenied.
-	Success              []string               `json:"success"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateAppData defines model for UpdateAppData.
-type UpdateAppData struct {
-	// AncestorId The id of the app from which this app was copied
-	AncestorId *string `json:"ancestorId,omitempty"`
-
-	// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
-	DataClassification *string `json:"dataClassification,omitempty"`
-
-	// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
-	DateFormat *string `json:"dateFormat,omitempty"`
-
-	// Description The description for the app. If this property is left out, the app description will be blank.
-	Description *string `json:"description,omitempty"`
-
-	// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
-	HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
-
-	// Id The unique identifier for this application.
-	Id *string `json:"id,omitempty"`
-
-	// MemoryInfo Application memory info
-	MemoryInfo *struct {
-		// EstMemory The estimated memory of this application in gigabytes
-		EstMemory *float32 `json:"estMemory,omitempty"`
-
-		// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-		EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
-	} `json:"memoryInfo,omitempty"`
-
-	// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-	Name string `json:"name"`
-
-	// SecurityProperties Security properties of the application
-	SecurityProperties *UpdateAppData_SecurityProperties `json:"securityProperties,omitempty"`
-
-	// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
-	TimeZone *string `json:"timeZone,omitempty"`
-
-	// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated *string `json:"updated,omitempty"`
-
-	// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-	Variables            *[]UpdateAppData_Variables_Item `json:"variables,omitempty"`
-	AdditionalProperties map[string]interface{}          `json:"-"`
-}
-
-// UpdateAppData_SecurityProperties Security properties of the application
-type UpdateAppData_SecurityProperties struct {
-	// AllowClone Allow users who are not administrators to copy
-	AllowClone *bool `json:"allowClone,omitempty"`
-
-	// AllowExport Allow users who are not administrators to export data
-	AllowExport *bool `json:"allowExport,omitempty"`
-
-	// EnableAppTokens Require Application Tokens
-	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
-
-	// HideFromPublic Hide from public application searches
-	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
-
-	// MustBeRealmApproved Only "approved" users may access this application
-	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
-
-	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
-	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateAppData_Variables_Item defines model for UpdateAppData.variables.Item.
-type UpdateAppData_Variables_Item struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
-
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateFieldData defines model for UpdateFieldData.
-type UpdateFieldData struct {
-	// AppearsByDefault Indicates if the field is marked as a default in reports.
-	AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
-
-	// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
-	Audited *bool `json:"audited,omitempty"`
-
-	// Bold Indicates if the field is configured to display in bold in the product.
-	Bold *bool `json:"bold,omitempty"`
-
-	// DoesDataCopy Indicates if the field data will copy when a user copies the record.
-	DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
-
-	// FieldHelp The configured help text shown to users within the product.
-	FieldHelp *string `json:"fieldHelp,omitempty"`
-
-	// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
-	FieldType *string `json:"fieldType,omitempty"`
-
-	// FindEnabled Indicates if the field is marked as searchable.
-	FindEnabled *bool `json:"findEnabled,omitempty"`
-
-	// Id The id of the field, unique to this table.
-	Id int64 `json:"id"`
-
-	// Label The label (name) of the field.
-	Label *string `json:"label,omitempty"`
-
-	// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
-	Mode *string `json:"mode,omitempty"`
-
-	// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
-	NoWrap *bool `json:"noWrap,omitempty"`
-
-	// Permissions Field Permissions for different roles.
-	Permissions *[]struct {
-		// PermissionType The permission given to the role for this field
-		PermissionType *string `json:"permissionType,omitempty"`
-
-		// Role The role associated with a given permission for the field
-		Role *string `json:"role,omitempty"`
-
-		// RoleId The Id of the given role
-		RoleId *int `json:"roleId,omitempty"`
-	} `json:"permissions,omitempty"`
-
-	// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-	Properties *UpdateFieldData_Properties `json:"properties,omitempty"`
-
-	// Required Indicates if the field is marked required.
-	Required *bool `json:"required,omitempty"`
-
-	// Unique Indicates if the field is marked unique.
-	Unique               *bool                  `json:"unique,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateFieldDataPropertiesCompositeFields0 defines model for .
-type UpdateFieldDataPropertiesCompositeFields0 = int
-
-// UpdateFieldDataPropertiesCompositeFields1 defines model for .
-type UpdateFieldDataPropertiesCompositeFields1 = map[string]interface{}
-
-// UpdateFieldData_Properties_CompositeFields_Item defines model for UpdateFieldData.Properties.CompositeFields.Item.
-type UpdateFieldData_Properties_CompositeFields_Item struct {
-	union json.RawMessage
-}
-
-// UpdateFieldDataPropertiesCurrencyFormat The currency format used when displaying field values within the product.
-type UpdateFieldDataPropertiesCurrencyFormat string
-
-// UpdateFieldDataPropertiesSummaryFunction The summary accumulation function type.
-type UpdateFieldDataPropertiesSummaryFunction string
-
-// UpdateFieldDataPropertiesVersionMode Version modes for files. Keep all versions vs keep last version.
-type UpdateFieldDataPropertiesVersionMode string
-
-// UpdateFieldData_Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
-type UpdateFieldData_Properties struct {
-	// Abbreviate Don't show the URL protocol when showing the URL.
-	Abbreviate *bool `json:"abbreviate,omitempty"`
-
-	// AllowHTML Whether this field allows html.
-	AllowHTML *bool `json:"allowHTML,omitempty"`
-
-	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
-	AllowMentions *bool `json:"allowMentions,omitempty"`
-
-	// AllowNewChoices Indicates if users can add new choices to a selection list.
-	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
-
-	// AppearsAs The link text, if empty, the url will be used as link text.
-	AppearsAs *string `json:"appearsAs,omitempty"`
-
-	// AppendOnly Whether this field is append only.
-	AppendOnly *bool `json:"appendOnly,omitempty"`
-
-	// AutoSave Whether the link field will auto save.
-	AutoSave *bool `json:"autoSave,omitempty"`
-
-	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
-	BlankIsZero *bool `json:"blankIsZero,omitempty"`
-
-	// CarryChoices Whether the field should carry its multiple choice fields when copied.
-	CarryChoices *bool `json:"carryChoices,omitempty"`
-
-	// Choices An array of entries that exist for a field that offers choices to the user.
-	Choices *[]string `json:"choices,omitempty"`
-
-	// ChoicesLuid List of user choices.
-	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
-
-	// CommaStart The number of digits before commas display in the product, when applicable.
-	CommaStart *int `json:"commaStart,omitempty"`
-
-	// Comments The comments entered on the field properties by an administrator.
-	Comments *string `json:"comments,omitempty"`
-
-	// CompositeFields An array of the fields that make up a composite field (e.g., address).
-	CompositeFields *[]UpdateFieldData_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
-
-	// CoverText An alternate user friendly text that can be used to display a link in the browser.
-	CoverText *string `json:"coverText,omitempty"`
-
-	// CurrencyFormat The currency format used when displaying field values within the product.
-	CurrencyFormat *UpdateFieldDataPropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
-
-	// CurrencySymbol The current symbol used when displaying field values within the product.
-	CurrencySymbol *string `json:"currencySymbol,omitempty"`
-
-	// DecimalPlaces The number of decimal places displayed in the product for this field.
-	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
-
-	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
-	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
-
-	// DefaultDomain Default email domain.
-	DefaultDomain *string `json:"defaultDomain,omitempty"`
-
-	// DefaultKind The user default type.
-	DefaultKind *string `json:"defaultKind,omitempty"`
-
-	// DefaultToday Indicates if the field value is defaulted today for new records.
-	DefaultToday *bool `json:"defaultToday,omitempty"`
-
-	// DefaultValue The default value configured for a field when a new record is added.
-	DefaultValue *string `json:"defaultValue,omitempty"`
-
-	// DefaultValueLuid Default user id value.
-	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
-
-	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
-	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
-
-	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
-	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
-
-	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
-	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
-
-	// DisplayEmail How the email is displayed.
-	DisplayEmail *string `json:"displayEmail,omitempty"`
-
-	// DisplayMonth How to display months.
-	DisplayMonth *string `json:"displayMonth,omitempty"`
-
-	// DisplayRelative Whether to display time as relative.
-	DisplayRelative *bool `json:"displayRelative,omitempty"`
-
-	// DisplayTime Indicates whether to display the time, in addition to the date.
-	DisplayTime *bool `json:"displayTime,omitempty"`
-
-	// DisplayTimezone Indicates whether to display the timezone within the product.
-	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
-
-	// DisplayUser The configured option for how users display within the product.
-	DisplayUser *string `json:"displayUser,omitempty"`
-
-	// DoesAverage Whether this field averages in reports within the product.
-	DoesAverage *bool `json:"doesAverage,omitempty"`
-
-	// DoesTotal Whether this field totals in reports within the product.
-	DoesTotal *bool `json:"doesTotal,omitempty"`
-
-	// DurationField The duration field id.
-	DurationField *int `json:"durationField,omitempty"`
-
-	// Exact Whether an exact match is required for a report link.
-	Exact *bool `json:"exact,omitempty"`
-
-	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
-	ForeignKey *bool `json:"foreignKey,omitempty"`
-
-	// Format The format to display time.
-	Format *int `json:"format,omitempty"`
-
-	// Formula The formula of the field as configured in Quickbase.
-	Formula *string `json:"formula,omitempty"`
-
-	// HasExtension Whether this field has a phone extension.
-	HasExtension *bool `json:"hasExtension,omitempty"`
-
-	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
-	Hours24 *bool `json:"hours24,omitempty"`
-
-	// LinkText The configured text value that replaces the URL that users see within the product.
-	LinkText *string `json:"linkText,omitempty"`
-
-	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
-	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
-
-	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
-	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
-
-	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
-	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
-
-	// MasterChoiceTableId The id of the table that is the master in this relationship.
-	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
-
-	// MasterTableTag The table alias for the master table in the relationship this field is part of.
-	MasterTableTag *string `json:"masterTableTag,omitempty"`
-
-	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
-	MaxLength *int `json:"maxLength,omitempty"`
-
-	// MaxVersions The maximum number of versions configured for a file attachment.
-	MaxVersions *int `json:"maxVersions,omitempty"`
-
-	// NumLines The number of lines shown in Quickbase for this text field.
-	NumLines *int `json:"numLines,omitempty"`
-
-	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
-	NumberFormat *int `json:"numberFormat,omitempty"`
-
-	// ParentFieldId The id of the parent composite field, when applicable.
-	ParentFieldId *int `json:"parentFieldId,omitempty"`
-
-	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
-	PostTempToken *bool `json:"postTempToken,omitempty"`
-
-	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
-	SeeVersions *bool `json:"seeVersions,omitempty"`
-
-	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
-	SnapFieldId *int `json:"snapFieldId,omitempty"`
-
-	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
-	SortAlpha *bool `json:"sortAlpha,omitempty"`
-
-	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
-	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
-
-	// SourceFieldId The id of the source field.
-	SourceFieldId *int `json:"sourceFieldId,omitempty"`
-
-	// StartField The start field id.
-	StartField *int `json:"startField,omitempty"`
-
-	// SummaryFunction The summary accumulation function type.
-	SummaryFunction *UpdateFieldDataPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
-
-	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
-	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
-
-	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
-	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
-
-	// TargetFieldId The id of the target field.
-	TargetFieldId *int `json:"targetFieldId,omitempty"`
-
-	// TargetTableId The id of the target table.
-	TargetTableId *string `json:"targetTableId,omitempty"`
-
-	// TargetTableName The field's target table name.
-	TargetTableName *string `json:"targetTableName,omitempty"`
-
-	// Units The units label.
-	Units *string `json:"units,omitempty"`
-
-	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
-	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
-
-	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
-	UseNewWindow *bool `json:"useNewWindow,omitempty"`
-
-	// VersionMode Version modes for files. Keep all versions vs keep last version.
-	VersionMode *UpdateFieldDataPropertiesVersionMode `json:"versionMode,omitempty"`
-
-	// Width The field's html input width in the product.
-	Width *int `json:"width,omitempty"`
-
-	// WorkWeek The work week type.
-	WorkWeek *int `json:"workWeek,omitempty"`
-
-	// XmlTag The field's xml tag.
-	XmlTag               *string                `json:"xmlTag,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateRelationshipData defines model for UpdateRelationshipData.
-type UpdateRelationshipData struct {
-	// ChildTableId The child table id of the relationship.
-	ChildTableId string `json:"childTableId"`
-
-	// ForeignKeyField The foreign key field information.
-	ForeignKeyField *UpdateRelationshipData_ForeignKeyField `json:"foreignKeyField,omitempty"`
-
-	// Id The relationship id (foreign key field id).
-	Id int `json:"id"`
-
-	// IsCrossApp Whether this is a cross-app relationship.
-	IsCrossApp bool `json:"isCrossApp"`
-
-	// LookupFields The lookup fields array.
-	LookupFields *[]UpdateRelationshipData_LookupFields_Item `json:"lookupFields,omitempty"`
-
-	// ParentTableId The parent table id of the relationship.
-	ParentTableId string `json:"parentTableId"`
-
-	// SummaryFields The summary fields array.
-	SummaryFields        *[]UpdateRelationshipData_SummaryFields_Item `json:"summaryFields,omitempty"`
-	AdditionalProperties map[string]interface{}                       `json:"-"`
-}
-
-// UpdateRelationshipData_ForeignKeyField The foreign key field information.
-type UpdateRelationshipData_ForeignKeyField struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateRelationshipData_LookupFields_Item defines model for UpdateRelationshipData.lookupFields.Item.
-type UpdateRelationshipData_LookupFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateRelationshipData_SummaryFields_Item defines model for UpdateRelationshipData.summaryFields.Item.
-type UpdateRelationshipData_SummaryFields_Item struct {
-	// Id Field id.
-	Id *int `json:"id,omitempty"`
-
-	// Label Field label.
-	Label *string `json:"label,omitempty"`
-
-	// Type Field type.
-	Type                 *string                `json:"type,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateTableData defines model for UpdateTableData.
-type UpdateTableData struct {
-	// Alias The automatically-created table alias for the table.
-	Alias *string `json:"alias,omitempty"`
-
-	// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Created *string `json:"created,omitempty"`
-
-	// DefaultSortFieldId The id of the field that is configured for default sorting.
-	DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
-
-	// DefaultSortOrder The configuration of the default sort order on the table.
-	DefaultSortOrder *UpdateTableDataDefaultSortOrder `json:"defaultSortOrder,omitempty"`
-
-	// Description The description of the table, as configured by an application administrator.
-	Description *string `json:"description,omitempty"`
-
-	// Id The unique identifier (dbid) of the table.
-	Id *string `json:"id,omitempty"`
-
-	// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
-	KeyFieldId *int `json:"keyFieldId,omitempty"`
-
-	// Name The name of the table.
-	Name *string `json:"name,omitempty"`
-
-	// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
-	NextFieldId *int `json:"nextFieldId,omitempty"`
-
-	// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
-	NextRecordId *int `json:"nextRecordId,omitempty"`
-
-	// PluralRecordName The builder-configured plural noun of the table.
-	PluralRecordName *string `json:"pluralRecordName,omitempty"`
-
-	// SingleRecordName The builder-configured singular noun of the table.
-	SingleRecordName *string `json:"singleRecordName,omitempty"`
-
-	// SizeLimit The size limit for the table.
-	SizeLimit *string `json:"sizeLimit,omitempty"`
-
-	// SpaceRemaining The amount of space remaining for use by the table.
-	SpaceRemaining *string `json:"spaceRemaining,omitempty"`
-
-	// SpaceUsed The amount of space currently being used by the table.
-	SpaceUsed *string `json:"spaceUsed,omitempty"`
-
-	// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
-	Updated              *string                `json:"updated,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpdateTableDataDefaultSortOrder The configuration of the default sort order on the table.
-type UpdateTableDataDefaultSortOrder string
-
-// UpdateTrusteesData defines model for UpdateTrusteesData.
-type UpdateTrusteesData struct {
-	// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-	Failure []struct {
-		// Error The error message associated with the trustee that could not be updated.
-		Error *string `json:"error,omitempty"`
-
-		// Trustee Object used for operations to read, create, or update trustees in an app.
-		Trustee *struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-			OldRoleId int `json:"oldRoleId"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type UpdateTrusteesDataFailureTrusteeType `json:"type"`
-		} `json:"trustee,omitempty"`
-	} `json:"failure"`
-
-	// Success A list of trustees that have been successfully updated.
-	Success []struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-		OldRoleId int `json:"oldRoleId"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type UpdateTrusteesDataSuccessType `json:"type"`
-	} `json:"success"`
-}
-
-// UpdateTrusteesDataFailureTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
-type UpdateTrusteesDataFailureTrusteeType string
-
-// UpdateTrusteesDataSuccessType The type of trustee being added. This can be a user, group, or email domain group.
-type UpdateTrusteesDataSuccessType string
-
-// UpsertData A successful response that includes details on the records added, updated or unchanged. In the example below, the table previously had ten records with IDs from 1 through 10. The user posts an upsert that updates the value of record 1 and adds two new records, all successfully.
-type UpsertData struct {
-	// Data The data that is expected to be returned.
-	Data *[]QuickbaseRecord `json:"data,omitempty"`
-
-	// Metadata Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
-	Metadata             *UpsertData_Metadata   `json:"metadata,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// UpsertData_Metadata Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
-type UpsertData_Metadata struct {
-	// CreatedRecordIds Array containing the created record ids.
-	CreatedRecordIds *[]int `json:"createdRecordIds,omitempty"`
-
-	// LineErrors This will only be returned in the case of failed records. It is a collection of errors that occurred when processing the incoming data that resulted in records not being processed. Each object has a key representing the sequence number of the record in the original payload (starting from 1). The value is a list of errors occurred.
-	LineErrors *map[string][]string `json:"lineErrors,omitempty"`
-
-	// TotalNumberOfRecordsProcessed Number of records processed. Includes successful and failed record updates.
-	TotalNumberOfRecordsProcessed *int `json:"totalNumberOfRecordsProcessed,omitempty"`
-
-	// UnchangedRecordIds Array containing the unchanged record ids.
-	UnchangedRecordIds *[]int `json:"unchangedRecordIds,omitempty"`
-
-	// UpdatedRecordIds Array containing the updated record ids.
-	UpdatedRecordIds     *[]int                 `json:"updatedRecordIds,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
-}
 
 // PlatformAnalyticEventSummariesJSONBody defines parameters for PlatformAnalyticEventSummaries.
 type PlatformAnalyticEventSummariesJSONBody struct {
@@ -6506,18613 +2935,6 @@ func (a GetUsersJSONBody) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
-// Getter for additional properties for AddManagersToGroupData. Returns the specified
-// element and whether it was found
-func (a AddManagersToGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AddManagersToGroupData
-func (a *AddManagersToGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AddManagersToGroupData to handle AdditionalProperties
-func (a *AddManagersToGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AddManagersToGroupData to handle AdditionalProperties
-func (a AddManagersToGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AddMembersToGroupData. Returns the specified
-// element and whether it was found
-func (a AddMembersToGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AddMembersToGroupData
-func (a *AddMembersToGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AddMembersToGroupData to handle AdditionalProperties
-func (a *AddMembersToGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AddMembersToGroupData to handle AdditionalProperties
-func (a AddMembersToGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AddSubgroupsToGroupData. Returns the specified
-// element and whether it was found
-func (a AddSubgroupsToGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AddSubgroupsToGroupData
-func (a *AddSubgroupsToGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AddSubgroupsToGroupData to handle AdditionalProperties
-func (a *AddSubgroupsToGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AddSubgroupsToGroupData to handle AdditionalProperties
-func (a AddSubgroupsToGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AuditData. Returns the specified
-// element and whether it was found
-func (a AuditData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AuditData
-func (a *AuditData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AuditData to handle AdditionalProperties
-func (a *AuditData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["events"]; found {
-		err = json.Unmarshal(raw, &a.Events)
-		if err != nil {
-			return fmt.Errorf("error reading 'events': %w", err)
-		}
-		delete(object, "events")
-	}
-
-	if raw, found := object["nextToken"]; found {
-		err = json.Unmarshal(raw, &a.NextToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextToken': %w", err)
-		}
-		delete(object, "nextToken")
-	}
-
-	if raw, found := object["queryId"]; found {
-		err = json.Unmarshal(raw, &a.QueryId)
-		if err != nil {
-			return fmt.Errorf("error reading 'queryId': %w", err)
-		}
-		delete(object, "queryId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AuditData to handle AdditionalProperties
-func (a AuditData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Events != nil {
-		object["events"], err = json.Marshal(a.Events)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'events': %w", err)
-		}
-	}
-
-	if a.NextToken != nil {
-		object["nextToken"], err = json.Marshal(a.NextToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextToken': %w", err)
-		}
-	}
-
-	object["queryId"], err = json.Marshal(a.QueryId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'queryId': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AuditData_Events_PayloadChanges_Changes. Returns the specified
-// element and whether it was found
-func (a AuditData_Events_PayloadChanges_Changes) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AuditData_Events_PayloadChanges_Changes
-func (a *AuditData_Events_PayloadChanges_Changes) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AuditData_Events_PayloadChanges_Changes to handle AdditionalProperties
-func (a *AuditData_Events_PayloadChanges_Changes) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["current"]; found {
-		err = json.Unmarshal(raw, &a.Current)
-		if err != nil {
-			return fmt.Errorf("error reading 'current': %w", err)
-		}
-		delete(object, "current")
-	}
-
-	if raw, found := object["fields"]; found {
-		err = json.Unmarshal(raw, &a.Fields)
-		if err != nil {
-			return fmt.Errorf("error reading 'fields': %w", err)
-		}
-		delete(object, "fields")
-	}
-
-	if raw, found := object["previous"]; found {
-		err = json.Unmarshal(raw, &a.Previous)
-		if err != nil {
-			return fmt.Errorf("error reading 'previous': %w", err)
-		}
-		delete(object, "previous")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AuditData_Events_PayloadChanges_Changes to handle AdditionalProperties
-func (a AuditData_Events_PayloadChanges_Changes) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Current != nil {
-		object["current"], err = json.Marshal(a.Current)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'current': %w", err)
-		}
-	}
-
-	if a.Fields != nil {
-		object["fields"], err = json.Marshal(a.Fields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fields': %w", err)
-		}
-	}
-
-	if a.Previous != nil {
-		object["previous"], err = json.Marshal(a.Previous)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'previous': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AuditData_Events_PayloadChanges. Returns the specified
-// element and whether it was found
-func (a AuditData_Events_PayloadChanges) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AuditData_Events_PayloadChanges
-func (a *AuditData_Events_PayloadChanges) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AuditData_Events_PayloadChanges to handle AdditionalProperties
-func (a *AuditData_Events_PayloadChanges) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["changeType"]; found {
-		err = json.Unmarshal(raw, &a.ChangeType)
-		if err != nil {
-			return fmt.Errorf("error reading 'changeType': %w", err)
-		}
-		delete(object, "changeType")
-	}
-
-	if raw, found := object["changes"]; found {
-		err = json.Unmarshal(raw, &a.Changes)
-		if err != nil {
-			return fmt.Errorf("error reading 'changes': %w", err)
-		}
-		delete(object, "changes")
-	}
-
-	if raw, found := object["rid"]; found {
-		err = json.Unmarshal(raw, &a.Rid)
-		if err != nil {
-			return fmt.Errorf("error reading 'rid': %w", err)
-		}
-		delete(object, "rid")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AuditData_Events_PayloadChanges to handle AdditionalProperties
-func (a AuditData_Events_PayloadChanges) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["changeType"], err = json.Marshal(a.ChangeType)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'changeType': %w", err)
-	}
-
-	object["changes"], err = json.Marshal(a.Changes)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'changes': %w", err)
-	}
-
-	object["rid"], err = json.Marshal(a.Rid)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'rid': %w", err)
-	}
-
-	object["type"], err = json.Marshal(a.Type)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'type': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for AuditData_Events_Item. Returns the specified
-// element and whether it was found
-func (a AuditData_Events_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for AuditData_Events_Item
-func (a *AuditData_Events_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for AuditData_Events_Item to handle AdditionalProperties
-func (a *AuditData_Events_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["application"]; found {
-		err = json.Unmarshal(raw, &a.Application)
-		if err != nil {
-			return fmt.Errorf("error reading 'application': %w", err)
-		}
-		delete(object, "application")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["email"]; found {
-		err = json.Unmarshal(raw, &a.Email)
-		if err != nil {
-			return fmt.Errorf("error reading 'email': %w", err)
-		}
-		delete(object, "email")
-	}
-
-	if raw, found := object["firstname"]; found {
-		err = json.Unmarshal(raw, &a.Firstname)
-		if err != nil {
-			return fmt.Errorf("error reading 'firstname': %w", err)
-		}
-		delete(object, "firstname")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["ipaddress"]; found {
-		err = json.Unmarshal(raw, &a.Ipaddress)
-		if err != nil {
-			return fmt.Errorf("error reading 'ipaddress': %w", err)
-		}
-		delete(object, "ipaddress")
-	}
-
-	if raw, found := object["lastname"]; found {
-		err = json.Unmarshal(raw, &a.Lastname)
-		if err != nil {
-			return fmt.Errorf("error reading 'lastname': %w", err)
-		}
-		delete(object, "lastname")
-	}
-
-	if raw, found := object["payloadChanges"]; found {
-		err = json.Unmarshal(raw, &a.PayloadChanges)
-		if err != nil {
-			return fmt.Errorf("error reading 'payloadChanges': %w", err)
-		}
-		delete(object, "payloadChanges")
-	}
-
-	if raw, found := object["time"]; found {
-		err = json.Unmarshal(raw, &a.Time)
-		if err != nil {
-			return fmt.Errorf("error reading 'time': %w", err)
-		}
-		delete(object, "time")
-	}
-
-	if raw, found := object["topic"]; found {
-		err = json.Unmarshal(raw, &a.Topic)
-		if err != nil {
-			return fmt.Errorf("error reading 'topic': %w", err)
-		}
-		delete(object, "topic")
-	}
-
-	if raw, found := object["useragent"]; found {
-		err = json.Unmarshal(raw, &a.Useragent)
-		if err != nil {
-			return fmt.Errorf("error reading 'useragent': %w", err)
-		}
-		delete(object, "useragent")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for AuditData_Events_Item to handle AdditionalProperties
-func (a AuditData_Events_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["application"], err = json.Marshal(a.Application)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'application': %w", err)
-	}
-
-	object["description"], err = json.Marshal(a.Description)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'description': %w", err)
-	}
-
-	object["email"], err = json.Marshal(a.Email)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'email': %w", err)
-	}
-
-	object["firstname"], err = json.Marshal(a.Firstname)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'firstname': %w", err)
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["ipaddress"], err = json.Marshal(a.Ipaddress)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'ipaddress': %w", err)
-	}
-
-	object["lastname"], err = json.Marshal(a.Lastname)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'lastname': %w", err)
-	}
-
-	if a.PayloadChanges != nil {
-		object["payloadChanges"], err = json.Marshal(a.PayloadChanges)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'payloadChanges': %w", err)
-		}
-	}
-
-	object["time"], err = json.Marshal(a.Time)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'time': %w", err)
-	}
-
-	object["topic"], err = json.Marshal(a.Topic)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'topic': %w", err)
-	}
-
-	object["useragent"], err = json.Marshal(a.Useragent)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'useragent': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CloneUserTokenData. Returns the specified
-// element and whether it was found
-func (a CloneUserTokenData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CloneUserTokenData
-func (a *CloneUserTokenData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CloneUserTokenData to handle AdditionalProperties
-func (a *CloneUserTokenData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["active"]; found {
-		err = json.Unmarshal(raw, &a.Active)
-		if err != nil {
-			return fmt.Errorf("error reading 'active': %w", err)
-		}
-		delete(object, "active")
-	}
-
-	if raw, found := object["apps"]; found {
-		err = json.Unmarshal(raw, &a.Apps)
-		if err != nil {
-			return fmt.Errorf("error reading 'apps': %w", err)
-		}
-		delete(object, "apps")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["lastUsed"]; found {
-		err = json.Unmarshal(raw, &a.LastUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'lastUsed': %w", err)
-		}
-		delete(object, "lastUsed")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["token"]; found {
-		err = json.Unmarshal(raw, &a.Token)
-		if err != nil {
-			return fmt.Errorf("error reading 'token': %w", err)
-		}
-		delete(object, "token")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CloneUserTokenData to handle AdditionalProperties
-func (a CloneUserTokenData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Active != nil {
-		object["active"], err = json.Marshal(a.Active)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'active': %w", err)
-		}
-	}
-
-	if a.Apps != nil {
-		object["apps"], err = json.Marshal(a.Apps)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'apps': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.LastUsed != nil {
-		object["lastUsed"], err = json.Marshal(a.LastUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lastUsed': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Token != nil {
-		object["token"], err = json.Marshal(a.Token)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'token': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CloneUserTokenData_Apps_Item. Returns the specified
-// element and whether it was found
-func (a CloneUserTokenData_Apps_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CloneUserTokenData_Apps_Item
-func (a *CloneUserTokenData_Apps_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CloneUserTokenData_Apps_Item to handle AdditionalProperties
-func (a *CloneUserTokenData_Apps_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CloneUserTokenData_Apps_Item to handle AdditionalProperties
-func (a CloneUserTokenData_Apps_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CopyAppData. Returns the specified
-// element and whether it was found
-func (a CopyAppData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CopyAppData
-func (a *CopyAppData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CopyAppData to handle AdditionalProperties
-func (a *CopyAppData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["ancestorId"]; found {
-		err = json.Unmarshal(raw, &a.AncestorId)
-		if err != nil {
-			return fmt.Errorf("error reading 'ancestorId': %w", err)
-		}
-		delete(object, "ancestorId")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["dataClassification"]; found {
-		err = json.Unmarshal(raw, &a.DataClassification)
-		if err != nil {
-			return fmt.Errorf("error reading 'dataClassification': %w", err)
-		}
-		delete(object, "dataClassification")
-	}
-
-	if raw, found := object["dateFormat"]; found {
-		err = json.Unmarshal(raw, &a.DateFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'dateFormat': %w", err)
-		}
-		delete(object, "dateFormat")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["hasEveryoneOnTheInternet"]; found {
-		err = json.Unmarshal(raw, &a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasEveryoneOnTheInternet': %w", err)
-		}
-		delete(object, "hasEveryoneOnTheInternet")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["timeZone"]; found {
-		err = json.Unmarshal(raw, &a.TimeZone)
-		if err != nil {
-			return fmt.Errorf("error reading 'timeZone': %w", err)
-		}
-		delete(object, "timeZone")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if raw, found := object["variables"]; found {
-		err = json.Unmarshal(raw, &a.Variables)
-		if err != nil {
-			return fmt.Errorf("error reading 'variables': %w", err)
-		}
-		delete(object, "variables")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CopyAppData to handle AdditionalProperties
-func (a CopyAppData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AncestorId != nil {
-		object["ancestorId"], err = json.Marshal(a.AncestorId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'ancestorId': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DataClassification != nil {
-		object["dataClassification"], err = json.Marshal(a.DataClassification)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dataClassification': %w", err)
-		}
-	}
-
-	if a.DateFormat != nil {
-		object["dateFormat"], err = json.Marshal(a.DateFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dateFormat': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.HasEveryoneOnTheInternet != nil {
-		object["hasEveryoneOnTheInternet"], err = json.Marshal(a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasEveryoneOnTheInternet': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	if a.TimeZone != nil {
-		object["timeZone"], err = json.Marshal(a.TimeZone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timeZone': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	if a.Variables != nil {
-		object["variables"], err = json.Marshal(a.Variables)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CopyAppData_Variables_Item. Returns the specified
-// element and whether it was found
-func (a CopyAppData_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CopyAppData_Variables_Item
-func (a *CopyAppData_Variables_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CopyAppData_Variables_Item to handle AdditionalProperties
-func (a *CopyAppData_Variables_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["value"]; found {
-		err = json.Unmarshal(raw, &a.Value)
-		if err != nil {
-			return fmt.Errorf("error reading 'value': %w", err)
-		}
-		delete(object, "value")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CopyAppData_Variables_Item to handle AdditionalProperties
-func (a CopyAppData_Variables_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateAppData. Returns the specified
-// element and whether it was found
-func (a CreateAppData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateAppData
-func (a *CreateAppData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateAppData to handle AdditionalProperties
-func (a *CreateAppData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["dataClassification"]; found {
-		err = json.Unmarshal(raw, &a.DataClassification)
-		if err != nil {
-			return fmt.Errorf("error reading 'dataClassification': %w", err)
-		}
-		delete(object, "dataClassification")
-	}
-
-	if raw, found := object["dateFormat"]; found {
-		err = json.Unmarshal(raw, &a.DateFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'dateFormat': %w", err)
-		}
-		delete(object, "dateFormat")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["hasEveryoneOnTheInternet"]; found {
-		err = json.Unmarshal(raw, &a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasEveryoneOnTheInternet': %w", err)
-		}
-		delete(object, "hasEveryoneOnTheInternet")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["memoryInfo"]; found {
-		err = json.Unmarshal(raw, &a.MemoryInfo)
-		if err != nil {
-			return fmt.Errorf("error reading 'memoryInfo': %w", err)
-		}
-		delete(object, "memoryInfo")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["securityProperties"]; found {
-		err = json.Unmarshal(raw, &a.SecurityProperties)
-		if err != nil {
-			return fmt.Errorf("error reading 'securityProperties': %w", err)
-		}
-		delete(object, "securityProperties")
-	}
-
-	if raw, found := object["timeZone"]; found {
-		err = json.Unmarshal(raw, &a.TimeZone)
-		if err != nil {
-			return fmt.Errorf("error reading 'timeZone': %w", err)
-		}
-		delete(object, "timeZone")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if raw, found := object["variables"]; found {
-		err = json.Unmarshal(raw, &a.Variables)
-		if err != nil {
-			return fmt.Errorf("error reading 'variables': %w", err)
-		}
-		delete(object, "variables")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateAppData to handle AdditionalProperties
-func (a CreateAppData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DataClassification != nil {
-		object["dataClassification"], err = json.Marshal(a.DataClassification)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dataClassification': %w", err)
-		}
-	}
-
-	if a.DateFormat != nil {
-		object["dateFormat"], err = json.Marshal(a.DateFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dateFormat': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.HasEveryoneOnTheInternet != nil {
-		object["hasEveryoneOnTheInternet"], err = json.Marshal(a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasEveryoneOnTheInternet': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.MemoryInfo != nil {
-		object["memoryInfo"], err = json.Marshal(a.MemoryInfo)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'memoryInfo': %w", err)
-		}
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	if a.SecurityProperties != nil {
-		object["securityProperties"], err = json.Marshal(a.SecurityProperties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'securityProperties': %w", err)
-		}
-	}
-
-	if a.TimeZone != nil {
-		object["timeZone"], err = json.Marshal(a.TimeZone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timeZone': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	if a.Variables != nil {
-		object["variables"], err = json.Marshal(a.Variables)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateAppData_SecurityProperties. Returns the specified
-// element and whether it was found
-func (a CreateAppData_SecurityProperties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateAppData_SecurityProperties
-func (a *CreateAppData_SecurityProperties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateAppData_SecurityProperties to handle AdditionalProperties
-func (a *CreateAppData_SecurityProperties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["allowClone"]; found {
-		err = json.Unmarshal(raw, &a.AllowClone)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowClone': %w", err)
-		}
-		delete(object, "allowClone")
-	}
-
-	if raw, found := object["allowExport"]; found {
-		err = json.Unmarshal(raw, &a.AllowExport)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowExport': %w", err)
-		}
-		delete(object, "allowExport")
-	}
-
-	if raw, found := object["enableAppTokens"]; found {
-		err = json.Unmarshal(raw, &a.EnableAppTokens)
-		if err != nil {
-			return fmt.Errorf("error reading 'enableAppTokens': %w", err)
-		}
-		delete(object, "enableAppTokens")
-	}
-
-	if raw, found := object["hideFromPublic"]; found {
-		err = json.Unmarshal(raw, &a.HideFromPublic)
-		if err != nil {
-			return fmt.Errorf("error reading 'hideFromPublic': %w", err)
-		}
-		delete(object, "hideFromPublic")
-	}
-
-	if raw, found := object["mustBeRealmApproved"]; found {
-		err = json.Unmarshal(raw, &a.MustBeRealmApproved)
-		if err != nil {
-			return fmt.Errorf("error reading 'mustBeRealmApproved': %w", err)
-		}
-		delete(object, "mustBeRealmApproved")
-	}
-
-	if raw, found := object["useIPFilter"]; found {
-		err = json.Unmarshal(raw, &a.UseIPFilter)
-		if err != nil {
-			return fmt.Errorf("error reading 'useIPFilter': %w", err)
-		}
-		delete(object, "useIPFilter")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateAppData_SecurityProperties to handle AdditionalProperties
-func (a CreateAppData_SecurityProperties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AllowClone != nil {
-		object["allowClone"], err = json.Marshal(a.AllowClone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowClone': %w", err)
-		}
-	}
-
-	if a.AllowExport != nil {
-		object["allowExport"], err = json.Marshal(a.AllowExport)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowExport': %w", err)
-		}
-	}
-
-	if a.EnableAppTokens != nil {
-		object["enableAppTokens"], err = json.Marshal(a.EnableAppTokens)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'enableAppTokens': %w", err)
-		}
-	}
-
-	if a.HideFromPublic != nil {
-		object["hideFromPublic"], err = json.Marshal(a.HideFromPublic)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hideFromPublic': %w", err)
-		}
-	}
-
-	if a.MustBeRealmApproved != nil {
-		object["mustBeRealmApproved"], err = json.Marshal(a.MustBeRealmApproved)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mustBeRealmApproved': %w", err)
-		}
-	}
-
-	if a.UseIPFilter != nil {
-		object["useIPFilter"], err = json.Marshal(a.UseIPFilter)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useIPFilter': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateAppData_Variables_Item. Returns the specified
-// element and whether it was found
-func (a CreateAppData_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateAppData_Variables_Item
-func (a *CreateAppData_Variables_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateAppData_Variables_Item to handle AdditionalProperties
-func (a *CreateAppData_Variables_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["value"]; found {
-		err = json.Unmarshal(raw, &a.Value)
-		if err != nil {
-			return fmt.Errorf("error reading 'value': %w", err)
-		}
-		delete(object, "value")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateAppData_Variables_Item to handle AdditionalProperties
-func (a CreateAppData_Variables_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateFieldData. Returns the specified
-// element and whether it was found
-func (a CreateFieldData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateFieldData
-func (a *CreateFieldData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateFieldData to handle AdditionalProperties
-func (a *CreateFieldData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["appearsByDefault"]; found {
-		err = json.Unmarshal(raw, &a.AppearsByDefault)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsByDefault': %w", err)
-		}
-		delete(object, "appearsByDefault")
-	}
-
-	if raw, found := object["audited"]; found {
-		err = json.Unmarshal(raw, &a.Audited)
-		if err != nil {
-			return fmt.Errorf("error reading 'audited': %w", err)
-		}
-		delete(object, "audited")
-	}
-
-	if raw, found := object["bold"]; found {
-		err = json.Unmarshal(raw, &a.Bold)
-		if err != nil {
-			return fmt.Errorf("error reading 'bold': %w", err)
-		}
-		delete(object, "bold")
-	}
-
-	if raw, found := object["doesDataCopy"]; found {
-		err = json.Unmarshal(raw, &a.DoesDataCopy)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesDataCopy': %w", err)
-		}
-		delete(object, "doesDataCopy")
-	}
-
-	if raw, found := object["fieldHelp"]; found {
-		err = json.Unmarshal(raw, &a.FieldHelp)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldHelp': %w", err)
-		}
-		delete(object, "fieldHelp")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["findEnabled"]; found {
-		err = json.Unmarshal(raw, &a.FindEnabled)
-		if err != nil {
-			return fmt.Errorf("error reading 'findEnabled': %w", err)
-		}
-		delete(object, "findEnabled")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["mode"]; found {
-		err = json.Unmarshal(raw, &a.Mode)
-		if err != nil {
-			return fmt.Errorf("error reading 'mode': %w", err)
-		}
-		delete(object, "mode")
-	}
-
-	if raw, found := object["noWrap"]; found {
-		err = json.Unmarshal(raw, &a.NoWrap)
-		if err != nil {
-			return fmt.Errorf("error reading 'noWrap': %w", err)
-		}
-		delete(object, "noWrap")
-	}
-
-	if raw, found := object["permissions"]; found {
-		err = json.Unmarshal(raw, &a.Permissions)
-		if err != nil {
-			return fmt.Errorf("error reading 'permissions': %w", err)
-		}
-		delete(object, "permissions")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["required"]; found {
-		err = json.Unmarshal(raw, &a.Required)
-		if err != nil {
-			return fmt.Errorf("error reading 'required': %w", err)
-		}
-		delete(object, "required")
-	}
-
-	if raw, found := object["unique"]; found {
-		err = json.Unmarshal(raw, &a.Unique)
-		if err != nil {
-			return fmt.Errorf("error reading 'unique': %w", err)
-		}
-		delete(object, "unique")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateFieldData to handle AdditionalProperties
-func (a CreateFieldData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AppearsByDefault != nil {
-		object["appearsByDefault"], err = json.Marshal(a.AppearsByDefault)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsByDefault': %w", err)
-		}
-	}
-
-	if a.Audited != nil {
-		object["audited"], err = json.Marshal(a.Audited)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'audited': %w", err)
-		}
-	}
-
-	if a.Bold != nil {
-		object["bold"], err = json.Marshal(a.Bold)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'bold': %w", err)
-		}
-	}
-
-	if a.DoesDataCopy != nil {
-		object["doesDataCopy"], err = json.Marshal(a.DoesDataCopy)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesDataCopy': %w", err)
-		}
-	}
-
-	if a.FieldHelp != nil {
-		object["fieldHelp"], err = json.Marshal(a.FieldHelp)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldHelp': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.FindEnabled != nil {
-		object["findEnabled"], err = json.Marshal(a.FindEnabled)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'findEnabled': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Mode != nil {
-		object["mode"], err = json.Marshal(a.Mode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mode': %w", err)
-		}
-	}
-
-	if a.NoWrap != nil {
-		object["noWrap"], err = json.Marshal(a.NoWrap)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'noWrap': %w", err)
-		}
-	}
-
-	if a.Permissions != nil {
-		object["permissions"], err = json.Marshal(a.Permissions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'permissions': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Required != nil {
-		object["required"], err = json.Marshal(a.Required)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'required': %w", err)
-		}
-	}
-
-	if a.Unique != nil {
-		object["unique"], err = json.Marshal(a.Unique)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'unique': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateFieldData_Properties. Returns the specified
-// element and whether it was found
-func (a CreateFieldData_Properties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateFieldData_Properties
-func (a *CreateFieldData_Properties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateFieldData_Properties to handle AdditionalProperties
-func (a *CreateFieldData_Properties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["abbreviate"]; found {
-		err = json.Unmarshal(raw, &a.Abbreviate)
-		if err != nil {
-			return fmt.Errorf("error reading 'abbreviate': %w", err)
-		}
-		delete(object, "abbreviate")
-	}
-
-	if raw, found := object["allowHTML"]; found {
-		err = json.Unmarshal(raw, &a.AllowHTML)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowHTML': %w", err)
-		}
-		delete(object, "allowHTML")
-	}
-
-	if raw, found := object["allowMentions"]; found {
-		err = json.Unmarshal(raw, &a.AllowMentions)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowMentions': %w", err)
-		}
-		delete(object, "allowMentions")
-	}
-
-	if raw, found := object["allowNewChoices"]; found {
-		err = json.Unmarshal(raw, &a.AllowNewChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowNewChoices': %w", err)
-		}
-		delete(object, "allowNewChoices")
-	}
-
-	if raw, found := object["appearsAs"]; found {
-		err = json.Unmarshal(raw, &a.AppearsAs)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsAs': %w", err)
-		}
-		delete(object, "appearsAs")
-	}
-
-	if raw, found := object["appendOnly"]; found {
-		err = json.Unmarshal(raw, &a.AppendOnly)
-		if err != nil {
-			return fmt.Errorf("error reading 'appendOnly': %w", err)
-		}
-		delete(object, "appendOnly")
-	}
-
-	if raw, found := object["autoSave"]; found {
-		err = json.Unmarshal(raw, &a.AutoSave)
-		if err != nil {
-			return fmt.Errorf("error reading 'autoSave': %w", err)
-		}
-		delete(object, "autoSave")
-	}
-
-	if raw, found := object["blankIsZero"]; found {
-		err = json.Unmarshal(raw, &a.BlankIsZero)
-		if err != nil {
-			return fmt.Errorf("error reading 'blankIsZero': %w", err)
-		}
-		delete(object, "blankIsZero")
-	}
-
-	if raw, found := object["carryChoices"]; found {
-		err = json.Unmarshal(raw, &a.CarryChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'carryChoices': %w", err)
-		}
-		delete(object, "carryChoices")
-	}
-
-	if raw, found := object["choices"]; found {
-		err = json.Unmarshal(raw, &a.Choices)
-		if err != nil {
-			return fmt.Errorf("error reading 'choices': %w", err)
-		}
-		delete(object, "choices")
-	}
-
-	if raw, found := object["choicesLuid"]; found {
-		err = json.Unmarshal(raw, &a.ChoicesLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'choicesLuid': %w", err)
-		}
-		delete(object, "choicesLuid")
-	}
-
-	if raw, found := object["commaStart"]; found {
-		err = json.Unmarshal(raw, &a.CommaStart)
-		if err != nil {
-			return fmt.Errorf("error reading 'commaStart': %w", err)
-		}
-		delete(object, "commaStart")
-	}
-
-	if raw, found := object["comments"]; found {
-		err = json.Unmarshal(raw, &a.Comments)
-		if err != nil {
-			return fmt.Errorf("error reading 'comments': %w", err)
-		}
-		delete(object, "comments")
-	}
-
-	if raw, found := object["compositeFields"]; found {
-		err = json.Unmarshal(raw, &a.CompositeFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'compositeFields': %w", err)
-		}
-		delete(object, "compositeFields")
-	}
-
-	if raw, found := object["coverText"]; found {
-		err = json.Unmarshal(raw, &a.CoverText)
-		if err != nil {
-			return fmt.Errorf("error reading 'coverText': %w", err)
-		}
-		delete(object, "coverText")
-	}
-
-	if raw, found := object["currencyFormat"]; found {
-		err = json.Unmarshal(raw, &a.CurrencyFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencyFormat': %w", err)
-		}
-		delete(object, "currencyFormat")
-	}
-
-	if raw, found := object["currencySymbol"]; found {
-		err = json.Unmarshal(raw, &a.CurrencySymbol)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencySymbol': %w", err)
-		}
-		delete(object, "currencySymbol")
-	}
-
-	if raw, found := object["decimalPlaces"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPlaces)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPlaces': %w", err)
-		}
-		delete(object, "decimalPlaces")
-	}
-
-	if raw, found := object["defaultCountryCode"]; found {
-		err = json.Unmarshal(raw, &a.DefaultCountryCode)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultCountryCode': %w", err)
-		}
-		delete(object, "defaultCountryCode")
-	}
-
-	if raw, found := object["defaultDomain"]; found {
-		err = json.Unmarshal(raw, &a.DefaultDomain)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultDomain': %w", err)
-		}
-		delete(object, "defaultDomain")
-	}
-
-	if raw, found := object["defaultKind"]; found {
-		err = json.Unmarshal(raw, &a.DefaultKind)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultKind': %w", err)
-		}
-		delete(object, "defaultKind")
-	}
-
-	if raw, found := object["defaultToday"]; found {
-		err = json.Unmarshal(raw, &a.DefaultToday)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultToday': %w", err)
-		}
-		delete(object, "defaultToday")
-	}
-
-	if raw, found := object["defaultValue"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValue)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValue': %w", err)
-		}
-		delete(object, "defaultValue")
-	}
-
-	if raw, found := object["defaultValueLuid"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValueLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValueLuid': %w", err)
-		}
-		delete(object, "defaultValueLuid")
-	}
-
-	if raw, found := object["displayAsLink"]; found {
-		err = json.Unmarshal(raw, &a.DisplayAsLink)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayAsLink': %w", err)
-		}
-		delete(object, "displayAsLink")
-	}
-
-	if raw, found := object["displayCheckboxAsText"]; found {
-		err = json.Unmarshal(raw, &a.DisplayCheckboxAsText)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayCheckboxAsText': %w", err)
-		}
-		delete(object, "displayCheckboxAsText")
-	}
-
-	if raw, found := object["displayDayOfWeek"]; found {
-		err = json.Unmarshal(raw, &a.DisplayDayOfWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayDayOfWeek': %w", err)
-		}
-		delete(object, "displayDayOfWeek")
-	}
-
-	if raw, found := object["displayEmail"]; found {
-		err = json.Unmarshal(raw, &a.DisplayEmail)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayEmail': %w", err)
-		}
-		delete(object, "displayEmail")
-	}
-
-	if raw, found := object["displayMonth"]; found {
-		err = json.Unmarshal(raw, &a.DisplayMonth)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayMonth': %w", err)
-		}
-		delete(object, "displayMonth")
-	}
-
-	if raw, found := object["displayRelative"]; found {
-		err = json.Unmarshal(raw, &a.DisplayRelative)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayRelative': %w", err)
-		}
-		delete(object, "displayRelative")
-	}
-
-	if raw, found := object["displayTime"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTime)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTime': %w", err)
-		}
-		delete(object, "displayTime")
-	}
-
-	if raw, found := object["displayTimezone"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTimezone)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTimezone': %w", err)
-		}
-		delete(object, "displayTimezone")
-	}
-
-	if raw, found := object["displayUser"]; found {
-		err = json.Unmarshal(raw, &a.DisplayUser)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayUser': %w", err)
-		}
-		delete(object, "displayUser")
-	}
-
-	if raw, found := object["doesAverage"]; found {
-		err = json.Unmarshal(raw, &a.DoesAverage)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesAverage': %w", err)
-		}
-		delete(object, "doesAverage")
-	}
-
-	if raw, found := object["doesTotal"]; found {
-		err = json.Unmarshal(raw, &a.DoesTotal)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesTotal': %w", err)
-		}
-		delete(object, "doesTotal")
-	}
-
-	if raw, found := object["durationField"]; found {
-		err = json.Unmarshal(raw, &a.DurationField)
-		if err != nil {
-			return fmt.Errorf("error reading 'durationField': %w", err)
-		}
-		delete(object, "durationField")
-	}
-
-	if raw, found := object["exact"]; found {
-		err = json.Unmarshal(raw, &a.Exact)
-		if err != nil {
-			return fmt.Errorf("error reading 'exact': %w", err)
-		}
-		delete(object, "exact")
-	}
-
-	if raw, found := object["foreignKey"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKey)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKey': %w", err)
-		}
-		delete(object, "foreignKey")
-	}
-
-	if raw, found := object["format"]; found {
-		err = json.Unmarshal(raw, &a.Format)
-		if err != nil {
-			return fmt.Errorf("error reading 'format': %w", err)
-		}
-		delete(object, "format")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["hasExtension"]; found {
-		err = json.Unmarshal(raw, &a.HasExtension)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasExtension': %w", err)
-		}
-		delete(object, "hasExtension")
-	}
-
-	if raw, found := object["hours24"]; found {
-		err = json.Unmarshal(raw, &a.Hours24)
-		if err != nil {
-			return fmt.Errorf("error reading 'hours24': %w", err)
-		}
-		delete(object, "hours24")
-	}
-
-	if raw, found := object["linkText"]; found {
-		err = json.Unmarshal(raw, &a.LinkText)
-		if err != nil {
-			return fmt.Errorf("error reading 'linkText': %w", err)
-		}
-		delete(object, "linkText")
-	}
-
-	if raw, found := object["lookupReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupReferenceFieldId': %w", err)
-		}
-		delete(object, "lookupReferenceFieldId")
-	}
-
-	if raw, found := object["lookupTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupTargetFieldId': %w", err)
-		}
-		delete(object, "lookupTargetFieldId")
-	}
-
-	if raw, found := object["masterChoiceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceFieldId': %w", err)
-		}
-		delete(object, "masterChoiceFieldId")
-	}
-
-	if raw, found := object["masterChoiceTableId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceTableId': %w", err)
-		}
-		delete(object, "masterChoiceTableId")
-	}
-
-	if raw, found := object["masterTableTag"]; found {
-		err = json.Unmarshal(raw, &a.MasterTableTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterTableTag': %w", err)
-		}
-		delete(object, "masterTableTag")
-	}
-
-	if raw, found := object["maxLength"]; found {
-		err = json.Unmarshal(raw, &a.MaxLength)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxLength': %w", err)
-		}
-		delete(object, "maxLength")
-	}
-
-	if raw, found := object["maxVersions"]; found {
-		err = json.Unmarshal(raw, &a.MaxVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxVersions': %w", err)
-		}
-		delete(object, "maxVersions")
-	}
-
-	if raw, found := object["numLines"]; found {
-		err = json.Unmarshal(raw, &a.NumLines)
-		if err != nil {
-			return fmt.Errorf("error reading 'numLines': %w", err)
-		}
-		delete(object, "numLines")
-	}
-
-	if raw, found := object["numberFormat"]; found {
-		err = json.Unmarshal(raw, &a.NumberFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'numberFormat': %w", err)
-		}
-		delete(object, "numberFormat")
-	}
-
-	if raw, found := object["parentFieldId"]; found {
-		err = json.Unmarshal(raw, &a.ParentFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentFieldId': %w", err)
-		}
-		delete(object, "parentFieldId")
-	}
-
-	if raw, found := object["postTempToken"]; found {
-		err = json.Unmarshal(raw, &a.PostTempToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'postTempToken': %w", err)
-		}
-		delete(object, "postTempToken")
-	}
-
-	if raw, found := object["seeVersions"]; found {
-		err = json.Unmarshal(raw, &a.SeeVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'seeVersions': %w", err)
-		}
-		delete(object, "seeVersions")
-	}
-
-	if raw, found := object["snapFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SnapFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'snapFieldId': %w", err)
-		}
-		delete(object, "snapFieldId")
-	}
-
-	if raw, found := object["sortAlpha"]; found {
-		err = json.Unmarshal(raw, &a.SortAlpha)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAlpha': %w", err)
-		}
-		delete(object, "sortAlpha")
-	}
-
-	if raw, found := object["sortAsGiven"]; found {
-		err = json.Unmarshal(raw, &a.SortAsGiven)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAsGiven': %w", err)
-		}
-		delete(object, "sortAsGiven")
-	}
-
-	if raw, found := object["sourceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SourceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'sourceFieldId': %w", err)
-		}
-		delete(object, "sourceFieldId")
-	}
-
-	if raw, found := object["startField"]; found {
-		err = json.Unmarshal(raw, &a.StartField)
-		if err != nil {
-			return fmt.Errorf("error reading 'startField': %w", err)
-		}
-		delete(object, "startField")
-	}
-
-	if raw, found := object["summaryFunction"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFunction)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFunction': %w", err)
-		}
-		delete(object, "summaryFunction")
-	}
-
-	if raw, found := object["summaryReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryReferenceFieldId': %w", err)
-		}
-		delete(object, "summaryReferenceFieldId")
-	}
-
-	if raw, found := object["summaryTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryTargetFieldId': %w", err)
-		}
-		delete(object, "summaryTargetFieldId")
-	}
-
-	if raw, found := object["targetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.TargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetFieldId': %w", err)
-		}
-		delete(object, "targetFieldId")
-	}
-
-	if raw, found := object["targetTableId"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableId': %w", err)
-		}
-		delete(object, "targetTableId")
-	}
-
-	if raw, found := object["targetTableName"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableName)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableName': %w", err)
-		}
-		delete(object, "targetTableName")
-	}
-
-	if raw, found := object["units"]; found {
-		err = json.Unmarshal(raw, &a.Units)
-		if err != nil {
-			return fmt.Errorf("error reading 'units': %w", err)
-		}
-		delete(object, "units")
-	}
-
-	if raw, found := object["useI18NFormat"]; found {
-		err = json.Unmarshal(raw, &a.UseI18NFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'useI18NFormat': %w", err)
-		}
-		delete(object, "useI18NFormat")
-	}
-
-	if raw, found := object["useNewWindow"]; found {
-		err = json.Unmarshal(raw, &a.UseNewWindow)
-		if err != nil {
-			return fmt.Errorf("error reading 'useNewWindow': %w", err)
-		}
-		delete(object, "useNewWindow")
-	}
-
-	if raw, found := object["versionMode"]; found {
-		err = json.Unmarshal(raw, &a.VersionMode)
-		if err != nil {
-			return fmt.Errorf("error reading 'versionMode': %w", err)
-		}
-		delete(object, "versionMode")
-	}
-
-	if raw, found := object["width"]; found {
-		err = json.Unmarshal(raw, &a.Width)
-		if err != nil {
-			return fmt.Errorf("error reading 'width': %w", err)
-		}
-		delete(object, "width")
-	}
-
-	if raw, found := object["workWeek"]; found {
-		err = json.Unmarshal(raw, &a.WorkWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'workWeek': %w", err)
-		}
-		delete(object, "workWeek")
-	}
-
-	if raw, found := object["xmlTag"]; found {
-		err = json.Unmarshal(raw, &a.XmlTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'xmlTag': %w", err)
-		}
-		delete(object, "xmlTag")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateFieldData_Properties to handle AdditionalProperties
-func (a CreateFieldData_Properties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Abbreviate != nil {
-		object["abbreviate"], err = json.Marshal(a.Abbreviate)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'abbreviate': %w", err)
-		}
-	}
-
-	if a.AllowHTML != nil {
-		object["allowHTML"], err = json.Marshal(a.AllowHTML)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowHTML': %w", err)
-		}
-	}
-
-	if a.AllowMentions != nil {
-		object["allowMentions"], err = json.Marshal(a.AllowMentions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowMentions': %w", err)
-		}
-	}
-
-	if a.AllowNewChoices != nil {
-		object["allowNewChoices"], err = json.Marshal(a.AllowNewChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowNewChoices': %w", err)
-		}
-	}
-
-	if a.AppearsAs != nil {
-		object["appearsAs"], err = json.Marshal(a.AppearsAs)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsAs': %w", err)
-		}
-	}
-
-	if a.AppendOnly != nil {
-		object["appendOnly"], err = json.Marshal(a.AppendOnly)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appendOnly': %w", err)
-		}
-	}
-
-	if a.AutoSave != nil {
-		object["autoSave"], err = json.Marshal(a.AutoSave)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'autoSave': %w", err)
-		}
-	}
-
-	if a.BlankIsZero != nil {
-		object["blankIsZero"], err = json.Marshal(a.BlankIsZero)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'blankIsZero': %w", err)
-		}
-	}
-
-	if a.CarryChoices != nil {
-		object["carryChoices"], err = json.Marshal(a.CarryChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'carryChoices': %w", err)
-		}
-	}
-
-	if a.Choices != nil {
-		object["choices"], err = json.Marshal(a.Choices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choices': %w", err)
-		}
-	}
-
-	if a.ChoicesLuid != nil {
-		object["choicesLuid"], err = json.Marshal(a.ChoicesLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choicesLuid': %w", err)
-		}
-	}
-
-	if a.CommaStart != nil {
-		object["commaStart"], err = json.Marshal(a.CommaStart)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'commaStart': %w", err)
-		}
-	}
-
-	if a.Comments != nil {
-		object["comments"], err = json.Marshal(a.Comments)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'comments': %w", err)
-		}
-	}
-
-	if a.CompositeFields != nil {
-		object["compositeFields"], err = json.Marshal(a.CompositeFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'compositeFields': %w", err)
-		}
-	}
-
-	if a.CoverText != nil {
-		object["coverText"], err = json.Marshal(a.CoverText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'coverText': %w", err)
-		}
-	}
-
-	if a.CurrencyFormat != nil {
-		object["currencyFormat"], err = json.Marshal(a.CurrencyFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencyFormat': %w", err)
-		}
-	}
-
-	if a.CurrencySymbol != nil {
-		object["currencySymbol"], err = json.Marshal(a.CurrencySymbol)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencySymbol': %w", err)
-		}
-	}
-
-	if a.DecimalPlaces != nil {
-		object["decimalPlaces"], err = json.Marshal(a.DecimalPlaces)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPlaces': %w", err)
-		}
-	}
-
-	if a.DefaultCountryCode != nil {
-		object["defaultCountryCode"], err = json.Marshal(a.DefaultCountryCode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultCountryCode': %w", err)
-		}
-	}
-
-	if a.DefaultDomain != nil {
-		object["defaultDomain"], err = json.Marshal(a.DefaultDomain)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultDomain': %w", err)
-		}
-	}
-
-	if a.DefaultKind != nil {
-		object["defaultKind"], err = json.Marshal(a.DefaultKind)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultKind': %w", err)
-		}
-	}
-
-	if a.DefaultToday != nil {
-		object["defaultToday"], err = json.Marshal(a.DefaultToday)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultToday': %w", err)
-		}
-	}
-
-	if a.DefaultValue != nil {
-		object["defaultValue"], err = json.Marshal(a.DefaultValue)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValue': %w", err)
-		}
-	}
-
-	if a.DefaultValueLuid != nil {
-		object["defaultValueLuid"], err = json.Marshal(a.DefaultValueLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValueLuid': %w", err)
-		}
-	}
-
-	if a.DisplayAsLink != nil {
-		object["displayAsLink"], err = json.Marshal(a.DisplayAsLink)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayAsLink': %w", err)
-		}
-	}
-
-	if a.DisplayCheckboxAsText != nil {
-		object["displayCheckboxAsText"], err = json.Marshal(a.DisplayCheckboxAsText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayCheckboxAsText': %w", err)
-		}
-	}
-
-	if a.DisplayDayOfWeek != nil {
-		object["displayDayOfWeek"], err = json.Marshal(a.DisplayDayOfWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayDayOfWeek': %w", err)
-		}
-	}
-
-	if a.DisplayEmail != nil {
-		object["displayEmail"], err = json.Marshal(a.DisplayEmail)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayEmail': %w", err)
-		}
-	}
-
-	if a.DisplayMonth != nil {
-		object["displayMonth"], err = json.Marshal(a.DisplayMonth)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayMonth': %w", err)
-		}
-	}
-
-	if a.DisplayRelative != nil {
-		object["displayRelative"], err = json.Marshal(a.DisplayRelative)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayRelative': %w", err)
-		}
-	}
-
-	if a.DisplayTime != nil {
-		object["displayTime"], err = json.Marshal(a.DisplayTime)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTime': %w", err)
-		}
-	}
-
-	if a.DisplayTimezone != nil {
-		object["displayTimezone"], err = json.Marshal(a.DisplayTimezone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTimezone': %w", err)
-		}
-	}
-
-	if a.DisplayUser != nil {
-		object["displayUser"], err = json.Marshal(a.DisplayUser)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayUser': %w", err)
-		}
-	}
-
-	if a.DoesAverage != nil {
-		object["doesAverage"], err = json.Marshal(a.DoesAverage)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesAverage': %w", err)
-		}
-	}
-
-	if a.DoesTotal != nil {
-		object["doesTotal"], err = json.Marshal(a.DoesTotal)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesTotal': %w", err)
-		}
-	}
-
-	if a.DurationField != nil {
-		object["durationField"], err = json.Marshal(a.DurationField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'durationField': %w", err)
-		}
-	}
-
-	if a.Exact != nil {
-		object["exact"], err = json.Marshal(a.Exact)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'exact': %w", err)
-		}
-	}
-
-	if a.ForeignKey != nil {
-		object["foreignKey"], err = json.Marshal(a.ForeignKey)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKey': %w", err)
-		}
-	}
-
-	if a.Format != nil {
-		object["format"], err = json.Marshal(a.Format)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'format': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.HasExtension != nil {
-		object["hasExtension"], err = json.Marshal(a.HasExtension)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasExtension': %w", err)
-		}
-	}
-
-	if a.Hours24 != nil {
-		object["hours24"], err = json.Marshal(a.Hours24)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hours24': %w", err)
-		}
-	}
-
-	if a.LinkText != nil {
-		object["linkText"], err = json.Marshal(a.LinkText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'linkText': %w", err)
-		}
-	}
-
-	if a.LookupReferenceFieldId != nil {
-		object["lookupReferenceFieldId"], err = json.Marshal(a.LookupReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.LookupTargetFieldId != nil {
-		object["lookupTargetFieldId"], err = json.Marshal(a.LookupTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupTargetFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceFieldId != nil {
-		object["masterChoiceFieldId"], err = json.Marshal(a.MasterChoiceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceTableId != nil {
-		object["masterChoiceTableId"], err = json.Marshal(a.MasterChoiceTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceTableId': %w", err)
-		}
-	}
-
-	if a.MasterTableTag != nil {
-		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterTableTag': %w", err)
-		}
-	}
-
-	if a.MaxLength != nil {
-		object["maxLength"], err = json.Marshal(a.MaxLength)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxLength': %w", err)
-		}
-	}
-
-	if a.MaxVersions != nil {
-		object["maxVersions"], err = json.Marshal(a.MaxVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxVersions': %w", err)
-		}
-	}
-
-	if a.NumLines != nil {
-		object["numLines"], err = json.Marshal(a.NumLines)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numLines': %w", err)
-		}
-	}
-
-	if a.NumberFormat != nil {
-		object["numberFormat"], err = json.Marshal(a.NumberFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numberFormat': %w", err)
-		}
-	}
-
-	if a.ParentFieldId != nil {
-		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'parentFieldId': %w", err)
-		}
-	}
-
-	if a.PostTempToken != nil {
-		object["postTempToken"], err = json.Marshal(a.PostTempToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
-		}
-	}
-
-	if a.SeeVersions != nil {
-		object["seeVersions"], err = json.Marshal(a.SeeVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'seeVersions': %w", err)
-		}
-	}
-
-	if a.SnapFieldId != nil {
-		object["snapFieldId"], err = json.Marshal(a.SnapFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'snapFieldId': %w", err)
-		}
-	}
-
-	if a.SortAlpha != nil {
-		object["sortAlpha"], err = json.Marshal(a.SortAlpha)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAlpha': %w", err)
-		}
-	}
-
-	if a.SortAsGiven != nil {
-		object["sortAsGiven"], err = json.Marshal(a.SortAsGiven)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAsGiven': %w", err)
-		}
-	}
-
-	if a.SourceFieldId != nil {
-		object["sourceFieldId"], err = json.Marshal(a.SourceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sourceFieldId': %w", err)
-		}
-	}
-
-	if a.StartField != nil {
-		object["startField"], err = json.Marshal(a.StartField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'startField': %w", err)
-		}
-	}
-
-	if a.SummaryFunction != nil {
-		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
-		}
-	}
-
-	if a.SummaryReferenceFieldId != nil {
-		object["summaryReferenceFieldId"], err = json.Marshal(a.SummaryReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.SummaryTargetFieldId != nil {
-		object["summaryTargetFieldId"], err = json.Marshal(a.SummaryTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryTargetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetFieldId != nil {
-		object["targetFieldId"], err = json.Marshal(a.TargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetTableId != nil {
-		object["targetTableId"], err = json.Marshal(a.TargetTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableId': %w", err)
-		}
-	}
-
-	if a.TargetTableName != nil {
-		object["targetTableName"], err = json.Marshal(a.TargetTableName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableName': %w", err)
-		}
-	}
-
-	if a.Units != nil {
-		object["units"], err = json.Marshal(a.Units)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'units': %w", err)
-		}
-	}
-
-	if a.UseI18NFormat != nil {
-		object["useI18NFormat"], err = json.Marshal(a.UseI18NFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useI18NFormat': %w", err)
-		}
-	}
-
-	if a.UseNewWindow != nil {
-		object["useNewWindow"], err = json.Marshal(a.UseNewWindow)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useNewWindow': %w", err)
-		}
-	}
-
-	if a.VersionMode != nil {
-		object["versionMode"], err = json.Marshal(a.VersionMode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'versionMode': %w", err)
-		}
-	}
-
-	if a.Width != nil {
-		object["width"], err = json.Marshal(a.Width)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'width': %w", err)
-		}
-	}
-
-	if a.WorkWeek != nil {
-		object["workWeek"], err = json.Marshal(a.WorkWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'workWeek': %w", err)
-		}
-	}
-
-	if a.XmlTag != nil {
-		object["xmlTag"], err = json.Marshal(a.XmlTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'xmlTag': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateRelationshipData. Returns the specified
-// element and whether it was found
-func (a CreateRelationshipData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateRelationshipData
-func (a *CreateRelationshipData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateRelationshipData to handle AdditionalProperties
-func (a *CreateRelationshipData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["childTableId"]; found {
-		err = json.Unmarshal(raw, &a.ChildTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'childTableId': %w", err)
-		}
-		delete(object, "childTableId")
-	}
-
-	if raw, found := object["foreignKeyField"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKeyField)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKeyField': %w", err)
-		}
-		delete(object, "foreignKeyField")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["isCrossApp"]; found {
-		err = json.Unmarshal(raw, &a.IsCrossApp)
-		if err != nil {
-			return fmt.Errorf("error reading 'isCrossApp': %w", err)
-		}
-		delete(object, "isCrossApp")
-	}
-
-	if raw, found := object["lookupFields"]; found {
-		err = json.Unmarshal(raw, &a.LookupFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupFields': %w", err)
-		}
-		delete(object, "lookupFields")
-	}
-
-	if raw, found := object["parentTableId"]; found {
-		err = json.Unmarshal(raw, &a.ParentTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentTableId': %w", err)
-		}
-		delete(object, "parentTableId")
-	}
-
-	if raw, found := object["summaryFields"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFields': %w", err)
-		}
-		delete(object, "summaryFields")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateRelationshipData to handle AdditionalProperties
-func (a CreateRelationshipData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["childTableId"], err = json.Marshal(a.ChildTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'childTableId': %w", err)
-	}
-
-	if a.ForeignKeyField != nil {
-		object["foreignKeyField"], err = json.Marshal(a.ForeignKeyField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKeyField': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["isCrossApp"], err = json.Marshal(a.IsCrossApp)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'isCrossApp': %w", err)
-	}
-
-	if a.LookupFields != nil {
-		object["lookupFields"], err = json.Marshal(a.LookupFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupFields': %w", err)
-		}
-	}
-
-	object["parentTableId"], err = json.Marshal(a.ParentTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'parentTableId': %w", err)
-	}
-
-	if a.SummaryFields != nil {
-		object["summaryFields"], err = json.Marshal(a.SummaryFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFields': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateRelationshipData_ForeignKeyField. Returns the specified
-// element and whether it was found
-func (a CreateRelationshipData_ForeignKeyField) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateRelationshipData_ForeignKeyField
-func (a *CreateRelationshipData_ForeignKeyField) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateRelationshipData_ForeignKeyField to handle AdditionalProperties
-func (a *CreateRelationshipData_ForeignKeyField) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateRelationshipData_ForeignKeyField to handle AdditionalProperties
-func (a CreateRelationshipData_ForeignKeyField) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateRelationshipData_LookupFields_Item. Returns the specified
-// element and whether it was found
-func (a CreateRelationshipData_LookupFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateRelationshipData_LookupFields_Item
-func (a *CreateRelationshipData_LookupFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateRelationshipData_LookupFields_Item to handle AdditionalProperties
-func (a *CreateRelationshipData_LookupFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateRelationshipData_LookupFields_Item to handle AdditionalProperties
-func (a CreateRelationshipData_LookupFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateRelationshipData_SummaryFields_Item. Returns the specified
-// element and whether it was found
-func (a CreateRelationshipData_SummaryFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateRelationshipData_SummaryFields_Item
-func (a *CreateRelationshipData_SummaryFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateRelationshipData_SummaryFields_Item to handle AdditionalProperties
-func (a *CreateRelationshipData_SummaryFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateRelationshipData_SummaryFields_Item to handle AdditionalProperties
-func (a CreateRelationshipData_SummaryFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for CreateTableData. Returns the specified
-// element and whether it was found
-func (a CreateTableData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for CreateTableData
-func (a *CreateTableData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for CreateTableData to handle AdditionalProperties
-func (a *CreateTableData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["alias"]; found {
-		err = json.Unmarshal(raw, &a.Alias)
-		if err != nil {
-			return fmt.Errorf("error reading 'alias': %w", err)
-		}
-		delete(object, "alias")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["defaultSortFieldId"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortFieldId': %w", err)
-		}
-		delete(object, "defaultSortFieldId")
-	}
-
-	if raw, found := object["defaultSortOrder"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortOrder)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortOrder': %w", err)
-		}
-		delete(object, "defaultSortOrder")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["keyFieldId"]; found {
-		err = json.Unmarshal(raw, &a.KeyFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'keyFieldId': %w", err)
-		}
-		delete(object, "keyFieldId")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["nextFieldId"]; found {
-		err = json.Unmarshal(raw, &a.NextFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextFieldId': %w", err)
-		}
-		delete(object, "nextFieldId")
-	}
-
-	if raw, found := object["nextRecordId"]; found {
-		err = json.Unmarshal(raw, &a.NextRecordId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextRecordId': %w", err)
-		}
-		delete(object, "nextRecordId")
-	}
-
-	if raw, found := object["pluralRecordName"]; found {
-		err = json.Unmarshal(raw, &a.PluralRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'pluralRecordName': %w", err)
-		}
-		delete(object, "pluralRecordName")
-	}
-
-	if raw, found := object["singleRecordName"]; found {
-		err = json.Unmarshal(raw, &a.SingleRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'singleRecordName': %w", err)
-		}
-		delete(object, "singleRecordName")
-	}
-
-	if raw, found := object["sizeLimit"]; found {
-		err = json.Unmarshal(raw, &a.SizeLimit)
-		if err != nil {
-			return fmt.Errorf("error reading 'sizeLimit': %w", err)
-		}
-		delete(object, "sizeLimit")
-	}
-
-	if raw, found := object["spaceRemaining"]; found {
-		err = json.Unmarshal(raw, &a.SpaceRemaining)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceRemaining': %w", err)
-		}
-		delete(object, "spaceRemaining")
-	}
-
-	if raw, found := object["spaceUsed"]; found {
-		err = json.Unmarshal(raw, &a.SpaceUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceUsed': %w", err)
-		}
-		delete(object, "spaceUsed")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for CreateTableData to handle AdditionalProperties
-func (a CreateTableData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Alias != nil {
-		object["alias"], err = json.Marshal(a.Alias)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'alias': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DefaultSortFieldId != nil {
-		object["defaultSortFieldId"], err = json.Marshal(a.DefaultSortFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortFieldId': %w", err)
-		}
-	}
-
-	if a.DefaultSortOrder != nil {
-		object["defaultSortOrder"], err = json.Marshal(a.DefaultSortOrder)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortOrder': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.KeyFieldId != nil {
-		object["keyFieldId"], err = json.Marshal(a.KeyFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'keyFieldId': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.NextFieldId != nil {
-		object["nextFieldId"], err = json.Marshal(a.NextFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextFieldId': %w", err)
-		}
-	}
-
-	if a.NextRecordId != nil {
-		object["nextRecordId"], err = json.Marshal(a.NextRecordId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextRecordId': %w", err)
-		}
-	}
-
-	if a.PluralRecordName != nil {
-		object["pluralRecordName"], err = json.Marshal(a.PluralRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'pluralRecordName': %w", err)
-		}
-	}
-
-	if a.SingleRecordName != nil {
-		object["singleRecordName"], err = json.Marshal(a.SingleRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'singleRecordName': %w", err)
-		}
-	}
-
-	if a.SizeLimit != nil {
-		object["sizeLimit"], err = json.Marshal(a.SizeLimit)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sizeLimit': %w", err)
-		}
-	}
-
-	if a.SpaceRemaining != nil {
-		object["spaceRemaining"], err = json.Marshal(a.SpaceRemaining)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceRemaining': %w", err)
-		}
-	}
-
-	if a.SpaceUsed != nil {
-		object["spaceUsed"], err = json.Marshal(a.SpaceUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceUsed': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeactivateUserTokenData. Returns the specified
-// element and whether it was found
-func (a DeactivateUserTokenData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeactivateUserTokenData
-func (a *DeactivateUserTokenData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeactivateUserTokenData to handle AdditionalProperties
-func (a *DeactivateUserTokenData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeactivateUserTokenData to handle AdditionalProperties
-func (a DeactivateUserTokenData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteAppData. Returns the specified
-// element and whether it was found
-func (a DeleteAppData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteAppData
-func (a *DeleteAppData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteAppData to handle AdditionalProperties
-func (a *DeleteAppData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["deletedAppId"]; found {
-		err = json.Unmarshal(raw, &a.DeletedAppId)
-		if err != nil {
-			return fmt.Errorf("error reading 'deletedAppId': %w", err)
-		}
-		delete(object, "deletedAppId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteAppData to handle AdditionalProperties
-func (a DeleteAppData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.DeletedAppId != nil {
-		object["deletedAppId"], err = json.Marshal(a.DeletedAppId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'deletedAppId': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteFieldsData. Returns the specified
-// element and whether it was found
-func (a DeleteFieldsData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteFieldsData
-func (a *DeleteFieldsData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteFieldsData to handle AdditionalProperties
-func (a *DeleteFieldsData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["deletedFieldIds"]; found {
-		err = json.Unmarshal(raw, &a.DeletedFieldIds)
-		if err != nil {
-			return fmt.Errorf("error reading 'deletedFieldIds': %w", err)
-		}
-		delete(object, "deletedFieldIds")
-	}
-
-	if raw, found := object["errors"]; found {
-		err = json.Unmarshal(raw, &a.Errors)
-		if err != nil {
-			return fmt.Errorf("error reading 'errors': %w", err)
-		}
-		delete(object, "errors")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteFieldsData to handle AdditionalProperties
-func (a DeleteFieldsData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.DeletedFieldIds != nil {
-		object["deletedFieldIds"], err = json.Marshal(a.DeletedFieldIds)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'deletedFieldIds': %w", err)
-		}
-	}
-
-	if a.Errors != nil {
-		object["errors"], err = json.Marshal(a.Errors)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'errors': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteFileData. Returns the specified
-// element and whether it was found
-func (a DeleteFileData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteFileData
-func (a *DeleteFileData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteFileData to handle AdditionalProperties
-func (a *DeleteFileData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["creator"]; found {
-		err = json.Unmarshal(raw, &a.Creator)
-		if err != nil {
-			return fmt.Errorf("error reading 'creator': %w", err)
-		}
-		delete(object, "creator")
-	}
-
-	if raw, found := object["fileName"]; found {
-		err = json.Unmarshal(raw, &a.FileName)
-		if err != nil {
-			return fmt.Errorf("error reading 'fileName': %w", err)
-		}
-		delete(object, "fileName")
-	}
-
-	if raw, found := object["uploaded"]; found {
-		err = json.Unmarshal(raw, &a.Uploaded)
-		if err != nil {
-			return fmt.Errorf("error reading 'uploaded': %w", err)
-		}
-		delete(object, "uploaded")
-	}
-
-	if raw, found := object["versionNumber"]; found {
-		err = json.Unmarshal(raw, &a.VersionNumber)
-		if err != nil {
-			return fmt.Errorf("error reading 'versionNumber': %w", err)
-		}
-		delete(object, "versionNumber")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteFileData to handle AdditionalProperties
-func (a DeleteFileData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Creator != nil {
-		object["creator"], err = json.Marshal(a.Creator)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'creator': %w", err)
-		}
-	}
-
-	if a.FileName != nil {
-		object["fileName"], err = json.Marshal(a.FileName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fileName': %w", err)
-		}
-	}
-
-	if a.Uploaded != nil {
-		object["uploaded"], err = json.Marshal(a.Uploaded)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'uploaded': %w", err)
-		}
-	}
-
-	if a.VersionNumber != nil {
-		object["versionNumber"], err = json.Marshal(a.VersionNumber)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'versionNumber': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteFileData_Creator. Returns the specified
-// element and whether it was found
-func (a DeleteFileData_Creator) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteFileData_Creator
-func (a *DeleteFileData_Creator) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteFileData_Creator to handle AdditionalProperties
-func (a *DeleteFileData_Creator) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["email"]; found {
-		err = json.Unmarshal(raw, &a.Email)
-		if err != nil {
-			return fmt.Errorf("error reading 'email': %w", err)
-		}
-		delete(object, "email")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["userName"]; found {
-		err = json.Unmarshal(raw, &a.UserName)
-		if err != nil {
-			return fmt.Errorf("error reading 'userName': %w", err)
-		}
-		delete(object, "userName")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteFileData_Creator to handle AdditionalProperties
-func (a DeleteFileData_Creator) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Email != nil {
-		object["email"], err = json.Marshal(a.Email)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'email': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.UserName != nil {
-		object["userName"], err = json.Marshal(a.UserName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'userName': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteRecordsData. Returns the specified
-// element and whether it was found
-func (a DeleteRecordsData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteRecordsData
-func (a *DeleteRecordsData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteRecordsData to handle AdditionalProperties
-func (a *DeleteRecordsData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["numberDeleted"]; found {
-		err = json.Unmarshal(raw, &a.NumberDeleted)
-		if err != nil {
-			return fmt.Errorf("error reading 'numberDeleted': %w", err)
-		}
-		delete(object, "numberDeleted")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteRecordsData to handle AdditionalProperties
-func (a DeleteRecordsData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.NumberDeleted != nil {
-		object["numberDeleted"], err = json.Marshal(a.NumberDeleted)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numberDeleted': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteRelationshipData. Returns the specified
-// element and whether it was found
-func (a DeleteRelationshipData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteRelationshipData
-func (a *DeleteRelationshipData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteRelationshipData to handle AdditionalProperties
-func (a *DeleteRelationshipData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["relationshipId"]; found {
-		err = json.Unmarshal(raw, &a.RelationshipId)
-		if err != nil {
-			return fmt.Errorf("error reading 'relationshipId': %w", err)
-		}
-		delete(object, "relationshipId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteRelationshipData to handle AdditionalProperties
-func (a DeleteRelationshipData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["relationshipId"], err = json.Marshal(a.RelationshipId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'relationshipId': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteTableData. Returns the specified
-// element and whether it was found
-func (a DeleteTableData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteTableData
-func (a *DeleteTableData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteTableData to handle AdditionalProperties
-func (a *DeleteTableData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["deletedTableId"]; found {
-		err = json.Unmarshal(raw, &a.DeletedTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'deletedTableId': %w", err)
-		}
-		delete(object, "deletedTableId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteTableData to handle AdditionalProperties
-func (a DeleteTableData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.DeletedTableId != nil {
-		object["deletedTableId"], err = json.Marshal(a.DeletedTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'deletedTableId': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DeleteUserTokenData. Returns the specified
-// element and whether it was found
-func (a DeleteUserTokenData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DeleteUserTokenData
-func (a *DeleteUserTokenData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DeleteUserTokenData to handle AdditionalProperties
-func (a *DeleteUserTokenData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DeleteUserTokenData to handle AdditionalProperties
-func (a DeleteUserTokenData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DenyUsersAndGroupsData. Returns the specified
-// element and whether it was found
-func (a DenyUsersAndGroupsData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DenyUsersAndGroupsData
-func (a *DenyUsersAndGroupsData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DenyUsersAndGroupsData to handle AdditionalProperties
-func (a *DenyUsersAndGroupsData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DenyUsersAndGroupsData to handle AdditionalProperties
-func (a DenyUsersAndGroupsData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for DenyUsersData. Returns the specified
-// element and whether it was found
-func (a DenyUsersData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for DenyUsersData
-func (a *DenyUsersData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for DenyUsersData to handle AdditionalProperties
-func (a *DenyUsersData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for DenyUsersData to handle AdditionalProperties
-func (a DenyUsersData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for ExchangeSsoTokenData. Returns the specified
-// element and whether it was found
-func (a ExchangeSsoTokenData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for ExchangeSsoTokenData
-func (a *ExchangeSsoTokenData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for ExchangeSsoTokenData to handle AdditionalProperties
-func (a *ExchangeSsoTokenData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["access_token"]; found {
-		err = json.Unmarshal(raw, &a.AccessToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'access_token': %w", err)
-		}
-		delete(object, "access_token")
-	}
-
-	if raw, found := object["issued_token_type"]; found {
-		err = json.Unmarshal(raw, &a.IssuedTokenType)
-		if err != nil {
-			return fmt.Errorf("error reading 'issued_token_type': %w", err)
-		}
-		delete(object, "issued_token_type")
-	}
-
-	if raw, found := object["token_type"]; found {
-		err = json.Unmarshal(raw, &a.TokenType)
-		if err != nil {
-			return fmt.Errorf("error reading 'token_type': %w", err)
-		}
-		delete(object, "token_type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for ExchangeSsoTokenData to handle AdditionalProperties
-func (a ExchangeSsoTokenData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AccessToken != nil {
-		object["access_token"], err = json.Marshal(a.AccessToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'access_token': %w", err)
-		}
-	}
-
-	if a.IssuedTokenType != nil {
-		object["issued_token_type"], err = json.Marshal(a.IssuedTokenType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'issued_token_type': %w", err)
-		}
-	}
-
-	if a.TokenType != nil {
-		object["token_type"], err = json.Marshal(a.TokenType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'token_type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GenerateDocumentData. Returns the specified
-// element and whether it was found
-func (a GenerateDocumentData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GenerateDocumentData
-func (a *GenerateDocumentData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GenerateDocumentData to handle AdditionalProperties
-func (a *GenerateDocumentData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["contentType"]; found {
-		err = json.Unmarshal(raw, &a.ContentType)
-		if err != nil {
-			return fmt.Errorf("error reading 'contentType': %w", err)
-		}
-		delete(object, "contentType")
-	}
-
-	if raw, found := object["data"]; found {
-		err = json.Unmarshal(raw, &a.Data)
-		if err != nil {
-			return fmt.Errorf("error reading 'data': %w", err)
-		}
-		delete(object, "data")
-	}
-
-	if raw, found := object["fileName"]; found {
-		err = json.Unmarshal(raw, &a.FileName)
-		if err != nil {
-			return fmt.Errorf("error reading 'fileName': %w", err)
-		}
-		delete(object, "fileName")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GenerateDocumentData to handle AdditionalProperties
-func (a GenerateDocumentData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.ContentType != nil {
-		object["contentType"], err = json.Marshal(a.ContentType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'contentType': %w", err)
-		}
-	}
-
-	if a.Data != nil {
-		object["data"], err = json.Marshal(a.Data)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'data': %w", err)
-		}
-	}
-
-	if a.FileName != nil {
-		object["fileName"], err = json.Marshal(a.FileName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fileName': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppData. Returns the specified
-// element and whether it was found
-func (a GetAppData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppData
-func (a *GetAppData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppData to handle AdditionalProperties
-func (a *GetAppData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["ancestorId"]; found {
-		err = json.Unmarshal(raw, &a.AncestorId)
-		if err != nil {
-			return fmt.Errorf("error reading 'ancestorId': %w", err)
-		}
-		delete(object, "ancestorId")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["dataClassification"]; found {
-		err = json.Unmarshal(raw, &a.DataClassification)
-		if err != nil {
-			return fmt.Errorf("error reading 'dataClassification': %w", err)
-		}
-		delete(object, "dataClassification")
-	}
-
-	if raw, found := object["dateFormat"]; found {
-		err = json.Unmarshal(raw, &a.DateFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'dateFormat': %w", err)
-		}
-		delete(object, "dateFormat")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["hasEveryoneOnTheInternet"]; found {
-		err = json.Unmarshal(raw, &a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasEveryoneOnTheInternet': %w", err)
-		}
-		delete(object, "hasEveryoneOnTheInternet")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["memoryInfo"]; found {
-		err = json.Unmarshal(raw, &a.MemoryInfo)
-		if err != nil {
-			return fmt.Errorf("error reading 'memoryInfo': %w", err)
-		}
-		delete(object, "memoryInfo")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["securityProperties"]; found {
-		err = json.Unmarshal(raw, &a.SecurityProperties)
-		if err != nil {
-			return fmt.Errorf("error reading 'securityProperties': %w", err)
-		}
-		delete(object, "securityProperties")
-	}
-
-	if raw, found := object["timeZone"]; found {
-		err = json.Unmarshal(raw, &a.TimeZone)
-		if err != nil {
-			return fmt.Errorf("error reading 'timeZone': %w", err)
-		}
-		delete(object, "timeZone")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if raw, found := object["variables"]; found {
-		err = json.Unmarshal(raw, &a.Variables)
-		if err != nil {
-			return fmt.Errorf("error reading 'variables': %w", err)
-		}
-		delete(object, "variables")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppData to handle AdditionalProperties
-func (a GetAppData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AncestorId != nil {
-		object["ancestorId"], err = json.Marshal(a.AncestorId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'ancestorId': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DataClassification != nil {
-		object["dataClassification"], err = json.Marshal(a.DataClassification)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dataClassification': %w", err)
-		}
-	}
-
-	if a.DateFormat != nil {
-		object["dateFormat"], err = json.Marshal(a.DateFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dateFormat': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.HasEveryoneOnTheInternet != nil {
-		object["hasEveryoneOnTheInternet"], err = json.Marshal(a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasEveryoneOnTheInternet': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.MemoryInfo != nil {
-		object["memoryInfo"], err = json.Marshal(a.MemoryInfo)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'memoryInfo': %w", err)
-		}
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	if a.SecurityProperties != nil {
-		object["securityProperties"], err = json.Marshal(a.SecurityProperties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'securityProperties': %w", err)
-		}
-	}
-
-	if a.TimeZone != nil {
-		object["timeZone"], err = json.Marshal(a.TimeZone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timeZone': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	if a.Variables != nil {
-		object["variables"], err = json.Marshal(a.Variables)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppData_SecurityProperties. Returns the specified
-// element and whether it was found
-func (a GetAppData_SecurityProperties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppData_SecurityProperties
-func (a *GetAppData_SecurityProperties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppData_SecurityProperties to handle AdditionalProperties
-func (a *GetAppData_SecurityProperties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["allowClone"]; found {
-		err = json.Unmarshal(raw, &a.AllowClone)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowClone': %w", err)
-		}
-		delete(object, "allowClone")
-	}
-
-	if raw, found := object["allowExport"]; found {
-		err = json.Unmarshal(raw, &a.AllowExport)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowExport': %w", err)
-		}
-		delete(object, "allowExport")
-	}
-
-	if raw, found := object["enableAppTokens"]; found {
-		err = json.Unmarshal(raw, &a.EnableAppTokens)
-		if err != nil {
-			return fmt.Errorf("error reading 'enableAppTokens': %w", err)
-		}
-		delete(object, "enableAppTokens")
-	}
-
-	if raw, found := object["hideFromPublic"]; found {
-		err = json.Unmarshal(raw, &a.HideFromPublic)
-		if err != nil {
-			return fmt.Errorf("error reading 'hideFromPublic': %w", err)
-		}
-		delete(object, "hideFromPublic")
-	}
-
-	if raw, found := object["mustBeRealmApproved"]; found {
-		err = json.Unmarshal(raw, &a.MustBeRealmApproved)
-		if err != nil {
-			return fmt.Errorf("error reading 'mustBeRealmApproved': %w", err)
-		}
-		delete(object, "mustBeRealmApproved")
-	}
-
-	if raw, found := object["useIPFilter"]; found {
-		err = json.Unmarshal(raw, &a.UseIPFilter)
-		if err != nil {
-			return fmt.Errorf("error reading 'useIPFilter': %w", err)
-		}
-		delete(object, "useIPFilter")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppData_SecurityProperties to handle AdditionalProperties
-func (a GetAppData_SecurityProperties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AllowClone != nil {
-		object["allowClone"], err = json.Marshal(a.AllowClone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowClone': %w", err)
-		}
-	}
-
-	if a.AllowExport != nil {
-		object["allowExport"], err = json.Marshal(a.AllowExport)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowExport': %w", err)
-		}
-	}
-
-	if a.EnableAppTokens != nil {
-		object["enableAppTokens"], err = json.Marshal(a.EnableAppTokens)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'enableAppTokens': %w", err)
-		}
-	}
-
-	if a.HideFromPublic != nil {
-		object["hideFromPublic"], err = json.Marshal(a.HideFromPublic)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hideFromPublic': %w", err)
-		}
-	}
-
-	if a.MustBeRealmApproved != nil {
-		object["mustBeRealmApproved"], err = json.Marshal(a.MustBeRealmApproved)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mustBeRealmApproved': %w", err)
-		}
-	}
-
-	if a.UseIPFilter != nil {
-		object["useIPFilter"], err = json.Marshal(a.UseIPFilter)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useIPFilter': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppData_Variables_Item. Returns the specified
-// element and whether it was found
-func (a GetAppData_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppData_Variables_Item
-func (a *GetAppData_Variables_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppData_Variables_Item to handle AdditionalProperties
-func (a *GetAppData_Variables_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["value"]; found {
-		err = json.Unmarshal(raw, &a.Value)
-		if err != nil {
-			return fmt.Errorf("error reading 'value': %w", err)
-		}
-		delete(object, "value")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppData_Variables_Item to handle AdditionalProperties
-func (a GetAppData_Variables_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppEventsItem. Returns the specified
-// element and whether it was found
-func (a GetAppEventsItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppEventsItem
-func (a *GetAppEventsItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppEventsItem to handle AdditionalProperties
-func (a *GetAppEventsItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["isActive"]; found {
-		err = json.Unmarshal(raw, &a.IsActive)
-		if err != nil {
-			return fmt.Errorf("error reading 'isActive': %w", err)
-		}
-		delete(object, "isActive")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["owner"]; found {
-		err = json.Unmarshal(raw, &a.Owner)
-		if err != nil {
-			return fmt.Errorf("error reading 'owner': %w", err)
-		}
-		delete(object, "owner")
-	}
-
-	if raw, found := object["tableId"]; found {
-		err = json.Unmarshal(raw, &a.TableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableId': %w", err)
-		}
-		delete(object, "tableId")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if raw, found := object["url"]; found {
-		err = json.Unmarshal(raw, &a.Url)
-		if err != nil {
-			return fmt.Errorf("error reading 'url': %w", err)
-		}
-		delete(object, "url")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppEventsItem to handle AdditionalProperties
-func (a GetAppEventsItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.IsActive != nil {
-		object["isActive"], err = json.Marshal(a.IsActive)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'isActive': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Owner != nil {
-		object["owner"], err = json.Marshal(a.Owner)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'owner': %w", err)
-		}
-	}
-
-	if a.TableId != nil {
-		object["tableId"], err = json.Marshal(a.TableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'tableId': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	if a.Url != nil {
-		object["url"], err = json.Marshal(a.Url)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'url': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppEventsItem_Owner. Returns the specified
-// element and whether it was found
-func (a GetAppEventsItem_Owner) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppEventsItem_Owner
-func (a *GetAppEventsItem_Owner) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppEventsItem_Owner to handle AdditionalProperties
-func (a *GetAppEventsItem_Owner) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["email"]; found {
-		err = json.Unmarshal(raw, &a.Email)
-		if err != nil {
-			return fmt.Errorf("error reading 'email': %w", err)
-		}
-		delete(object, "email")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["userName"]; found {
-		err = json.Unmarshal(raw, &a.UserName)
-		if err != nil {
-			return fmt.Errorf("error reading 'userName': %w", err)
-		}
-		delete(object, "userName")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppEventsItem_Owner to handle AdditionalProperties
-func (a GetAppEventsItem_Owner) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Email != nil {
-		object["email"], err = json.Marshal(a.Email)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'email': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.UserName != nil {
-		object["userName"], err = json.Marshal(a.UserName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'userName': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetAppTablesItem. Returns the specified
-// element and whether it was found
-func (a GetAppTablesItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetAppTablesItem
-func (a *GetAppTablesItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetAppTablesItem to handle AdditionalProperties
-func (a *GetAppTablesItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["alias"]; found {
-		err = json.Unmarshal(raw, &a.Alias)
-		if err != nil {
-			return fmt.Errorf("error reading 'alias': %w", err)
-		}
-		delete(object, "alias")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["defaultSortFieldId"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortFieldId': %w", err)
-		}
-		delete(object, "defaultSortFieldId")
-	}
-
-	if raw, found := object["defaultSortOrder"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortOrder)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortOrder': %w", err)
-		}
-		delete(object, "defaultSortOrder")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["keyFieldId"]; found {
-		err = json.Unmarshal(raw, &a.KeyFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'keyFieldId': %w", err)
-		}
-		delete(object, "keyFieldId")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["nextFieldId"]; found {
-		err = json.Unmarshal(raw, &a.NextFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextFieldId': %w", err)
-		}
-		delete(object, "nextFieldId")
-	}
-
-	if raw, found := object["nextRecordId"]; found {
-		err = json.Unmarshal(raw, &a.NextRecordId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextRecordId': %w", err)
-		}
-		delete(object, "nextRecordId")
-	}
-
-	if raw, found := object["pluralRecordName"]; found {
-		err = json.Unmarshal(raw, &a.PluralRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'pluralRecordName': %w", err)
-		}
-		delete(object, "pluralRecordName")
-	}
-
-	if raw, found := object["singleRecordName"]; found {
-		err = json.Unmarshal(raw, &a.SingleRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'singleRecordName': %w", err)
-		}
-		delete(object, "singleRecordName")
-	}
-
-	if raw, found := object["sizeLimit"]; found {
-		err = json.Unmarshal(raw, &a.SizeLimit)
-		if err != nil {
-			return fmt.Errorf("error reading 'sizeLimit': %w", err)
-		}
-		delete(object, "sizeLimit")
-	}
-
-	if raw, found := object["spaceRemaining"]; found {
-		err = json.Unmarshal(raw, &a.SpaceRemaining)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceRemaining': %w", err)
-		}
-		delete(object, "spaceRemaining")
-	}
-
-	if raw, found := object["spaceUsed"]; found {
-		err = json.Unmarshal(raw, &a.SpaceUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceUsed': %w", err)
-		}
-		delete(object, "spaceUsed")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetAppTablesItem to handle AdditionalProperties
-func (a GetAppTablesItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Alias != nil {
-		object["alias"], err = json.Marshal(a.Alias)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'alias': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DefaultSortFieldId != nil {
-		object["defaultSortFieldId"], err = json.Marshal(a.DefaultSortFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortFieldId': %w", err)
-		}
-	}
-
-	if a.DefaultSortOrder != nil {
-		object["defaultSortOrder"], err = json.Marshal(a.DefaultSortOrder)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortOrder': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.KeyFieldId != nil {
-		object["keyFieldId"], err = json.Marshal(a.KeyFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'keyFieldId': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.NextFieldId != nil {
-		object["nextFieldId"], err = json.Marshal(a.NextFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextFieldId': %w", err)
-		}
-	}
-
-	if a.NextRecordId != nil {
-		object["nextRecordId"], err = json.Marshal(a.NextRecordId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextRecordId': %w", err)
-		}
-	}
-
-	if a.PluralRecordName != nil {
-		object["pluralRecordName"], err = json.Marshal(a.PluralRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'pluralRecordName': %w", err)
-		}
-	}
-
-	if a.SingleRecordName != nil {
-		object["singleRecordName"], err = json.Marshal(a.SingleRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'singleRecordName': %w", err)
-		}
-	}
-
-	if a.SizeLimit != nil {
-		object["sizeLimit"], err = json.Marshal(a.SizeLimit)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sizeLimit': %w", err)
-		}
-	}
-
-	if a.SpaceRemaining != nil {
-		object["spaceRemaining"], err = json.Marshal(a.SpaceRemaining)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceRemaining': %w", err)
-		}
-	}
-
-	if a.SpaceUsed != nil {
-		object["spaceUsed"], err = json.Marshal(a.SpaceUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceUsed': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldData. Returns the specified
-// element and whether it was found
-func (a GetFieldData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldData
-func (a *GetFieldData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldData to handle AdditionalProperties
-func (a *GetFieldData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["appearsByDefault"]; found {
-		err = json.Unmarshal(raw, &a.AppearsByDefault)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsByDefault': %w", err)
-		}
-		delete(object, "appearsByDefault")
-	}
-
-	if raw, found := object["audited"]; found {
-		err = json.Unmarshal(raw, &a.Audited)
-		if err != nil {
-			return fmt.Errorf("error reading 'audited': %w", err)
-		}
-		delete(object, "audited")
-	}
-
-	if raw, found := object["bold"]; found {
-		err = json.Unmarshal(raw, &a.Bold)
-		if err != nil {
-			return fmt.Errorf("error reading 'bold': %w", err)
-		}
-		delete(object, "bold")
-	}
-
-	if raw, found := object["doesDataCopy"]; found {
-		err = json.Unmarshal(raw, &a.DoesDataCopy)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesDataCopy': %w", err)
-		}
-		delete(object, "doesDataCopy")
-	}
-
-	if raw, found := object["fieldHelp"]; found {
-		err = json.Unmarshal(raw, &a.FieldHelp)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldHelp': %w", err)
-		}
-		delete(object, "fieldHelp")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["findEnabled"]; found {
-		err = json.Unmarshal(raw, &a.FindEnabled)
-		if err != nil {
-			return fmt.Errorf("error reading 'findEnabled': %w", err)
-		}
-		delete(object, "findEnabled")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["mode"]; found {
-		err = json.Unmarshal(raw, &a.Mode)
-		if err != nil {
-			return fmt.Errorf("error reading 'mode': %w", err)
-		}
-		delete(object, "mode")
-	}
-
-	if raw, found := object["noWrap"]; found {
-		err = json.Unmarshal(raw, &a.NoWrap)
-		if err != nil {
-			return fmt.Errorf("error reading 'noWrap': %w", err)
-		}
-		delete(object, "noWrap")
-	}
-
-	if raw, found := object["permissions"]; found {
-		err = json.Unmarshal(raw, &a.Permissions)
-		if err != nil {
-			return fmt.Errorf("error reading 'permissions': %w", err)
-		}
-		delete(object, "permissions")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["required"]; found {
-		err = json.Unmarshal(raw, &a.Required)
-		if err != nil {
-			return fmt.Errorf("error reading 'required': %w", err)
-		}
-		delete(object, "required")
-	}
-
-	if raw, found := object["unique"]; found {
-		err = json.Unmarshal(raw, &a.Unique)
-		if err != nil {
-			return fmt.Errorf("error reading 'unique': %w", err)
-		}
-		delete(object, "unique")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldData to handle AdditionalProperties
-func (a GetFieldData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AppearsByDefault != nil {
-		object["appearsByDefault"], err = json.Marshal(a.AppearsByDefault)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsByDefault': %w", err)
-		}
-	}
-
-	if a.Audited != nil {
-		object["audited"], err = json.Marshal(a.Audited)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'audited': %w", err)
-		}
-	}
-
-	if a.Bold != nil {
-		object["bold"], err = json.Marshal(a.Bold)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'bold': %w", err)
-		}
-	}
-
-	if a.DoesDataCopy != nil {
-		object["doesDataCopy"], err = json.Marshal(a.DoesDataCopy)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesDataCopy': %w", err)
-		}
-	}
-
-	if a.FieldHelp != nil {
-		object["fieldHelp"], err = json.Marshal(a.FieldHelp)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldHelp': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.FindEnabled != nil {
-		object["findEnabled"], err = json.Marshal(a.FindEnabled)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'findEnabled': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Mode != nil {
-		object["mode"], err = json.Marshal(a.Mode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mode': %w", err)
-		}
-	}
-
-	if a.NoWrap != nil {
-		object["noWrap"], err = json.Marshal(a.NoWrap)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'noWrap': %w", err)
-		}
-	}
-
-	if a.Permissions != nil {
-		object["permissions"], err = json.Marshal(a.Permissions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'permissions': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Required != nil {
-		object["required"], err = json.Marshal(a.Required)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'required': %w", err)
-		}
-	}
-
-	if a.Unique != nil {
-		object["unique"], err = json.Marshal(a.Unique)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'unique': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldData_Properties. Returns the specified
-// element and whether it was found
-func (a GetFieldData_Properties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldData_Properties
-func (a *GetFieldData_Properties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldData_Properties to handle AdditionalProperties
-func (a *GetFieldData_Properties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["abbreviate"]; found {
-		err = json.Unmarshal(raw, &a.Abbreviate)
-		if err != nil {
-			return fmt.Errorf("error reading 'abbreviate': %w", err)
-		}
-		delete(object, "abbreviate")
-	}
-
-	if raw, found := object["allowHTML"]; found {
-		err = json.Unmarshal(raw, &a.AllowHTML)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowHTML': %w", err)
-		}
-		delete(object, "allowHTML")
-	}
-
-	if raw, found := object["allowMentions"]; found {
-		err = json.Unmarshal(raw, &a.AllowMentions)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowMentions': %w", err)
-		}
-		delete(object, "allowMentions")
-	}
-
-	if raw, found := object["allowNewChoices"]; found {
-		err = json.Unmarshal(raw, &a.AllowNewChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowNewChoices': %w", err)
-		}
-		delete(object, "allowNewChoices")
-	}
-
-	if raw, found := object["appearsAs"]; found {
-		err = json.Unmarshal(raw, &a.AppearsAs)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsAs': %w", err)
-		}
-		delete(object, "appearsAs")
-	}
-
-	if raw, found := object["appendOnly"]; found {
-		err = json.Unmarshal(raw, &a.AppendOnly)
-		if err != nil {
-			return fmt.Errorf("error reading 'appendOnly': %w", err)
-		}
-		delete(object, "appendOnly")
-	}
-
-	if raw, found := object["autoSave"]; found {
-		err = json.Unmarshal(raw, &a.AutoSave)
-		if err != nil {
-			return fmt.Errorf("error reading 'autoSave': %w", err)
-		}
-		delete(object, "autoSave")
-	}
-
-	if raw, found := object["blankIsZero"]; found {
-		err = json.Unmarshal(raw, &a.BlankIsZero)
-		if err != nil {
-			return fmt.Errorf("error reading 'blankIsZero': %w", err)
-		}
-		delete(object, "blankIsZero")
-	}
-
-	if raw, found := object["carryChoices"]; found {
-		err = json.Unmarshal(raw, &a.CarryChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'carryChoices': %w", err)
-		}
-		delete(object, "carryChoices")
-	}
-
-	if raw, found := object["choices"]; found {
-		err = json.Unmarshal(raw, &a.Choices)
-		if err != nil {
-			return fmt.Errorf("error reading 'choices': %w", err)
-		}
-		delete(object, "choices")
-	}
-
-	if raw, found := object["choicesLuid"]; found {
-		err = json.Unmarshal(raw, &a.ChoicesLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'choicesLuid': %w", err)
-		}
-		delete(object, "choicesLuid")
-	}
-
-	if raw, found := object["commaStart"]; found {
-		err = json.Unmarshal(raw, &a.CommaStart)
-		if err != nil {
-			return fmt.Errorf("error reading 'commaStart': %w", err)
-		}
-		delete(object, "commaStart")
-	}
-
-	if raw, found := object["comments"]; found {
-		err = json.Unmarshal(raw, &a.Comments)
-		if err != nil {
-			return fmt.Errorf("error reading 'comments': %w", err)
-		}
-		delete(object, "comments")
-	}
-
-	if raw, found := object["compositeFields"]; found {
-		err = json.Unmarshal(raw, &a.CompositeFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'compositeFields': %w", err)
-		}
-		delete(object, "compositeFields")
-	}
-
-	if raw, found := object["coverText"]; found {
-		err = json.Unmarshal(raw, &a.CoverText)
-		if err != nil {
-			return fmt.Errorf("error reading 'coverText': %w", err)
-		}
-		delete(object, "coverText")
-	}
-
-	if raw, found := object["currencyFormat"]; found {
-		err = json.Unmarshal(raw, &a.CurrencyFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencyFormat': %w", err)
-		}
-		delete(object, "currencyFormat")
-	}
-
-	if raw, found := object["currencySymbol"]; found {
-		err = json.Unmarshal(raw, &a.CurrencySymbol)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencySymbol': %w", err)
-		}
-		delete(object, "currencySymbol")
-	}
-
-	if raw, found := object["decimalPlaces"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPlaces)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPlaces': %w", err)
-		}
-		delete(object, "decimalPlaces")
-	}
-
-	if raw, found := object["defaultCountryCode"]; found {
-		err = json.Unmarshal(raw, &a.DefaultCountryCode)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultCountryCode': %w", err)
-		}
-		delete(object, "defaultCountryCode")
-	}
-
-	if raw, found := object["defaultDomain"]; found {
-		err = json.Unmarshal(raw, &a.DefaultDomain)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultDomain': %w", err)
-		}
-		delete(object, "defaultDomain")
-	}
-
-	if raw, found := object["defaultKind"]; found {
-		err = json.Unmarshal(raw, &a.DefaultKind)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultKind': %w", err)
-		}
-		delete(object, "defaultKind")
-	}
-
-	if raw, found := object["defaultToday"]; found {
-		err = json.Unmarshal(raw, &a.DefaultToday)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultToday': %w", err)
-		}
-		delete(object, "defaultToday")
-	}
-
-	if raw, found := object["defaultValue"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValue)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValue': %w", err)
-		}
-		delete(object, "defaultValue")
-	}
-
-	if raw, found := object["defaultValueLuid"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValueLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValueLuid': %w", err)
-		}
-		delete(object, "defaultValueLuid")
-	}
-
-	if raw, found := object["displayAsLink"]; found {
-		err = json.Unmarshal(raw, &a.DisplayAsLink)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayAsLink': %w", err)
-		}
-		delete(object, "displayAsLink")
-	}
-
-	if raw, found := object["displayCheckboxAsText"]; found {
-		err = json.Unmarshal(raw, &a.DisplayCheckboxAsText)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayCheckboxAsText': %w", err)
-		}
-		delete(object, "displayCheckboxAsText")
-	}
-
-	if raw, found := object["displayDayOfWeek"]; found {
-		err = json.Unmarshal(raw, &a.DisplayDayOfWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayDayOfWeek': %w", err)
-		}
-		delete(object, "displayDayOfWeek")
-	}
-
-	if raw, found := object["displayEmail"]; found {
-		err = json.Unmarshal(raw, &a.DisplayEmail)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayEmail': %w", err)
-		}
-		delete(object, "displayEmail")
-	}
-
-	if raw, found := object["displayMonth"]; found {
-		err = json.Unmarshal(raw, &a.DisplayMonth)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayMonth': %w", err)
-		}
-		delete(object, "displayMonth")
-	}
-
-	if raw, found := object["displayRelative"]; found {
-		err = json.Unmarshal(raw, &a.DisplayRelative)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayRelative': %w", err)
-		}
-		delete(object, "displayRelative")
-	}
-
-	if raw, found := object["displayTime"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTime)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTime': %w", err)
-		}
-		delete(object, "displayTime")
-	}
-
-	if raw, found := object["displayTimezone"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTimezone)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTimezone': %w", err)
-		}
-		delete(object, "displayTimezone")
-	}
-
-	if raw, found := object["displayUser"]; found {
-		err = json.Unmarshal(raw, &a.DisplayUser)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayUser': %w", err)
-		}
-		delete(object, "displayUser")
-	}
-
-	if raw, found := object["doesAverage"]; found {
-		err = json.Unmarshal(raw, &a.DoesAverage)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesAverage': %w", err)
-		}
-		delete(object, "doesAverage")
-	}
-
-	if raw, found := object["doesTotal"]; found {
-		err = json.Unmarshal(raw, &a.DoesTotal)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesTotal': %w", err)
-		}
-		delete(object, "doesTotal")
-	}
-
-	if raw, found := object["durationField"]; found {
-		err = json.Unmarshal(raw, &a.DurationField)
-		if err != nil {
-			return fmt.Errorf("error reading 'durationField': %w", err)
-		}
-		delete(object, "durationField")
-	}
-
-	if raw, found := object["exact"]; found {
-		err = json.Unmarshal(raw, &a.Exact)
-		if err != nil {
-			return fmt.Errorf("error reading 'exact': %w", err)
-		}
-		delete(object, "exact")
-	}
-
-	if raw, found := object["foreignKey"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKey)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKey': %w", err)
-		}
-		delete(object, "foreignKey")
-	}
-
-	if raw, found := object["format"]; found {
-		err = json.Unmarshal(raw, &a.Format)
-		if err != nil {
-			return fmt.Errorf("error reading 'format': %w", err)
-		}
-		delete(object, "format")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["hasExtension"]; found {
-		err = json.Unmarshal(raw, &a.HasExtension)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasExtension': %w", err)
-		}
-		delete(object, "hasExtension")
-	}
-
-	if raw, found := object["hours24"]; found {
-		err = json.Unmarshal(raw, &a.Hours24)
-		if err != nil {
-			return fmt.Errorf("error reading 'hours24': %w", err)
-		}
-		delete(object, "hours24")
-	}
-
-	if raw, found := object["linkText"]; found {
-		err = json.Unmarshal(raw, &a.LinkText)
-		if err != nil {
-			return fmt.Errorf("error reading 'linkText': %w", err)
-		}
-		delete(object, "linkText")
-	}
-
-	if raw, found := object["lookupReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupReferenceFieldId': %w", err)
-		}
-		delete(object, "lookupReferenceFieldId")
-	}
-
-	if raw, found := object["lookupTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupTargetFieldId': %w", err)
-		}
-		delete(object, "lookupTargetFieldId")
-	}
-
-	if raw, found := object["masterChoiceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceFieldId': %w", err)
-		}
-		delete(object, "masterChoiceFieldId")
-	}
-
-	if raw, found := object["masterChoiceTableId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceTableId': %w", err)
-		}
-		delete(object, "masterChoiceTableId")
-	}
-
-	if raw, found := object["masterTableTag"]; found {
-		err = json.Unmarshal(raw, &a.MasterTableTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterTableTag': %w", err)
-		}
-		delete(object, "masterTableTag")
-	}
-
-	if raw, found := object["maxLength"]; found {
-		err = json.Unmarshal(raw, &a.MaxLength)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxLength': %w", err)
-		}
-		delete(object, "maxLength")
-	}
-
-	if raw, found := object["maxVersions"]; found {
-		err = json.Unmarshal(raw, &a.MaxVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxVersions': %w", err)
-		}
-		delete(object, "maxVersions")
-	}
-
-	if raw, found := object["numLines"]; found {
-		err = json.Unmarshal(raw, &a.NumLines)
-		if err != nil {
-			return fmt.Errorf("error reading 'numLines': %w", err)
-		}
-		delete(object, "numLines")
-	}
-
-	if raw, found := object["numberFormat"]; found {
-		err = json.Unmarshal(raw, &a.NumberFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'numberFormat': %w", err)
-		}
-		delete(object, "numberFormat")
-	}
-
-	if raw, found := object["parentFieldId"]; found {
-		err = json.Unmarshal(raw, &a.ParentFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentFieldId': %w", err)
-		}
-		delete(object, "parentFieldId")
-	}
-
-	if raw, found := object["postTempToken"]; found {
-		err = json.Unmarshal(raw, &a.PostTempToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'postTempToken': %w", err)
-		}
-		delete(object, "postTempToken")
-	}
-
-	if raw, found := object["seeVersions"]; found {
-		err = json.Unmarshal(raw, &a.SeeVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'seeVersions': %w", err)
-		}
-		delete(object, "seeVersions")
-	}
-
-	if raw, found := object["snapFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SnapFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'snapFieldId': %w", err)
-		}
-		delete(object, "snapFieldId")
-	}
-
-	if raw, found := object["sortAlpha"]; found {
-		err = json.Unmarshal(raw, &a.SortAlpha)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAlpha': %w", err)
-		}
-		delete(object, "sortAlpha")
-	}
-
-	if raw, found := object["sortAsGiven"]; found {
-		err = json.Unmarshal(raw, &a.SortAsGiven)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAsGiven': %w", err)
-		}
-		delete(object, "sortAsGiven")
-	}
-
-	if raw, found := object["sourceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SourceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'sourceFieldId': %w", err)
-		}
-		delete(object, "sourceFieldId")
-	}
-
-	if raw, found := object["startField"]; found {
-		err = json.Unmarshal(raw, &a.StartField)
-		if err != nil {
-			return fmt.Errorf("error reading 'startField': %w", err)
-		}
-		delete(object, "startField")
-	}
-
-	if raw, found := object["summaryFunction"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFunction)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFunction': %w", err)
-		}
-		delete(object, "summaryFunction")
-	}
-
-	if raw, found := object["summaryReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryReferenceFieldId': %w", err)
-		}
-		delete(object, "summaryReferenceFieldId")
-	}
-
-	if raw, found := object["summaryTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryTargetFieldId': %w", err)
-		}
-		delete(object, "summaryTargetFieldId")
-	}
-
-	if raw, found := object["targetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.TargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetFieldId': %w", err)
-		}
-		delete(object, "targetFieldId")
-	}
-
-	if raw, found := object["targetTableId"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableId': %w", err)
-		}
-		delete(object, "targetTableId")
-	}
-
-	if raw, found := object["targetTableName"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableName)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableName': %w", err)
-		}
-		delete(object, "targetTableName")
-	}
-
-	if raw, found := object["units"]; found {
-		err = json.Unmarshal(raw, &a.Units)
-		if err != nil {
-			return fmt.Errorf("error reading 'units': %w", err)
-		}
-		delete(object, "units")
-	}
-
-	if raw, found := object["useI18NFormat"]; found {
-		err = json.Unmarshal(raw, &a.UseI18NFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'useI18NFormat': %w", err)
-		}
-		delete(object, "useI18NFormat")
-	}
-
-	if raw, found := object["useNewWindow"]; found {
-		err = json.Unmarshal(raw, &a.UseNewWindow)
-		if err != nil {
-			return fmt.Errorf("error reading 'useNewWindow': %w", err)
-		}
-		delete(object, "useNewWindow")
-	}
-
-	if raw, found := object["versionMode"]; found {
-		err = json.Unmarshal(raw, &a.VersionMode)
-		if err != nil {
-			return fmt.Errorf("error reading 'versionMode': %w", err)
-		}
-		delete(object, "versionMode")
-	}
-
-	if raw, found := object["width"]; found {
-		err = json.Unmarshal(raw, &a.Width)
-		if err != nil {
-			return fmt.Errorf("error reading 'width': %w", err)
-		}
-		delete(object, "width")
-	}
-
-	if raw, found := object["workWeek"]; found {
-		err = json.Unmarshal(raw, &a.WorkWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'workWeek': %w", err)
-		}
-		delete(object, "workWeek")
-	}
-
-	if raw, found := object["xmlTag"]; found {
-		err = json.Unmarshal(raw, &a.XmlTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'xmlTag': %w", err)
-		}
-		delete(object, "xmlTag")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldData_Properties to handle AdditionalProperties
-func (a GetFieldData_Properties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Abbreviate != nil {
-		object["abbreviate"], err = json.Marshal(a.Abbreviate)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'abbreviate': %w", err)
-		}
-	}
-
-	if a.AllowHTML != nil {
-		object["allowHTML"], err = json.Marshal(a.AllowHTML)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowHTML': %w", err)
-		}
-	}
-
-	if a.AllowMentions != nil {
-		object["allowMentions"], err = json.Marshal(a.AllowMentions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowMentions': %w", err)
-		}
-	}
-
-	if a.AllowNewChoices != nil {
-		object["allowNewChoices"], err = json.Marshal(a.AllowNewChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowNewChoices': %w", err)
-		}
-	}
-
-	if a.AppearsAs != nil {
-		object["appearsAs"], err = json.Marshal(a.AppearsAs)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsAs': %w", err)
-		}
-	}
-
-	if a.AppendOnly != nil {
-		object["appendOnly"], err = json.Marshal(a.AppendOnly)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appendOnly': %w", err)
-		}
-	}
-
-	if a.AutoSave != nil {
-		object["autoSave"], err = json.Marshal(a.AutoSave)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'autoSave': %w", err)
-		}
-	}
-
-	if a.BlankIsZero != nil {
-		object["blankIsZero"], err = json.Marshal(a.BlankIsZero)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'blankIsZero': %w", err)
-		}
-	}
-
-	if a.CarryChoices != nil {
-		object["carryChoices"], err = json.Marshal(a.CarryChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'carryChoices': %w", err)
-		}
-	}
-
-	if a.Choices != nil {
-		object["choices"], err = json.Marshal(a.Choices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choices': %w", err)
-		}
-	}
-
-	if a.ChoicesLuid != nil {
-		object["choicesLuid"], err = json.Marshal(a.ChoicesLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choicesLuid': %w", err)
-		}
-	}
-
-	if a.CommaStart != nil {
-		object["commaStart"], err = json.Marshal(a.CommaStart)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'commaStart': %w", err)
-		}
-	}
-
-	if a.Comments != nil {
-		object["comments"], err = json.Marshal(a.Comments)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'comments': %w", err)
-		}
-	}
-
-	if a.CompositeFields != nil {
-		object["compositeFields"], err = json.Marshal(a.CompositeFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'compositeFields': %w", err)
-		}
-	}
-
-	if a.CoverText != nil {
-		object["coverText"], err = json.Marshal(a.CoverText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'coverText': %w", err)
-		}
-	}
-
-	if a.CurrencyFormat != nil {
-		object["currencyFormat"], err = json.Marshal(a.CurrencyFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencyFormat': %w", err)
-		}
-	}
-
-	if a.CurrencySymbol != nil {
-		object["currencySymbol"], err = json.Marshal(a.CurrencySymbol)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencySymbol': %w", err)
-		}
-	}
-
-	if a.DecimalPlaces != nil {
-		object["decimalPlaces"], err = json.Marshal(a.DecimalPlaces)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPlaces': %w", err)
-		}
-	}
-
-	if a.DefaultCountryCode != nil {
-		object["defaultCountryCode"], err = json.Marshal(a.DefaultCountryCode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultCountryCode': %w", err)
-		}
-	}
-
-	if a.DefaultDomain != nil {
-		object["defaultDomain"], err = json.Marshal(a.DefaultDomain)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultDomain': %w", err)
-		}
-	}
-
-	if a.DefaultKind != nil {
-		object["defaultKind"], err = json.Marshal(a.DefaultKind)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultKind': %w", err)
-		}
-	}
-
-	if a.DefaultToday != nil {
-		object["defaultToday"], err = json.Marshal(a.DefaultToday)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultToday': %w", err)
-		}
-	}
-
-	if a.DefaultValue != nil {
-		object["defaultValue"], err = json.Marshal(a.DefaultValue)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValue': %w", err)
-		}
-	}
-
-	if a.DefaultValueLuid != nil {
-		object["defaultValueLuid"], err = json.Marshal(a.DefaultValueLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValueLuid': %w", err)
-		}
-	}
-
-	if a.DisplayAsLink != nil {
-		object["displayAsLink"], err = json.Marshal(a.DisplayAsLink)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayAsLink': %w", err)
-		}
-	}
-
-	if a.DisplayCheckboxAsText != nil {
-		object["displayCheckboxAsText"], err = json.Marshal(a.DisplayCheckboxAsText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayCheckboxAsText': %w", err)
-		}
-	}
-
-	if a.DisplayDayOfWeek != nil {
-		object["displayDayOfWeek"], err = json.Marshal(a.DisplayDayOfWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayDayOfWeek': %w", err)
-		}
-	}
-
-	if a.DisplayEmail != nil {
-		object["displayEmail"], err = json.Marshal(a.DisplayEmail)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayEmail': %w", err)
-		}
-	}
-
-	if a.DisplayMonth != nil {
-		object["displayMonth"], err = json.Marshal(a.DisplayMonth)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayMonth': %w", err)
-		}
-	}
-
-	if a.DisplayRelative != nil {
-		object["displayRelative"], err = json.Marshal(a.DisplayRelative)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayRelative': %w", err)
-		}
-	}
-
-	if a.DisplayTime != nil {
-		object["displayTime"], err = json.Marshal(a.DisplayTime)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTime': %w", err)
-		}
-	}
-
-	if a.DisplayTimezone != nil {
-		object["displayTimezone"], err = json.Marshal(a.DisplayTimezone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTimezone': %w", err)
-		}
-	}
-
-	if a.DisplayUser != nil {
-		object["displayUser"], err = json.Marshal(a.DisplayUser)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayUser': %w", err)
-		}
-	}
-
-	if a.DoesAverage != nil {
-		object["doesAverage"], err = json.Marshal(a.DoesAverage)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesAverage': %w", err)
-		}
-	}
-
-	if a.DoesTotal != nil {
-		object["doesTotal"], err = json.Marshal(a.DoesTotal)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesTotal': %w", err)
-		}
-	}
-
-	if a.DurationField != nil {
-		object["durationField"], err = json.Marshal(a.DurationField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'durationField': %w", err)
-		}
-	}
-
-	if a.Exact != nil {
-		object["exact"], err = json.Marshal(a.Exact)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'exact': %w", err)
-		}
-	}
-
-	if a.ForeignKey != nil {
-		object["foreignKey"], err = json.Marshal(a.ForeignKey)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKey': %w", err)
-		}
-	}
-
-	if a.Format != nil {
-		object["format"], err = json.Marshal(a.Format)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'format': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.HasExtension != nil {
-		object["hasExtension"], err = json.Marshal(a.HasExtension)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasExtension': %w", err)
-		}
-	}
-
-	if a.Hours24 != nil {
-		object["hours24"], err = json.Marshal(a.Hours24)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hours24': %w", err)
-		}
-	}
-
-	if a.LinkText != nil {
-		object["linkText"], err = json.Marshal(a.LinkText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'linkText': %w", err)
-		}
-	}
-
-	if a.LookupReferenceFieldId != nil {
-		object["lookupReferenceFieldId"], err = json.Marshal(a.LookupReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.LookupTargetFieldId != nil {
-		object["lookupTargetFieldId"], err = json.Marshal(a.LookupTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupTargetFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceFieldId != nil {
-		object["masterChoiceFieldId"], err = json.Marshal(a.MasterChoiceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceTableId != nil {
-		object["masterChoiceTableId"], err = json.Marshal(a.MasterChoiceTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceTableId': %w", err)
-		}
-	}
-
-	if a.MasterTableTag != nil {
-		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterTableTag': %w", err)
-		}
-	}
-
-	if a.MaxLength != nil {
-		object["maxLength"], err = json.Marshal(a.MaxLength)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxLength': %w", err)
-		}
-	}
-
-	if a.MaxVersions != nil {
-		object["maxVersions"], err = json.Marshal(a.MaxVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxVersions': %w", err)
-		}
-	}
-
-	if a.NumLines != nil {
-		object["numLines"], err = json.Marshal(a.NumLines)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numLines': %w", err)
-		}
-	}
-
-	if a.NumberFormat != nil {
-		object["numberFormat"], err = json.Marshal(a.NumberFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numberFormat': %w", err)
-		}
-	}
-
-	if a.ParentFieldId != nil {
-		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'parentFieldId': %w", err)
-		}
-	}
-
-	if a.PostTempToken != nil {
-		object["postTempToken"], err = json.Marshal(a.PostTempToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
-		}
-	}
-
-	if a.SeeVersions != nil {
-		object["seeVersions"], err = json.Marshal(a.SeeVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'seeVersions': %w", err)
-		}
-	}
-
-	if a.SnapFieldId != nil {
-		object["snapFieldId"], err = json.Marshal(a.SnapFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'snapFieldId': %w", err)
-		}
-	}
-
-	if a.SortAlpha != nil {
-		object["sortAlpha"], err = json.Marshal(a.SortAlpha)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAlpha': %w", err)
-		}
-	}
-
-	if a.SortAsGiven != nil {
-		object["sortAsGiven"], err = json.Marshal(a.SortAsGiven)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAsGiven': %w", err)
-		}
-	}
-
-	if a.SourceFieldId != nil {
-		object["sourceFieldId"], err = json.Marshal(a.SourceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sourceFieldId': %w", err)
-		}
-	}
-
-	if a.StartField != nil {
-		object["startField"], err = json.Marshal(a.StartField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'startField': %w", err)
-		}
-	}
-
-	if a.SummaryFunction != nil {
-		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
-		}
-	}
-
-	if a.SummaryReferenceFieldId != nil {
-		object["summaryReferenceFieldId"], err = json.Marshal(a.SummaryReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.SummaryTargetFieldId != nil {
-		object["summaryTargetFieldId"], err = json.Marshal(a.SummaryTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryTargetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetFieldId != nil {
-		object["targetFieldId"], err = json.Marshal(a.TargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetTableId != nil {
-		object["targetTableId"], err = json.Marshal(a.TargetTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableId': %w", err)
-		}
-	}
-
-	if a.TargetTableName != nil {
-		object["targetTableName"], err = json.Marshal(a.TargetTableName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableName': %w", err)
-		}
-	}
-
-	if a.Units != nil {
-		object["units"], err = json.Marshal(a.Units)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'units': %w", err)
-		}
-	}
-
-	if a.UseI18NFormat != nil {
-		object["useI18NFormat"], err = json.Marshal(a.UseI18NFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useI18NFormat': %w", err)
-		}
-	}
-
-	if a.UseNewWindow != nil {
-		object["useNewWindow"], err = json.Marshal(a.UseNewWindow)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useNewWindow': %w", err)
-		}
-	}
-
-	if a.VersionMode != nil {
-		object["versionMode"], err = json.Marshal(a.VersionMode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'versionMode': %w", err)
-		}
-	}
-
-	if a.Width != nil {
-		object["width"], err = json.Marshal(a.Width)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'width': %w", err)
-		}
-	}
-
-	if a.WorkWeek != nil {
-		object["workWeek"], err = json.Marshal(a.WorkWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'workWeek': %w", err)
-		}
-	}
-
-	if a.XmlTag != nil {
-		object["xmlTag"], err = json.Marshal(a.XmlTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'xmlTag': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem
-func (a *GetFieldUsageItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem to handle AdditionalProperties
-func (a *GetFieldUsageItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["field"]; found {
-		err = json.Unmarshal(raw, &a.Field)
-		if err != nil {
-			return fmt.Errorf("error reading 'field': %w", err)
-		}
-		delete(object, "field")
-	}
-
-	if raw, found := object["usage"]; found {
-		err = json.Unmarshal(raw, &a.Usage)
-		if err != nil {
-			return fmt.Errorf("error reading 'usage': %w", err)
-		}
-		delete(object, "usage")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem to handle AdditionalProperties
-func (a GetFieldUsageItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["field"], err = json.Marshal(a.Field)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'field': %w", err)
-	}
-
-	object["usage"], err = json.Marshal(a.Usage)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'usage': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Field. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Field) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Field
-func (a *GetFieldUsageItem_Field) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Field to handle AdditionalProperties
-func (a *GetFieldUsageItem_Field) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Field to handle AdditionalProperties
-func (a GetFieldUsageItem_Field) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	object["type"], err = json.Marshal(a.Type)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'type': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Actions. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Actions) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Actions
-func (a *GetFieldUsageItem_Usage_Actions) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Actions to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Actions) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Actions to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Actions) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_AppHomePages. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_AppHomePages) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_AppHomePages
-func (a *GetFieldUsageItem_Usage_AppHomePages) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_AppHomePages to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_AppHomePages) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_AppHomePages to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_AppHomePages) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_DefaultReports. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_DefaultReports
-func (a *GetFieldUsageItem_Usage_DefaultReports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_DefaultReports to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_DefaultReports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_DefaultReports to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_DefaultReports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_ExactForms. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_ExactForms) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_ExactForms
-func (a *GetFieldUsageItem_Usage_ExactForms) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_ExactForms to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_ExactForms) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_ExactForms to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_ExactForms) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Fields. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Fields) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Fields
-func (a *GetFieldUsageItem_Usage_Fields) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Fields to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Fields) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Fields to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Fields) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Forms. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Forms) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Forms
-func (a *GetFieldUsageItem_Usage_Forms) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Forms to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Forms) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Forms to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Forms) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Notifications. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Notifications) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Notifications
-func (a *GetFieldUsageItem_Usage_Notifications) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Notifications to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Notifications) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Notifications to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Notifications) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_PersonalReports. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_PersonalReports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_PersonalReports
-func (a *GetFieldUsageItem_Usage_PersonalReports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_PersonalReports to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_PersonalReports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_PersonalReports to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_PersonalReports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Pipelines. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Pipelines) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Pipelines
-func (a *GetFieldUsageItem_Usage_Pipelines) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Pipelines to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Pipelines) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Pipelines to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Pipelines) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Relationships. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Relationships) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Relationships
-func (a *GetFieldUsageItem_Usage_Relationships) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Relationships to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Relationships) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Relationships to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Relationships) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Reminders. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Reminders) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Reminders
-func (a *GetFieldUsageItem_Usage_Reminders) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Reminders to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Reminders) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Reminders to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Reminders) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Reports. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Reports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Reports
-func (a *GetFieldUsageItem_Usage_Reports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Reports to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Reports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Reports to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Reports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Roles. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Roles) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Roles
-func (a *GetFieldUsageItem_Usage_Roles) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Roles to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Roles) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Roles to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Roles) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage_Webhooks. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage_Webhooks) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage_Webhooks
-func (a *GetFieldUsageItem_Usage_Webhooks) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Webhooks to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage_Webhooks) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage_Webhooks to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage_Webhooks) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldUsageItem_Usage. Returns the specified
-// element and whether it was found
-func (a GetFieldUsageItem_Usage) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldUsageItem_Usage
-func (a *GetFieldUsageItem_Usage) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage to handle AdditionalProperties
-func (a *GetFieldUsageItem_Usage) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["actions"]; found {
-		err = json.Unmarshal(raw, &a.Actions)
-		if err != nil {
-			return fmt.Errorf("error reading 'actions': %w", err)
-		}
-		delete(object, "actions")
-	}
-
-	if raw, found := object["appHomePages"]; found {
-		err = json.Unmarshal(raw, &a.AppHomePages)
-		if err != nil {
-			return fmt.Errorf("error reading 'appHomePages': %w", err)
-		}
-		delete(object, "appHomePages")
-	}
-
-	if raw, found := object["dashboards"]; found {
-		err = json.Unmarshal(raw, &a.Dashboards)
-		if err != nil {
-			return fmt.Errorf("error reading 'dashboards': %w", err)
-		}
-		delete(object, "dashboards")
-	}
-
-	if raw, found := object["defaultReports"]; found {
-		err = json.Unmarshal(raw, &a.DefaultReports)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultReports': %w", err)
-		}
-		delete(object, "defaultReports")
-	}
-
-	if raw, found := object["exactForms"]; found {
-		err = json.Unmarshal(raw, &a.ExactForms)
-		if err != nil {
-			return fmt.Errorf("error reading 'exactForms': %w", err)
-		}
-		delete(object, "exactForms")
-	}
-
-	if raw, found := object["fields"]; found {
-		err = json.Unmarshal(raw, &a.Fields)
-		if err != nil {
-			return fmt.Errorf("error reading 'fields': %w", err)
-		}
-		delete(object, "fields")
-	}
-
-	if raw, found := object["forms"]; found {
-		err = json.Unmarshal(raw, &a.Forms)
-		if err != nil {
-			return fmt.Errorf("error reading 'forms': %w", err)
-		}
-		delete(object, "forms")
-	}
-
-	if raw, found := object["notifications"]; found {
-		err = json.Unmarshal(raw, &a.Notifications)
-		if err != nil {
-			return fmt.Errorf("error reading 'notifications': %w", err)
-		}
-		delete(object, "notifications")
-	}
-
-	if raw, found := object["personalReports"]; found {
-		err = json.Unmarshal(raw, &a.PersonalReports)
-		if err != nil {
-			return fmt.Errorf("error reading 'personalReports': %w", err)
-		}
-		delete(object, "personalReports")
-	}
-
-	if raw, found := object["pipelines"]; found {
-		err = json.Unmarshal(raw, &a.Pipelines)
-		if err != nil {
-			return fmt.Errorf("error reading 'pipelines': %w", err)
-		}
-		delete(object, "pipelines")
-	}
-
-	if raw, found := object["relationships"]; found {
-		err = json.Unmarshal(raw, &a.Relationships)
-		if err != nil {
-			return fmt.Errorf("error reading 'relationships': %w", err)
-		}
-		delete(object, "relationships")
-	}
-
-	if raw, found := object["reminders"]; found {
-		err = json.Unmarshal(raw, &a.Reminders)
-		if err != nil {
-			return fmt.Errorf("error reading 'reminders': %w", err)
-		}
-		delete(object, "reminders")
-	}
-
-	if raw, found := object["reports"]; found {
-		err = json.Unmarshal(raw, &a.Reports)
-		if err != nil {
-			return fmt.Errorf("error reading 'reports': %w", err)
-		}
-		delete(object, "reports")
-	}
-
-	if raw, found := object["roles"]; found {
-		err = json.Unmarshal(raw, &a.Roles)
-		if err != nil {
-			return fmt.Errorf("error reading 'roles': %w", err)
-		}
-		delete(object, "roles")
-	}
-
-	if raw, found := object["tableImports"]; found {
-		err = json.Unmarshal(raw, &a.TableImports)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableImports': %w", err)
-		}
-		delete(object, "tableImports")
-	}
-
-	if raw, found := object["tableRules"]; found {
-		err = json.Unmarshal(raw, &a.TableRules)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableRules': %w", err)
-		}
-		delete(object, "tableRules")
-	}
-
-	if raw, found := object["webhooks"]; found {
-		err = json.Unmarshal(raw, &a.Webhooks)
-		if err != nil {
-			return fmt.Errorf("error reading 'webhooks': %w", err)
-		}
-		delete(object, "webhooks")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldUsageItem_Usage to handle AdditionalProperties
-func (a GetFieldUsageItem_Usage) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["actions"], err = json.Marshal(a.Actions)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'actions': %w", err)
-	}
-
-	object["appHomePages"], err = json.Marshal(a.AppHomePages)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'appHomePages': %w", err)
-	}
-
-	object["dashboards"], err = json.Marshal(a.Dashboards)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'dashboards': %w", err)
-	}
-
-	object["defaultReports"], err = json.Marshal(a.DefaultReports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'defaultReports': %w", err)
-	}
-
-	object["exactForms"], err = json.Marshal(a.ExactForms)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'exactForms': %w", err)
-	}
-
-	object["fields"], err = json.Marshal(a.Fields)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'fields': %w", err)
-	}
-
-	object["forms"], err = json.Marshal(a.Forms)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'forms': %w", err)
-	}
-
-	object["notifications"], err = json.Marshal(a.Notifications)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'notifications': %w", err)
-	}
-
-	object["personalReports"], err = json.Marshal(a.PersonalReports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'personalReports': %w", err)
-	}
-
-	object["pipelines"], err = json.Marshal(a.Pipelines)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'pipelines': %w", err)
-	}
-
-	object["relationships"], err = json.Marshal(a.Relationships)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'relationships': %w", err)
-	}
-
-	object["reminders"], err = json.Marshal(a.Reminders)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'reminders': %w", err)
-	}
-
-	object["reports"], err = json.Marshal(a.Reports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'reports': %w", err)
-	}
-
-	object["roles"], err = json.Marshal(a.Roles)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'roles': %w", err)
-	}
-
-	object["tableImports"], err = json.Marshal(a.TableImports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'tableImports': %w", err)
-	}
-
-	object["tableRules"], err = json.Marshal(a.TableRules)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'tableRules': %w", err)
-	}
-
-	object["webhooks"], err = json.Marshal(a.Webhooks)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'webhooks': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsItem. Returns the specified
-// element and whether it was found
-func (a GetFieldsItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsItem
-func (a *GetFieldsItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsItem to handle AdditionalProperties
-func (a *GetFieldsItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["appearsByDefault"]; found {
-		err = json.Unmarshal(raw, &a.AppearsByDefault)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsByDefault': %w", err)
-		}
-		delete(object, "appearsByDefault")
-	}
-
-	if raw, found := object["audited"]; found {
-		err = json.Unmarshal(raw, &a.Audited)
-		if err != nil {
-			return fmt.Errorf("error reading 'audited': %w", err)
-		}
-		delete(object, "audited")
-	}
-
-	if raw, found := object["bold"]; found {
-		err = json.Unmarshal(raw, &a.Bold)
-		if err != nil {
-			return fmt.Errorf("error reading 'bold': %w", err)
-		}
-		delete(object, "bold")
-	}
-
-	if raw, found := object["doesDataCopy"]; found {
-		err = json.Unmarshal(raw, &a.DoesDataCopy)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesDataCopy': %w", err)
-		}
-		delete(object, "doesDataCopy")
-	}
-
-	if raw, found := object["fieldHelp"]; found {
-		err = json.Unmarshal(raw, &a.FieldHelp)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldHelp': %w", err)
-		}
-		delete(object, "fieldHelp")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["findEnabled"]; found {
-		err = json.Unmarshal(raw, &a.FindEnabled)
-		if err != nil {
-			return fmt.Errorf("error reading 'findEnabled': %w", err)
-		}
-		delete(object, "findEnabled")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["mode"]; found {
-		err = json.Unmarshal(raw, &a.Mode)
-		if err != nil {
-			return fmt.Errorf("error reading 'mode': %w", err)
-		}
-		delete(object, "mode")
-	}
-
-	if raw, found := object["noWrap"]; found {
-		err = json.Unmarshal(raw, &a.NoWrap)
-		if err != nil {
-			return fmt.Errorf("error reading 'noWrap': %w", err)
-		}
-		delete(object, "noWrap")
-	}
-
-	if raw, found := object["permissions"]; found {
-		err = json.Unmarshal(raw, &a.Permissions)
-		if err != nil {
-			return fmt.Errorf("error reading 'permissions': %w", err)
-		}
-		delete(object, "permissions")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["required"]; found {
-		err = json.Unmarshal(raw, &a.Required)
-		if err != nil {
-			return fmt.Errorf("error reading 'required': %w", err)
-		}
-		delete(object, "required")
-	}
-
-	if raw, found := object["unique"]; found {
-		err = json.Unmarshal(raw, &a.Unique)
-		if err != nil {
-			return fmt.Errorf("error reading 'unique': %w", err)
-		}
-		delete(object, "unique")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsItem to handle AdditionalProperties
-func (a GetFieldsItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AppearsByDefault != nil {
-		object["appearsByDefault"], err = json.Marshal(a.AppearsByDefault)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsByDefault': %w", err)
-		}
-	}
-
-	if a.Audited != nil {
-		object["audited"], err = json.Marshal(a.Audited)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'audited': %w", err)
-		}
-	}
-
-	if a.Bold != nil {
-		object["bold"], err = json.Marshal(a.Bold)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'bold': %w", err)
-		}
-	}
-
-	if a.DoesDataCopy != nil {
-		object["doesDataCopy"], err = json.Marshal(a.DoesDataCopy)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesDataCopy': %w", err)
-		}
-	}
-
-	if a.FieldHelp != nil {
-		object["fieldHelp"], err = json.Marshal(a.FieldHelp)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldHelp': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.FindEnabled != nil {
-		object["findEnabled"], err = json.Marshal(a.FindEnabled)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'findEnabled': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Mode != nil {
-		object["mode"], err = json.Marshal(a.Mode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mode': %w", err)
-		}
-	}
-
-	if a.NoWrap != nil {
-		object["noWrap"], err = json.Marshal(a.NoWrap)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'noWrap': %w", err)
-		}
-	}
-
-	if a.Permissions != nil {
-		object["permissions"], err = json.Marshal(a.Permissions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'permissions': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Required != nil {
-		object["required"], err = json.Marshal(a.Required)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'required': %w", err)
-		}
-	}
-
-	if a.Unique != nil {
-		object["unique"], err = json.Marshal(a.Unique)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'unique': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsItem_Properties. Returns the specified
-// element and whether it was found
-func (a GetFieldsItem_Properties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsItem_Properties
-func (a *GetFieldsItem_Properties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsItem_Properties to handle AdditionalProperties
-func (a *GetFieldsItem_Properties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["abbreviate"]; found {
-		err = json.Unmarshal(raw, &a.Abbreviate)
-		if err != nil {
-			return fmt.Errorf("error reading 'abbreviate': %w", err)
-		}
-		delete(object, "abbreviate")
-	}
-
-	if raw, found := object["allowHTML"]; found {
-		err = json.Unmarshal(raw, &a.AllowHTML)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowHTML': %w", err)
-		}
-		delete(object, "allowHTML")
-	}
-
-	if raw, found := object["allowMentions"]; found {
-		err = json.Unmarshal(raw, &a.AllowMentions)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowMentions': %w", err)
-		}
-		delete(object, "allowMentions")
-	}
-
-	if raw, found := object["allowNewChoices"]; found {
-		err = json.Unmarshal(raw, &a.AllowNewChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowNewChoices': %w", err)
-		}
-		delete(object, "allowNewChoices")
-	}
-
-	if raw, found := object["appearsAs"]; found {
-		err = json.Unmarshal(raw, &a.AppearsAs)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsAs': %w", err)
-		}
-		delete(object, "appearsAs")
-	}
-
-	if raw, found := object["appendOnly"]; found {
-		err = json.Unmarshal(raw, &a.AppendOnly)
-		if err != nil {
-			return fmt.Errorf("error reading 'appendOnly': %w", err)
-		}
-		delete(object, "appendOnly")
-	}
-
-	if raw, found := object["autoSave"]; found {
-		err = json.Unmarshal(raw, &a.AutoSave)
-		if err != nil {
-			return fmt.Errorf("error reading 'autoSave': %w", err)
-		}
-		delete(object, "autoSave")
-	}
-
-	if raw, found := object["blankIsZero"]; found {
-		err = json.Unmarshal(raw, &a.BlankIsZero)
-		if err != nil {
-			return fmt.Errorf("error reading 'blankIsZero': %w", err)
-		}
-		delete(object, "blankIsZero")
-	}
-
-	if raw, found := object["carryChoices"]; found {
-		err = json.Unmarshal(raw, &a.CarryChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'carryChoices': %w", err)
-		}
-		delete(object, "carryChoices")
-	}
-
-	if raw, found := object["choices"]; found {
-		err = json.Unmarshal(raw, &a.Choices)
-		if err != nil {
-			return fmt.Errorf("error reading 'choices': %w", err)
-		}
-		delete(object, "choices")
-	}
-
-	if raw, found := object["choicesLuid"]; found {
-		err = json.Unmarshal(raw, &a.ChoicesLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'choicesLuid': %w", err)
-		}
-		delete(object, "choicesLuid")
-	}
-
-	if raw, found := object["commaStart"]; found {
-		err = json.Unmarshal(raw, &a.CommaStart)
-		if err != nil {
-			return fmt.Errorf("error reading 'commaStart': %w", err)
-		}
-		delete(object, "commaStart")
-	}
-
-	if raw, found := object["comments"]; found {
-		err = json.Unmarshal(raw, &a.Comments)
-		if err != nil {
-			return fmt.Errorf("error reading 'comments': %w", err)
-		}
-		delete(object, "comments")
-	}
-
-	if raw, found := object["compositeFields"]; found {
-		err = json.Unmarshal(raw, &a.CompositeFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'compositeFields': %w", err)
-		}
-		delete(object, "compositeFields")
-	}
-
-	if raw, found := object["coverText"]; found {
-		err = json.Unmarshal(raw, &a.CoverText)
-		if err != nil {
-			return fmt.Errorf("error reading 'coverText': %w", err)
-		}
-		delete(object, "coverText")
-	}
-
-	if raw, found := object["currencyFormat"]; found {
-		err = json.Unmarshal(raw, &a.CurrencyFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencyFormat': %w", err)
-		}
-		delete(object, "currencyFormat")
-	}
-
-	if raw, found := object["currencySymbol"]; found {
-		err = json.Unmarshal(raw, &a.CurrencySymbol)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencySymbol': %w", err)
-		}
-		delete(object, "currencySymbol")
-	}
-
-	if raw, found := object["decimalPlaces"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPlaces)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPlaces': %w", err)
-		}
-		delete(object, "decimalPlaces")
-	}
-
-	if raw, found := object["defaultCountryCode"]; found {
-		err = json.Unmarshal(raw, &a.DefaultCountryCode)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultCountryCode': %w", err)
-		}
-		delete(object, "defaultCountryCode")
-	}
-
-	if raw, found := object["defaultDomain"]; found {
-		err = json.Unmarshal(raw, &a.DefaultDomain)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultDomain': %w", err)
-		}
-		delete(object, "defaultDomain")
-	}
-
-	if raw, found := object["defaultKind"]; found {
-		err = json.Unmarshal(raw, &a.DefaultKind)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultKind': %w", err)
-		}
-		delete(object, "defaultKind")
-	}
-
-	if raw, found := object["defaultToday"]; found {
-		err = json.Unmarshal(raw, &a.DefaultToday)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultToday': %w", err)
-		}
-		delete(object, "defaultToday")
-	}
-
-	if raw, found := object["defaultValue"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValue)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValue': %w", err)
-		}
-		delete(object, "defaultValue")
-	}
-
-	if raw, found := object["defaultValueLuid"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValueLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValueLuid': %w", err)
-		}
-		delete(object, "defaultValueLuid")
-	}
-
-	if raw, found := object["displayAsLink"]; found {
-		err = json.Unmarshal(raw, &a.DisplayAsLink)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayAsLink': %w", err)
-		}
-		delete(object, "displayAsLink")
-	}
-
-	if raw, found := object["displayCheckboxAsText"]; found {
-		err = json.Unmarshal(raw, &a.DisplayCheckboxAsText)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayCheckboxAsText': %w", err)
-		}
-		delete(object, "displayCheckboxAsText")
-	}
-
-	if raw, found := object["displayDayOfWeek"]; found {
-		err = json.Unmarshal(raw, &a.DisplayDayOfWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayDayOfWeek': %w", err)
-		}
-		delete(object, "displayDayOfWeek")
-	}
-
-	if raw, found := object["displayEmail"]; found {
-		err = json.Unmarshal(raw, &a.DisplayEmail)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayEmail': %w", err)
-		}
-		delete(object, "displayEmail")
-	}
-
-	if raw, found := object["displayMonth"]; found {
-		err = json.Unmarshal(raw, &a.DisplayMonth)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayMonth': %w", err)
-		}
-		delete(object, "displayMonth")
-	}
-
-	if raw, found := object["displayRelative"]; found {
-		err = json.Unmarshal(raw, &a.DisplayRelative)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayRelative': %w", err)
-		}
-		delete(object, "displayRelative")
-	}
-
-	if raw, found := object["displayTime"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTime)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTime': %w", err)
-		}
-		delete(object, "displayTime")
-	}
-
-	if raw, found := object["displayTimezone"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTimezone)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTimezone': %w", err)
-		}
-		delete(object, "displayTimezone")
-	}
-
-	if raw, found := object["displayUser"]; found {
-		err = json.Unmarshal(raw, &a.DisplayUser)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayUser': %w", err)
-		}
-		delete(object, "displayUser")
-	}
-
-	if raw, found := object["doesAverage"]; found {
-		err = json.Unmarshal(raw, &a.DoesAverage)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesAverage': %w", err)
-		}
-		delete(object, "doesAverage")
-	}
-
-	if raw, found := object["doesTotal"]; found {
-		err = json.Unmarshal(raw, &a.DoesTotal)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesTotal': %w", err)
-		}
-		delete(object, "doesTotal")
-	}
-
-	if raw, found := object["durationField"]; found {
-		err = json.Unmarshal(raw, &a.DurationField)
-		if err != nil {
-			return fmt.Errorf("error reading 'durationField': %w", err)
-		}
-		delete(object, "durationField")
-	}
-
-	if raw, found := object["exact"]; found {
-		err = json.Unmarshal(raw, &a.Exact)
-		if err != nil {
-			return fmt.Errorf("error reading 'exact': %w", err)
-		}
-		delete(object, "exact")
-	}
-
-	if raw, found := object["foreignKey"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKey)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKey': %w", err)
-		}
-		delete(object, "foreignKey")
-	}
-
-	if raw, found := object["format"]; found {
-		err = json.Unmarshal(raw, &a.Format)
-		if err != nil {
-			return fmt.Errorf("error reading 'format': %w", err)
-		}
-		delete(object, "format")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["hasExtension"]; found {
-		err = json.Unmarshal(raw, &a.HasExtension)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasExtension': %w", err)
-		}
-		delete(object, "hasExtension")
-	}
-
-	if raw, found := object["hours24"]; found {
-		err = json.Unmarshal(raw, &a.Hours24)
-		if err != nil {
-			return fmt.Errorf("error reading 'hours24': %w", err)
-		}
-		delete(object, "hours24")
-	}
-
-	if raw, found := object["linkText"]; found {
-		err = json.Unmarshal(raw, &a.LinkText)
-		if err != nil {
-			return fmt.Errorf("error reading 'linkText': %w", err)
-		}
-		delete(object, "linkText")
-	}
-
-	if raw, found := object["lookupReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupReferenceFieldId': %w", err)
-		}
-		delete(object, "lookupReferenceFieldId")
-	}
-
-	if raw, found := object["lookupTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupTargetFieldId': %w", err)
-		}
-		delete(object, "lookupTargetFieldId")
-	}
-
-	if raw, found := object["masterChoiceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceFieldId': %w", err)
-		}
-		delete(object, "masterChoiceFieldId")
-	}
-
-	if raw, found := object["masterChoiceTableId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceTableId': %w", err)
-		}
-		delete(object, "masterChoiceTableId")
-	}
-
-	if raw, found := object["masterTableTag"]; found {
-		err = json.Unmarshal(raw, &a.MasterTableTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterTableTag': %w", err)
-		}
-		delete(object, "masterTableTag")
-	}
-
-	if raw, found := object["maxLength"]; found {
-		err = json.Unmarshal(raw, &a.MaxLength)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxLength': %w", err)
-		}
-		delete(object, "maxLength")
-	}
-
-	if raw, found := object["maxVersions"]; found {
-		err = json.Unmarshal(raw, &a.MaxVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxVersions': %w", err)
-		}
-		delete(object, "maxVersions")
-	}
-
-	if raw, found := object["numLines"]; found {
-		err = json.Unmarshal(raw, &a.NumLines)
-		if err != nil {
-			return fmt.Errorf("error reading 'numLines': %w", err)
-		}
-		delete(object, "numLines")
-	}
-
-	if raw, found := object["numberFormat"]; found {
-		err = json.Unmarshal(raw, &a.NumberFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'numberFormat': %w", err)
-		}
-		delete(object, "numberFormat")
-	}
-
-	if raw, found := object["parentFieldId"]; found {
-		err = json.Unmarshal(raw, &a.ParentFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentFieldId': %w", err)
-		}
-		delete(object, "parentFieldId")
-	}
-
-	if raw, found := object["postTempToken"]; found {
-		err = json.Unmarshal(raw, &a.PostTempToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'postTempToken': %w", err)
-		}
-		delete(object, "postTempToken")
-	}
-
-	if raw, found := object["seeVersions"]; found {
-		err = json.Unmarshal(raw, &a.SeeVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'seeVersions': %w", err)
-		}
-		delete(object, "seeVersions")
-	}
-
-	if raw, found := object["snapFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SnapFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'snapFieldId': %w", err)
-		}
-		delete(object, "snapFieldId")
-	}
-
-	if raw, found := object["sortAlpha"]; found {
-		err = json.Unmarshal(raw, &a.SortAlpha)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAlpha': %w", err)
-		}
-		delete(object, "sortAlpha")
-	}
-
-	if raw, found := object["sortAsGiven"]; found {
-		err = json.Unmarshal(raw, &a.SortAsGiven)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAsGiven': %w", err)
-		}
-		delete(object, "sortAsGiven")
-	}
-
-	if raw, found := object["sourceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SourceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'sourceFieldId': %w", err)
-		}
-		delete(object, "sourceFieldId")
-	}
-
-	if raw, found := object["startField"]; found {
-		err = json.Unmarshal(raw, &a.StartField)
-		if err != nil {
-			return fmt.Errorf("error reading 'startField': %w", err)
-		}
-		delete(object, "startField")
-	}
-
-	if raw, found := object["summaryFunction"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFunction)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFunction': %w", err)
-		}
-		delete(object, "summaryFunction")
-	}
-
-	if raw, found := object["summaryReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryReferenceFieldId': %w", err)
-		}
-		delete(object, "summaryReferenceFieldId")
-	}
-
-	if raw, found := object["summaryTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryTargetFieldId': %w", err)
-		}
-		delete(object, "summaryTargetFieldId")
-	}
-
-	if raw, found := object["targetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.TargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetFieldId': %w", err)
-		}
-		delete(object, "targetFieldId")
-	}
-
-	if raw, found := object["targetTableId"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableId': %w", err)
-		}
-		delete(object, "targetTableId")
-	}
-
-	if raw, found := object["targetTableName"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableName)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableName': %w", err)
-		}
-		delete(object, "targetTableName")
-	}
-
-	if raw, found := object["units"]; found {
-		err = json.Unmarshal(raw, &a.Units)
-		if err != nil {
-			return fmt.Errorf("error reading 'units': %w", err)
-		}
-		delete(object, "units")
-	}
-
-	if raw, found := object["useI18NFormat"]; found {
-		err = json.Unmarshal(raw, &a.UseI18NFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'useI18NFormat': %w", err)
-		}
-		delete(object, "useI18NFormat")
-	}
-
-	if raw, found := object["useNewWindow"]; found {
-		err = json.Unmarshal(raw, &a.UseNewWindow)
-		if err != nil {
-			return fmt.Errorf("error reading 'useNewWindow': %w", err)
-		}
-		delete(object, "useNewWindow")
-	}
-
-	if raw, found := object["versionMode"]; found {
-		err = json.Unmarshal(raw, &a.VersionMode)
-		if err != nil {
-			return fmt.Errorf("error reading 'versionMode': %w", err)
-		}
-		delete(object, "versionMode")
-	}
-
-	if raw, found := object["width"]; found {
-		err = json.Unmarshal(raw, &a.Width)
-		if err != nil {
-			return fmt.Errorf("error reading 'width': %w", err)
-		}
-		delete(object, "width")
-	}
-
-	if raw, found := object["workWeek"]; found {
-		err = json.Unmarshal(raw, &a.WorkWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'workWeek': %w", err)
-		}
-		delete(object, "workWeek")
-	}
-
-	if raw, found := object["xmlTag"]; found {
-		err = json.Unmarshal(raw, &a.XmlTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'xmlTag': %w", err)
-		}
-		delete(object, "xmlTag")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsItem_Properties to handle AdditionalProperties
-func (a GetFieldsItem_Properties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Abbreviate != nil {
-		object["abbreviate"], err = json.Marshal(a.Abbreviate)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'abbreviate': %w", err)
-		}
-	}
-
-	if a.AllowHTML != nil {
-		object["allowHTML"], err = json.Marshal(a.AllowHTML)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowHTML': %w", err)
-		}
-	}
-
-	if a.AllowMentions != nil {
-		object["allowMentions"], err = json.Marshal(a.AllowMentions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowMentions': %w", err)
-		}
-	}
-
-	if a.AllowNewChoices != nil {
-		object["allowNewChoices"], err = json.Marshal(a.AllowNewChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowNewChoices': %w", err)
-		}
-	}
-
-	if a.AppearsAs != nil {
-		object["appearsAs"], err = json.Marshal(a.AppearsAs)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsAs': %w", err)
-		}
-	}
-
-	if a.AppendOnly != nil {
-		object["appendOnly"], err = json.Marshal(a.AppendOnly)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appendOnly': %w", err)
-		}
-	}
-
-	if a.AutoSave != nil {
-		object["autoSave"], err = json.Marshal(a.AutoSave)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'autoSave': %w", err)
-		}
-	}
-
-	if a.BlankIsZero != nil {
-		object["blankIsZero"], err = json.Marshal(a.BlankIsZero)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'blankIsZero': %w", err)
-		}
-	}
-
-	if a.CarryChoices != nil {
-		object["carryChoices"], err = json.Marshal(a.CarryChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'carryChoices': %w", err)
-		}
-	}
-
-	if a.Choices != nil {
-		object["choices"], err = json.Marshal(a.Choices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choices': %w", err)
-		}
-	}
-
-	if a.ChoicesLuid != nil {
-		object["choicesLuid"], err = json.Marshal(a.ChoicesLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choicesLuid': %w", err)
-		}
-	}
-
-	if a.CommaStart != nil {
-		object["commaStart"], err = json.Marshal(a.CommaStart)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'commaStart': %w", err)
-		}
-	}
-
-	if a.Comments != nil {
-		object["comments"], err = json.Marshal(a.Comments)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'comments': %w", err)
-		}
-	}
-
-	if a.CompositeFields != nil {
-		object["compositeFields"], err = json.Marshal(a.CompositeFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'compositeFields': %w", err)
-		}
-	}
-
-	if a.CoverText != nil {
-		object["coverText"], err = json.Marshal(a.CoverText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'coverText': %w", err)
-		}
-	}
-
-	if a.CurrencyFormat != nil {
-		object["currencyFormat"], err = json.Marshal(a.CurrencyFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencyFormat': %w", err)
-		}
-	}
-
-	if a.CurrencySymbol != nil {
-		object["currencySymbol"], err = json.Marshal(a.CurrencySymbol)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencySymbol': %w", err)
-		}
-	}
-
-	if a.DecimalPlaces != nil {
-		object["decimalPlaces"], err = json.Marshal(a.DecimalPlaces)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPlaces': %w", err)
-		}
-	}
-
-	if a.DefaultCountryCode != nil {
-		object["defaultCountryCode"], err = json.Marshal(a.DefaultCountryCode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultCountryCode': %w", err)
-		}
-	}
-
-	if a.DefaultDomain != nil {
-		object["defaultDomain"], err = json.Marshal(a.DefaultDomain)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultDomain': %w", err)
-		}
-	}
-
-	if a.DefaultKind != nil {
-		object["defaultKind"], err = json.Marshal(a.DefaultKind)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultKind': %w", err)
-		}
-	}
-
-	if a.DefaultToday != nil {
-		object["defaultToday"], err = json.Marshal(a.DefaultToday)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultToday': %w", err)
-		}
-	}
-
-	if a.DefaultValue != nil {
-		object["defaultValue"], err = json.Marshal(a.DefaultValue)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValue': %w", err)
-		}
-	}
-
-	if a.DefaultValueLuid != nil {
-		object["defaultValueLuid"], err = json.Marshal(a.DefaultValueLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValueLuid': %w", err)
-		}
-	}
-
-	if a.DisplayAsLink != nil {
-		object["displayAsLink"], err = json.Marshal(a.DisplayAsLink)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayAsLink': %w", err)
-		}
-	}
-
-	if a.DisplayCheckboxAsText != nil {
-		object["displayCheckboxAsText"], err = json.Marshal(a.DisplayCheckboxAsText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayCheckboxAsText': %w", err)
-		}
-	}
-
-	if a.DisplayDayOfWeek != nil {
-		object["displayDayOfWeek"], err = json.Marshal(a.DisplayDayOfWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayDayOfWeek': %w", err)
-		}
-	}
-
-	if a.DisplayEmail != nil {
-		object["displayEmail"], err = json.Marshal(a.DisplayEmail)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayEmail': %w", err)
-		}
-	}
-
-	if a.DisplayMonth != nil {
-		object["displayMonth"], err = json.Marshal(a.DisplayMonth)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayMonth': %w", err)
-		}
-	}
-
-	if a.DisplayRelative != nil {
-		object["displayRelative"], err = json.Marshal(a.DisplayRelative)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayRelative': %w", err)
-		}
-	}
-
-	if a.DisplayTime != nil {
-		object["displayTime"], err = json.Marshal(a.DisplayTime)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTime': %w", err)
-		}
-	}
-
-	if a.DisplayTimezone != nil {
-		object["displayTimezone"], err = json.Marshal(a.DisplayTimezone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTimezone': %w", err)
-		}
-	}
-
-	if a.DisplayUser != nil {
-		object["displayUser"], err = json.Marshal(a.DisplayUser)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayUser': %w", err)
-		}
-	}
-
-	if a.DoesAverage != nil {
-		object["doesAverage"], err = json.Marshal(a.DoesAverage)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesAverage': %w", err)
-		}
-	}
-
-	if a.DoesTotal != nil {
-		object["doesTotal"], err = json.Marshal(a.DoesTotal)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesTotal': %w", err)
-		}
-	}
-
-	if a.DurationField != nil {
-		object["durationField"], err = json.Marshal(a.DurationField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'durationField': %w", err)
-		}
-	}
-
-	if a.Exact != nil {
-		object["exact"], err = json.Marshal(a.Exact)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'exact': %w", err)
-		}
-	}
-
-	if a.ForeignKey != nil {
-		object["foreignKey"], err = json.Marshal(a.ForeignKey)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKey': %w", err)
-		}
-	}
-
-	if a.Format != nil {
-		object["format"], err = json.Marshal(a.Format)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'format': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.HasExtension != nil {
-		object["hasExtension"], err = json.Marshal(a.HasExtension)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasExtension': %w", err)
-		}
-	}
-
-	if a.Hours24 != nil {
-		object["hours24"], err = json.Marshal(a.Hours24)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hours24': %w", err)
-		}
-	}
-
-	if a.LinkText != nil {
-		object["linkText"], err = json.Marshal(a.LinkText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'linkText': %w", err)
-		}
-	}
-
-	if a.LookupReferenceFieldId != nil {
-		object["lookupReferenceFieldId"], err = json.Marshal(a.LookupReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.LookupTargetFieldId != nil {
-		object["lookupTargetFieldId"], err = json.Marshal(a.LookupTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupTargetFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceFieldId != nil {
-		object["masterChoiceFieldId"], err = json.Marshal(a.MasterChoiceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceTableId != nil {
-		object["masterChoiceTableId"], err = json.Marshal(a.MasterChoiceTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceTableId': %w", err)
-		}
-	}
-
-	if a.MasterTableTag != nil {
-		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterTableTag': %w", err)
-		}
-	}
-
-	if a.MaxLength != nil {
-		object["maxLength"], err = json.Marshal(a.MaxLength)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxLength': %w", err)
-		}
-	}
-
-	if a.MaxVersions != nil {
-		object["maxVersions"], err = json.Marshal(a.MaxVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxVersions': %w", err)
-		}
-	}
-
-	if a.NumLines != nil {
-		object["numLines"], err = json.Marshal(a.NumLines)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numLines': %w", err)
-		}
-	}
-
-	if a.NumberFormat != nil {
-		object["numberFormat"], err = json.Marshal(a.NumberFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numberFormat': %w", err)
-		}
-	}
-
-	if a.ParentFieldId != nil {
-		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'parentFieldId': %w", err)
-		}
-	}
-
-	if a.PostTempToken != nil {
-		object["postTempToken"], err = json.Marshal(a.PostTempToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
-		}
-	}
-
-	if a.SeeVersions != nil {
-		object["seeVersions"], err = json.Marshal(a.SeeVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'seeVersions': %w", err)
-		}
-	}
-
-	if a.SnapFieldId != nil {
-		object["snapFieldId"], err = json.Marshal(a.SnapFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'snapFieldId': %w", err)
-		}
-	}
-
-	if a.SortAlpha != nil {
-		object["sortAlpha"], err = json.Marshal(a.SortAlpha)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAlpha': %w", err)
-		}
-	}
-
-	if a.SortAsGiven != nil {
-		object["sortAsGiven"], err = json.Marshal(a.SortAsGiven)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAsGiven': %w", err)
-		}
-	}
-
-	if a.SourceFieldId != nil {
-		object["sourceFieldId"], err = json.Marshal(a.SourceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sourceFieldId': %w", err)
-		}
-	}
-
-	if a.StartField != nil {
-		object["startField"], err = json.Marshal(a.StartField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'startField': %w", err)
-		}
-	}
-
-	if a.SummaryFunction != nil {
-		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
-		}
-	}
-
-	if a.SummaryReferenceFieldId != nil {
-		object["summaryReferenceFieldId"], err = json.Marshal(a.SummaryReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.SummaryTargetFieldId != nil {
-		object["summaryTargetFieldId"], err = json.Marshal(a.SummaryTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryTargetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetFieldId != nil {
-		object["targetFieldId"], err = json.Marshal(a.TargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetTableId != nil {
-		object["targetTableId"], err = json.Marshal(a.TargetTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableId': %w", err)
-		}
-	}
-
-	if a.TargetTableName != nil {
-		object["targetTableName"], err = json.Marshal(a.TargetTableName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableName': %w", err)
-		}
-	}
-
-	if a.Units != nil {
-		object["units"], err = json.Marshal(a.Units)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'units': %w", err)
-		}
-	}
-
-	if a.UseI18NFormat != nil {
-		object["useI18NFormat"], err = json.Marshal(a.UseI18NFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useI18NFormat': %w", err)
-		}
-	}
-
-	if a.UseNewWindow != nil {
-		object["useNewWindow"], err = json.Marshal(a.UseNewWindow)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useNewWindow': %w", err)
-		}
-	}
-
-	if a.VersionMode != nil {
-		object["versionMode"], err = json.Marshal(a.VersionMode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'versionMode': %w", err)
-		}
-	}
-
-	if a.Width != nil {
-		object["width"], err = json.Marshal(a.Width)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'width': %w", err)
-		}
-	}
-
-	if a.WorkWeek != nil {
-		object["workWeek"], err = json.Marshal(a.WorkWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'workWeek': %w", err)
-		}
-	}
-
-	if a.XmlTag != nil {
-		object["xmlTag"], err = json.Marshal(a.XmlTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'xmlTag': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem
-func (a *GetFieldsUsageItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem to handle AdditionalProperties
-func (a *GetFieldsUsageItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["field"]; found {
-		err = json.Unmarshal(raw, &a.Field)
-		if err != nil {
-			return fmt.Errorf("error reading 'field': %w", err)
-		}
-		delete(object, "field")
-	}
-
-	if raw, found := object["usage"]; found {
-		err = json.Unmarshal(raw, &a.Usage)
-		if err != nil {
-			return fmt.Errorf("error reading 'usage': %w", err)
-		}
-		delete(object, "usage")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem to handle AdditionalProperties
-func (a GetFieldsUsageItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["field"], err = json.Marshal(a.Field)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'field': %w", err)
-	}
-
-	object["usage"], err = json.Marshal(a.Usage)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'usage': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Field. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Field) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Field
-func (a *GetFieldsUsageItem_Field) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Field to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Field) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Field to handle AdditionalProperties
-func (a GetFieldsUsageItem_Field) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	object["type"], err = json.Marshal(a.Type)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'type': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Actions. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Actions) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Actions
-func (a *GetFieldsUsageItem_Usage_Actions) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Actions to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Actions) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Actions to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Actions) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_AppHomePages. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_AppHomePages) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_AppHomePages
-func (a *GetFieldsUsageItem_Usage_AppHomePages) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_AppHomePages to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_AppHomePages) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_AppHomePages to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_AppHomePages) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_DefaultReports. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_DefaultReports
-func (a *GetFieldsUsageItem_Usage_DefaultReports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_DefaultReports to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_DefaultReports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_DefaultReports to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_DefaultReports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_ExactForms. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_ExactForms) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_ExactForms
-func (a *GetFieldsUsageItem_Usage_ExactForms) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_ExactForms to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_ExactForms) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_ExactForms to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_ExactForms) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Fields. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Fields) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Fields
-func (a *GetFieldsUsageItem_Usage_Fields) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Fields to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Fields) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Fields to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Fields) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Forms. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Forms) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Forms
-func (a *GetFieldsUsageItem_Usage_Forms) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Forms to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Forms) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Forms to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Forms) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Notifications. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Notifications) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Notifications
-func (a *GetFieldsUsageItem_Usage_Notifications) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Notifications to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Notifications) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Notifications to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Notifications) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_PersonalReports. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_PersonalReports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_PersonalReports
-func (a *GetFieldsUsageItem_Usage_PersonalReports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_PersonalReports to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_PersonalReports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_PersonalReports to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_PersonalReports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Pipelines. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Pipelines) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Pipelines
-func (a *GetFieldsUsageItem_Usage_Pipelines) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Pipelines to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Pipelines) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Pipelines to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Pipelines) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Relationships. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Relationships) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Relationships
-func (a *GetFieldsUsageItem_Usage_Relationships) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Relationships to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Relationships) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Relationships to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Relationships) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Reminders. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Reminders) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Reminders
-func (a *GetFieldsUsageItem_Usage_Reminders) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Reminders to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Reminders) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Reminders to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Reminders) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Reports. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Reports) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Reports
-func (a *GetFieldsUsageItem_Usage_Reports) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Reports to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Reports) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Reports to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Reports) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Roles. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Roles) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Roles
-func (a *GetFieldsUsageItem_Usage_Roles) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Roles to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Roles) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Roles to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Roles) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage_Webhooks. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage_Webhooks) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage_Webhooks
-func (a *GetFieldsUsageItem_Usage_Webhooks) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Webhooks to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage_Webhooks) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage_Webhooks to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage_Webhooks) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetFieldsUsageItem_Usage. Returns the specified
-// element and whether it was found
-func (a GetFieldsUsageItem_Usage) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetFieldsUsageItem_Usage
-func (a *GetFieldsUsageItem_Usage) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage to handle AdditionalProperties
-func (a *GetFieldsUsageItem_Usage) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["actions"]; found {
-		err = json.Unmarshal(raw, &a.Actions)
-		if err != nil {
-			return fmt.Errorf("error reading 'actions': %w", err)
-		}
-		delete(object, "actions")
-	}
-
-	if raw, found := object["appHomePages"]; found {
-		err = json.Unmarshal(raw, &a.AppHomePages)
-		if err != nil {
-			return fmt.Errorf("error reading 'appHomePages': %w", err)
-		}
-		delete(object, "appHomePages")
-	}
-
-	if raw, found := object["dashboards"]; found {
-		err = json.Unmarshal(raw, &a.Dashboards)
-		if err != nil {
-			return fmt.Errorf("error reading 'dashboards': %w", err)
-		}
-		delete(object, "dashboards")
-	}
-
-	if raw, found := object["defaultReports"]; found {
-		err = json.Unmarshal(raw, &a.DefaultReports)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultReports': %w", err)
-		}
-		delete(object, "defaultReports")
-	}
-
-	if raw, found := object["exactForms"]; found {
-		err = json.Unmarshal(raw, &a.ExactForms)
-		if err != nil {
-			return fmt.Errorf("error reading 'exactForms': %w", err)
-		}
-		delete(object, "exactForms")
-	}
-
-	if raw, found := object["fields"]; found {
-		err = json.Unmarshal(raw, &a.Fields)
-		if err != nil {
-			return fmt.Errorf("error reading 'fields': %w", err)
-		}
-		delete(object, "fields")
-	}
-
-	if raw, found := object["forms"]; found {
-		err = json.Unmarshal(raw, &a.Forms)
-		if err != nil {
-			return fmt.Errorf("error reading 'forms': %w", err)
-		}
-		delete(object, "forms")
-	}
-
-	if raw, found := object["notifications"]; found {
-		err = json.Unmarshal(raw, &a.Notifications)
-		if err != nil {
-			return fmt.Errorf("error reading 'notifications': %w", err)
-		}
-		delete(object, "notifications")
-	}
-
-	if raw, found := object["personalReports"]; found {
-		err = json.Unmarshal(raw, &a.PersonalReports)
-		if err != nil {
-			return fmt.Errorf("error reading 'personalReports': %w", err)
-		}
-		delete(object, "personalReports")
-	}
-
-	if raw, found := object["pipelines"]; found {
-		err = json.Unmarshal(raw, &a.Pipelines)
-		if err != nil {
-			return fmt.Errorf("error reading 'pipelines': %w", err)
-		}
-		delete(object, "pipelines")
-	}
-
-	if raw, found := object["relationships"]; found {
-		err = json.Unmarshal(raw, &a.Relationships)
-		if err != nil {
-			return fmt.Errorf("error reading 'relationships': %w", err)
-		}
-		delete(object, "relationships")
-	}
-
-	if raw, found := object["reminders"]; found {
-		err = json.Unmarshal(raw, &a.Reminders)
-		if err != nil {
-			return fmt.Errorf("error reading 'reminders': %w", err)
-		}
-		delete(object, "reminders")
-	}
-
-	if raw, found := object["reports"]; found {
-		err = json.Unmarshal(raw, &a.Reports)
-		if err != nil {
-			return fmt.Errorf("error reading 'reports': %w", err)
-		}
-		delete(object, "reports")
-	}
-
-	if raw, found := object["roles"]; found {
-		err = json.Unmarshal(raw, &a.Roles)
-		if err != nil {
-			return fmt.Errorf("error reading 'roles': %w", err)
-		}
-		delete(object, "roles")
-	}
-
-	if raw, found := object["tableImports"]; found {
-		err = json.Unmarshal(raw, &a.TableImports)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableImports': %w", err)
-		}
-		delete(object, "tableImports")
-	}
-
-	if raw, found := object["tableRules"]; found {
-		err = json.Unmarshal(raw, &a.TableRules)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableRules': %w", err)
-		}
-		delete(object, "tableRules")
-	}
-
-	if raw, found := object["webhooks"]; found {
-		err = json.Unmarshal(raw, &a.Webhooks)
-		if err != nil {
-			return fmt.Errorf("error reading 'webhooks': %w", err)
-		}
-		delete(object, "webhooks")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetFieldsUsageItem_Usage to handle AdditionalProperties
-func (a GetFieldsUsageItem_Usage) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["actions"], err = json.Marshal(a.Actions)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'actions': %w", err)
-	}
-
-	object["appHomePages"], err = json.Marshal(a.AppHomePages)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'appHomePages': %w", err)
-	}
-
-	object["dashboards"], err = json.Marshal(a.Dashboards)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'dashboards': %w", err)
-	}
-
-	object["defaultReports"], err = json.Marshal(a.DefaultReports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'defaultReports': %w", err)
-	}
-
-	object["exactForms"], err = json.Marshal(a.ExactForms)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'exactForms': %w", err)
-	}
-
-	object["fields"], err = json.Marshal(a.Fields)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'fields': %w", err)
-	}
-
-	object["forms"], err = json.Marshal(a.Forms)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'forms': %w", err)
-	}
-
-	object["notifications"], err = json.Marshal(a.Notifications)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'notifications': %w", err)
-	}
-
-	object["personalReports"], err = json.Marshal(a.PersonalReports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'personalReports': %w", err)
-	}
-
-	object["pipelines"], err = json.Marshal(a.Pipelines)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'pipelines': %w", err)
-	}
-
-	object["relationships"], err = json.Marshal(a.Relationships)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'relationships': %w", err)
-	}
-
-	object["reminders"], err = json.Marshal(a.Reminders)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'reminders': %w", err)
-	}
-
-	object["reports"], err = json.Marshal(a.Reports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'reports': %w", err)
-	}
-
-	object["roles"], err = json.Marshal(a.Roles)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'roles': %w", err)
-	}
-
-	object["tableImports"], err = json.Marshal(a.TableImports)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'tableImports': %w", err)
-	}
-
-	object["tableRules"], err = json.Marshal(a.TableRules)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'tableRules': %w", err)
-	}
-
-	object["webhooks"], err = json.Marshal(a.Webhooks)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'webhooks': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData
-func (a *GetRelationshipsData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData to handle AdditionalProperties
-func (a *GetRelationshipsData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if raw, found := object["relationships"]; found {
-		err = json.Unmarshal(raw, &a.Relationships)
-		if err != nil {
-			return fmt.Errorf("error reading 'relationships': %w", err)
-		}
-		delete(object, "relationships")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData to handle AdditionalProperties
-func (a GetRelationshipsData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Metadata != nil {
-		object["metadata"], err = json.Marshal(a.Metadata)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-		}
-	}
-
-	if a.Relationships != nil {
-		object["relationships"], err = json.Marshal(a.Relationships)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'relationships': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData_Metadata. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData_Metadata) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData_Metadata
-func (a *GetRelationshipsData_Metadata) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData_Metadata to handle AdditionalProperties
-func (a *GetRelationshipsData_Metadata) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["numRelationships"]; found {
-		err = json.Unmarshal(raw, &a.NumRelationships)
-		if err != nil {
-			return fmt.Errorf("error reading 'numRelationships': %w", err)
-		}
-		delete(object, "numRelationships")
-	}
-
-	if raw, found := object["skip"]; found {
-		err = json.Unmarshal(raw, &a.Skip)
-		if err != nil {
-			return fmt.Errorf("error reading 'skip': %w", err)
-		}
-		delete(object, "skip")
-	}
-
-	if raw, found := object["totalRelationships"]; found {
-		err = json.Unmarshal(raw, &a.TotalRelationships)
-		if err != nil {
-			return fmt.Errorf("error reading 'totalRelationships': %w", err)
-		}
-		delete(object, "totalRelationships")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData_Metadata to handle AdditionalProperties
-func (a GetRelationshipsData_Metadata) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.NumRelationships != nil {
-		object["numRelationships"], err = json.Marshal(a.NumRelationships)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numRelationships': %w", err)
-		}
-	}
-
-	if a.Skip != nil {
-		object["skip"], err = json.Marshal(a.Skip)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'skip': %w", err)
-		}
-	}
-
-	if a.TotalRelationships != nil {
-		object["totalRelationships"], err = json.Marshal(a.TotalRelationships)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'totalRelationships': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData_Relationships_ForeignKeyField. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData_Relationships_ForeignKeyField) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData_Relationships_ForeignKeyField
-func (a *GetRelationshipsData_Relationships_ForeignKeyField) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_ForeignKeyField to handle AdditionalProperties
-func (a *GetRelationshipsData_Relationships_ForeignKeyField) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_ForeignKeyField to handle AdditionalProperties
-func (a GetRelationshipsData_Relationships_ForeignKeyField) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData_Relationships_LookupFields_Item. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData_Relationships_LookupFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData_Relationships_LookupFields_Item
-func (a *GetRelationshipsData_Relationships_LookupFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_LookupFields_Item to handle AdditionalProperties
-func (a *GetRelationshipsData_Relationships_LookupFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_LookupFields_Item to handle AdditionalProperties
-func (a GetRelationshipsData_Relationships_LookupFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData_Relationships_SummaryFields_Item. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData_Relationships_SummaryFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData_Relationships_SummaryFields_Item
-func (a *GetRelationshipsData_Relationships_SummaryFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_SummaryFields_Item to handle AdditionalProperties
-func (a *GetRelationshipsData_Relationships_SummaryFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_SummaryFields_Item to handle AdditionalProperties
-func (a GetRelationshipsData_Relationships_SummaryFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRelationshipsData_Relationships_Item. Returns the specified
-// element and whether it was found
-func (a GetRelationshipsData_Relationships_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRelationshipsData_Relationships_Item
-func (a *GetRelationshipsData_Relationships_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_Item to handle AdditionalProperties
-func (a *GetRelationshipsData_Relationships_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["childTableId"]; found {
-		err = json.Unmarshal(raw, &a.ChildTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'childTableId': %w", err)
-		}
-		delete(object, "childTableId")
-	}
-
-	if raw, found := object["foreignKeyField"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKeyField)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKeyField': %w", err)
-		}
-		delete(object, "foreignKeyField")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["isCrossApp"]; found {
-		err = json.Unmarshal(raw, &a.IsCrossApp)
-		if err != nil {
-			return fmt.Errorf("error reading 'isCrossApp': %w", err)
-		}
-		delete(object, "isCrossApp")
-	}
-
-	if raw, found := object["lookupFields"]; found {
-		err = json.Unmarshal(raw, &a.LookupFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupFields': %w", err)
-		}
-		delete(object, "lookupFields")
-	}
-
-	if raw, found := object["parentTableId"]; found {
-		err = json.Unmarshal(raw, &a.ParentTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentTableId': %w", err)
-		}
-		delete(object, "parentTableId")
-	}
-
-	if raw, found := object["summaryFields"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFields': %w", err)
-		}
-		delete(object, "summaryFields")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRelationshipsData_Relationships_Item to handle AdditionalProperties
-func (a GetRelationshipsData_Relationships_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["childTableId"], err = json.Marshal(a.ChildTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'childTableId': %w", err)
-	}
-
-	if a.ForeignKeyField != nil {
-		object["foreignKeyField"], err = json.Marshal(a.ForeignKeyField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKeyField': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["isCrossApp"], err = json.Marshal(a.IsCrossApp)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'isCrossApp': %w", err)
-	}
-
-	if a.LookupFields != nil {
-		object["lookupFields"], err = json.Marshal(a.LookupFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupFields': %w", err)
-		}
-	}
-
-	object["parentTableId"], err = json.Marshal(a.ParentTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'parentTableId': %w", err)
-	}
-
-	if a.SummaryFields != nil {
-		object["summaryFields"], err = json.Marshal(a.SummaryFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFields': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetReportData. Returns the specified
-// element and whether it was found
-func (a GetReportData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetReportData
-func (a *GetReportData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetReportData to handle AdditionalProperties
-func (a *GetReportData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["ownerId"]; found {
-		err = json.Unmarshal(raw, &a.OwnerId)
-		if err != nil {
-			return fmt.Errorf("error reading 'ownerId': %w", err)
-		}
-		delete(object, "ownerId")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["query"]; found {
-		err = json.Unmarshal(raw, &a.Query)
-		if err != nil {
-			return fmt.Errorf("error reading 'query': %w", err)
-		}
-		delete(object, "query")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if raw, found := object["usedCount"]; found {
-		err = json.Unmarshal(raw, &a.UsedCount)
-		if err != nil {
-			return fmt.Errorf("error reading 'usedCount': %w", err)
-		}
-		delete(object, "usedCount")
-	}
-
-	if raw, found := object["usedLast"]; found {
-		err = json.Unmarshal(raw, &a.UsedLast)
-		if err != nil {
-			return fmt.Errorf("error reading 'usedLast': %w", err)
-		}
-		delete(object, "usedLast")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetReportData to handle AdditionalProperties
-func (a GetReportData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.OwnerId != nil {
-		object["ownerId"], err = json.Marshal(a.OwnerId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'ownerId': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Query != nil {
-		object["query"], err = json.Marshal(a.Query)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'query': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	if a.UsedCount != nil {
-		object["usedCount"], err = json.Marshal(a.UsedCount)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'usedCount': %w", err)
-		}
-	}
-
-	if a.UsedLast != nil {
-		object["usedLast"], err = json.Marshal(a.UsedLast)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'usedLast': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetReportData_Query_FormulaFields_Item. Returns the specified
-// element and whether it was found
-func (a GetReportData_Query_FormulaFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetReportData_Query_FormulaFields_Item
-func (a *GetReportData_Query_FormulaFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetReportData_Query_FormulaFields_Item to handle AdditionalProperties
-func (a *GetReportData_Query_FormulaFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["decimalPrecision"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPrecision)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPrecision': %w", err)
-		}
-		delete(object, "decimalPrecision")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetReportData_Query_FormulaFields_Item to handle AdditionalProperties
-func (a GetReportData_Query_FormulaFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.DecimalPrecision != nil {
-		object["decimalPrecision"], err = json.Marshal(a.DecimalPrecision)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPrecision': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetReportData_Query. Returns the specified
-// element and whether it was found
-func (a GetReportData_Query) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetReportData_Query
-func (a *GetReportData_Query) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetReportData_Query to handle AdditionalProperties
-func (a *GetReportData_Query) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["filter"]; found {
-		err = json.Unmarshal(raw, &a.Filter)
-		if err != nil {
-			return fmt.Errorf("error reading 'filter': %w", err)
-		}
-		delete(object, "filter")
-	}
-
-	if raw, found := object["formulaFields"]; found {
-		err = json.Unmarshal(raw, &a.FormulaFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'formulaFields': %w", err)
-		}
-		delete(object, "formulaFields")
-	}
-
-	if raw, found := object["tableId"]; found {
-		err = json.Unmarshal(raw, &a.TableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableId': %w", err)
-		}
-		delete(object, "tableId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetReportData_Query to handle AdditionalProperties
-func (a GetReportData_Query) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Filter != nil {
-		object["filter"], err = json.Marshal(a.Filter)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'filter': %w", err)
-		}
-	}
-
-	if a.FormulaFields != nil {
-		object["formulaFields"], err = json.Marshal(a.FormulaFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formulaFields': %w", err)
-		}
-	}
-
-	if a.TableId != nil {
-		object["tableId"], err = json.Marshal(a.TableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'tableId': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRolesItem. Returns the specified
-// element and whether it was found
-func (a GetRolesItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRolesItem
-func (a *GetRolesItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRolesItem to handle AdditionalProperties
-func (a *GetRolesItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["access"]; found {
-		err = json.Unmarshal(raw, &a.Access)
-		if err != nil {
-			return fmt.Errorf("error reading 'access': %w", err)
-		}
-		delete(object, "access")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRolesItem to handle AdditionalProperties
-func (a GetRolesItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Access != nil {
-		object["access"], err = json.Marshal(a.Access)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'access': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetRolesItem_Access. Returns the specified
-// element and whether it was found
-func (a GetRolesItem_Access) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetRolesItem_Access
-func (a *GetRolesItem_Access) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetRolesItem_Access to handle AdditionalProperties
-func (a *GetRolesItem_Access) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetRolesItem_Access to handle AdditionalProperties
-func (a GetRolesItem_Access) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetTableData. Returns the specified
-// element and whether it was found
-func (a GetTableData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetTableData
-func (a *GetTableData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetTableData to handle AdditionalProperties
-func (a *GetTableData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["alias"]; found {
-		err = json.Unmarshal(raw, &a.Alias)
-		if err != nil {
-			return fmt.Errorf("error reading 'alias': %w", err)
-		}
-		delete(object, "alias")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["defaultSortFieldId"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortFieldId': %w", err)
-		}
-		delete(object, "defaultSortFieldId")
-	}
-
-	if raw, found := object["defaultSortOrder"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortOrder)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortOrder': %w", err)
-		}
-		delete(object, "defaultSortOrder")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["keyFieldId"]; found {
-		err = json.Unmarshal(raw, &a.KeyFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'keyFieldId': %w", err)
-		}
-		delete(object, "keyFieldId")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["nextFieldId"]; found {
-		err = json.Unmarshal(raw, &a.NextFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextFieldId': %w", err)
-		}
-		delete(object, "nextFieldId")
-	}
-
-	if raw, found := object["nextRecordId"]; found {
-		err = json.Unmarshal(raw, &a.NextRecordId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextRecordId': %w", err)
-		}
-		delete(object, "nextRecordId")
-	}
-
-	if raw, found := object["pluralRecordName"]; found {
-		err = json.Unmarshal(raw, &a.PluralRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'pluralRecordName': %w", err)
-		}
-		delete(object, "pluralRecordName")
-	}
-
-	if raw, found := object["singleRecordName"]; found {
-		err = json.Unmarshal(raw, &a.SingleRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'singleRecordName': %w", err)
-		}
-		delete(object, "singleRecordName")
-	}
-
-	if raw, found := object["sizeLimit"]; found {
-		err = json.Unmarshal(raw, &a.SizeLimit)
-		if err != nil {
-			return fmt.Errorf("error reading 'sizeLimit': %w", err)
-		}
-		delete(object, "sizeLimit")
-	}
-
-	if raw, found := object["spaceRemaining"]; found {
-		err = json.Unmarshal(raw, &a.SpaceRemaining)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceRemaining': %w", err)
-		}
-		delete(object, "spaceRemaining")
-	}
-
-	if raw, found := object["spaceUsed"]; found {
-		err = json.Unmarshal(raw, &a.SpaceUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceUsed': %w", err)
-		}
-		delete(object, "spaceUsed")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetTableData to handle AdditionalProperties
-func (a GetTableData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Alias != nil {
-		object["alias"], err = json.Marshal(a.Alias)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'alias': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DefaultSortFieldId != nil {
-		object["defaultSortFieldId"], err = json.Marshal(a.DefaultSortFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortFieldId': %w", err)
-		}
-	}
-
-	if a.DefaultSortOrder != nil {
-		object["defaultSortOrder"], err = json.Marshal(a.DefaultSortOrder)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortOrder': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.KeyFieldId != nil {
-		object["keyFieldId"], err = json.Marshal(a.KeyFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'keyFieldId': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.NextFieldId != nil {
-		object["nextFieldId"], err = json.Marshal(a.NextFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextFieldId': %w", err)
-		}
-	}
-
-	if a.NextRecordId != nil {
-		object["nextRecordId"], err = json.Marshal(a.NextRecordId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextRecordId': %w", err)
-		}
-	}
-
-	if a.PluralRecordName != nil {
-		object["pluralRecordName"], err = json.Marshal(a.PluralRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'pluralRecordName': %w", err)
-		}
-	}
-
-	if a.SingleRecordName != nil {
-		object["singleRecordName"], err = json.Marshal(a.SingleRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'singleRecordName': %w", err)
-		}
-	}
-
-	if a.SizeLimit != nil {
-		object["sizeLimit"], err = json.Marshal(a.SizeLimit)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sizeLimit': %w", err)
-		}
-	}
-
-	if a.SpaceRemaining != nil {
-		object["spaceRemaining"], err = json.Marshal(a.SpaceRemaining)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceRemaining': %w", err)
-		}
-	}
-
-	if a.SpaceUsed != nil {
-		object["spaceUsed"], err = json.Marshal(a.SpaceUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceUsed': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetTableReportsItem. Returns the specified
-// element and whether it was found
-func (a GetTableReportsItem) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetTableReportsItem
-func (a *GetTableReportsItem) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetTableReportsItem to handle AdditionalProperties
-func (a *GetTableReportsItem) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["ownerId"]; found {
-		err = json.Unmarshal(raw, &a.OwnerId)
-		if err != nil {
-			return fmt.Errorf("error reading 'ownerId': %w", err)
-		}
-		delete(object, "ownerId")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["query"]; found {
-		err = json.Unmarshal(raw, &a.Query)
-		if err != nil {
-			return fmt.Errorf("error reading 'query': %w", err)
-		}
-		delete(object, "query")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if raw, found := object["usedCount"]; found {
-		err = json.Unmarshal(raw, &a.UsedCount)
-		if err != nil {
-			return fmt.Errorf("error reading 'usedCount': %w", err)
-		}
-		delete(object, "usedCount")
-	}
-
-	if raw, found := object["usedLast"]; found {
-		err = json.Unmarshal(raw, &a.UsedLast)
-		if err != nil {
-			return fmt.Errorf("error reading 'usedLast': %w", err)
-		}
-		delete(object, "usedLast")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetTableReportsItem to handle AdditionalProperties
-func (a GetTableReportsItem) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.OwnerId != nil {
-		object["ownerId"], err = json.Marshal(a.OwnerId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'ownerId': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Query != nil {
-		object["query"], err = json.Marshal(a.Query)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'query': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	if a.UsedCount != nil {
-		object["usedCount"], err = json.Marshal(a.UsedCount)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'usedCount': %w", err)
-		}
-	}
-
-	if a.UsedLast != nil {
-		object["usedLast"], err = json.Marshal(a.UsedLast)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'usedLast': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetTableReportsItem_Query_FormulaFields_Item. Returns the specified
-// element and whether it was found
-func (a GetTableReportsItem_Query_FormulaFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetTableReportsItem_Query_FormulaFields_Item
-func (a *GetTableReportsItem_Query_FormulaFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetTableReportsItem_Query_FormulaFields_Item to handle AdditionalProperties
-func (a *GetTableReportsItem_Query_FormulaFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["decimalPrecision"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPrecision)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPrecision': %w", err)
-		}
-		delete(object, "decimalPrecision")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetTableReportsItem_Query_FormulaFields_Item to handle AdditionalProperties
-func (a GetTableReportsItem_Query_FormulaFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.DecimalPrecision != nil {
-		object["decimalPrecision"], err = json.Marshal(a.DecimalPrecision)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPrecision': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetTableReportsItem_Query. Returns the specified
-// element and whether it was found
-func (a GetTableReportsItem_Query) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetTableReportsItem_Query
-func (a *GetTableReportsItem_Query) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetTableReportsItem_Query to handle AdditionalProperties
-func (a *GetTableReportsItem_Query) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["filter"]; found {
-		err = json.Unmarshal(raw, &a.Filter)
-		if err != nil {
-			return fmt.Errorf("error reading 'filter': %w", err)
-		}
-		delete(object, "filter")
-	}
-
-	if raw, found := object["formulaFields"]; found {
-		err = json.Unmarshal(raw, &a.FormulaFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'formulaFields': %w", err)
-		}
-		delete(object, "formulaFields")
-	}
-
-	if raw, found := object["tableId"]; found {
-		err = json.Unmarshal(raw, &a.TableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'tableId': %w", err)
-		}
-		delete(object, "tableId")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetTableReportsItem_Query to handle AdditionalProperties
-func (a GetTableReportsItem_Query) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Filter != nil {
-		object["filter"], err = json.Marshal(a.Filter)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'filter': %w", err)
-		}
-	}
-
-	if a.FormulaFields != nil {
-		object["formulaFields"], err = json.Marshal(a.FormulaFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formulaFields': %w", err)
-		}
-	}
-
-	if a.TableId != nil {
-		object["tableId"], err = json.Marshal(a.TableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'tableId': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetTempTokenDBIDData. Returns the specified
-// element and whether it was found
-func (a GetTempTokenDBIDData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetTempTokenDBIDData
-func (a *GetTempTokenDBIDData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetTempTokenDBIDData to handle AdditionalProperties
-func (a *GetTempTokenDBIDData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["temporaryAuthorization"]; found {
-		err = json.Unmarshal(raw, &a.TemporaryAuthorization)
-		if err != nil {
-			return fmt.Errorf("error reading 'temporaryAuthorization': %w", err)
-		}
-		delete(object, "temporaryAuthorization")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetTempTokenDBIDData to handle AdditionalProperties
-func (a GetTempTokenDBIDData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.TemporaryAuthorization != nil {
-		object["temporaryAuthorization"], err = json.Marshal(a.TemporaryAuthorization)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'temporaryAuthorization': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetUsersData. Returns the specified
-// element and whether it was found
-func (a GetUsersData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetUsersData
-func (a *GetUsersData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetUsersData to handle AdditionalProperties
-func (a *GetUsersData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if raw, found := object["users"]; found {
-		err = json.Unmarshal(raw, &a.Users)
-		if err != nil {
-			return fmt.Errorf("error reading 'users': %w", err)
-		}
-		delete(object, "users")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetUsersData to handle AdditionalProperties
-func (a GetUsersData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["metadata"], err = json.Marshal(a.Metadata)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-	}
-
-	if a.Users != nil {
-		object["users"], err = json.Marshal(a.Users)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'users': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetUsersData_Metadata. Returns the specified
-// element and whether it was found
-func (a GetUsersData_Metadata) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetUsersData_Metadata
-func (a *GetUsersData_Metadata) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetUsersData_Metadata to handle AdditionalProperties
-func (a *GetUsersData_Metadata) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["nextPageToken"]; found {
-		err = json.Unmarshal(raw, &a.NextPageToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextPageToken': %w", err)
-		}
-		delete(object, "nextPageToken")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetUsersData_Metadata to handle AdditionalProperties
-func (a GetUsersData_Metadata) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["nextPageToken"], err = json.Marshal(a.NextPageToken)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'nextPageToken': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for GetUsersData_Users_Item. Returns the specified
-// element and whether it was found
-func (a GetUsersData_Users_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for GetUsersData_Users_Item
-func (a *GetUsersData_Users_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for GetUsersData_Users_Item to handle AdditionalProperties
-func (a *GetUsersData_Users_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["emailAddress"]; found {
-		err = json.Unmarshal(raw, &a.EmailAddress)
-		if err != nil {
-			return fmt.Errorf("error reading 'emailAddress': %w", err)
-		}
-		delete(object, "emailAddress")
-	}
-
-	if raw, found := object["firstName"]; found {
-		err = json.Unmarshal(raw, &a.FirstName)
-		if err != nil {
-			return fmt.Errorf("error reading 'firstName': %w", err)
-		}
-		delete(object, "firstName")
-	}
-
-	if raw, found := object["hashId"]; found {
-		err = json.Unmarshal(raw, &a.HashId)
-		if err != nil {
-			return fmt.Errorf("error reading 'hashId': %w", err)
-		}
-		delete(object, "hashId")
-	}
-
-	if raw, found := object["lastName"]; found {
-		err = json.Unmarshal(raw, &a.LastName)
-		if err != nil {
-			return fmt.Errorf("error reading 'lastName': %w", err)
-		}
-		delete(object, "lastName")
-	}
-
-	if raw, found := object["userName"]; found {
-		err = json.Unmarshal(raw, &a.UserName)
-		if err != nil {
-			return fmt.Errorf("error reading 'userName': %w", err)
-		}
-		delete(object, "userName")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for GetUsersData_Users_Item to handle AdditionalProperties
-func (a GetUsersData_Users_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["emailAddress"], err = json.Marshal(a.EmailAddress)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'emailAddress': %w", err)
-	}
-
-	object["firstName"], err = json.Marshal(a.FirstName)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'firstName': %w", err)
-	}
-
-	object["hashId"], err = json.Marshal(a.HashId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'hashId': %w", err)
-	}
-
-	object["lastName"], err = json.Marshal(a.LastName)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'lastName': %w", err)
-	}
-
-	object["userName"], err = json.Marshal(a.UserName)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'userName': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for PlatformAnalyticReadsData. Returns the specified
-// element and whether it was found
-func (a PlatformAnalyticReadsData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for PlatformAnalyticReadsData
-func (a *PlatformAnalyticReadsData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData to handle AdditionalProperties
-func (a *PlatformAnalyticReadsData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["data"]; found {
-		err = json.Unmarshal(raw, &a.Data)
-		if err != nil {
-			return fmt.Errorf("error reading 'data': %w", err)
-		}
-		delete(object, "data")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData to handle AdditionalProperties
-func (a PlatformAnalyticReadsData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["data"], err = json.Marshal(a.Data)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'data': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations. Returns the specified
-// element and whether it was found
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations to handle AdditionalProperties
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["api"]; found {
-		err = json.Unmarshal(raw, &a.Api)
-		if err != nil {
-			return fmt.Errorf("error reading 'api': %w", err)
-		}
-		delete(object, "api")
-	}
-
-	if raw, found := object["eoti"]; found {
-		err = json.Unmarshal(raw, &a.Eoti)
-		if err != nil {
-			return fmt.Errorf("error reading 'eoti': %w", err)
-		}
-		delete(object, "eoti")
-	}
-
-	if raw, found := object["pipelines"]; found {
-		err = json.Unmarshal(raw, &a.Pipelines)
-		if err != nil {
-			return fmt.Errorf("error reading 'pipelines': %w", err)
-		}
-		delete(object, "pipelines")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations to handle AdditionalProperties
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["api"], err = json.Marshal(a.Api)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'api': %w", err)
-	}
-
-	object["eoti"], err = json.Marshal(a.Eoti)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'eoti': %w", err)
-	}
-
-	object["pipelines"], err = json.Marshal(a.Pipelines)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'pipelines': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads. Returns the specified
-// element and whether it was found
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads to handle AdditionalProperties
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["integrations"]; found {
-		err = json.Unmarshal(raw, &a.Integrations)
-		if err != nil {
-			return fmt.Errorf("error reading 'integrations': %w", err)
-		}
-		delete(object, "integrations")
-	}
-
-	if raw, found := object["user"]; found {
-		err = json.Unmarshal(raw, &a.User)
-		if err != nil {
-			return fmt.Errorf("error reading 'user': %w", err)
-		}
-		delete(object, "user")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads to handle AdditionalProperties
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["integrations"], err = json.Marshal(a.Integrations)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'integrations': %w", err)
-	}
-
-	object["user"], err = json.Marshal(a.User)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'user': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads. Returns the specified
-// element and whether it was found
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for PlatformAnalyticReadsData_Data_DailyDetailedReads
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads to handle AdditionalProperties
-func (a *PlatformAnalyticReadsData_Data_DailyDetailedReads) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["date"]; found {
-		err = json.Unmarshal(raw, &a.Date)
-		if err != nil {
-			return fmt.Errorf("error reading 'date': %w", err)
-		}
-		delete(object, "date")
-	}
-
-	if raw, found := object["reads"]; found {
-		err = json.Unmarshal(raw, &a.Reads)
-		if err != nil {
-			return fmt.Errorf("error reading 'reads': %w", err)
-		}
-		delete(object, "reads")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data_DailyDetailedReads to handle AdditionalProperties
-func (a PlatformAnalyticReadsData_Data_DailyDetailedReads) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["date"], err = json.Marshal(a.Date)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'date': %w", err)
-	}
-
-	object["reads"], err = json.Marshal(a.Reads)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'reads': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for PlatformAnalyticReadsData_Data. Returns the specified
-// element and whether it was found
-func (a PlatformAnalyticReadsData_Data) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for PlatformAnalyticReadsData_Data
-func (a *PlatformAnalyticReadsData_Data) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data to handle AdditionalProperties
-func (a *PlatformAnalyticReadsData_Data) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["dailyDetailedReads"]; found {
-		err = json.Unmarshal(raw, &a.DailyDetailedReads)
-		if err != nil {
-			return fmt.Errorf("error reading 'dailyDetailedReads': %w", err)
-		}
-		delete(object, "dailyDetailedReads")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for PlatformAnalyticReadsData_Data to handle AdditionalProperties
-func (a PlatformAnalyticReadsData_Data) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["dailyDetailedReads"], err = json.Marshal(a.DailyDetailedReads)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'dailyDetailedReads': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RecordsModifiedSinceData. Returns the specified
-// element and whether it was found
-func (a RecordsModifiedSinceData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RecordsModifiedSinceData
-func (a *RecordsModifiedSinceData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RecordsModifiedSinceData to handle AdditionalProperties
-func (a *RecordsModifiedSinceData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["changes"]; found {
-		err = json.Unmarshal(raw, &a.Changes)
-		if err != nil {
-			return fmt.Errorf("error reading 'changes': %w", err)
-		}
-		delete(object, "changes")
-	}
-
-	if raw, found := object["count"]; found {
-		err = json.Unmarshal(raw, &a.Count)
-		if err != nil {
-			return fmt.Errorf("error reading 'count': %w", err)
-		}
-		delete(object, "count")
-	}
-
-	if raw, found := object["deletesTruncated"]; found {
-		err = json.Unmarshal(raw, &a.DeletesTruncated)
-		if err != nil {
-			return fmt.Errorf("error reading 'deletesTruncated': %w", err)
-		}
-		delete(object, "deletesTruncated")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RecordsModifiedSinceData to handle AdditionalProperties
-func (a RecordsModifiedSinceData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Changes != nil {
-		object["changes"], err = json.Marshal(a.Changes)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'changes': %w", err)
-		}
-	}
-
-	object["count"], err = json.Marshal(a.Count)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'count': %w", err)
-	}
-
-	if a.DeletesTruncated != nil {
-		object["deletesTruncated"], err = json.Marshal(a.DeletesTruncated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'deletesTruncated': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RecordsModifiedSinceData_Changes_Item. Returns the specified
-// element and whether it was found
-func (a RecordsModifiedSinceData_Changes_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RecordsModifiedSinceData_Changes_Item
-func (a *RecordsModifiedSinceData_Changes_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RecordsModifiedSinceData_Changes_Item to handle AdditionalProperties
-func (a *RecordsModifiedSinceData_Changes_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["changeType"]; found {
-		err = json.Unmarshal(raw, &a.ChangeType)
-		if err != nil {
-			return fmt.Errorf("error reading 'changeType': %w", err)
-		}
-		delete(object, "changeType")
-	}
-
-	if raw, found := object["recordId"]; found {
-		err = json.Unmarshal(raw, &a.RecordId)
-		if err != nil {
-			return fmt.Errorf("error reading 'recordId': %w", err)
-		}
-		delete(object, "recordId")
-	}
-
-	if raw, found := object["timestamp"]; found {
-		err = json.Unmarshal(raw, &a.Timestamp)
-		if err != nil {
-			return fmt.Errorf("error reading 'timestamp': %w", err)
-		}
-		delete(object, "timestamp")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RecordsModifiedSinceData_Changes_Item to handle AdditionalProperties
-func (a RecordsModifiedSinceData_Changes_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.ChangeType != nil {
-		object["changeType"], err = json.Marshal(a.ChangeType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'changeType': %w", err)
-		}
-	}
-
-	if a.RecordId != nil {
-		object["recordId"], err = json.Marshal(a.RecordId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'recordId': %w", err)
-		}
-	}
-
-	if a.Timestamp != nil {
-		object["timestamp"], err = json.Marshal(a.Timestamp)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timestamp': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RemoveManagersFromGroupData. Returns the specified
-// element and whether it was found
-func (a RemoveManagersFromGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RemoveManagersFromGroupData
-func (a *RemoveManagersFromGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RemoveManagersFromGroupData to handle AdditionalProperties
-func (a *RemoveManagersFromGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RemoveManagersFromGroupData to handle AdditionalProperties
-func (a RemoveManagersFromGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RemoveMembersFromGroupData. Returns the specified
-// element and whether it was found
-func (a RemoveMembersFromGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RemoveMembersFromGroupData
-func (a *RemoveMembersFromGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RemoveMembersFromGroupData to handle AdditionalProperties
-func (a *RemoveMembersFromGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RemoveMembersFromGroupData to handle AdditionalProperties
-func (a RemoveMembersFromGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RemoveSubgroupsFromGroupData. Returns the specified
-// element and whether it was found
-func (a RemoveSubgroupsFromGroupData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RemoveSubgroupsFromGroupData
-func (a *RemoveSubgroupsFromGroupData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RemoveSubgroupsFromGroupData to handle AdditionalProperties
-func (a *RemoveSubgroupsFromGroupData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RemoveSubgroupsFromGroupData to handle AdditionalProperties
-func (a RemoveSubgroupsFromGroupData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunFormulaData. Returns the specified
-// element and whether it was found
-func (a RunFormulaData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunFormulaData
-func (a *RunFormulaData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunFormulaData to handle AdditionalProperties
-func (a *RunFormulaData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["result"]; found {
-		err = json.Unmarshal(raw, &a.Result)
-		if err != nil {
-			return fmt.Errorf("error reading 'result': %w", err)
-		}
-		delete(object, "result")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunFormulaData to handle AdditionalProperties
-func (a RunFormulaData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Result != nil {
-		object["result"], err = json.Marshal(a.Result)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'result': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunQueryData. Returns the specified
-// element and whether it was found
-func (a RunQueryData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunQueryData
-func (a *RunQueryData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunQueryData to handle AdditionalProperties
-func (a *RunQueryData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["data"]; found {
-		err = json.Unmarshal(raw, &a.Data)
-		if err != nil {
-			return fmt.Errorf("error reading 'data': %w", err)
-		}
-		delete(object, "data")
-	}
-
-	if raw, found := object["fields"]; found {
-		err = json.Unmarshal(raw, &a.Fields)
-		if err != nil {
-			return fmt.Errorf("error reading 'fields': %w", err)
-		}
-		delete(object, "fields")
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunQueryData to handle AdditionalProperties
-func (a RunQueryData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Data != nil {
-		object["data"], err = json.Marshal(a.Data)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'data': %w", err)
-		}
-	}
-
-	if a.Fields != nil {
-		object["fields"], err = json.Marshal(a.Fields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fields': %w", err)
-		}
-	}
-
-	if a.Metadata != nil {
-		object["metadata"], err = json.Marshal(a.Metadata)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunQueryData_Fields_Item. Returns the specified
-// element and whether it was found
-func (a RunQueryData_Fields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunQueryData_Fields_Item
-func (a *RunQueryData_Fields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunQueryData_Fields_Item to handle AdditionalProperties
-func (a *RunQueryData_Fields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunQueryData_Fields_Item to handle AdditionalProperties
-func (a RunQueryData_Fields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunQueryData_Metadata. Returns the specified
-// element and whether it was found
-func (a RunQueryData_Metadata) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunQueryData_Metadata
-func (a *RunQueryData_Metadata) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunQueryData_Metadata to handle AdditionalProperties
-func (a *RunQueryData_Metadata) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["numFields"]; found {
-		err = json.Unmarshal(raw, &a.NumFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'numFields': %w", err)
-		}
-		delete(object, "numFields")
-	}
-
-	if raw, found := object["numRecords"]; found {
-		err = json.Unmarshal(raw, &a.NumRecords)
-		if err != nil {
-			return fmt.Errorf("error reading 'numRecords': %w", err)
-		}
-		delete(object, "numRecords")
-	}
-
-	if raw, found := object["skip"]; found {
-		err = json.Unmarshal(raw, &a.Skip)
-		if err != nil {
-			return fmt.Errorf("error reading 'skip': %w", err)
-		}
-		delete(object, "skip")
-	}
-
-	if raw, found := object["top"]; found {
-		err = json.Unmarshal(raw, &a.Top)
-		if err != nil {
-			return fmt.Errorf("error reading 'top': %w", err)
-		}
-		delete(object, "top")
-	}
-
-	if raw, found := object["totalRecords"]; found {
-		err = json.Unmarshal(raw, &a.TotalRecords)
-		if err != nil {
-			return fmt.Errorf("error reading 'totalRecords': %w", err)
-		}
-		delete(object, "totalRecords")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunQueryData_Metadata to handle AdditionalProperties
-func (a RunQueryData_Metadata) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["numFields"], err = json.Marshal(a.NumFields)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'numFields': %w", err)
-	}
-
-	object["numRecords"], err = json.Marshal(a.NumRecords)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'numRecords': %w", err)
-	}
-
-	if a.Skip != nil {
-		object["skip"], err = json.Marshal(a.Skip)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'skip': %w", err)
-		}
-	}
-
-	if a.Top != nil {
-		object["top"], err = json.Marshal(a.Top)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'top': %w", err)
-		}
-	}
-
-	object["totalRecords"], err = json.Marshal(a.TotalRecords)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'totalRecords': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunReportData. Returns the specified
-// element and whether it was found
-func (a RunReportData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunReportData
-func (a *RunReportData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunReportData to handle AdditionalProperties
-func (a *RunReportData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["data"]; found {
-		err = json.Unmarshal(raw, &a.Data)
-		if err != nil {
-			return fmt.Errorf("error reading 'data': %w", err)
-		}
-		delete(object, "data")
-	}
-
-	if raw, found := object["fields"]; found {
-		err = json.Unmarshal(raw, &a.Fields)
-		if err != nil {
-			return fmt.Errorf("error reading 'fields': %w", err)
-		}
-		delete(object, "fields")
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunReportData to handle AdditionalProperties
-func (a RunReportData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Data != nil {
-		object["data"], err = json.Marshal(a.Data)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'data': %w", err)
-		}
-	}
-
-	if a.Fields != nil {
-		object["fields"], err = json.Marshal(a.Fields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fields': %w", err)
-		}
-	}
-
-	if a.Metadata != nil {
-		object["metadata"], err = json.Marshal(a.Metadata)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunReportData_Fields_Item. Returns the specified
-// element and whether it was found
-func (a RunReportData_Fields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunReportData_Fields_Item
-func (a *RunReportData_Fields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunReportData_Fields_Item to handle AdditionalProperties
-func (a *RunReportData_Fields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["labelOverride"]; found {
-		err = json.Unmarshal(raw, &a.LabelOverride)
-		if err != nil {
-			return fmt.Errorf("error reading 'labelOverride': %w", err)
-		}
-		delete(object, "labelOverride")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunReportData_Fields_Item to handle AdditionalProperties
-func (a RunReportData_Fields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.LabelOverride != nil {
-		object["labelOverride"], err = json.Marshal(a.LabelOverride)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'labelOverride': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for RunReportData_Metadata. Returns the specified
-// element and whether it was found
-func (a RunReportData_Metadata) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for RunReportData_Metadata
-func (a *RunReportData_Metadata) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for RunReportData_Metadata to handle AdditionalProperties
-func (a *RunReportData_Metadata) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["numFields"]; found {
-		err = json.Unmarshal(raw, &a.NumFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'numFields': %w", err)
-		}
-		delete(object, "numFields")
-	}
-
-	if raw, found := object["numRecords"]; found {
-		err = json.Unmarshal(raw, &a.NumRecords)
-		if err != nil {
-			return fmt.Errorf("error reading 'numRecords': %w", err)
-		}
-		delete(object, "numRecords")
-	}
-
-	if raw, found := object["skip"]; found {
-		err = json.Unmarshal(raw, &a.Skip)
-		if err != nil {
-			return fmt.Errorf("error reading 'skip': %w", err)
-		}
-		delete(object, "skip")
-	}
-
-	if raw, found := object["top"]; found {
-		err = json.Unmarshal(raw, &a.Top)
-		if err != nil {
-			return fmt.Errorf("error reading 'top': %w", err)
-		}
-		delete(object, "top")
-	}
-
-	if raw, found := object["totalRecords"]; found {
-		err = json.Unmarshal(raw, &a.TotalRecords)
-		if err != nil {
-			return fmt.Errorf("error reading 'totalRecords': %w", err)
-		}
-		delete(object, "totalRecords")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for RunReportData_Metadata to handle AdditionalProperties
-func (a RunReportData_Metadata) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["numFields"], err = json.Marshal(a.NumFields)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'numFields': %w", err)
-	}
-
-	object["numRecords"], err = json.Marshal(a.NumRecords)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'numRecords': %w", err)
-	}
-
-	if a.Skip != nil {
-		object["skip"], err = json.Marshal(a.Skip)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'skip': %w", err)
-		}
-	}
-
-	if a.Top != nil {
-		object["top"], err = json.Marshal(a.Top)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'top': %w", err)
-		}
-	}
-
-	object["totalRecords"], err = json.Marshal(a.TotalRecords)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'totalRecords': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for TransferUserTokenData. Returns the specified
-// element and whether it was found
-func (a TransferUserTokenData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for TransferUserTokenData
-func (a *TransferUserTokenData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for TransferUserTokenData to handle AdditionalProperties
-func (a *TransferUserTokenData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["active"]; found {
-		err = json.Unmarshal(raw, &a.Active)
-		if err != nil {
-			return fmt.Errorf("error reading 'active': %w", err)
-		}
-		delete(object, "active")
-	}
-
-	if raw, found := object["apps"]; found {
-		err = json.Unmarshal(raw, &a.Apps)
-		if err != nil {
-			return fmt.Errorf("error reading 'apps': %w", err)
-		}
-		delete(object, "apps")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["lastUsed"]; found {
-		err = json.Unmarshal(raw, &a.LastUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'lastUsed': %w", err)
-		}
-		delete(object, "lastUsed")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for TransferUserTokenData to handle AdditionalProperties
-func (a TransferUserTokenData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Active != nil {
-		object["active"], err = json.Marshal(a.Active)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'active': %w", err)
-		}
-	}
-
-	if a.Apps != nil {
-		object["apps"], err = json.Marshal(a.Apps)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'apps': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.LastUsed != nil {
-		object["lastUsed"], err = json.Marshal(a.LastUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lastUsed': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for TransferUserTokenData_Apps_Item. Returns the specified
-// element and whether it was found
-func (a TransferUserTokenData_Apps_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for TransferUserTokenData_Apps_Item
-func (a *TransferUserTokenData_Apps_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for TransferUserTokenData_Apps_Item to handle AdditionalProperties
-func (a *TransferUserTokenData_Apps_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for TransferUserTokenData_Apps_Item to handle AdditionalProperties
-func (a TransferUserTokenData_Apps_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UndenyUsersData. Returns the specified
-// element and whether it was found
-func (a UndenyUsersData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UndenyUsersData
-func (a *UndenyUsersData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UndenyUsersData to handle AdditionalProperties
-func (a *UndenyUsersData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["failure"]; found {
-		err = json.Unmarshal(raw, &a.Failure)
-		if err != nil {
-			return fmt.Errorf("error reading 'failure': %w", err)
-		}
-		delete(object, "failure")
-	}
-
-	if raw, found := object["success"]; found {
-		err = json.Unmarshal(raw, &a.Success)
-		if err != nil {
-			return fmt.Errorf("error reading 'success': %w", err)
-		}
-		delete(object, "success")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UndenyUsersData to handle AdditionalProperties
-func (a UndenyUsersData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Failure != nil {
-		object["failure"], err = json.Marshal(a.Failure)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'failure': %w", err)
-		}
-	}
-
-	if a.Success != nil {
-		object["success"], err = json.Marshal(a.Success)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'success': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateAppData. Returns the specified
-// element and whether it was found
-func (a UpdateAppData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateAppData
-func (a *UpdateAppData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateAppData to handle AdditionalProperties
-func (a *UpdateAppData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["ancestorId"]; found {
-		err = json.Unmarshal(raw, &a.AncestorId)
-		if err != nil {
-			return fmt.Errorf("error reading 'ancestorId': %w", err)
-		}
-		delete(object, "ancestorId")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["dataClassification"]; found {
-		err = json.Unmarshal(raw, &a.DataClassification)
-		if err != nil {
-			return fmt.Errorf("error reading 'dataClassification': %w", err)
-		}
-		delete(object, "dataClassification")
-	}
-
-	if raw, found := object["dateFormat"]; found {
-		err = json.Unmarshal(raw, &a.DateFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'dateFormat': %w", err)
-		}
-		delete(object, "dateFormat")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["hasEveryoneOnTheInternet"]; found {
-		err = json.Unmarshal(raw, &a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasEveryoneOnTheInternet': %w", err)
-		}
-		delete(object, "hasEveryoneOnTheInternet")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["memoryInfo"]; found {
-		err = json.Unmarshal(raw, &a.MemoryInfo)
-		if err != nil {
-			return fmt.Errorf("error reading 'memoryInfo': %w", err)
-		}
-		delete(object, "memoryInfo")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["securityProperties"]; found {
-		err = json.Unmarshal(raw, &a.SecurityProperties)
-		if err != nil {
-			return fmt.Errorf("error reading 'securityProperties': %w", err)
-		}
-		delete(object, "securityProperties")
-	}
-
-	if raw, found := object["timeZone"]; found {
-		err = json.Unmarshal(raw, &a.TimeZone)
-		if err != nil {
-			return fmt.Errorf("error reading 'timeZone': %w", err)
-		}
-		delete(object, "timeZone")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if raw, found := object["variables"]; found {
-		err = json.Unmarshal(raw, &a.Variables)
-		if err != nil {
-			return fmt.Errorf("error reading 'variables': %w", err)
-		}
-		delete(object, "variables")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateAppData to handle AdditionalProperties
-func (a UpdateAppData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AncestorId != nil {
-		object["ancestorId"], err = json.Marshal(a.AncestorId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'ancestorId': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DataClassification != nil {
-		object["dataClassification"], err = json.Marshal(a.DataClassification)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dataClassification': %w", err)
-		}
-	}
-
-	if a.DateFormat != nil {
-		object["dateFormat"], err = json.Marshal(a.DateFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'dateFormat': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.HasEveryoneOnTheInternet != nil {
-		object["hasEveryoneOnTheInternet"], err = json.Marshal(a.HasEveryoneOnTheInternet)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasEveryoneOnTheInternet': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.MemoryInfo != nil {
-		object["memoryInfo"], err = json.Marshal(a.MemoryInfo)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'memoryInfo': %w", err)
-		}
-	}
-
-	object["name"], err = json.Marshal(a.Name)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
-	}
-
-	if a.SecurityProperties != nil {
-		object["securityProperties"], err = json.Marshal(a.SecurityProperties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'securityProperties': %w", err)
-		}
-	}
-
-	if a.TimeZone != nil {
-		object["timeZone"], err = json.Marshal(a.TimeZone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timeZone': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	if a.Variables != nil {
-		object["variables"], err = json.Marshal(a.Variables)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateAppData_SecurityProperties. Returns the specified
-// element and whether it was found
-func (a UpdateAppData_SecurityProperties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateAppData_SecurityProperties
-func (a *UpdateAppData_SecurityProperties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateAppData_SecurityProperties to handle AdditionalProperties
-func (a *UpdateAppData_SecurityProperties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["allowClone"]; found {
-		err = json.Unmarshal(raw, &a.AllowClone)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowClone': %w", err)
-		}
-		delete(object, "allowClone")
-	}
-
-	if raw, found := object["allowExport"]; found {
-		err = json.Unmarshal(raw, &a.AllowExport)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowExport': %w", err)
-		}
-		delete(object, "allowExport")
-	}
-
-	if raw, found := object["enableAppTokens"]; found {
-		err = json.Unmarshal(raw, &a.EnableAppTokens)
-		if err != nil {
-			return fmt.Errorf("error reading 'enableAppTokens': %w", err)
-		}
-		delete(object, "enableAppTokens")
-	}
-
-	if raw, found := object["hideFromPublic"]; found {
-		err = json.Unmarshal(raw, &a.HideFromPublic)
-		if err != nil {
-			return fmt.Errorf("error reading 'hideFromPublic': %w", err)
-		}
-		delete(object, "hideFromPublic")
-	}
-
-	if raw, found := object["mustBeRealmApproved"]; found {
-		err = json.Unmarshal(raw, &a.MustBeRealmApproved)
-		if err != nil {
-			return fmt.Errorf("error reading 'mustBeRealmApproved': %w", err)
-		}
-		delete(object, "mustBeRealmApproved")
-	}
-
-	if raw, found := object["useIPFilter"]; found {
-		err = json.Unmarshal(raw, &a.UseIPFilter)
-		if err != nil {
-			return fmt.Errorf("error reading 'useIPFilter': %w", err)
-		}
-		delete(object, "useIPFilter")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateAppData_SecurityProperties to handle AdditionalProperties
-func (a UpdateAppData_SecurityProperties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AllowClone != nil {
-		object["allowClone"], err = json.Marshal(a.AllowClone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowClone': %w", err)
-		}
-	}
-
-	if a.AllowExport != nil {
-		object["allowExport"], err = json.Marshal(a.AllowExport)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowExport': %w", err)
-		}
-	}
-
-	if a.EnableAppTokens != nil {
-		object["enableAppTokens"], err = json.Marshal(a.EnableAppTokens)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'enableAppTokens': %w", err)
-		}
-	}
-
-	if a.HideFromPublic != nil {
-		object["hideFromPublic"], err = json.Marshal(a.HideFromPublic)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hideFromPublic': %w", err)
-		}
-	}
-
-	if a.MustBeRealmApproved != nil {
-		object["mustBeRealmApproved"], err = json.Marshal(a.MustBeRealmApproved)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mustBeRealmApproved': %w", err)
-		}
-	}
-
-	if a.UseIPFilter != nil {
-		object["useIPFilter"], err = json.Marshal(a.UseIPFilter)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useIPFilter': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateAppData_Variables_Item. Returns the specified
-// element and whether it was found
-func (a UpdateAppData_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateAppData_Variables_Item
-func (a *UpdateAppData_Variables_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateAppData_Variables_Item to handle AdditionalProperties
-func (a *UpdateAppData_Variables_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["value"]; found {
-		err = json.Unmarshal(raw, &a.Value)
-		if err != nil {
-			return fmt.Errorf("error reading 'value': %w", err)
-		}
-		delete(object, "value")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateAppData_Variables_Item to handle AdditionalProperties
-func (a UpdateAppData_Variables_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateFieldData. Returns the specified
-// element and whether it was found
-func (a UpdateFieldData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateFieldData
-func (a *UpdateFieldData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateFieldData to handle AdditionalProperties
-func (a *UpdateFieldData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["appearsByDefault"]; found {
-		err = json.Unmarshal(raw, &a.AppearsByDefault)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsByDefault': %w", err)
-		}
-		delete(object, "appearsByDefault")
-	}
-
-	if raw, found := object["audited"]; found {
-		err = json.Unmarshal(raw, &a.Audited)
-		if err != nil {
-			return fmt.Errorf("error reading 'audited': %w", err)
-		}
-		delete(object, "audited")
-	}
-
-	if raw, found := object["bold"]; found {
-		err = json.Unmarshal(raw, &a.Bold)
-		if err != nil {
-			return fmt.Errorf("error reading 'bold': %w", err)
-		}
-		delete(object, "bold")
-	}
-
-	if raw, found := object["doesDataCopy"]; found {
-		err = json.Unmarshal(raw, &a.DoesDataCopy)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesDataCopy': %w", err)
-		}
-		delete(object, "doesDataCopy")
-	}
-
-	if raw, found := object["fieldHelp"]; found {
-		err = json.Unmarshal(raw, &a.FieldHelp)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldHelp': %w", err)
-		}
-		delete(object, "fieldHelp")
-	}
-
-	if raw, found := object["fieldType"]; found {
-		err = json.Unmarshal(raw, &a.FieldType)
-		if err != nil {
-			return fmt.Errorf("error reading 'fieldType': %w", err)
-		}
-		delete(object, "fieldType")
-	}
-
-	if raw, found := object["findEnabled"]; found {
-		err = json.Unmarshal(raw, &a.FindEnabled)
-		if err != nil {
-			return fmt.Errorf("error reading 'findEnabled': %w", err)
-		}
-		delete(object, "findEnabled")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["mode"]; found {
-		err = json.Unmarshal(raw, &a.Mode)
-		if err != nil {
-			return fmt.Errorf("error reading 'mode': %w", err)
-		}
-		delete(object, "mode")
-	}
-
-	if raw, found := object["noWrap"]; found {
-		err = json.Unmarshal(raw, &a.NoWrap)
-		if err != nil {
-			return fmt.Errorf("error reading 'noWrap': %w", err)
-		}
-		delete(object, "noWrap")
-	}
-
-	if raw, found := object["permissions"]; found {
-		err = json.Unmarshal(raw, &a.Permissions)
-		if err != nil {
-			return fmt.Errorf("error reading 'permissions': %w", err)
-		}
-		delete(object, "permissions")
-	}
-
-	if raw, found := object["properties"]; found {
-		err = json.Unmarshal(raw, &a.Properties)
-		if err != nil {
-			return fmt.Errorf("error reading 'properties': %w", err)
-		}
-		delete(object, "properties")
-	}
-
-	if raw, found := object["required"]; found {
-		err = json.Unmarshal(raw, &a.Required)
-		if err != nil {
-			return fmt.Errorf("error reading 'required': %w", err)
-		}
-		delete(object, "required")
-	}
-
-	if raw, found := object["unique"]; found {
-		err = json.Unmarshal(raw, &a.Unique)
-		if err != nil {
-			return fmt.Errorf("error reading 'unique': %w", err)
-		}
-		delete(object, "unique")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateFieldData to handle AdditionalProperties
-func (a UpdateFieldData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.AppearsByDefault != nil {
-		object["appearsByDefault"], err = json.Marshal(a.AppearsByDefault)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsByDefault': %w", err)
-		}
-	}
-
-	if a.Audited != nil {
-		object["audited"], err = json.Marshal(a.Audited)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'audited': %w", err)
-		}
-	}
-
-	if a.Bold != nil {
-		object["bold"], err = json.Marshal(a.Bold)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'bold': %w", err)
-		}
-	}
-
-	if a.DoesDataCopy != nil {
-		object["doesDataCopy"], err = json.Marshal(a.DoesDataCopy)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesDataCopy': %w", err)
-		}
-	}
-
-	if a.FieldHelp != nil {
-		object["fieldHelp"], err = json.Marshal(a.FieldHelp)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldHelp': %w", err)
-		}
-	}
-
-	if a.FieldType != nil {
-		object["fieldType"], err = json.Marshal(a.FieldType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'fieldType': %w", err)
-		}
-	}
-
-	if a.FindEnabled != nil {
-		object["findEnabled"], err = json.Marshal(a.FindEnabled)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'findEnabled': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Mode != nil {
-		object["mode"], err = json.Marshal(a.Mode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'mode': %w", err)
-		}
-	}
-
-	if a.NoWrap != nil {
-		object["noWrap"], err = json.Marshal(a.NoWrap)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'noWrap': %w", err)
-		}
-	}
-
-	if a.Permissions != nil {
-		object["permissions"], err = json.Marshal(a.Permissions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'permissions': %w", err)
-		}
-	}
-
-	if a.Properties != nil {
-		object["properties"], err = json.Marshal(a.Properties)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
-		}
-	}
-
-	if a.Required != nil {
-		object["required"], err = json.Marshal(a.Required)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'required': %w", err)
-		}
-	}
-
-	if a.Unique != nil {
-		object["unique"], err = json.Marshal(a.Unique)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'unique': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateFieldData_Properties. Returns the specified
-// element and whether it was found
-func (a UpdateFieldData_Properties) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateFieldData_Properties
-func (a *UpdateFieldData_Properties) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateFieldData_Properties to handle AdditionalProperties
-func (a *UpdateFieldData_Properties) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["abbreviate"]; found {
-		err = json.Unmarshal(raw, &a.Abbreviate)
-		if err != nil {
-			return fmt.Errorf("error reading 'abbreviate': %w", err)
-		}
-		delete(object, "abbreviate")
-	}
-
-	if raw, found := object["allowHTML"]; found {
-		err = json.Unmarshal(raw, &a.AllowHTML)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowHTML': %w", err)
-		}
-		delete(object, "allowHTML")
-	}
-
-	if raw, found := object["allowMentions"]; found {
-		err = json.Unmarshal(raw, &a.AllowMentions)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowMentions': %w", err)
-		}
-		delete(object, "allowMentions")
-	}
-
-	if raw, found := object["allowNewChoices"]; found {
-		err = json.Unmarshal(raw, &a.AllowNewChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'allowNewChoices': %w", err)
-		}
-		delete(object, "allowNewChoices")
-	}
-
-	if raw, found := object["appearsAs"]; found {
-		err = json.Unmarshal(raw, &a.AppearsAs)
-		if err != nil {
-			return fmt.Errorf("error reading 'appearsAs': %w", err)
-		}
-		delete(object, "appearsAs")
-	}
-
-	if raw, found := object["appendOnly"]; found {
-		err = json.Unmarshal(raw, &a.AppendOnly)
-		if err != nil {
-			return fmt.Errorf("error reading 'appendOnly': %w", err)
-		}
-		delete(object, "appendOnly")
-	}
-
-	if raw, found := object["autoSave"]; found {
-		err = json.Unmarshal(raw, &a.AutoSave)
-		if err != nil {
-			return fmt.Errorf("error reading 'autoSave': %w", err)
-		}
-		delete(object, "autoSave")
-	}
-
-	if raw, found := object["blankIsZero"]; found {
-		err = json.Unmarshal(raw, &a.BlankIsZero)
-		if err != nil {
-			return fmt.Errorf("error reading 'blankIsZero': %w", err)
-		}
-		delete(object, "blankIsZero")
-	}
-
-	if raw, found := object["carryChoices"]; found {
-		err = json.Unmarshal(raw, &a.CarryChoices)
-		if err != nil {
-			return fmt.Errorf("error reading 'carryChoices': %w", err)
-		}
-		delete(object, "carryChoices")
-	}
-
-	if raw, found := object["choices"]; found {
-		err = json.Unmarshal(raw, &a.Choices)
-		if err != nil {
-			return fmt.Errorf("error reading 'choices': %w", err)
-		}
-		delete(object, "choices")
-	}
-
-	if raw, found := object["choicesLuid"]; found {
-		err = json.Unmarshal(raw, &a.ChoicesLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'choicesLuid': %w", err)
-		}
-		delete(object, "choicesLuid")
-	}
-
-	if raw, found := object["commaStart"]; found {
-		err = json.Unmarshal(raw, &a.CommaStart)
-		if err != nil {
-			return fmt.Errorf("error reading 'commaStart': %w", err)
-		}
-		delete(object, "commaStart")
-	}
-
-	if raw, found := object["comments"]; found {
-		err = json.Unmarshal(raw, &a.Comments)
-		if err != nil {
-			return fmt.Errorf("error reading 'comments': %w", err)
-		}
-		delete(object, "comments")
-	}
-
-	if raw, found := object["compositeFields"]; found {
-		err = json.Unmarshal(raw, &a.CompositeFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'compositeFields': %w", err)
-		}
-		delete(object, "compositeFields")
-	}
-
-	if raw, found := object["coverText"]; found {
-		err = json.Unmarshal(raw, &a.CoverText)
-		if err != nil {
-			return fmt.Errorf("error reading 'coverText': %w", err)
-		}
-		delete(object, "coverText")
-	}
-
-	if raw, found := object["currencyFormat"]; found {
-		err = json.Unmarshal(raw, &a.CurrencyFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencyFormat': %w", err)
-		}
-		delete(object, "currencyFormat")
-	}
-
-	if raw, found := object["currencySymbol"]; found {
-		err = json.Unmarshal(raw, &a.CurrencySymbol)
-		if err != nil {
-			return fmt.Errorf("error reading 'currencySymbol': %w", err)
-		}
-		delete(object, "currencySymbol")
-	}
-
-	if raw, found := object["decimalPlaces"]; found {
-		err = json.Unmarshal(raw, &a.DecimalPlaces)
-		if err != nil {
-			return fmt.Errorf("error reading 'decimalPlaces': %w", err)
-		}
-		delete(object, "decimalPlaces")
-	}
-
-	if raw, found := object["defaultCountryCode"]; found {
-		err = json.Unmarshal(raw, &a.DefaultCountryCode)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultCountryCode': %w", err)
-		}
-		delete(object, "defaultCountryCode")
-	}
-
-	if raw, found := object["defaultDomain"]; found {
-		err = json.Unmarshal(raw, &a.DefaultDomain)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultDomain': %w", err)
-		}
-		delete(object, "defaultDomain")
-	}
-
-	if raw, found := object["defaultKind"]; found {
-		err = json.Unmarshal(raw, &a.DefaultKind)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultKind': %w", err)
-		}
-		delete(object, "defaultKind")
-	}
-
-	if raw, found := object["defaultToday"]; found {
-		err = json.Unmarshal(raw, &a.DefaultToday)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultToday': %w", err)
-		}
-		delete(object, "defaultToday")
-	}
-
-	if raw, found := object["defaultValue"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValue)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValue': %w", err)
-		}
-		delete(object, "defaultValue")
-	}
-
-	if raw, found := object["defaultValueLuid"]; found {
-		err = json.Unmarshal(raw, &a.DefaultValueLuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultValueLuid': %w", err)
-		}
-		delete(object, "defaultValueLuid")
-	}
-
-	if raw, found := object["displayAsLink"]; found {
-		err = json.Unmarshal(raw, &a.DisplayAsLink)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayAsLink': %w", err)
-		}
-		delete(object, "displayAsLink")
-	}
-
-	if raw, found := object["displayCheckboxAsText"]; found {
-		err = json.Unmarshal(raw, &a.DisplayCheckboxAsText)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayCheckboxAsText': %w", err)
-		}
-		delete(object, "displayCheckboxAsText")
-	}
-
-	if raw, found := object["displayDayOfWeek"]; found {
-		err = json.Unmarshal(raw, &a.DisplayDayOfWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayDayOfWeek': %w", err)
-		}
-		delete(object, "displayDayOfWeek")
-	}
-
-	if raw, found := object["displayEmail"]; found {
-		err = json.Unmarshal(raw, &a.DisplayEmail)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayEmail': %w", err)
-		}
-		delete(object, "displayEmail")
-	}
-
-	if raw, found := object["displayMonth"]; found {
-		err = json.Unmarshal(raw, &a.DisplayMonth)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayMonth': %w", err)
-		}
-		delete(object, "displayMonth")
-	}
-
-	if raw, found := object["displayRelative"]; found {
-		err = json.Unmarshal(raw, &a.DisplayRelative)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayRelative': %w", err)
-		}
-		delete(object, "displayRelative")
-	}
-
-	if raw, found := object["displayTime"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTime)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTime': %w", err)
-		}
-		delete(object, "displayTime")
-	}
-
-	if raw, found := object["displayTimezone"]; found {
-		err = json.Unmarshal(raw, &a.DisplayTimezone)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayTimezone': %w", err)
-		}
-		delete(object, "displayTimezone")
-	}
-
-	if raw, found := object["displayUser"]; found {
-		err = json.Unmarshal(raw, &a.DisplayUser)
-		if err != nil {
-			return fmt.Errorf("error reading 'displayUser': %w", err)
-		}
-		delete(object, "displayUser")
-	}
-
-	if raw, found := object["doesAverage"]; found {
-		err = json.Unmarshal(raw, &a.DoesAverage)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesAverage': %w", err)
-		}
-		delete(object, "doesAverage")
-	}
-
-	if raw, found := object["doesTotal"]; found {
-		err = json.Unmarshal(raw, &a.DoesTotal)
-		if err != nil {
-			return fmt.Errorf("error reading 'doesTotal': %w", err)
-		}
-		delete(object, "doesTotal")
-	}
-
-	if raw, found := object["durationField"]; found {
-		err = json.Unmarshal(raw, &a.DurationField)
-		if err != nil {
-			return fmt.Errorf("error reading 'durationField': %w", err)
-		}
-		delete(object, "durationField")
-	}
-
-	if raw, found := object["exact"]; found {
-		err = json.Unmarshal(raw, &a.Exact)
-		if err != nil {
-			return fmt.Errorf("error reading 'exact': %w", err)
-		}
-		delete(object, "exact")
-	}
-
-	if raw, found := object["foreignKey"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKey)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKey': %w", err)
-		}
-		delete(object, "foreignKey")
-	}
-
-	if raw, found := object["format"]; found {
-		err = json.Unmarshal(raw, &a.Format)
-		if err != nil {
-			return fmt.Errorf("error reading 'format': %w", err)
-		}
-		delete(object, "format")
-	}
-
-	if raw, found := object["formula"]; found {
-		err = json.Unmarshal(raw, &a.Formula)
-		if err != nil {
-			return fmt.Errorf("error reading 'formula': %w", err)
-		}
-		delete(object, "formula")
-	}
-
-	if raw, found := object["hasExtension"]; found {
-		err = json.Unmarshal(raw, &a.HasExtension)
-		if err != nil {
-			return fmt.Errorf("error reading 'hasExtension': %w", err)
-		}
-		delete(object, "hasExtension")
-	}
-
-	if raw, found := object["hours24"]; found {
-		err = json.Unmarshal(raw, &a.Hours24)
-		if err != nil {
-			return fmt.Errorf("error reading 'hours24': %w", err)
-		}
-		delete(object, "hours24")
-	}
-
-	if raw, found := object["linkText"]; found {
-		err = json.Unmarshal(raw, &a.LinkText)
-		if err != nil {
-			return fmt.Errorf("error reading 'linkText': %w", err)
-		}
-		delete(object, "linkText")
-	}
-
-	if raw, found := object["lookupReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupReferenceFieldId': %w", err)
-		}
-		delete(object, "lookupReferenceFieldId")
-	}
-
-	if raw, found := object["lookupTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.LookupTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupTargetFieldId': %w", err)
-		}
-		delete(object, "lookupTargetFieldId")
-	}
-
-	if raw, found := object["masterChoiceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceFieldId': %w", err)
-		}
-		delete(object, "masterChoiceFieldId")
-	}
-
-	if raw, found := object["masterChoiceTableId"]; found {
-		err = json.Unmarshal(raw, &a.MasterChoiceTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterChoiceTableId': %w", err)
-		}
-		delete(object, "masterChoiceTableId")
-	}
-
-	if raw, found := object["masterTableTag"]; found {
-		err = json.Unmarshal(raw, &a.MasterTableTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'masterTableTag': %w", err)
-		}
-		delete(object, "masterTableTag")
-	}
-
-	if raw, found := object["maxLength"]; found {
-		err = json.Unmarshal(raw, &a.MaxLength)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxLength': %w", err)
-		}
-		delete(object, "maxLength")
-	}
-
-	if raw, found := object["maxVersions"]; found {
-		err = json.Unmarshal(raw, &a.MaxVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'maxVersions': %w", err)
-		}
-		delete(object, "maxVersions")
-	}
-
-	if raw, found := object["numLines"]; found {
-		err = json.Unmarshal(raw, &a.NumLines)
-		if err != nil {
-			return fmt.Errorf("error reading 'numLines': %w", err)
-		}
-		delete(object, "numLines")
-	}
-
-	if raw, found := object["numberFormat"]; found {
-		err = json.Unmarshal(raw, &a.NumberFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'numberFormat': %w", err)
-		}
-		delete(object, "numberFormat")
-	}
-
-	if raw, found := object["parentFieldId"]; found {
-		err = json.Unmarshal(raw, &a.ParentFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentFieldId': %w", err)
-		}
-		delete(object, "parentFieldId")
-	}
-
-	if raw, found := object["postTempToken"]; found {
-		err = json.Unmarshal(raw, &a.PostTempToken)
-		if err != nil {
-			return fmt.Errorf("error reading 'postTempToken': %w", err)
-		}
-		delete(object, "postTempToken")
-	}
-
-	if raw, found := object["seeVersions"]; found {
-		err = json.Unmarshal(raw, &a.SeeVersions)
-		if err != nil {
-			return fmt.Errorf("error reading 'seeVersions': %w", err)
-		}
-		delete(object, "seeVersions")
-	}
-
-	if raw, found := object["snapFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SnapFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'snapFieldId': %w", err)
-		}
-		delete(object, "snapFieldId")
-	}
-
-	if raw, found := object["sortAlpha"]; found {
-		err = json.Unmarshal(raw, &a.SortAlpha)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAlpha': %w", err)
-		}
-		delete(object, "sortAlpha")
-	}
-
-	if raw, found := object["sortAsGiven"]; found {
-		err = json.Unmarshal(raw, &a.SortAsGiven)
-		if err != nil {
-			return fmt.Errorf("error reading 'sortAsGiven': %w", err)
-		}
-		delete(object, "sortAsGiven")
-	}
-
-	if raw, found := object["sourceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SourceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'sourceFieldId': %w", err)
-		}
-		delete(object, "sourceFieldId")
-	}
-
-	if raw, found := object["startField"]; found {
-		err = json.Unmarshal(raw, &a.StartField)
-		if err != nil {
-			return fmt.Errorf("error reading 'startField': %w", err)
-		}
-		delete(object, "startField")
-	}
-
-	if raw, found := object["summaryFunction"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFunction)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFunction': %w", err)
-		}
-		delete(object, "summaryFunction")
-	}
-
-	if raw, found := object["summaryReferenceFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryReferenceFieldId': %w", err)
-		}
-		delete(object, "summaryReferenceFieldId")
-	}
-
-	if raw, found := object["summaryTargetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.SummaryTargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryTargetFieldId': %w", err)
-		}
-		delete(object, "summaryTargetFieldId")
-	}
-
-	if raw, found := object["targetFieldId"]; found {
-		err = json.Unmarshal(raw, &a.TargetFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetFieldId': %w", err)
-		}
-		delete(object, "targetFieldId")
-	}
-
-	if raw, found := object["targetTableId"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableId': %w", err)
-		}
-		delete(object, "targetTableId")
-	}
-
-	if raw, found := object["targetTableName"]; found {
-		err = json.Unmarshal(raw, &a.TargetTableName)
-		if err != nil {
-			return fmt.Errorf("error reading 'targetTableName': %w", err)
-		}
-		delete(object, "targetTableName")
-	}
-
-	if raw, found := object["units"]; found {
-		err = json.Unmarshal(raw, &a.Units)
-		if err != nil {
-			return fmt.Errorf("error reading 'units': %w", err)
-		}
-		delete(object, "units")
-	}
-
-	if raw, found := object["useI18NFormat"]; found {
-		err = json.Unmarshal(raw, &a.UseI18NFormat)
-		if err != nil {
-			return fmt.Errorf("error reading 'useI18NFormat': %w", err)
-		}
-		delete(object, "useI18NFormat")
-	}
-
-	if raw, found := object["useNewWindow"]; found {
-		err = json.Unmarshal(raw, &a.UseNewWindow)
-		if err != nil {
-			return fmt.Errorf("error reading 'useNewWindow': %w", err)
-		}
-		delete(object, "useNewWindow")
-	}
-
-	if raw, found := object["versionMode"]; found {
-		err = json.Unmarshal(raw, &a.VersionMode)
-		if err != nil {
-			return fmt.Errorf("error reading 'versionMode': %w", err)
-		}
-		delete(object, "versionMode")
-	}
-
-	if raw, found := object["width"]; found {
-		err = json.Unmarshal(raw, &a.Width)
-		if err != nil {
-			return fmt.Errorf("error reading 'width': %w", err)
-		}
-		delete(object, "width")
-	}
-
-	if raw, found := object["workWeek"]; found {
-		err = json.Unmarshal(raw, &a.WorkWeek)
-		if err != nil {
-			return fmt.Errorf("error reading 'workWeek': %w", err)
-		}
-		delete(object, "workWeek")
-	}
-
-	if raw, found := object["xmlTag"]; found {
-		err = json.Unmarshal(raw, &a.XmlTag)
-		if err != nil {
-			return fmt.Errorf("error reading 'xmlTag': %w", err)
-		}
-		delete(object, "xmlTag")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateFieldData_Properties to handle AdditionalProperties
-func (a UpdateFieldData_Properties) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Abbreviate != nil {
-		object["abbreviate"], err = json.Marshal(a.Abbreviate)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'abbreviate': %w", err)
-		}
-	}
-
-	if a.AllowHTML != nil {
-		object["allowHTML"], err = json.Marshal(a.AllowHTML)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowHTML': %w", err)
-		}
-	}
-
-	if a.AllowMentions != nil {
-		object["allowMentions"], err = json.Marshal(a.AllowMentions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowMentions': %w", err)
-		}
-	}
-
-	if a.AllowNewChoices != nil {
-		object["allowNewChoices"], err = json.Marshal(a.AllowNewChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'allowNewChoices': %w", err)
-		}
-	}
-
-	if a.AppearsAs != nil {
-		object["appearsAs"], err = json.Marshal(a.AppearsAs)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appearsAs': %w", err)
-		}
-	}
-
-	if a.AppendOnly != nil {
-		object["appendOnly"], err = json.Marshal(a.AppendOnly)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'appendOnly': %w", err)
-		}
-	}
-
-	if a.AutoSave != nil {
-		object["autoSave"], err = json.Marshal(a.AutoSave)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'autoSave': %w", err)
-		}
-	}
-
-	if a.BlankIsZero != nil {
-		object["blankIsZero"], err = json.Marshal(a.BlankIsZero)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'blankIsZero': %w", err)
-		}
-	}
-
-	if a.CarryChoices != nil {
-		object["carryChoices"], err = json.Marshal(a.CarryChoices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'carryChoices': %w", err)
-		}
-	}
-
-	if a.Choices != nil {
-		object["choices"], err = json.Marshal(a.Choices)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choices': %w", err)
-		}
-	}
-
-	if a.ChoicesLuid != nil {
-		object["choicesLuid"], err = json.Marshal(a.ChoicesLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'choicesLuid': %w", err)
-		}
-	}
-
-	if a.CommaStart != nil {
-		object["commaStart"], err = json.Marshal(a.CommaStart)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'commaStart': %w", err)
-		}
-	}
-
-	if a.Comments != nil {
-		object["comments"], err = json.Marshal(a.Comments)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'comments': %w", err)
-		}
-	}
-
-	if a.CompositeFields != nil {
-		object["compositeFields"], err = json.Marshal(a.CompositeFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'compositeFields': %w", err)
-		}
-	}
-
-	if a.CoverText != nil {
-		object["coverText"], err = json.Marshal(a.CoverText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'coverText': %w", err)
-		}
-	}
-
-	if a.CurrencyFormat != nil {
-		object["currencyFormat"], err = json.Marshal(a.CurrencyFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencyFormat': %w", err)
-		}
-	}
-
-	if a.CurrencySymbol != nil {
-		object["currencySymbol"], err = json.Marshal(a.CurrencySymbol)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'currencySymbol': %w", err)
-		}
-	}
-
-	if a.DecimalPlaces != nil {
-		object["decimalPlaces"], err = json.Marshal(a.DecimalPlaces)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'decimalPlaces': %w", err)
-		}
-	}
-
-	if a.DefaultCountryCode != nil {
-		object["defaultCountryCode"], err = json.Marshal(a.DefaultCountryCode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultCountryCode': %w", err)
-		}
-	}
-
-	if a.DefaultDomain != nil {
-		object["defaultDomain"], err = json.Marshal(a.DefaultDomain)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultDomain': %w", err)
-		}
-	}
-
-	if a.DefaultKind != nil {
-		object["defaultKind"], err = json.Marshal(a.DefaultKind)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultKind': %w", err)
-		}
-	}
-
-	if a.DefaultToday != nil {
-		object["defaultToday"], err = json.Marshal(a.DefaultToday)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultToday': %w", err)
-		}
-	}
-
-	if a.DefaultValue != nil {
-		object["defaultValue"], err = json.Marshal(a.DefaultValue)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValue': %w", err)
-		}
-	}
-
-	if a.DefaultValueLuid != nil {
-		object["defaultValueLuid"], err = json.Marshal(a.DefaultValueLuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultValueLuid': %w", err)
-		}
-	}
-
-	if a.DisplayAsLink != nil {
-		object["displayAsLink"], err = json.Marshal(a.DisplayAsLink)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayAsLink': %w", err)
-		}
-	}
-
-	if a.DisplayCheckboxAsText != nil {
-		object["displayCheckboxAsText"], err = json.Marshal(a.DisplayCheckboxAsText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayCheckboxAsText': %w", err)
-		}
-	}
-
-	if a.DisplayDayOfWeek != nil {
-		object["displayDayOfWeek"], err = json.Marshal(a.DisplayDayOfWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayDayOfWeek': %w", err)
-		}
-	}
-
-	if a.DisplayEmail != nil {
-		object["displayEmail"], err = json.Marshal(a.DisplayEmail)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayEmail': %w", err)
-		}
-	}
-
-	if a.DisplayMonth != nil {
-		object["displayMonth"], err = json.Marshal(a.DisplayMonth)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayMonth': %w", err)
-		}
-	}
-
-	if a.DisplayRelative != nil {
-		object["displayRelative"], err = json.Marshal(a.DisplayRelative)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayRelative': %w", err)
-		}
-	}
-
-	if a.DisplayTime != nil {
-		object["displayTime"], err = json.Marshal(a.DisplayTime)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTime': %w", err)
-		}
-	}
-
-	if a.DisplayTimezone != nil {
-		object["displayTimezone"], err = json.Marshal(a.DisplayTimezone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayTimezone': %w", err)
-		}
-	}
-
-	if a.DisplayUser != nil {
-		object["displayUser"], err = json.Marshal(a.DisplayUser)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'displayUser': %w", err)
-		}
-	}
-
-	if a.DoesAverage != nil {
-		object["doesAverage"], err = json.Marshal(a.DoesAverage)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesAverage': %w", err)
-		}
-	}
-
-	if a.DoesTotal != nil {
-		object["doesTotal"], err = json.Marshal(a.DoesTotal)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'doesTotal': %w", err)
-		}
-	}
-
-	if a.DurationField != nil {
-		object["durationField"], err = json.Marshal(a.DurationField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'durationField': %w", err)
-		}
-	}
-
-	if a.Exact != nil {
-		object["exact"], err = json.Marshal(a.Exact)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'exact': %w", err)
-		}
-	}
-
-	if a.ForeignKey != nil {
-		object["foreignKey"], err = json.Marshal(a.ForeignKey)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKey': %w", err)
-		}
-	}
-
-	if a.Format != nil {
-		object["format"], err = json.Marshal(a.Format)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'format': %w", err)
-		}
-	}
-
-	if a.Formula != nil {
-		object["formula"], err = json.Marshal(a.Formula)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'formula': %w", err)
-		}
-	}
-
-	if a.HasExtension != nil {
-		object["hasExtension"], err = json.Marshal(a.HasExtension)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hasExtension': %w", err)
-		}
-	}
-
-	if a.Hours24 != nil {
-		object["hours24"], err = json.Marshal(a.Hours24)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'hours24': %w", err)
-		}
-	}
-
-	if a.LinkText != nil {
-		object["linkText"], err = json.Marshal(a.LinkText)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'linkText': %w", err)
-		}
-	}
-
-	if a.LookupReferenceFieldId != nil {
-		object["lookupReferenceFieldId"], err = json.Marshal(a.LookupReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.LookupTargetFieldId != nil {
-		object["lookupTargetFieldId"], err = json.Marshal(a.LookupTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupTargetFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceFieldId != nil {
-		object["masterChoiceFieldId"], err = json.Marshal(a.MasterChoiceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceFieldId': %w", err)
-		}
-	}
-
-	if a.MasterChoiceTableId != nil {
-		object["masterChoiceTableId"], err = json.Marshal(a.MasterChoiceTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterChoiceTableId': %w", err)
-		}
-	}
-
-	if a.MasterTableTag != nil {
-		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'masterTableTag': %w", err)
-		}
-	}
-
-	if a.MaxLength != nil {
-		object["maxLength"], err = json.Marshal(a.MaxLength)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxLength': %w", err)
-		}
-	}
-
-	if a.MaxVersions != nil {
-		object["maxVersions"], err = json.Marshal(a.MaxVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'maxVersions': %w", err)
-		}
-	}
-
-	if a.NumLines != nil {
-		object["numLines"], err = json.Marshal(a.NumLines)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numLines': %w", err)
-		}
-	}
-
-	if a.NumberFormat != nil {
-		object["numberFormat"], err = json.Marshal(a.NumberFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'numberFormat': %w", err)
-		}
-	}
-
-	if a.ParentFieldId != nil {
-		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'parentFieldId': %w", err)
-		}
-	}
-
-	if a.PostTempToken != nil {
-		object["postTempToken"], err = json.Marshal(a.PostTempToken)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
-		}
-	}
-
-	if a.SeeVersions != nil {
-		object["seeVersions"], err = json.Marshal(a.SeeVersions)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'seeVersions': %w", err)
-		}
-	}
-
-	if a.SnapFieldId != nil {
-		object["snapFieldId"], err = json.Marshal(a.SnapFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'snapFieldId': %w", err)
-		}
-	}
-
-	if a.SortAlpha != nil {
-		object["sortAlpha"], err = json.Marshal(a.SortAlpha)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAlpha': %w", err)
-		}
-	}
-
-	if a.SortAsGiven != nil {
-		object["sortAsGiven"], err = json.Marshal(a.SortAsGiven)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sortAsGiven': %w", err)
-		}
-	}
-
-	if a.SourceFieldId != nil {
-		object["sourceFieldId"], err = json.Marshal(a.SourceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sourceFieldId': %w", err)
-		}
-	}
-
-	if a.StartField != nil {
-		object["startField"], err = json.Marshal(a.StartField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'startField': %w", err)
-		}
-	}
-
-	if a.SummaryFunction != nil {
-		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
-		}
-	}
-
-	if a.SummaryReferenceFieldId != nil {
-		object["summaryReferenceFieldId"], err = json.Marshal(a.SummaryReferenceFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryReferenceFieldId': %w", err)
-		}
-	}
-
-	if a.SummaryTargetFieldId != nil {
-		object["summaryTargetFieldId"], err = json.Marshal(a.SummaryTargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryTargetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetFieldId != nil {
-		object["targetFieldId"], err = json.Marshal(a.TargetFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetFieldId': %w", err)
-		}
-	}
-
-	if a.TargetTableId != nil {
-		object["targetTableId"], err = json.Marshal(a.TargetTableId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableId': %w", err)
-		}
-	}
-
-	if a.TargetTableName != nil {
-		object["targetTableName"], err = json.Marshal(a.TargetTableName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'targetTableName': %w", err)
-		}
-	}
-
-	if a.Units != nil {
-		object["units"], err = json.Marshal(a.Units)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'units': %w", err)
-		}
-	}
-
-	if a.UseI18NFormat != nil {
-		object["useI18NFormat"], err = json.Marshal(a.UseI18NFormat)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useI18NFormat': %w", err)
-		}
-	}
-
-	if a.UseNewWindow != nil {
-		object["useNewWindow"], err = json.Marshal(a.UseNewWindow)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'useNewWindow': %w", err)
-		}
-	}
-
-	if a.VersionMode != nil {
-		object["versionMode"], err = json.Marshal(a.VersionMode)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'versionMode': %w", err)
-		}
-	}
-
-	if a.Width != nil {
-		object["width"], err = json.Marshal(a.Width)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'width': %w", err)
-		}
-	}
-
-	if a.WorkWeek != nil {
-		object["workWeek"], err = json.Marshal(a.WorkWeek)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'workWeek': %w", err)
-		}
-	}
-
-	if a.XmlTag != nil {
-		object["xmlTag"], err = json.Marshal(a.XmlTag)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'xmlTag': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateRelationshipData. Returns the specified
-// element and whether it was found
-func (a UpdateRelationshipData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateRelationshipData
-func (a *UpdateRelationshipData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateRelationshipData to handle AdditionalProperties
-func (a *UpdateRelationshipData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["childTableId"]; found {
-		err = json.Unmarshal(raw, &a.ChildTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'childTableId': %w", err)
-		}
-		delete(object, "childTableId")
-	}
-
-	if raw, found := object["foreignKeyField"]; found {
-		err = json.Unmarshal(raw, &a.ForeignKeyField)
-		if err != nil {
-			return fmt.Errorf("error reading 'foreignKeyField': %w", err)
-		}
-		delete(object, "foreignKeyField")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["isCrossApp"]; found {
-		err = json.Unmarshal(raw, &a.IsCrossApp)
-		if err != nil {
-			return fmt.Errorf("error reading 'isCrossApp': %w", err)
-		}
-		delete(object, "isCrossApp")
-	}
-
-	if raw, found := object["lookupFields"]; found {
-		err = json.Unmarshal(raw, &a.LookupFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'lookupFields': %w", err)
-		}
-		delete(object, "lookupFields")
-	}
-
-	if raw, found := object["parentTableId"]; found {
-		err = json.Unmarshal(raw, &a.ParentTableId)
-		if err != nil {
-			return fmt.Errorf("error reading 'parentTableId': %w", err)
-		}
-		delete(object, "parentTableId")
-	}
-
-	if raw, found := object["summaryFields"]; found {
-		err = json.Unmarshal(raw, &a.SummaryFields)
-		if err != nil {
-			return fmt.Errorf("error reading 'summaryFields': %w", err)
-		}
-		delete(object, "summaryFields")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateRelationshipData to handle AdditionalProperties
-func (a UpdateRelationshipData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["childTableId"], err = json.Marshal(a.ChildTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'childTableId': %w", err)
-	}
-
-	if a.ForeignKeyField != nil {
-		object["foreignKeyField"], err = json.Marshal(a.ForeignKeyField)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'foreignKeyField': %w", err)
-		}
-	}
-
-	object["id"], err = json.Marshal(a.Id)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'id': %w", err)
-	}
-
-	object["isCrossApp"], err = json.Marshal(a.IsCrossApp)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'isCrossApp': %w", err)
-	}
-
-	if a.LookupFields != nil {
-		object["lookupFields"], err = json.Marshal(a.LookupFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lookupFields': %w", err)
-		}
-	}
-
-	object["parentTableId"], err = json.Marshal(a.ParentTableId)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'parentTableId': %w", err)
-	}
-
-	if a.SummaryFields != nil {
-		object["summaryFields"], err = json.Marshal(a.SummaryFields)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'summaryFields': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateRelationshipData_ForeignKeyField. Returns the specified
-// element and whether it was found
-func (a UpdateRelationshipData_ForeignKeyField) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateRelationshipData_ForeignKeyField
-func (a *UpdateRelationshipData_ForeignKeyField) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateRelationshipData_ForeignKeyField to handle AdditionalProperties
-func (a *UpdateRelationshipData_ForeignKeyField) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateRelationshipData_ForeignKeyField to handle AdditionalProperties
-func (a UpdateRelationshipData_ForeignKeyField) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateRelationshipData_LookupFields_Item. Returns the specified
-// element and whether it was found
-func (a UpdateRelationshipData_LookupFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateRelationshipData_LookupFields_Item
-func (a *UpdateRelationshipData_LookupFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateRelationshipData_LookupFields_Item to handle AdditionalProperties
-func (a *UpdateRelationshipData_LookupFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateRelationshipData_LookupFields_Item to handle AdditionalProperties
-func (a UpdateRelationshipData_LookupFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateRelationshipData_SummaryFields_Item. Returns the specified
-// element and whether it was found
-func (a UpdateRelationshipData_SummaryFields_Item) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateRelationshipData_SummaryFields_Item
-func (a *UpdateRelationshipData_SummaryFields_Item) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateRelationshipData_SummaryFields_Item to handle AdditionalProperties
-func (a *UpdateRelationshipData_SummaryFields_Item) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["label"]; found {
-		err = json.Unmarshal(raw, &a.Label)
-		if err != nil {
-			return fmt.Errorf("error reading 'label': %w", err)
-		}
-		delete(object, "label")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateRelationshipData_SummaryFields_Item to handle AdditionalProperties
-func (a UpdateRelationshipData_SummaryFields_Item) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.Label != nil {
-		object["label"], err = json.Marshal(a.Label)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'label': %w", err)
-		}
-	}
-
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpdateTableData. Returns the specified
-// element and whether it was found
-func (a UpdateTableData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpdateTableData
-func (a *UpdateTableData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpdateTableData to handle AdditionalProperties
-func (a *UpdateTableData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["alias"]; found {
-		err = json.Unmarshal(raw, &a.Alias)
-		if err != nil {
-			return fmt.Errorf("error reading 'alias': %w", err)
-		}
-		delete(object, "alias")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["defaultSortFieldId"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortFieldId': %w", err)
-		}
-		delete(object, "defaultSortFieldId")
-	}
-
-	if raw, found := object["defaultSortOrder"]; found {
-		err = json.Unmarshal(raw, &a.DefaultSortOrder)
-		if err != nil {
-			return fmt.Errorf("error reading 'defaultSortOrder': %w", err)
-		}
-		delete(object, "defaultSortOrder")
-	}
-
-	if raw, found := object["description"]; found {
-		err = json.Unmarshal(raw, &a.Description)
-		if err != nil {
-			return fmt.Errorf("error reading 'description': %w", err)
-		}
-		delete(object, "description")
-	}
-
-	if raw, found := object["id"]; found {
-		err = json.Unmarshal(raw, &a.Id)
-		if err != nil {
-			return fmt.Errorf("error reading 'id': %w", err)
-		}
-		delete(object, "id")
-	}
-
-	if raw, found := object["keyFieldId"]; found {
-		err = json.Unmarshal(raw, &a.KeyFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'keyFieldId': %w", err)
-		}
-		delete(object, "keyFieldId")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["nextFieldId"]; found {
-		err = json.Unmarshal(raw, &a.NextFieldId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextFieldId': %w", err)
-		}
-		delete(object, "nextFieldId")
-	}
-
-	if raw, found := object["nextRecordId"]; found {
-		err = json.Unmarshal(raw, &a.NextRecordId)
-		if err != nil {
-			return fmt.Errorf("error reading 'nextRecordId': %w", err)
-		}
-		delete(object, "nextRecordId")
-	}
-
-	if raw, found := object["pluralRecordName"]; found {
-		err = json.Unmarshal(raw, &a.PluralRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'pluralRecordName': %w", err)
-		}
-		delete(object, "pluralRecordName")
-	}
-
-	if raw, found := object["singleRecordName"]; found {
-		err = json.Unmarshal(raw, &a.SingleRecordName)
-		if err != nil {
-			return fmt.Errorf("error reading 'singleRecordName': %w", err)
-		}
-		delete(object, "singleRecordName")
-	}
-
-	if raw, found := object["sizeLimit"]; found {
-		err = json.Unmarshal(raw, &a.SizeLimit)
-		if err != nil {
-			return fmt.Errorf("error reading 'sizeLimit': %w", err)
-		}
-		delete(object, "sizeLimit")
-	}
-
-	if raw, found := object["spaceRemaining"]; found {
-		err = json.Unmarshal(raw, &a.SpaceRemaining)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceRemaining': %w", err)
-		}
-		delete(object, "spaceRemaining")
-	}
-
-	if raw, found := object["spaceUsed"]; found {
-		err = json.Unmarshal(raw, &a.SpaceUsed)
-		if err != nil {
-			return fmt.Errorf("error reading 'spaceUsed': %w", err)
-		}
-		delete(object, "spaceUsed")
-	}
-
-	if raw, found := object["updated"]; found {
-		err = json.Unmarshal(raw, &a.Updated)
-		if err != nil {
-			return fmt.Errorf("error reading 'updated': %w", err)
-		}
-		delete(object, "updated")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpdateTableData to handle AdditionalProperties
-func (a UpdateTableData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Alias != nil {
-		object["alias"], err = json.Marshal(a.Alias)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'alias': %w", err)
-		}
-	}
-
-	if a.Created != nil {
-		object["created"], err = json.Marshal(a.Created)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'created': %w", err)
-		}
-	}
-
-	if a.DefaultSortFieldId != nil {
-		object["defaultSortFieldId"], err = json.Marshal(a.DefaultSortFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortFieldId': %w", err)
-		}
-	}
-
-	if a.DefaultSortOrder != nil {
-		object["defaultSortOrder"], err = json.Marshal(a.DefaultSortOrder)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'defaultSortOrder': %w", err)
-		}
-	}
-
-	if a.Description != nil {
-		object["description"], err = json.Marshal(a.Description)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'description': %w", err)
-		}
-	}
-
-	if a.Id != nil {
-		object["id"], err = json.Marshal(a.Id)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'id': %w", err)
-		}
-	}
-
-	if a.KeyFieldId != nil {
-		object["keyFieldId"], err = json.Marshal(a.KeyFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'keyFieldId': %w", err)
-		}
-	}
-
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
-		}
-	}
-
-	if a.NextFieldId != nil {
-		object["nextFieldId"], err = json.Marshal(a.NextFieldId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextFieldId': %w", err)
-		}
-	}
-
-	if a.NextRecordId != nil {
-		object["nextRecordId"], err = json.Marshal(a.NextRecordId)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nextRecordId': %w", err)
-		}
-	}
-
-	if a.PluralRecordName != nil {
-		object["pluralRecordName"], err = json.Marshal(a.PluralRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'pluralRecordName': %w", err)
-		}
-	}
-
-	if a.SingleRecordName != nil {
-		object["singleRecordName"], err = json.Marshal(a.SingleRecordName)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'singleRecordName': %w", err)
-		}
-	}
-
-	if a.SizeLimit != nil {
-		object["sizeLimit"], err = json.Marshal(a.SizeLimit)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'sizeLimit': %w", err)
-		}
-	}
-
-	if a.SpaceRemaining != nil {
-		object["spaceRemaining"], err = json.Marshal(a.SpaceRemaining)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceRemaining': %w", err)
-		}
-	}
-
-	if a.SpaceUsed != nil {
-		object["spaceUsed"], err = json.Marshal(a.SpaceUsed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'spaceUsed': %w", err)
-		}
-	}
-
-	if a.Updated != nil {
-		object["updated"], err = json.Marshal(a.Updated)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updated': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpsertData. Returns the specified
-// element and whether it was found
-func (a UpsertData) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpsertData
-func (a *UpsertData) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpsertData to handle AdditionalProperties
-func (a *UpsertData) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["data"]; found {
-		err = json.Unmarshal(raw, &a.Data)
-		if err != nil {
-			return fmt.Errorf("error reading 'data': %w", err)
-		}
-		delete(object, "data")
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpsertData to handle AdditionalProperties
-func (a UpsertData) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.Data != nil {
-		object["data"], err = json.Marshal(a.Data)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'data': %w", err)
-		}
-	}
-
-	if a.Metadata != nil {
-		object["metadata"], err = json.Marshal(a.Metadata)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// Getter for additional properties for UpsertData_Metadata. Returns the specified
-// element and whether it was found
-func (a UpsertData_Metadata) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
-}
-
-// Setter for additional properties for UpsertData_Metadata
-func (a *UpsertData_Metadata) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for UpsertData_Metadata to handle AdditionalProperties
-func (a *UpsertData_Metadata) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["createdRecordIds"]; found {
-		err = json.Unmarshal(raw, &a.CreatedRecordIds)
-		if err != nil {
-			return fmt.Errorf("error reading 'createdRecordIds': %w", err)
-		}
-		delete(object, "createdRecordIds")
-	}
-
-	if raw, found := object["lineErrors"]; found {
-		err = json.Unmarshal(raw, &a.LineErrors)
-		if err != nil {
-			return fmt.Errorf("error reading 'lineErrors': %w", err)
-		}
-		delete(object, "lineErrors")
-	}
-
-	if raw, found := object["totalNumberOfRecordsProcessed"]; found {
-		err = json.Unmarshal(raw, &a.TotalNumberOfRecordsProcessed)
-		if err != nil {
-			return fmt.Errorf("error reading 'totalNumberOfRecordsProcessed': %w", err)
-		}
-		delete(object, "totalNumberOfRecordsProcessed")
-	}
-
-	if raw, found := object["unchangedRecordIds"]; found {
-		err = json.Unmarshal(raw, &a.UnchangedRecordIds)
-		if err != nil {
-			return fmt.Errorf("error reading 'unchangedRecordIds': %w", err)
-		}
-		delete(object, "unchangedRecordIds")
-	}
-
-	if raw, found := object["updatedRecordIds"]; found {
-		err = json.Unmarshal(raw, &a.UpdatedRecordIds)
-		if err != nil {
-			return fmt.Errorf("error reading 'updatedRecordIds': %w", err)
-		}
-		delete(object, "updatedRecordIds")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
-}
-
-// Override default JSON handling for UpsertData_Metadata to handle AdditionalProperties
-func (a UpsertData_Metadata) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	if a.CreatedRecordIds != nil {
-		object["createdRecordIds"], err = json.Marshal(a.CreatedRecordIds)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'createdRecordIds': %w", err)
-		}
-	}
-
-	if a.LineErrors != nil {
-		object["lineErrors"], err = json.Marshal(a.LineErrors)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'lineErrors': %w", err)
-		}
-	}
-
-	if a.TotalNumberOfRecordsProcessed != nil {
-		object["totalNumberOfRecordsProcessed"], err = json.Marshal(a.TotalNumberOfRecordsProcessed)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'totalNumberOfRecordsProcessed': %w", err)
-		}
-	}
-
-	if a.UnchangedRecordIds != nil {
-		object["unchangedRecordIds"], err = json.Marshal(a.UnchangedRecordIds)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'unchangedRecordIds': %w", err)
-		}
-	}
-
-	if a.UpdatedRecordIds != nil {
-		object["updatedRecordIds"], err = json.Marshal(a.UpdatedRecordIds)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'updatedRecordIds': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
-}
-
-// AsCreateFieldDataPropertiesCompositeFields0 returns the union data inside the CreateFieldData_Properties_CompositeFields_Item as a CreateFieldDataPropertiesCompositeFields0
-func (t CreateFieldData_Properties_CompositeFields_Item) AsCreateFieldDataPropertiesCompositeFields0() (CreateFieldDataPropertiesCompositeFields0, error) {
-	var body CreateFieldDataPropertiesCompositeFields0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromCreateFieldDataPropertiesCompositeFields0 overwrites any union data inside the CreateFieldData_Properties_CompositeFields_Item as the provided CreateFieldDataPropertiesCompositeFields0
-func (t *CreateFieldData_Properties_CompositeFields_Item) FromCreateFieldDataPropertiesCompositeFields0(v CreateFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeCreateFieldDataPropertiesCompositeFields0 performs a merge with any union data inside the CreateFieldData_Properties_CompositeFields_Item, using the provided CreateFieldDataPropertiesCompositeFields0
-func (t *CreateFieldData_Properties_CompositeFields_Item) MergeCreateFieldDataPropertiesCompositeFields0(v CreateFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsCreateFieldDataPropertiesCompositeFields1 returns the union data inside the CreateFieldData_Properties_CompositeFields_Item as a CreateFieldDataPropertiesCompositeFields1
-func (t CreateFieldData_Properties_CompositeFields_Item) AsCreateFieldDataPropertiesCompositeFields1() (CreateFieldDataPropertiesCompositeFields1, error) {
-	var body CreateFieldDataPropertiesCompositeFields1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromCreateFieldDataPropertiesCompositeFields1 overwrites any union data inside the CreateFieldData_Properties_CompositeFields_Item as the provided CreateFieldDataPropertiesCompositeFields1
-func (t *CreateFieldData_Properties_CompositeFields_Item) FromCreateFieldDataPropertiesCompositeFields1(v CreateFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeCreateFieldDataPropertiesCompositeFields1 performs a merge with any union data inside the CreateFieldData_Properties_CompositeFields_Item, using the provided CreateFieldDataPropertiesCompositeFields1
-func (t *CreateFieldData_Properties_CompositeFields_Item) MergeCreateFieldDataPropertiesCompositeFields1(v CreateFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t CreateFieldData_Properties_CompositeFields_Item) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *CreateFieldData_Properties_CompositeFields_Item) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
 // AsFieldValueValue0 returns the union data inside the FieldValue_Value as a FieldValueValue0
 func (t FieldValue_Value) AsFieldValueValue0() (FieldValueValue0, error) {
 	var body FieldValueValue0
@@ -25249,192 +3071,6 @@ func (t FieldValue_Value) MarshalJSON() ([]byte, error) {
 }
 
 func (t *FieldValue_Value) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsGetFieldDataPropertiesCompositeFields0 returns the union data inside the GetFieldData_Properties_CompositeFields_Item as a GetFieldDataPropertiesCompositeFields0
-func (t GetFieldData_Properties_CompositeFields_Item) AsGetFieldDataPropertiesCompositeFields0() (GetFieldDataPropertiesCompositeFields0, error) {
-	var body GetFieldDataPropertiesCompositeFields0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromGetFieldDataPropertiesCompositeFields0 overwrites any union data inside the GetFieldData_Properties_CompositeFields_Item as the provided GetFieldDataPropertiesCompositeFields0
-func (t *GetFieldData_Properties_CompositeFields_Item) FromGetFieldDataPropertiesCompositeFields0(v GetFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeGetFieldDataPropertiesCompositeFields0 performs a merge with any union data inside the GetFieldData_Properties_CompositeFields_Item, using the provided GetFieldDataPropertiesCompositeFields0
-func (t *GetFieldData_Properties_CompositeFields_Item) MergeGetFieldDataPropertiesCompositeFields0(v GetFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsGetFieldDataPropertiesCompositeFields1 returns the union data inside the GetFieldData_Properties_CompositeFields_Item as a GetFieldDataPropertiesCompositeFields1
-func (t GetFieldData_Properties_CompositeFields_Item) AsGetFieldDataPropertiesCompositeFields1() (GetFieldDataPropertiesCompositeFields1, error) {
-	var body GetFieldDataPropertiesCompositeFields1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromGetFieldDataPropertiesCompositeFields1 overwrites any union data inside the GetFieldData_Properties_CompositeFields_Item as the provided GetFieldDataPropertiesCompositeFields1
-func (t *GetFieldData_Properties_CompositeFields_Item) FromGetFieldDataPropertiesCompositeFields1(v GetFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeGetFieldDataPropertiesCompositeFields1 performs a merge with any union data inside the GetFieldData_Properties_CompositeFields_Item, using the provided GetFieldDataPropertiesCompositeFields1
-func (t *GetFieldData_Properties_CompositeFields_Item) MergeGetFieldDataPropertiesCompositeFields1(v GetFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t GetFieldData_Properties_CompositeFields_Item) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *GetFieldData_Properties_CompositeFields_Item) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsGetFieldsItemPropertiesCompositeFields0 returns the union data inside the GetFieldsItem_Properties_CompositeFields_Item as a GetFieldsItemPropertiesCompositeFields0
-func (t GetFieldsItem_Properties_CompositeFields_Item) AsGetFieldsItemPropertiesCompositeFields0() (GetFieldsItemPropertiesCompositeFields0, error) {
-	var body GetFieldsItemPropertiesCompositeFields0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromGetFieldsItemPropertiesCompositeFields0 overwrites any union data inside the GetFieldsItem_Properties_CompositeFields_Item as the provided GetFieldsItemPropertiesCompositeFields0
-func (t *GetFieldsItem_Properties_CompositeFields_Item) FromGetFieldsItemPropertiesCompositeFields0(v GetFieldsItemPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeGetFieldsItemPropertiesCompositeFields0 performs a merge with any union data inside the GetFieldsItem_Properties_CompositeFields_Item, using the provided GetFieldsItemPropertiesCompositeFields0
-func (t *GetFieldsItem_Properties_CompositeFields_Item) MergeGetFieldsItemPropertiesCompositeFields0(v GetFieldsItemPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsGetFieldsItemPropertiesCompositeFields1 returns the union data inside the GetFieldsItem_Properties_CompositeFields_Item as a GetFieldsItemPropertiesCompositeFields1
-func (t GetFieldsItem_Properties_CompositeFields_Item) AsGetFieldsItemPropertiesCompositeFields1() (GetFieldsItemPropertiesCompositeFields1, error) {
-	var body GetFieldsItemPropertiesCompositeFields1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromGetFieldsItemPropertiesCompositeFields1 overwrites any union data inside the GetFieldsItem_Properties_CompositeFields_Item as the provided GetFieldsItemPropertiesCompositeFields1
-func (t *GetFieldsItem_Properties_CompositeFields_Item) FromGetFieldsItemPropertiesCompositeFields1(v GetFieldsItemPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeGetFieldsItemPropertiesCompositeFields1 performs a merge with any union data inside the GetFieldsItem_Properties_CompositeFields_Item, using the provided GetFieldsItemPropertiesCompositeFields1
-func (t *GetFieldsItem_Properties_CompositeFields_Item) MergeGetFieldsItemPropertiesCompositeFields1(v GetFieldsItemPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t GetFieldsItem_Properties_CompositeFields_Item) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *GetFieldsItem_Properties_CompositeFields_Item) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsUpdateFieldDataPropertiesCompositeFields0 returns the union data inside the UpdateFieldData_Properties_CompositeFields_Item as a UpdateFieldDataPropertiesCompositeFields0
-func (t UpdateFieldData_Properties_CompositeFields_Item) AsUpdateFieldDataPropertiesCompositeFields0() (UpdateFieldDataPropertiesCompositeFields0, error) {
-	var body UpdateFieldDataPropertiesCompositeFields0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromUpdateFieldDataPropertiesCompositeFields0 overwrites any union data inside the UpdateFieldData_Properties_CompositeFields_Item as the provided UpdateFieldDataPropertiesCompositeFields0
-func (t *UpdateFieldData_Properties_CompositeFields_Item) FromUpdateFieldDataPropertiesCompositeFields0(v UpdateFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeUpdateFieldDataPropertiesCompositeFields0 performs a merge with any union data inside the UpdateFieldData_Properties_CompositeFields_Item, using the provided UpdateFieldDataPropertiesCompositeFields0
-func (t *UpdateFieldData_Properties_CompositeFields_Item) MergeUpdateFieldDataPropertiesCompositeFields0(v UpdateFieldDataPropertiesCompositeFields0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsUpdateFieldDataPropertiesCompositeFields1 returns the union data inside the UpdateFieldData_Properties_CompositeFields_Item as a UpdateFieldDataPropertiesCompositeFields1
-func (t UpdateFieldData_Properties_CompositeFields_Item) AsUpdateFieldDataPropertiesCompositeFields1() (UpdateFieldDataPropertiesCompositeFields1, error) {
-	var body UpdateFieldDataPropertiesCompositeFields1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromUpdateFieldDataPropertiesCompositeFields1 overwrites any union data inside the UpdateFieldData_Properties_CompositeFields_Item as the provided UpdateFieldDataPropertiesCompositeFields1
-func (t *UpdateFieldData_Properties_CompositeFields_Item) FromUpdateFieldDataPropertiesCompositeFields1(v UpdateFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeUpdateFieldDataPropertiesCompositeFields1 performs a merge with any union data inside the UpdateFieldData_Properties_CompositeFields_Item, using the provided UpdateFieldDataPropertiesCompositeFields1
-func (t *UpdateFieldData_Properties_CompositeFields_Item) MergeUpdateFieldDataPropertiesCompositeFields1(v UpdateFieldDataPropertiesCompositeFields1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t UpdateFieldData_Properties_CompositeFields_Item) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *UpdateFieldData_Properties_CompositeFields_Item) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -30962,8 +8598,75 @@ type ClientWithResponsesInterface interface {
 type PlatformAnalyticEventSummariesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *PlatformAnalyticEventSummariesData
+	JSON200      *struct {
+		Data struct {
+			EventsSummaries struct {
+				// AccountId The ID of the account the events are associated with.
+				AccountId string `json:"accountId"`
+
+				// End The end date and time of the requested summaries in ISO 8601 time format.
+				End time.Time `json:"end"`
+
+				// GroupBy How the events should be grouped.
+				GroupBy PlatformAnalyticEventSummaries200DataEventsSummariesGroupBy `json:"groupBy"`
+
+				// Metadata Additional information about the results that may be helpful.
+				Metadata struct {
+					// NextToken Supply this token in a subsequent request to fetch the next page of results.
+					NextToken string `json:"nextToken"`
+				} `json:"metadata"`
+
+				// Results An array of objects that contains Application/User information and an events object with summaries by event type.
+				Results []struct {
+					// EventTypes An array of events that contains specific information associated with an Application/User broken down by event type.
+					EventTypes []struct {
+						// BillingCategory Billing category of the event type.
+						BillingCategory *PlatformAnalyticEventSummaries200DataEventsSummariesResultsEventTypesBillingCategory `json:"billingCategory,omitempty"`
+
+						// Count Count of events associated with that event type and Application/User.
+						Count *int `json:"count,omitempty"`
+
+						// EventType Event type
+						EventType *string `json:"eventType,omitempty"`
+					} `json:"eventTypes"`
+
+					// Id Id of the Application/User.
+					Id string `json:"id"`
+
+					// Name Name of the Application/User.
+					Name string `json:"name"`
+
+					// Totals Totals by billing category for the event grouping.
+					Totals struct {
+						All         *float32 `json:"all,omitempty"`
+						Integration *float32 `json:"integration,omitempty"`
+						User        *float32 `json:"user,omitempty"`
+					} `json:"totals"`
+				} `json:"results"`
+
+				// Start The start date and time of the requested summaries in ISO 8601 time format.
+				Start time.Time `json:"start"`
+
+				// Totals Totals by billing category for all queried events.
+				Totals struct {
+					All         *float32 `json:"all,omitempty"`
+					Integration *float32 `json:"integration,omitempty"`
+					User        *float32 `json:"user,omitempty"`
+				} `json:"totals"`
+				Where []struct {
+					// Id Id of the item to filter by.
+					Id string `json:"id"`
+
+					// Type The type of item to filter by.
+					Type PlatformAnalyticEventSummaries200DataEventsSummariesWhereType `json:"type"`
+				} `json:"where"`
+			} `json:"eventsSummaries"`
+		} `json:"data"`
+	}
 }
+type PlatformAnalyticEventSummaries200DataEventsSummariesGroupBy string
+type PlatformAnalyticEventSummaries200DataEventsSummariesResultsEventTypesBillingCategory string
+type PlatformAnalyticEventSummaries200DataEventsSummariesWhereType string
 
 // Status returns HTTPResponse.Status
 func (r PlatformAnalyticEventSummariesResponse) Status() string {
@@ -30984,7 +8687,43 @@ func (r PlatformAnalyticEventSummariesResponse) StatusCode() int {
 type PlatformAnalyticReadsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *PlatformAnalyticReadsData
+	JSON200      *struct {
+		// Data The data object containing the read summaries.
+		Data                 PlatformAnalyticReads_200_Data `json:"data"`
+		AdditionalProperties map[string]interface{}         `json:"-"`
+	}
+}
+type PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations struct {
+	// Api Total API reads for the realm on the specified date.
+	Api int `json:"api"`
+
+	// Eoti Total reads by anonymous users for the realm on the specified date.
+	Eoti int `json:"eoti"`
+
+	// Pipelines Total pipeline reads for the realm on the specified date.
+	Pipelines            int                    `json:"pipelines"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads struct {
+	// Integrations Total integration reads for the realm on the specified date.
+	Integrations PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations `json:"integrations"`
+
+	// User Total user reads for the realm on the specified date.
+	User                 int                    `json:"user"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type PlatformAnalyticReads_200_Data_DailyDetailedReads struct {
+	// Date The date of the requested summary.
+	Date openapi_types.Date `json:"date"`
+
+	// Reads Total reads for the specified date.
+	Reads                PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads `json:"reads"`
+	AdditionalProperties map[string]interface{}                                  `json:"-"`
+}
+type PlatformAnalyticReads_200_Data struct {
+	// DailyDetailedReads Detailed read summaries for a specific date.
+	DailyDetailedReads   PlatformAnalyticReads_200_Data_DailyDetailedReads `json:"dailyDetailedReads"`
+	AdditionalProperties map[string]interface{}                            `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31006,8 +8745,38 @@ func (r PlatformAnalyticReadsResponse) StatusCode() int {
 type RemoveTrusteesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RemoveTrusteesData
-	JSON207      *struct {
+	JSON200      *struct {
+		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+		Failure []struct {
+			// Error The error message associated with the trustee that could not be updated.
+			Error *string `json:"error,omitempty"`
+
+			// Trustee Object used for operations to read, create, or update trustees in an app.
+			Trustee *struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type RemoveTrustees200FailureTrusteeType `json:"type"`
+			} `json:"trustee,omitempty"`
+		} `json:"failure"`
+
+		// Success A list of trustees that have been successfully updated.
+		Success []struct {
+			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+			Id string `json:"id"`
+
+			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+			RoleId int `json:"roleId"`
+
+			// Type The type of trustee being added. This can be a user, group, or email domain group.
+			Type RemoveTrustees200SuccessType `json:"type"`
+		} `json:"success"`
+	}
+	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
 		Failure []struct {
 			// Error The error message associated with the trustee that could not be updated.
@@ -31039,6 +8808,8 @@ type RemoveTrusteesResponse struct {
 		} `json:"success"`
 	}
 }
+type RemoveTrustees200FailureTrusteeType string
+type RemoveTrustees200SuccessType string
 type RemoveTrustees207FailureTrusteeType string
 type RemoveTrustees207SuccessType string
 
@@ -31061,8 +8832,18 @@ func (r RemoveTrusteesResponse) StatusCode() int {
 type GetTrusteesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetTrusteesItem
+	JSON200      *[]struct {
+		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+		Id string `json:"id"`
+
+		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+		RoleId int `json:"roleId"`
+
+		// Type The type of trustee being added. This can be a user, group, or email domain group.
+		Type GetTrustees200Type `json:"type"`
+	}
 }
+type GetTrustees200Type string
 
 // Status returns HTTPResponse.Status
 func (r GetTrusteesResponse) Status() string {
@@ -31083,8 +8864,44 @@ func (r GetTrusteesResponse) StatusCode() int {
 type UpdateTrusteesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpdateTrusteesData
-	JSON207      *struct {
+	JSON200      *struct {
+		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+		Failure []struct {
+			// Error The error message associated with the trustee that could not be updated.
+			Error *string `json:"error,omitempty"`
+
+			// Trustee Object used for operations to read, create, or update trustees in an app.
+			Trustee *struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+				OldRoleId int `json:"oldRoleId"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type UpdateTrustees200FailureTrusteeType `json:"type"`
+			} `json:"trustee,omitempty"`
+		} `json:"failure"`
+
+		// Success A list of trustees that have been successfully updated.
+		Success []struct {
+			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+			Id string `json:"id"`
+
+			// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+			OldRoleId int `json:"oldRoleId"`
+
+			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+			RoleId int `json:"roleId"`
+
+			// Type The type of trustee being added. This can be a user, group, or email domain group.
+			Type UpdateTrustees200SuccessType `json:"type"`
+		} `json:"success"`
+	}
+	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
 		Failure []struct {
 			// Error The error message associated with the trustee that could not be updated.
@@ -31122,6 +8939,8 @@ type UpdateTrusteesResponse struct {
 		} `json:"success"`
 	}
 }
+type UpdateTrustees200FailureTrusteeType string
+type UpdateTrustees200SuccessType string
 type UpdateTrustees207FailureTrusteeType string
 type UpdateTrustees207SuccessType string
 
@@ -31144,8 +8963,38 @@ func (r UpdateTrusteesResponse) StatusCode() int {
 type AddTrusteesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *AddTrusteesData
-	JSON207      *struct {
+	JSON200      *struct {
+		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+		Failure []struct {
+			// Error The error message associated with the trustee that could not be updated.
+			Error *string `json:"error,omitempty"`
+
+			// Trustee Object used for operations to read, create, or update trustees in an app.
+			Trustee *struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type AddTrustees200FailureTrusteeType `json:"type"`
+			} `json:"trustee,omitempty"`
+		} `json:"failure"`
+
+		// Success A list of trustees that have been successfully updated.
+		Success []struct {
+			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+			Id string `json:"id"`
+
+			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+			RoleId int `json:"roleId"`
+
+			// Type The type of trustee being added. This can be a user, group, or email domain group.
+			Type AddTrustees200SuccessType `json:"type"`
+		} `json:"success"`
+	}
+	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
 		Failure []struct {
 			// Error The error message associated with the trustee that could not be updated.
@@ -31177,6 +9026,8 @@ type AddTrusteesResponse struct {
 		} `json:"success"`
 	}
 }
+type AddTrustees200FailureTrusteeType string
+type AddTrustees200SuccessType string
 type AddTrustees207FailureTrusteeType string
 type AddTrustees207SuccessType string
 
@@ -31199,7 +9050,78 @@ func (r AddTrusteesResponse) StatusCode() int {
 type CreateAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CreateAppData
+	JSON200      *struct {
+		// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+		DataClassification *string `json:"dataClassification,omitempty"`
+
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
+		DateFormat *string `json:"dateFormat,omitempty"`
+
+		// Description The description for the app. If this property is left out, the app description will be blank.
+		Description *string `json:"description,omitempty"`
+
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
+		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+		// Id The unique identifier for this application.
+		Id *string `json:"id,omitempty"`
+
+		// MemoryInfo Application memory info
+		MemoryInfo *struct {
+			// EstMemory The estimated memory of this application in gigabytes
+			EstMemory *float32 `json:"estMemory,omitempty"`
+
+			// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+			EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+		} `json:"memoryInfo,omitempty"`
+
+		// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+		Name string `json:"name"`
+
+		// SecurityProperties Security properties of the application
+		SecurityProperties *CreateApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
+		TimeZone *string `json:"timeZone,omitempty"`
+
+		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated *string `json:"updated,omitempty"`
+
+		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+		Variables            *[]CreateApp_200_Variables_Item `json:"variables,omitempty"`
+		AdditionalProperties map[string]interface{}          `json:"-"`
+	}
+}
+type CreateApp_200_SecurityProperties struct {
+	// AllowClone Allow users who are not administrators to copy
+	AllowClone *bool `json:"allowClone,omitempty"`
+
+	// AllowExport Allow users who are not administrators to export data
+	AllowExport *bool `json:"allowExport,omitempty"`
+
+	// EnableAppTokens Require Application Tokens
+	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
+
+	// HideFromPublic Hide from public application searches
+	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
+
+	// MustBeRealmApproved Only "approved" users may access this application
+	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
+
+	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
+	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type CreateApp_200_Variables_Item struct {
+	// Name Variable name.
+	Name *string `json:"name,omitempty"`
+
+	// Value Variable value.
+	Value                *string                `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31221,7 +9143,11 @@ func (r CreateAppResponse) StatusCode() int {
 type DeleteAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteAppData
+	JSON200      *struct {
+		// DeletedAppId An ID of deleted application.
+		DeletedAppId         *string                `json:"deletedAppId,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31243,7 +9169,81 @@ func (r DeleteAppResponse) StatusCode() int {
 type GetAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetAppData
+	JSON200      *struct {
+		// AncestorId The id of the app from which this app was copied
+		AncestorId *string `json:"ancestorId,omitempty"`
+
+		// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+		DataClassification *string `json:"dataClassification,omitempty"`
+
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+		DateFormat *string `json:"dateFormat,omitempty"`
+
+		// Description The description for the app. If this property is left out, the app description will be blank.
+		Description *string `json:"description,omitempty"`
+
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+		// Id The unique identifier for this application.
+		Id *string `json:"id,omitempty"`
+
+		// MemoryInfo Application memory info
+		MemoryInfo *struct {
+			// EstMemory The estimated memory of this application in gigabytes
+			EstMemory *float32 `json:"estMemory,omitempty"`
+
+			// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+			EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+		} `json:"memoryInfo,omitempty"`
+
+		// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+		Name string `json:"name"`
+
+		// SecurityProperties Security properties of the application
+		SecurityProperties *GetApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+		TimeZone *string `json:"timeZone,omitempty"`
+
+		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated *string `json:"updated,omitempty"`
+
+		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+		Variables            *[]GetApp_200_Variables_Item `json:"variables,omitempty"`
+		AdditionalProperties map[string]interface{}       `json:"-"`
+	}
+}
+type GetApp_200_SecurityProperties struct {
+	// AllowClone Allow users who are not administrators to copy
+	AllowClone *bool `json:"allowClone,omitempty"`
+
+	// AllowExport Allow users who are not administrators to export data
+	AllowExport *bool `json:"allowExport,omitempty"`
+
+	// EnableAppTokens Require Application Tokens
+	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
+
+	// HideFromPublic Hide from public application searches
+	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
+
+	// MustBeRealmApproved Only "approved" users may access this application
+	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
+
+	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
+	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetApp_200_Variables_Item struct {
+	// Name Variable name.
+	Name *string `json:"name,omitempty"`
+
+	// Value Variable value.
+	Value                *string                `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31265,7 +9265,81 @@ func (r GetAppResponse) StatusCode() int {
 type UpdateAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpdateAppData
+	JSON200      *struct {
+		// AncestorId The id of the app from which this app was copied
+		AncestorId *string `json:"ancestorId,omitempty"`
+
+		// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+		DataClassification *string `json:"dataClassification,omitempty"`
+
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+		DateFormat *string `json:"dateFormat,omitempty"`
+
+		// Description The description for the app. If this property is left out, the app description will be blank.
+		Description *string `json:"description,omitempty"`
+
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+		// Id The unique identifier for this application.
+		Id *string `json:"id,omitempty"`
+
+		// MemoryInfo Application memory info
+		MemoryInfo *struct {
+			// EstMemory The estimated memory of this application in gigabytes
+			EstMemory *float32 `json:"estMemory,omitempty"`
+
+			// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+			EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+		} `json:"memoryInfo,omitempty"`
+
+		// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+		Name string `json:"name"`
+
+		// SecurityProperties Security properties of the application
+		SecurityProperties *UpdateApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+		TimeZone *string `json:"timeZone,omitempty"`
+
+		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated *string `json:"updated,omitempty"`
+
+		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+		Variables            *[]UpdateApp_200_Variables_Item `json:"variables,omitempty"`
+		AdditionalProperties map[string]interface{}          `json:"-"`
+	}
+}
+type UpdateApp_200_SecurityProperties struct {
+	// AllowClone Allow users who are not administrators to copy
+	AllowClone *bool `json:"allowClone,omitempty"`
+
+	// AllowExport Allow users who are not administrators to export data
+	AllowExport *bool `json:"allowExport,omitempty"`
+
+	// EnableAppTokens Require Application Tokens
+	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
+
+	// HideFromPublic Hide from public application searches
+	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
+
+	// MustBeRealmApproved Only "approved" users may access this application
+	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
+
+	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
+	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type UpdateApp_200_Variables_Item struct {
+	// Name Variable name.
+	Name *string `json:"name,omitempty"`
+
+	// Value Variable value.
+	Value                *string                `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31287,7 +9361,49 @@ func (r UpdateAppResponse) StatusCode() int {
 type CopyAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CopyAppData
+	JSON200      *struct {
+		// AncestorId The id of the app from which this app was copied
+		AncestorId *string `json:"ancestorId,omitempty"`
+
+		// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+		DataClassification *string `json:"dataClassification,omitempty"`
+
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+		DateFormat *string `json:"dateFormat,omitempty"`
+
+		// Description The description for the app
+		Description *string `json:"description,omitempty"`
+
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+		// Id The unique identifier for this application.
+		Id *string `json:"id,omitempty"`
+
+		// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+		Name string `json:"name"`
+
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+		TimeZone *string `json:"timeZone,omitempty"`
+
+		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated *string `json:"updated,omitempty"`
+
+		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+		Variables            *[]CopyApp_200_Variables_Item `json:"variables,omitempty"`
+		AdditionalProperties map[string]interface{}        `json:"-"`
+	}
+}
+type CopyApp_200_Variables_Item struct {
+	// Name Variable name.
+	Name *string `json:"name,omitempty"`
+
+	// Value Variable value.
+	Value                *string                `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31309,7 +9425,42 @@ func (r CopyAppResponse) StatusCode() int {
 type GetAppEventsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetAppEventsItem
+	JSON200      *[]GetAppEvents_200_Item
+}
+type GetAppEvents_200_Owner struct {
+	// Email User email.
+	Email *string `json:"email,omitempty"`
+
+	// Id User Id.
+	Id *string `json:"id,omitempty"`
+
+	// Name User full name.
+	Name *string `json:"name,omitempty"`
+
+	// UserName User Name as updated in user properties. Optional, appears if not the same as user email.
+	UserName             *string                `json:"userName,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetAppEvents200Type string
+type GetAppEvents_200_Item struct {
+	// IsActive Indication of whether current event is active.
+	IsActive *bool `json:"isActive,omitempty"`
+
+	// Name The name of the event. This property is not returned for automations.
+	Name *string `json:"name,omitempty"`
+
+	// Owner The user that owns the event.
+	Owner *GetAppEvents_200_Owner `json:"owner,omitempty"`
+
+	// TableId The unique identifier of the table to which event belongs to.
+	TableId *string `json:"tableId,omitempty"`
+
+	// Type Type of an event.
+	Type *GetAppEvents200Type `json:"type,omitempty"`
+
+	// Url The url to automation that can be accessed from the browser. Only returned for automations.
+	Url                  *string                `json:"url,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31331,7 +9482,27 @@ func (r GetAppEventsResponse) StatusCode() int {
 type GetRolesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetRolesItem
+	JSON200      *[]GetRoles_200_Item
+}
+type GetRoles200AccessType string
+type GetRoles_200_Access struct {
+	// Id The ID of the access type the role is given. (0 = None, 1 = Administrator, 2 = Basic Access with Share, 3 = Basic Access, 4 = Partial Administrator).
+	Id *int `json:"id,omitempty"`
+
+	// Type The type of access the role is given.
+	Type                 *GetRoles200AccessType `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetRoles_200_Item struct {
+	// Access The role access properties.
+	Access *GetRoles_200_Access `json:"access,omitempty"`
+
+	// Id The role id.
+	Id *int `json:"id,omitempty"`
+
+	// Name The role name.
+	Name                 *string                `json:"name,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31353,12 +9524,82 @@ func (r GetRolesResponse) StatusCode() int {
 type AuditResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *AuditData
-	JSON202      *struct {
+	JSON200      *struct {
+		// Events All events of the audit log.
+		Events *[]Audit_200_Events_Item `json:"events,omitempty"`
+
+		// NextToken Token to fetch the next 1000 logs.
+		NextToken *string `json:"nextToken,omitempty"`
+
 		// QueryId Query id of the requested audit log.
 		QueryId              string                 `json:"queryId"`
 		AdditionalProperties map[string]interface{} `json:"-"`
 	}
+	JSON202 *struct {
+		// QueryId Query id of the requested audit log.
+		QueryId              string                 `json:"queryId"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type Audit_200_Events_PayloadChanges_Changes struct {
+	// Current The current value of the fields that have been changed.
+	Current []interface{} `json:"current"`
+
+	// Fields The list of fields and their types that have been changed.
+	Fields []interface{} `json:"fields"`
+
+	// Previous The previous value of the fields that have been changed.
+	Previous             []interface{}          `json:"previous"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type Audit_200_Events_PayloadChanges struct {
+	// ChangeType The change type that occured for a record. Could be one of add, edit, delete.
+	ChangeType string `json:"changeType"`
+
+	// Changes An object describing the changes that occured on record changes.
+	Changes Audit_200_Events_PayloadChanges_Changes `json:"changes"`
+
+	// Rid The recordId that has been edited.
+	Rid int `json:"rid"`
+
+	// Type A placeholder for type changes.
+	Type                 string                 `json:"type"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type Audit_200_Events_Item struct {
+	// Application UI for user interface or API for an API call.
+	Application string `json:"application"`
+
+	// Description A brief description of the action that you can click to see additional details.
+	Description string `json:"description"`
+
+	// Email User's email address.
+	Email string `json:"email"`
+
+	// Firstname User's first name.
+	Firstname string `json:"firstname"`
+
+	// Id Log ID.
+	Id string `json:"id"`
+
+	// Ipaddress The IP address the action was taken from.
+	Ipaddress string `json:"ipaddress"`
+
+	// Lastname User's last name.
+	Lastname string `json:"lastname"`
+
+	// PayloadChanges The data changes that have occured to a field that has been marked as audited.
+	PayloadChanges *Audit_200_Events_PayloadChanges `json:"payloadChanges,omitempty"`
+
+	// Time Exact time the action was taken, including date, and time with hour, minutes and seconds. Time zone is the browser time zone.
+	Time string `json:"time"`
+
+	// Topic What action was taken, such as log in, create app, report access, or table search.
+	Topic string `json:"topic"`
+
+	// Useragent The browser and OS the action was taken from.
+	Useragent            string                 `json:"useragent"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31380,8 +9621,20 @@ func (r AuditResponse) StatusCode() int {
 type ExchangeSsoTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ExchangeSsoTokenData
+	JSON200      *struct {
+		// AccessToken The security token issued by the authorization server in response to the token exchange request. The identifier `access_token` is used for historical reasons and the issued token need not be an OAuth access token.
+		AccessToken *string `json:"access_token,omitempty"`
+
+		// IssuedTokenType An identifier for the representation of the issued security token.
+		IssuedTokenType *ExchangeSsoToken200IssuedTokenType `json:"issued_token_type,omitempty"`
+
+		// TokenType Will always return `N_A`
+		TokenType            *ExchangeSsoToken200TokenType `json:"token_type,omitempty"`
+		AdditionalProperties map[string]interface{}        `json:"-"`
+	}
 }
+type ExchangeSsoToken200IssuedTokenType string
+type ExchangeSsoToken200TokenType string
 
 // Status returns HTTPResponse.Status
 func (r ExchangeSsoTokenResponse) Status() string {
@@ -31402,7 +9655,11 @@ func (r ExchangeSsoTokenResponse) StatusCode() int {
 type GetTempTokenDBIDResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetTempTokenDBIDData
+	JSON200      *struct {
+		// TemporaryAuthorization Temporary authorization token.
+		TemporaryAuthorization *string                `json:"temporaryAuthorization,omitempty"`
+		AdditionalProperties   map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31424,7 +9681,17 @@ func (r GetTempTokenDBIDResponse) StatusCode() int {
 type GenerateDocumentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GenerateDocumentData
+	JSON200      *struct {
+		// ContentType The document content type.
+		ContentType *string `json:"contentType,omitempty"`
+
+		// Data Base64 encoded file content.
+		Data *string `json:"data,omitempty"`
+
+		// FileName The file name.
+		FileName             *string                `json:"fileName,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31446,7 +9713,14 @@ func (r GenerateDocumentResponse) StatusCode() int {
 type DeleteFieldsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteFieldsData
+	JSON200      *struct {
+		// DeletedFieldIds List of field IDs to were deleted.
+		DeletedFieldIds []int `json:"deletedFieldIds"`
+
+		// Errors List of errors found.
+		Errors               []string               `json:"errors"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31468,7 +9742,292 @@ func (r DeleteFieldsResponse) StatusCode() int {
 type GetFieldsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetFieldsItem
+	JSON200      *[]GetFields_200_Item
+}
+type GetFields200PropertiesCompositeFields0 = int
+type GetFields200PropertiesCompositeFields1 = map[string]interface{}
+type GetFields_200_Properties_CompositeFields_Item struct {
+	union json.RawMessage
+}
+type GetFields200PropertiesCurrencyFormat string
+type GetFields200PropertiesSummaryFunction string
+type GetFields200PropertiesVersionMode string
+type GetFields_200_Properties struct {
+	// Abbreviate Don't show the URL protocol when showing the URL.
+	Abbreviate *bool `json:"abbreviate,omitempty"`
+
+	// AllowHTML Whether this field allows html.
+	AllowHTML *bool `json:"allowHTML,omitempty"`
+
+	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
+	AllowMentions *bool `json:"allowMentions,omitempty"`
+
+	// AllowNewChoices Indicates if users can add new choices to a selection list.
+	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
+
+	// AppearsAs The link text, if empty, the url will be used as link text.
+	AppearsAs *string `json:"appearsAs,omitempty"`
+
+	// AppendOnly Whether this field is append only.
+	AppendOnly *bool `json:"appendOnly,omitempty"`
+
+	// AutoSave Whether the link field will auto save.
+	AutoSave *bool `json:"autoSave,omitempty"`
+
+	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+	BlankIsZero *bool `json:"blankIsZero,omitempty"`
+
+	// CarryChoices Whether the field should carry its multiple choice fields when copied.
+	CarryChoices *bool `json:"carryChoices,omitempty"`
+
+	// Choices An array of entries that exist for a field that offers choices to the user.
+	Choices *[]string `json:"choices,omitempty"`
+
+	// ChoicesLuid List of user choices.
+	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
+
+	// CommaStart The number of digits before commas display in the product, when applicable.
+	CommaStart *int `json:"commaStart,omitempty"`
+
+	// Comments The comments entered on the field properties by an administrator.
+	Comments *string `json:"comments,omitempty"`
+
+	// CompositeFields An array of the fields that make up a composite field (e.g., address).
+	CompositeFields *[]GetFields_200_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
+
+	// CoverText An alternate user friendly text that can be used to display a link in the browser.
+	CoverText *string `json:"coverText,omitempty"`
+
+	// CurrencyFormat The currency format used when displaying field values within the product.
+	CurrencyFormat *GetFields200PropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
+
+	// CurrencySymbol The current symbol used when displaying field values within the product.
+	CurrencySymbol *string `json:"currencySymbol,omitempty"`
+
+	// DecimalPlaces The number of decimal places displayed in the product for this field.
+	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
+
+	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
+
+	// DefaultDomain Default email domain.
+	DefaultDomain *string `json:"defaultDomain,omitempty"`
+
+	// DefaultKind The user default type.
+	DefaultKind *string `json:"defaultKind,omitempty"`
+
+	// DefaultToday Indicates if the field value is defaulted today for new records.
+	DefaultToday *bool `json:"defaultToday,omitempty"`
+
+	// DefaultValue The default value configured for a field when a new record is added.
+	DefaultValue *string `json:"defaultValue,omitempty"`
+
+	// DefaultValueLuid Default user id value.
+	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
+
+	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
+	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
+
+	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
+
+	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
+
+	// DisplayEmail How the email is displayed.
+	DisplayEmail *string `json:"displayEmail,omitempty"`
+
+	// DisplayMonth How to display months.
+	DisplayMonth *string `json:"displayMonth,omitempty"`
+
+	// DisplayRelative Whether to display time as relative.
+	DisplayRelative *bool `json:"displayRelative,omitempty"`
+
+	// DisplayTime Indicates whether to display the time, in addition to the date.
+	DisplayTime *bool `json:"displayTime,omitempty"`
+
+	// DisplayTimezone Indicates whether to display the timezone within the product.
+	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
+
+	// DisplayUser The configured option for how users display within the product.
+	DisplayUser *string `json:"displayUser,omitempty"`
+
+	// DoesAverage Whether this field averages in reports within the product.
+	DoesAverage *bool `json:"doesAverage,omitempty"`
+
+	// DoesTotal Whether this field totals in reports within the product.
+	DoesTotal *bool `json:"doesTotal,omitempty"`
+
+	// DurationField The duration field id.
+	DurationField *int `json:"durationField,omitempty"`
+
+	// Exact Whether an exact match is required for a report link.
+	Exact *bool `json:"exact,omitempty"`
+
+	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
+	ForeignKey *bool `json:"foreignKey,omitempty"`
+
+	// Format The format to display time.
+	Format *int `json:"format,omitempty"`
+
+	// Formula The formula of the field as configured in Quickbase.
+	Formula *string `json:"formula,omitempty"`
+
+	// HasExtension Whether this field has a phone extension.
+	HasExtension *bool `json:"hasExtension,omitempty"`
+
+	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+	Hours24 *bool `json:"hours24,omitempty"`
+
+	// LinkText The configured text value that replaces the URL that users see within the product.
+	LinkText *string `json:"linkText,omitempty"`
+
+	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
+	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
+
+	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
+	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
+
+	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
+	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
+
+	// MasterChoiceTableId The id of the table that is the master in this relationship.
+	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
+
+	// MasterTableTag The table alias for the master table in the relationship this field is part of.
+	MasterTableTag *string `json:"masterTableTag,omitempty"`
+
+	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+	MaxLength *int `json:"maxLength,omitempty"`
+
+	// MaxVersions The maximum number of versions configured for a file attachment.
+	MaxVersions *int `json:"maxVersions,omitempty"`
+
+	// NumLines The number of lines shown in Quickbase for this text field.
+	NumLines *int `json:"numLines,omitempty"`
+
+	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+	NumberFormat *int `json:"numberFormat,omitempty"`
+
+	// ParentFieldId The id of the parent composite field, when applicable.
+	ParentFieldId *int `json:"parentFieldId,omitempty"`
+
+	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
+	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+	SeeVersions *bool `json:"seeVersions,omitempty"`
+
+	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+	SnapFieldId *int `json:"snapFieldId,omitempty"`
+
+	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+	SortAlpha *bool `json:"sortAlpha,omitempty"`
+
+	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
+
+	// SourceFieldId The id of the source field.
+	SourceFieldId *int `json:"sourceFieldId,omitempty"`
+
+	// StartField The start field id.
+	StartField *int `json:"startField,omitempty"`
+
+	// SummaryFunction The summary accumulation function type.
+	SummaryFunction *GetFields200PropertiesSummaryFunction `json:"summaryFunction,omitempty"`
+
+	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
+	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
+
+	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
+	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
+
+	// TargetFieldId The id of the target field.
+	TargetFieldId *int `json:"targetFieldId,omitempty"`
+
+	// TargetTableId The id of the target table.
+	TargetTableId *string `json:"targetTableId,omitempty"`
+
+	// TargetTableName The field's target table name.
+	TargetTableName *string `json:"targetTableName,omitempty"`
+
+	// Units The units label.
+	Units *string `json:"units,omitempty"`
+
+	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
+	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
+
+	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
+	UseNewWindow *bool `json:"useNewWindow,omitempty"`
+
+	// VersionMode Version modes for files. Keep all versions vs keep last version.
+	VersionMode *GetFields200PropertiesVersionMode `json:"versionMode,omitempty"`
+
+	// Width The field's html input width in the product.
+	Width *int `json:"width,omitempty"`
+
+	// WorkWeek The work week type.
+	WorkWeek *int `json:"workWeek,omitempty"`
+
+	// XmlTag The field's xml tag.
+	XmlTag               *string                `json:"xmlTag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFields_200_Item struct {
+	// AppearsByDefault Indicates if the field is marked as a default in reports.
+	AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+	// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+	Audited *bool `json:"audited,omitempty"`
+
+	// Bold Indicates if the field is configured to display in bold in the product.
+	Bold *bool `json:"bold,omitempty"`
+
+	// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+	DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+	// FieldHelp The configured help text shown to users within the product.
+	FieldHelp *string `json:"fieldHelp,omitempty"`
+
+	// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+	FieldType *string `json:"fieldType,omitempty"`
+
+	// FindEnabled Indicates if the field is marked as searchable.
+	FindEnabled *bool `json:"findEnabled,omitempty"`
+
+	// Id The id of the field, unique to this table.
+	Id int64 `json:"id"`
+
+	// Label The label (name) of the field.
+	Label *string `json:"label,omitempty"`
+
+	// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+	Mode *string `json:"mode,omitempty"`
+
+	// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+	NoWrap *bool `json:"noWrap,omitempty"`
+
+	// Permissions Field Permissions for different roles.
+	Permissions *[]struct {
+		// PermissionType The permission given to the role for this field
+		PermissionType *string `json:"permissionType,omitempty"`
+
+		// Role The role associated with a given permission for the field
+		Role *string `json:"role,omitempty"`
+
+		// RoleId The Id of the given role
+		RoleId *int `json:"roleId,omitempty"`
+	} `json:"permissions,omitempty"`
+
+	// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+	Properties *GetFields_200_Properties `json:"properties,omitempty"`
+
+	// Required Indicates if the field is marked required.
+	Required *bool `json:"required,omitempty"`
+
+	// Unique Indicates if the field is marked unique.
+	Unique               *bool                  `json:"unique,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31490,7 +10049,291 @@ func (r GetFieldsResponse) StatusCode() int {
 type CreateFieldResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CreateFieldData
+	JSON200      *struct {
+		// AppearsByDefault Indicates if the field is marked as a default in reports.
+		AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+		// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+		Audited *bool `json:"audited,omitempty"`
+
+		// Bold Indicates if the field is configured to display in bold in the product.
+		Bold *bool `json:"bold,omitempty"`
+
+		// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+		DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+		// FieldHelp The configured help text shown to users within the product.
+		FieldHelp *string `json:"fieldHelp,omitempty"`
+
+		// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+		FieldType *string `json:"fieldType,omitempty"`
+
+		// FindEnabled Indicates if the field is marked as searchable.
+		FindEnabled *bool `json:"findEnabled,omitempty"`
+
+		// Id The id of the field, unique to this table.
+		Id int64 `json:"id"`
+
+		// Label The label (name) of the field.
+		Label *string `json:"label,omitempty"`
+
+		// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+		Mode *string `json:"mode,omitempty"`
+
+		// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+		NoWrap *bool `json:"noWrap,omitempty"`
+
+		// Permissions Field Permissions for different roles.
+		Permissions *[]struct {
+			// PermissionType The permission given to the role for this field
+			PermissionType *string `json:"permissionType,omitempty"`
+
+			// Role The role associated with a given permission for the field
+			Role *string `json:"role,omitempty"`
+
+			// RoleId The Id of the given role
+			RoleId *int `json:"roleId,omitempty"`
+		} `json:"permissions,omitempty"`
+
+		// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+		Properties *CreateField_200_Properties `json:"properties,omitempty"`
+
+		// Required Indicates if the field is marked required.
+		Required *bool `json:"required,omitempty"`
+
+		// Unique Indicates if the field is marked unique.
+		Unique               *bool                  `json:"unique,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type CreateField200PropertiesCompositeFields0 = int
+type CreateField200PropertiesCompositeFields1 = map[string]interface{}
+type CreateField_200_Properties_CompositeFields_Item struct {
+	union json.RawMessage
+}
+type CreateField200PropertiesCurrencyFormat string
+type CreateField200PropertiesSummaryFunction string
+type CreateField200PropertiesVersionMode string
+type CreateField_200_Properties struct {
+	// Abbreviate Don't show the URL protocol when showing the URL.
+	Abbreviate *bool `json:"abbreviate,omitempty"`
+
+	// AllowHTML Whether this field allows html.
+	AllowHTML *bool `json:"allowHTML,omitempty"`
+
+	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
+	AllowMentions *bool `json:"allowMentions,omitempty"`
+
+	// AllowNewChoices Indicates if users can add new choices to a selection list.
+	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
+
+	// AppearsAs The link text, if empty, the url will be used as link text.
+	AppearsAs *string `json:"appearsAs,omitempty"`
+
+	// AppendOnly Whether this field is append only.
+	AppendOnly *bool `json:"appendOnly,omitempty"`
+
+	// AutoSave Whether the link field will auto save.
+	AutoSave *bool `json:"autoSave,omitempty"`
+
+	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+	BlankIsZero *bool `json:"blankIsZero,omitempty"`
+
+	// CarryChoices Whether the field should carry its multiple choice fields when copied.
+	CarryChoices *bool `json:"carryChoices,omitempty"`
+
+	// Choices An array of entries that exist for a field that offers choices to the user.
+	Choices *[]string `json:"choices,omitempty"`
+
+	// ChoicesLuid List of user choices.
+	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
+
+	// CommaStart The number of digits before commas display in the product, when applicable.
+	CommaStart *int `json:"commaStart,omitempty"`
+
+	// Comments The comments entered on the field properties by an administrator.
+	Comments *string `json:"comments,omitempty"`
+
+	// CompositeFields An array of the fields that make up a composite field (e.g., address).
+	CompositeFields *[]CreateField_200_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
+
+	// CoverText An alternate user friendly text that can be used to display a link in the browser.
+	CoverText *string `json:"coverText,omitempty"`
+
+	// CurrencyFormat The currency format used when displaying field values within the product.
+	CurrencyFormat *CreateField200PropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
+
+	// CurrencySymbol The current symbol used when displaying field values within the product.
+	CurrencySymbol *string `json:"currencySymbol,omitempty"`
+
+	// DecimalPlaces The number of decimal places displayed in the product for this field.
+	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
+
+	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
+
+	// DefaultDomain Default email domain.
+	DefaultDomain *string `json:"defaultDomain,omitempty"`
+
+	// DefaultKind The user default type.
+	DefaultKind *string `json:"defaultKind,omitempty"`
+
+	// DefaultToday Indicates if the field value is defaulted today for new records.
+	DefaultToday *bool `json:"defaultToday,omitempty"`
+
+	// DefaultValue The default value configured for a field when a new record is added.
+	DefaultValue *string `json:"defaultValue,omitempty"`
+
+	// DefaultValueLuid Default user id value.
+	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
+
+	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
+	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
+
+	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
+
+	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
+
+	// DisplayEmail How the email is displayed.
+	DisplayEmail *string `json:"displayEmail,omitempty"`
+
+	// DisplayMonth How to display months.
+	DisplayMonth *string `json:"displayMonth,omitempty"`
+
+	// DisplayRelative Whether to display time as relative.
+	DisplayRelative *bool `json:"displayRelative,omitempty"`
+
+	// DisplayTime Indicates whether to display the time, in addition to the date.
+	DisplayTime *bool `json:"displayTime,omitempty"`
+
+	// DisplayTimezone Indicates whether to display the timezone within the product.
+	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
+
+	// DisplayUser The configured option for how users display within the product.
+	DisplayUser *string `json:"displayUser,omitempty"`
+
+	// DoesAverage Whether this field averages in reports within the product.
+	DoesAverage *bool `json:"doesAverage,omitempty"`
+
+	// DoesTotal Whether this field totals in reports within the product.
+	DoesTotal *bool `json:"doesTotal,omitempty"`
+
+	// DurationField The duration field id.
+	DurationField *int `json:"durationField,omitempty"`
+
+	// Exact Whether an exact match is required for a report link.
+	Exact *bool `json:"exact,omitempty"`
+
+	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
+	ForeignKey *bool `json:"foreignKey,omitempty"`
+
+	// Format The format to display time.
+	Format *int `json:"format,omitempty"`
+
+	// Formula The formula of the field as configured in Quickbase.
+	Formula *string `json:"formula,omitempty"`
+
+	// HasExtension Whether this field has a phone extension.
+	HasExtension *bool `json:"hasExtension,omitempty"`
+
+	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+	Hours24 *bool `json:"hours24,omitempty"`
+
+	// LinkText The configured text value that replaces the URL that users see within the product.
+	LinkText *string `json:"linkText,omitempty"`
+
+	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
+	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
+
+	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
+	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
+
+	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
+	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
+
+	// MasterChoiceTableId The id of the table that is the master in this relationship.
+	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
+
+	// MasterTableTag The table alias for the master table in the relationship this field is part of.
+	MasterTableTag *string `json:"masterTableTag,omitempty"`
+
+	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+	MaxLength *int `json:"maxLength,omitempty"`
+
+	// MaxVersions The maximum number of versions configured for a file attachment.
+	MaxVersions *int `json:"maxVersions,omitempty"`
+
+	// NumLines The number of lines shown in Quickbase for this text field.
+	NumLines *int `json:"numLines,omitempty"`
+
+	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+	NumberFormat *int `json:"numberFormat,omitempty"`
+
+	// ParentFieldId The id of the parent composite field, when applicable.
+	ParentFieldId *int `json:"parentFieldId,omitempty"`
+
+	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
+	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+	SeeVersions *bool `json:"seeVersions,omitempty"`
+
+	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+	SnapFieldId *int `json:"snapFieldId,omitempty"`
+
+	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+	SortAlpha *bool `json:"sortAlpha,omitempty"`
+
+	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
+
+	// SourceFieldId The id of the source field.
+	SourceFieldId *int `json:"sourceFieldId,omitempty"`
+
+	// StartField The start field id.
+	StartField *int `json:"startField,omitempty"`
+
+	// SummaryFunction The summary accumulation function type.
+	SummaryFunction *CreateField200PropertiesSummaryFunction `json:"summaryFunction,omitempty"`
+
+	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
+	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
+
+	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
+	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
+
+	// TargetFieldId The id of the target field.
+	TargetFieldId *int `json:"targetFieldId,omitempty"`
+
+	// TargetTableId The id of the target table.
+	TargetTableId *string `json:"targetTableId,omitempty"`
+
+	// TargetTableName The field's target table name.
+	TargetTableName *string `json:"targetTableName,omitempty"`
+
+	// Units The units label.
+	Units *string `json:"units,omitempty"`
+
+	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
+	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
+
+	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
+	UseNewWindow *bool `json:"useNewWindow,omitempty"`
+
+	// VersionMode Version modes for files. Keep all versions vs keep last version.
+	VersionMode *CreateField200PropertiesVersionMode `json:"versionMode,omitempty"`
+
+	// Width The field's html input width in the product.
+	Width *int `json:"width,omitempty"`
+
+	// WorkWeek The work week type.
+	WorkWeek *int `json:"workWeek,omitempty"`
+
+	// XmlTag The field's xml tag.
+	XmlTag               *string                `json:"xmlTag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31512,7 +10355,158 @@ func (r CreateFieldResponse) StatusCode() int {
 type GetFieldsUsageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetFieldsUsageItem
+	JSON200      *[]GetFieldsUsage_200_Item
+}
+type GetFieldsUsage_200_Field struct {
+	// Id Field id.
+	Id int `json:"id"`
+
+	// Name Field name.
+	Name string `json:"name"`
+
+	// Type Field type.
+	Type                 string                 `json:"type"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Actions struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_AppHomePages struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_DefaultReports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_ExactForms struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Fields struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Forms struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Notifications struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_PersonalReports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Pipelines struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Relationships struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Reminders struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Reports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Roles struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage_Webhooks struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldsUsage_200_Usage struct {
+	// Actions The number of quickbase actions where the given field is referenced.
+	Actions GetFieldsUsage_200_Usage_Actions `json:"actions"`
+
+	// AppHomePages The number of app home pages where the given field is referenced.
+	AppHomePages GetFieldsUsage_200_Usage_AppHomePages `json:"appHomePages"`
+
+	// Dashboards The number of dashboards where the given field is referenced.
+	Dashboards struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"dashboards"`
+
+	// DefaultReports The number of default reports where the given field is referenced.
+	DefaultReports GetFieldsUsage_200_Usage_DefaultReports `json:"defaultReports"`
+
+	// ExactForms The number of exact forms where the given field is referenced.
+	ExactForms GetFieldsUsage_200_Usage_ExactForms `json:"exactForms"`
+
+	// Fields The number of fields where the given field is referenced.
+	Fields GetFieldsUsage_200_Usage_Fields `json:"fields"`
+
+	// Forms The number of forms where the given field is referenced.
+	Forms GetFieldsUsage_200_Usage_Forms `json:"forms"`
+
+	// Notifications The number of notifications where the given field is referenced.
+	Notifications GetFieldsUsage_200_Usage_Notifications `json:"notifications"`
+
+	// PersonalReports The number of personal reports where the given field is referenced.
+	PersonalReports GetFieldsUsage_200_Usage_PersonalReports `json:"personalReports"`
+
+	// Pipelines The number of pipelines where the given field is referenced.
+	Pipelines GetFieldsUsage_200_Usage_Pipelines `json:"pipelines"`
+
+	// Relationships The number of relationships where the given field is referenced.
+	Relationships GetFieldsUsage_200_Usage_Relationships `json:"relationships"`
+
+	// Reminders The number of reminders where the given field is referenced.
+	Reminders GetFieldsUsage_200_Usage_Reminders `json:"reminders"`
+
+	// Reports The number of reports where the given field is referenced.
+	Reports GetFieldsUsage_200_Usage_Reports `json:"reports"`
+
+	// Roles The number of roles where the given field is referenced.
+	Roles GetFieldsUsage_200_Usage_Roles `json:"roles"`
+
+	// TableImports The number of table imports where the given field is referenced.
+	TableImports struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"tableImports"`
+
+	// TableRules The number of table rules where the given field is referenced.
+	TableRules struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"tableRules"`
+
+	// Webhooks The number of webhooks where the given field is referenced.
+	Webhooks             GetFieldsUsage_200_Usage_Webhooks `json:"webhooks"`
+	AdditionalProperties map[string]interface{}            `json:"-"`
+}
+type GetFieldsUsage_200_Item struct {
+	// Field Basic information about the field.
+	Field GetFieldsUsage_200_Field `json:"field"`
+
+	// Usage Usage Information about the field.
+	Usage                GetFieldsUsage_200_Usage `json:"usage"`
+	AdditionalProperties map[string]interface{}   `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31534,7 +10528,158 @@ func (r GetFieldsUsageResponse) StatusCode() int {
 type GetFieldUsageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetFieldUsageItem
+	JSON200      *[]GetFieldUsage_200_Item
+}
+type GetFieldUsage_200_Field struct {
+	// Id Field id.
+	Id int `json:"id"`
+
+	// Name Field name.
+	Name string `json:"name"`
+
+	// Type Field type.
+	Type                 string                 `json:"type"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Actions struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_AppHomePages struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_DefaultReports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_ExactForms struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Fields struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Forms struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Notifications struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_PersonalReports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Pipelines struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Relationships struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Reminders struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Reports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Roles struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage_Webhooks struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetFieldUsage_200_Usage struct {
+	// Actions The number of quickbase actions where the given field is referenced.
+	Actions GetFieldUsage_200_Usage_Actions `json:"actions"`
+
+	// AppHomePages The number of app home pages where the given field is referenced.
+	AppHomePages GetFieldUsage_200_Usage_AppHomePages `json:"appHomePages"`
+
+	// Dashboards The number of dashboards where the given field is referenced.
+	Dashboards struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"dashboards"`
+
+	// DefaultReports The number of default reports where the given field is referenced.
+	DefaultReports GetFieldUsage_200_Usage_DefaultReports `json:"defaultReports"`
+
+	// ExactForms The number of exact forms where the given field is referenced.
+	ExactForms GetFieldUsage_200_Usage_ExactForms `json:"exactForms"`
+
+	// Fields The number of fields where the given field is referenced.
+	Fields GetFieldUsage_200_Usage_Fields `json:"fields"`
+
+	// Forms The number of forms where the given field is referenced.
+	Forms GetFieldUsage_200_Usage_Forms `json:"forms"`
+
+	// Notifications The number of notifications where the given field is referenced.
+	Notifications GetFieldUsage_200_Usage_Notifications `json:"notifications"`
+
+	// PersonalReports The number of personal reports where the given field is referenced.
+	PersonalReports GetFieldUsage_200_Usage_PersonalReports `json:"personalReports"`
+
+	// Pipelines The number of pipelines where the given field is referenced.
+	Pipelines GetFieldUsage_200_Usage_Pipelines `json:"pipelines"`
+
+	// Relationships The number of relationships where the given field is referenced.
+	Relationships GetFieldUsage_200_Usage_Relationships `json:"relationships"`
+
+	// Reminders The number of reminders where the given field is referenced.
+	Reminders GetFieldUsage_200_Usage_Reminders `json:"reminders"`
+
+	// Reports The number of reports where the given field is referenced.
+	Reports GetFieldUsage_200_Usage_Reports `json:"reports"`
+
+	// Roles The number of roles where the given field is referenced.
+	Roles GetFieldUsage_200_Usage_Roles `json:"roles"`
+
+	// TableImports The number of table imports where the given field is referenced.
+	TableImports struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"tableImports"`
+
+	// TableRules The number of table rules where the given field is referenced.
+	TableRules struct {
+		// Count the number of times a field has been used for the given item.
+		Count int `json:"count"`
+	} `json:"tableRules"`
+
+	// Webhooks The number of webhooks where the given field is referenced.
+	Webhooks             GetFieldUsage_200_Usage_Webhooks `json:"webhooks"`
+	AdditionalProperties map[string]interface{}           `json:"-"`
+}
+type GetFieldUsage_200_Item struct {
+	// Field Basic information about the field.
+	Field GetFieldUsage_200_Field `json:"field"`
+
+	// Usage Usage Information about the field.
+	Usage                GetFieldUsage_200_Usage `json:"usage"`
+	AdditionalProperties map[string]interface{}  `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31556,7 +10701,291 @@ func (r GetFieldUsageResponse) StatusCode() int {
 type GetFieldResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetFieldData
+	JSON200      *struct {
+		// AppearsByDefault Indicates if the field is marked as a default in reports.
+		AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+		// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+		Audited *bool `json:"audited,omitempty"`
+
+		// Bold Indicates if the field is configured to display in bold in the product.
+		Bold *bool `json:"bold,omitempty"`
+
+		// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+		DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+		// FieldHelp The configured help text shown to users within the product.
+		FieldHelp *string `json:"fieldHelp,omitempty"`
+
+		// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+		FieldType *string `json:"fieldType,omitempty"`
+
+		// FindEnabled Indicates if the field is marked as searchable.
+		FindEnabled *bool `json:"findEnabled,omitempty"`
+
+		// Id The id of the field, unique to this table.
+		Id int64 `json:"id"`
+
+		// Label The label (name) of the field.
+		Label *string `json:"label,omitempty"`
+
+		// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+		Mode *string `json:"mode,omitempty"`
+
+		// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+		NoWrap *bool `json:"noWrap,omitempty"`
+
+		// Permissions Field Permissions for different roles.
+		Permissions *[]struct {
+			// PermissionType The permission given to the role for this field
+			PermissionType *string `json:"permissionType,omitempty"`
+
+			// Role The role associated with a given permission for the field
+			Role *string `json:"role,omitempty"`
+
+			// RoleId The Id of the given role
+			RoleId *int `json:"roleId,omitempty"`
+		} `json:"permissions,omitempty"`
+
+		// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+		Properties *GetField_200_Properties `json:"properties,omitempty"`
+
+		// Required Indicates if the field is marked required.
+		Required *bool `json:"required,omitempty"`
+
+		// Unique Indicates if the field is marked unique.
+		Unique               *bool                  `json:"unique,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type GetField200PropertiesCompositeFields0 = int
+type GetField200PropertiesCompositeFields1 = map[string]interface{}
+type GetField_200_Properties_CompositeFields_Item struct {
+	union json.RawMessage
+}
+type GetField200PropertiesCurrencyFormat string
+type GetField200PropertiesSummaryFunction string
+type GetField200PropertiesVersionMode string
+type GetField_200_Properties struct {
+	// Abbreviate Don't show the URL protocol when showing the URL.
+	Abbreviate *bool `json:"abbreviate,omitempty"`
+
+	// AllowHTML Whether this field allows html.
+	AllowHTML *bool `json:"allowHTML,omitempty"`
+
+	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
+	AllowMentions *bool `json:"allowMentions,omitempty"`
+
+	// AllowNewChoices Indicates if users can add new choices to a selection list.
+	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
+
+	// AppearsAs The link text, if empty, the url will be used as link text.
+	AppearsAs *string `json:"appearsAs,omitempty"`
+
+	// AppendOnly Whether this field is append only.
+	AppendOnly *bool `json:"appendOnly,omitempty"`
+
+	// AutoSave Whether the link field will auto save.
+	AutoSave *bool `json:"autoSave,omitempty"`
+
+	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+	BlankIsZero *bool `json:"blankIsZero,omitempty"`
+
+	// CarryChoices Whether the field should carry its multiple choice fields when copied.
+	CarryChoices *bool `json:"carryChoices,omitempty"`
+
+	// Choices An array of entries that exist for a field that offers choices to the user.
+	Choices *[]string `json:"choices,omitempty"`
+
+	// ChoicesLuid List of user choices.
+	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
+
+	// CommaStart The number of digits before commas display in the product, when applicable.
+	CommaStart *int `json:"commaStart,omitempty"`
+
+	// Comments The comments entered on the field properties by an administrator.
+	Comments *string `json:"comments,omitempty"`
+
+	// CompositeFields An array of the fields that make up a composite field (e.g., address).
+	CompositeFields *[]GetField_200_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
+
+	// CoverText An alternate user friendly text that can be used to display a link in the browser.
+	CoverText *string `json:"coverText,omitempty"`
+
+	// CurrencyFormat The currency format used when displaying field values within the product.
+	CurrencyFormat *GetField200PropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
+
+	// CurrencySymbol The current symbol used when displaying field values within the product.
+	CurrencySymbol *string `json:"currencySymbol,omitempty"`
+
+	// DecimalPlaces The number of decimal places displayed in the product for this field.
+	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
+
+	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
+
+	// DefaultDomain Default email domain.
+	DefaultDomain *string `json:"defaultDomain,omitempty"`
+
+	// DefaultKind The user default type.
+	DefaultKind *string `json:"defaultKind,omitempty"`
+
+	// DefaultToday Indicates if the field value is defaulted today for new records.
+	DefaultToday *bool `json:"defaultToday,omitempty"`
+
+	// DefaultValue The default value configured for a field when a new record is added.
+	DefaultValue *string `json:"defaultValue,omitempty"`
+
+	// DefaultValueLuid Default user id value.
+	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
+
+	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
+	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
+
+	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
+
+	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
+
+	// DisplayEmail How the email is displayed.
+	DisplayEmail *string `json:"displayEmail,omitempty"`
+
+	// DisplayMonth How to display months.
+	DisplayMonth *string `json:"displayMonth,omitempty"`
+
+	// DisplayRelative Whether to display time as relative.
+	DisplayRelative *bool `json:"displayRelative,omitempty"`
+
+	// DisplayTime Indicates whether to display the time, in addition to the date.
+	DisplayTime *bool `json:"displayTime,omitempty"`
+
+	// DisplayTimezone Indicates whether to display the timezone within the product.
+	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
+
+	// DisplayUser The configured option for how users display within the product.
+	DisplayUser *string `json:"displayUser,omitempty"`
+
+	// DoesAverage Whether this field averages in reports within the product.
+	DoesAverage *bool `json:"doesAverage,omitempty"`
+
+	// DoesTotal Whether this field totals in reports within the product.
+	DoesTotal *bool `json:"doesTotal,omitempty"`
+
+	// DurationField The duration field id.
+	DurationField *int `json:"durationField,omitempty"`
+
+	// Exact Whether an exact match is required for a report link.
+	Exact *bool `json:"exact,omitempty"`
+
+	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
+	ForeignKey *bool `json:"foreignKey,omitempty"`
+
+	// Format The format to display time.
+	Format *int `json:"format,omitempty"`
+
+	// Formula The formula of the field as configured in Quickbase.
+	Formula *string `json:"formula,omitempty"`
+
+	// HasExtension Whether this field has a phone extension.
+	HasExtension *bool `json:"hasExtension,omitempty"`
+
+	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+	Hours24 *bool `json:"hours24,omitempty"`
+
+	// LinkText The configured text value that replaces the URL that users see within the product.
+	LinkText *string `json:"linkText,omitempty"`
+
+	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
+	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
+
+	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
+	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
+
+	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
+	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
+
+	// MasterChoiceTableId The id of the table that is the master in this relationship.
+	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
+
+	// MasterTableTag The table alias for the master table in the relationship this field is part of.
+	MasterTableTag *string `json:"masterTableTag,omitempty"`
+
+	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+	MaxLength *int `json:"maxLength,omitempty"`
+
+	// MaxVersions The maximum number of versions configured for a file attachment.
+	MaxVersions *int `json:"maxVersions,omitempty"`
+
+	// NumLines The number of lines shown in Quickbase for this text field.
+	NumLines *int `json:"numLines,omitempty"`
+
+	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+	NumberFormat *int `json:"numberFormat,omitempty"`
+
+	// ParentFieldId The id of the parent composite field, when applicable.
+	ParentFieldId *int `json:"parentFieldId,omitempty"`
+
+	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
+	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+	SeeVersions *bool `json:"seeVersions,omitempty"`
+
+	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+	SnapFieldId *int `json:"snapFieldId,omitempty"`
+
+	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+	SortAlpha *bool `json:"sortAlpha,omitempty"`
+
+	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
+
+	// SourceFieldId The id of the source field.
+	SourceFieldId *int `json:"sourceFieldId,omitempty"`
+
+	// StartField The start field id.
+	StartField *int `json:"startField,omitempty"`
+
+	// SummaryFunction The summary accumulation function type.
+	SummaryFunction *GetField200PropertiesSummaryFunction `json:"summaryFunction,omitempty"`
+
+	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
+	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
+
+	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
+	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
+
+	// TargetFieldId The id of the target field.
+	TargetFieldId *int `json:"targetFieldId,omitempty"`
+
+	// TargetTableId The id of the target table.
+	TargetTableId *string `json:"targetTableId,omitempty"`
+
+	// TargetTableName The field's target table name.
+	TargetTableName *string `json:"targetTableName,omitempty"`
+
+	// Units The units label.
+	Units *string `json:"units,omitempty"`
+
+	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
+	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
+
+	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
+	UseNewWindow *bool `json:"useNewWindow,omitempty"`
+
+	// VersionMode Version modes for files. Keep all versions vs keep last version.
+	VersionMode *GetField200PropertiesVersionMode `json:"versionMode,omitempty"`
+
+	// Width The field's html input width in the product.
+	Width *int `json:"width,omitempty"`
+
+	// WorkWeek The work week type.
+	WorkWeek *int `json:"workWeek,omitempty"`
+
+	// XmlTag The field's xml tag.
+	XmlTag               *string                `json:"xmlTag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31578,7 +11007,291 @@ func (r GetFieldResponse) StatusCode() int {
 type UpdateFieldResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpdateFieldData
+	JSON200      *struct {
+		// AppearsByDefault Indicates if the field is marked as a default in reports.
+		AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+		// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+		Audited *bool `json:"audited,omitempty"`
+
+		// Bold Indicates if the field is configured to display in bold in the product.
+		Bold *bool `json:"bold,omitempty"`
+
+		// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+		DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+		// FieldHelp The configured help text shown to users within the product.
+		FieldHelp *string `json:"fieldHelp,omitempty"`
+
+		// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+		FieldType *string `json:"fieldType,omitempty"`
+
+		// FindEnabled Indicates if the field is marked as searchable.
+		FindEnabled *bool `json:"findEnabled,omitempty"`
+
+		// Id The id of the field, unique to this table.
+		Id int64 `json:"id"`
+
+		// Label The label (name) of the field.
+		Label *string `json:"label,omitempty"`
+
+		// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+		Mode *string `json:"mode,omitempty"`
+
+		// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+		NoWrap *bool `json:"noWrap,omitempty"`
+
+		// Permissions Field Permissions for different roles.
+		Permissions *[]struct {
+			// PermissionType The permission given to the role for this field
+			PermissionType *string `json:"permissionType,omitempty"`
+
+			// Role The role associated with a given permission for the field
+			Role *string `json:"role,omitempty"`
+
+			// RoleId The Id of the given role
+			RoleId *int `json:"roleId,omitempty"`
+		} `json:"permissions,omitempty"`
+
+		// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+		Properties *UpdateField_200_Properties `json:"properties,omitempty"`
+
+		// Required Indicates if the field is marked required.
+		Required *bool `json:"required,omitempty"`
+
+		// Unique Indicates if the field is marked unique.
+		Unique               *bool                  `json:"unique,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type UpdateField200PropertiesCompositeFields0 = int
+type UpdateField200PropertiesCompositeFields1 = map[string]interface{}
+type UpdateField_200_Properties_CompositeFields_Item struct {
+	union json.RawMessage
+}
+type UpdateField200PropertiesCurrencyFormat string
+type UpdateField200PropertiesSummaryFunction string
+type UpdateField200PropertiesVersionMode string
+type UpdateField_200_Properties struct {
+	// Abbreviate Don't show the URL protocol when showing the URL.
+	Abbreviate *bool `json:"abbreviate,omitempty"`
+
+	// AllowHTML Whether this field allows html.
+	AllowHTML *bool `json:"allowHTML,omitempty"`
+
+	// AllowMentions If someone can @mention users in the rich text field to generate an email notification.
+	AllowMentions *bool `json:"allowMentions,omitempty"`
+
+	// AllowNewChoices Indicates if users can add new choices to a selection list.
+	AllowNewChoices *bool `json:"allowNewChoices,omitempty"`
+
+	// AppearsAs The link text, if empty, the url will be used as link text.
+	AppearsAs *string `json:"appearsAs,omitempty"`
+
+	// AppendOnly Whether this field is append only.
+	AppendOnly *bool `json:"appendOnly,omitempty"`
+
+	// AutoSave Whether the link field will auto save.
+	AutoSave *bool `json:"autoSave,omitempty"`
+
+	// BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
+	BlankIsZero *bool `json:"blankIsZero,omitempty"`
+
+	// CarryChoices Whether the field should carry its multiple choice fields when copied.
+	CarryChoices *bool `json:"carryChoices,omitempty"`
+
+	// Choices An array of entries that exist for a field that offers choices to the user.
+	Choices *[]string `json:"choices,omitempty"`
+
+	// ChoicesLuid List of user choices.
+	ChoicesLuid *[]string `json:"choicesLuid,omitempty"`
+
+	// CommaStart The number of digits before commas display in the product, when applicable.
+	CommaStart *int `json:"commaStart,omitempty"`
+
+	// Comments The comments entered on the field properties by an administrator.
+	Comments *string `json:"comments,omitempty"`
+
+	// CompositeFields An array of the fields that make up a composite field (e.g., address).
+	CompositeFields *[]UpdateField_200_Properties_CompositeFields_Item `json:"compositeFields,omitempty"`
+
+	// CoverText An alternate user friendly text that can be used to display a link in the browser.
+	CoverText *string `json:"coverText,omitempty"`
+
+	// CurrencyFormat The currency format used when displaying field values within the product.
+	CurrencyFormat *UpdateField200PropertiesCurrencyFormat `json:"currencyFormat,omitempty"`
+
+	// CurrencySymbol The current symbol used when displaying field values within the product.
+	CurrencySymbol *string `json:"currencySymbol,omitempty"`
+
+	// DecimalPlaces The number of decimal places displayed in the product for this field.
+	DecimalPlaces *int `json:"decimalPlaces,omitempty"`
+
+	// DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
+	DefaultCountryCode *string `json:"defaultCountryCode,omitempty"`
+
+	// DefaultDomain Default email domain.
+	DefaultDomain *string `json:"defaultDomain,omitempty"`
+
+	// DefaultKind The user default type.
+	DefaultKind *string `json:"defaultKind,omitempty"`
+
+	// DefaultToday Indicates if the field value is defaulted today for new records.
+	DefaultToday *bool `json:"defaultToday,omitempty"`
+
+	// DefaultValue The default value configured for a field when a new record is added.
+	DefaultValue *string `json:"defaultValue,omitempty"`
+
+	// DefaultValueLuid Default user id value.
+	DefaultValueLuid *int `json:"defaultValueLuid,omitempty"`
+
+	// DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
+	DisplayAsLink *bool `json:"displayAsLink,omitempty"`
+
+	// DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
+	DisplayCheckboxAsText *bool `json:"displayCheckboxAsText,omitempty"`
+
+	// DisplayDayOfWeek Indicates whether to display the day of the week within the product.
+	DisplayDayOfWeek *bool `json:"displayDayOfWeek,omitempty"`
+
+	// DisplayEmail How the email is displayed.
+	DisplayEmail *string `json:"displayEmail,omitempty"`
+
+	// DisplayMonth How to display months.
+	DisplayMonth *string `json:"displayMonth,omitempty"`
+
+	// DisplayRelative Whether to display time as relative.
+	DisplayRelative *bool `json:"displayRelative,omitempty"`
+
+	// DisplayTime Indicates whether to display the time, in addition to the date.
+	DisplayTime *bool `json:"displayTime,omitempty"`
+
+	// DisplayTimezone Indicates whether to display the timezone within the product.
+	DisplayTimezone *bool `json:"displayTimezone,omitempty"`
+
+	// DisplayUser The configured option for how users display within the product.
+	DisplayUser *string `json:"displayUser,omitempty"`
+
+	// DoesAverage Whether this field averages in reports within the product.
+	DoesAverage *bool `json:"doesAverage,omitempty"`
+
+	// DoesTotal Whether this field totals in reports within the product.
+	DoesTotal *bool `json:"doesTotal,omitempty"`
+
+	// DurationField The duration field id.
+	DurationField *int `json:"durationField,omitempty"`
+
+	// Exact Whether an exact match is required for a report link.
+	Exact *bool `json:"exact,omitempty"`
+
+	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
+	ForeignKey *bool `json:"foreignKey,omitempty"`
+
+	// Format The format to display time.
+	Format *int `json:"format,omitempty"`
+
+	// Formula The formula of the field as configured in Quickbase.
+	Formula *string `json:"formula,omitempty"`
+
+	// HasExtension Whether this field has a phone extension.
+	HasExtension *bool `json:"hasExtension,omitempty"`
+
+	// Hours24 Indicates whether or not to display time in the 24-hour format within the product.
+	Hours24 *bool `json:"hours24,omitempty"`
+
+	// LinkText The configured text value that replaces the URL that users see within the product.
+	LinkText *string `json:"linkText,omitempty"`
+
+	// LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
+	LookupReferenceFieldId *int `json:"lookupReferenceFieldId,omitempty"`
+
+	// LookupTargetFieldId The id of the field that is the target on the master table for this lookup.
+	LookupTargetFieldId *int `json:"lookupTargetFieldId,omitempty"`
+
+	// MasterChoiceFieldId The id of the field that is the reference in the relationship.
+	MasterChoiceFieldId *int `json:"masterChoiceFieldId,omitempty"`
+
+	// MasterChoiceTableId The id of the table that is the master in this relationship.
+	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
+
+	// MasterTableTag The table alias for the master table in the relationship this field is part of.
+	MasterTableTag *string `json:"masterTableTag,omitempty"`
+
+	// MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
+	MaxLength *int `json:"maxLength,omitempty"`
+
+	// MaxVersions The maximum number of versions configured for a file attachment.
+	MaxVersions *int `json:"maxVersions,omitempty"`
+
+	// NumLines The number of lines shown in Quickbase for this text field.
+	NumLines *int `json:"numLines,omitempty"`
+
+	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
+	NumberFormat *int `json:"numberFormat,omitempty"`
+
+	// ParentFieldId The id of the parent composite field, when applicable.
+	ParentFieldId *int `json:"parentFieldId,omitempty"`
+
+	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
+	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
+	SeeVersions *bool `json:"seeVersions,omitempty"`
+
+	// SnapFieldId The id of the field that is used to snapshot values from, when applicable.
+	SnapFieldId *int `json:"snapFieldId,omitempty"`
+
+	// SortAlpha Whether to sort alphabetically, default sort is by record ID.
+	SortAlpha *bool `json:"sortAlpha,omitempty"`
+
+	// SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
+	SortAsGiven *bool `json:"sortAsGiven,omitempty"`
+
+	// SourceFieldId The id of the source field.
+	SourceFieldId *int `json:"sourceFieldId,omitempty"`
+
+	// StartField The start field id.
+	StartField *int `json:"startField,omitempty"`
+
+	// SummaryFunction The summary accumulation function type.
+	SummaryFunction *UpdateField200PropertiesSummaryFunction `json:"summaryFunction,omitempty"`
+
+	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
+	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
+
+	// SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
+	SummaryTargetFieldId *int `json:"summaryTargetFieldId,omitempty"`
+
+	// TargetFieldId The id of the target field.
+	TargetFieldId *int `json:"targetFieldId,omitempty"`
+
+	// TargetTableId The id of the target table.
+	TargetTableId *string `json:"targetTableId,omitempty"`
+
+	// TargetTableName The field's target table name.
+	TargetTableName *string `json:"targetTableName,omitempty"`
+
+	// Units The units label.
+	Units *string `json:"units,omitempty"`
+
+	// UseI18NFormat Whether phone numbers should be in E.164 standard international format.
+	UseI18NFormat *bool `json:"useI18NFormat,omitempty"`
+
+	// UseNewWindow Indicates if the URL should open a new window when a user clicks it within the product.
+	UseNewWindow *bool `json:"useNewWindow,omitempty"`
+
+	// VersionMode Version modes for files. Keep all versions vs keep last version.
+	VersionMode *UpdateField200PropertiesVersionMode `json:"versionMode,omitempty"`
+
+	// Width The field's html input width in the product.
+	Width *int `json:"width,omitempty"`
+
+	// WorkWeek The work week type.
+	WorkWeek *int `json:"workWeek,omitempty"`
+
+	// XmlTag The field's xml tag.
+	XmlTag               *string                `json:"xmlTag,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31600,7 +11313,34 @@ func (r UpdateFieldResponse) StatusCode() int {
 type DeleteFileResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteFileData
+	JSON200      *struct {
+		// Creator The user that uploaded version.
+		Creator *DeleteFile_200_Creator `json:"creator,omitempty"`
+
+		// FileName The name of file associated with deleted version.
+		FileName *string `json:"fileName,omitempty"`
+
+		// Uploaded The timestamp when the version was originally uploaded.
+		Uploaded *string `json:"uploaded,omitempty"`
+
+		// VersionNumber The number of deleted version.
+		VersionNumber        *int                   `json:"versionNumber,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type DeleteFile_200_Creator struct {
+	// Email User email.
+	Email *string `json:"email,omitempty"`
+
+	// Id User Id.
+	Id *string `json:"id,omitempty"`
+
+	// Name User full name.
+	Name *string `json:"name,omitempty"`
+
+	// UserName User Name as updated in user properties. Optional, appears if not the same as user email.
+	UserName             *string                `json:"userName,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31644,7 +11384,11 @@ func (r DownloadFileResponse) StatusCode() int {
 type RunFormulaResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RunFormulaData
+	JSON200      *struct {
+		// Result The formula execution result.
+		Result               *string                `json:"result,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31666,7 +11410,14 @@ func (r RunFormulaResponse) StatusCode() int {
 type RemoveManagersFromGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RemoveManagersFromGroupData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have been removed from the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31688,7 +11439,14 @@ func (r RemoveManagersFromGroupResponse) StatusCode() int {
 type AddManagersToGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *AddManagersToGroupData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have been added to the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31710,7 +11468,14 @@ func (r AddManagersToGroupResponse) StatusCode() int {
 type RemoveMembersFromGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RemoveMembersFromGroupData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have been removed from the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31732,7 +11497,14 @@ func (r RemoveMembersFromGroupResponse) StatusCode() int {
 type AddMembersToGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *AddMembersToGroupData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have been added to the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31754,7 +11526,14 @@ func (r AddMembersToGroupResponse) StatusCode() int {
 type RemoveSubgroupsFromGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RemoveSubgroupsFromGroupData
+	JSON200      *struct {
+		// Failure A list of child groups that couldn't be removed from the group. This includes a list of IDs that represent invalid groups.
+		Failure []string `json:"failure"`
+
+		// Success A list of child groups that have been removed from the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31776,7 +11555,14 @@ func (r RemoveSubgroupsFromGroupResponse) StatusCode() int {
 type AddSubgroupsToGroupResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *AddSubgroupsToGroupData
+	JSON200      *struct {
+		// Failure A list of child groups that couldn't be added to the group. This includes a list of IDs that represent invalid groups and groups that have already been added to the group.
+		Failure []string `json:"failure"`
+
+		// Success A list of child groups that have been added to the group successfully.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31798,7 +11584,11 @@ func (r AddSubgroupsToGroupResponse) StatusCode() int {
 type DeleteRecordsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteRecordsData
+	JSON200      *struct {
+		// NumberDeleted The number of records deleted.
+		NumberDeleted        *int                   `json:"numberDeleted,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -31820,8 +11610,15 @@ func (r DeleteRecordsResponse) StatusCode() int {
 type UpsertResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpsertData
-	JSON207      *struct {
+	JSON200      *struct {
+		// Data The data that is expected to be returned.
+		Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+		// Metadata Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
+		Metadata             *Upsert_200_Metadata   `json:"metadata,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+	JSON207 *struct {
 		// Data The data that is expected to be returned.
 		Data *[]interface{} `json:"data,omitempty"`
 
@@ -31837,6 +11634,23 @@ type UpsertResponse struct {
 		Message              *string                `json:"message,omitempty"`
 		AdditionalProperties map[string]interface{} `json:"-"`
 	}
+}
+type Upsert_200_Metadata struct {
+	// CreatedRecordIds Array containing the created record ids.
+	CreatedRecordIds *[]int `json:"createdRecordIds,omitempty"`
+
+	// LineErrors This will only be returned in the case of failed records. It is a collection of errors that occurred when processing the incoming data that resulted in records not being processed. Each object has a key representing the sequence number of the record in the original payload (starting from 1). The value is a list of errors occurred.
+	LineErrors *map[string][]string `json:"lineErrors,omitempty"`
+
+	// TotalNumberOfRecordsProcessed Number of records processed. Includes successful and failed record updates.
+	TotalNumberOfRecordsProcessed *int `json:"totalNumberOfRecordsProcessed,omitempty"`
+
+	// UnchangedRecordIds Array containing the unchanged record ids.
+	UnchangedRecordIds *[]int `json:"unchangedRecordIds,omitempty"`
+
+	// UpdatedRecordIds Array containing the updated record ids.
+	UpdatedRecordIds     *[]int                 `json:"updatedRecordIds,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 type Upsert_207_Metadata struct {
 	// CreatedRecordIds Array containing the created record ids.
@@ -31875,7 +11689,29 @@ func (r UpsertResponse) StatusCode() int {
 type RecordsModifiedSinceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RecordsModifiedSinceData
+	JSON200      *struct {
+		// Changes When includeDetails is true, this array contains the individual record changes. If includeDetails is false, this array will not be returned.
+		Changes *[]RecordsModifiedSince_200_Changes_Item `json:"changes,omitempty"`
+
+		// Count The count of changes found.
+		Count int `json:"count"`
+
+		// DeletesTruncated When true, this indicates that the number of deletes detected exceeded the limit and details could not be returned.
+		DeletesTruncated     *bool                  `json:"deletesTruncated,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type RecordsModifiedSince200ChangesChangeType string
+type RecordsModifiedSince_200_Changes_Item struct {
+	// ChangeType The type of change that was detected.
+	ChangeType *RecordsModifiedSince200ChangesChangeType `json:"changeType,omitempty"`
+
+	// RecordId A record whose dependencies were found to have been updated after the time provided.
+	RecordId *int `json:"recordId,omitempty"`
+
+	// Timestamp The timestamp that Quickbase found that exceeded the after time. This does not represent the latest date modified in the record graph.
+	Timestamp            *time.Time             `json:"timestamp,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31897,7 +11733,45 @@ func (r RecordsModifiedSinceResponse) StatusCode() int {
 type RunQueryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RunQueryData
+	JSON200      *struct {
+		// Data An array of objects that either represents the record data or summarized values, depending on the report type.
+		Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+		// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
+		Fields *[]RunQuery_200_Fields_Item `json:"fields,omitempty"`
+
+		// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
+		Metadata             *RunQuery_200_Metadata `json:"metadata,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type RunQuery_200_Fields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type RunQuery_200_Metadata struct {
+	// NumFields The number of fields in each record in the current response object
+	NumFields int `json:"numFields"`
+
+	// NumRecords The number of records in the current response object
+	NumRecords int `json:"numRecords"`
+
+	// Skip The number of records to skip
+	Skip *int `json:"skip,omitempty"`
+
+	// Top If present, the maximum number of records requested by the caller
+	Top *int `json:"top,omitempty"`
+
+	// TotalRecords The total number of records in the result set
+	TotalRecords         int                    `json:"totalRecords"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31919,7 +11793,65 @@ func (r RunQueryResponse) StatusCode() int {
 type GetTableReportsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetTableReportsItem
+	JSON200      *[]GetTableReports_200_Item
+}
+type GetTableReports200QueryFormulaFieldsFieldType string
+type GetTableReports_200_Query_FormulaFields_Item struct {
+	// DecimalPrecision For numeric formula the number precision.
+	DecimalPrecision *int `json:"decimalPrecision,omitempty"`
+
+	// FieldType Resulting formula value type.
+	FieldType *GetTableReports200QueryFormulaFieldsFieldType `json:"fieldType,omitempty"`
+
+	// Formula Formula text.
+	Formula *string `json:"formula,omitempty"`
+
+	// Id Formula field identifier.
+	Id *int `json:"id,omitempty"`
+
+	// Label Formula field label.
+	Label                *string                `json:"label,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetTableReports_200_Query struct {
+	// Filter Filter used to query for data.
+	Filter *string `json:"filter,omitempty"`
+
+	// FormulaFields Calculated formula fields.
+	FormulaFields *[]GetTableReports_200_Query_FormulaFields_Item `json:"formulaFields,omitempty"`
+
+	// TableId The table identifier for the report.
+	TableId              *string                `json:"tableId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetTableReports_200_Item struct {
+	// Description The configured description of a report.
+	Description *string `json:"description,omitempty"`
+
+	// Id The identifier of the report, unique to the table.
+	Id *string `json:"id,omitempty"`
+
+	// Name The configured name of the report.
+	Name *string `json:"name,omitempty"`
+
+	// OwnerId Optional, showed only for personal reports. The user ID of report owner.
+	OwnerId *int `json:"ownerId,omitempty"`
+
+	// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
+	Properties *map[string]interface{} `json:"properties,omitempty"`
+
+	// Query The query definition as configured in Quickbase that gets executed when the report is run.
+	Query *GetTableReports_200_Query `json:"query,omitempty"`
+
+	// Type The type of report in Quickbase (e.g., chart).
+	Type *string `json:"type,omitempty"`
+
+	// UsedCount The number of times a report has been used.
+	UsedCount *int `json:"usedCount,omitempty"`
+
+	// UsedLast The instant at which a report was last used.
+	UsedLast             *string                `json:"usedLast,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31941,7 +11873,64 @@ func (r GetTableReportsResponse) StatusCode() int {
 type GetReportResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetReportData
+	JSON200      *struct {
+		// Description The configured description of a report.
+		Description *string `json:"description,omitempty"`
+
+		// Id The identifier of the report, unique to the table.
+		Id *string `json:"id,omitempty"`
+
+		// Name The configured name of the report.
+		Name *string `json:"name,omitempty"`
+
+		// OwnerId Optional, showed only for personal reports. The user ID of report owner.
+		OwnerId *int `json:"ownerId,omitempty"`
+
+		// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
+		Properties *map[string]interface{} `json:"properties,omitempty"`
+
+		// Query The query definition as configured in Quickbase that gets executed when the report is run.
+		Query *GetReport_200_Query `json:"query,omitempty"`
+
+		// Type The type of report in Quickbase (e.g., chart).
+		Type *string `json:"type,omitempty"`
+
+		// UsedCount The number of times a report has been used.
+		UsedCount *int `json:"usedCount,omitempty"`
+
+		// UsedLast The instant at which a report was last used.
+		UsedLast             *string                `json:"usedLast,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type GetReport200QueryFormulaFieldsFieldType string
+type GetReport_200_Query_FormulaFields_Item struct {
+	// DecimalPrecision For numeric formula the number precision.
+	DecimalPrecision *int `json:"decimalPrecision,omitempty"`
+
+	// FieldType Resulting formula value type.
+	FieldType *GetReport200QueryFormulaFieldsFieldType `json:"fieldType,omitempty"`
+
+	// Formula Formula text.
+	Formula *string `json:"formula,omitempty"`
+
+	// Id Formula field identifier.
+	Id *int `json:"id,omitempty"`
+
+	// Label Formula field label.
+	Label                *string                `json:"label,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetReport_200_Query struct {
+	// Filter Filter used to query for data.
+	Filter *string `json:"filter,omitempty"`
+
+	// FormulaFields Calculated formula fields.
+	FormulaFields *[]GetReport_200_Query_FormulaFields_Item `json:"formulaFields,omitempty"`
+
+	// TableId The table identifier for the report.
+	TableId              *string                `json:"tableId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -31963,7 +11952,48 @@ func (r GetReportResponse) StatusCode() int {
 type RunReportResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *RunReportData
+	JSON200      *struct {
+		// Data An array of objects that either represents the record data or summarized values, depending on the report type.
+		Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+		// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
+		Fields *[]RunReport_200_Fields_Item `json:"fields,omitempty"`
+
+		// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
+		Metadata             *RunReport_200_Metadata `json:"metadata,omitempty"`
+		AdditionalProperties map[string]interface{}  `json:"-"`
+	}
+}
+type RunReport_200_Fields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// LabelOverride Column heading label override for field in report.
+	LabelOverride *string `json:"labelOverride,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type RunReport_200_Metadata struct {
+	// NumFields The number of fields in each record in the current response object
+	NumFields int `json:"numFields"`
+
+	// NumRecords The number of records in the current response object
+	NumRecords int `json:"numRecords"`
+
+	// Skip The number of records to skip
+	Skip *int `json:"skip,omitempty"`
+
+	// Top If present, the maximum number of records requested by the caller
+	Top *int `json:"top,omitempty"`
+
+	// TotalRecords The total number of records in the result set
+	TotalRecords         int                    `json:"totalRecords"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32217,7 +12247,58 @@ func (r ExportSolutionToRecordResponse) StatusCode() int {
 type GetAppTablesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]GetAppTablesItem
+	JSON200      *[]GetAppTables_200_Item
+}
+type GetAppTables200DefaultSortOrder string
+type GetAppTables_200_Item struct {
+	// Alias The automatically-created table alias for the table.
+	Alias *string `json:"alias,omitempty"`
+
+	// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+	Created *string `json:"created,omitempty"`
+
+	// DefaultSortFieldId The id of the field that is configured for default sorting.
+	DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+	// DefaultSortOrder The configuration of the default sort order on the table.
+	DefaultSortOrder *GetAppTables200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+	// Description The description of the table, as configured by an application administrator.
+	Description *string `json:"description,omitempty"`
+
+	// Id The unique identifier (dbid) of the table.
+	Id *string `json:"id,omitempty"`
+
+	// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+	KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+	// Name The name of the table.
+	Name *string `json:"name,omitempty"`
+
+	// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+	NextFieldId *int `json:"nextFieldId,omitempty"`
+
+	// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+	NextRecordId *int `json:"nextRecordId,omitempty"`
+
+	// PluralRecordName The builder-configured plural noun of the table.
+	PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+	// SingleRecordName The builder-configured singular noun of the table.
+	SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+	// SizeLimit The size limit for the table.
+	SizeLimit *string `json:"sizeLimit,omitempty"`
+
+	// SpaceRemaining The amount of space remaining for use by the table.
+	SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+	// SpaceUsed The amount of space currently being used by the table.
+	SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+	// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+	Updated              *string                `json:"updated,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32239,8 +12320,58 @@ func (r GetAppTablesResponse) StatusCode() int {
 type CreateTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CreateTableData
+	JSON200      *struct {
+		// Alias The automatically-created table alias for the table.
+		Alias *string `json:"alias,omitempty"`
+
+		// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DefaultSortFieldId The id of the field that is configured for default sorting.
+		DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+		// DefaultSortOrder The configuration of the default sort order on the table.
+		DefaultSortOrder *CreateTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+		// Description The description of the table, as configured by an application administrator.
+		Description *string `json:"description,omitempty"`
+
+		// Id The unique identifier (dbid) of the table.
+		Id *string `json:"id,omitempty"`
+
+		// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+		KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+		// Name The name of the table.
+		Name *string `json:"name,omitempty"`
+
+		// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+		NextFieldId *int `json:"nextFieldId,omitempty"`
+
+		// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+		NextRecordId *int `json:"nextRecordId,omitempty"`
+
+		// PluralRecordName The builder-configured plural noun of the table.
+		PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+		// SingleRecordName The builder-configured singular noun of the table.
+		SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+		// SizeLimit The size limit for the table.
+		SizeLimit *string `json:"sizeLimit,omitempty"`
+
+		// SpaceRemaining The amount of space remaining for use by the table.
+		SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+		// SpaceUsed The amount of space currently being used by the table.
+		SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+		// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated              *string                `json:"updated,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
+type CreateTable200DefaultSortOrder string
 
 // Status returns HTTPResponse.Status
 func (r CreateTableResponse) Status() string {
@@ -32261,7 +12392,11 @@ func (r CreateTableResponse) StatusCode() int {
 type DeleteTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteTableData
+	JSON200      *struct {
+		// DeletedTableId The deleted table id.
+		DeletedTableId       *string                `json:"deletedTableId,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32283,8 +12418,58 @@ func (r DeleteTableResponse) StatusCode() int {
 type GetTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetTableData
+	JSON200      *struct {
+		// Alias The automatically-created table alias for the table.
+		Alias *string `json:"alias,omitempty"`
+
+		// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DefaultSortFieldId The id of the field that is configured for default sorting.
+		DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+		// DefaultSortOrder The configuration of the default sort order on the table.
+		DefaultSortOrder *GetTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+		// Description The description of the table, as configured by an application administrator.
+		Description *string `json:"description,omitempty"`
+
+		// Id The unique identifier (dbid) of the table.
+		Id *string `json:"id,omitempty"`
+
+		// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+		KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+		// Name The name of the table.
+		Name *string `json:"name,omitempty"`
+
+		// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+		NextFieldId *int `json:"nextFieldId,omitempty"`
+
+		// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+		NextRecordId *int `json:"nextRecordId,omitempty"`
+
+		// PluralRecordName The builder-configured plural noun of the table.
+		PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+		// SingleRecordName The builder-configured singular noun of the table.
+		SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+		// SizeLimit The size limit for the table.
+		SizeLimit *string `json:"sizeLimit,omitempty"`
+
+		// SpaceRemaining The amount of space remaining for use by the table.
+		SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+		// SpaceUsed The amount of space currently being used by the table.
+		SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+		// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated              *string                `json:"updated,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
+type GetTable200DefaultSortOrder string
 
 // Status returns HTTPResponse.Status
 func (r GetTableResponse) Status() string {
@@ -32305,8 +12490,58 @@ func (r GetTableResponse) StatusCode() int {
 type UpdateTableResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpdateTableData
+	JSON200      *struct {
+		// Alias The automatically-created table alias for the table.
+		Alias *string `json:"alias,omitempty"`
+
+		// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Created *string `json:"created,omitempty"`
+
+		// DefaultSortFieldId The id of the field that is configured for default sorting.
+		DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+		// DefaultSortOrder The configuration of the default sort order on the table.
+		DefaultSortOrder *UpdateTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+		// Description The description of the table, as configured by an application administrator.
+		Description *string `json:"description,omitempty"`
+
+		// Id The unique identifier (dbid) of the table.
+		Id *string `json:"id,omitempty"`
+
+		// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+		KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+		// Name The name of the table.
+		Name *string `json:"name,omitempty"`
+
+		// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+		NextFieldId *int `json:"nextFieldId,omitempty"`
+
+		// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+		NextRecordId *int `json:"nextRecordId,omitempty"`
+
+		// PluralRecordName The builder-configured plural noun of the table.
+		PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+		// SingleRecordName The builder-configured singular noun of the table.
+		SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+		// SizeLimit The size limit for the table.
+		SizeLimit *string `json:"sizeLimit,omitempty"`
+
+		// SpaceRemaining The amount of space remaining for use by the table.
+		SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+		// SpaceUsed The amount of space currently being used by the table.
+		SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+		// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		Updated              *string                `json:"updated,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
+type UpdateTable200DefaultSortOrder string
 
 // Status returns HTTPResponse.Status
 func (r UpdateTableResponse) Status() string {
@@ -32327,7 +12562,62 @@ func (r UpdateTableResponse) StatusCode() int {
 type CreateRelationshipResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CreateRelationshipData
+	JSON200      *struct {
+		// ChildTableId The child table id of the relationship.
+		ChildTableId string `json:"childTableId"`
+
+		// ForeignKeyField The foreign key field information.
+		ForeignKeyField *CreateRelationship_200_ForeignKeyField `json:"foreignKeyField,omitempty"`
+
+		// Id The relationship id (foreign key field id).
+		Id int `json:"id"`
+
+		// IsCrossApp Whether this is a cross-app relationship.
+		IsCrossApp bool `json:"isCrossApp"`
+
+		// LookupFields The lookup fields array.
+		LookupFields *[]CreateRelationship_200_LookupFields_Item `json:"lookupFields,omitempty"`
+
+		// ParentTableId The parent table id of the relationship.
+		ParentTableId string `json:"parentTableId"`
+
+		// SummaryFields The summary fields array.
+		SummaryFields        *[]CreateRelationship_200_SummaryFields_Item `json:"summaryFields,omitempty"`
+		AdditionalProperties map[string]interface{}                       `json:"-"`
+	}
+}
+type CreateRelationship_200_ForeignKeyField struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type CreateRelationship_200_LookupFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type CreateRelationship_200_SummaryFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32349,7 +12639,11 @@ func (r CreateRelationshipResponse) StatusCode() int {
 type DeleteRelationshipResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteRelationshipData
+	JSON200      *struct {
+		// RelationshipId The relationship id.
+		RelationshipId       int                    `json:"relationshipId"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32371,7 +12665,62 @@ func (r DeleteRelationshipResponse) StatusCode() int {
 type UpdateRelationshipResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UpdateRelationshipData
+	JSON200      *struct {
+		// ChildTableId The child table id of the relationship.
+		ChildTableId string `json:"childTableId"`
+
+		// ForeignKeyField The foreign key field information.
+		ForeignKeyField *UpdateRelationship_200_ForeignKeyField `json:"foreignKeyField,omitempty"`
+
+		// Id The relationship id (foreign key field id).
+		Id int `json:"id"`
+
+		// IsCrossApp Whether this is a cross-app relationship.
+		IsCrossApp bool `json:"isCrossApp"`
+
+		// LookupFields The lookup fields array.
+		LookupFields *[]UpdateRelationship_200_LookupFields_Item `json:"lookupFields,omitempty"`
+
+		// ParentTableId The parent table id of the relationship.
+		ParentTableId string `json:"parentTableId"`
+
+		// SummaryFields The summary fields array.
+		SummaryFields        *[]UpdateRelationship_200_SummaryFields_Item `json:"summaryFields,omitempty"`
+		AdditionalProperties map[string]interface{}                       `json:"-"`
+	}
+}
+type UpdateRelationship_200_ForeignKeyField struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type UpdateRelationship_200_LookupFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type UpdateRelationship_200_SummaryFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32393,7 +12742,81 @@ func (r UpdateRelationshipResponse) StatusCode() int {
 type GetRelationshipsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetRelationshipsData
+	JSON200      *struct {
+		// Metadata Additional information about the results that may be helpful.
+		Metadata *GetRelationships_200_Metadata `json:"metadata,omitempty"`
+
+		// Relationships The relationships in a table.
+		Relationships        []GetRelationships_200_Relationships_Item `json:"relationships"`
+		AdditionalProperties map[string]interface{}                    `json:"-"`
+	}
+}
+type GetRelationships_200_Metadata struct {
+	// NumRelationships The number of relationships in the current response object.
+	NumRelationships *int `json:"numRelationships,omitempty"`
+
+	// Skip The number of relationships to skip.
+	Skip *int `json:"skip,omitempty"`
+
+	// TotalRelationships The total number of relationships.
+	TotalRelationships   *int                   `json:"totalRelationships,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetRelationships_200_Relationships_ForeignKeyField struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetRelationships_200_Relationships_LookupFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetRelationships_200_Relationships_SummaryFields_Item struct {
+	// Id Field id.
+	Id *int `json:"id,omitempty"`
+
+	// Label Field label.
+	Label *string `json:"label,omitempty"`
+
+	// Type Field type.
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetRelationships_200_Relationships_Item struct {
+	// ChildTableId The child table id of the relationship.
+	ChildTableId string `json:"childTableId"`
+
+	// ForeignKeyField The foreign key field information.
+	ForeignKeyField *GetRelationships_200_Relationships_ForeignKeyField `json:"foreignKeyField,omitempty"`
+
+	// Id The relationship id (foreign key field id).
+	Id int `json:"id"`
+
+	// IsCrossApp Whether this is a cross-app relationship.
+	IsCrossApp bool `json:"isCrossApp"`
+
+	// LookupFields The lookup fields array.
+	LookupFields *[]GetRelationships_200_Relationships_LookupFields_Item `json:"lookupFields,omitempty"`
+
+	// ParentTableId The parent table id of the relationship.
+	ParentTableId string `json:"parentTableId"`
+
+	// SummaryFields The summary fields array.
+	SummaryFields        *[]GetRelationships_200_Relationships_SummaryFields_Item `json:"summaryFields,omitempty"`
+	AdditionalProperties map[string]interface{}                                   `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32415,7 +12838,26 @@ func (r GetRelationshipsResponse) StatusCode() int {
 type GetUsersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *GetUsersData
+	JSON200      *struct {
+		// Metadata Additional request information
+		Metadata GetUsers_200_Metadata `json:"metadata"`
+
+		// Users A list of users found in an account with the given criterias
+		Users                []GetUsers_200_Users_Item `json:"users"`
+		AdditionalProperties map[string]interface{}    `json:"-"`
+	}
+}
+type GetUsers_200_Metadata struct {
+	NextPageToken        string                 `json:"nextPageToken"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type GetUsers_200_Users_Item struct {
+	EmailAddress         string                 `json:"emailAddress"`
+	FirstName            string                 `json:"firstName"`
+	HashId               string                 `json:"hashId"`
+	LastName             string                 `json:"lastName"`
+	UserName             string                 `json:"userName"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32437,7 +12879,14 @@ func (r GetUsersResponse) StatusCode() int {
 type DenyUsersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DenyUsersData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have successfully been denied.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32459,7 +12908,14 @@ func (r DenyUsersResponse) StatusCode() int {
 type DenyUsersAndGroupsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DenyUsersAndGroupsData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have successfully been denied.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32481,7 +12937,14 @@ func (r DenyUsersAndGroupsResponse) StatusCode() int {
 type UndenyUsersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *UndenyUsersData
+	JSON200      *struct {
+		// Failure A list of users that couldn't be undenied. This also includes the ID's of users that are not valid.
+		Failure []string `json:"failure"`
+
+		// Success A list of users that have successfully been undenied.
+		Success              []string               `json:"success"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32503,7 +12966,11 @@ func (r UndenyUsersResponse) StatusCode() int {
 type DeleteUserTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeleteUserTokenData
+	JSON200      *struct {
+		// Id The user token id.
+		Id                   *int                   `json:"id,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32525,7 +12992,37 @@ func (r DeleteUserTokenResponse) StatusCode() int {
 type CloneUserTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *CloneUserTokenData
+	JSON200      *struct {
+		// Active Whether the user token is active.
+		Active *bool `json:"active,omitempty"`
+
+		// Apps The list of apps this user token is assigned to.
+		Apps *[]CloneUserToken_200_Apps_Item `json:"apps,omitempty"`
+
+		// Description User Token description.
+		Description *string `json:"description,omitempty"`
+
+		// Id User Token id.
+		Id *int `json:"id,omitempty"`
+
+		// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		LastUsed *string `json:"lastUsed,omitempty"`
+
+		// Name User Token name.
+		Name *string `json:"name,omitempty"`
+
+		// Token User Token value.
+		Token                *string                `json:"token,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type CloneUserToken_200_Apps_Item struct {
+	// Id The unique identifier for this application.
+	Id *string `json:"id,omitempty"`
+
+	// Name The application's name.
+	Name                 *string                `json:"name,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -32547,7 +13044,11 @@ func (r CloneUserTokenResponse) StatusCode() int {
 type DeactivateUserTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *DeactivateUserTokenData
+	JSON200      *struct {
+		// Id The user token id.
+		Id                   *int                   `json:"id,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -32569,7 +13070,34 @@ func (r DeactivateUserTokenResponse) StatusCode() int {
 type TransferUserTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *TransferUserTokenData
+	JSON200      *struct {
+		// Active Whether the user token is active.
+		Active *bool `json:"active,omitempty"`
+
+		// Apps The list of apps this user token is assigned to.
+		Apps *[]TransferUserToken_200_Apps_Item `json:"apps,omitempty"`
+
+		// Description User Token description.
+		Description *string `json:"description,omitempty"`
+
+		// Id User Token id.
+		Id *int `json:"id,omitempty"`
+
+		// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+		LastUsed *string `json:"lastUsed,omitempty"`
+
+		// Name User Token name.
+		Name                 *string                `json:"name,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+type TransferUserToken_200_Apps_Item struct {
+	// Id The unique identifier for this application.
+	Id *string `json:"id,omitempty"`
+
+	// Name The application's name.
+	Name                 *string                `json:"name,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // Status returns HTTPResponse.Status
@@ -33501,7 +14029,71 @@ func ParsePlatformAnalyticEventSummariesResponse(rsp *http.Response) (*PlatformA
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PlatformAnalyticEventSummariesData
+		var dest struct {
+			Data struct {
+				EventsSummaries struct {
+					// AccountId The ID of the account the events are associated with.
+					AccountId string `json:"accountId"`
+
+					// End The end date and time of the requested summaries in ISO 8601 time format.
+					End time.Time `json:"end"`
+
+					// GroupBy How the events should be grouped.
+					GroupBy PlatformAnalyticEventSummaries200DataEventsSummariesGroupBy `json:"groupBy"`
+
+					// Metadata Additional information about the results that may be helpful.
+					Metadata struct {
+						// NextToken Supply this token in a subsequent request to fetch the next page of results.
+						NextToken string `json:"nextToken"`
+					} `json:"metadata"`
+
+					// Results An array of objects that contains Application/User information and an events object with summaries by event type.
+					Results []struct {
+						// EventTypes An array of events that contains specific information associated with an Application/User broken down by event type.
+						EventTypes []struct {
+							// BillingCategory Billing category of the event type.
+							BillingCategory *PlatformAnalyticEventSummaries200DataEventsSummariesResultsEventTypesBillingCategory `json:"billingCategory,omitempty"`
+
+							// Count Count of events associated with that event type and Application/User.
+							Count *int `json:"count,omitempty"`
+
+							// EventType Event type
+							EventType *string `json:"eventType,omitempty"`
+						} `json:"eventTypes"`
+
+						// Id Id of the Application/User.
+						Id string `json:"id"`
+
+						// Name Name of the Application/User.
+						Name string `json:"name"`
+
+						// Totals Totals by billing category for the event grouping.
+						Totals struct {
+							All         *float32 `json:"all,omitempty"`
+							Integration *float32 `json:"integration,omitempty"`
+							User        *float32 `json:"user,omitempty"`
+						} `json:"totals"`
+					} `json:"results"`
+
+					// Start The start date and time of the requested summaries in ISO 8601 time format.
+					Start time.Time `json:"start"`
+
+					// Totals Totals by billing category for all queried events.
+					Totals struct {
+						All         *float32 `json:"all,omitempty"`
+						Integration *float32 `json:"integration,omitempty"`
+						User        *float32 `json:"user,omitempty"`
+					} `json:"totals"`
+					Where []struct {
+						// Id Id of the item to filter by.
+						Id string `json:"id"`
+
+						// Type The type of item to filter by.
+						Type PlatformAnalyticEventSummaries200DataEventsSummariesWhereType `json:"type"`
+					} `json:"where"`
+				} `json:"eventsSummaries"`
+			} `json:"data"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33527,7 +14119,11 @@ func ParsePlatformAnalyticReadsResponse(rsp *http.Response) (*PlatformAnalyticRe
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PlatformAnalyticReadsData
+		var dest struct {
+			// Data The data object containing the read summaries.
+			Data                 PlatformAnalyticReads_200_Data `json:"data"`
+			AdditionalProperties map[string]interface{}         `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33553,7 +14149,37 @@ func ParseRemoveTrusteesResponse(rsp *http.Response) (*RemoveTrusteesResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RemoveTrusteesData
+		var dest struct {
+			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+			Failure []struct {
+				// Error The error message associated with the trustee that could not be updated.
+				Error *string `json:"error,omitempty"`
+
+				// Trustee Object used for operations to read, create, or update trustees in an app.
+				Trustee *struct {
+					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+					Id string `json:"id"`
+
+					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+					RoleId int `json:"roleId"`
+
+					// Type The type of trustee being added. This can be a user, group, or email domain group.
+					Type RemoveTrustees200FailureTrusteeType `json:"type"`
+				} `json:"trustee,omitempty"`
+			} `json:"failure"`
+
+			// Success A list of trustees that have been successfully updated.
+			Success []struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type RemoveTrustees200SuccessType `json:"type"`
+			} `json:"success"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33616,7 +14242,16 @@ func ParseGetTrusteesResponse(rsp *http.Response) (*GetTrusteesResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetTrusteesItem
+		var dest []struct {
+			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+			Id string `json:"id"`
+
+			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+			RoleId int `json:"roleId"`
+
+			// Type The type of trustee being added. This can be a user, group, or email domain group.
+			Type GetTrustees200Type `json:"type"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33642,7 +14277,43 @@ func ParseUpdateTrusteesResponse(rsp *http.Response) (*UpdateTrusteesResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpdateTrusteesData
+		var dest struct {
+			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+			Failure []struct {
+				// Error The error message associated with the trustee that could not be updated.
+				Error *string `json:"error,omitempty"`
+
+				// Trustee Object used for operations to read, create, or update trustees in an app.
+				Trustee *struct {
+					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+					Id string `json:"id"`
+
+					// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+					OldRoleId int `json:"oldRoleId"`
+
+					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+					RoleId int `json:"roleId"`
+
+					// Type The type of trustee being added. This can be a user, group, or email domain group.
+					Type UpdateTrustees200FailureTrusteeType `json:"type"`
+				} `json:"trustee,omitempty"`
+			} `json:"failure"`
+
+			// Success A list of trustees that have been successfully updated.
+			Success []struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+				OldRoleId int `json:"oldRoleId"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type UpdateTrustees200SuccessType `json:"type"`
+			} `json:"success"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33711,7 +14382,37 @@ func ParseAddTrusteesResponse(rsp *http.Response) (*AddTrusteesResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest AddTrusteesData
+		var dest struct {
+			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
+			Failure []struct {
+				// Error The error message associated with the trustee that could not be updated.
+				Error *string `json:"error,omitempty"`
+
+				// Trustee Object used for operations to read, create, or update trustees in an app.
+				Trustee *struct {
+					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+					Id string `json:"id"`
+
+					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+					RoleId int `json:"roleId"`
+
+					// Type The type of trustee being added. This can be a user, group, or email domain group.
+					Type AddTrustees200FailureTrusteeType `json:"type"`
+				} `json:"trustee,omitempty"`
+			} `json:"failure"`
+
+			// Success A list of trustees that have been successfully updated.
+			Success []struct {
+				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+				Id string `json:"id"`
+
+				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+				RoleId int `json:"roleId"`
+
+				// Type The type of trustee being added. This can be a user, group, or email domain group.
+				Type AddTrustees200SuccessType `json:"type"`
+			} `json:"success"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33774,7 +14475,50 @@ func ParseCreateAppResponse(rsp *http.Response) (*CreateAppResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateAppData
+		var dest struct {
+			// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+			DataClassification *string `json:"dataClassification,omitempty"`
+
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
+			DateFormat *string `json:"dateFormat,omitempty"`
+
+			// Description The description for the app. If this property is left out, the app description will be blank.
+			Description *string `json:"description,omitempty"`
+
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
+			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+			// Id The unique identifier for this application.
+			Id *string `json:"id,omitempty"`
+
+			// MemoryInfo Application memory info
+			MemoryInfo *struct {
+				// EstMemory The estimated memory of this application in gigabytes
+				EstMemory *float32 `json:"estMemory,omitempty"`
+
+				// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+				EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+			} `json:"memoryInfo,omitempty"`
+
+			// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+			Name string `json:"name"`
+
+			// SecurityProperties Security properties of the application
+			SecurityProperties *CreateApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
+			TimeZone *string `json:"timeZone,omitempty"`
+
+			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated *string `json:"updated,omitempty"`
+
+			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+			Variables            *[]CreateApp_200_Variables_Item `json:"variables,omitempty"`
+			AdditionalProperties map[string]interface{}          `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33800,7 +14544,11 @@ func ParseDeleteAppResponse(rsp *http.Response) (*DeleteAppResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteAppData
+		var dest struct {
+			// DeletedAppId An ID of deleted application.
+			DeletedAppId         *string                `json:"deletedAppId,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33826,7 +14574,53 @@ func ParseGetAppResponse(rsp *http.Response) (*GetAppResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetAppData
+		var dest struct {
+			// AncestorId The id of the app from which this app was copied
+			AncestorId *string `json:"ancestorId,omitempty"`
+
+			// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+			DataClassification *string `json:"dataClassification,omitempty"`
+
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+			DateFormat *string `json:"dateFormat,omitempty"`
+
+			// Description The description for the app. If this property is left out, the app description will be blank.
+			Description *string `json:"description,omitempty"`
+
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+			// Id The unique identifier for this application.
+			Id *string `json:"id,omitempty"`
+
+			// MemoryInfo Application memory info
+			MemoryInfo *struct {
+				// EstMemory The estimated memory of this application in gigabytes
+				EstMemory *float32 `json:"estMemory,omitempty"`
+
+				// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+				EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+			} `json:"memoryInfo,omitempty"`
+
+			// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+			Name string `json:"name"`
+
+			// SecurityProperties Security properties of the application
+			SecurityProperties *GetApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+			TimeZone *string `json:"timeZone,omitempty"`
+
+			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated *string `json:"updated,omitempty"`
+
+			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+			Variables            *[]GetApp_200_Variables_Item `json:"variables,omitempty"`
+			AdditionalProperties map[string]interface{}       `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33852,7 +14646,53 @@ func ParseUpdateAppResponse(rsp *http.Response) (*UpdateAppResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpdateAppData
+		var dest struct {
+			// AncestorId The id of the app from which this app was copied
+			AncestorId *string `json:"ancestorId,omitempty"`
+
+			// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+			DataClassification *string `json:"dataClassification,omitempty"`
+
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+			DateFormat *string `json:"dateFormat,omitempty"`
+
+			// Description The description for the app. If this property is left out, the app description will be blank.
+			Description *string `json:"description,omitempty"`
+
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+			// Id The unique identifier for this application.
+			Id *string `json:"id,omitempty"`
+
+			// MemoryInfo Application memory info
+			MemoryInfo *struct {
+				// EstMemory The estimated memory of this application in gigabytes
+				EstMemory *float32 `json:"estMemory,omitempty"`
+
+				// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
+				EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+			} `json:"memoryInfo,omitempty"`
+
+			// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+			Name string `json:"name"`
+
+			// SecurityProperties Security properties of the application
+			SecurityProperties *UpdateApp_200_SecurityProperties `json:"securityProperties,omitempty"`
+
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+			TimeZone *string `json:"timeZone,omitempty"`
+
+			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated *string `json:"updated,omitempty"`
+
+			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+			Variables            *[]UpdateApp_200_Variables_Item `json:"variables,omitempty"`
+			AdditionalProperties map[string]interface{}          `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33878,7 +14718,41 @@ func ParseCopyAppResponse(rsp *http.Response) (*CopyAppResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CopyAppData
+		var dest struct {
+			// AncestorId The id of the app from which this app was copied
+			AncestorId *string `json:"ancestorId,omitempty"`
+
+			// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
+			DataClassification *string `json:"dataClassification,omitempty"`
+
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+			DateFormat *string `json:"dateFormat,omitempty"`
+
+			// Description The description for the app
+			Description *string `json:"description,omitempty"`
+
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
+
+			// Id The unique identifier for this application.
+			Id *string `json:"id,omitempty"`
+
+			// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
+			Name string `json:"name"`
+
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+			TimeZone *string `json:"timeZone,omitempty"`
+
+			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated *string `json:"updated,omitempty"`
+
+			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+			Variables            *[]CopyApp_200_Variables_Item `json:"variables,omitempty"`
+			AdditionalProperties map[string]interface{}        `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33904,7 +14778,7 @@ func ParseGetAppEventsResponse(rsp *http.Response) (*GetAppEventsResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetAppEventsItem
+		var dest []GetAppEvents_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33930,7 +14804,7 @@ func ParseGetRolesResponse(rsp *http.Response) (*GetRolesResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetRolesItem
+		var dest []GetRoles_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33956,7 +14830,17 @@ func ParseAuditResponse(rsp *http.Response) (*AuditResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest AuditData
+		var dest struct {
+			// Events All events of the audit log.
+			Events *[]Audit_200_Events_Item `json:"events,omitempty"`
+
+			// NextToken Token to fetch the next 1000 logs.
+			NextToken *string `json:"nextToken,omitempty"`
+
+			// QueryId Query id of the requested audit log.
+			QueryId              string                 `json:"queryId"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33993,7 +14877,17 @@ func ParseExchangeSsoTokenResponse(rsp *http.Response) (*ExchangeSsoTokenRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ExchangeSsoTokenData
+		var dest struct {
+			// AccessToken The security token issued by the authorization server in response to the token exchange request. The identifier `access_token` is used for historical reasons and the issued token need not be an OAuth access token.
+			AccessToken *string `json:"access_token,omitempty"`
+
+			// IssuedTokenType An identifier for the representation of the issued security token.
+			IssuedTokenType *ExchangeSsoToken200IssuedTokenType `json:"issued_token_type,omitempty"`
+
+			// TokenType Will always return `N_A`
+			TokenType            *ExchangeSsoToken200TokenType `json:"token_type,omitempty"`
+			AdditionalProperties map[string]interface{}        `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34019,7 +14913,11 @@ func ParseGetTempTokenDBIDResponse(rsp *http.Response) (*GetTempTokenDBIDRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetTempTokenDBIDData
+		var dest struct {
+			// TemporaryAuthorization Temporary authorization token.
+			TemporaryAuthorization *string                `json:"temporaryAuthorization,omitempty"`
+			AdditionalProperties   map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34045,7 +14943,17 @@ func ParseGenerateDocumentResponse(rsp *http.Response) (*GenerateDocumentRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GenerateDocumentData
+		var dest struct {
+			// ContentType The document content type.
+			ContentType *string `json:"contentType,omitempty"`
+
+			// Data Base64 encoded file content.
+			Data *string `json:"data,omitempty"`
+
+			// FileName The file name.
+			FileName             *string                `json:"fileName,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34071,7 +14979,14 @@ func ParseDeleteFieldsResponse(rsp *http.Response) (*DeleteFieldsResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteFieldsData
+		var dest struct {
+			// DeletedFieldIds List of field IDs to were deleted.
+			DeletedFieldIds []int `json:"deletedFieldIds"`
+
+			// Errors List of errors found.
+			Errors               []string               `json:"errors"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34097,7 +15012,7 @@ func ParseGetFieldsResponse(rsp *http.Response) (*GetFieldsResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetFieldsItem
+		var dest []GetFields_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34123,7 +15038,62 @@ func ParseCreateFieldResponse(rsp *http.Response) (*CreateFieldResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateFieldData
+		var dest struct {
+			// AppearsByDefault Indicates if the field is marked as a default in reports.
+			AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+			// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+			Audited *bool `json:"audited,omitempty"`
+
+			// Bold Indicates if the field is configured to display in bold in the product.
+			Bold *bool `json:"bold,omitempty"`
+
+			// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+			DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+			// FieldHelp The configured help text shown to users within the product.
+			FieldHelp *string `json:"fieldHelp,omitempty"`
+
+			// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+			FieldType *string `json:"fieldType,omitempty"`
+
+			// FindEnabled Indicates if the field is marked as searchable.
+			FindEnabled *bool `json:"findEnabled,omitempty"`
+
+			// Id The id of the field, unique to this table.
+			Id int64 `json:"id"`
+
+			// Label The label (name) of the field.
+			Label *string `json:"label,omitempty"`
+
+			// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+			Mode *string `json:"mode,omitempty"`
+
+			// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+			NoWrap *bool `json:"noWrap,omitempty"`
+
+			// Permissions Field Permissions for different roles.
+			Permissions *[]struct {
+				// PermissionType The permission given to the role for this field
+				PermissionType *string `json:"permissionType,omitempty"`
+
+				// Role The role associated with a given permission for the field
+				Role *string `json:"role,omitempty"`
+
+				// RoleId The Id of the given role
+				RoleId *int `json:"roleId,omitempty"`
+			} `json:"permissions,omitempty"`
+
+			// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+			Properties *CreateField_200_Properties `json:"properties,omitempty"`
+
+			// Required Indicates if the field is marked required.
+			Required *bool `json:"required,omitempty"`
+
+			// Unique Indicates if the field is marked unique.
+			Unique               *bool                  `json:"unique,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34149,7 +15119,7 @@ func ParseGetFieldsUsageResponse(rsp *http.Response) (*GetFieldsUsageResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetFieldsUsageItem
+		var dest []GetFieldsUsage_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34175,7 +15145,7 @@ func ParseGetFieldUsageResponse(rsp *http.Response) (*GetFieldUsageResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetFieldUsageItem
+		var dest []GetFieldUsage_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34201,7 +15171,62 @@ func ParseGetFieldResponse(rsp *http.Response) (*GetFieldResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetFieldData
+		var dest struct {
+			// AppearsByDefault Indicates if the field is marked as a default in reports.
+			AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+			// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+			Audited *bool `json:"audited,omitempty"`
+
+			// Bold Indicates if the field is configured to display in bold in the product.
+			Bold *bool `json:"bold,omitempty"`
+
+			// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+			DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+			// FieldHelp The configured help text shown to users within the product.
+			FieldHelp *string `json:"fieldHelp,omitempty"`
+
+			// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+			FieldType *string `json:"fieldType,omitempty"`
+
+			// FindEnabled Indicates if the field is marked as searchable.
+			FindEnabled *bool `json:"findEnabled,omitempty"`
+
+			// Id The id of the field, unique to this table.
+			Id int64 `json:"id"`
+
+			// Label The label (name) of the field.
+			Label *string `json:"label,omitempty"`
+
+			// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+			Mode *string `json:"mode,omitempty"`
+
+			// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+			NoWrap *bool `json:"noWrap,omitempty"`
+
+			// Permissions Field Permissions for different roles.
+			Permissions *[]struct {
+				// PermissionType The permission given to the role for this field
+				PermissionType *string `json:"permissionType,omitempty"`
+
+				// Role The role associated with a given permission for the field
+				Role *string `json:"role,omitempty"`
+
+				// RoleId The Id of the given role
+				RoleId *int `json:"roleId,omitempty"`
+			} `json:"permissions,omitempty"`
+
+			// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+			Properties *GetField_200_Properties `json:"properties,omitempty"`
+
+			// Required Indicates if the field is marked required.
+			Required *bool `json:"required,omitempty"`
+
+			// Unique Indicates if the field is marked unique.
+			Unique               *bool                  `json:"unique,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34227,7 +15252,62 @@ func ParseUpdateFieldResponse(rsp *http.Response) (*UpdateFieldResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpdateFieldData
+		var dest struct {
+			// AppearsByDefault Indicates if the field is marked as a default in reports.
+			AppearsByDefault *bool `json:"appearsByDefault,omitempty"`
+
+			// Audited Indicates if the field is being tracked as part of Quickbase Audit Logs.
+			Audited *bool `json:"audited,omitempty"`
+
+			// Bold Indicates if the field is configured to display in bold in the product.
+			Bold *bool `json:"bold,omitempty"`
+
+			// DoesDataCopy Indicates if the field data will copy when a user copies the record.
+			DoesDataCopy *bool `json:"doesDataCopy,omitempty"`
+
+			// FieldHelp The configured help text shown to users within the product.
+			FieldHelp *string `json:"fieldHelp,omitempty"`
+
+			// FieldType The type of field, as described [here](https://help.quickbase.com/user-assistance/field_types.html).
+			FieldType *string `json:"fieldType,omitempty"`
+
+			// FindEnabled Indicates if the field is marked as searchable.
+			FindEnabled *bool `json:"findEnabled,omitempty"`
+
+			// Id The id of the field, unique to this table.
+			Id int64 `json:"id"`
+
+			// Label The label (name) of the field.
+			Label *string `json:"label,omitempty"`
+
+			// Mode For derived fields, this will be 'lookup', 'summary', or 'formula', to indicate the type of derived field.  For non-derived fields, this will be blank.
+			Mode *string `json:"mode,omitempty"`
+
+			// NoWrap Indicates if the field is configured to not wrap when displayed in the product.
+			NoWrap *bool `json:"noWrap,omitempty"`
+
+			// Permissions Field Permissions for different roles.
+			Permissions *[]struct {
+				// PermissionType The permission given to the role for this field
+				PermissionType *string `json:"permissionType,omitempty"`
+
+				// Role The role associated with a given permission for the field
+				Role *string `json:"role,omitempty"`
+
+				// RoleId The Id of the given role
+				RoleId *int `json:"roleId,omitempty"`
+			} `json:"permissions,omitempty"`
+
+			// Properties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
+			Properties *UpdateField_200_Properties `json:"properties,omitempty"`
+
+			// Required Indicates if the field is marked required.
+			Required *bool `json:"required,omitempty"`
+
+			// Unique Indicates if the field is marked unique.
+			Unique               *bool                  `json:"unique,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34253,7 +15333,20 @@ func ParseDeleteFileResponse(rsp *http.Response) (*DeleteFileResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteFileData
+		var dest struct {
+			// Creator The user that uploaded version.
+			Creator *DeleteFile_200_Creator `json:"creator,omitempty"`
+
+			// FileName The name of file associated with deleted version.
+			FileName *string `json:"fileName,omitempty"`
+
+			// Uploaded The timestamp when the version was originally uploaded.
+			Uploaded *string `json:"uploaded,omitempty"`
+
+			// VersionNumber The number of deleted version.
+			VersionNumber        *int                   `json:"versionNumber,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34305,7 +15398,11 @@ func ParseRunFormulaResponse(rsp *http.Response) (*RunFormulaResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RunFormulaData
+		var dest struct {
+			// Result The formula execution result.
+			Result               *string                `json:"result,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34331,7 +15428,14 @@ func ParseRemoveManagersFromGroupResponse(rsp *http.Response) (*RemoveManagersFr
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RemoveManagersFromGroupData
+		var dest struct {
+			// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have been removed from the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34357,7 +15461,14 @@ func ParseAddManagersToGroupResponse(rsp *http.Response) (*AddManagersToGroupRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest AddManagersToGroupData
+		var dest struct {
+			// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have been added to the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34383,7 +15494,14 @@ func ParseRemoveMembersFromGroupResponse(rsp *http.Response) (*RemoveMembersFrom
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RemoveMembersFromGroupData
+		var dest struct {
+			// Failure A list of users that couldn't be removed from the group. This includes a list of IDs that represent invalid users.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have been removed from the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34409,7 +15527,14 @@ func ParseAddMembersToGroupResponse(rsp *http.Response) (*AddMembersToGroupRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest AddMembersToGroupData
+		var dest struct {
+			// Failure A list of users that couldn't be added to the group. This includes a list of IDs that represent invalid users and users who have already been added to the group.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have been added to the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34435,7 +15560,14 @@ func ParseRemoveSubgroupsFromGroupResponse(rsp *http.Response) (*RemoveSubgroups
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RemoveSubgroupsFromGroupData
+		var dest struct {
+			// Failure A list of child groups that couldn't be removed from the group. This includes a list of IDs that represent invalid groups.
+			Failure []string `json:"failure"`
+
+			// Success A list of child groups that have been removed from the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34461,7 +15593,14 @@ func ParseAddSubgroupsToGroupResponse(rsp *http.Response) (*AddSubgroupsToGroupR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest AddSubgroupsToGroupData
+		var dest struct {
+			// Failure A list of child groups that couldn't be added to the group. This includes a list of IDs that represent invalid groups and groups that have already been added to the group.
+			Failure []string `json:"failure"`
+
+			// Success A list of child groups that have been added to the group successfully.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34487,7 +15626,11 @@ func ParseDeleteRecordsResponse(rsp *http.Response) (*DeleteRecordsResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteRecordsData
+		var dest struct {
+			// NumberDeleted The number of records deleted.
+			NumberDeleted        *int                   `json:"numberDeleted,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34513,7 +15656,14 @@ func ParseUpsertResponse(rsp *http.Response) (*UpsertResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpsertData
+		var dest struct {
+			// Data The data that is expected to be returned.
+			Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+			// Metadata Information about created records, updated records, referenced but unchanged records, and records having any errors while being processed.
+			Metadata             *Upsert_200_Metadata   `json:"metadata,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34567,7 +15717,17 @@ func ParseRecordsModifiedSinceResponse(rsp *http.Response) (*RecordsModifiedSinc
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RecordsModifiedSinceData
+		var dest struct {
+			// Changes When includeDetails is true, this array contains the individual record changes. If includeDetails is false, this array will not be returned.
+			Changes *[]RecordsModifiedSince_200_Changes_Item `json:"changes,omitempty"`
+
+			// Count The count of changes found.
+			Count int `json:"count"`
+
+			// DeletesTruncated When true, this indicates that the number of deletes detected exceeded the limit and details could not be returned.
+			DeletesTruncated     *bool                  `json:"deletesTruncated,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34593,7 +15753,17 @@ func ParseRunQueryResponse(rsp *http.Response) (*RunQueryResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RunQueryData
+		var dest struct {
+			// Data An array of objects that either represents the record data or summarized values, depending on the report type.
+			Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+			// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
+			Fields *[]RunQuery_200_Fields_Item `json:"fields,omitempty"`
+
+			// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
+			Metadata             *RunQuery_200_Metadata `json:"metadata,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34619,7 +15789,7 @@ func ParseGetTableReportsResponse(rsp *http.Response) (*GetTableReportsResponse,
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetTableReportsItem
+		var dest []GetTableReports_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34645,7 +15815,35 @@ func ParseGetReportResponse(rsp *http.Response) (*GetReportResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetReportData
+		var dest struct {
+			// Description The configured description of a report.
+			Description *string `json:"description,omitempty"`
+
+			// Id The identifier of the report, unique to the table.
+			Id *string `json:"id,omitempty"`
+
+			// Name The configured name of the report.
+			Name *string `json:"name,omitempty"`
+
+			// OwnerId Optional, showed only for personal reports. The user ID of report owner.
+			OwnerId *int `json:"ownerId,omitempty"`
+
+			// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
+			Properties *map[string]interface{} `json:"properties,omitempty"`
+
+			// Query The query definition as configured in Quickbase that gets executed when the report is run.
+			Query *GetReport_200_Query `json:"query,omitempty"`
+
+			// Type The type of report in Quickbase (e.g., chart).
+			Type *string `json:"type,omitempty"`
+
+			// UsedCount The number of times a report has been used.
+			UsedCount *int `json:"usedCount,omitempty"`
+
+			// UsedLast The instant at which a report was last used.
+			UsedLast             *string                `json:"usedLast,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -34671,7 +15869,17 @@ func ParseRunReportResponse(rsp *http.Response) (*RunReportResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RunReportData
+		var dest struct {
+			// Data An array of objects that either represents the record data or summarized values, depending on the report type.
+			Data *[]QuickbaseRecord `json:"data,omitempty"`
+
+			// Fields An array of objects that contains limited meta-data of each field displayed in the report. This assists in building logic that depends on field types and IDs.
+			Fields *[]RunReport_200_Fields_Item `json:"fields,omitempty"`
+
+			// Metadata Additional information about the results that may be helpful. Pagination may be needed if either you specify a smaller number of results to skip than is available, or if the API automatically returns fewer results. numRecords can be compared to totalRecords to determine if further pagination is needed.
+			Metadata             *RunReport_200_Metadata `json:"metadata,omitempty"`
+			AdditionalProperties map[string]interface{}  `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35169,7 +16377,7 @@ func ParseGetAppTablesResponse(rsp *http.Response) (*GetAppTablesResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []GetAppTablesItem
+		var dest []GetAppTables_200_Item
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35195,7 +16403,56 @@ func ParseCreateTableResponse(rsp *http.Response) (*CreateTableResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateTableData
+		var dest struct {
+			// Alias The automatically-created table alias for the table.
+			Alias *string `json:"alias,omitempty"`
+
+			// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DefaultSortFieldId The id of the field that is configured for default sorting.
+			DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+			// DefaultSortOrder The configuration of the default sort order on the table.
+			DefaultSortOrder *CreateTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+			// Description The description of the table, as configured by an application administrator.
+			Description *string `json:"description,omitempty"`
+
+			// Id The unique identifier (dbid) of the table.
+			Id *string `json:"id,omitempty"`
+
+			// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+			KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+			// Name The name of the table.
+			Name *string `json:"name,omitempty"`
+
+			// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+			NextFieldId *int `json:"nextFieldId,omitempty"`
+
+			// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+			NextRecordId *int `json:"nextRecordId,omitempty"`
+
+			// PluralRecordName The builder-configured plural noun of the table.
+			PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+			// SingleRecordName The builder-configured singular noun of the table.
+			SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+			// SizeLimit The size limit for the table.
+			SizeLimit *string `json:"sizeLimit,omitempty"`
+
+			// SpaceRemaining The amount of space remaining for use by the table.
+			SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+			// SpaceUsed The amount of space currently being used by the table.
+			SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+			// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated              *string                `json:"updated,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35221,7 +16478,11 @@ func ParseDeleteTableResponse(rsp *http.Response) (*DeleteTableResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteTableData
+		var dest struct {
+			// DeletedTableId The deleted table id.
+			DeletedTableId       *string                `json:"deletedTableId,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35247,7 +16508,56 @@ func ParseGetTableResponse(rsp *http.Response) (*GetTableResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetTableData
+		var dest struct {
+			// Alias The automatically-created table alias for the table.
+			Alias *string `json:"alias,omitempty"`
+
+			// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DefaultSortFieldId The id of the field that is configured for default sorting.
+			DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+			// DefaultSortOrder The configuration of the default sort order on the table.
+			DefaultSortOrder *GetTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+			// Description The description of the table, as configured by an application administrator.
+			Description *string `json:"description,omitempty"`
+
+			// Id The unique identifier (dbid) of the table.
+			Id *string `json:"id,omitempty"`
+
+			// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+			KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+			// Name The name of the table.
+			Name *string `json:"name,omitempty"`
+
+			// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+			NextFieldId *int `json:"nextFieldId,omitempty"`
+
+			// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+			NextRecordId *int `json:"nextRecordId,omitempty"`
+
+			// PluralRecordName The builder-configured plural noun of the table.
+			PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+			// SingleRecordName The builder-configured singular noun of the table.
+			SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+			// SizeLimit The size limit for the table.
+			SizeLimit *string `json:"sizeLimit,omitempty"`
+
+			// SpaceRemaining The amount of space remaining for use by the table.
+			SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+			// SpaceUsed The amount of space currently being used by the table.
+			SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+			// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated              *string                `json:"updated,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35273,7 +16583,56 @@ func ParseUpdateTableResponse(rsp *http.Response) (*UpdateTableResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpdateTableData
+		var dest struct {
+			// Alias The automatically-created table alias for the table.
+			Alias *string `json:"alias,omitempty"`
+
+			// Created The time and date when the table was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Created *string `json:"created,omitempty"`
+
+			// DefaultSortFieldId The id of the field that is configured for default sorting.
+			DefaultSortFieldId *int `json:"defaultSortFieldId,omitempty"`
+
+			// DefaultSortOrder The configuration of the default sort order on the table.
+			DefaultSortOrder *UpdateTable200DefaultSortOrder `json:"defaultSortOrder,omitempty"`
+
+			// Description The description of the table, as configured by an application administrator.
+			Description *string `json:"description,omitempty"`
+
+			// Id The unique identifier (dbid) of the table.
+			Id *string `json:"id,omitempty"`
+
+			// KeyFieldId The id of the field that is configured to be the key on this table, which is usually the Quickbase Record ID.
+			KeyFieldId *int `json:"keyFieldId,omitempty"`
+
+			// Name The name of the table.
+			Name *string `json:"name,omitempty"`
+
+			// NextFieldId The incremental Field ID that will be used when the next field is created, as determined when the API call was ran.
+			NextFieldId *int `json:"nextFieldId,omitempty"`
+
+			// NextRecordId The incremental Record ID that will be used when the next record is created, as determined when the API call was ran.
+			NextRecordId *int `json:"nextRecordId,omitempty"`
+
+			// PluralRecordName The builder-configured plural noun of the table.
+			PluralRecordName *string `json:"pluralRecordName,omitempty"`
+
+			// SingleRecordName The builder-configured singular noun of the table.
+			SingleRecordName *string `json:"singleRecordName,omitempty"`
+
+			// SizeLimit The size limit for the table.
+			SizeLimit *string `json:"sizeLimit,omitempty"`
+
+			// SpaceRemaining The amount of space remaining for use by the table.
+			SpaceRemaining *string `json:"spaceRemaining,omitempty"`
+
+			// SpaceUsed The amount of space currently being used by the table.
+			SpaceUsed *string `json:"spaceUsed,omitempty"`
+
+			// Updated The time and date when the table schema or data was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			Updated              *string                `json:"updated,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35299,7 +16658,29 @@ func ParseCreateRelationshipResponse(rsp *http.Response) (*CreateRelationshipRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateRelationshipData
+		var dest struct {
+			// ChildTableId The child table id of the relationship.
+			ChildTableId string `json:"childTableId"`
+
+			// ForeignKeyField The foreign key field information.
+			ForeignKeyField *CreateRelationship_200_ForeignKeyField `json:"foreignKeyField,omitempty"`
+
+			// Id The relationship id (foreign key field id).
+			Id int `json:"id"`
+
+			// IsCrossApp Whether this is a cross-app relationship.
+			IsCrossApp bool `json:"isCrossApp"`
+
+			// LookupFields The lookup fields array.
+			LookupFields *[]CreateRelationship_200_LookupFields_Item `json:"lookupFields,omitempty"`
+
+			// ParentTableId The parent table id of the relationship.
+			ParentTableId string `json:"parentTableId"`
+
+			// SummaryFields The summary fields array.
+			SummaryFields        *[]CreateRelationship_200_SummaryFields_Item `json:"summaryFields,omitempty"`
+			AdditionalProperties map[string]interface{}                       `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35325,7 +16706,11 @@ func ParseDeleteRelationshipResponse(rsp *http.Response) (*DeleteRelationshipRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteRelationshipData
+		var dest struct {
+			// RelationshipId The relationship id.
+			RelationshipId       int                    `json:"relationshipId"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35351,7 +16736,29 @@ func ParseUpdateRelationshipResponse(rsp *http.Response) (*UpdateRelationshipRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UpdateRelationshipData
+		var dest struct {
+			// ChildTableId The child table id of the relationship.
+			ChildTableId string `json:"childTableId"`
+
+			// ForeignKeyField The foreign key field information.
+			ForeignKeyField *UpdateRelationship_200_ForeignKeyField `json:"foreignKeyField,omitempty"`
+
+			// Id The relationship id (foreign key field id).
+			Id int `json:"id"`
+
+			// IsCrossApp Whether this is a cross-app relationship.
+			IsCrossApp bool `json:"isCrossApp"`
+
+			// LookupFields The lookup fields array.
+			LookupFields *[]UpdateRelationship_200_LookupFields_Item `json:"lookupFields,omitempty"`
+
+			// ParentTableId The parent table id of the relationship.
+			ParentTableId string `json:"parentTableId"`
+
+			// SummaryFields The summary fields array.
+			SummaryFields        *[]UpdateRelationship_200_SummaryFields_Item `json:"summaryFields,omitempty"`
+			AdditionalProperties map[string]interface{}                       `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35377,7 +16784,14 @@ func ParseGetRelationshipsResponse(rsp *http.Response) (*GetRelationshipsRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetRelationshipsData
+		var dest struct {
+			// Metadata Additional information about the results that may be helpful.
+			Metadata *GetRelationships_200_Metadata `json:"metadata,omitempty"`
+
+			// Relationships The relationships in a table.
+			Relationships        []GetRelationships_200_Relationships_Item `json:"relationships"`
+			AdditionalProperties map[string]interface{}                    `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35403,7 +16817,14 @@ func ParseGetUsersResponse(rsp *http.Response) (*GetUsersResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetUsersData
+		var dest struct {
+			// Metadata Additional request information
+			Metadata GetUsers_200_Metadata `json:"metadata"`
+
+			// Users A list of users found in an account with the given criterias
+			Users                []GetUsers_200_Users_Item `json:"users"`
+			AdditionalProperties map[string]interface{}    `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35429,7 +16850,14 @@ func ParseDenyUsersResponse(rsp *http.Response) (*DenyUsersResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DenyUsersData
+		var dest struct {
+			// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have successfully been denied.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35455,7 +16883,14 @@ func ParseDenyUsersAndGroupsResponse(rsp *http.Response) (*DenyUsersAndGroupsRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DenyUsersAndGroupsData
+		var dest struct {
+			// Failure A list of users that couldn't be denied. This also includes the ID's of users that are not valid.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have successfully been denied.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35481,7 +16916,14 @@ func ParseUndenyUsersResponse(rsp *http.Response) (*UndenyUsersResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest UndenyUsersData
+		var dest struct {
+			// Failure A list of users that couldn't be undenied. This also includes the ID's of users that are not valid.
+			Failure []string `json:"failure"`
+
+			// Success A list of users that have successfully been undenied.
+			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35507,7 +16949,11 @@ func ParseDeleteUserTokenResponse(rsp *http.Response) (*DeleteUserTokenResponse,
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeleteUserTokenData
+		var dest struct {
+			// Id The user token id.
+			Id                   *int                   `json:"id,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35533,7 +16979,29 @@ func ParseCloneUserTokenResponse(rsp *http.Response) (*CloneUserTokenResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CloneUserTokenData
+		var dest struct {
+			// Active Whether the user token is active.
+			Active *bool `json:"active,omitempty"`
+
+			// Apps The list of apps this user token is assigned to.
+			Apps *[]CloneUserToken_200_Apps_Item `json:"apps,omitempty"`
+
+			// Description User Token description.
+			Description *string `json:"description,omitempty"`
+
+			// Id User Token id.
+			Id *int `json:"id,omitempty"`
+
+			// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			LastUsed *string `json:"lastUsed,omitempty"`
+
+			// Name User Token name.
+			Name *string `json:"name,omitempty"`
+
+			// Token User Token value.
+			Token                *string                `json:"token,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35559,7 +17027,11 @@ func ParseDeactivateUserTokenResponse(rsp *http.Response) (*DeactivateUserTokenR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DeactivateUserTokenData
+		var dest struct {
+			// Id The user token id.
+			Id                   *int                   `json:"id,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -35585,7 +17057,26 @@ func ParseTransferUserTokenResponse(rsp *http.Response) (*TransferUserTokenRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest TransferUserTokenData
+		var dest struct {
+			// Active Whether the user token is active.
+			Active *bool `json:"active,omitempty"`
+
+			// Apps The list of apps this user token is assigned to.
+			Apps *[]TransferUserToken_200_Apps_Item `json:"apps,omitempty"`
+
+			// Description User Token description.
+			Description *string `json:"description,omitempty"`
+
+			// Id User Token id.
+			Id *int `json:"id,omitempty"`
+
+			// LastUsed The last date this user token was used, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
+			LastUsed *string `json:"lastUsed,omitempty"`
+
+			// Name User Token name.
+			Name                 *string                `json:"name,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

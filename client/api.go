@@ -122,7 +122,7 @@ func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONReques
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 
-	return &RunQueryResult{resp.JSON200}, nil
+	return &RunQueryResult{resp: resp}, nil
 }
 
 // transformRunQueryBody transforms a RunQuery body, resolving table alias to ID.

@@ -186,16 +186,17 @@ func getConstructorParams(operationID string, pathParams []string) []string {
 // - Operations with primitive responses (downloadFile returns a string)
 // - Operations with malformed spec (solutions endpoints have no type, only examples)
 var rawResponseOperations = map[string]bool{
-	"downloadFile":               true, // Returns base64 string, not object
-	"exportSolution":             true, // Returns YAML string
-	"updateSolution":             true, // Malformed spec - no type, only example
-	"createSolution":             true, // Malformed spec - no type, only example
-	"exportSolutionToRecord":     true, // Malformed spec - no type, only example
-	"createSolutionFromRecord":   true, // Malformed spec - no type, only example
-	"updateSolutionToRecord":     true, // Malformed spec - no type, only example
-	"changesetSolution":          true, // Malformed spec - no type, only example
+	"downloadFile":                true, // Returns base64 string, not object
+	"exportSolution":              true, // Returns YAML string
+	"updateSolution":              true, // Malformed spec - no type, only example
+	"createSolution":              true, // Malformed spec - no type, only example
+	"exportSolutionToRecord":      true, // Malformed spec - no type, only example
+	"createSolutionFromRecord":    true, // Malformed spec - no type, only example
+	"updateSolutionToRecord":      true, // Malformed spec - no type, only example
+	"changesetSolution":           true, // Malformed spec - no type, only example
 	"changesetSolutionFromRecord": true, // Malformed spec - no type, only example
-	"getSolutionPublic":          true, // Malformed spec - no type, only example
+	"getSolutionPublic":           true, // Malformed spec - no type, only example
+	"getTrustees":                 true, // Anonymous array element type - no named item type
 }
 
 // shouldReturnRawResponse returns true if the operation should return the raw response type

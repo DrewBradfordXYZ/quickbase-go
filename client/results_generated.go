@@ -7,7040 +7,7192 @@ import (
 )
 
 
-// AddManagersToGroupResult wraps AddManagersToGroupData with convenience methods.
-// All fields from AddManagersToGroupData are accessible via embedding.
+// AddManagersToGroupResult wraps AddManagersToGroupResponse with convenience methods.
 type AddManagersToGroupResult struct {
-	*generated.AddManagersToGroupData
+	resp *generated.AddManagersToGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AddManagersToGroupResult) Raw() *generated.AddManagersToGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// AddMembersToGroupResult wraps AddMembersToGroupData with convenience methods.
-// All fields from AddMembersToGroupData are accessible via embedding.
+// AddMembersToGroupResult wraps AddMembersToGroupResponse with convenience methods.
 type AddMembersToGroupResult struct {
-	*generated.AddMembersToGroupData
+	resp *generated.AddMembersToGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AddMembersToGroupResult) Raw() *generated.AddMembersToGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// AddSubgroupsToGroupResult wraps AddSubgroupsToGroupData with convenience methods.
-// All fields from AddSubgroupsToGroupData are accessible via embedding.
+// AddSubgroupsToGroupResult wraps AddSubgroupsToGroupResponse with convenience methods.
 type AddSubgroupsToGroupResult struct {
-	*generated.AddSubgroupsToGroupData
+	resp *generated.AddSubgroupsToGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AddSubgroupsToGroupResult) Raw() *generated.AddSubgroupsToGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// AddTrusteesResult wraps AddTrusteesData with convenience methods.
-// All fields from AddTrusteesData are accessible via embedding.
+// AddTrusteesResult wraps AddTrusteesResponse with convenience methods.
 type AddTrusteesResult struct {
-	*generated.AddTrusteesData
+	resp *generated.AddTrusteesResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AddTrusteesResult) Raw() *generated.AddTrusteesResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// AuditResult wraps AuditData with convenience methods.
-// All fields from AuditData are accessible via embedding.
+// AuditResult wraps AuditResponse with convenience methods.
 type AuditResult struct {
-	*generated.AuditData
+	resp *generated.AuditResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AuditResult) Raw() *generated.AuditResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Events returns the Events field as wrapped types, or nil if not set.
 func (r *AuditResult) Events() []*AuditEventsItem {
-	if r == nil || r.AuditData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.AuditData.Events == nil {
+	if r.resp.JSON200.Events == nil {
 		return nil
 	}
-	items := make([]*AuditEventsItem, len(*r.AuditData.Events))
-	for i := range *r.AuditData.Events {
-		items[i] = &AuditEventsItem{&(*r.AuditData.Events)[i]}
+	items := make([]*AuditEventsItem, len(*r.resp.JSON200.Events))
+	for i := range *r.resp.JSON200.Events {
+		items[i] = &AuditEventsItem{&(*r.resp.JSON200.Events)[i]}
 	}
 	return items
 }
 
 // NextToken returns the NextToken field value, or zero value if nil.
 func (r *AuditResult) NextToken() string {
-	if r == nil || r.AuditData == nil || r.AuditData.NextToken == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextToken == nil {
 		return ""
 	}
-	return *r.AuditData.NextToken
+	return *r.resp.JSON200.NextToken
 }
 
 // QueryId returns the QueryId field value.
 func (r *AuditResult) QueryId() string {
-	if r == nil || r.AuditData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.AuditData.QueryId
+	return r.resp.JSON200.QueryId
 }
 
 
 
-// AuditEventsItem wraps AuditData_Events_Item with convenience methods.
-// All fields from AuditData_Events_Item are accessible via embedding.
-type AuditEventsItem struct {
-	*generated.AuditData_Events_Item
+// ChangesetSolutionFromRecordResult wraps ChangesetSolutionFromRecordResponse with convenience methods.
+type ChangesetSolutionFromRecordResult struct {
+	resp *generated.ChangesetSolutionFromRecordResponse
 }
 
-// Application returns the Application field value.
-func (r *AuditEventsItem) Application() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Application
-}
-
-// Description returns the Description field value.
-func (r *AuditEventsItem) Description() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Description
-}
-
-// Email returns the Email field value.
-func (r *AuditEventsItem) Email() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Email
-}
-
-// Firstname returns the Firstname field value.
-func (r *AuditEventsItem) Firstname() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Firstname
-}
-
-// Id returns the Id field value.
-func (r *AuditEventsItem) Id() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Id
-}
-
-// Ipaddress returns the Ipaddress field value.
-func (r *AuditEventsItem) Ipaddress() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Ipaddress
-}
-
-// Lastname returns the Lastname field value.
-func (r *AuditEventsItem) Lastname() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Lastname
-}
-
-// PayloadChanges returns the PayloadChanges field as a wrapped type, or nil if not set.
-func (r *AuditEventsItem) PayloadChanges() *AuditEventsPayloadChanges {
-	if r == nil || r.AuditData_Events_Item == nil || r.AuditData_Events_Item.PayloadChanges == nil {
+// Raw returns the underlying generated response.
+func (r *ChangesetSolutionFromRecordResult) Raw() *generated.ChangesetSolutionFromRecordResponse {
+	if r == nil {
 		return nil
 	}
-	return &AuditEventsPayloadChanges{r.AuditData_Events_Item.PayloadChanges}
+	return r.resp
 }
 
-// Time returns the Time field value.
-func (r *AuditEventsItem) Time() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
+
+
+// ChangesetSolutionResult wraps ChangesetSolutionResponse with convenience methods.
+type ChangesetSolutionResult struct {
+	resp *generated.ChangesetSolutionResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *ChangesetSolutionResult) Raw() *generated.ChangesetSolutionResponse {
+	if r == nil {
+		return nil
 	}
-	return r.AuditData_Events_Item.Time
-}
-
-// Topic returns the Topic field value.
-func (r *AuditEventsItem) Topic() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Topic
-}
-
-// Useragent returns the Useragent field value.
-func (r *AuditEventsItem) Useragent() string {
-	if r == nil || r.AuditData_Events_Item == nil {
-		return ""
-	}
-	return r.AuditData_Events_Item.Useragent
+	return r.resp
 }
 
 
 
-// AuditEventsPayloadChanges wraps AuditData_Events_PayloadChanges with convenience methods.
-// All fields from AuditData_Events_PayloadChanges are accessible via embedding.
-type AuditEventsPayloadChanges struct {
-	*generated.AuditData_Events_PayloadChanges
-}
-
-// ChangeType returns the ChangeType field value.
-func (r *AuditEventsPayloadChanges) ChangeType() string {
-	if r == nil || r.AuditData_Events_PayloadChanges == nil {
-		return ""
-	}
-	return r.AuditData_Events_PayloadChanges.ChangeType
-}
-
-// Rid returns the Rid field value.
-func (r *AuditEventsPayloadChanges) Rid() int {
-	if r == nil || r.AuditData_Events_PayloadChanges == nil {
-		return 0
-	}
-	return r.AuditData_Events_PayloadChanges.Rid
-}
-
-// Type returns the Type field value.
-func (r *AuditEventsPayloadChanges) Type() string {
-	if r == nil || r.AuditData_Events_PayloadChanges == nil {
-		return ""
-	}
-	return r.AuditData_Events_PayloadChanges.Type
-}
-
-
-
-// AuditEventsPayloadChangesChanges wraps AuditData_Events_PayloadChanges_Changes with convenience methods.
-// All fields from AuditData_Events_PayloadChanges_Changes are accessible via embedding.
-type AuditEventsPayloadChangesChanges struct {
-	*generated.AuditData_Events_PayloadChanges_Changes
-}
-
-
-
-// CloneUserTokenResult wraps CloneUserTokenData with convenience methods.
-// All fields from CloneUserTokenData are accessible via embedding.
+// CloneUserTokenResult wraps CloneUserTokenResponse with convenience methods.
 type CloneUserTokenResult struct {
-	*generated.CloneUserTokenData
+	resp *generated.CloneUserTokenResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CloneUserTokenResult) Raw() *generated.CloneUserTokenResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Active returns the Active field value, or zero value if nil.
 func (r *CloneUserTokenResult) Active() bool {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.Active == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Active == nil {
 		return false
 	}
-	return *r.CloneUserTokenData.Active
+	return *r.resp.JSON200.Active
 }
 
 // Apps returns the Apps field as wrapped types, or nil if not set.
 func (r *CloneUserTokenResult) Apps() []*CloneUserTokenAppsItem {
-	if r == nil || r.CloneUserTokenData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.CloneUserTokenData.Apps == nil {
+	if r.resp.JSON200.Apps == nil {
 		return nil
 	}
-	items := make([]*CloneUserTokenAppsItem, len(*r.CloneUserTokenData.Apps))
-	for i := range *r.CloneUserTokenData.Apps {
-		items[i] = &CloneUserTokenAppsItem{&(*r.CloneUserTokenData.Apps)[i]}
+	items := make([]*CloneUserTokenAppsItem, len(*r.resp.JSON200.Apps))
+	for i := range *r.resp.JSON200.Apps {
+		items[i] = &CloneUserTokenAppsItem{&(*r.resp.JSON200.Apps)[i]}
 	}
 	return items
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *CloneUserTokenResult) Description() string {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.CloneUserTokenData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *CloneUserTokenResult) Id() int {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return 0
 	}
-	return *r.CloneUserTokenData.Id
+	return *r.resp.JSON200.Id
 }
 
 // LastUsed returns the LastUsed field value, or zero value if nil.
 func (r *CloneUserTokenResult) LastUsed() string {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.LastUsed == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.LastUsed == nil {
 		return ""
 	}
-	return *r.CloneUserTokenData.LastUsed
+	return *r.resp.JSON200.LastUsed
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *CloneUserTokenResult) Name() string {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.CloneUserTokenData.Name
+	return *r.resp.JSON200.Name
 }
 
 // Token returns the Token field value, or zero value if nil.
 func (r *CloneUserTokenResult) Token() string {
-	if r == nil || r.CloneUserTokenData == nil || r.CloneUserTokenData.Token == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Token == nil {
 		return ""
 	}
-	return *r.CloneUserTokenData.Token
+	return *r.resp.JSON200.Token
 }
 
 
 
-// CloneUserTokenAppsItem wraps CloneUserTokenData_Apps_Item with convenience methods.
-// All fields from CloneUserTokenData_Apps_Item are accessible via embedding.
-type CloneUserTokenAppsItem struct {
-	*generated.CloneUserTokenData_Apps_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *CloneUserTokenAppsItem) Id() string {
-	if r == nil || r.CloneUserTokenData_Apps_Item == nil || r.CloneUserTokenData_Apps_Item.Id == nil {
-		return ""
-	}
-	return *r.CloneUserTokenData_Apps_Item.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *CloneUserTokenAppsItem) Name() string {
-	if r == nil || r.CloneUserTokenData_Apps_Item == nil || r.CloneUserTokenData_Apps_Item.Name == nil {
-		return ""
-	}
-	return *r.CloneUserTokenData_Apps_Item.Name
-}
-
-
-
-// CopyAppResult wraps CopyAppData with convenience methods.
-// All fields from CopyAppData are accessible via embedding.
+// CopyAppResult wraps CopyAppResponse with convenience methods.
 type CopyAppResult struct {
-	*generated.CopyAppData
+	resp *generated.CopyAppResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CopyAppResult) Raw() *generated.CopyAppResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AncestorId returns the AncestorId field value, or zero value if nil.
 func (r *CopyAppResult) AncestorId() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.AncestorId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AncestorId == nil {
 		return ""
 	}
-	return *r.CopyAppData.AncestorId
+	return *r.resp.JSON200.AncestorId
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *CopyAppResult) Created() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.CopyAppData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DataClassification returns the DataClassification field value, or zero value if nil.
 func (r *CopyAppResult) DataClassification() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.DataClassification == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DataClassification == nil {
 		return ""
 	}
-	return *r.CopyAppData.DataClassification
+	return *r.resp.JSON200.DataClassification
 }
 
 // DateFormat returns the DateFormat field value, or zero value if nil.
 func (r *CopyAppResult) DateFormat() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.DateFormat == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DateFormat == nil {
 		return ""
 	}
-	return *r.CopyAppData.DateFormat
+	return *r.resp.JSON200.DateFormat
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *CopyAppResult) Description() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.CopyAppData.Description
+	return *r.resp.JSON200.Description
 }
 
 // HasEveryoneOnTheInternet returns the HasEveryoneOnTheInternet field value, or zero value if nil.
 func (r *CopyAppResult) HasEveryoneOnTheInternet() bool {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.HasEveryoneOnTheInternet == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.HasEveryoneOnTheInternet == nil {
 		return false
 	}
-	return *r.CopyAppData.HasEveryoneOnTheInternet
+	return *r.resp.JSON200.HasEveryoneOnTheInternet
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *CopyAppResult) Id() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.CopyAppData.Id
+	return *r.resp.JSON200.Id
 }
 
 // Name returns the Name field value.
 func (r *CopyAppResult) Name() string {
-	if r == nil || r.CopyAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.CopyAppData.Name
+	return r.resp.JSON200.Name
 }
 
 // TimeZone returns the TimeZone field value, or zero value if nil.
 func (r *CopyAppResult) TimeZone() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.TimeZone == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TimeZone == nil {
 		return ""
 	}
-	return *r.CopyAppData.TimeZone
+	return *r.resp.JSON200.TimeZone
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *CopyAppResult) Updated() string {
-	if r == nil || r.CopyAppData == nil || r.CopyAppData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.CopyAppData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 // Variables returns the Variables field as wrapped types, or nil if not set.
 func (r *CopyAppResult) Variables() []*CopyAppVariablesItem {
-	if r == nil || r.CopyAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.CopyAppData.Variables == nil {
+	if r.resp.JSON200.Variables == nil {
 		return nil
 	}
-	items := make([]*CopyAppVariablesItem, len(*r.CopyAppData.Variables))
-	for i := range *r.CopyAppData.Variables {
-		items[i] = &CopyAppVariablesItem{&(*r.CopyAppData.Variables)[i]}
+	items := make([]*CopyAppVariablesItem, len(*r.resp.JSON200.Variables))
+	for i := range *r.resp.JSON200.Variables {
+		items[i] = &CopyAppVariablesItem{&(*r.resp.JSON200.Variables)[i]}
 	}
 	return items
 }
 
 
 
-// CopyAppVariablesItem wraps CopyAppData_Variables_Item with convenience methods.
-// All fields from CopyAppData_Variables_Item are accessible via embedding.
-type CopyAppVariablesItem struct {
-	*generated.CopyAppData_Variables_Item
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *CopyAppVariablesItem) Name() string {
-	if r == nil || r.CopyAppData_Variables_Item == nil || r.CopyAppData_Variables_Item.Name == nil {
-		return ""
-	}
-	return *r.CopyAppData_Variables_Item.Name
-}
-
-// Value returns the Value field value, or zero value if nil.
-func (r *CopyAppVariablesItem) Value() string {
-	if r == nil || r.CopyAppData_Variables_Item == nil || r.CopyAppData_Variables_Item.Value == nil {
-		return ""
-	}
-	return *r.CopyAppData_Variables_Item.Value
-}
-
-
-
-// CreateAppResult wraps CreateAppData with convenience methods.
-// All fields from CreateAppData are accessible via embedding.
+// CreateAppResult wraps CreateAppResponse with convenience methods.
 type CreateAppResult struct {
-	*generated.CreateAppData
+	resp *generated.CreateAppResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CreateAppResult) Raw() *generated.CreateAppResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *CreateAppResult) Created() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.CreateAppData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DataClassification returns the DataClassification field value, or zero value if nil.
 func (r *CreateAppResult) DataClassification() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.DataClassification == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DataClassification == nil {
 		return ""
 	}
-	return *r.CreateAppData.DataClassification
+	return *r.resp.JSON200.DataClassification
 }
 
 // DateFormat returns the DateFormat field value, or zero value if nil.
 func (r *CreateAppResult) DateFormat() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.DateFormat == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DateFormat == nil {
 		return ""
 	}
-	return *r.CreateAppData.DateFormat
+	return *r.resp.JSON200.DateFormat
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *CreateAppResult) Description() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.CreateAppData.Description
+	return *r.resp.JSON200.Description
 }
 
 // HasEveryoneOnTheInternet returns the HasEveryoneOnTheInternet field value, or zero value if nil.
 func (r *CreateAppResult) HasEveryoneOnTheInternet() bool {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.HasEveryoneOnTheInternet == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.HasEveryoneOnTheInternet == nil {
 		return false
 	}
-	return *r.CreateAppData.HasEveryoneOnTheInternet
+	return *r.resp.JSON200.HasEveryoneOnTheInternet
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *CreateAppResult) Id() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.CreateAppData.Id
+	return *r.resp.JSON200.Id
 }
 
 // Name returns the Name field value.
 func (r *CreateAppResult) Name() string {
-	if r == nil || r.CreateAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.CreateAppData.Name
+	return r.resp.JSON200.Name
 }
 
 // SecurityProperties returns the SecurityProperties field as a wrapped type, or nil if not set.
 func (r *CreateAppResult) SecurityProperties() *CreateAppSecurityProperties {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.SecurityProperties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SecurityProperties == nil {
 		return nil
 	}
-	return &CreateAppSecurityProperties{r.CreateAppData.SecurityProperties}
+	return &CreateAppSecurityProperties{r.resp.JSON200.SecurityProperties}
 }
 
 // TimeZone returns the TimeZone field value, or zero value if nil.
 func (r *CreateAppResult) TimeZone() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.TimeZone == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TimeZone == nil {
 		return ""
 	}
-	return *r.CreateAppData.TimeZone
+	return *r.resp.JSON200.TimeZone
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *CreateAppResult) Updated() string {
-	if r == nil || r.CreateAppData == nil || r.CreateAppData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.CreateAppData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 // Variables returns the Variables field as wrapped types, or nil if not set.
 func (r *CreateAppResult) Variables() []*CreateAppVariablesItem {
-	if r == nil || r.CreateAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.CreateAppData.Variables == nil {
+	if r.resp.JSON200.Variables == nil {
 		return nil
 	}
-	items := make([]*CreateAppVariablesItem, len(*r.CreateAppData.Variables))
-	for i := range *r.CreateAppData.Variables {
-		items[i] = &CreateAppVariablesItem{&(*r.CreateAppData.Variables)[i]}
+	items := make([]*CreateAppVariablesItem, len(*r.resp.JSON200.Variables))
+	for i := range *r.resp.JSON200.Variables {
+		items[i] = &CreateAppVariablesItem{&(*r.resp.JSON200.Variables)[i]}
 	}
 	return items
 }
 
 
 
-// CreateAppSecurityProperties wraps CreateAppData_SecurityProperties with convenience methods.
-// All fields from CreateAppData_SecurityProperties are accessible via embedding.
-type CreateAppSecurityProperties struct {
-	*generated.CreateAppData_SecurityProperties
-}
-
-// AllowClone returns the AllowClone field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) AllowClone() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.AllowClone == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.AllowClone
-}
-
-// AllowExport returns the AllowExport field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) AllowExport() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.AllowExport == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.AllowExport
-}
-
-// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) EnableAppTokens() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.EnableAppTokens == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.EnableAppTokens
-}
-
-// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) HideFromPublic() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.HideFromPublic == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.HideFromPublic
-}
-
-// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) MustBeRealmApproved() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.MustBeRealmApproved == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.MustBeRealmApproved
-}
-
-// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
-func (r *CreateAppSecurityProperties) UseIPFilter() bool {
-	if r == nil || r.CreateAppData_SecurityProperties == nil || r.CreateAppData_SecurityProperties.UseIPFilter == nil {
-		return false
-	}
-	return *r.CreateAppData_SecurityProperties.UseIPFilter
-}
-
-
-
-// CreateAppVariablesItem wraps CreateAppData_Variables_Item with convenience methods.
-// All fields from CreateAppData_Variables_Item are accessible via embedding.
-type CreateAppVariablesItem struct {
-	*generated.CreateAppData_Variables_Item
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *CreateAppVariablesItem) Name() string {
-	if r == nil || r.CreateAppData_Variables_Item == nil || r.CreateAppData_Variables_Item.Name == nil {
-		return ""
-	}
-	return *r.CreateAppData_Variables_Item.Name
-}
-
-// Value returns the Value field value, or zero value if nil.
-func (r *CreateAppVariablesItem) Value() string {
-	if r == nil || r.CreateAppData_Variables_Item == nil || r.CreateAppData_Variables_Item.Value == nil {
-		return ""
-	}
-	return *r.CreateAppData_Variables_Item.Value
-}
-
-
-
-// CreateFieldResult wraps CreateFieldData with convenience methods.
-// All fields from CreateFieldData are accessible via embedding.
+// CreateFieldResult wraps CreateFieldResponse with convenience methods.
 type CreateFieldResult struct {
-	*generated.CreateFieldData
+	resp *generated.CreateFieldResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CreateFieldResult) Raw() *generated.CreateFieldResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AppearsByDefault returns the AppearsByDefault field value, or zero value if nil.
 func (r *CreateFieldResult) AppearsByDefault() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.AppearsByDefault == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AppearsByDefault == nil {
 		return false
 	}
-	return *r.CreateFieldData.AppearsByDefault
+	return *r.resp.JSON200.AppearsByDefault
 }
 
 // Audited returns the Audited field value, or zero value if nil.
 func (r *CreateFieldResult) Audited() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Audited == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Audited == nil {
 		return false
 	}
-	return *r.CreateFieldData.Audited
+	return *r.resp.JSON200.Audited
 }
 
 // Bold returns the Bold field value, or zero value if nil.
 func (r *CreateFieldResult) Bold() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Bold == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Bold == nil {
 		return false
 	}
-	return *r.CreateFieldData.Bold
+	return *r.resp.JSON200.Bold
 }
 
 // DoesDataCopy returns the DoesDataCopy field value, or zero value if nil.
 func (r *CreateFieldResult) DoesDataCopy() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.DoesDataCopy == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DoesDataCopy == nil {
 		return false
 	}
-	return *r.CreateFieldData.DoesDataCopy
+	return *r.resp.JSON200.DoesDataCopy
 }
 
 // FieldHelp returns the FieldHelp field value, or zero value if nil.
 func (r *CreateFieldResult) FieldHelp() string {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.FieldHelp == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldHelp == nil {
 		return ""
 	}
-	return *r.CreateFieldData.FieldHelp
+	return *r.resp.JSON200.FieldHelp
 }
 
 // FieldType returns the FieldType field value, or zero value if nil.
 func (r *CreateFieldResult) FieldType() string {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.FieldType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldType == nil {
 		return ""
 	}
-	return *r.CreateFieldData.FieldType
+	return *r.resp.JSON200.FieldType
 }
 
 // FindEnabled returns the FindEnabled field value, or zero value if nil.
 func (r *CreateFieldResult) FindEnabled() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.FindEnabled == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FindEnabled == nil {
 		return false
 	}
-	return *r.CreateFieldData.FindEnabled
+	return *r.resp.JSON200.FindEnabled
 }
 
 // Id returns the Id field value.
 func (r *CreateFieldResult) Id() int64 {
-	if r == nil || r.CreateFieldData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.CreateFieldData.Id
+	return r.resp.JSON200.Id
 }
 
 // Label returns the Label field value, or zero value if nil.
 func (r *CreateFieldResult) Label() string {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Label == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Label == nil {
 		return ""
 	}
-	return *r.CreateFieldData.Label
+	return *r.resp.JSON200.Label
 }
 
 // Mode returns the Mode field value, or zero value if nil.
 func (r *CreateFieldResult) Mode() string {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Mode == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Mode == nil {
 		return ""
 	}
-	return *r.CreateFieldData.Mode
+	return *r.resp.JSON200.Mode
 }
 
 // NoWrap returns the NoWrap field value, or zero value if nil.
 func (r *CreateFieldResult) NoWrap() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.NoWrap == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NoWrap == nil {
 		return false
 	}
-	return *r.CreateFieldData.NoWrap
+	return *r.resp.JSON200.NoWrap
 }
 
 // Properties returns the Properties field as a wrapped type, or nil if not set.
 func (r *CreateFieldResult) Properties() *CreateFieldProperties {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Properties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Properties == nil {
 		return nil
 	}
-	return &CreateFieldProperties{r.CreateFieldData.Properties}
+	return &CreateFieldProperties{r.resp.JSON200.Properties}
 }
 
 // Required returns the Required field value, or zero value if nil.
 func (r *CreateFieldResult) Required() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Required == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Required == nil {
 		return false
 	}
-	return *r.CreateFieldData.Required
+	return *r.resp.JSON200.Required
 }
 
 // Unique returns the Unique field value, or zero value if nil.
 func (r *CreateFieldResult) Unique() bool {
-	if r == nil || r.CreateFieldData == nil || r.CreateFieldData.Unique == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Unique == nil {
 		return false
 	}
-	return *r.CreateFieldData.Unique
+	return *r.resp.JSON200.Unique
 }
 
 
 
-// CreateFieldProperties wraps CreateFieldData_Properties with convenience methods.
-// All fields from CreateFieldData_Properties are accessible via embedding.
-type CreateFieldProperties struct {
-	*generated.CreateFieldData_Properties
-}
-
-// Abbreviate returns the Abbreviate field value, or zero value if nil.
-func (r *CreateFieldProperties) Abbreviate() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Abbreviate == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.Abbreviate
-}
-
-// AllowHTML returns the AllowHTML field value, or zero value if nil.
-func (r *CreateFieldProperties) AllowHTML() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AllowHTML == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.AllowHTML
-}
-
-// AllowMentions returns the AllowMentions field value, or zero value if nil.
-func (r *CreateFieldProperties) AllowMentions() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AllowMentions == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.AllowMentions
-}
-
-// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
-func (r *CreateFieldProperties) AllowNewChoices() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AllowNewChoices == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.AllowNewChoices
-}
-
-// AppearsAs returns the AppearsAs field value, or zero value if nil.
-func (r *CreateFieldProperties) AppearsAs() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AppearsAs == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.AppearsAs
-}
-
-// AppendOnly returns the AppendOnly field value, or zero value if nil.
-func (r *CreateFieldProperties) AppendOnly() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AppendOnly == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.AppendOnly
-}
-
-// AutoSave returns the AutoSave field value, or zero value if nil.
-func (r *CreateFieldProperties) AutoSave() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.AutoSave == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.AutoSave
-}
-
-// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
-func (r *CreateFieldProperties) BlankIsZero() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.BlankIsZero == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.BlankIsZero
-}
-
-// CarryChoices returns the CarryChoices field value, or zero value if nil.
-func (r *CreateFieldProperties) CarryChoices() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CarryChoices == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.CarryChoices
-}
-
-// Choices returns the Choices field value, or nil if not set.
-func (r *CreateFieldProperties) Choices() []string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Choices == nil {
-		return nil
-	}
-	return *r.CreateFieldData_Properties.Choices
-}
-
-// ChoicesLuid returns the ChoicesLuid field value, or nil if not set.
-func (r *CreateFieldProperties) ChoicesLuid() []string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.ChoicesLuid == nil {
-		return nil
-	}
-	return *r.CreateFieldData_Properties.ChoicesLuid
-}
-
-// CommaStart returns the CommaStart field value, or zero value if nil.
-func (r *CreateFieldProperties) CommaStart() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CommaStart == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.CommaStart
-}
-
-// Comments returns the Comments field value, or zero value if nil.
-func (r *CreateFieldProperties) Comments() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Comments == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.Comments
-}
-
-// CompositeFields returns the CompositeFields field as wrapped types, or nil if not set.
-func (r *CreateFieldProperties) CompositeFields() []*CreateFieldPropertiesCompositeFieldsItem {
-	if r == nil || r.CreateFieldData_Properties == nil {
-		return nil
-	}
-	if r.CreateFieldData_Properties.CompositeFields == nil {
-		return nil
-	}
-	items := make([]*CreateFieldPropertiesCompositeFieldsItem, len(*r.CreateFieldData_Properties.CompositeFields))
-	for i := range *r.CreateFieldData_Properties.CompositeFields {
-		items[i] = &CreateFieldPropertiesCompositeFieldsItem{&(*r.CreateFieldData_Properties.CompositeFields)[i]}
-	}
-	return items
-}
-
-// CoverText returns the CoverText field value, or zero value if nil.
-func (r *CreateFieldProperties) CoverText() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CoverText == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.CoverText
-}
-
-// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
-func (r *CreateFieldProperties) CurrencyFormat() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CurrencyFormat == nil {
-		return ""
-	}
-	return string(*r.CreateFieldData_Properties.CurrencyFormat)
-}
-
-// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
-func (r *CreateFieldProperties) CurrencySymbol() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.CurrencySymbol == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.CurrencySymbol
-}
-
-// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
-func (r *CreateFieldProperties) DecimalPlaces() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DecimalPlaces == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.DecimalPlaces
-}
-
-// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultCountryCode() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultCountryCode == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DefaultCountryCode
-}
-
-// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultDomain() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultDomain == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DefaultDomain
-}
-
-// DefaultKind returns the DefaultKind field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultKind() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultKind == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DefaultKind
-}
-
-// DefaultToday returns the DefaultToday field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultToday() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultToday == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DefaultToday
-}
-
-// DefaultValue returns the DefaultValue field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultValue() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultValue == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DefaultValue
-}
-
-// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
-func (r *CreateFieldProperties) DefaultValueLuid() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DefaultValueLuid == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.DefaultValueLuid
-}
-
-// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayAsLink() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayAsLink == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayAsLink
-}
-
-// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayCheckboxAsText() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayCheckboxAsText == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayCheckboxAsText
-}
-
-// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayDayOfWeek() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayDayOfWeek == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayDayOfWeek
-}
-
-// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayEmail() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayEmail == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DisplayEmail
-}
-
-// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayMonth() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayMonth == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DisplayMonth
-}
-
-// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayRelative() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayRelative == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayRelative
-}
-
-// DisplayTime returns the DisplayTime field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayTime() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayTime == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayTime
-}
-
-// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayTimezone() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayTimezone == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DisplayTimezone
-}
-
-// DisplayUser returns the DisplayUser field value, or zero value if nil.
-func (r *CreateFieldProperties) DisplayUser() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DisplayUser == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.DisplayUser
-}
-
-// DoesAverage returns the DoesAverage field value, or zero value if nil.
-func (r *CreateFieldProperties) DoesAverage() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DoesAverage == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DoesAverage
-}
-
-// DoesTotal returns the DoesTotal field value, or zero value if nil.
-func (r *CreateFieldProperties) DoesTotal() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DoesTotal == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.DoesTotal
-}
-
-// DurationField returns the DurationField field value, or zero value if nil.
-func (r *CreateFieldProperties) DurationField() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.DurationField == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.DurationField
-}
-
-// Exact returns the Exact field value, or zero value if nil.
-func (r *CreateFieldProperties) Exact() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Exact == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.Exact
-}
-
-// ForeignKey returns the ForeignKey field value, or zero value if nil.
-func (r *CreateFieldProperties) ForeignKey() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.ForeignKey == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.ForeignKey
-}
-
-// Format returns the Format field value, or zero value if nil.
-func (r *CreateFieldProperties) Format() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Format == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.Format
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *CreateFieldProperties) Formula() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Formula == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.Formula
-}
-
-// HasExtension returns the HasExtension field value, or zero value if nil.
-func (r *CreateFieldProperties) HasExtension() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.HasExtension == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.HasExtension
-}
-
-// Hours24 returns the Hours24 field value, or zero value if nil.
-func (r *CreateFieldProperties) Hours24() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Hours24 == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.Hours24
-}
-
-// LinkText returns the LinkText field value, or zero value if nil.
-func (r *CreateFieldProperties) LinkText() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.LinkText == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.LinkText
-}
-
-// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) LookupReferenceFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.LookupReferenceFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.LookupReferenceFieldId
-}
-
-// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) LookupTargetFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.LookupTargetFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.LookupTargetFieldId
-}
-
-// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) MasterChoiceFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.MasterChoiceFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.MasterChoiceFieldId
-}
-
-// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
-func (r *CreateFieldProperties) MasterChoiceTableId() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.MasterChoiceTableId == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.MasterChoiceTableId
-}
-
-// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
-func (r *CreateFieldProperties) MasterTableTag() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.MasterTableTag == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.MasterTableTag
-}
-
-// MaxLength returns the MaxLength field value, or zero value if nil.
-func (r *CreateFieldProperties) MaxLength() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.MaxLength == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.MaxLength
-}
-
-// MaxVersions returns the MaxVersions field value, or zero value if nil.
-func (r *CreateFieldProperties) MaxVersions() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.MaxVersions == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.MaxVersions
-}
-
-// NumLines returns the NumLines field value, or zero value if nil.
-func (r *CreateFieldProperties) NumLines() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.NumLines == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.NumLines
-}
-
-// NumberFormat returns the NumberFormat field value, or zero value if nil.
-func (r *CreateFieldProperties) NumberFormat() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.NumberFormat == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.NumberFormat
-}
-
-// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) ParentFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.ParentFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.ParentFieldId
-}
-
-// PostTempToken returns the PostTempToken field value, or zero value if nil.
-func (r *CreateFieldProperties) PostTempToken() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.PostTempToken == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.PostTempToken
-}
-
-// SeeVersions returns the SeeVersions field value, or zero value if nil.
-func (r *CreateFieldProperties) SeeVersions() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SeeVersions == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.SeeVersions
-}
-
-// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) SnapFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SnapFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.SnapFieldId
-}
-
-// SortAlpha returns the SortAlpha field value, or zero value if nil.
-func (r *CreateFieldProperties) SortAlpha() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SortAlpha == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.SortAlpha
-}
-
-// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
-func (r *CreateFieldProperties) SortAsGiven() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SortAsGiven == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.SortAsGiven
-}
-
-// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) SourceFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SourceFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.SourceFieldId
-}
-
-// StartField returns the StartField field value, or zero value if nil.
-func (r *CreateFieldProperties) StartField() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.StartField == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.StartField
-}
-
-// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
-func (r *CreateFieldProperties) SummaryFunction() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SummaryFunction == nil {
-		return ""
-	}
-	return string(*r.CreateFieldData_Properties.SummaryFunction)
-}
-
-// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) SummaryReferenceFieldId() int64 {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SummaryReferenceFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.SummaryReferenceFieldId
-}
-
-// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) SummaryTargetFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.SummaryTargetFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.SummaryTargetFieldId
-}
-
-// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
-func (r *CreateFieldProperties) TargetFieldId() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.TargetFieldId == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.TargetFieldId
-}
-
-// TargetTableId returns the TargetTableId field value, or zero value if nil.
-func (r *CreateFieldProperties) TargetTableId() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.TargetTableId == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.TargetTableId
-}
-
-// TargetTableName returns the TargetTableName field value, or zero value if nil.
-func (r *CreateFieldProperties) TargetTableName() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.TargetTableName == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.TargetTableName
-}
-
-// Units returns the Units field value, or zero value if nil.
-func (r *CreateFieldProperties) Units() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Units == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.Units
-}
-
-// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
-func (r *CreateFieldProperties) UseI18NFormat() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.UseI18NFormat == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.UseI18NFormat
-}
-
-// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
-func (r *CreateFieldProperties) UseNewWindow() bool {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.UseNewWindow == nil {
-		return false
-	}
-	return *r.CreateFieldData_Properties.UseNewWindow
-}
-
-// VersionMode returns the VersionMode field value as a string, or empty string if nil.
-func (r *CreateFieldProperties) VersionMode() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.VersionMode == nil {
-		return ""
-	}
-	return string(*r.CreateFieldData_Properties.VersionMode)
-}
-
-// Width returns the Width field value, or zero value if nil.
-func (r *CreateFieldProperties) Width() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.Width == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.Width
-}
-
-// WorkWeek returns the WorkWeek field value, or zero value if nil.
-func (r *CreateFieldProperties) WorkWeek() int {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.WorkWeek == nil {
-		return 0
-	}
-	return *r.CreateFieldData_Properties.WorkWeek
-}
-
-// XmlTag returns the XmlTag field value, or zero value if nil.
-func (r *CreateFieldProperties) XmlTag() string {
-	if r == nil || r.CreateFieldData_Properties == nil || r.CreateFieldData_Properties.XmlTag == nil {
-		return ""
-	}
-	return *r.CreateFieldData_Properties.XmlTag
-}
-
-
-
-// CreateFieldPropertiesCompositeFieldsItem wraps CreateFieldData_Properties_CompositeFields_Item with convenience methods.
-// All fields from CreateFieldData_Properties_CompositeFields_Item are accessible via embedding.
-type CreateFieldPropertiesCompositeFieldsItem struct {
-	*generated.CreateFieldData_Properties_CompositeFields_Item
-}
-
-
-
-// CreateRelationshipResult wraps CreateRelationshipData with convenience methods.
-// All fields from CreateRelationshipData are accessible via embedding.
+// CreateRelationshipResult wraps CreateRelationshipResponse with convenience methods.
 type CreateRelationshipResult struct {
-	*generated.CreateRelationshipData
+	resp *generated.CreateRelationshipResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CreateRelationshipResult) Raw() *generated.CreateRelationshipResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // ChildTableId returns the ChildTableId field value.
 func (r *CreateRelationshipResult) ChildTableId() string {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.CreateRelationshipData.ChildTableId
+	return r.resp.JSON200.ChildTableId
 }
 
 // ForeignKeyField returns the ForeignKeyField field as a wrapped type, or nil if not set.
 func (r *CreateRelationshipResult) ForeignKeyField() *CreateRelationshipForeignKeyField {
-	if r == nil || r.CreateRelationshipData == nil || r.CreateRelationshipData.ForeignKeyField == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.ForeignKeyField == nil {
 		return nil
 	}
-	return &CreateRelationshipForeignKeyField{r.CreateRelationshipData.ForeignKeyField}
+	return &CreateRelationshipForeignKeyField{r.resp.JSON200.ForeignKeyField}
 }
 
 // Id returns the Id field value.
 func (r *CreateRelationshipResult) Id() int {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.CreateRelationshipData.Id
+	return r.resp.JSON200.Id
 }
 
 // IsCrossApp returns the IsCrossApp field value.
 func (r *CreateRelationshipResult) IsCrossApp() bool {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return false
 	}
-	return r.CreateRelationshipData.IsCrossApp
+	return r.resp.JSON200.IsCrossApp
 }
 
 // LookupFields returns the LookupFields field as wrapped types, or nil if not set.
 func (r *CreateRelationshipResult) LookupFields() []*CreateRelationshipLookupFieldsItem {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.CreateRelationshipData.LookupFields == nil {
+	if r.resp.JSON200.LookupFields == nil {
 		return nil
 	}
-	items := make([]*CreateRelationshipLookupFieldsItem, len(*r.CreateRelationshipData.LookupFields))
-	for i := range *r.CreateRelationshipData.LookupFields {
-		items[i] = &CreateRelationshipLookupFieldsItem{&(*r.CreateRelationshipData.LookupFields)[i]}
+	items := make([]*CreateRelationshipLookupFieldsItem, len(*r.resp.JSON200.LookupFields))
+	for i := range *r.resp.JSON200.LookupFields {
+		items[i] = &CreateRelationshipLookupFieldsItem{&(*r.resp.JSON200.LookupFields)[i]}
 	}
 	return items
 }
 
 // ParentTableId returns the ParentTableId field value.
 func (r *CreateRelationshipResult) ParentTableId() string {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.CreateRelationshipData.ParentTableId
+	return r.resp.JSON200.ParentTableId
 }
 
 // SummaryFields returns the SummaryFields field as wrapped types, or nil if not set.
 func (r *CreateRelationshipResult) SummaryFields() []*CreateRelationshipSummaryFieldsItem {
-	if r == nil || r.CreateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.CreateRelationshipData.SummaryFields == nil {
+	if r.resp.JSON200.SummaryFields == nil {
 		return nil
 	}
-	items := make([]*CreateRelationshipSummaryFieldsItem, len(*r.CreateRelationshipData.SummaryFields))
-	for i := range *r.CreateRelationshipData.SummaryFields {
-		items[i] = &CreateRelationshipSummaryFieldsItem{&(*r.CreateRelationshipData.SummaryFields)[i]}
+	items := make([]*CreateRelationshipSummaryFieldsItem, len(*r.resp.JSON200.SummaryFields))
+	for i := range *r.resp.JSON200.SummaryFields {
+		items[i] = &CreateRelationshipSummaryFieldsItem{&(*r.resp.JSON200.SummaryFields)[i]}
 	}
 	return items
 }
 
 
 
-// CreateRelationshipForeignKeyField wraps CreateRelationshipData_ForeignKeyField with convenience methods.
-// All fields from CreateRelationshipData_ForeignKeyField are accessible via embedding.
-type CreateRelationshipForeignKeyField struct {
-	*generated.CreateRelationshipData_ForeignKeyField
+// CreateSolutionFromRecordResult wraps CreateSolutionFromRecordResponse with convenience methods.
+type CreateSolutionFromRecordResult struct {
+	resp *generated.CreateSolutionFromRecordResponse
 }
 
-// Id returns the Id field value, or zero value if nil.
-func (r *CreateRelationshipForeignKeyField) Id() int {
-	if r == nil || r.CreateRelationshipData_ForeignKeyField == nil || r.CreateRelationshipData_ForeignKeyField.Id == nil {
-		return 0
+// Raw returns the underlying generated response.
+func (r *CreateSolutionFromRecordResult) Raw() *generated.CreateSolutionFromRecordResponse {
+	if r == nil {
+		return nil
 	}
-	return *r.CreateRelationshipData_ForeignKeyField.Id
+	return r.resp
 }
 
-// Label returns the Label field value, or zero value if nil.
-func (r *CreateRelationshipForeignKeyField) Label() string {
-	if r == nil || r.CreateRelationshipData_ForeignKeyField == nil || r.CreateRelationshipData_ForeignKeyField.Label == nil {
-		return ""
+
+
+// CreateSolutionResult wraps CreateSolutionResponse with convenience methods.
+type CreateSolutionResult struct {
+	resp *generated.CreateSolutionResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CreateSolutionResult) Raw() *generated.CreateSolutionResponse {
+	if r == nil {
+		return nil
 	}
-	return *r.CreateRelationshipData_ForeignKeyField.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *CreateRelationshipForeignKeyField) Type() string {
-	if r == nil || r.CreateRelationshipData_ForeignKeyField == nil || r.CreateRelationshipData_ForeignKeyField.Type == nil {
-		return ""
-	}
-	return *r.CreateRelationshipData_ForeignKeyField.Type
+	return r.resp
 }
 
 
 
-// CreateRelationshipLookupFieldsItem wraps CreateRelationshipData_LookupFields_Item with convenience methods.
-// All fields from CreateRelationshipData_LookupFields_Item are accessible via embedding.
-type CreateRelationshipLookupFieldsItem struct {
-	*generated.CreateRelationshipData_LookupFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *CreateRelationshipLookupFieldsItem) Id() int {
-	if r == nil || r.CreateRelationshipData_LookupFields_Item == nil || r.CreateRelationshipData_LookupFields_Item.Id == nil {
-		return 0
-	}
-	return *r.CreateRelationshipData_LookupFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *CreateRelationshipLookupFieldsItem) Label() string {
-	if r == nil || r.CreateRelationshipData_LookupFields_Item == nil || r.CreateRelationshipData_LookupFields_Item.Label == nil {
-		return ""
-	}
-	return *r.CreateRelationshipData_LookupFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *CreateRelationshipLookupFieldsItem) Type() string {
-	if r == nil || r.CreateRelationshipData_LookupFields_Item == nil || r.CreateRelationshipData_LookupFields_Item.Type == nil {
-		return ""
-	}
-	return *r.CreateRelationshipData_LookupFields_Item.Type
-}
-
-
-
-// CreateRelationshipSummaryFieldsItem wraps CreateRelationshipData_SummaryFields_Item with convenience methods.
-// All fields from CreateRelationshipData_SummaryFields_Item are accessible via embedding.
-type CreateRelationshipSummaryFieldsItem struct {
-	*generated.CreateRelationshipData_SummaryFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *CreateRelationshipSummaryFieldsItem) Id() int {
-	if r == nil || r.CreateRelationshipData_SummaryFields_Item == nil || r.CreateRelationshipData_SummaryFields_Item.Id == nil {
-		return 0
-	}
-	return *r.CreateRelationshipData_SummaryFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *CreateRelationshipSummaryFieldsItem) Label() string {
-	if r == nil || r.CreateRelationshipData_SummaryFields_Item == nil || r.CreateRelationshipData_SummaryFields_Item.Label == nil {
-		return ""
-	}
-	return *r.CreateRelationshipData_SummaryFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *CreateRelationshipSummaryFieldsItem) Type() string {
-	if r == nil || r.CreateRelationshipData_SummaryFields_Item == nil || r.CreateRelationshipData_SummaryFields_Item.Type == nil {
-		return ""
-	}
-	return *r.CreateRelationshipData_SummaryFields_Item.Type
-}
-
-
-
-// CreateTableResult wraps CreateTableData with convenience methods.
-// All fields from CreateTableData are accessible via embedding.
+// CreateTableResult wraps CreateTableResponse with convenience methods.
 type CreateTableResult struct {
-	*generated.CreateTableData
+	resp *generated.CreateTableResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *CreateTableResult) Raw() *generated.CreateTableResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Alias returns the Alias field value, or zero value if nil.
 func (r *CreateTableResult) Alias() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Alias == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Alias == nil {
 		return ""
 	}
-	return *r.CreateTableData.Alias
+	return *r.resp.JSON200.Alias
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *CreateTableResult) Created() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.CreateTableData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DefaultSortFieldId returns the DefaultSortFieldId field value, or zero value if nil.
 func (r *CreateTableResult) DefaultSortFieldId() int {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.DefaultSortFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortFieldId == nil {
 		return 0
 	}
-	return *r.CreateTableData.DefaultSortFieldId
+	return *r.resp.JSON200.DefaultSortFieldId
 }
 
 // DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
 func (r *CreateTableResult) DefaultSortOrder() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.DefaultSortOrder == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortOrder == nil {
 		return ""
 	}
-	return string(*r.CreateTableData.DefaultSortOrder)
+	return string(*r.resp.JSON200.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *CreateTableResult) Description() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.CreateTableData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *CreateTableResult) Id() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.CreateTableData.Id
+	return *r.resp.JSON200.Id
 }
 
 // KeyFieldId returns the KeyFieldId field value, or zero value if nil.
 func (r *CreateTableResult) KeyFieldId() int {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.KeyFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.KeyFieldId == nil {
 		return 0
 	}
-	return *r.CreateTableData.KeyFieldId
+	return *r.resp.JSON200.KeyFieldId
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *CreateTableResult) Name() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.CreateTableData.Name
+	return *r.resp.JSON200.Name
 }
 
 // NextFieldId returns the NextFieldId field value, or zero value if nil.
 func (r *CreateTableResult) NextFieldId() int {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.NextFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextFieldId == nil {
 		return 0
 	}
-	return *r.CreateTableData.NextFieldId
+	return *r.resp.JSON200.NextFieldId
 }
 
 // NextRecordId returns the NextRecordId field value, or zero value if nil.
 func (r *CreateTableResult) NextRecordId() int {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.NextRecordId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextRecordId == nil {
 		return 0
 	}
-	return *r.CreateTableData.NextRecordId
+	return *r.resp.JSON200.NextRecordId
 }
 
 // PluralRecordName returns the PluralRecordName field value, or zero value if nil.
 func (r *CreateTableResult) PluralRecordName() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.PluralRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.PluralRecordName == nil {
 		return ""
 	}
-	return *r.CreateTableData.PluralRecordName
+	return *r.resp.JSON200.PluralRecordName
 }
 
 // SingleRecordName returns the SingleRecordName field value, or zero value if nil.
 func (r *CreateTableResult) SingleRecordName() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.SingleRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SingleRecordName == nil {
 		return ""
 	}
-	return *r.CreateTableData.SingleRecordName
+	return *r.resp.JSON200.SingleRecordName
 }
 
 // SizeLimit returns the SizeLimit field value, or zero value if nil.
 func (r *CreateTableResult) SizeLimit() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.SizeLimit == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SizeLimit == nil {
 		return ""
 	}
-	return *r.CreateTableData.SizeLimit
+	return *r.resp.JSON200.SizeLimit
 }
 
 // SpaceRemaining returns the SpaceRemaining field value, or zero value if nil.
 func (r *CreateTableResult) SpaceRemaining() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.SpaceRemaining == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceRemaining == nil {
 		return ""
 	}
-	return *r.CreateTableData.SpaceRemaining
+	return *r.resp.JSON200.SpaceRemaining
 }
 
 // SpaceUsed returns the SpaceUsed field value, or zero value if nil.
 func (r *CreateTableResult) SpaceUsed() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.SpaceUsed == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceUsed == nil {
 		return ""
 	}
-	return *r.CreateTableData.SpaceUsed
+	return *r.resp.JSON200.SpaceUsed
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *CreateTableResult) Updated() string {
-	if r == nil || r.CreateTableData == nil || r.CreateTableData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.CreateTableData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 
 
-// DeactivateUserTokenResult wraps DeactivateUserTokenData with convenience methods.
-// All fields from DeactivateUserTokenData are accessible via embedding.
+// DeactivateUserTokenResult wraps DeactivateUserTokenResponse with convenience methods.
 type DeactivateUserTokenResult struct {
-	*generated.DeactivateUserTokenData
+	resp *generated.DeactivateUserTokenResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeactivateUserTokenResult) Raw() *generated.DeactivateUserTokenResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *DeactivateUserTokenResult) Id() int {
-	if r == nil || r.DeactivateUserTokenData == nil || r.DeactivateUserTokenData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return 0
 	}
-	return *r.DeactivateUserTokenData.Id
+	return *r.resp.JSON200.Id
 }
 
 
 
-// DeleteAppResult wraps DeleteAppData with convenience methods.
-// All fields from DeleteAppData are accessible via embedding.
+// DeleteAppResult wraps DeleteAppResponse with convenience methods.
 type DeleteAppResult struct {
-	*generated.DeleteAppData
+	resp *generated.DeleteAppResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteAppResult) Raw() *generated.DeleteAppResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // DeletedAppId returns the DeletedAppId field value, or zero value if nil.
 func (r *DeleteAppResult) DeletedAppId() string {
-	if r == nil || r.DeleteAppData == nil || r.DeleteAppData.DeletedAppId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DeletedAppId == nil {
 		return ""
 	}
-	return *r.DeleteAppData.DeletedAppId
+	return *r.resp.JSON200.DeletedAppId
 }
 
 
 
-// DeleteFieldsResult wraps DeleteFieldsData with convenience methods.
-// All fields from DeleteFieldsData are accessible via embedding.
+// DeleteFieldsResult wraps DeleteFieldsResponse with convenience methods.
 type DeleteFieldsResult struct {
-	*generated.DeleteFieldsData
+	resp *generated.DeleteFieldsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteFieldsResult) Raw() *generated.DeleteFieldsResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// DeleteFileResult wraps DeleteFileData with convenience methods.
-// All fields from DeleteFileData are accessible via embedding.
+// DeleteFileResult wraps DeleteFileResponse with convenience methods.
 type DeleteFileResult struct {
-	*generated.DeleteFileData
+	resp *generated.DeleteFileResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteFileResult) Raw() *generated.DeleteFileResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Creator returns the Creator field as a wrapped type, or nil if not set.
 func (r *DeleteFileResult) Creator() *DeleteFileCreator {
-	if r == nil || r.DeleteFileData == nil || r.DeleteFileData.Creator == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Creator == nil {
 		return nil
 	}
-	return &DeleteFileCreator{r.DeleteFileData.Creator}
+	return &DeleteFileCreator{r.resp.JSON200.Creator}
 }
 
 // FileName returns the FileName field value, or zero value if nil.
 func (r *DeleteFileResult) FileName() string {
-	if r == nil || r.DeleteFileData == nil || r.DeleteFileData.FileName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FileName == nil {
 		return ""
 	}
-	return *r.DeleteFileData.FileName
+	return *r.resp.JSON200.FileName
 }
 
 // Uploaded returns the Uploaded field value, or zero value if nil.
 func (r *DeleteFileResult) Uploaded() string {
-	if r == nil || r.DeleteFileData == nil || r.DeleteFileData.Uploaded == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Uploaded == nil {
 		return ""
 	}
-	return *r.DeleteFileData.Uploaded
+	return *r.resp.JSON200.Uploaded
 }
 
 // VersionNumber returns the VersionNumber field value, or zero value if nil.
 func (r *DeleteFileResult) VersionNumber() int {
-	if r == nil || r.DeleteFileData == nil || r.DeleteFileData.VersionNumber == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.VersionNumber == nil {
 		return 0
 	}
-	return *r.DeleteFileData.VersionNumber
+	return *r.resp.JSON200.VersionNumber
 }
 
 
 
-// DeleteFileCreator wraps DeleteFileData_Creator with convenience methods.
-// All fields from DeleteFileData_Creator are accessible via embedding.
-type DeleteFileCreator struct {
-	*generated.DeleteFileData_Creator
-}
-
-// Email returns the Email field value, or zero value if nil.
-func (r *DeleteFileCreator) Email() string {
-	if r == nil || r.DeleteFileData_Creator == nil || r.DeleteFileData_Creator.Email == nil {
-		return ""
-	}
-	return *r.DeleteFileData_Creator.Email
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *DeleteFileCreator) Id() string {
-	if r == nil || r.DeleteFileData_Creator == nil || r.DeleteFileData_Creator.Id == nil {
-		return ""
-	}
-	return *r.DeleteFileData_Creator.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *DeleteFileCreator) Name() string {
-	if r == nil || r.DeleteFileData_Creator == nil || r.DeleteFileData_Creator.Name == nil {
-		return ""
-	}
-	return *r.DeleteFileData_Creator.Name
-}
-
-// UserName returns the UserName field value, or zero value if nil.
-func (r *DeleteFileCreator) UserName() string {
-	if r == nil || r.DeleteFileData_Creator == nil || r.DeleteFileData_Creator.UserName == nil {
-		return ""
-	}
-	return *r.DeleteFileData_Creator.UserName
-}
-
-
-
-// DeleteRecordsResult wraps DeleteRecordsData with convenience methods.
-// All fields from DeleteRecordsData are accessible via embedding.
+// DeleteRecordsResult wraps DeleteRecordsResponse with convenience methods.
 type DeleteRecordsResult struct {
-	*generated.DeleteRecordsData
+	resp *generated.DeleteRecordsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteRecordsResult) Raw() *generated.DeleteRecordsResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // NumberDeleted returns the NumberDeleted field value, or zero value if nil.
 func (r *DeleteRecordsResult) NumberDeleted() int {
-	if r == nil || r.DeleteRecordsData == nil || r.DeleteRecordsData.NumberDeleted == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NumberDeleted == nil {
 		return 0
 	}
-	return *r.DeleteRecordsData.NumberDeleted
+	return *r.resp.JSON200.NumberDeleted
 }
 
 
 
-// DeleteRelationshipResult wraps DeleteRelationshipData with convenience methods.
-// All fields from DeleteRelationshipData are accessible via embedding.
+// DeleteRelationshipResult wraps DeleteRelationshipResponse with convenience methods.
 type DeleteRelationshipResult struct {
-	*generated.DeleteRelationshipData
+	resp *generated.DeleteRelationshipResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteRelationshipResult) Raw() *generated.DeleteRelationshipResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // RelationshipId returns the RelationshipId field value.
 func (r *DeleteRelationshipResult) RelationshipId() int {
-	if r == nil || r.DeleteRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.DeleteRelationshipData.RelationshipId
+	return r.resp.JSON200.RelationshipId
 }
 
 
 
-// DeleteTableResult wraps DeleteTableData with convenience methods.
-// All fields from DeleteTableData are accessible via embedding.
+// DeleteTableResult wraps DeleteTableResponse with convenience methods.
 type DeleteTableResult struct {
-	*generated.DeleteTableData
+	resp *generated.DeleteTableResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteTableResult) Raw() *generated.DeleteTableResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // DeletedTableId returns the DeletedTableId field value, or zero value if nil.
 func (r *DeleteTableResult) DeletedTableId() string {
-	if r == nil || r.DeleteTableData == nil || r.DeleteTableData.DeletedTableId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DeletedTableId == nil {
 		return ""
 	}
-	return *r.DeleteTableData.DeletedTableId
+	return *r.resp.JSON200.DeletedTableId
 }
 
 
 
-// DeleteUserTokenResult wraps DeleteUserTokenData with convenience methods.
-// All fields from DeleteUserTokenData are accessible via embedding.
+// DeleteUserTokenResult wraps DeleteUserTokenResponse with convenience methods.
 type DeleteUserTokenResult struct {
-	*generated.DeleteUserTokenData
+	resp *generated.DeleteUserTokenResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DeleteUserTokenResult) Raw() *generated.DeleteUserTokenResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *DeleteUserTokenResult) Id() int {
-	if r == nil || r.DeleteUserTokenData == nil || r.DeleteUserTokenData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return 0
 	}
-	return *r.DeleteUserTokenData.Id
+	return *r.resp.JSON200.Id
 }
 
 
 
-// DenyUsersAndGroupsResult wraps DenyUsersAndGroupsData with convenience methods.
-// All fields from DenyUsersAndGroupsData are accessible via embedding.
+// DenyUsersAndGroupsResult wraps DenyUsersAndGroupsResponse with convenience methods.
 type DenyUsersAndGroupsResult struct {
-	*generated.DenyUsersAndGroupsData
+	resp *generated.DenyUsersAndGroupsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DenyUsersAndGroupsResult) Raw() *generated.DenyUsersAndGroupsResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// DenyUsersResult wraps DenyUsersData with convenience methods.
-// All fields from DenyUsersData are accessible via embedding.
+// DenyUsersResult wraps DenyUsersResponse with convenience methods.
 type DenyUsersResult struct {
-	*generated.DenyUsersData
+	resp *generated.DenyUsersResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DenyUsersResult) Raw() *generated.DenyUsersResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// ExchangeSsoTokenResult wraps ExchangeSsoTokenData with convenience methods.
-// All fields from ExchangeSsoTokenData are accessible via embedding.
+// DownloadFileResult wraps DownloadFileResponse with convenience methods.
+type DownloadFileResult struct {
+	resp *generated.DownloadFileResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *DownloadFileResult) Raw() *generated.DownloadFileResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+
+
+
+// ExchangeSsoTokenResult wraps ExchangeSsoTokenResponse with convenience methods.
 type ExchangeSsoTokenResult struct {
-	*generated.ExchangeSsoTokenData
+	resp *generated.ExchangeSsoTokenResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *ExchangeSsoTokenResult) Raw() *generated.ExchangeSsoTokenResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AccessToken returns the AccessToken field value, or zero value if nil.
 func (r *ExchangeSsoTokenResult) AccessToken() string {
-	if r == nil || r.ExchangeSsoTokenData == nil || r.ExchangeSsoTokenData.AccessToken == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AccessToken == nil {
 		return ""
 	}
-	return *r.ExchangeSsoTokenData.AccessToken
+	return *r.resp.JSON200.AccessToken
 }
 
 // IssuedTokenType returns the IssuedTokenType field value as a string, or empty string if nil.
 func (r *ExchangeSsoTokenResult) IssuedTokenType() string {
-	if r == nil || r.ExchangeSsoTokenData == nil || r.ExchangeSsoTokenData.IssuedTokenType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.IssuedTokenType == nil {
 		return ""
 	}
-	return string(*r.ExchangeSsoTokenData.IssuedTokenType)
+	return string(*r.resp.JSON200.IssuedTokenType)
 }
 
 // TokenType returns the TokenType field value as a string, or empty string if nil.
 func (r *ExchangeSsoTokenResult) TokenType() string {
-	if r == nil || r.ExchangeSsoTokenData == nil || r.ExchangeSsoTokenData.TokenType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TokenType == nil {
 		return ""
 	}
-	return string(*r.ExchangeSsoTokenData.TokenType)
+	return string(*r.resp.JSON200.TokenType)
 }
 
 
 
-// GenerateDocumentResult wraps GenerateDocumentData with convenience methods.
-// All fields from GenerateDocumentData are accessible via embedding.
+// ExportSolutionResult wraps ExportSolutionResponse with convenience methods.
+type ExportSolutionResult struct {
+	resp *generated.ExportSolutionResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *ExportSolutionResult) Raw() *generated.ExportSolutionResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+
+
+
+// ExportSolutionToRecordResult wraps ExportSolutionToRecordResponse with convenience methods.
+type ExportSolutionToRecordResult struct {
+	resp *generated.ExportSolutionToRecordResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *ExportSolutionToRecordResult) Raw() *generated.ExportSolutionToRecordResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+
+
+
+// GenerateDocumentResult wraps GenerateDocumentResponse with convenience methods.
 type GenerateDocumentResult struct {
-	*generated.GenerateDocumentData
+	resp *generated.GenerateDocumentResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *GenerateDocumentResult) Raw() *generated.GenerateDocumentResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // ContentType returns the ContentType field value, or zero value if nil.
 func (r *GenerateDocumentResult) ContentType() string {
-	if r == nil || r.GenerateDocumentData == nil || r.GenerateDocumentData.ContentType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.ContentType == nil {
 		return ""
 	}
-	return *r.GenerateDocumentData.ContentType
+	return *r.resp.JSON200.ContentType
 }
 
 // Data returns the Data field value, or zero value if nil.
 func (r *GenerateDocumentResult) Data() string {
-	if r == nil || r.GenerateDocumentData == nil || r.GenerateDocumentData.Data == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Data == nil {
 		return ""
 	}
-	return *r.GenerateDocumentData.Data
+	return *r.resp.JSON200.Data
 }
 
 // FileName returns the FileName field value, or zero value if nil.
 func (r *GenerateDocumentResult) FileName() string {
-	if r == nil || r.GenerateDocumentData == nil || r.GenerateDocumentData.FileName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FileName == nil {
 		return ""
 	}
-	return *r.GenerateDocumentData.FileName
+	return *r.resp.JSON200.FileName
 }
 
 
 
-// AppResult wraps GetAppData with convenience methods.
-// All fields from GetAppData are accessible via embedding.
+// AppEventsResult wraps GetAppEventsResponse with convenience methods.
+type AppEventsResult struct {
+	resp *generated.GetAppEventsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AppEventsResult) Raw() *generated.GetAppEventsResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+
+
+
+// AppResult wraps GetAppResponse with convenience methods.
 type AppResult struct {
-	*generated.GetAppData
+	resp *generated.GetAppResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *AppResult) Raw() *generated.GetAppResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AncestorId returns the AncestorId field value, or zero value if nil.
 func (r *AppResult) AncestorId() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.AncestorId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AncestorId == nil {
 		return ""
 	}
-	return *r.GetAppData.AncestorId
+	return *r.resp.JSON200.AncestorId
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *AppResult) Created() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.GetAppData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DataClassification returns the DataClassification field value, or zero value if nil.
 func (r *AppResult) DataClassification() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.DataClassification == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DataClassification == nil {
 		return ""
 	}
-	return *r.GetAppData.DataClassification
+	return *r.resp.JSON200.DataClassification
 }
 
 // DateFormat returns the DateFormat field value, or zero value if nil.
 func (r *AppResult) DateFormat() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.DateFormat == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DateFormat == nil {
 		return ""
 	}
-	return *r.GetAppData.DateFormat
+	return *r.resp.JSON200.DateFormat
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *AppResult) Description() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.GetAppData.Description
+	return *r.resp.JSON200.Description
 }
 
 // HasEveryoneOnTheInternet returns the HasEveryoneOnTheInternet field value, or zero value if nil.
 func (r *AppResult) HasEveryoneOnTheInternet() bool {
-	if r == nil || r.GetAppData == nil || r.GetAppData.HasEveryoneOnTheInternet == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.HasEveryoneOnTheInternet == nil {
 		return false
 	}
-	return *r.GetAppData.HasEveryoneOnTheInternet
+	return *r.resp.JSON200.HasEveryoneOnTheInternet
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *AppResult) Id() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.GetAppData.Id
+	return *r.resp.JSON200.Id
 }
 
 // Name returns the Name field value.
 func (r *AppResult) Name() string {
-	if r == nil || r.GetAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.GetAppData.Name
+	return r.resp.JSON200.Name
 }
 
 // SecurityProperties returns the SecurityProperties field as a wrapped type, or nil if not set.
 func (r *AppResult) SecurityProperties() *AppSecurityProperties {
-	if r == nil || r.GetAppData == nil || r.GetAppData.SecurityProperties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SecurityProperties == nil {
 		return nil
 	}
-	return &AppSecurityProperties{r.GetAppData.SecurityProperties}
+	return &AppSecurityProperties{r.resp.JSON200.SecurityProperties}
 }
 
 // TimeZone returns the TimeZone field value, or zero value if nil.
 func (r *AppResult) TimeZone() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.TimeZone == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TimeZone == nil {
 		return ""
 	}
-	return *r.GetAppData.TimeZone
+	return *r.resp.JSON200.TimeZone
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *AppResult) Updated() string {
-	if r == nil || r.GetAppData == nil || r.GetAppData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.GetAppData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 // Variables returns the Variables field as wrapped types, or nil if not set.
 func (r *AppResult) Variables() []*AppVariablesItem {
-	if r == nil || r.GetAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.GetAppData.Variables == nil {
+	if r.resp.JSON200.Variables == nil {
 		return nil
 	}
-	items := make([]*AppVariablesItem, len(*r.GetAppData.Variables))
-	for i := range *r.GetAppData.Variables {
-		items[i] = &AppVariablesItem{&(*r.GetAppData.Variables)[i]}
+	items := make([]*AppVariablesItem, len(*r.resp.JSON200.Variables))
+	for i := range *r.resp.JSON200.Variables {
+		items[i] = &AppVariablesItem{&(*r.resp.JSON200.Variables)[i]}
 	}
 	return items
 }
 
 
 
-// AppSecurityProperties wraps GetAppData_SecurityProperties with convenience methods.
-// All fields from GetAppData_SecurityProperties are accessible via embedding.
-type AppSecurityProperties struct {
-	*generated.GetAppData_SecurityProperties
+// AppTablesResult wraps GetAppTablesResponse with convenience methods.
+type AppTablesResult struct {
+	resp *generated.GetAppTablesResponse
 }
 
-// AllowClone returns the AllowClone field value, or zero value if nil.
-func (r *AppSecurityProperties) AllowClone() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.AllowClone == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.AllowClone
-}
-
-// AllowExport returns the AllowExport field value, or zero value if nil.
-func (r *AppSecurityProperties) AllowExport() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.AllowExport == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.AllowExport
-}
-
-// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
-func (r *AppSecurityProperties) EnableAppTokens() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.EnableAppTokens == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.EnableAppTokens
-}
-
-// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
-func (r *AppSecurityProperties) HideFromPublic() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.HideFromPublic == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.HideFromPublic
-}
-
-// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
-func (r *AppSecurityProperties) MustBeRealmApproved() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.MustBeRealmApproved == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.MustBeRealmApproved
-}
-
-// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
-func (r *AppSecurityProperties) UseIPFilter() bool {
-	if r == nil || r.GetAppData_SecurityProperties == nil || r.GetAppData_SecurityProperties.UseIPFilter == nil {
-		return false
-	}
-	return *r.GetAppData_SecurityProperties.UseIPFilter
-}
-
-
-
-// AppVariablesItem wraps GetAppData_Variables_Item with convenience methods.
-// All fields from GetAppData_Variables_Item are accessible via embedding.
-type AppVariablesItem struct {
-	*generated.GetAppData_Variables_Item
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *AppVariablesItem) Name() string {
-	if r == nil || r.GetAppData_Variables_Item == nil || r.GetAppData_Variables_Item.Name == nil {
-		return ""
-	}
-	return *r.GetAppData_Variables_Item.Name
-}
-
-// Value returns the Value field value, or zero value if nil.
-func (r *AppVariablesItem) Value() string {
-	if r == nil || r.GetAppData_Variables_Item == nil || r.GetAppData_Variables_Item.Value == nil {
-		return ""
-	}
-	return *r.GetAppData_Variables_Item.Value
-}
-
-
-
-// AppEventsItem wraps GetAppEventsItem with convenience methods.
-// All fields from GetAppEventsItem are accessible via embedding.
-type AppEventsItem struct {
-	*generated.GetAppEventsItem
-}
-
-// IsActive returns the IsActive field value, or zero value if nil.
-func (r *AppEventsItem) IsActive() bool {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.IsActive == nil {
-		return false
-	}
-	return *r.GetAppEventsItem.IsActive
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *AppEventsItem) Name() string {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Name == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem.Name
-}
-
-// Owner returns the Owner field as a wrapped type, or nil if not set.
-func (r *AppEventsItem) Owner() *AppEventsOwner {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Owner == nil {
+// Raw returns the underlying generated response.
+func (r *AppTablesResult) Raw() *generated.GetAppTablesResponse {
+	if r == nil {
 		return nil
 	}
-	return &AppEventsOwner{r.GetAppEventsItem.Owner}
-}
-
-// TableId returns the TableId field value, or zero value if nil.
-func (r *AppEventsItem) TableId() string {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.TableId == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem.TableId
-}
-
-// Type returns the Type field value as a string, or empty string if nil.
-func (r *AppEventsItem) Type() string {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Type == nil {
-		return ""
-	}
-	return string(*r.GetAppEventsItem.Type)
-}
-
-// Url returns the Url field value, or zero value if nil.
-func (r *AppEventsItem) Url() string {
-	if r == nil || r.GetAppEventsItem == nil || r.GetAppEventsItem.Url == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem.Url
+	return r.resp
 }
 
 
 
-// AppEventsOwner wraps GetAppEventsItem_Owner with convenience methods.
-// All fields from GetAppEventsItem_Owner are accessible via embedding.
-type AppEventsOwner struct {
-	*generated.GetAppEventsItem_Owner
-}
-
-// Email returns the Email field value, or zero value if nil.
-func (r *AppEventsOwner) Email() string {
-	if r == nil || r.GetAppEventsItem_Owner == nil || r.GetAppEventsItem_Owner.Email == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem_Owner.Email
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *AppEventsOwner) Id() string {
-	if r == nil || r.GetAppEventsItem_Owner == nil || r.GetAppEventsItem_Owner.Id == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem_Owner.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *AppEventsOwner) Name() string {
-	if r == nil || r.GetAppEventsItem_Owner == nil || r.GetAppEventsItem_Owner.Name == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem_Owner.Name
-}
-
-// UserName returns the UserName field value, or zero value if nil.
-func (r *AppEventsOwner) UserName() string {
-	if r == nil || r.GetAppEventsItem_Owner == nil || r.GetAppEventsItem_Owner.UserName == nil {
-		return ""
-	}
-	return *r.GetAppEventsItem_Owner.UserName
-}
-
-
-
-// AppTablesItem wraps GetAppTablesItem with convenience methods.
-// All fields from GetAppTablesItem are accessible via embedding.
-type AppTablesItem struct {
-	*generated.GetAppTablesItem
-}
-
-// Alias returns the Alias field value, or zero value if nil.
-func (r *AppTablesItem) Alias() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Alias == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Alias
-}
-
-// Created returns the Created field value, or zero value if nil.
-func (r *AppTablesItem) Created() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Created == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Created
-}
-
-// DefaultSortFieldId returns the DefaultSortFieldId field value, or zero value if nil.
-func (r *AppTablesItem) DefaultSortFieldId() int {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.DefaultSortFieldId == nil {
-		return 0
-	}
-	return *r.GetAppTablesItem.DefaultSortFieldId
-}
-
-// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
-func (r *AppTablesItem) DefaultSortOrder() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.DefaultSortOrder == nil {
-		return ""
-	}
-	return string(*r.GetAppTablesItem.DefaultSortOrder)
-}
-
-// Description returns the Description field value, or zero value if nil.
-func (r *AppTablesItem) Description() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Description == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Description
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *AppTablesItem) Id() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Id == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Id
-}
-
-// KeyFieldId returns the KeyFieldId field value, or zero value if nil.
-func (r *AppTablesItem) KeyFieldId() int {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.KeyFieldId == nil {
-		return 0
-	}
-	return *r.GetAppTablesItem.KeyFieldId
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *AppTablesItem) Name() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Name == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Name
-}
-
-// NextFieldId returns the NextFieldId field value, or zero value if nil.
-func (r *AppTablesItem) NextFieldId() int {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.NextFieldId == nil {
-		return 0
-	}
-	return *r.GetAppTablesItem.NextFieldId
-}
-
-// NextRecordId returns the NextRecordId field value, or zero value if nil.
-func (r *AppTablesItem) NextRecordId() int {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.NextRecordId == nil {
-		return 0
-	}
-	return *r.GetAppTablesItem.NextRecordId
-}
-
-// PluralRecordName returns the PluralRecordName field value, or zero value if nil.
-func (r *AppTablesItem) PluralRecordName() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.PluralRecordName == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.PluralRecordName
-}
-
-// SingleRecordName returns the SingleRecordName field value, or zero value if nil.
-func (r *AppTablesItem) SingleRecordName() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.SingleRecordName == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.SingleRecordName
-}
-
-// SizeLimit returns the SizeLimit field value, or zero value if nil.
-func (r *AppTablesItem) SizeLimit() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.SizeLimit == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.SizeLimit
-}
-
-// SpaceRemaining returns the SpaceRemaining field value, or zero value if nil.
-func (r *AppTablesItem) SpaceRemaining() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.SpaceRemaining == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.SpaceRemaining
-}
-
-// SpaceUsed returns the SpaceUsed field value, or zero value if nil.
-func (r *AppTablesItem) SpaceUsed() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.SpaceUsed == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.SpaceUsed
-}
-
-// Updated returns the Updated field value, or zero value if nil.
-func (r *AppTablesItem) Updated() string {
-	if r == nil || r.GetAppTablesItem == nil || r.GetAppTablesItem.Updated == nil {
-		return ""
-	}
-	return *r.GetAppTablesItem.Updated
-}
-
-
-
-// FieldResult wraps GetFieldData with convenience methods.
-// All fields from GetFieldData are accessible via embedding.
+// FieldResult wraps GetFieldResponse with convenience methods.
 type FieldResult struct {
-	*generated.GetFieldData
+	resp *generated.GetFieldResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *FieldResult) Raw() *generated.GetFieldResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AppearsByDefault returns the AppearsByDefault field value, or zero value if nil.
 func (r *FieldResult) AppearsByDefault() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.AppearsByDefault == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AppearsByDefault == nil {
 		return false
 	}
-	return *r.GetFieldData.AppearsByDefault
+	return *r.resp.JSON200.AppearsByDefault
 }
 
 // Audited returns the Audited field value, or zero value if nil.
 func (r *FieldResult) Audited() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Audited == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Audited == nil {
 		return false
 	}
-	return *r.GetFieldData.Audited
+	return *r.resp.JSON200.Audited
 }
 
 // Bold returns the Bold field value, or zero value if nil.
 func (r *FieldResult) Bold() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Bold == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Bold == nil {
 		return false
 	}
-	return *r.GetFieldData.Bold
+	return *r.resp.JSON200.Bold
 }
 
 // DoesDataCopy returns the DoesDataCopy field value, or zero value if nil.
 func (r *FieldResult) DoesDataCopy() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.DoesDataCopy == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DoesDataCopy == nil {
 		return false
 	}
-	return *r.GetFieldData.DoesDataCopy
+	return *r.resp.JSON200.DoesDataCopy
 }
 
 // FieldHelp returns the FieldHelp field value, or zero value if nil.
 func (r *FieldResult) FieldHelp() string {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.FieldHelp == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldHelp == nil {
 		return ""
 	}
-	return *r.GetFieldData.FieldHelp
+	return *r.resp.JSON200.FieldHelp
 }
 
 // FieldType returns the FieldType field value, or zero value if nil.
 func (r *FieldResult) FieldType() string {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.FieldType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldType == nil {
 		return ""
 	}
-	return *r.GetFieldData.FieldType
+	return *r.resp.JSON200.FieldType
 }
 
 // FindEnabled returns the FindEnabled field value, or zero value if nil.
 func (r *FieldResult) FindEnabled() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.FindEnabled == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FindEnabled == nil {
 		return false
 	}
-	return *r.GetFieldData.FindEnabled
+	return *r.resp.JSON200.FindEnabled
 }
 
 // Id returns the Id field value.
 func (r *FieldResult) Id() int64 {
-	if r == nil || r.GetFieldData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.GetFieldData.Id
+	return r.resp.JSON200.Id
 }
 
 // Label returns the Label field value, or zero value if nil.
 func (r *FieldResult) Label() string {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Label == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Label == nil {
 		return ""
 	}
-	return *r.GetFieldData.Label
+	return *r.resp.JSON200.Label
 }
 
 // Mode returns the Mode field value, or zero value if nil.
 func (r *FieldResult) Mode() string {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Mode == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Mode == nil {
 		return ""
 	}
-	return *r.GetFieldData.Mode
+	return *r.resp.JSON200.Mode
 }
 
 // NoWrap returns the NoWrap field value, or zero value if nil.
 func (r *FieldResult) NoWrap() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.NoWrap == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NoWrap == nil {
 		return false
 	}
-	return *r.GetFieldData.NoWrap
+	return *r.resp.JSON200.NoWrap
 }
 
 // Properties returns the Properties field as a wrapped type, or nil if not set.
 func (r *FieldResult) Properties() *FieldProperties {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Properties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Properties == nil {
 		return nil
 	}
-	return &FieldProperties{r.GetFieldData.Properties}
+	return &FieldProperties{r.resp.JSON200.Properties}
 }
 
 // Required returns the Required field value, or zero value if nil.
 func (r *FieldResult) Required() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Required == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Required == nil {
 		return false
 	}
-	return *r.GetFieldData.Required
+	return *r.resp.JSON200.Required
 }
 
 // Unique returns the Unique field value, or zero value if nil.
 func (r *FieldResult) Unique() bool {
-	if r == nil || r.GetFieldData == nil || r.GetFieldData.Unique == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Unique == nil {
 		return false
 	}
-	return *r.GetFieldData.Unique
+	return *r.resp.JSON200.Unique
 }
 
 
 
-// FieldProperties wraps GetFieldData_Properties with convenience methods.
-// All fields from GetFieldData_Properties are accessible via embedding.
-type FieldProperties struct {
-	*generated.GetFieldData_Properties
+// FieldUsageResult wraps GetFieldUsageResponse with convenience methods.
+type FieldUsageResult struct {
+	resp *generated.GetFieldUsageResponse
 }
 
-// Abbreviate returns the Abbreviate field value, or zero value if nil.
-func (r *FieldProperties) Abbreviate() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Abbreviate == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.Abbreviate
-}
-
-// AllowHTML returns the AllowHTML field value, or zero value if nil.
-func (r *FieldProperties) AllowHTML() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AllowHTML == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.AllowHTML
-}
-
-// AllowMentions returns the AllowMentions field value, or zero value if nil.
-func (r *FieldProperties) AllowMentions() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AllowMentions == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.AllowMentions
-}
-
-// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
-func (r *FieldProperties) AllowNewChoices() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AllowNewChoices == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.AllowNewChoices
-}
-
-// AppearsAs returns the AppearsAs field value, or zero value if nil.
-func (r *FieldProperties) AppearsAs() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AppearsAs == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.AppearsAs
-}
-
-// AppendOnly returns the AppendOnly field value, or zero value if nil.
-func (r *FieldProperties) AppendOnly() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AppendOnly == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.AppendOnly
-}
-
-// AutoSave returns the AutoSave field value, or zero value if nil.
-func (r *FieldProperties) AutoSave() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.AutoSave == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.AutoSave
-}
-
-// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
-func (r *FieldProperties) BlankIsZero() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.BlankIsZero == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.BlankIsZero
-}
-
-// CarryChoices returns the CarryChoices field value, or zero value if nil.
-func (r *FieldProperties) CarryChoices() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CarryChoices == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.CarryChoices
-}
-
-// Choices returns the Choices field value, or nil if not set.
-func (r *FieldProperties) Choices() []string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Choices == nil {
+// Raw returns the underlying generated response.
+func (r *FieldUsageResult) Raw() *generated.GetFieldUsageResponse {
+	if r == nil {
 		return nil
 	}
-	return *r.GetFieldData_Properties.Choices
+	return r.resp
 }
 
-// ChoicesLuid returns the ChoicesLuid field value, or nil if not set.
-func (r *FieldProperties) ChoicesLuid() []string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.ChoicesLuid == nil {
+
+
+// FieldsResult wraps GetFieldsResponse with convenience methods.
+type FieldsResult struct {
+	resp *generated.GetFieldsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *FieldsResult) Raw() *generated.GetFieldsResponse {
+	if r == nil {
 		return nil
 	}
-	return *r.GetFieldData_Properties.ChoicesLuid
+	return r.resp
 }
 
-// CommaStart returns the CommaStart field value, or zero value if nil.
-func (r *FieldProperties) CommaStart() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CommaStart == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.CommaStart
+
+
+// FieldsUsageResult wraps GetFieldsUsageResponse with convenience methods.
+type FieldsUsageResult struct {
+	resp *generated.GetFieldsUsageResponse
 }
 
-// Comments returns the Comments field value, or zero value if nil.
-func (r *FieldProperties) Comments() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Comments == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.Comments
-}
-
-// CompositeFields returns the CompositeFields field as wrapped types, or nil if not set.
-func (r *FieldProperties) CompositeFields() []*FieldPropertiesCompositeFieldsItem {
-	if r == nil || r.GetFieldData_Properties == nil {
+// Raw returns the underlying generated response.
+func (r *FieldsUsageResult) Raw() *generated.GetFieldsUsageResponse {
+	if r == nil {
 		return nil
 	}
-	if r.GetFieldData_Properties.CompositeFields == nil {
-		return nil
-	}
-	items := make([]*FieldPropertiesCompositeFieldsItem, len(*r.GetFieldData_Properties.CompositeFields))
-	for i := range *r.GetFieldData_Properties.CompositeFields {
-		items[i] = &FieldPropertiesCompositeFieldsItem{&(*r.GetFieldData_Properties.CompositeFields)[i]}
-	}
-	return items
+	return r.resp
 }
 
-// CoverText returns the CoverText field value, or zero value if nil.
-func (r *FieldProperties) CoverText() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CoverText == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.CoverText
-}
-
-// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
-func (r *FieldProperties) CurrencyFormat() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CurrencyFormat == nil {
-		return ""
-	}
-	return string(*r.GetFieldData_Properties.CurrencyFormat)
-}
-
-// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
-func (r *FieldProperties) CurrencySymbol() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.CurrencySymbol == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.CurrencySymbol
-}
-
-// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
-func (r *FieldProperties) DecimalPlaces() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DecimalPlaces == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.DecimalPlaces
-}
-
-// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
-func (r *FieldProperties) DefaultCountryCode() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultCountryCode == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DefaultCountryCode
-}
-
-// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
-func (r *FieldProperties) DefaultDomain() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultDomain == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DefaultDomain
-}
-
-// DefaultKind returns the DefaultKind field value, or zero value if nil.
-func (r *FieldProperties) DefaultKind() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultKind == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DefaultKind
-}
-
-// DefaultToday returns the DefaultToday field value, or zero value if nil.
-func (r *FieldProperties) DefaultToday() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultToday == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DefaultToday
-}
-
-// DefaultValue returns the DefaultValue field value, or zero value if nil.
-func (r *FieldProperties) DefaultValue() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultValue == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DefaultValue
-}
-
-// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
-func (r *FieldProperties) DefaultValueLuid() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DefaultValueLuid == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.DefaultValueLuid
-}
-
-// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
-func (r *FieldProperties) DisplayAsLink() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayAsLink == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayAsLink
-}
-
-// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
-func (r *FieldProperties) DisplayCheckboxAsText() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayCheckboxAsText == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayCheckboxAsText
-}
-
-// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
-func (r *FieldProperties) DisplayDayOfWeek() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayDayOfWeek == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayDayOfWeek
-}
-
-// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
-func (r *FieldProperties) DisplayEmail() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayEmail == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DisplayEmail
-}
-
-// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
-func (r *FieldProperties) DisplayMonth() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayMonth == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DisplayMonth
-}
-
-// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
-func (r *FieldProperties) DisplayRelative() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayRelative == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayRelative
-}
-
-// DisplayTime returns the DisplayTime field value, or zero value if nil.
-func (r *FieldProperties) DisplayTime() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayTime == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayTime
-}
-
-// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
-func (r *FieldProperties) DisplayTimezone() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayTimezone == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DisplayTimezone
-}
-
-// DisplayUser returns the DisplayUser field value, or zero value if nil.
-func (r *FieldProperties) DisplayUser() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DisplayUser == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.DisplayUser
-}
-
-// DoesAverage returns the DoesAverage field value, or zero value if nil.
-func (r *FieldProperties) DoesAverage() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DoesAverage == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DoesAverage
-}
-
-// DoesTotal returns the DoesTotal field value, or zero value if nil.
-func (r *FieldProperties) DoesTotal() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DoesTotal == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.DoesTotal
-}
-
-// DurationField returns the DurationField field value, or zero value if nil.
-func (r *FieldProperties) DurationField() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.DurationField == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.DurationField
-}
-
-// Exact returns the Exact field value, or zero value if nil.
-func (r *FieldProperties) Exact() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Exact == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.Exact
-}
-
-// ForeignKey returns the ForeignKey field value, or zero value if nil.
-func (r *FieldProperties) ForeignKey() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.ForeignKey == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.ForeignKey
-}
-
-// Format returns the Format field value, or zero value if nil.
-func (r *FieldProperties) Format() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Format == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.Format
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *FieldProperties) Formula() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Formula == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.Formula
-}
-
-// HasExtension returns the HasExtension field value, or zero value if nil.
-func (r *FieldProperties) HasExtension() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.HasExtension == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.HasExtension
-}
-
-// Hours24 returns the Hours24 field value, or zero value if nil.
-func (r *FieldProperties) Hours24() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Hours24 == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.Hours24
-}
-
-// LinkText returns the LinkText field value, or zero value if nil.
-func (r *FieldProperties) LinkText() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.LinkText == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.LinkText
-}
-
-// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
-func (r *FieldProperties) LookupReferenceFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.LookupReferenceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.LookupReferenceFieldId
-}
-
-// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
-func (r *FieldProperties) LookupTargetFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.LookupTargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.LookupTargetFieldId
-}
-
-// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
-func (r *FieldProperties) MasterChoiceFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.MasterChoiceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.MasterChoiceFieldId
-}
-
-// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
-func (r *FieldProperties) MasterChoiceTableId() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.MasterChoiceTableId == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.MasterChoiceTableId
-}
-
-// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
-func (r *FieldProperties) MasterTableTag() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.MasterTableTag == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.MasterTableTag
-}
-
-// MaxLength returns the MaxLength field value, or zero value if nil.
-func (r *FieldProperties) MaxLength() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.MaxLength == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.MaxLength
-}
-
-// MaxVersions returns the MaxVersions field value, or zero value if nil.
-func (r *FieldProperties) MaxVersions() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.MaxVersions == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.MaxVersions
-}
-
-// NumLines returns the NumLines field value, or zero value if nil.
-func (r *FieldProperties) NumLines() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.NumLines == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.NumLines
-}
-
-// NumberFormat returns the NumberFormat field value, or zero value if nil.
-func (r *FieldProperties) NumberFormat() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.NumberFormat == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.NumberFormat
-}
-
-// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
-func (r *FieldProperties) ParentFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.ParentFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.ParentFieldId
-}
-
-// PostTempToken returns the PostTempToken field value, or zero value if nil.
-func (r *FieldProperties) PostTempToken() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.PostTempToken == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.PostTempToken
-}
-
-// SeeVersions returns the SeeVersions field value, or zero value if nil.
-func (r *FieldProperties) SeeVersions() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SeeVersions == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.SeeVersions
-}
-
-// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
-func (r *FieldProperties) SnapFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SnapFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.SnapFieldId
-}
-
-// SortAlpha returns the SortAlpha field value, or zero value if nil.
-func (r *FieldProperties) SortAlpha() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SortAlpha == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.SortAlpha
-}
-
-// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
-func (r *FieldProperties) SortAsGiven() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SortAsGiven == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.SortAsGiven
-}
-
-// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
-func (r *FieldProperties) SourceFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SourceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.SourceFieldId
-}
-
-// StartField returns the StartField field value, or zero value if nil.
-func (r *FieldProperties) StartField() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.StartField == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.StartField
-}
-
-// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
-func (r *FieldProperties) SummaryFunction() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SummaryFunction == nil {
-		return ""
-	}
-	return string(*r.GetFieldData_Properties.SummaryFunction)
-}
-
-// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
-func (r *FieldProperties) SummaryReferenceFieldId() int64 {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SummaryReferenceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.SummaryReferenceFieldId
-}
-
-// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
-func (r *FieldProperties) SummaryTargetFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.SummaryTargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.SummaryTargetFieldId
-}
-
-// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
-func (r *FieldProperties) TargetFieldId() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.TargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.TargetFieldId
-}
-
-// TargetTableId returns the TargetTableId field value, or zero value if nil.
-func (r *FieldProperties) TargetTableId() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.TargetTableId == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.TargetTableId
-}
-
-// TargetTableName returns the TargetTableName field value, or zero value if nil.
-func (r *FieldProperties) TargetTableName() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.TargetTableName == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.TargetTableName
-}
-
-// Units returns the Units field value, or zero value if nil.
-func (r *FieldProperties) Units() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Units == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.Units
-}
-
-// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
-func (r *FieldProperties) UseI18NFormat() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.UseI18NFormat == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.UseI18NFormat
-}
-
-// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
-func (r *FieldProperties) UseNewWindow() bool {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.UseNewWindow == nil {
-		return false
-	}
-	return *r.GetFieldData_Properties.UseNewWindow
-}
-
-// VersionMode returns the VersionMode field value as a string, or empty string if nil.
-func (r *FieldProperties) VersionMode() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.VersionMode == nil {
-		return ""
-	}
-	return string(*r.GetFieldData_Properties.VersionMode)
-}
-
-// Width returns the Width field value, or zero value if nil.
-func (r *FieldProperties) Width() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.Width == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.Width
-}
-
-// WorkWeek returns the WorkWeek field value, or zero value if nil.
-func (r *FieldProperties) WorkWeek() int {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.WorkWeek == nil {
-		return 0
-	}
-	return *r.GetFieldData_Properties.WorkWeek
-}
-
-// XmlTag returns the XmlTag field value, or zero value if nil.
-func (r *FieldProperties) XmlTag() string {
-	if r == nil || r.GetFieldData_Properties == nil || r.GetFieldData_Properties.XmlTag == nil {
-		return ""
-	}
-	return *r.GetFieldData_Properties.XmlTag
-}
-
-
-
-// FieldPropertiesCompositeFieldsItem wraps GetFieldData_Properties_CompositeFields_Item with convenience methods.
-// All fields from GetFieldData_Properties_CompositeFields_Item are accessible via embedding.
-type FieldPropertiesCompositeFieldsItem struct {
-	*generated.GetFieldData_Properties_CompositeFields_Item
-}
-
-
-
-// FieldUsageItem wraps GetFieldUsageItem with convenience methods.
-// All fields from GetFieldUsageItem are accessible via embedding.
-type FieldUsageItem struct {
-	*generated.GetFieldUsageItem
-}
-
-
-
-// FieldUsageField wraps GetFieldUsageItem_Field with convenience methods.
-// All fields from GetFieldUsageItem_Field are accessible via embedding.
-type FieldUsageField struct {
-	*generated.GetFieldUsageItem_Field
-}
-
-// Id returns the Id field value.
-func (r *FieldUsageField) Id() int {
-	if r == nil || r.GetFieldUsageItem_Field == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Field.Id
-}
-
-// Name returns the Name field value.
-func (r *FieldUsageField) Name() string {
-	if r == nil || r.GetFieldUsageItem_Field == nil {
-		return ""
-	}
-	return r.GetFieldUsageItem_Field.Name
-}
-
-// Type returns the Type field value.
-func (r *FieldUsageField) Type() string {
-	if r == nil || r.GetFieldUsageItem_Field == nil {
-		return ""
-	}
-	return r.GetFieldUsageItem_Field.Type
-}
-
-
-
-// FieldUsageUsage wraps GetFieldUsageItem_Usage with convenience methods.
-// All fields from GetFieldUsageItem_Usage are accessible via embedding.
-type FieldUsageUsage struct {
-	*generated.GetFieldUsageItem_Usage
-}
-
-
-
-// FieldUsageUsageActions wraps GetFieldUsageItem_Usage_Actions with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Actions are accessible via embedding.
-type FieldUsageUsageActions struct {
-	*generated.GetFieldUsageItem_Usage_Actions
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageActions) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Actions == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Actions.Count
-}
-
-
-
-// FieldUsageUsageAppHomePages wraps GetFieldUsageItem_Usage_AppHomePages with convenience methods.
-// All fields from GetFieldUsageItem_Usage_AppHomePages are accessible via embedding.
-type FieldUsageUsageAppHomePages struct {
-	*generated.GetFieldUsageItem_Usage_AppHomePages
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageAppHomePages) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_AppHomePages == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_AppHomePages.Count
-}
-
-
-
-// FieldUsageUsageDefaultReports wraps GetFieldUsageItem_Usage_DefaultReports with convenience methods.
-// All fields from GetFieldUsageItem_Usage_DefaultReports are accessible via embedding.
-type FieldUsageUsageDefaultReports struct {
-	*generated.GetFieldUsageItem_Usage_DefaultReports
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageDefaultReports) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_DefaultReports == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_DefaultReports.Count
-}
-
-
-
-// FieldUsageUsageExactForms wraps GetFieldUsageItem_Usage_ExactForms with convenience methods.
-// All fields from GetFieldUsageItem_Usage_ExactForms are accessible via embedding.
-type FieldUsageUsageExactForms struct {
-	*generated.GetFieldUsageItem_Usage_ExactForms
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageExactForms) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_ExactForms == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_ExactForms.Count
-}
-
-
-
-// FieldUsageUsageFields wraps GetFieldUsageItem_Usage_Fields with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Fields are accessible via embedding.
-type FieldUsageUsageFields struct {
-	*generated.GetFieldUsageItem_Usage_Fields
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageFields) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Fields == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Fields.Count
-}
-
-
-
-// FieldUsageUsageForms wraps GetFieldUsageItem_Usage_Forms with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Forms are accessible via embedding.
-type FieldUsageUsageForms struct {
-	*generated.GetFieldUsageItem_Usage_Forms
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageForms) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Forms == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Forms.Count
-}
-
-
-
-// FieldUsageUsageNotifications wraps GetFieldUsageItem_Usage_Notifications with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Notifications are accessible via embedding.
-type FieldUsageUsageNotifications struct {
-	*generated.GetFieldUsageItem_Usage_Notifications
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageNotifications) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Notifications == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Notifications.Count
-}
-
-
-
-// FieldUsageUsagePersonalReports wraps GetFieldUsageItem_Usage_PersonalReports with convenience methods.
-// All fields from GetFieldUsageItem_Usage_PersonalReports are accessible via embedding.
-type FieldUsageUsagePersonalReports struct {
-	*generated.GetFieldUsageItem_Usage_PersonalReports
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsagePersonalReports) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_PersonalReports == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_PersonalReports.Count
-}
-
-
-
-// FieldUsageUsagePipelines wraps GetFieldUsageItem_Usage_Pipelines with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Pipelines are accessible via embedding.
-type FieldUsageUsagePipelines struct {
-	*generated.GetFieldUsageItem_Usage_Pipelines
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsagePipelines) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Pipelines == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Pipelines.Count
-}
-
-
-
-// FieldUsageUsageRelationships wraps GetFieldUsageItem_Usage_Relationships with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Relationships are accessible via embedding.
-type FieldUsageUsageRelationships struct {
-	*generated.GetFieldUsageItem_Usage_Relationships
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageRelationships) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Relationships == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Relationships.Count
-}
-
-
-
-// FieldUsageUsageReminders wraps GetFieldUsageItem_Usage_Reminders with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Reminders are accessible via embedding.
-type FieldUsageUsageReminders struct {
-	*generated.GetFieldUsageItem_Usage_Reminders
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageReminders) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Reminders == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Reminders.Count
-}
-
-
-
-// FieldUsageUsageReports wraps GetFieldUsageItem_Usage_Reports with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Reports are accessible via embedding.
-type FieldUsageUsageReports struct {
-	*generated.GetFieldUsageItem_Usage_Reports
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageReports) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Reports == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Reports.Count
-}
-
-
-
-// FieldUsageUsageRoles wraps GetFieldUsageItem_Usage_Roles with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Roles are accessible via embedding.
-type FieldUsageUsageRoles struct {
-	*generated.GetFieldUsageItem_Usage_Roles
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageRoles) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Roles == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Roles.Count
-}
-
-
-
-// FieldUsageUsageWebhooks wraps GetFieldUsageItem_Usage_Webhooks with convenience methods.
-// All fields from GetFieldUsageItem_Usage_Webhooks are accessible via embedding.
-type FieldUsageUsageWebhooks struct {
-	*generated.GetFieldUsageItem_Usage_Webhooks
-}
-
-// Count returns the Count field value.
-func (r *FieldUsageUsageWebhooks) Count() int {
-	if r == nil || r.GetFieldUsageItem_Usage_Webhooks == nil {
-		return 0
-	}
-	return r.GetFieldUsageItem_Usage_Webhooks.Count
-}
-
-
-
-// FieldsItem wraps GetFieldsItem with convenience methods.
-// All fields from GetFieldsItem are accessible via embedding.
-type FieldsItem struct {
-	*generated.GetFieldsItem
-}
-
-// AppearsByDefault returns the AppearsByDefault field value, or zero value if nil.
-func (r *FieldsItem) AppearsByDefault() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.AppearsByDefault == nil {
-		return false
-	}
-	return *r.GetFieldsItem.AppearsByDefault
-}
-
-// Audited returns the Audited field value, or zero value if nil.
-func (r *FieldsItem) Audited() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Audited == nil {
-		return false
-	}
-	return *r.GetFieldsItem.Audited
-}
-
-// Bold returns the Bold field value, or zero value if nil.
-func (r *FieldsItem) Bold() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Bold == nil {
-		return false
-	}
-	return *r.GetFieldsItem.Bold
-}
-
-// DoesDataCopy returns the DoesDataCopy field value, or zero value if nil.
-func (r *FieldsItem) DoesDataCopy() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.DoesDataCopy == nil {
-		return false
-	}
-	return *r.GetFieldsItem.DoesDataCopy
-}
-
-// FieldHelp returns the FieldHelp field value, or zero value if nil.
-func (r *FieldsItem) FieldHelp() string {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.FieldHelp == nil {
-		return ""
-	}
-	return *r.GetFieldsItem.FieldHelp
-}
-
-// FieldType returns the FieldType field value, or zero value if nil.
-func (r *FieldsItem) FieldType() string {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.FieldType == nil {
-		return ""
-	}
-	return *r.GetFieldsItem.FieldType
-}
-
-// FindEnabled returns the FindEnabled field value, or zero value if nil.
-func (r *FieldsItem) FindEnabled() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.FindEnabled == nil {
-		return false
-	}
-	return *r.GetFieldsItem.FindEnabled
-}
-
-// Id returns the Id field value.
-func (r *FieldsItem) Id() int64 {
-	if r == nil || r.GetFieldsItem == nil {
-		return 0
-	}
-	return r.GetFieldsItem.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *FieldsItem) Label() string {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Label == nil {
-		return ""
-	}
-	return *r.GetFieldsItem.Label
-}
-
-// Mode returns the Mode field value, or zero value if nil.
-func (r *FieldsItem) Mode() string {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Mode == nil {
-		return ""
-	}
-	return *r.GetFieldsItem.Mode
-}
-
-// NoWrap returns the NoWrap field value, or zero value if nil.
-func (r *FieldsItem) NoWrap() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.NoWrap == nil {
-		return false
-	}
-	return *r.GetFieldsItem.NoWrap
-}
-
-// Properties returns the Properties field as a wrapped type, or nil if not set.
-func (r *FieldsItem) Properties() *FieldsProperties {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Properties == nil {
-		return nil
-	}
-	return &FieldsProperties{r.GetFieldsItem.Properties}
-}
-
-// Required returns the Required field value, or zero value if nil.
-func (r *FieldsItem) Required() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Required == nil {
-		return false
-	}
-	return *r.GetFieldsItem.Required
-}
-
-// Unique returns the Unique field value, or zero value if nil.
-func (r *FieldsItem) Unique() bool {
-	if r == nil || r.GetFieldsItem == nil || r.GetFieldsItem.Unique == nil {
-		return false
-	}
-	return *r.GetFieldsItem.Unique
-}
-
-
-
-// FieldsProperties wraps GetFieldsItem_Properties with convenience methods.
-// All fields from GetFieldsItem_Properties are accessible via embedding.
-type FieldsProperties struct {
-	*generated.GetFieldsItem_Properties
-}
-
-// Abbreviate returns the Abbreviate field value, or zero value if nil.
-func (r *FieldsProperties) Abbreviate() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Abbreviate == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.Abbreviate
-}
-
-// AllowHTML returns the AllowHTML field value, or zero value if nil.
-func (r *FieldsProperties) AllowHTML() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AllowHTML == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.AllowHTML
-}
-
-// AllowMentions returns the AllowMentions field value, or zero value if nil.
-func (r *FieldsProperties) AllowMentions() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AllowMentions == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.AllowMentions
-}
-
-// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
-func (r *FieldsProperties) AllowNewChoices() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AllowNewChoices == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.AllowNewChoices
-}
-
-// AppearsAs returns the AppearsAs field value, or zero value if nil.
-func (r *FieldsProperties) AppearsAs() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AppearsAs == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.AppearsAs
-}
-
-// AppendOnly returns the AppendOnly field value, or zero value if nil.
-func (r *FieldsProperties) AppendOnly() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AppendOnly == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.AppendOnly
-}
-
-// AutoSave returns the AutoSave field value, or zero value if nil.
-func (r *FieldsProperties) AutoSave() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.AutoSave == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.AutoSave
-}
-
-// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
-func (r *FieldsProperties) BlankIsZero() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.BlankIsZero == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.BlankIsZero
-}
-
-// CarryChoices returns the CarryChoices field value, or zero value if nil.
-func (r *FieldsProperties) CarryChoices() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CarryChoices == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.CarryChoices
-}
-
-// Choices returns the Choices field value, or nil if not set.
-func (r *FieldsProperties) Choices() []string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Choices == nil {
-		return nil
-	}
-	return *r.GetFieldsItem_Properties.Choices
-}
-
-// ChoicesLuid returns the ChoicesLuid field value, or nil if not set.
-func (r *FieldsProperties) ChoicesLuid() []string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.ChoicesLuid == nil {
-		return nil
-	}
-	return *r.GetFieldsItem_Properties.ChoicesLuid
-}
-
-// CommaStart returns the CommaStart field value, or zero value if nil.
-func (r *FieldsProperties) CommaStart() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CommaStart == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.CommaStart
-}
-
-// Comments returns the Comments field value, or zero value if nil.
-func (r *FieldsProperties) Comments() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Comments == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.Comments
-}
-
-// CompositeFields returns the CompositeFields field as wrapped types, or nil if not set.
-func (r *FieldsProperties) CompositeFields() []*FieldsPropertiesCompositeFieldsItem {
-	if r == nil || r.GetFieldsItem_Properties == nil {
-		return nil
-	}
-	if r.GetFieldsItem_Properties.CompositeFields == nil {
-		return nil
-	}
-	items := make([]*FieldsPropertiesCompositeFieldsItem, len(*r.GetFieldsItem_Properties.CompositeFields))
-	for i := range *r.GetFieldsItem_Properties.CompositeFields {
-		items[i] = &FieldsPropertiesCompositeFieldsItem{&(*r.GetFieldsItem_Properties.CompositeFields)[i]}
-	}
-	return items
-}
-
-// CoverText returns the CoverText field value, or zero value if nil.
-func (r *FieldsProperties) CoverText() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CoverText == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.CoverText
-}
-
-// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
-func (r *FieldsProperties) CurrencyFormat() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CurrencyFormat == nil {
-		return ""
-	}
-	return string(*r.GetFieldsItem_Properties.CurrencyFormat)
-}
-
-// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
-func (r *FieldsProperties) CurrencySymbol() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.CurrencySymbol == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.CurrencySymbol
-}
-
-// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
-func (r *FieldsProperties) DecimalPlaces() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DecimalPlaces == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.DecimalPlaces
-}
-
-// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
-func (r *FieldsProperties) DefaultCountryCode() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultCountryCode == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DefaultCountryCode
-}
-
-// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
-func (r *FieldsProperties) DefaultDomain() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultDomain == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DefaultDomain
-}
-
-// DefaultKind returns the DefaultKind field value, or zero value if nil.
-func (r *FieldsProperties) DefaultKind() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultKind == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DefaultKind
-}
-
-// DefaultToday returns the DefaultToday field value, or zero value if nil.
-func (r *FieldsProperties) DefaultToday() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultToday == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DefaultToday
-}
-
-// DefaultValue returns the DefaultValue field value, or zero value if nil.
-func (r *FieldsProperties) DefaultValue() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultValue == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DefaultValue
-}
-
-// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
-func (r *FieldsProperties) DefaultValueLuid() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DefaultValueLuid == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.DefaultValueLuid
-}
-
-// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
-func (r *FieldsProperties) DisplayAsLink() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayAsLink == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayAsLink
-}
-
-// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
-func (r *FieldsProperties) DisplayCheckboxAsText() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayCheckboxAsText == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayCheckboxAsText
-}
-
-// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
-func (r *FieldsProperties) DisplayDayOfWeek() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayDayOfWeek == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayDayOfWeek
-}
-
-// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
-func (r *FieldsProperties) DisplayEmail() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayEmail == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DisplayEmail
-}
-
-// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
-func (r *FieldsProperties) DisplayMonth() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayMonth == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DisplayMonth
-}
-
-// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
-func (r *FieldsProperties) DisplayRelative() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayRelative == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayRelative
-}
-
-// DisplayTime returns the DisplayTime field value, or zero value if nil.
-func (r *FieldsProperties) DisplayTime() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayTime == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayTime
-}
-
-// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
-func (r *FieldsProperties) DisplayTimezone() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayTimezone == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DisplayTimezone
-}
-
-// DisplayUser returns the DisplayUser field value, or zero value if nil.
-func (r *FieldsProperties) DisplayUser() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DisplayUser == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.DisplayUser
-}
-
-// DoesAverage returns the DoesAverage field value, or zero value if nil.
-func (r *FieldsProperties) DoesAverage() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DoesAverage == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DoesAverage
-}
-
-// DoesTotal returns the DoesTotal field value, or zero value if nil.
-func (r *FieldsProperties) DoesTotal() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DoesTotal == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.DoesTotal
-}
-
-// DurationField returns the DurationField field value, or zero value if nil.
-func (r *FieldsProperties) DurationField() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.DurationField == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.DurationField
-}
-
-// Exact returns the Exact field value, or zero value if nil.
-func (r *FieldsProperties) Exact() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Exact == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.Exact
-}
-
-// ForeignKey returns the ForeignKey field value, or zero value if nil.
-func (r *FieldsProperties) ForeignKey() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.ForeignKey == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.ForeignKey
-}
-
-// Format returns the Format field value, or zero value if nil.
-func (r *FieldsProperties) Format() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Format == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.Format
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *FieldsProperties) Formula() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Formula == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.Formula
-}
-
-// HasExtension returns the HasExtension field value, or zero value if nil.
-func (r *FieldsProperties) HasExtension() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.HasExtension == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.HasExtension
-}
-
-// Hours24 returns the Hours24 field value, or zero value if nil.
-func (r *FieldsProperties) Hours24() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Hours24 == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.Hours24
-}
-
-// LinkText returns the LinkText field value, or zero value if nil.
-func (r *FieldsProperties) LinkText() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.LinkText == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.LinkText
-}
-
-// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
-func (r *FieldsProperties) LookupReferenceFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.LookupReferenceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.LookupReferenceFieldId
-}
-
-// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
-func (r *FieldsProperties) LookupTargetFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.LookupTargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.LookupTargetFieldId
-}
-
-// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
-func (r *FieldsProperties) MasterChoiceFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.MasterChoiceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.MasterChoiceFieldId
-}
-
-// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
-func (r *FieldsProperties) MasterChoiceTableId() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.MasterChoiceTableId == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.MasterChoiceTableId
-}
-
-// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
-func (r *FieldsProperties) MasterTableTag() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.MasterTableTag == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.MasterTableTag
-}
-
-// MaxLength returns the MaxLength field value, or zero value if nil.
-func (r *FieldsProperties) MaxLength() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.MaxLength == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.MaxLength
-}
-
-// MaxVersions returns the MaxVersions field value, or zero value if nil.
-func (r *FieldsProperties) MaxVersions() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.MaxVersions == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.MaxVersions
-}
-
-// NumLines returns the NumLines field value, or zero value if nil.
-func (r *FieldsProperties) NumLines() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.NumLines == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.NumLines
-}
-
-// NumberFormat returns the NumberFormat field value, or zero value if nil.
-func (r *FieldsProperties) NumberFormat() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.NumberFormat == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.NumberFormat
-}
-
-// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
-func (r *FieldsProperties) ParentFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.ParentFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.ParentFieldId
-}
-
-// PostTempToken returns the PostTempToken field value, or zero value if nil.
-func (r *FieldsProperties) PostTempToken() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.PostTempToken == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.PostTempToken
-}
-
-// SeeVersions returns the SeeVersions field value, or zero value if nil.
-func (r *FieldsProperties) SeeVersions() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SeeVersions == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.SeeVersions
-}
-
-// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
-func (r *FieldsProperties) SnapFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SnapFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.SnapFieldId
-}
-
-// SortAlpha returns the SortAlpha field value, or zero value if nil.
-func (r *FieldsProperties) SortAlpha() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SortAlpha == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.SortAlpha
-}
-
-// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
-func (r *FieldsProperties) SortAsGiven() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SortAsGiven == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.SortAsGiven
-}
-
-// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
-func (r *FieldsProperties) SourceFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SourceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.SourceFieldId
-}
-
-// StartField returns the StartField field value, or zero value if nil.
-func (r *FieldsProperties) StartField() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.StartField == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.StartField
-}
-
-// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
-func (r *FieldsProperties) SummaryFunction() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SummaryFunction == nil {
-		return ""
-	}
-	return string(*r.GetFieldsItem_Properties.SummaryFunction)
-}
-
-// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
-func (r *FieldsProperties) SummaryReferenceFieldId() int64 {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SummaryReferenceFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.SummaryReferenceFieldId
-}
-
-// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
-func (r *FieldsProperties) SummaryTargetFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.SummaryTargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.SummaryTargetFieldId
-}
-
-// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
-func (r *FieldsProperties) TargetFieldId() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.TargetFieldId == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.TargetFieldId
-}
-
-// TargetTableId returns the TargetTableId field value, or zero value if nil.
-func (r *FieldsProperties) TargetTableId() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.TargetTableId == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.TargetTableId
-}
-
-// TargetTableName returns the TargetTableName field value, or zero value if nil.
-func (r *FieldsProperties) TargetTableName() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.TargetTableName == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.TargetTableName
-}
-
-// Units returns the Units field value, or zero value if nil.
-func (r *FieldsProperties) Units() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Units == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.Units
-}
-
-// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
-func (r *FieldsProperties) UseI18NFormat() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.UseI18NFormat == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.UseI18NFormat
-}
-
-// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
-func (r *FieldsProperties) UseNewWindow() bool {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.UseNewWindow == nil {
-		return false
-	}
-	return *r.GetFieldsItem_Properties.UseNewWindow
-}
-
-// VersionMode returns the VersionMode field value as a string, or empty string if nil.
-func (r *FieldsProperties) VersionMode() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.VersionMode == nil {
-		return ""
-	}
-	return string(*r.GetFieldsItem_Properties.VersionMode)
-}
-
-// Width returns the Width field value, or zero value if nil.
-func (r *FieldsProperties) Width() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.Width == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.Width
-}
-
-// WorkWeek returns the WorkWeek field value, or zero value if nil.
-func (r *FieldsProperties) WorkWeek() int {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.WorkWeek == nil {
-		return 0
-	}
-	return *r.GetFieldsItem_Properties.WorkWeek
-}
-
-// XmlTag returns the XmlTag field value, or zero value if nil.
-func (r *FieldsProperties) XmlTag() string {
-	if r == nil || r.GetFieldsItem_Properties == nil || r.GetFieldsItem_Properties.XmlTag == nil {
-		return ""
-	}
-	return *r.GetFieldsItem_Properties.XmlTag
-}
-
-
-
-// FieldsPropertiesCompositeFieldsItem wraps GetFieldsItem_Properties_CompositeFields_Item with convenience methods.
-// All fields from GetFieldsItem_Properties_CompositeFields_Item are accessible via embedding.
-type FieldsPropertiesCompositeFieldsItem struct {
-	*generated.GetFieldsItem_Properties_CompositeFields_Item
-}
-
-
-
-// FieldsUsageItem wraps GetFieldsUsageItem with convenience methods.
-// All fields from GetFieldsUsageItem are accessible via embedding.
-type FieldsUsageItem struct {
-	*generated.GetFieldsUsageItem
-}
-
-
-
-// FieldsUsageField wraps GetFieldsUsageItem_Field with convenience methods.
-// All fields from GetFieldsUsageItem_Field are accessible via embedding.
-type FieldsUsageField struct {
-	*generated.GetFieldsUsageItem_Field
-}
-
-// Id returns the Id field value.
-func (r *FieldsUsageField) Id() int {
-	if r == nil || r.GetFieldsUsageItem_Field == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Field.Id
-}
-
-// Name returns the Name field value.
-func (r *FieldsUsageField) Name() string {
-	if r == nil || r.GetFieldsUsageItem_Field == nil {
-		return ""
-	}
-	return r.GetFieldsUsageItem_Field.Name
-}
-
-// Type returns the Type field value.
-func (r *FieldsUsageField) Type() string {
-	if r == nil || r.GetFieldsUsageItem_Field == nil {
-		return ""
-	}
-	return r.GetFieldsUsageItem_Field.Type
-}
-
-
-
-// FieldsUsageUsage wraps GetFieldsUsageItem_Usage with convenience methods.
-// All fields from GetFieldsUsageItem_Usage are accessible via embedding.
-type FieldsUsageUsage struct {
-	*generated.GetFieldsUsageItem_Usage
-}
-
-
-
-// FieldsUsageUsageActions wraps GetFieldsUsageItem_Usage_Actions with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Actions are accessible via embedding.
-type FieldsUsageUsageActions struct {
-	*generated.GetFieldsUsageItem_Usage_Actions
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageActions) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Actions == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Actions.Count
-}
-
-
-
-// FieldsUsageUsageAppHomePages wraps GetFieldsUsageItem_Usage_AppHomePages with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_AppHomePages are accessible via embedding.
-type FieldsUsageUsageAppHomePages struct {
-	*generated.GetFieldsUsageItem_Usage_AppHomePages
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageAppHomePages) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_AppHomePages == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_AppHomePages.Count
-}
-
-
-
-// FieldsUsageUsageDefaultReports wraps GetFieldsUsageItem_Usage_DefaultReports with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_DefaultReports are accessible via embedding.
-type FieldsUsageUsageDefaultReports struct {
-	*generated.GetFieldsUsageItem_Usage_DefaultReports
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageDefaultReports) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_DefaultReports == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_DefaultReports.Count
-}
-
-
-
-// FieldsUsageUsageExactForms wraps GetFieldsUsageItem_Usage_ExactForms with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_ExactForms are accessible via embedding.
-type FieldsUsageUsageExactForms struct {
-	*generated.GetFieldsUsageItem_Usage_ExactForms
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageExactForms) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_ExactForms == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_ExactForms.Count
-}
-
-
-
-// FieldsUsageUsageFields wraps GetFieldsUsageItem_Usage_Fields with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Fields are accessible via embedding.
-type FieldsUsageUsageFields struct {
-	*generated.GetFieldsUsageItem_Usage_Fields
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageFields) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Fields == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Fields.Count
-}
-
-
-
-// FieldsUsageUsageForms wraps GetFieldsUsageItem_Usage_Forms with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Forms are accessible via embedding.
-type FieldsUsageUsageForms struct {
-	*generated.GetFieldsUsageItem_Usage_Forms
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageForms) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Forms == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Forms.Count
-}
-
-
-
-// FieldsUsageUsageNotifications wraps GetFieldsUsageItem_Usage_Notifications with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Notifications are accessible via embedding.
-type FieldsUsageUsageNotifications struct {
-	*generated.GetFieldsUsageItem_Usage_Notifications
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageNotifications) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Notifications == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Notifications.Count
-}
-
-
-
-// FieldsUsageUsagePersonalReports wraps GetFieldsUsageItem_Usage_PersonalReports with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_PersonalReports are accessible via embedding.
-type FieldsUsageUsagePersonalReports struct {
-	*generated.GetFieldsUsageItem_Usage_PersonalReports
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsagePersonalReports) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_PersonalReports == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_PersonalReports.Count
-}
-
-
-
-// FieldsUsageUsagePipelines wraps GetFieldsUsageItem_Usage_Pipelines with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Pipelines are accessible via embedding.
-type FieldsUsageUsagePipelines struct {
-	*generated.GetFieldsUsageItem_Usage_Pipelines
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsagePipelines) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Pipelines == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Pipelines.Count
-}
-
-
-
-// FieldsUsageUsageRelationships wraps GetFieldsUsageItem_Usage_Relationships with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Relationships are accessible via embedding.
-type FieldsUsageUsageRelationships struct {
-	*generated.GetFieldsUsageItem_Usage_Relationships
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageRelationships) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Relationships == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Relationships.Count
-}
-
-
-
-// FieldsUsageUsageReminders wraps GetFieldsUsageItem_Usage_Reminders with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Reminders are accessible via embedding.
-type FieldsUsageUsageReminders struct {
-	*generated.GetFieldsUsageItem_Usage_Reminders
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageReminders) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Reminders == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Reminders.Count
-}
-
-
-
-// FieldsUsageUsageReports wraps GetFieldsUsageItem_Usage_Reports with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Reports are accessible via embedding.
-type FieldsUsageUsageReports struct {
-	*generated.GetFieldsUsageItem_Usage_Reports
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageReports) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Reports == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Reports.Count
-}
-
-
-
-// FieldsUsageUsageRoles wraps GetFieldsUsageItem_Usage_Roles with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Roles are accessible via embedding.
-type FieldsUsageUsageRoles struct {
-	*generated.GetFieldsUsageItem_Usage_Roles
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageRoles) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Roles == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Roles.Count
-}
-
-
-
-// FieldsUsageUsageWebhooks wraps GetFieldsUsageItem_Usage_Webhooks with convenience methods.
-// All fields from GetFieldsUsageItem_Usage_Webhooks are accessible via embedding.
-type FieldsUsageUsageWebhooks struct {
-	*generated.GetFieldsUsageItem_Usage_Webhooks
-}
-
-// Count returns the Count field value.
-func (r *FieldsUsageUsageWebhooks) Count() int {
-	if r == nil || r.GetFieldsUsageItem_Usage_Webhooks == nil {
-		return 0
-	}
-	return r.GetFieldsUsageItem_Usage_Webhooks.Count
-}
-
 
 
-// RelationshipsResult wraps GetRelationshipsData with convenience methods.
-// All fields from GetRelationshipsData are accessible via embedding.
+// RelationshipsResult wraps GetRelationshipsResponse with convenience methods.
 type RelationshipsResult struct {
-	*generated.GetRelationshipsData
+	resp *generated.GetRelationshipsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RelationshipsResult) Raw() *generated.GetRelationshipsResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Metadata returns the Metadata field as a wrapped type, or nil if not set.
 func (r *RelationshipsResult) Metadata() *RelationshipsMetadata {
-	if r == nil || r.GetRelationshipsData == nil || r.GetRelationshipsData.Metadata == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Metadata == nil {
 		return nil
 	}
-	return &RelationshipsMetadata{r.GetRelationshipsData.Metadata}
+	return &RelationshipsMetadata{r.resp.JSON200.Metadata}
 }
 
 // Relationships returns the Relationships field as wrapped types, or nil if not set.
 func (r *RelationshipsResult) Relationships() []*RelationshipsRelationshipsItem {
-	if r == nil || r.GetRelationshipsData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	items := make([]*RelationshipsRelationshipsItem, len(r.GetRelationshipsData.Relationships))
-	for i := range r.GetRelationshipsData.Relationships {
-		items[i] = &RelationshipsRelationshipsItem{&r.GetRelationshipsData.Relationships[i]}
+	items := make([]*RelationshipsRelationshipsItem, len(r.resp.JSON200.Relationships))
+	for i := range r.resp.JSON200.Relationships {
+		items[i] = &RelationshipsRelationshipsItem{&r.resp.JSON200.Relationships[i]}
 	}
 	return items
 }
 
 
 
-// RelationshipsMetadata wraps GetRelationshipsData_Metadata with convenience methods.
-// All fields from GetRelationshipsData_Metadata are accessible via embedding.
-type RelationshipsMetadata struct {
-	*generated.GetRelationshipsData_Metadata
-}
-
-// NumRelationships returns the NumRelationships field value, or zero value if nil.
-func (r *RelationshipsMetadata) NumRelationships() int {
-	if r == nil || r.GetRelationshipsData_Metadata == nil || r.GetRelationshipsData_Metadata.NumRelationships == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Metadata.NumRelationships
-}
-
-// Skip returns the Skip field value, or zero value if nil.
-func (r *RelationshipsMetadata) Skip() int {
-	if r == nil || r.GetRelationshipsData_Metadata == nil || r.GetRelationshipsData_Metadata.Skip == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Metadata.Skip
-}
-
-// TotalRelationships returns the TotalRelationships field value, or zero value if nil.
-func (r *RelationshipsMetadata) TotalRelationships() int {
-	if r == nil || r.GetRelationshipsData_Metadata == nil || r.GetRelationshipsData_Metadata.TotalRelationships == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Metadata.TotalRelationships
-}
-
-
-
-// RelationshipsRelationshipsForeignKeyField wraps GetRelationshipsData_Relationships_ForeignKeyField with convenience methods.
-// All fields from GetRelationshipsData_Relationships_ForeignKeyField are accessible via embedding.
-type RelationshipsRelationshipsForeignKeyField struct {
-	*generated.GetRelationshipsData_Relationships_ForeignKeyField
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RelationshipsRelationshipsForeignKeyField) Id() int {
-	if r == nil || r.GetRelationshipsData_Relationships_ForeignKeyField == nil || r.GetRelationshipsData_Relationships_ForeignKeyField.Id == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Relationships_ForeignKeyField.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *RelationshipsRelationshipsForeignKeyField) Label() string {
-	if r == nil || r.GetRelationshipsData_Relationships_ForeignKeyField == nil || r.GetRelationshipsData_Relationships_ForeignKeyField.Label == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_ForeignKeyField.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *RelationshipsRelationshipsForeignKeyField) Type() string {
-	if r == nil || r.GetRelationshipsData_Relationships_ForeignKeyField == nil || r.GetRelationshipsData_Relationships_ForeignKeyField.Type == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_ForeignKeyField.Type
-}
-
-
-
-// RelationshipsRelationshipsItem wraps GetRelationshipsData_Relationships_Item with convenience methods.
-// All fields from GetRelationshipsData_Relationships_Item are accessible via embedding.
-type RelationshipsRelationshipsItem struct {
-	*generated.GetRelationshipsData_Relationships_Item
-}
-
-// ChildTableId returns the ChildTableId field value.
-func (r *RelationshipsRelationshipsItem) ChildTableId() string {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return ""
-	}
-	return r.GetRelationshipsData_Relationships_Item.ChildTableId
-}
-
-// ForeignKeyField returns the ForeignKeyField field as a wrapped type, or nil if not set.
-func (r *RelationshipsRelationshipsItem) ForeignKeyField() *RelationshipsRelationshipsForeignKeyField {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil || r.GetRelationshipsData_Relationships_Item.ForeignKeyField == nil {
-		return nil
-	}
-	return &RelationshipsRelationshipsForeignKeyField{r.GetRelationshipsData_Relationships_Item.ForeignKeyField}
-}
-
-// Id returns the Id field value.
-func (r *RelationshipsRelationshipsItem) Id() int {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return 0
-	}
-	return r.GetRelationshipsData_Relationships_Item.Id
-}
-
-// IsCrossApp returns the IsCrossApp field value.
-func (r *RelationshipsRelationshipsItem) IsCrossApp() bool {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return false
-	}
-	return r.GetRelationshipsData_Relationships_Item.IsCrossApp
-}
-
-// LookupFields returns the LookupFields field as wrapped types, or nil if not set.
-func (r *RelationshipsRelationshipsItem) LookupFields() []*RelationshipsRelationshipsLookupFieldsItem {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return nil
-	}
-	if r.GetRelationshipsData_Relationships_Item.LookupFields == nil {
-		return nil
-	}
-	items := make([]*RelationshipsRelationshipsLookupFieldsItem, len(*r.GetRelationshipsData_Relationships_Item.LookupFields))
-	for i := range *r.GetRelationshipsData_Relationships_Item.LookupFields {
-		items[i] = &RelationshipsRelationshipsLookupFieldsItem{&(*r.GetRelationshipsData_Relationships_Item.LookupFields)[i]}
-	}
-	return items
-}
-
-// ParentTableId returns the ParentTableId field value.
-func (r *RelationshipsRelationshipsItem) ParentTableId() string {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return ""
-	}
-	return r.GetRelationshipsData_Relationships_Item.ParentTableId
-}
-
-// SummaryFields returns the SummaryFields field as wrapped types, or nil if not set.
-func (r *RelationshipsRelationshipsItem) SummaryFields() []*RelationshipsRelationshipsSummaryFieldsItem {
-	if r == nil || r.GetRelationshipsData_Relationships_Item == nil {
-		return nil
-	}
-	if r.GetRelationshipsData_Relationships_Item.SummaryFields == nil {
-		return nil
-	}
-	items := make([]*RelationshipsRelationshipsSummaryFieldsItem, len(*r.GetRelationshipsData_Relationships_Item.SummaryFields))
-	for i := range *r.GetRelationshipsData_Relationships_Item.SummaryFields {
-		items[i] = &RelationshipsRelationshipsSummaryFieldsItem{&(*r.GetRelationshipsData_Relationships_Item.SummaryFields)[i]}
-	}
-	return items
-}
-
-
-
-// RelationshipsRelationshipsLookupFieldsItem wraps GetRelationshipsData_Relationships_LookupFields_Item with convenience methods.
-// All fields from GetRelationshipsData_Relationships_LookupFields_Item are accessible via embedding.
-type RelationshipsRelationshipsLookupFieldsItem struct {
-	*generated.GetRelationshipsData_Relationships_LookupFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RelationshipsRelationshipsLookupFieldsItem) Id() int {
-	if r == nil || r.GetRelationshipsData_Relationships_LookupFields_Item == nil || r.GetRelationshipsData_Relationships_LookupFields_Item.Id == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Relationships_LookupFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *RelationshipsRelationshipsLookupFieldsItem) Label() string {
-	if r == nil || r.GetRelationshipsData_Relationships_LookupFields_Item == nil || r.GetRelationshipsData_Relationships_LookupFields_Item.Label == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_LookupFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *RelationshipsRelationshipsLookupFieldsItem) Type() string {
-	if r == nil || r.GetRelationshipsData_Relationships_LookupFields_Item == nil || r.GetRelationshipsData_Relationships_LookupFields_Item.Type == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_LookupFields_Item.Type
-}
-
-
-
-// RelationshipsRelationshipsSummaryFieldsItem wraps GetRelationshipsData_Relationships_SummaryFields_Item with convenience methods.
-// All fields from GetRelationshipsData_Relationships_SummaryFields_Item are accessible via embedding.
-type RelationshipsRelationshipsSummaryFieldsItem struct {
-	*generated.GetRelationshipsData_Relationships_SummaryFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RelationshipsRelationshipsSummaryFieldsItem) Id() int {
-	if r == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item.Id == nil {
-		return 0
-	}
-	return *r.GetRelationshipsData_Relationships_SummaryFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *RelationshipsRelationshipsSummaryFieldsItem) Label() string {
-	if r == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item.Label == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_SummaryFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *RelationshipsRelationshipsSummaryFieldsItem) Type() string {
-	if r == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item == nil || r.GetRelationshipsData_Relationships_SummaryFields_Item.Type == nil {
-		return ""
-	}
-	return *r.GetRelationshipsData_Relationships_SummaryFields_Item.Type
-}
-
-
-
-// ReportResult wraps GetReportData with convenience methods.
-// All fields from GetReportData are accessible via embedding.
+// ReportResult wraps GetReportResponse with convenience methods.
 type ReportResult struct {
-	*generated.GetReportData
+	resp *generated.GetReportResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *ReportResult) Raw() *generated.GetReportResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *ReportResult) Description() string {
-	if r == nil || r.GetReportData == nil || r.GetReportData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.GetReportData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *ReportResult) Id() string {
-	if r == nil || r.GetReportData == nil || r.GetReportData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.GetReportData.Id
+	return *r.resp.JSON200.Id
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *ReportResult) Name() string {
-	if r == nil || r.GetReportData == nil || r.GetReportData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.GetReportData.Name
+	return *r.resp.JSON200.Name
 }
 
 // OwnerId returns the OwnerId field value, or zero value if nil.
 func (r *ReportResult) OwnerId() int {
-	if r == nil || r.GetReportData == nil || r.GetReportData.OwnerId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.OwnerId == nil {
 		return 0
 	}
-	return *r.GetReportData.OwnerId
+	return *r.resp.JSON200.OwnerId
 }
 
 // Query returns the Query field as a wrapped type, or nil if not set.
 func (r *ReportResult) Query() *ReportQuery {
-	if r == nil || r.GetReportData == nil || r.GetReportData.Query == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Query == nil {
 		return nil
 	}
-	return &ReportQuery{r.GetReportData.Query}
+	return &ReportQuery{r.resp.JSON200.Query}
 }
 
 // Type returns the Type field value, or zero value if nil.
 func (r *ReportResult) Type() string {
-	if r == nil || r.GetReportData == nil || r.GetReportData.Type == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Type == nil {
 		return ""
 	}
-	return *r.GetReportData.Type
+	return *r.resp.JSON200.Type
 }
 
 // UsedCount returns the UsedCount field value, or zero value if nil.
 func (r *ReportResult) UsedCount() int {
-	if r == nil || r.GetReportData == nil || r.GetReportData.UsedCount == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.UsedCount == nil {
 		return 0
 	}
-	return *r.GetReportData.UsedCount
+	return *r.resp.JSON200.UsedCount
 }
 
 // UsedLast returns the UsedLast field value, or zero value if nil.
 func (r *ReportResult) UsedLast() string {
-	if r == nil || r.GetReportData == nil || r.GetReportData.UsedLast == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.UsedLast == nil {
 		return ""
 	}
-	return *r.GetReportData.UsedLast
+	return *r.resp.JSON200.UsedLast
 }
 
 
 
-// ReportQuery wraps GetReportData_Query with convenience methods.
-// All fields from GetReportData_Query are accessible via embedding.
-type ReportQuery struct {
-	*generated.GetReportData_Query
+// RolesResult wraps GetRolesResponse with convenience methods.
+type RolesResult struct {
+	resp *generated.GetRolesResponse
 }
 
-// Filter returns the Filter field value, or zero value if nil.
-func (r *ReportQuery) Filter() string {
-	if r == nil || r.GetReportData_Query == nil || r.GetReportData_Query.Filter == nil {
-		return ""
-	}
-	return *r.GetReportData_Query.Filter
-}
-
-// FormulaFields returns the FormulaFields field as wrapped types, or nil if not set.
-func (r *ReportQuery) FormulaFields() []*ReportQueryFormulaFieldsItem {
-	if r == nil || r.GetReportData_Query == nil {
+// Raw returns the underlying generated response.
+func (r *RolesResult) Raw() *generated.GetRolesResponse {
+	if r == nil {
 		return nil
 	}
-	if r.GetReportData_Query.FormulaFields == nil {
+	return r.resp
+}
+
+
+
+// SolutionPublicResult wraps GetSolutionPublicResponse with convenience methods.
+type SolutionPublicResult struct {
+	resp *generated.GetSolutionPublicResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *SolutionPublicResult) Raw() *generated.GetSolutionPublicResponse {
+	if r == nil {
 		return nil
 	}
-	items := make([]*ReportQueryFormulaFieldsItem, len(*r.GetReportData_Query.FormulaFields))
-	for i := range *r.GetReportData_Query.FormulaFields {
-		items[i] = &ReportQueryFormulaFieldsItem{&(*r.GetReportData_Query.FormulaFields)[i]}
-	}
-	return items
-}
-
-// TableId returns the TableId field value, or zero value if nil.
-func (r *ReportQuery) TableId() string {
-	if r == nil || r.GetReportData_Query == nil || r.GetReportData_Query.TableId == nil {
-		return ""
-	}
-	return *r.GetReportData_Query.TableId
+	return r.resp
 }
 
 
 
-// ReportQueryFormulaFieldsItem wraps GetReportData_Query_FormulaFields_Item with convenience methods.
-// All fields from GetReportData_Query_FormulaFields_Item are accessible via embedding.
-type ReportQueryFormulaFieldsItem struct {
-	*generated.GetReportData_Query_FormulaFields_Item
+// TableReportsResult wraps GetTableReportsResponse with convenience methods.
+type TableReportsResult struct {
+	resp *generated.GetTableReportsResponse
 }
 
-// DecimalPrecision returns the DecimalPrecision field value, or zero value if nil.
-func (r *ReportQueryFormulaFieldsItem) DecimalPrecision() int {
-	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.DecimalPrecision == nil {
-		return 0
-	}
-	return *r.GetReportData_Query_FormulaFields_Item.DecimalPrecision
-}
-
-// FieldType returns the FieldType field value as a string, or empty string if nil.
-func (r *ReportQueryFormulaFieldsItem) FieldType() string {
-	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.FieldType == nil {
-		return ""
-	}
-	return string(*r.GetReportData_Query_FormulaFields_Item.FieldType)
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *ReportQueryFormulaFieldsItem) Formula() string {
-	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.Formula == nil {
-		return ""
-	}
-	return *r.GetReportData_Query_FormulaFields_Item.Formula
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *ReportQueryFormulaFieldsItem) Id() int {
-	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.Id == nil {
-		return 0
-	}
-	return *r.GetReportData_Query_FormulaFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *ReportQueryFormulaFieldsItem) Label() string {
-	if r == nil || r.GetReportData_Query_FormulaFields_Item == nil || r.GetReportData_Query_FormulaFields_Item.Label == nil {
-		return ""
-	}
-	return *r.GetReportData_Query_FormulaFields_Item.Label
-}
-
-
-
-// RolesItem wraps GetRolesItem with convenience methods.
-// All fields from GetRolesItem are accessible via embedding.
-type RolesItem struct {
-	*generated.GetRolesItem
-}
-
-// Access returns the Access field as a wrapped type, or nil if not set.
-func (r *RolesItem) Access() *RolesAccess {
-	if r == nil || r.GetRolesItem == nil || r.GetRolesItem.Access == nil {
+// Raw returns the underlying generated response.
+func (r *TableReportsResult) Raw() *generated.GetTableReportsResponse {
+	if r == nil {
 		return nil
 	}
-	return &RolesAccess{r.GetRolesItem.Access}
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RolesItem) Id() int {
-	if r == nil || r.GetRolesItem == nil || r.GetRolesItem.Id == nil {
-		return 0
-	}
-	return *r.GetRolesItem.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *RolesItem) Name() string {
-	if r == nil || r.GetRolesItem == nil || r.GetRolesItem.Name == nil {
-		return ""
-	}
-	return *r.GetRolesItem.Name
+	return r.resp
 }
 
 
 
-// RolesAccess wraps GetRolesItem_Access with convenience methods.
-// All fields from GetRolesItem_Access are accessible via embedding.
-type RolesAccess struct {
-	*generated.GetRolesItem_Access
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RolesAccess) Id() int {
-	if r == nil || r.GetRolesItem_Access == nil || r.GetRolesItem_Access.Id == nil {
-		return 0
-	}
-	return *r.GetRolesItem_Access.Id
-}
-
-// Type returns the Type field value as a string, or empty string if nil.
-func (r *RolesAccess) Type() string {
-	if r == nil || r.GetRolesItem_Access == nil || r.GetRolesItem_Access.Type == nil {
-		return ""
-	}
-	return string(*r.GetRolesItem_Access.Type)
-}
-
-
-
-// TableResult wraps GetTableData with convenience methods.
-// All fields from GetTableData are accessible via embedding.
+// TableResult wraps GetTableResponse with convenience methods.
 type TableResult struct {
-	*generated.GetTableData
+	resp *generated.GetTableResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *TableResult) Raw() *generated.GetTableResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Alias returns the Alias field value, or zero value if nil.
 func (r *TableResult) Alias() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Alias == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Alias == nil {
 		return ""
 	}
-	return *r.GetTableData.Alias
+	return *r.resp.JSON200.Alias
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *TableResult) Created() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.GetTableData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DefaultSortFieldId returns the DefaultSortFieldId field value, or zero value if nil.
 func (r *TableResult) DefaultSortFieldId() int {
-	if r == nil || r.GetTableData == nil || r.GetTableData.DefaultSortFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortFieldId == nil {
 		return 0
 	}
-	return *r.GetTableData.DefaultSortFieldId
+	return *r.resp.JSON200.DefaultSortFieldId
 }
 
 // DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
 func (r *TableResult) DefaultSortOrder() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.DefaultSortOrder == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortOrder == nil {
 		return ""
 	}
-	return string(*r.GetTableData.DefaultSortOrder)
+	return string(*r.resp.JSON200.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *TableResult) Description() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.GetTableData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *TableResult) Id() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.GetTableData.Id
+	return *r.resp.JSON200.Id
 }
 
 // KeyFieldId returns the KeyFieldId field value, or zero value if nil.
 func (r *TableResult) KeyFieldId() int {
-	if r == nil || r.GetTableData == nil || r.GetTableData.KeyFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.KeyFieldId == nil {
 		return 0
 	}
-	return *r.GetTableData.KeyFieldId
+	return *r.resp.JSON200.KeyFieldId
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *TableResult) Name() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.GetTableData.Name
+	return *r.resp.JSON200.Name
 }
 
 // NextFieldId returns the NextFieldId field value, or zero value if nil.
 func (r *TableResult) NextFieldId() int {
-	if r == nil || r.GetTableData == nil || r.GetTableData.NextFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextFieldId == nil {
 		return 0
 	}
-	return *r.GetTableData.NextFieldId
+	return *r.resp.JSON200.NextFieldId
 }
 
 // NextRecordId returns the NextRecordId field value, or zero value if nil.
 func (r *TableResult) NextRecordId() int {
-	if r == nil || r.GetTableData == nil || r.GetTableData.NextRecordId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextRecordId == nil {
 		return 0
 	}
-	return *r.GetTableData.NextRecordId
+	return *r.resp.JSON200.NextRecordId
 }
 
 // PluralRecordName returns the PluralRecordName field value, or zero value if nil.
 func (r *TableResult) PluralRecordName() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.PluralRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.PluralRecordName == nil {
 		return ""
 	}
-	return *r.GetTableData.PluralRecordName
+	return *r.resp.JSON200.PluralRecordName
 }
 
 // SingleRecordName returns the SingleRecordName field value, or zero value if nil.
 func (r *TableResult) SingleRecordName() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.SingleRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SingleRecordName == nil {
 		return ""
 	}
-	return *r.GetTableData.SingleRecordName
+	return *r.resp.JSON200.SingleRecordName
 }
 
 // SizeLimit returns the SizeLimit field value, or zero value if nil.
 func (r *TableResult) SizeLimit() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.SizeLimit == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SizeLimit == nil {
 		return ""
 	}
-	return *r.GetTableData.SizeLimit
+	return *r.resp.JSON200.SizeLimit
 }
 
 // SpaceRemaining returns the SpaceRemaining field value, or zero value if nil.
 func (r *TableResult) SpaceRemaining() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.SpaceRemaining == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceRemaining == nil {
 		return ""
 	}
-	return *r.GetTableData.SpaceRemaining
+	return *r.resp.JSON200.SpaceRemaining
 }
 
 // SpaceUsed returns the SpaceUsed field value, or zero value if nil.
 func (r *TableResult) SpaceUsed() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.SpaceUsed == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceUsed == nil {
 		return ""
 	}
-	return *r.GetTableData.SpaceUsed
+	return *r.resp.JSON200.SpaceUsed
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *TableResult) Updated() string {
-	if r == nil || r.GetTableData == nil || r.GetTableData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.GetTableData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 
 
-// TableReportsItem wraps GetTableReportsItem with convenience methods.
-// All fields from GetTableReportsItem are accessible via embedding.
-type TableReportsItem struct {
-	*generated.GetTableReportsItem
-}
-
-// Description returns the Description field value, or zero value if nil.
-func (r *TableReportsItem) Description() string {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Description == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem.Description
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *TableReportsItem) Id() string {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Id == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *TableReportsItem) Name() string {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Name == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem.Name
-}
-
-// OwnerId returns the OwnerId field value, or zero value if nil.
-func (r *TableReportsItem) OwnerId() int {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.OwnerId == nil {
-		return 0
-	}
-	return *r.GetTableReportsItem.OwnerId
-}
-
-// Query returns the Query field as a wrapped type, or nil if not set.
-func (r *TableReportsItem) Query() *TableReportsQuery {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Query == nil {
-		return nil
-	}
-	return &TableReportsQuery{r.GetTableReportsItem.Query}
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *TableReportsItem) Type() string {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Type == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem.Type
-}
-
-// UsedCount returns the UsedCount field value, or zero value if nil.
-func (r *TableReportsItem) UsedCount() int {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.UsedCount == nil {
-		return 0
-	}
-	return *r.GetTableReportsItem.UsedCount
-}
-
-// UsedLast returns the UsedLast field value, or zero value if nil.
-func (r *TableReportsItem) UsedLast() string {
-	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.UsedLast == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem.UsedLast
-}
-
-
-
-// TableReportsQuery wraps GetTableReportsItem_Query with convenience methods.
-// All fields from GetTableReportsItem_Query are accessible via embedding.
-type TableReportsQuery struct {
-	*generated.GetTableReportsItem_Query
-}
-
-// Filter returns the Filter field value, or zero value if nil.
-func (r *TableReportsQuery) Filter() string {
-	if r == nil || r.GetTableReportsItem_Query == nil || r.GetTableReportsItem_Query.Filter == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem_Query.Filter
-}
-
-// FormulaFields returns the FormulaFields field as wrapped types, or nil if not set.
-func (r *TableReportsQuery) FormulaFields() []*TableReportsQueryFormulaFieldsItem {
-	if r == nil || r.GetTableReportsItem_Query == nil {
-		return nil
-	}
-	if r.GetTableReportsItem_Query.FormulaFields == nil {
-		return nil
-	}
-	items := make([]*TableReportsQueryFormulaFieldsItem, len(*r.GetTableReportsItem_Query.FormulaFields))
-	for i := range *r.GetTableReportsItem_Query.FormulaFields {
-		items[i] = &TableReportsQueryFormulaFieldsItem{&(*r.GetTableReportsItem_Query.FormulaFields)[i]}
-	}
-	return items
-}
-
-// TableId returns the TableId field value, or zero value if nil.
-func (r *TableReportsQuery) TableId() string {
-	if r == nil || r.GetTableReportsItem_Query == nil || r.GetTableReportsItem_Query.TableId == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem_Query.TableId
-}
-
-
-
-// TableReportsQueryFormulaFieldsItem wraps GetTableReportsItem_Query_FormulaFields_Item with convenience methods.
-// All fields from GetTableReportsItem_Query_FormulaFields_Item are accessible via embedding.
-type TableReportsQueryFormulaFieldsItem struct {
-	*generated.GetTableReportsItem_Query_FormulaFields_Item
-}
-
-// DecimalPrecision returns the DecimalPrecision field value, or zero value if nil.
-func (r *TableReportsQueryFormulaFieldsItem) DecimalPrecision() int {
-	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.DecimalPrecision == nil {
-		return 0
-	}
-	return *r.GetTableReportsItem_Query_FormulaFields_Item.DecimalPrecision
-}
-
-// FieldType returns the FieldType field value as a string, or empty string if nil.
-func (r *TableReportsQueryFormulaFieldsItem) FieldType() string {
-	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.FieldType == nil {
-		return ""
-	}
-	return string(*r.GetTableReportsItem_Query_FormulaFields_Item.FieldType)
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *TableReportsQueryFormulaFieldsItem) Formula() string {
-	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.Formula == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem_Query_FormulaFields_Item.Formula
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *TableReportsQueryFormulaFieldsItem) Id() int {
-	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.Id == nil {
-		return 0
-	}
-	return *r.GetTableReportsItem_Query_FormulaFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *TableReportsQueryFormulaFieldsItem) Label() string {
-	if r == nil || r.GetTableReportsItem_Query_FormulaFields_Item == nil || r.GetTableReportsItem_Query_FormulaFields_Item.Label == nil {
-		return ""
-	}
-	return *r.GetTableReportsItem_Query_FormulaFields_Item.Label
-}
-
-
-
-// TempTokenDBIDResult wraps GetTempTokenDBIDData with convenience methods.
-// All fields from GetTempTokenDBIDData are accessible via embedding.
+// TempTokenDBIDResult wraps GetTempTokenDBIDResponse with convenience methods.
 type TempTokenDBIDResult struct {
-	*generated.GetTempTokenDBIDData
+	resp *generated.GetTempTokenDBIDResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *TempTokenDBIDResult) Raw() *generated.GetTempTokenDBIDResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // TemporaryAuthorization returns the TemporaryAuthorization field value, or zero value if nil.
 func (r *TempTokenDBIDResult) TemporaryAuthorization() string {
-	if r == nil || r.GetTempTokenDBIDData == nil || r.GetTempTokenDBIDData.TemporaryAuthorization == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TemporaryAuthorization == nil {
 		return ""
 	}
-	return *r.GetTempTokenDBIDData.TemporaryAuthorization
+	return *r.resp.JSON200.TemporaryAuthorization
 }
 
 
 
-// TrusteesItem wraps GetTrusteesItem with convenience methods.
-// All fields from GetTrusteesItem are accessible via embedding.
-type TrusteesItem struct {
-	*generated.GetTrusteesItem
+// TrusteesResult wraps GetTrusteesResponse with convenience methods.
+type TrusteesResult struct {
+	resp *generated.GetTrusteesResponse
 }
 
-// Id returns the Id field value.
-func (r *TrusteesItem) Id() string {
-	if r == nil || r.GetTrusteesItem == nil {
-		return ""
+// Raw returns the underlying generated response.
+func (r *TrusteesResult) Raw() *generated.GetTrusteesResponse {
+	if r == nil {
+		return nil
 	}
-	return r.GetTrusteesItem.Id
-}
-
-// RoleId returns the RoleId field value.
-func (r *TrusteesItem) RoleId() int {
-	if r == nil || r.GetTrusteesItem == nil {
-		return 0
-	}
-	return r.GetTrusteesItem.RoleId
+	return r.resp
 }
 
 
 
-// UsersResult wraps GetUsersData with convenience methods.
-// All fields from GetUsersData are accessible via embedding.
+// UsersResult wraps GetUsersResponse with convenience methods.
 type UsersResult struct {
-	*generated.GetUsersData
+	resp *generated.GetUsersResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UsersResult) Raw() *generated.GetUsersResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Users returns the Users field as wrapped types, or nil if not set.
 func (r *UsersResult) Users() []*UsersUsersItem {
-	if r == nil || r.GetUsersData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	items := make([]*UsersUsersItem, len(r.GetUsersData.Users))
-	for i := range r.GetUsersData.Users {
-		items[i] = &UsersUsersItem{&r.GetUsersData.Users[i]}
+	items := make([]*UsersUsersItem, len(r.resp.JSON200.Users))
+	for i := range r.resp.JSON200.Users {
+		items[i] = &UsersUsersItem{&r.resp.JSON200.Users[i]}
 	}
 	return items
 }
 
 
 
-// UsersMetadata wraps GetUsersData_Metadata with convenience methods.
-// All fields from GetUsersData_Metadata are accessible via embedding.
-type UsersMetadata struct {
-	*generated.GetUsersData_Metadata
-}
-
-// NextPageToken returns the NextPageToken field value.
-func (r *UsersMetadata) NextPageToken() string {
-	if r == nil || r.GetUsersData_Metadata == nil {
-		return ""
-	}
-	return r.GetUsersData_Metadata.NextPageToken
-}
-
-
-
-// UsersUsersItem wraps GetUsersData_Users_Item with convenience methods.
-// All fields from GetUsersData_Users_Item are accessible via embedding.
-type UsersUsersItem struct {
-	*generated.GetUsersData_Users_Item
-}
-
-// EmailAddress returns the EmailAddress field value.
-func (r *UsersUsersItem) EmailAddress() string {
-	if r == nil || r.GetUsersData_Users_Item == nil {
-		return ""
-	}
-	return r.GetUsersData_Users_Item.EmailAddress
-}
-
-// FirstName returns the FirstName field value.
-func (r *UsersUsersItem) FirstName() string {
-	if r == nil || r.GetUsersData_Users_Item == nil {
-		return ""
-	}
-	return r.GetUsersData_Users_Item.FirstName
-}
-
-// HashId returns the HashId field value.
-func (r *UsersUsersItem) HashId() string {
-	if r == nil || r.GetUsersData_Users_Item == nil {
-		return ""
-	}
-	return r.GetUsersData_Users_Item.HashId
-}
-
-// LastName returns the LastName field value.
-func (r *UsersUsersItem) LastName() string {
-	if r == nil || r.GetUsersData_Users_Item == nil {
-		return ""
-	}
-	return r.GetUsersData_Users_Item.LastName
-}
-
-// UserName returns the UserName field value.
-func (r *UsersUsersItem) UserName() string {
-	if r == nil || r.GetUsersData_Users_Item == nil {
-		return ""
-	}
-	return r.GetUsersData_Users_Item.UserName
-}
-
-
-
-// PlatformAnalyticEventSummariesResult wraps PlatformAnalyticEventSummariesData with convenience methods.
-// All fields from PlatformAnalyticEventSummariesData are accessible via embedding.
+// PlatformAnalyticEventSummariesResult wraps PlatformAnalyticEventSummariesResponse with convenience methods.
 type PlatformAnalyticEventSummariesResult struct {
-	*generated.PlatformAnalyticEventSummariesData
+	resp *generated.PlatformAnalyticEventSummariesResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *PlatformAnalyticEventSummariesResult) Raw() *generated.PlatformAnalyticEventSummariesResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// PlatformAnalyticReadsResult wraps PlatformAnalyticReadsData with convenience methods.
-// All fields from PlatformAnalyticReadsData are accessible via embedding.
+// PlatformAnalyticReadsResult wraps PlatformAnalyticReadsResponse with convenience methods.
 type PlatformAnalyticReadsResult struct {
-	*generated.PlatformAnalyticReadsData
+	resp *generated.PlatformAnalyticReadsResponse
 }
 
-
-
-// PlatformAnalyticReadsData wraps PlatformAnalyticReadsData_Data with convenience methods.
-// All fields from PlatformAnalyticReadsData_Data are accessible via embedding.
-type PlatformAnalyticReadsData struct {
-	*generated.PlatformAnalyticReadsData_Data
-}
-
-
-
-// PlatformAnalyticReadsDataDailyDetailedReads wraps PlatformAnalyticReadsData_Data_DailyDetailedReads with convenience methods.
-// All fields from PlatformAnalyticReadsData_Data_DailyDetailedReads are accessible via embedding.
-type PlatformAnalyticReadsDataDailyDetailedReads struct {
-	*generated.PlatformAnalyticReadsData_Data_DailyDetailedReads
-}
-
-
-
-// PlatformAnalyticReadsDataDailyDetailedReadsReads wraps PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads with convenience methods.
-// All fields from PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads are accessible via embedding.
-type PlatformAnalyticReadsDataDailyDetailedReadsReads struct {
-	*generated.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads
-}
-
-// User returns the User field value.
-func (r *PlatformAnalyticReadsDataDailyDetailedReadsReads) User() int {
-	if r == nil || r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads == nil {
-		return 0
+// Raw returns the underlying generated response.
+func (r *PlatformAnalyticReadsResult) Raw() *generated.PlatformAnalyticReadsResponse {
+	if r == nil {
+		return nil
 	}
-	return r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads.User
+	return r.resp
 }
 
 
 
-// PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations wraps PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations with convenience methods.
-// All fields from PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations are accessible via embedding.
-type PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations struct {
-	*generated.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations
-}
-
-// Api returns the Api field value.
-func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Api() int {
-	if r == nil || r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations == nil {
-		return 0
-	}
-	return r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations.Api
-}
-
-// Eoti returns the Eoti field value.
-func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Eoti() int {
-	if r == nil || r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations == nil {
-		return 0
-	}
-	return r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations.Eoti
-}
-
-// Pipelines returns the Pipelines field value.
-func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Pipelines() int {
-	if r == nil || r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations == nil {
-		return 0
-	}
-	return r.PlatformAnalyticReadsData_Data_DailyDetailedReads_Reads_Integrations.Pipelines
-}
-
-
-
-// RecordsModifiedSinceResult wraps RecordsModifiedSinceData with convenience methods.
-// All fields from RecordsModifiedSinceData are accessible via embedding.
+// RecordsModifiedSinceResult wraps RecordsModifiedSinceResponse with convenience methods.
 type RecordsModifiedSinceResult struct {
-	*generated.RecordsModifiedSinceData
+	resp *generated.RecordsModifiedSinceResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RecordsModifiedSinceResult) Raw() *generated.RecordsModifiedSinceResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Changes returns the Changes field as wrapped types, or nil if not set.
 func (r *RecordsModifiedSinceResult) Changes() []*RecordsModifiedSinceChangesItem {
-	if r == nil || r.RecordsModifiedSinceData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.RecordsModifiedSinceData.Changes == nil {
+	if r.resp.JSON200.Changes == nil {
 		return nil
 	}
-	items := make([]*RecordsModifiedSinceChangesItem, len(*r.RecordsModifiedSinceData.Changes))
-	for i := range *r.RecordsModifiedSinceData.Changes {
-		items[i] = &RecordsModifiedSinceChangesItem{&(*r.RecordsModifiedSinceData.Changes)[i]}
+	items := make([]*RecordsModifiedSinceChangesItem, len(*r.resp.JSON200.Changes))
+	for i := range *r.resp.JSON200.Changes {
+		items[i] = &RecordsModifiedSinceChangesItem{&(*r.resp.JSON200.Changes)[i]}
 	}
 	return items
 }
 
 // Count returns the Count field value.
 func (r *RecordsModifiedSinceResult) Count() int {
-	if r == nil || r.RecordsModifiedSinceData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.RecordsModifiedSinceData.Count
+	return r.resp.JSON200.Count
 }
 
 // DeletesTruncated returns the DeletesTruncated field value, or zero value if nil.
 func (r *RecordsModifiedSinceResult) DeletesTruncated() bool {
-	if r == nil || r.RecordsModifiedSinceData == nil || r.RecordsModifiedSinceData.DeletesTruncated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DeletesTruncated == nil {
 		return false
 	}
-	return *r.RecordsModifiedSinceData.DeletesTruncated
+	return *r.resp.JSON200.DeletesTruncated
 }
 
 
 
-// RecordsModifiedSinceChangesItem wraps RecordsModifiedSinceData_Changes_Item with convenience methods.
-// All fields from RecordsModifiedSinceData_Changes_Item are accessible via embedding.
-type RecordsModifiedSinceChangesItem struct {
-	*generated.RecordsModifiedSinceData_Changes_Item
-}
-
-// ChangeType returns the ChangeType field value as a string, or empty string if nil.
-func (r *RecordsModifiedSinceChangesItem) ChangeType() string {
-	if r == nil || r.RecordsModifiedSinceData_Changes_Item == nil || r.RecordsModifiedSinceData_Changes_Item.ChangeType == nil {
-		return ""
-	}
-	return string(*r.RecordsModifiedSinceData_Changes_Item.ChangeType)
-}
-
-// RecordId returns the RecordId field value, or zero value if nil.
-func (r *RecordsModifiedSinceChangesItem) RecordId() int {
-	if r == nil || r.RecordsModifiedSinceData_Changes_Item == nil || r.RecordsModifiedSinceData_Changes_Item.RecordId == nil {
-		return 0
-	}
-	return *r.RecordsModifiedSinceData_Changes_Item.RecordId
-}
-
-
-
-// RemoveManagersFromGroupResult wraps RemoveManagersFromGroupData with convenience methods.
-// All fields from RemoveManagersFromGroupData are accessible via embedding.
+// RemoveManagersFromGroupResult wraps RemoveManagersFromGroupResponse with convenience methods.
 type RemoveManagersFromGroupResult struct {
-	*generated.RemoveManagersFromGroupData
+	resp *generated.RemoveManagersFromGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RemoveManagersFromGroupResult) Raw() *generated.RemoveManagersFromGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// RemoveMembersFromGroupResult wraps RemoveMembersFromGroupData with convenience methods.
-// All fields from RemoveMembersFromGroupData are accessible via embedding.
+// RemoveMembersFromGroupResult wraps RemoveMembersFromGroupResponse with convenience methods.
 type RemoveMembersFromGroupResult struct {
-	*generated.RemoveMembersFromGroupData
+	resp *generated.RemoveMembersFromGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RemoveMembersFromGroupResult) Raw() *generated.RemoveMembersFromGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// RemoveSubgroupsFromGroupResult wraps RemoveSubgroupsFromGroupData with convenience methods.
-// All fields from RemoveSubgroupsFromGroupData are accessible via embedding.
+// RemoveSubgroupsFromGroupResult wraps RemoveSubgroupsFromGroupResponse with convenience methods.
 type RemoveSubgroupsFromGroupResult struct {
-	*generated.RemoveSubgroupsFromGroupData
+	resp *generated.RemoveSubgroupsFromGroupResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RemoveSubgroupsFromGroupResult) Raw() *generated.RemoveSubgroupsFromGroupResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// RemoveTrusteesResult wraps RemoveTrusteesData with convenience methods.
-// All fields from RemoveTrusteesData are accessible via embedding.
+// RemoveTrusteesResult wraps RemoveTrusteesResponse with convenience methods.
 type RemoveTrusteesResult struct {
-	*generated.RemoveTrusteesData
+	resp *generated.RemoveTrusteesResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RemoveTrusteesResult) Raw() *generated.RemoveTrusteesResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// RunFormulaResult wraps RunFormulaData with convenience methods.
-// All fields from RunFormulaData are accessible via embedding.
+// RunFormulaResult wraps RunFormulaResponse with convenience methods.
 type RunFormulaResult struct {
-	*generated.RunFormulaData
+	resp *generated.RunFormulaResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RunFormulaResult) Raw() *generated.RunFormulaResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Result returns the Result field value, or zero value if nil.
 func (r *RunFormulaResult) Result() string {
-	if r == nil || r.RunFormulaData == nil || r.RunFormulaData.Result == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Result == nil {
 		return ""
 	}
-	return *r.RunFormulaData.Result
+	return *r.resp.JSON200.Result
 }
 
 
 
-// RunQueryResult wraps RunQueryData with convenience methods.
-// All fields from RunQueryData are accessible via embedding.
+// RunQueryResult wraps RunQueryResponse with convenience methods.
 type RunQueryResult struct {
-	*generated.RunQueryData
+	resp *generated.RunQueryResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RunQueryResult) Raw() *generated.RunQueryResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Fields returns the Fields field as wrapped types, or nil if not set.
 func (r *RunQueryResult) Fields() []*RunQueryFieldsItem {
-	if r == nil || r.RunQueryData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.RunQueryData.Fields == nil {
+	if r.resp.JSON200.Fields == nil {
 		return nil
 	}
-	items := make([]*RunQueryFieldsItem, len(*r.RunQueryData.Fields))
-	for i := range *r.RunQueryData.Fields {
-		items[i] = &RunQueryFieldsItem{&(*r.RunQueryData.Fields)[i]}
+	items := make([]*RunQueryFieldsItem, len(*r.resp.JSON200.Fields))
+	for i := range *r.resp.JSON200.Fields {
+		items[i] = &RunQueryFieldsItem{&(*r.resp.JSON200.Fields)[i]}
 	}
 	return items
 }
 
 // Metadata returns the Metadata field as a wrapped type, or nil if not set.
 func (r *RunQueryResult) Metadata() *RunQueryMetadata {
-	if r == nil || r.RunQueryData == nil || r.RunQueryData.Metadata == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Metadata == nil {
 		return nil
 	}
-	return &RunQueryMetadata{r.RunQueryData.Metadata}
+	return &RunQueryMetadata{r.resp.JSON200.Metadata}
 }
 
 
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
-func (r *RunQueryResult) Records() []map[string]any {
-	if r == nil || r.RunQueryData == nil || r.RunQueryData.Data == nil {
+func (r *RunQueryResult) Records() []Record {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Data == nil {
 		return nil
 	}
-	return unwrapRecords(*r.RunQueryData.Data)
+	return unwrapRecords(*r.resp.JSON200.Data)
 }
 
 
-// RunQueryFieldsItem wraps RunQueryData_Fields_Item with convenience methods.
-// All fields from RunQueryData_Fields_Item are accessible via embedding.
-type RunQueryFieldsItem struct {
-	*generated.RunQueryData_Fields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RunQueryFieldsItem) Id() int {
-	if r == nil || r.RunQueryData_Fields_Item == nil || r.RunQueryData_Fields_Item.Id == nil {
-		return 0
-	}
-	return *r.RunQueryData_Fields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *RunQueryFieldsItem) Label() string {
-	if r == nil || r.RunQueryData_Fields_Item == nil || r.RunQueryData_Fields_Item.Label == nil {
-		return ""
-	}
-	return *r.RunQueryData_Fields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *RunQueryFieldsItem) Type() string {
-	if r == nil || r.RunQueryData_Fields_Item == nil || r.RunQueryData_Fields_Item.Type == nil {
-		return ""
-	}
-	return *r.RunQueryData_Fields_Item.Type
-}
-
-
-
-// RunQueryMetadata wraps RunQueryData_Metadata with convenience methods.
-// All fields from RunQueryData_Metadata are accessible via embedding.
-type RunQueryMetadata struct {
-	*generated.RunQueryData_Metadata
-}
-
-// NumFields returns the NumFields field value.
-func (r *RunQueryMetadata) NumFields() int {
-	if r == nil || r.RunQueryData_Metadata == nil {
-		return 0
-	}
-	return r.RunQueryData_Metadata.NumFields
-}
-
-// NumRecords returns the NumRecords field value.
-func (r *RunQueryMetadata) NumRecords() int {
-	if r == nil || r.RunQueryData_Metadata == nil {
-		return 0
-	}
-	return r.RunQueryData_Metadata.NumRecords
-}
-
-// Skip returns the Skip field value, or zero value if nil.
-func (r *RunQueryMetadata) Skip() int {
-	if r == nil || r.RunQueryData_Metadata == nil || r.RunQueryData_Metadata.Skip == nil {
-		return 0
-	}
-	return *r.RunQueryData_Metadata.Skip
-}
-
-// Top returns the Top field value, or zero value if nil.
-func (r *RunQueryMetadata) Top() int {
-	if r == nil || r.RunQueryData_Metadata == nil || r.RunQueryData_Metadata.Top == nil {
-		return 0
-	}
-	return *r.RunQueryData_Metadata.Top
-}
-
-// TotalRecords returns the TotalRecords field value.
-func (r *RunQueryMetadata) TotalRecords() int {
-	if r == nil || r.RunQueryData_Metadata == nil {
-		return 0
-	}
-	return r.RunQueryData_Metadata.TotalRecords
-}
-
-
-
-// RunReportResult wraps RunReportData with convenience methods.
-// All fields from RunReportData are accessible via embedding.
+// RunReportResult wraps RunReportResponse with convenience methods.
 type RunReportResult struct {
-	*generated.RunReportData
+	resp *generated.RunReportResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *RunReportResult) Raw() *generated.RunReportResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Fields returns the Fields field as wrapped types, or nil if not set.
 func (r *RunReportResult) Fields() []*RunReportFieldsItem {
-	if r == nil || r.RunReportData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.RunReportData.Fields == nil {
+	if r.resp.JSON200.Fields == nil {
 		return nil
 	}
-	items := make([]*RunReportFieldsItem, len(*r.RunReportData.Fields))
-	for i := range *r.RunReportData.Fields {
-		items[i] = &RunReportFieldsItem{&(*r.RunReportData.Fields)[i]}
+	items := make([]*RunReportFieldsItem, len(*r.resp.JSON200.Fields))
+	for i := range *r.resp.JSON200.Fields {
+		items[i] = &RunReportFieldsItem{&(*r.resp.JSON200.Fields)[i]}
 	}
 	return items
 }
 
 // Metadata returns the Metadata field as a wrapped type, or nil if not set.
 func (r *RunReportResult) Metadata() *RunReportMetadata {
-	if r == nil || r.RunReportData == nil || r.RunReportData.Metadata == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Metadata == nil {
 		return nil
 	}
-	return &RunReportMetadata{r.RunReportData.Metadata}
+	return &RunReportMetadata{r.resp.JSON200.Metadata}
 }
 
 
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
-func (r *RunReportResult) Records() []map[string]any {
-	if r == nil || r.RunReportData == nil || r.RunReportData.Data == nil {
+func (r *RunReportResult) Records() []Record {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Data == nil {
 		return nil
 	}
-	return unwrapRecords(*r.RunReportData.Data)
+	return unwrapRecords(*r.resp.JSON200.Data)
 }
 
 
-// RunReportFieldsItem wraps RunReportData_Fields_Item with convenience methods.
-// All fields from RunReportData_Fields_Item are accessible via embedding.
-type RunReportFieldsItem struct {
-	*generated.RunReportData_Fields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *RunReportFieldsItem) Id() int {
-	if r == nil || r.RunReportData_Fields_Item == nil || r.RunReportData_Fields_Item.Id == nil {
-		return 0
-	}
-	return *r.RunReportData_Fields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *RunReportFieldsItem) Label() string {
-	if r == nil || r.RunReportData_Fields_Item == nil || r.RunReportData_Fields_Item.Label == nil {
-		return ""
-	}
-	return *r.RunReportData_Fields_Item.Label
-}
-
-// LabelOverride returns the LabelOverride field value, or zero value if nil.
-func (r *RunReportFieldsItem) LabelOverride() string {
-	if r == nil || r.RunReportData_Fields_Item == nil || r.RunReportData_Fields_Item.LabelOverride == nil {
-		return ""
-	}
-	return *r.RunReportData_Fields_Item.LabelOverride
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *RunReportFieldsItem) Type() string {
-	if r == nil || r.RunReportData_Fields_Item == nil || r.RunReportData_Fields_Item.Type == nil {
-		return ""
-	}
-	return *r.RunReportData_Fields_Item.Type
-}
-
-
-
-// RunReportMetadata wraps RunReportData_Metadata with convenience methods.
-// All fields from RunReportData_Metadata are accessible via embedding.
-type RunReportMetadata struct {
-	*generated.RunReportData_Metadata
-}
-
-// NumFields returns the NumFields field value.
-func (r *RunReportMetadata) NumFields() int {
-	if r == nil || r.RunReportData_Metadata == nil {
-		return 0
-	}
-	return r.RunReportData_Metadata.NumFields
-}
-
-// NumRecords returns the NumRecords field value.
-func (r *RunReportMetadata) NumRecords() int {
-	if r == nil || r.RunReportData_Metadata == nil {
-		return 0
-	}
-	return r.RunReportData_Metadata.NumRecords
-}
-
-// Skip returns the Skip field value, or zero value if nil.
-func (r *RunReportMetadata) Skip() int {
-	if r == nil || r.RunReportData_Metadata == nil || r.RunReportData_Metadata.Skip == nil {
-		return 0
-	}
-	return *r.RunReportData_Metadata.Skip
-}
-
-// Top returns the Top field value, or zero value if nil.
-func (r *RunReportMetadata) Top() int {
-	if r == nil || r.RunReportData_Metadata == nil || r.RunReportData_Metadata.Top == nil {
-		return 0
-	}
-	return *r.RunReportData_Metadata.Top
-}
-
-// TotalRecords returns the TotalRecords field value.
-func (r *RunReportMetadata) TotalRecords() int {
-	if r == nil || r.RunReportData_Metadata == nil {
-		return 0
-	}
-	return r.RunReportData_Metadata.TotalRecords
-}
-
-
-
-// TransferUserTokenResult wraps TransferUserTokenData with convenience methods.
-// All fields from TransferUserTokenData are accessible via embedding.
+// TransferUserTokenResult wraps TransferUserTokenResponse with convenience methods.
 type TransferUserTokenResult struct {
-	*generated.TransferUserTokenData
+	resp *generated.TransferUserTokenResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *TransferUserTokenResult) Raw() *generated.TransferUserTokenResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Active returns the Active field value, or zero value if nil.
 func (r *TransferUserTokenResult) Active() bool {
-	if r == nil || r.TransferUserTokenData == nil || r.TransferUserTokenData.Active == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Active == nil {
 		return false
 	}
-	return *r.TransferUserTokenData.Active
+	return *r.resp.JSON200.Active
 }
 
 // Apps returns the Apps field as wrapped types, or nil if not set.
 func (r *TransferUserTokenResult) Apps() []*TransferUserTokenAppsItem {
-	if r == nil || r.TransferUserTokenData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.TransferUserTokenData.Apps == nil {
+	if r.resp.JSON200.Apps == nil {
 		return nil
 	}
-	items := make([]*TransferUserTokenAppsItem, len(*r.TransferUserTokenData.Apps))
-	for i := range *r.TransferUserTokenData.Apps {
-		items[i] = &TransferUserTokenAppsItem{&(*r.TransferUserTokenData.Apps)[i]}
+	items := make([]*TransferUserTokenAppsItem, len(*r.resp.JSON200.Apps))
+	for i := range *r.resp.JSON200.Apps {
+		items[i] = &TransferUserTokenAppsItem{&(*r.resp.JSON200.Apps)[i]}
 	}
 	return items
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *TransferUserTokenResult) Description() string {
-	if r == nil || r.TransferUserTokenData == nil || r.TransferUserTokenData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.TransferUserTokenData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *TransferUserTokenResult) Id() int {
-	if r == nil || r.TransferUserTokenData == nil || r.TransferUserTokenData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return 0
 	}
-	return *r.TransferUserTokenData.Id
+	return *r.resp.JSON200.Id
 }
 
 // LastUsed returns the LastUsed field value, or zero value if nil.
 func (r *TransferUserTokenResult) LastUsed() string {
-	if r == nil || r.TransferUserTokenData == nil || r.TransferUserTokenData.LastUsed == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.LastUsed == nil {
 		return ""
 	}
-	return *r.TransferUserTokenData.LastUsed
+	return *r.resp.JSON200.LastUsed
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *TransferUserTokenResult) Name() string {
-	if r == nil || r.TransferUserTokenData == nil || r.TransferUserTokenData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.TransferUserTokenData.Name
+	return *r.resp.JSON200.Name
 }
 
 
 
-// TransferUserTokenAppsItem wraps TransferUserTokenData_Apps_Item with convenience methods.
-// All fields from TransferUserTokenData_Apps_Item are accessible via embedding.
-type TransferUserTokenAppsItem struct {
-	*generated.TransferUserTokenData_Apps_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *TransferUserTokenAppsItem) Id() string {
-	if r == nil || r.TransferUserTokenData_Apps_Item == nil || r.TransferUserTokenData_Apps_Item.Id == nil {
-		return ""
-	}
-	return *r.TransferUserTokenData_Apps_Item.Id
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *TransferUserTokenAppsItem) Name() string {
-	if r == nil || r.TransferUserTokenData_Apps_Item == nil || r.TransferUserTokenData_Apps_Item.Name == nil {
-		return ""
-	}
-	return *r.TransferUserTokenData_Apps_Item.Name
-}
-
-
-
-// UndenyUsersResult wraps UndenyUsersData with convenience methods.
-// All fields from UndenyUsersData are accessible via embedding.
+// UndenyUsersResult wraps UndenyUsersResponse with convenience methods.
 type UndenyUsersResult struct {
-	*generated.UndenyUsersData
+	resp *generated.UndenyUsersResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UndenyUsersResult) Raw() *generated.UndenyUsersResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// UpdateAppResult wraps UpdateAppData with convenience methods.
-// All fields from UpdateAppData are accessible via embedding.
+// UpdateAppResult wraps UpdateAppResponse with convenience methods.
 type UpdateAppResult struct {
-	*generated.UpdateAppData
+	resp *generated.UpdateAppResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateAppResult) Raw() *generated.UpdateAppResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AncestorId returns the AncestorId field value, or zero value if nil.
 func (r *UpdateAppResult) AncestorId() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.AncestorId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AncestorId == nil {
 		return ""
 	}
-	return *r.UpdateAppData.AncestorId
+	return *r.resp.JSON200.AncestorId
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *UpdateAppResult) Created() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.UpdateAppData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DataClassification returns the DataClassification field value, or zero value if nil.
 func (r *UpdateAppResult) DataClassification() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.DataClassification == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DataClassification == nil {
 		return ""
 	}
-	return *r.UpdateAppData.DataClassification
+	return *r.resp.JSON200.DataClassification
 }
 
 // DateFormat returns the DateFormat field value, or zero value if nil.
 func (r *UpdateAppResult) DateFormat() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.DateFormat == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DateFormat == nil {
 		return ""
 	}
-	return *r.UpdateAppData.DateFormat
+	return *r.resp.JSON200.DateFormat
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *UpdateAppResult) Description() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.UpdateAppData.Description
+	return *r.resp.JSON200.Description
 }
 
 // HasEveryoneOnTheInternet returns the HasEveryoneOnTheInternet field value, or zero value if nil.
 func (r *UpdateAppResult) HasEveryoneOnTheInternet() bool {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.HasEveryoneOnTheInternet == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.HasEveryoneOnTheInternet == nil {
 		return false
 	}
-	return *r.UpdateAppData.HasEveryoneOnTheInternet
+	return *r.resp.JSON200.HasEveryoneOnTheInternet
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *UpdateAppResult) Id() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.UpdateAppData.Id
+	return *r.resp.JSON200.Id
 }
 
 // Name returns the Name field value.
 func (r *UpdateAppResult) Name() string {
-	if r == nil || r.UpdateAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.UpdateAppData.Name
+	return r.resp.JSON200.Name
 }
 
 // SecurityProperties returns the SecurityProperties field as a wrapped type, or nil if not set.
 func (r *UpdateAppResult) SecurityProperties() *UpdateAppSecurityProperties {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.SecurityProperties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SecurityProperties == nil {
 		return nil
 	}
-	return &UpdateAppSecurityProperties{r.UpdateAppData.SecurityProperties}
+	return &UpdateAppSecurityProperties{r.resp.JSON200.SecurityProperties}
 }
 
 // TimeZone returns the TimeZone field value, or zero value if nil.
 func (r *UpdateAppResult) TimeZone() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.TimeZone == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.TimeZone == nil {
 		return ""
 	}
-	return *r.UpdateAppData.TimeZone
+	return *r.resp.JSON200.TimeZone
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *UpdateAppResult) Updated() string {
-	if r == nil || r.UpdateAppData == nil || r.UpdateAppData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.UpdateAppData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 // Variables returns the Variables field as wrapped types, or nil if not set.
 func (r *UpdateAppResult) Variables() []*UpdateAppVariablesItem {
-	if r == nil || r.UpdateAppData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.UpdateAppData.Variables == nil {
+	if r.resp.JSON200.Variables == nil {
 		return nil
 	}
-	items := make([]*UpdateAppVariablesItem, len(*r.UpdateAppData.Variables))
-	for i := range *r.UpdateAppData.Variables {
-		items[i] = &UpdateAppVariablesItem{&(*r.UpdateAppData.Variables)[i]}
+	items := make([]*UpdateAppVariablesItem, len(*r.resp.JSON200.Variables))
+	for i := range *r.resp.JSON200.Variables {
+		items[i] = &UpdateAppVariablesItem{&(*r.resp.JSON200.Variables)[i]}
 	}
 	return items
 }
 
 
 
-// UpdateAppSecurityProperties wraps UpdateAppData_SecurityProperties with convenience methods.
-// All fields from UpdateAppData_SecurityProperties are accessible via embedding.
-type UpdateAppSecurityProperties struct {
-	*generated.UpdateAppData_SecurityProperties
-}
-
-// AllowClone returns the AllowClone field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) AllowClone() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.AllowClone == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.AllowClone
-}
-
-// AllowExport returns the AllowExport field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) AllowExport() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.AllowExport == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.AllowExport
-}
-
-// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) EnableAppTokens() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.EnableAppTokens == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.EnableAppTokens
-}
-
-// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) HideFromPublic() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.HideFromPublic == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.HideFromPublic
-}
-
-// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) MustBeRealmApproved() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.MustBeRealmApproved == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.MustBeRealmApproved
-}
-
-// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
-func (r *UpdateAppSecurityProperties) UseIPFilter() bool {
-	if r == nil || r.UpdateAppData_SecurityProperties == nil || r.UpdateAppData_SecurityProperties.UseIPFilter == nil {
-		return false
-	}
-	return *r.UpdateAppData_SecurityProperties.UseIPFilter
-}
-
-
-
-// UpdateAppVariablesItem wraps UpdateAppData_Variables_Item with convenience methods.
-// All fields from UpdateAppData_Variables_Item are accessible via embedding.
-type UpdateAppVariablesItem struct {
-	*generated.UpdateAppData_Variables_Item
-}
-
-// Name returns the Name field value, or zero value if nil.
-func (r *UpdateAppVariablesItem) Name() string {
-	if r == nil || r.UpdateAppData_Variables_Item == nil || r.UpdateAppData_Variables_Item.Name == nil {
-		return ""
-	}
-	return *r.UpdateAppData_Variables_Item.Name
-}
-
-// Value returns the Value field value, or zero value if nil.
-func (r *UpdateAppVariablesItem) Value() string {
-	if r == nil || r.UpdateAppData_Variables_Item == nil || r.UpdateAppData_Variables_Item.Value == nil {
-		return ""
-	}
-	return *r.UpdateAppData_Variables_Item.Value
-}
-
-
-
-// UpdateFieldResult wraps UpdateFieldData with convenience methods.
-// All fields from UpdateFieldData are accessible via embedding.
+// UpdateFieldResult wraps UpdateFieldResponse with convenience methods.
 type UpdateFieldResult struct {
-	*generated.UpdateFieldData
+	resp *generated.UpdateFieldResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateFieldResult) Raw() *generated.UpdateFieldResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // AppearsByDefault returns the AppearsByDefault field value, or zero value if nil.
 func (r *UpdateFieldResult) AppearsByDefault() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.AppearsByDefault == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AppearsByDefault == nil {
 		return false
 	}
-	return *r.UpdateFieldData.AppearsByDefault
+	return *r.resp.JSON200.AppearsByDefault
 }
 
 // Audited returns the Audited field value, or zero value if nil.
 func (r *UpdateFieldResult) Audited() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Audited == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Audited == nil {
 		return false
 	}
-	return *r.UpdateFieldData.Audited
+	return *r.resp.JSON200.Audited
 }
 
 // Bold returns the Bold field value, or zero value if nil.
 func (r *UpdateFieldResult) Bold() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Bold == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Bold == nil {
 		return false
 	}
-	return *r.UpdateFieldData.Bold
+	return *r.resp.JSON200.Bold
 }
 
 // DoesDataCopy returns the DoesDataCopy field value, or zero value if nil.
 func (r *UpdateFieldResult) DoesDataCopy() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.DoesDataCopy == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DoesDataCopy == nil {
 		return false
 	}
-	return *r.UpdateFieldData.DoesDataCopy
+	return *r.resp.JSON200.DoesDataCopy
 }
 
 // FieldHelp returns the FieldHelp field value, or zero value if nil.
 func (r *UpdateFieldResult) FieldHelp() string {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.FieldHelp == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldHelp == nil {
 		return ""
 	}
-	return *r.UpdateFieldData.FieldHelp
+	return *r.resp.JSON200.FieldHelp
 }
 
 // FieldType returns the FieldType field value, or zero value if nil.
 func (r *UpdateFieldResult) FieldType() string {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.FieldType == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FieldType == nil {
 		return ""
 	}
-	return *r.UpdateFieldData.FieldType
+	return *r.resp.JSON200.FieldType
 }
 
 // FindEnabled returns the FindEnabled field value, or zero value if nil.
 func (r *UpdateFieldResult) FindEnabled() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.FindEnabled == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.FindEnabled == nil {
 		return false
 	}
-	return *r.UpdateFieldData.FindEnabled
+	return *r.resp.JSON200.FindEnabled
 }
 
 // Id returns the Id field value.
 func (r *UpdateFieldResult) Id() int64 {
-	if r == nil || r.UpdateFieldData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.UpdateFieldData.Id
+	return r.resp.JSON200.Id
 }
 
 // Label returns the Label field value, or zero value if nil.
 func (r *UpdateFieldResult) Label() string {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Label == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Label == nil {
 		return ""
 	}
-	return *r.UpdateFieldData.Label
+	return *r.resp.JSON200.Label
 }
 
 // Mode returns the Mode field value, or zero value if nil.
 func (r *UpdateFieldResult) Mode() string {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Mode == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Mode == nil {
 		return ""
 	}
-	return *r.UpdateFieldData.Mode
+	return *r.resp.JSON200.Mode
 }
 
 // NoWrap returns the NoWrap field value, or zero value if nil.
 func (r *UpdateFieldResult) NoWrap() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.NoWrap == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NoWrap == nil {
 		return false
 	}
-	return *r.UpdateFieldData.NoWrap
+	return *r.resp.JSON200.NoWrap
 }
 
 // Properties returns the Properties field as a wrapped type, or nil if not set.
 func (r *UpdateFieldResult) Properties() *UpdateFieldProperties {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Properties == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Properties == nil {
 		return nil
 	}
-	return &UpdateFieldProperties{r.UpdateFieldData.Properties}
+	return &UpdateFieldProperties{r.resp.JSON200.Properties}
 }
 
 // Required returns the Required field value, or zero value if nil.
 func (r *UpdateFieldResult) Required() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Required == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Required == nil {
 		return false
 	}
-	return *r.UpdateFieldData.Required
+	return *r.resp.JSON200.Required
 }
 
 // Unique returns the Unique field value, or zero value if nil.
 func (r *UpdateFieldResult) Unique() bool {
-	if r == nil || r.UpdateFieldData == nil || r.UpdateFieldData.Unique == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Unique == nil {
 		return false
 	}
-	return *r.UpdateFieldData.Unique
+	return *r.resp.JSON200.Unique
 }
 
 
 
-// UpdateFieldProperties wraps UpdateFieldData_Properties with convenience methods.
-// All fields from UpdateFieldData_Properties are accessible via embedding.
-type UpdateFieldProperties struct {
-	*generated.UpdateFieldData_Properties
-}
-
-// Abbreviate returns the Abbreviate field value, or zero value if nil.
-func (r *UpdateFieldProperties) Abbreviate() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Abbreviate == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.Abbreviate
-}
-
-// AllowHTML returns the AllowHTML field value, or zero value if nil.
-func (r *UpdateFieldProperties) AllowHTML() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AllowHTML == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.AllowHTML
-}
-
-// AllowMentions returns the AllowMentions field value, or zero value if nil.
-func (r *UpdateFieldProperties) AllowMentions() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AllowMentions == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.AllowMentions
-}
-
-// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
-func (r *UpdateFieldProperties) AllowNewChoices() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AllowNewChoices == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.AllowNewChoices
-}
-
-// AppearsAs returns the AppearsAs field value, or zero value if nil.
-func (r *UpdateFieldProperties) AppearsAs() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AppearsAs == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.AppearsAs
-}
-
-// AppendOnly returns the AppendOnly field value, or zero value if nil.
-func (r *UpdateFieldProperties) AppendOnly() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AppendOnly == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.AppendOnly
-}
-
-// AutoSave returns the AutoSave field value, or zero value if nil.
-func (r *UpdateFieldProperties) AutoSave() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.AutoSave == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.AutoSave
-}
-
-// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
-func (r *UpdateFieldProperties) BlankIsZero() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.BlankIsZero == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.BlankIsZero
-}
-
-// CarryChoices returns the CarryChoices field value, or zero value if nil.
-func (r *UpdateFieldProperties) CarryChoices() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CarryChoices == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.CarryChoices
-}
-
-// Choices returns the Choices field value, or nil if not set.
-func (r *UpdateFieldProperties) Choices() []string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Choices == nil {
-		return nil
-	}
-	return *r.UpdateFieldData_Properties.Choices
-}
-
-// ChoicesLuid returns the ChoicesLuid field value, or nil if not set.
-func (r *UpdateFieldProperties) ChoicesLuid() []string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.ChoicesLuid == nil {
-		return nil
-	}
-	return *r.UpdateFieldData_Properties.ChoicesLuid
-}
-
-// CommaStart returns the CommaStart field value, or zero value if nil.
-func (r *UpdateFieldProperties) CommaStart() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CommaStart == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.CommaStart
-}
-
-// Comments returns the Comments field value, or zero value if nil.
-func (r *UpdateFieldProperties) Comments() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Comments == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.Comments
-}
-
-// CompositeFields returns the CompositeFields field as wrapped types, or nil if not set.
-func (r *UpdateFieldProperties) CompositeFields() []*UpdateFieldPropertiesCompositeFieldsItem {
-	if r == nil || r.UpdateFieldData_Properties == nil {
-		return nil
-	}
-	if r.UpdateFieldData_Properties.CompositeFields == nil {
-		return nil
-	}
-	items := make([]*UpdateFieldPropertiesCompositeFieldsItem, len(*r.UpdateFieldData_Properties.CompositeFields))
-	for i := range *r.UpdateFieldData_Properties.CompositeFields {
-		items[i] = &UpdateFieldPropertiesCompositeFieldsItem{&(*r.UpdateFieldData_Properties.CompositeFields)[i]}
-	}
-	return items
-}
-
-// CoverText returns the CoverText field value, or zero value if nil.
-func (r *UpdateFieldProperties) CoverText() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CoverText == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.CoverText
-}
-
-// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
-func (r *UpdateFieldProperties) CurrencyFormat() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CurrencyFormat == nil {
-		return ""
-	}
-	return string(*r.UpdateFieldData_Properties.CurrencyFormat)
-}
-
-// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
-func (r *UpdateFieldProperties) CurrencySymbol() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.CurrencySymbol == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.CurrencySymbol
-}
-
-// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
-func (r *UpdateFieldProperties) DecimalPlaces() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DecimalPlaces == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.DecimalPlaces
-}
-
-// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultCountryCode() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultCountryCode == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DefaultCountryCode
-}
-
-// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultDomain() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultDomain == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DefaultDomain
-}
-
-// DefaultKind returns the DefaultKind field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultKind() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultKind == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DefaultKind
-}
-
-// DefaultToday returns the DefaultToday field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultToday() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultToday == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DefaultToday
-}
-
-// DefaultValue returns the DefaultValue field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultValue() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultValue == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DefaultValue
-}
-
-// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
-func (r *UpdateFieldProperties) DefaultValueLuid() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DefaultValueLuid == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.DefaultValueLuid
-}
-
-// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayAsLink() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayAsLink == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayAsLink
-}
-
-// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayCheckboxAsText() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayCheckboxAsText == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayCheckboxAsText
-}
-
-// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayDayOfWeek() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayDayOfWeek == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayDayOfWeek
-}
-
-// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayEmail() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayEmail == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DisplayEmail
-}
-
-// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayMonth() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayMonth == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DisplayMonth
-}
-
-// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayRelative() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayRelative == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayRelative
-}
-
-// DisplayTime returns the DisplayTime field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayTime() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayTime == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayTime
-}
-
-// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayTimezone() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayTimezone == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DisplayTimezone
-}
-
-// DisplayUser returns the DisplayUser field value, or zero value if nil.
-func (r *UpdateFieldProperties) DisplayUser() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DisplayUser == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.DisplayUser
-}
-
-// DoesAverage returns the DoesAverage field value, or zero value if nil.
-func (r *UpdateFieldProperties) DoesAverage() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DoesAverage == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DoesAverage
-}
-
-// DoesTotal returns the DoesTotal field value, or zero value if nil.
-func (r *UpdateFieldProperties) DoesTotal() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DoesTotal == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.DoesTotal
-}
-
-// DurationField returns the DurationField field value, or zero value if nil.
-func (r *UpdateFieldProperties) DurationField() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.DurationField == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.DurationField
-}
-
-// Exact returns the Exact field value, or zero value if nil.
-func (r *UpdateFieldProperties) Exact() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Exact == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.Exact
-}
-
-// ForeignKey returns the ForeignKey field value, or zero value if nil.
-func (r *UpdateFieldProperties) ForeignKey() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.ForeignKey == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.ForeignKey
-}
-
-// Format returns the Format field value, or zero value if nil.
-func (r *UpdateFieldProperties) Format() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Format == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.Format
-}
-
-// Formula returns the Formula field value, or zero value if nil.
-func (r *UpdateFieldProperties) Formula() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Formula == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.Formula
-}
-
-// HasExtension returns the HasExtension field value, or zero value if nil.
-func (r *UpdateFieldProperties) HasExtension() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.HasExtension == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.HasExtension
-}
-
-// Hours24 returns the Hours24 field value, or zero value if nil.
-func (r *UpdateFieldProperties) Hours24() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Hours24 == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.Hours24
-}
-
-// LinkText returns the LinkText field value, or zero value if nil.
-func (r *UpdateFieldProperties) LinkText() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.LinkText == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.LinkText
-}
-
-// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) LookupReferenceFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.LookupReferenceFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.LookupReferenceFieldId
-}
-
-// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) LookupTargetFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.LookupTargetFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.LookupTargetFieldId
-}
-
-// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) MasterChoiceFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.MasterChoiceFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.MasterChoiceFieldId
-}
-
-// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
-func (r *UpdateFieldProperties) MasterChoiceTableId() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.MasterChoiceTableId == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.MasterChoiceTableId
-}
-
-// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
-func (r *UpdateFieldProperties) MasterTableTag() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.MasterTableTag == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.MasterTableTag
-}
-
-// MaxLength returns the MaxLength field value, or zero value if nil.
-func (r *UpdateFieldProperties) MaxLength() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.MaxLength == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.MaxLength
-}
-
-// MaxVersions returns the MaxVersions field value, or zero value if nil.
-func (r *UpdateFieldProperties) MaxVersions() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.MaxVersions == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.MaxVersions
-}
-
-// NumLines returns the NumLines field value, or zero value if nil.
-func (r *UpdateFieldProperties) NumLines() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.NumLines == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.NumLines
-}
-
-// NumberFormat returns the NumberFormat field value, or zero value if nil.
-func (r *UpdateFieldProperties) NumberFormat() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.NumberFormat == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.NumberFormat
-}
-
-// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) ParentFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.ParentFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.ParentFieldId
-}
-
-// PostTempToken returns the PostTempToken field value, or zero value if nil.
-func (r *UpdateFieldProperties) PostTempToken() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.PostTempToken == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.PostTempToken
-}
-
-// SeeVersions returns the SeeVersions field value, or zero value if nil.
-func (r *UpdateFieldProperties) SeeVersions() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SeeVersions == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.SeeVersions
-}
-
-// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) SnapFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SnapFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.SnapFieldId
-}
-
-// SortAlpha returns the SortAlpha field value, or zero value if nil.
-func (r *UpdateFieldProperties) SortAlpha() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SortAlpha == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.SortAlpha
-}
-
-// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
-func (r *UpdateFieldProperties) SortAsGiven() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SortAsGiven == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.SortAsGiven
-}
-
-// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) SourceFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SourceFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.SourceFieldId
-}
-
-// StartField returns the StartField field value, or zero value if nil.
-func (r *UpdateFieldProperties) StartField() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.StartField == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.StartField
-}
-
-// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
-func (r *UpdateFieldProperties) SummaryFunction() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SummaryFunction == nil {
-		return ""
-	}
-	return string(*r.UpdateFieldData_Properties.SummaryFunction)
-}
-
-// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) SummaryReferenceFieldId() int64 {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SummaryReferenceFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.SummaryReferenceFieldId
-}
-
-// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) SummaryTargetFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.SummaryTargetFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.SummaryTargetFieldId
-}
-
-// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
-func (r *UpdateFieldProperties) TargetFieldId() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.TargetFieldId == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.TargetFieldId
-}
-
-// TargetTableId returns the TargetTableId field value, or zero value if nil.
-func (r *UpdateFieldProperties) TargetTableId() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.TargetTableId == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.TargetTableId
-}
-
-// TargetTableName returns the TargetTableName field value, or zero value if nil.
-func (r *UpdateFieldProperties) TargetTableName() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.TargetTableName == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.TargetTableName
-}
-
-// Units returns the Units field value, or zero value if nil.
-func (r *UpdateFieldProperties) Units() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Units == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.Units
-}
-
-// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
-func (r *UpdateFieldProperties) UseI18NFormat() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.UseI18NFormat == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.UseI18NFormat
-}
-
-// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
-func (r *UpdateFieldProperties) UseNewWindow() bool {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.UseNewWindow == nil {
-		return false
-	}
-	return *r.UpdateFieldData_Properties.UseNewWindow
-}
-
-// VersionMode returns the VersionMode field value as a string, or empty string if nil.
-func (r *UpdateFieldProperties) VersionMode() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.VersionMode == nil {
-		return ""
-	}
-	return string(*r.UpdateFieldData_Properties.VersionMode)
-}
-
-// Width returns the Width field value, or zero value if nil.
-func (r *UpdateFieldProperties) Width() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.Width == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.Width
-}
-
-// WorkWeek returns the WorkWeek field value, or zero value if nil.
-func (r *UpdateFieldProperties) WorkWeek() int {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.WorkWeek == nil {
-		return 0
-	}
-	return *r.UpdateFieldData_Properties.WorkWeek
-}
-
-// XmlTag returns the XmlTag field value, or zero value if nil.
-func (r *UpdateFieldProperties) XmlTag() string {
-	if r == nil || r.UpdateFieldData_Properties == nil || r.UpdateFieldData_Properties.XmlTag == nil {
-		return ""
-	}
-	return *r.UpdateFieldData_Properties.XmlTag
-}
-
-
-
-// UpdateFieldPropertiesCompositeFieldsItem wraps UpdateFieldData_Properties_CompositeFields_Item with convenience methods.
-// All fields from UpdateFieldData_Properties_CompositeFields_Item are accessible via embedding.
-type UpdateFieldPropertiesCompositeFieldsItem struct {
-	*generated.UpdateFieldData_Properties_CompositeFields_Item
-}
-
-
-
-// UpdateRelationshipResult wraps UpdateRelationshipData with convenience methods.
-// All fields from UpdateRelationshipData are accessible via embedding.
+// UpdateRelationshipResult wraps UpdateRelationshipResponse with convenience methods.
 type UpdateRelationshipResult struct {
-	*generated.UpdateRelationshipData
+	resp *generated.UpdateRelationshipResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateRelationshipResult) Raw() *generated.UpdateRelationshipResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // ChildTableId returns the ChildTableId field value.
 func (r *UpdateRelationshipResult) ChildTableId() string {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.UpdateRelationshipData.ChildTableId
+	return r.resp.JSON200.ChildTableId
 }
 
 // ForeignKeyField returns the ForeignKeyField field as a wrapped type, or nil if not set.
 func (r *UpdateRelationshipResult) ForeignKeyField() *UpdateRelationshipForeignKeyField {
-	if r == nil || r.UpdateRelationshipData == nil || r.UpdateRelationshipData.ForeignKeyField == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.ForeignKeyField == nil {
 		return nil
 	}
-	return &UpdateRelationshipForeignKeyField{r.UpdateRelationshipData.ForeignKeyField}
+	return &UpdateRelationshipForeignKeyField{r.resp.JSON200.ForeignKeyField}
 }
 
 // Id returns the Id field value.
 func (r *UpdateRelationshipResult) Id() int {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return 0
 	}
-	return r.UpdateRelationshipData.Id
+	return r.resp.JSON200.Id
 }
 
 // IsCrossApp returns the IsCrossApp field value.
 func (r *UpdateRelationshipResult) IsCrossApp() bool {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return false
 	}
-	return r.UpdateRelationshipData.IsCrossApp
+	return r.resp.JSON200.IsCrossApp
 }
 
 // LookupFields returns the LookupFields field as wrapped types, or nil if not set.
 func (r *UpdateRelationshipResult) LookupFields() []*UpdateRelationshipLookupFieldsItem {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.UpdateRelationshipData.LookupFields == nil {
+	if r.resp.JSON200.LookupFields == nil {
 		return nil
 	}
-	items := make([]*UpdateRelationshipLookupFieldsItem, len(*r.UpdateRelationshipData.LookupFields))
-	for i := range *r.UpdateRelationshipData.LookupFields {
-		items[i] = &UpdateRelationshipLookupFieldsItem{&(*r.UpdateRelationshipData.LookupFields)[i]}
+	items := make([]*UpdateRelationshipLookupFieldsItem, len(*r.resp.JSON200.LookupFields))
+	for i := range *r.resp.JSON200.LookupFields {
+		items[i] = &UpdateRelationshipLookupFieldsItem{&(*r.resp.JSON200.LookupFields)[i]}
 	}
 	return items
 }
 
 // ParentTableId returns the ParentTableId field value.
 func (r *UpdateRelationshipResult) ParentTableId() string {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return ""
 	}
-	return r.UpdateRelationshipData.ParentTableId
+	return r.resp.JSON200.ParentTableId
 }
 
 // SummaryFields returns the SummaryFields field as wrapped types, or nil if not set.
 func (r *UpdateRelationshipResult) SummaryFields() []*UpdateRelationshipSummaryFieldsItem {
-	if r == nil || r.UpdateRelationshipData == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
 		return nil
 	}
-	if r.UpdateRelationshipData.SummaryFields == nil {
+	if r.resp.JSON200.SummaryFields == nil {
 		return nil
 	}
-	items := make([]*UpdateRelationshipSummaryFieldsItem, len(*r.UpdateRelationshipData.SummaryFields))
-	for i := range *r.UpdateRelationshipData.SummaryFields {
-		items[i] = &UpdateRelationshipSummaryFieldsItem{&(*r.UpdateRelationshipData.SummaryFields)[i]}
+	items := make([]*UpdateRelationshipSummaryFieldsItem, len(*r.resp.JSON200.SummaryFields))
+	for i := range *r.resp.JSON200.SummaryFields {
+		items[i] = &UpdateRelationshipSummaryFieldsItem{&(*r.resp.JSON200.SummaryFields)[i]}
 	}
 	return items
 }
 
 
 
-// UpdateRelationshipForeignKeyField wraps UpdateRelationshipData_ForeignKeyField with convenience methods.
-// All fields from UpdateRelationshipData_ForeignKeyField are accessible via embedding.
-type UpdateRelationshipForeignKeyField struct {
-	*generated.UpdateRelationshipData_ForeignKeyField
+// UpdateSolutionResult wraps UpdateSolutionResponse with convenience methods.
+type UpdateSolutionResult struct {
+	resp *generated.UpdateSolutionResponse
 }
 
-// Id returns the Id field value, or zero value if nil.
-func (r *UpdateRelationshipForeignKeyField) Id() int {
-	if r == nil || r.UpdateRelationshipData_ForeignKeyField == nil || r.UpdateRelationshipData_ForeignKeyField.Id == nil {
-		return 0
+// Raw returns the underlying generated response.
+func (r *UpdateSolutionResult) Raw() *generated.UpdateSolutionResponse {
+	if r == nil {
+		return nil
 	}
-	return *r.UpdateRelationshipData_ForeignKeyField.Id
+	return r.resp
 }
 
-// Label returns the Label field value, or zero value if nil.
-func (r *UpdateRelationshipForeignKeyField) Label() string {
-	if r == nil || r.UpdateRelationshipData_ForeignKeyField == nil || r.UpdateRelationshipData_ForeignKeyField.Label == nil {
-		return ""
+
+
+// UpdateSolutionToRecordResult wraps UpdateSolutionToRecordResponse with convenience methods.
+type UpdateSolutionToRecordResult struct {
+	resp *generated.UpdateSolutionToRecordResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateSolutionToRecordResult) Raw() *generated.UpdateSolutionToRecordResponse {
+	if r == nil {
+		return nil
 	}
-	return *r.UpdateRelationshipData_ForeignKeyField.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *UpdateRelationshipForeignKeyField) Type() string {
-	if r == nil || r.UpdateRelationshipData_ForeignKeyField == nil || r.UpdateRelationshipData_ForeignKeyField.Type == nil {
-		return ""
-	}
-	return *r.UpdateRelationshipData_ForeignKeyField.Type
+	return r.resp
 }
 
 
 
-// UpdateRelationshipLookupFieldsItem wraps UpdateRelationshipData_LookupFields_Item with convenience methods.
-// All fields from UpdateRelationshipData_LookupFields_Item are accessible via embedding.
-type UpdateRelationshipLookupFieldsItem struct {
-	*generated.UpdateRelationshipData_LookupFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *UpdateRelationshipLookupFieldsItem) Id() int {
-	if r == nil || r.UpdateRelationshipData_LookupFields_Item == nil || r.UpdateRelationshipData_LookupFields_Item.Id == nil {
-		return 0
-	}
-	return *r.UpdateRelationshipData_LookupFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *UpdateRelationshipLookupFieldsItem) Label() string {
-	if r == nil || r.UpdateRelationshipData_LookupFields_Item == nil || r.UpdateRelationshipData_LookupFields_Item.Label == nil {
-		return ""
-	}
-	return *r.UpdateRelationshipData_LookupFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *UpdateRelationshipLookupFieldsItem) Type() string {
-	if r == nil || r.UpdateRelationshipData_LookupFields_Item == nil || r.UpdateRelationshipData_LookupFields_Item.Type == nil {
-		return ""
-	}
-	return *r.UpdateRelationshipData_LookupFields_Item.Type
-}
-
-
-
-// UpdateRelationshipSummaryFieldsItem wraps UpdateRelationshipData_SummaryFields_Item with convenience methods.
-// All fields from UpdateRelationshipData_SummaryFields_Item are accessible via embedding.
-type UpdateRelationshipSummaryFieldsItem struct {
-	*generated.UpdateRelationshipData_SummaryFields_Item
-}
-
-// Id returns the Id field value, or zero value if nil.
-func (r *UpdateRelationshipSummaryFieldsItem) Id() int {
-	if r == nil || r.UpdateRelationshipData_SummaryFields_Item == nil || r.UpdateRelationshipData_SummaryFields_Item.Id == nil {
-		return 0
-	}
-	return *r.UpdateRelationshipData_SummaryFields_Item.Id
-}
-
-// Label returns the Label field value, or zero value if nil.
-func (r *UpdateRelationshipSummaryFieldsItem) Label() string {
-	if r == nil || r.UpdateRelationshipData_SummaryFields_Item == nil || r.UpdateRelationshipData_SummaryFields_Item.Label == nil {
-		return ""
-	}
-	return *r.UpdateRelationshipData_SummaryFields_Item.Label
-}
-
-// Type returns the Type field value, or zero value if nil.
-func (r *UpdateRelationshipSummaryFieldsItem) Type() string {
-	if r == nil || r.UpdateRelationshipData_SummaryFields_Item == nil || r.UpdateRelationshipData_SummaryFields_Item.Type == nil {
-		return ""
-	}
-	return *r.UpdateRelationshipData_SummaryFields_Item.Type
-}
-
-
-
-// UpdateTableResult wraps UpdateTableData with convenience methods.
-// All fields from UpdateTableData are accessible via embedding.
+// UpdateTableResult wraps UpdateTableResponse with convenience methods.
 type UpdateTableResult struct {
-	*generated.UpdateTableData
+	resp *generated.UpdateTableResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateTableResult) Raw() *generated.UpdateTableResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Alias returns the Alias field value, or zero value if nil.
 func (r *UpdateTableResult) Alias() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Alias == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Alias == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Alias
+	return *r.resp.JSON200.Alias
 }
 
 // Created returns the Created field value, or zero value if nil.
 func (r *UpdateTableResult) Created() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Created == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Created
+	return *r.resp.JSON200.Created
 }
 
 // DefaultSortFieldId returns the DefaultSortFieldId field value, or zero value if nil.
 func (r *UpdateTableResult) DefaultSortFieldId() int {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.DefaultSortFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortFieldId == nil {
 		return 0
 	}
-	return *r.UpdateTableData.DefaultSortFieldId
+	return *r.resp.JSON200.DefaultSortFieldId
 }
 
 // DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
 func (r *UpdateTableResult) DefaultSortOrder() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.DefaultSortOrder == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.DefaultSortOrder == nil {
 		return ""
 	}
-	return string(*r.UpdateTableData.DefaultSortOrder)
+	return string(*r.resp.JSON200.DefaultSortOrder)
 }
 
 // Description returns the Description field value, or zero value if nil.
 func (r *UpdateTableResult) Description() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Description == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Description
+	return *r.resp.JSON200.Description
 }
 
 // Id returns the Id field value, or zero value if nil.
 func (r *UpdateTableResult) Id() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Id == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Id == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Id
+	return *r.resp.JSON200.Id
 }
 
 // KeyFieldId returns the KeyFieldId field value, or zero value if nil.
 func (r *UpdateTableResult) KeyFieldId() int {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.KeyFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.KeyFieldId == nil {
 		return 0
 	}
-	return *r.UpdateTableData.KeyFieldId
+	return *r.resp.JSON200.KeyFieldId
 }
 
 // Name returns the Name field value, or zero value if nil.
 func (r *UpdateTableResult) Name() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Name == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Name
+	return *r.resp.JSON200.Name
 }
 
 // NextFieldId returns the NextFieldId field value, or zero value if nil.
 func (r *UpdateTableResult) NextFieldId() int {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.NextFieldId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextFieldId == nil {
 		return 0
 	}
-	return *r.UpdateTableData.NextFieldId
+	return *r.resp.JSON200.NextFieldId
 }
 
 // NextRecordId returns the NextRecordId field value, or zero value if nil.
 func (r *UpdateTableResult) NextRecordId() int {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.NextRecordId == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.NextRecordId == nil {
 		return 0
 	}
-	return *r.UpdateTableData.NextRecordId
+	return *r.resp.JSON200.NextRecordId
 }
 
 // PluralRecordName returns the PluralRecordName field value, or zero value if nil.
 func (r *UpdateTableResult) PluralRecordName() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.PluralRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.PluralRecordName == nil {
 		return ""
 	}
-	return *r.UpdateTableData.PluralRecordName
+	return *r.resp.JSON200.PluralRecordName
 }
 
 // SingleRecordName returns the SingleRecordName field value, or zero value if nil.
 func (r *UpdateTableResult) SingleRecordName() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.SingleRecordName == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SingleRecordName == nil {
 		return ""
 	}
-	return *r.UpdateTableData.SingleRecordName
+	return *r.resp.JSON200.SingleRecordName
 }
 
 // SizeLimit returns the SizeLimit field value, or zero value if nil.
 func (r *UpdateTableResult) SizeLimit() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.SizeLimit == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SizeLimit == nil {
 		return ""
 	}
-	return *r.UpdateTableData.SizeLimit
+	return *r.resp.JSON200.SizeLimit
 }
 
 // SpaceRemaining returns the SpaceRemaining field value, or zero value if nil.
 func (r *UpdateTableResult) SpaceRemaining() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.SpaceRemaining == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceRemaining == nil {
 		return ""
 	}
-	return *r.UpdateTableData.SpaceRemaining
+	return *r.resp.JSON200.SpaceRemaining
 }
 
 // SpaceUsed returns the SpaceUsed field value, or zero value if nil.
 func (r *UpdateTableResult) SpaceUsed() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.SpaceUsed == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SpaceUsed == nil {
 		return ""
 	}
-	return *r.UpdateTableData.SpaceUsed
+	return *r.resp.JSON200.SpaceUsed
 }
 
 // Updated returns the Updated field value, or zero value if nil.
 func (r *UpdateTableResult) Updated() string {
-	if r == nil || r.UpdateTableData == nil || r.UpdateTableData.Updated == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Updated == nil {
 		return ""
 	}
-	return *r.UpdateTableData.Updated
+	return *r.resp.JSON200.Updated
 }
 
 
 
-// UpdateTrusteesResult wraps UpdateTrusteesData with convenience methods.
-// All fields from UpdateTrusteesData are accessible via embedding.
+// UpdateTrusteesResult wraps UpdateTrusteesResponse with convenience methods.
 type UpdateTrusteesResult struct {
-	*generated.UpdateTrusteesData
+	resp *generated.UpdateTrusteesResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpdateTrusteesResult) Raw() *generated.UpdateTrusteesResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 
 
-// UpsertResult wraps UpsertData with convenience methods.
-// All fields from UpsertData are accessible via embedding.
+// UpsertResult wraps UpsertResponse with convenience methods.
 type UpsertResult struct {
-	*generated.UpsertData
+	resp *generated.UpsertResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UpsertResult) Raw() *generated.UpsertResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
 }
 
 // Metadata returns the Metadata field as a wrapped type, or nil if not set.
 func (r *UpsertResult) Metadata() *UpsertMetadata {
-	if r == nil || r.UpsertData == nil || r.UpsertData.Metadata == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Metadata == nil {
 		return nil
 	}
-	return &UpsertMetadata{r.UpsertData.Metadata}
+	return &UpsertMetadata{r.resp.JSON200.Metadata}
 }
 
 
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
-func (r *UpsertResult) Records() []map[string]any {
-	if r == nil || r.UpsertData == nil || r.UpsertData.Data == nil {
+func (r *UpsertResult) Records() []Record {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Data == nil {
 		return nil
 	}
-	return unwrapRecords(*r.UpsertData.Data)
+	return unwrapRecords(*r.resp.JSON200.Data)
 }
 
 
-// UpsertMetadata wraps UpsertData_Metadata with convenience methods.
-// All fields from UpsertData_Metadata are accessible via embedding.
+
+
+// AppEventsItem wraps GetAppEvents_200_Item with convenience methods.
+type AppEventsItem struct {
+	*generated.GetAppEvents_200_Item
+}
+
+// IsActive returns the IsActive field value, or zero value if nil.
+func (r *AppEventsItem) IsActive() bool {
+	if r == nil || r.GetAppEvents_200_Item == nil || r.GetAppEvents_200_Item.IsActive == nil {
+		return false
+	}
+	return *r.GetAppEvents_200_Item.IsActive
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *AppEventsItem) Name() string {
+	if r == nil || r.GetAppEvents_200_Item == nil || r.GetAppEvents_200_Item.Name == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Item.Name
+}
+
+// TableId returns the TableId field value, or zero value if nil.
+func (r *AppEventsItem) TableId() string {
+	if r == nil || r.GetAppEvents_200_Item == nil || r.GetAppEvents_200_Item.TableId == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Item.TableId
+}
+
+// Type returns the Type field value as a string, or empty string if nil.
+func (r *AppEventsItem) Type() string {
+	if r == nil || r.GetAppEvents_200_Item == nil || r.GetAppEvents_200_Item.Type == nil {
+		return ""
+	}
+	return string(*r.GetAppEvents_200_Item.Type)
+}
+
+// Url returns the Url field value, or zero value if nil.
+func (r *AppEventsItem) Url() string {
+	if r == nil || r.GetAppEvents_200_Item == nil || r.GetAppEvents_200_Item.Url == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Item.Url
+}
+
+
+// AppTablesItem wraps GetAppTables_200_Item with convenience methods.
+type AppTablesItem struct {
+	*generated.GetAppTables_200_Item
+}
+
+// Alias returns the Alias field value, or zero value if nil.
+func (r *AppTablesItem) Alias() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Alias == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Alias
+}
+
+// Created returns the Created field value, or zero value if nil.
+func (r *AppTablesItem) Created() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Created == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Created
+}
+
+// DefaultSortFieldId returns the DefaultSortFieldId field value, or zero value if nil.
+func (r *AppTablesItem) DefaultSortFieldId() int {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.DefaultSortFieldId == nil {
+		return 0
+	}
+	return *r.GetAppTables_200_Item.DefaultSortFieldId
+}
+
+// DefaultSortOrder returns the DefaultSortOrder field value as a string, or empty string if nil.
+func (r *AppTablesItem) DefaultSortOrder() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.DefaultSortOrder == nil {
+		return ""
+	}
+	return string(*r.GetAppTables_200_Item.DefaultSortOrder)
+}
+
+// Description returns the Description field value, or zero value if nil.
+func (r *AppTablesItem) Description() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Description == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Description
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *AppTablesItem) Id() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Id == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Id
+}
+
+// KeyFieldId returns the KeyFieldId field value, or zero value if nil.
+func (r *AppTablesItem) KeyFieldId() int {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.KeyFieldId == nil {
+		return 0
+	}
+	return *r.GetAppTables_200_Item.KeyFieldId
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *AppTablesItem) Name() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Name == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Name
+}
+
+// NextFieldId returns the NextFieldId field value, or zero value if nil.
+func (r *AppTablesItem) NextFieldId() int {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.NextFieldId == nil {
+		return 0
+	}
+	return *r.GetAppTables_200_Item.NextFieldId
+}
+
+// NextRecordId returns the NextRecordId field value, or zero value if nil.
+func (r *AppTablesItem) NextRecordId() int {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.NextRecordId == nil {
+		return 0
+	}
+	return *r.GetAppTables_200_Item.NextRecordId
+}
+
+// PluralRecordName returns the PluralRecordName field value, or zero value if nil.
+func (r *AppTablesItem) PluralRecordName() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.PluralRecordName == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.PluralRecordName
+}
+
+// SingleRecordName returns the SingleRecordName field value, or zero value if nil.
+func (r *AppTablesItem) SingleRecordName() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.SingleRecordName == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.SingleRecordName
+}
+
+// SizeLimit returns the SizeLimit field value, or zero value if nil.
+func (r *AppTablesItem) SizeLimit() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.SizeLimit == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.SizeLimit
+}
+
+// SpaceRemaining returns the SpaceRemaining field value, or zero value if nil.
+func (r *AppTablesItem) SpaceRemaining() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.SpaceRemaining == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.SpaceRemaining
+}
+
+// SpaceUsed returns the SpaceUsed field value, or zero value if nil.
+func (r *AppTablesItem) SpaceUsed() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.SpaceUsed == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.SpaceUsed
+}
+
+// Updated returns the Updated field value, or zero value if nil.
+func (r *AppTablesItem) Updated() string {
+	if r == nil || r.GetAppTables_200_Item == nil || r.GetAppTables_200_Item.Updated == nil {
+		return ""
+	}
+	return *r.GetAppTables_200_Item.Updated
+}
+
+
+// FieldUsageItem wraps GetFieldUsage_200_Item with convenience methods.
+type FieldUsageItem struct {
+	*generated.GetFieldUsage_200_Item
+}
+
+
+// FieldsUsageItem wraps GetFieldsUsage_200_Item with convenience methods.
+type FieldsUsageItem struct {
+	*generated.GetFieldsUsage_200_Item
+}
+
+
+// FieldsItem wraps GetFields_200_Item with convenience methods.
+type FieldsItem struct {
+	*generated.GetFields_200_Item
+}
+
+// AppearsByDefault returns the AppearsByDefault field value, or zero value if nil.
+func (r *FieldsItem) AppearsByDefault() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.AppearsByDefault == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.AppearsByDefault
+}
+
+// Audited returns the Audited field value, or zero value if nil.
+func (r *FieldsItem) Audited() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Audited == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.Audited
+}
+
+// Bold returns the Bold field value, or zero value if nil.
+func (r *FieldsItem) Bold() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Bold == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.Bold
+}
+
+// DoesDataCopy returns the DoesDataCopy field value, or zero value if nil.
+func (r *FieldsItem) DoesDataCopy() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.DoesDataCopy == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.DoesDataCopy
+}
+
+// FieldHelp returns the FieldHelp field value, or zero value if nil.
+func (r *FieldsItem) FieldHelp() string {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.FieldHelp == nil {
+		return ""
+	}
+	return *r.GetFields_200_Item.FieldHelp
+}
+
+// FieldType returns the FieldType field value, or zero value if nil.
+func (r *FieldsItem) FieldType() string {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.FieldType == nil {
+		return ""
+	}
+	return *r.GetFields_200_Item.FieldType
+}
+
+// FindEnabled returns the FindEnabled field value, or zero value if nil.
+func (r *FieldsItem) FindEnabled() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.FindEnabled == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.FindEnabled
+}
+
+// Id returns the Id field value.
+func (r *FieldsItem) Id() int64 {
+	if r == nil || r.GetFields_200_Item == nil {
+		return 0
+	}
+	return r.GetFields_200_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *FieldsItem) Label() string {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Label == nil {
+		return ""
+	}
+	return *r.GetFields_200_Item.Label
+}
+
+// Mode returns the Mode field value, or zero value if nil.
+func (r *FieldsItem) Mode() string {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Mode == nil {
+		return ""
+	}
+	return *r.GetFields_200_Item.Mode
+}
+
+// NoWrap returns the NoWrap field value, or zero value if nil.
+func (r *FieldsItem) NoWrap() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.NoWrap == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.NoWrap
+}
+
+// Required returns the Required field value, or zero value if nil.
+func (r *FieldsItem) Required() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Required == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.Required
+}
+
+// Unique returns the Unique field value, or zero value if nil.
+func (r *FieldsItem) Unique() bool {
+	if r == nil || r.GetFields_200_Item == nil || r.GetFields_200_Item.Unique == nil {
+		return false
+	}
+	return *r.GetFields_200_Item.Unique
+}
+
+
+// RolesItem wraps GetRoles_200_Item with convenience methods.
+type RolesItem struct {
+	*generated.GetRoles_200_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RolesItem) Id() int {
+	if r == nil || r.GetRoles_200_Item == nil || r.GetRoles_200_Item.Id == nil {
+		return 0
+	}
+	return *r.GetRoles_200_Item.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *RolesItem) Name() string {
+	if r == nil || r.GetRoles_200_Item == nil || r.GetRoles_200_Item.Name == nil {
+		return ""
+	}
+	return *r.GetRoles_200_Item.Name
+}
+
+
+// TableReportsItem wraps GetTableReports_200_Item with convenience methods.
+type TableReportsItem struct {
+	*generated.GetTableReports_200_Item
+}
+
+// Description returns the Description field value, or zero value if nil.
+func (r *TableReportsItem) Description() string {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.Description == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Item.Description
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *TableReportsItem) Id() string {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.Id == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Item.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *TableReportsItem) Name() string {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.Name == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Item.Name
+}
+
+// OwnerId returns the OwnerId field value, or zero value if nil.
+func (r *TableReportsItem) OwnerId() int {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.OwnerId == nil {
+		return 0
+	}
+	return *r.GetTableReports_200_Item.OwnerId
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *TableReportsItem) Type() string {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.Type == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Item.Type
+}
+
+// UsedCount returns the UsedCount field value, or zero value if nil.
+func (r *TableReportsItem) UsedCount() int {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.UsedCount == nil {
+		return 0
+	}
+	return *r.GetTableReports_200_Item.UsedCount
+}
+
+// UsedLast returns the UsedLast field value, or zero value if nil.
+func (r *TableReportsItem) UsedLast() string {
+	if r == nil || r.GetTableReports_200_Item == nil || r.GetTableReports_200_Item.UsedLast == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Item.UsedLast
+}
+
+
+
+
+// AuditEventsItem wraps Audit_200_Events_Item with convenience methods.
+type AuditEventsItem struct {
+	*generated.Audit_200_Events_Item
+}
+
+// Application returns the Application field value.
+func (r *AuditEventsItem) Application() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Application
+}
+
+// Description returns the Description field value.
+func (r *AuditEventsItem) Description() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Description
+}
+
+// Email returns the Email field value.
+func (r *AuditEventsItem) Email() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Email
+}
+
+// Firstname returns the Firstname field value.
+func (r *AuditEventsItem) Firstname() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Firstname
+}
+
+// Id returns the Id field value.
+func (r *AuditEventsItem) Id() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Id
+}
+
+// Ipaddress returns the Ipaddress field value.
+func (r *AuditEventsItem) Ipaddress() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Ipaddress
+}
+
+// Lastname returns the Lastname field value.
+func (r *AuditEventsItem) Lastname() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Lastname
+}
+
+// Time returns the Time field value.
+func (r *AuditEventsItem) Time() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Time
+}
+
+// Topic returns the Topic field value.
+func (r *AuditEventsItem) Topic() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Topic
+}
+
+// Useragent returns the Useragent field value.
+func (r *AuditEventsItem) Useragent() string {
+	if r == nil || r.Audit_200_Events_Item == nil {
+		return ""
+	}
+	return r.Audit_200_Events_Item.Useragent
+}
+
+
+// AuditEventsPayloadChanges wraps Audit_200_Events_PayloadChanges with convenience methods.
+type AuditEventsPayloadChanges struct {
+	*generated.Audit_200_Events_PayloadChanges
+}
+
+// ChangeType returns the ChangeType field value.
+func (r *AuditEventsPayloadChanges) ChangeType() string {
+	if r == nil || r.Audit_200_Events_PayloadChanges == nil {
+		return ""
+	}
+	return r.Audit_200_Events_PayloadChanges.ChangeType
+}
+
+// Rid returns the Rid field value.
+func (r *AuditEventsPayloadChanges) Rid() int {
+	if r == nil || r.Audit_200_Events_PayloadChanges == nil {
+		return 0
+	}
+	return r.Audit_200_Events_PayloadChanges.Rid
+}
+
+// Type returns the Type field value.
+func (r *AuditEventsPayloadChanges) Type() string {
+	if r == nil || r.Audit_200_Events_PayloadChanges == nil {
+		return ""
+	}
+	return r.Audit_200_Events_PayloadChanges.Type
+}
+
+
+// AuditEventsPayloadChangesChanges wraps Audit_200_Events_PayloadChanges_Changes with convenience methods.
+type AuditEventsPayloadChangesChanges struct {
+	*generated.Audit_200_Events_PayloadChanges_Changes
+}
+
+
+// CloneUserTokenAppsItem wraps CloneUserToken_200_Apps_Item with convenience methods.
+type CloneUserTokenAppsItem struct {
+	*generated.CloneUserToken_200_Apps_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *CloneUserTokenAppsItem) Id() string {
+	if r == nil || r.CloneUserToken_200_Apps_Item == nil || r.CloneUserToken_200_Apps_Item.Id == nil {
+		return ""
+	}
+	return *r.CloneUserToken_200_Apps_Item.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *CloneUserTokenAppsItem) Name() string {
+	if r == nil || r.CloneUserToken_200_Apps_Item == nil || r.CloneUserToken_200_Apps_Item.Name == nil {
+		return ""
+	}
+	return *r.CloneUserToken_200_Apps_Item.Name
+}
+
+
+// CopyAppVariablesItem wraps CopyApp_200_Variables_Item with convenience methods.
+type CopyAppVariablesItem struct {
+	*generated.CopyApp_200_Variables_Item
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *CopyAppVariablesItem) Name() string {
+	if r == nil || r.CopyApp_200_Variables_Item == nil || r.CopyApp_200_Variables_Item.Name == nil {
+		return ""
+	}
+	return *r.CopyApp_200_Variables_Item.Name
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *CopyAppVariablesItem) Value() string {
+	if r == nil || r.CopyApp_200_Variables_Item == nil || r.CopyApp_200_Variables_Item.Value == nil {
+		return ""
+	}
+	return *r.CopyApp_200_Variables_Item.Value
+}
+
+
+// CreateAppSecurityProperties wraps CreateApp_200_SecurityProperties with convenience methods.
+type CreateAppSecurityProperties struct {
+	*generated.CreateApp_200_SecurityProperties
+}
+
+// AllowClone returns the AllowClone field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) AllowClone() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.AllowClone == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.AllowClone
+}
+
+// AllowExport returns the AllowExport field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) AllowExport() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.AllowExport == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.AllowExport
+}
+
+// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) EnableAppTokens() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.EnableAppTokens == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.EnableAppTokens
+}
+
+// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) HideFromPublic() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.HideFromPublic == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.HideFromPublic
+}
+
+// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) MustBeRealmApproved() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.MustBeRealmApproved == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.MustBeRealmApproved
+}
+
+// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
+func (r *CreateAppSecurityProperties) UseIPFilter() bool {
+	if r == nil || r.CreateApp_200_SecurityProperties == nil || r.CreateApp_200_SecurityProperties.UseIPFilter == nil {
+		return false
+	}
+	return *r.CreateApp_200_SecurityProperties.UseIPFilter
+}
+
+
+// CreateAppVariablesItem wraps CreateApp_200_Variables_Item with convenience methods.
+type CreateAppVariablesItem struct {
+	*generated.CreateApp_200_Variables_Item
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *CreateAppVariablesItem) Name() string {
+	if r == nil || r.CreateApp_200_Variables_Item == nil || r.CreateApp_200_Variables_Item.Name == nil {
+		return ""
+	}
+	return *r.CreateApp_200_Variables_Item.Name
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *CreateAppVariablesItem) Value() string {
+	if r == nil || r.CreateApp_200_Variables_Item == nil || r.CreateApp_200_Variables_Item.Value == nil {
+		return ""
+	}
+	return *r.CreateApp_200_Variables_Item.Value
+}
+
+
+// CreateFieldProperties wraps CreateField_200_Properties with convenience methods.
+type CreateFieldProperties struct {
+	*generated.CreateField_200_Properties
+}
+
+// Abbreviate returns the Abbreviate field value, or zero value if nil.
+func (r *CreateFieldProperties) Abbreviate() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Abbreviate == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.Abbreviate
+}
+
+// AllowHTML returns the AllowHTML field value, or zero value if nil.
+func (r *CreateFieldProperties) AllowHTML() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AllowHTML == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.AllowHTML
+}
+
+// AllowMentions returns the AllowMentions field value, or zero value if nil.
+func (r *CreateFieldProperties) AllowMentions() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AllowMentions == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.AllowMentions
+}
+
+// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
+func (r *CreateFieldProperties) AllowNewChoices() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AllowNewChoices == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.AllowNewChoices
+}
+
+// AppearsAs returns the AppearsAs field value, or zero value if nil.
+func (r *CreateFieldProperties) AppearsAs() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AppearsAs == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.AppearsAs
+}
+
+// AppendOnly returns the AppendOnly field value, or zero value if nil.
+func (r *CreateFieldProperties) AppendOnly() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AppendOnly == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.AppendOnly
+}
+
+// AutoSave returns the AutoSave field value, or zero value if nil.
+func (r *CreateFieldProperties) AutoSave() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.AutoSave == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.AutoSave
+}
+
+// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
+func (r *CreateFieldProperties) BlankIsZero() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.BlankIsZero == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.BlankIsZero
+}
+
+// CarryChoices returns the CarryChoices field value, or zero value if nil.
+func (r *CreateFieldProperties) CarryChoices() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.CarryChoices == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.CarryChoices
+}
+
+// CommaStart returns the CommaStart field value, or zero value if nil.
+func (r *CreateFieldProperties) CommaStart() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.CommaStart == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.CommaStart
+}
+
+// Comments returns the Comments field value, or zero value if nil.
+func (r *CreateFieldProperties) Comments() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Comments == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.Comments
+}
+
+// CoverText returns the CoverText field value, or zero value if nil.
+func (r *CreateFieldProperties) CoverText() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.CoverText == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.CoverText
+}
+
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) CurrencyFormat() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.CreateField_200_Properties.CurrencyFormat)
+}
+
+// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
+func (r *CreateFieldProperties) CurrencySymbol() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.CurrencySymbol == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.CurrencySymbol
+}
+
+// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
+func (r *CreateFieldProperties) DecimalPlaces() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DecimalPlaces == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.DecimalPlaces
+}
+
+// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultCountryCode() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultCountryCode == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DefaultCountryCode
+}
+
+// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultDomain() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultDomain == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DefaultDomain
+}
+
+// DefaultKind returns the DefaultKind field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultKind() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultKind == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DefaultKind
+}
+
+// DefaultToday returns the DefaultToday field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultToday() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultToday == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DefaultToday
+}
+
+// DefaultValue returns the DefaultValue field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultValue() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultValue == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DefaultValue
+}
+
+// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
+func (r *CreateFieldProperties) DefaultValueLuid() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DefaultValueLuid == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.DefaultValueLuid
+}
+
+// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayAsLink() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayAsLink == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayAsLink
+}
+
+// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayCheckboxAsText() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayCheckboxAsText == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayCheckboxAsText
+}
+
+// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayDayOfWeek() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayDayOfWeek == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayDayOfWeek
+}
+
+// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayEmail() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayEmail == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DisplayEmail
+}
+
+// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayMonth() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayMonth == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DisplayMonth
+}
+
+// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayRelative() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayRelative == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayRelative
+}
+
+// DisplayTime returns the DisplayTime field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayTime() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayTime == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayTime
+}
+
+// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayTimezone() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayTimezone == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DisplayTimezone
+}
+
+// DisplayUser returns the DisplayUser field value, or zero value if nil.
+func (r *CreateFieldProperties) DisplayUser() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DisplayUser == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.DisplayUser
+}
+
+// DoesAverage returns the DoesAverage field value, or zero value if nil.
+func (r *CreateFieldProperties) DoesAverage() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DoesAverage == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DoesAverage
+}
+
+// DoesTotal returns the DoesTotal field value, or zero value if nil.
+func (r *CreateFieldProperties) DoesTotal() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DoesTotal == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.DoesTotal
+}
+
+// DurationField returns the DurationField field value, or zero value if nil.
+func (r *CreateFieldProperties) DurationField() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.DurationField == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.DurationField
+}
+
+// Exact returns the Exact field value, or zero value if nil.
+func (r *CreateFieldProperties) Exact() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Exact == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.Exact
+}
+
+// ForeignKey returns the ForeignKey field value, or zero value if nil.
+func (r *CreateFieldProperties) ForeignKey() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.ForeignKey == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.ForeignKey
+}
+
+// Format returns the Format field value, or zero value if nil.
+func (r *CreateFieldProperties) Format() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Format == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.Format
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *CreateFieldProperties) Formula() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Formula == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.Formula
+}
+
+// HasExtension returns the HasExtension field value, or zero value if nil.
+func (r *CreateFieldProperties) HasExtension() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.HasExtension == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.HasExtension
+}
+
+// Hours24 returns the Hours24 field value, or zero value if nil.
+func (r *CreateFieldProperties) Hours24() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Hours24 == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.Hours24
+}
+
+// LinkText returns the LinkText field value, or zero value if nil.
+func (r *CreateFieldProperties) LinkText() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.LinkText == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.LinkText
+}
+
+// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) LookupReferenceFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.LookupReferenceFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.LookupReferenceFieldId
+}
+
+// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) LookupTargetFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.LookupTargetFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.LookupTargetFieldId
+}
+
+// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) MasterChoiceFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.MasterChoiceFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.MasterChoiceFieldId
+}
+
+// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
+func (r *CreateFieldProperties) MasterChoiceTableId() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.MasterChoiceTableId == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.MasterChoiceTableId
+}
+
+// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
+func (r *CreateFieldProperties) MasterTableTag() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.MasterTableTag == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.MasterTableTag
+}
+
+// MaxLength returns the MaxLength field value, or zero value if nil.
+func (r *CreateFieldProperties) MaxLength() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.MaxLength == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.MaxLength
+}
+
+// MaxVersions returns the MaxVersions field value, or zero value if nil.
+func (r *CreateFieldProperties) MaxVersions() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.MaxVersions == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.MaxVersions
+}
+
+// NumLines returns the NumLines field value, or zero value if nil.
+func (r *CreateFieldProperties) NumLines() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.NumLines == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.NumLines
+}
+
+// NumberFormat returns the NumberFormat field value, or zero value if nil.
+func (r *CreateFieldProperties) NumberFormat() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.NumberFormat == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.NumberFormat
+}
+
+// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) ParentFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.ParentFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.ParentFieldId
+}
+
+// PostTempToken returns the PostTempToken field value, or zero value if nil.
+func (r *CreateFieldProperties) PostTempToken() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.PostTempToken == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.PostTempToken
+}
+
+// SeeVersions returns the SeeVersions field value, or zero value if nil.
+func (r *CreateFieldProperties) SeeVersions() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SeeVersions == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.SeeVersions
+}
+
+// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) SnapFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SnapFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.SnapFieldId
+}
+
+// SortAlpha returns the SortAlpha field value, or zero value if nil.
+func (r *CreateFieldProperties) SortAlpha() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SortAlpha == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.SortAlpha
+}
+
+// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
+func (r *CreateFieldProperties) SortAsGiven() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SortAsGiven == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.SortAsGiven
+}
+
+// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) SourceFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SourceFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.SourceFieldId
+}
+
+// StartField returns the StartField field value, or zero value if nil.
+func (r *CreateFieldProperties) StartField() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.StartField == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.StartField
+}
+
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) SummaryFunction() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.CreateField_200_Properties.SummaryFunction)
+}
+
+// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) SummaryReferenceFieldId() int64 {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SummaryReferenceFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.SummaryReferenceFieldId
+}
+
+// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) SummaryTargetFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.SummaryTargetFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.SummaryTargetFieldId
+}
+
+// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
+func (r *CreateFieldProperties) TargetFieldId() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.TargetFieldId == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.TargetFieldId
+}
+
+// TargetTableId returns the TargetTableId field value, or zero value if nil.
+func (r *CreateFieldProperties) TargetTableId() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.TargetTableId == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.TargetTableId
+}
+
+// TargetTableName returns the TargetTableName field value, or zero value if nil.
+func (r *CreateFieldProperties) TargetTableName() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.TargetTableName == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.TargetTableName
+}
+
+// Units returns the Units field value, or zero value if nil.
+func (r *CreateFieldProperties) Units() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Units == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.Units
+}
+
+// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
+func (r *CreateFieldProperties) UseI18NFormat() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.UseI18NFormat == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.UseI18NFormat
+}
+
+// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
+func (r *CreateFieldProperties) UseNewWindow() bool {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.UseNewWindow == nil {
+		return false
+	}
+	return *r.CreateField_200_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *CreateFieldProperties) VersionMode() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.CreateField_200_Properties.VersionMode)
+}
+
+// Width returns the Width field value, or zero value if nil.
+func (r *CreateFieldProperties) Width() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.Width == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.Width
+}
+
+// WorkWeek returns the WorkWeek field value, or zero value if nil.
+func (r *CreateFieldProperties) WorkWeek() int {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.WorkWeek == nil {
+		return 0
+	}
+	return *r.CreateField_200_Properties.WorkWeek
+}
+
+// XmlTag returns the XmlTag field value, or zero value if nil.
+func (r *CreateFieldProperties) XmlTag() string {
+	if r == nil || r.CreateField_200_Properties == nil || r.CreateField_200_Properties.XmlTag == nil {
+		return ""
+	}
+	return *r.CreateField_200_Properties.XmlTag
+}
+
+
+// CreateFieldPropertiesCompositeFieldsItem wraps CreateField_200_Properties_CompositeFields_Item with convenience methods.
+type CreateFieldPropertiesCompositeFieldsItem struct {
+	*generated.CreateField_200_Properties_CompositeFields_Item
+}
+
+
+// CreateRelationshipForeignKeyField wraps CreateRelationship_200_ForeignKeyField with convenience methods.
+type CreateRelationshipForeignKeyField struct {
+	*generated.CreateRelationship_200_ForeignKeyField
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *CreateRelationshipForeignKeyField) Id() int {
+	if r == nil || r.CreateRelationship_200_ForeignKeyField == nil || r.CreateRelationship_200_ForeignKeyField.Id == nil {
+		return 0
+	}
+	return *r.CreateRelationship_200_ForeignKeyField.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *CreateRelationshipForeignKeyField) Label() string {
+	if r == nil || r.CreateRelationship_200_ForeignKeyField == nil || r.CreateRelationship_200_ForeignKeyField.Label == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_ForeignKeyField.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *CreateRelationshipForeignKeyField) Type() string {
+	if r == nil || r.CreateRelationship_200_ForeignKeyField == nil || r.CreateRelationship_200_ForeignKeyField.Type == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_ForeignKeyField.Type
+}
+
+
+// CreateRelationshipLookupFieldsItem wraps CreateRelationship_200_LookupFields_Item with convenience methods.
+type CreateRelationshipLookupFieldsItem struct {
+	*generated.CreateRelationship_200_LookupFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *CreateRelationshipLookupFieldsItem) Id() int {
+	if r == nil || r.CreateRelationship_200_LookupFields_Item == nil || r.CreateRelationship_200_LookupFields_Item.Id == nil {
+		return 0
+	}
+	return *r.CreateRelationship_200_LookupFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *CreateRelationshipLookupFieldsItem) Label() string {
+	if r == nil || r.CreateRelationship_200_LookupFields_Item == nil || r.CreateRelationship_200_LookupFields_Item.Label == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_LookupFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *CreateRelationshipLookupFieldsItem) Type() string {
+	if r == nil || r.CreateRelationship_200_LookupFields_Item == nil || r.CreateRelationship_200_LookupFields_Item.Type == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_LookupFields_Item.Type
+}
+
+
+// CreateRelationshipSummaryFieldsItem wraps CreateRelationship_200_SummaryFields_Item with convenience methods.
+type CreateRelationshipSummaryFieldsItem struct {
+	*generated.CreateRelationship_200_SummaryFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *CreateRelationshipSummaryFieldsItem) Id() int {
+	if r == nil || r.CreateRelationship_200_SummaryFields_Item == nil || r.CreateRelationship_200_SummaryFields_Item.Id == nil {
+		return 0
+	}
+	return *r.CreateRelationship_200_SummaryFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *CreateRelationshipSummaryFieldsItem) Label() string {
+	if r == nil || r.CreateRelationship_200_SummaryFields_Item == nil || r.CreateRelationship_200_SummaryFields_Item.Label == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_SummaryFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *CreateRelationshipSummaryFieldsItem) Type() string {
+	if r == nil || r.CreateRelationship_200_SummaryFields_Item == nil || r.CreateRelationship_200_SummaryFields_Item.Type == nil {
+		return ""
+	}
+	return *r.CreateRelationship_200_SummaryFields_Item.Type
+}
+
+
+// DeleteFileCreator wraps DeleteFile_200_Creator with convenience methods.
+type DeleteFileCreator struct {
+	*generated.DeleteFile_200_Creator
+}
+
+// Email returns the Email field value, or zero value if nil.
+func (r *DeleteFileCreator) Email() string {
+	if r == nil || r.DeleteFile_200_Creator == nil || r.DeleteFile_200_Creator.Email == nil {
+		return ""
+	}
+	return *r.DeleteFile_200_Creator.Email
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *DeleteFileCreator) Id() string {
+	if r == nil || r.DeleteFile_200_Creator == nil || r.DeleteFile_200_Creator.Id == nil {
+		return ""
+	}
+	return *r.DeleteFile_200_Creator.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *DeleteFileCreator) Name() string {
+	if r == nil || r.DeleteFile_200_Creator == nil || r.DeleteFile_200_Creator.Name == nil {
+		return ""
+	}
+	return *r.DeleteFile_200_Creator.Name
+}
+
+// UserName returns the UserName field value, or zero value if nil.
+func (r *DeleteFileCreator) UserName() string {
+	if r == nil || r.DeleteFile_200_Creator == nil || r.DeleteFile_200_Creator.UserName == nil {
+		return ""
+	}
+	return *r.DeleteFile_200_Creator.UserName
+}
+
+
+// AppEventsOwner wraps GetAppEvents_200_Owner with convenience methods.
+type AppEventsOwner struct {
+	*generated.GetAppEvents_200_Owner
+}
+
+// Email returns the Email field value, or zero value if nil.
+func (r *AppEventsOwner) Email() string {
+	if r == nil || r.GetAppEvents_200_Owner == nil || r.GetAppEvents_200_Owner.Email == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Owner.Email
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *AppEventsOwner) Id() string {
+	if r == nil || r.GetAppEvents_200_Owner == nil || r.GetAppEvents_200_Owner.Id == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Owner.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *AppEventsOwner) Name() string {
+	if r == nil || r.GetAppEvents_200_Owner == nil || r.GetAppEvents_200_Owner.Name == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Owner.Name
+}
+
+// UserName returns the UserName field value, or zero value if nil.
+func (r *AppEventsOwner) UserName() string {
+	if r == nil || r.GetAppEvents_200_Owner == nil || r.GetAppEvents_200_Owner.UserName == nil {
+		return ""
+	}
+	return *r.GetAppEvents_200_Owner.UserName
+}
+
+
+// AppSecurityProperties wraps GetApp_200_SecurityProperties with convenience methods.
+type AppSecurityProperties struct {
+	*generated.GetApp_200_SecurityProperties
+}
+
+// AllowClone returns the AllowClone field value, or zero value if nil.
+func (r *AppSecurityProperties) AllowClone() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.AllowClone == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.AllowClone
+}
+
+// AllowExport returns the AllowExport field value, or zero value if nil.
+func (r *AppSecurityProperties) AllowExport() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.AllowExport == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.AllowExport
+}
+
+// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
+func (r *AppSecurityProperties) EnableAppTokens() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.EnableAppTokens == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.EnableAppTokens
+}
+
+// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
+func (r *AppSecurityProperties) HideFromPublic() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.HideFromPublic == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.HideFromPublic
+}
+
+// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
+func (r *AppSecurityProperties) MustBeRealmApproved() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.MustBeRealmApproved == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.MustBeRealmApproved
+}
+
+// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
+func (r *AppSecurityProperties) UseIPFilter() bool {
+	if r == nil || r.GetApp_200_SecurityProperties == nil || r.GetApp_200_SecurityProperties.UseIPFilter == nil {
+		return false
+	}
+	return *r.GetApp_200_SecurityProperties.UseIPFilter
+}
+
+
+// AppVariablesItem wraps GetApp_200_Variables_Item with convenience methods.
+type AppVariablesItem struct {
+	*generated.GetApp_200_Variables_Item
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *AppVariablesItem) Name() string {
+	if r == nil || r.GetApp_200_Variables_Item == nil || r.GetApp_200_Variables_Item.Name == nil {
+		return ""
+	}
+	return *r.GetApp_200_Variables_Item.Name
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *AppVariablesItem) Value() string {
+	if r == nil || r.GetApp_200_Variables_Item == nil || r.GetApp_200_Variables_Item.Value == nil {
+		return ""
+	}
+	return *r.GetApp_200_Variables_Item.Value
+}
+
+
+// FieldUsageField wraps GetFieldUsage_200_Field with convenience methods.
+type FieldUsageField struct {
+	*generated.GetFieldUsage_200_Field
+}
+
+// Id returns the Id field value.
+func (r *FieldUsageField) Id() int {
+	if r == nil || r.GetFieldUsage_200_Field == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Field.Id
+}
+
+// Name returns the Name field value.
+func (r *FieldUsageField) Name() string {
+	if r == nil || r.GetFieldUsage_200_Field == nil {
+		return ""
+	}
+	return r.GetFieldUsage_200_Field.Name
+}
+
+// Type returns the Type field value.
+func (r *FieldUsageField) Type() string {
+	if r == nil || r.GetFieldUsage_200_Field == nil {
+		return ""
+	}
+	return r.GetFieldUsage_200_Field.Type
+}
+
+
+// FieldUsageUsage wraps GetFieldUsage_200_Usage with convenience methods.
+type FieldUsageUsage struct {
+	*generated.GetFieldUsage_200_Usage
+}
+
+
+// FieldUsageUsageActions wraps GetFieldUsage_200_Usage_Actions with convenience methods.
+type FieldUsageUsageActions struct {
+	*generated.GetFieldUsage_200_Usage_Actions
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageActions) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Actions == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Actions.Count
+}
+
+
+// FieldUsageUsageAppHomePages wraps GetFieldUsage_200_Usage_AppHomePages with convenience methods.
+type FieldUsageUsageAppHomePages struct {
+	*generated.GetFieldUsage_200_Usage_AppHomePages
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageAppHomePages) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_AppHomePages == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_AppHomePages.Count
+}
+
+
+// FieldUsageUsageDefaultReports wraps GetFieldUsage_200_Usage_DefaultReports with convenience methods.
+type FieldUsageUsageDefaultReports struct {
+	*generated.GetFieldUsage_200_Usage_DefaultReports
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageDefaultReports) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_DefaultReports == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_DefaultReports.Count
+}
+
+
+// FieldUsageUsageExactForms wraps GetFieldUsage_200_Usage_ExactForms with convenience methods.
+type FieldUsageUsageExactForms struct {
+	*generated.GetFieldUsage_200_Usage_ExactForms
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageExactForms) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_ExactForms == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_ExactForms.Count
+}
+
+
+// FieldUsageUsageFields wraps GetFieldUsage_200_Usage_Fields with convenience methods.
+type FieldUsageUsageFields struct {
+	*generated.GetFieldUsage_200_Usage_Fields
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageFields) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Fields == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Fields.Count
+}
+
+
+// FieldUsageUsageForms wraps GetFieldUsage_200_Usage_Forms with convenience methods.
+type FieldUsageUsageForms struct {
+	*generated.GetFieldUsage_200_Usage_Forms
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageForms) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Forms == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Forms.Count
+}
+
+
+// FieldUsageUsageNotifications wraps GetFieldUsage_200_Usage_Notifications with convenience methods.
+type FieldUsageUsageNotifications struct {
+	*generated.GetFieldUsage_200_Usage_Notifications
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageNotifications) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Notifications == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Notifications.Count
+}
+
+
+// FieldUsageUsagePersonalReports wraps GetFieldUsage_200_Usage_PersonalReports with convenience methods.
+type FieldUsageUsagePersonalReports struct {
+	*generated.GetFieldUsage_200_Usage_PersonalReports
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsagePersonalReports) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_PersonalReports == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_PersonalReports.Count
+}
+
+
+// FieldUsageUsagePipelines wraps GetFieldUsage_200_Usage_Pipelines with convenience methods.
+type FieldUsageUsagePipelines struct {
+	*generated.GetFieldUsage_200_Usage_Pipelines
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsagePipelines) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Pipelines == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Pipelines.Count
+}
+
+
+// FieldUsageUsageRelationships wraps GetFieldUsage_200_Usage_Relationships with convenience methods.
+type FieldUsageUsageRelationships struct {
+	*generated.GetFieldUsage_200_Usage_Relationships
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageRelationships) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Relationships == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Relationships.Count
+}
+
+
+// FieldUsageUsageReminders wraps GetFieldUsage_200_Usage_Reminders with convenience methods.
+type FieldUsageUsageReminders struct {
+	*generated.GetFieldUsage_200_Usage_Reminders
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageReminders) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Reminders == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Reminders.Count
+}
+
+
+// FieldUsageUsageReports wraps GetFieldUsage_200_Usage_Reports with convenience methods.
+type FieldUsageUsageReports struct {
+	*generated.GetFieldUsage_200_Usage_Reports
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageReports) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Reports == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Reports.Count
+}
+
+
+// FieldUsageUsageRoles wraps GetFieldUsage_200_Usage_Roles with convenience methods.
+type FieldUsageUsageRoles struct {
+	*generated.GetFieldUsage_200_Usage_Roles
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageRoles) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Roles == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Roles.Count
+}
+
+
+// FieldUsageUsageWebhooks wraps GetFieldUsage_200_Usage_Webhooks with convenience methods.
+type FieldUsageUsageWebhooks struct {
+	*generated.GetFieldUsage_200_Usage_Webhooks
+}
+
+// Count returns the Count field value.
+func (r *FieldUsageUsageWebhooks) Count() int {
+	if r == nil || r.GetFieldUsage_200_Usage_Webhooks == nil {
+		return 0
+	}
+	return r.GetFieldUsage_200_Usage_Webhooks.Count
+}
+
+
+// FieldProperties wraps GetField_200_Properties with convenience methods.
+type FieldProperties struct {
+	*generated.GetField_200_Properties
+}
+
+// Abbreviate returns the Abbreviate field value, or zero value if nil.
+func (r *FieldProperties) Abbreviate() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Abbreviate == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.Abbreviate
+}
+
+// AllowHTML returns the AllowHTML field value, or zero value if nil.
+func (r *FieldProperties) AllowHTML() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AllowHTML == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.AllowHTML
+}
+
+// AllowMentions returns the AllowMentions field value, or zero value if nil.
+func (r *FieldProperties) AllowMentions() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AllowMentions == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.AllowMentions
+}
+
+// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
+func (r *FieldProperties) AllowNewChoices() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AllowNewChoices == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.AllowNewChoices
+}
+
+// AppearsAs returns the AppearsAs field value, or zero value if nil.
+func (r *FieldProperties) AppearsAs() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AppearsAs == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.AppearsAs
+}
+
+// AppendOnly returns the AppendOnly field value, or zero value if nil.
+func (r *FieldProperties) AppendOnly() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AppendOnly == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.AppendOnly
+}
+
+// AutoSave returns the AutoSave field value, or zero value if nil.
+func (r *FieldProperties) AutoSave() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.AutoSave == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.AutoSave
+}
+
+// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
+func (r *FieldProperties) BlankIsZero() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.BlankIsZero == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.BlankIsZero
+}
+
+// CarryChoices returns the CarryChoices field value, or zero value if nil.
+func (r *FieldProperties) CarryChoices() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.CarryChoices == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.CarryChoices
+}
+
+// CommaStart returns the CommaStart field value, or zero value if nil.
+func (r *FieldProperties) CommaStart() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.CommaStart == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.CommaStart
+}
+
+// Comments returns the Comments field value, or zero value if nil.
+func (r *FieldProperties) Comments() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Comments == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.Comments
+}
+
+// CoverText returns the CoverText field value, or zero value if nil.
+func (r *FieldProperties) CoverText() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.CoverText == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.CoverText
+}
+
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *FieldProperties) CurrencyFormat() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.GetField_200_Properties.CurrencyFormat)
+}
+
+// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
+func (r *FieldProperties) CurrencySymbol() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.CurrencySymbol == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.CurrencySymbol
+}
+
+// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
+func (r *FieldProperties) DecimalPlaces() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DecimalPlaces == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.DecimalPlaces
+}
+
+// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
+func (r *FieldProperties) DefaultCountryCode() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultCountryCode == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DefaultCountryCode
+}
+
+// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
+func (r *FieldProperties) DefaultDomain() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultDomain == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DefaultDomain
+}
+
+// DefaultKind returns the DefaultKind field value, or zero value if nil.
+func (r *FieldProperties) DefaultKind() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultKind == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DefaultKind
+}
+
+// DefaultToday returns the DefaultToday field value, or zero value if nil.
+func (r *FieldProperties) DefaultToday() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultToday == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DefaultToday
+}
+
+// DefaultValue returns the DefaultValue field value, or zero value if nil.
+func (r *FieldProperties) DefaultValue() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultValue == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DefaultValue
+}
+
+// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
+func (r *FieldProperties) DefaultValueLuid() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DefaultValueLuid == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.DefaultValueLuid
+}
+
+// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
+func (r *FieldProperties) DisplayAsLink() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayAsLink == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayAsLink
+}
+
+// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
+func (r *FieldProperties) DisplayCheckboxAsText() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayCheckboxAsText == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayCheckboxAsText
+}
+
+// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
+func (r *FieldProperties) DisplayDayOfWeek() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayDayOfWeek == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayDayOfWeek
+}
+
+// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
+func (r *FieldProperties) DisplayEmail() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayEmail == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DisplayEmail
+}
+
+// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
+func (r *FieldProperties) DisplayMonth() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayMonth == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DisplayMonth
+}
+
+// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
+func (r *FieldProperties) DisplayRelative() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayRelative == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayRelative
+}
+
+// DisplayTime returns the DisplayTime field value, or zero value if nil.
+func (r *FieldProperties) DisplayTime() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayTime == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayTime
+}
+
+// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
+func (r *FieldProperties) DisplayTimezone() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayTimezone == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DisplayTimezone
+}
+
+// DisplayUser returns the DisplayUser field value, or zero value if nil.
+func (r *FieldProperties) DisplayUser() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DisplayUser == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.DisplayUser
+}
+
+// DoesAverage returns the DoesAverage field value, or zero value if nil.
+func (r *FieldProperties) DoesAverage() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DoesAverage == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DoesAverage
+}
+
+// DoesTotal returns the DoesTotal field value, or zero value if nil.
+func (r *FieldProperties) DoesTotal() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DoesTotal == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.DoesTotal
+}
+
+// DurationField returns the DurationField field value, or zero value if nil.
+func (r *FieldProperties) DurationField() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.DurationField == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.DurationField
+}
+
+// Exact returns the Exact field value, or zero value if nil.
+func (r *FieldProperties) Exact() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Exact == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.Exact
+}
+
+// ForeignKey returns the ForeignKey field value, or zero value if nil.
+func (r *FieldProperties) ForeignKey() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.ForeignKey == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.ForeignKey
+}
+
+// Format returns the Format field value, or zero value if nil.
+func (r *FieldProperties) Format() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Format == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.Format
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *FieldProperties) Formula() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Formula == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.Formula
+}
+
+// HasExtension returns the HasExtension field value, or zero value if nil.
+func (r *FieldProperties) HasExtension() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.HasExtension == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.HasExtension
+}
+
+// Hours24 returns the Hours24 field value, or zero value if nil.
+func (r *FieldProperties) Hours24() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Hours24 == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.Hours24
+}
+
+// LinkText returns the LinkText field value, or zero value if nil.
+func (r *FieldProperties) LinkText() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.LinkText == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.LinkText
+}
+
+// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
+func (r *FieldProperties) LookupReferenceFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.LookupReferenceFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.LookupReferenceFieldId
+}
+
+// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
+func (r *FieldProperties) LookupTargetFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.LookupTargetFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.LookupTargetFieldId
+}
+
+// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
+func (r *FieldProperties) MasterChoiceFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.MasterChoiceFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.MasterChoiceFieldId
+}
+
+// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
+func (r *FieldProperties) MasterChoiceTableId() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.MasterChoiceTableId == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.MasterChoiceTableId
+}
+
+// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
+func (r *FieldProperties) MasterTableTag() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.MasterTableTag == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.MasterTableTag
+}
+
+// MaxLength returns the MaxLength field value, or zero value if nil.
+func (r *FieldProperties) MaxLength() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.MaxLength == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.MaxLength
+}
+
+// MaxVersions returns the MaxVersions field value, or zero value if nil.
+func (r *FieldProperties) MaxVersions() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.MaxVersions == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.MaxVersions
+}
+
+// NumLines returns the NumLines field value, or zero value if nil.
+func (r *FieldProperties) NumLines() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.NumLines == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.NumLines
+}
+
+// NumberFormat returns the NumberFormat field value, or zero value if nil.
+func (r *FieldProperties) NumberFormat() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.NumberFormat == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.NumberFormat
+}
+
+// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
+func (r *FieldProperties) ParentFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.ParentFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.ParentFieldId
+}
+
+// PostTempToken returns the PostTempToken field value, or zero value if nil.
+func (r *FieldProperties) PostTempToken() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.PostTempToken == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.PostTempToken
+}
+
+// SeeVersions returns the SeeVersions field value, or zero value if nil.
+func (r *FieldProperties) SeeVersions() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SeeVersions == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.SeeVersions
+}
+
+// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
+func (r *FieldProperties) SnapFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SnapFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.SnapFieldId
+}
+
+// SortAlpha returns the SortAlpha field value, or zero value if nil.
+func (r *FieldProperties) SortAlpha() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SortAlpha == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.SortAlpha
+}
+
+// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
+func (r *FieldProperties) SortAsGiven() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SortAsGiven == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.SortAsGiven
+}
+
+// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
+func (r *FieldProperties) SourceFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SourceFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.SourceFieldId
+}
+
+// StartField returns the StartField field value, or zero value if nil.
+func (r *FieldProperties) StartField() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.StartField == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.StartField
+}
+
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *FieldProperties) SummaryFunction() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.GetField_200_Properties.SummaryFunction)
+}
+
+// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
+func (r *FieldProperties) SummaryReferenceFieldId() int64 {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SummaryReferenceFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.SummaryReferenceFieldId
+}
+
+// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
+func (r *FieldProperties) SummaryTargetFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.SummaryTargetFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.SummaryTargetFieldId
+}
+
+// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
+func (r *FieldProperties) TargetFieldId() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.TargetFieldId == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.TargetFieldId
+}
+
+// TargetTableId returns the TargetTableId field value, or zero value if nil.
+func (r *FieldProperties) TargetTableId() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.TargetTableId == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.TargetTableId
+}
+
+// TargetTableName returns the TargetTableName field value, or zero value if nil.
+func (r *FieldProperties) TargetTableName() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.TargetTableName == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.TargetTableName
+}
+
+// Units returns the Units field value, or zero value if nil.
+func (r *FieldProperties) Units() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Units == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.Units
+}
+
+// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
+func (r *FieldProperties) UseI18NFormat() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.UseI18NFormat == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.UseI18NFormat
+}
+
+// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
+func (r *FieldProperties) UseNewWindow() bool {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.UseNewWindow == nil {
+		return false
+	}
+	return *r.GetField_200_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *FieldProperties) VersionMode() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.GetField_200_Properties.VersionMode)
+}
+
+// Width returns the Width field value, or zero value if nil.
+func (r *FieldProperties) Width() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.Width == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.Width
+}
+
+// WorkWeek returns the WorkWeek field value, or zero value if nil.
+func (r *FieldProperties) WorkWeek() int {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.WorkWeek == nil {
+		return 0
+	}
+	return *r.GetField_200_Properties.WorkWeek
+}
+
+// XmlTag returns the XmlTag field value, or zero value if nil.
+func (r *FieldProperties) XmlTag() string {
+	if r == nil || r.GetField_200_Properties == nil || r.GetField_200_Properties.XmlTag == nil {
+		return ""
+	}
+	return *r.GetField_200_Properties.XmlTag
+}
+
+
+// FieldPropertiesCompositeFieldsItem wraps GetField_200_Properties_CompositeFields_Item with convenience methods.
+type FieldPropertiesCompositeFieldsItem struct {
+	*generated.GetField_200_Properties_CompositeFields_Item
+}
+
+
+// FieldsUsageField wraps GetFieldsUsage_200_Field with convenience methods.
+type FieldsUsageField struct {
+	*generated.GetFieldsUsage_200_Field
+}
+
+// Id returns the Id field value.
+func (r *FieldsUsageField) Id() int {
+	if r == nil || r.GetFieldsUsage_200_Field == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Field.Id
+}
+
+// Name returns the Name field value.
+func (r *FieldsUsageField) Name() string {
+	if r == nil || r.GetFieldsUsage_200_Field == nil {
+		return ""
+	}
+	return r.GetFieldsUsage_200_Field.Name
+}
+
+// Type returns the Type field value.
+func (r *FieldsUsageField) Type() string {
+	if r == nil || r.GetFieldsUsage_200_Field == nil {
+		return ""
+	}
+	return r.GetFieldsUsage_200_Field.Type
+}
+
+
+// FieldsUsageUsage wraps GetFieldsUsage_200_Usage with convenience methods.
+type FieldsUsageUsage struct {
+	*generated.GetFieldsUsage_200_Usage
+}
+
+
+// FieldsUsageUsageActions wraps GetFieldsUsage_200_Usage_Actions with convenience methods.
+type FieldsUsageUsageActions struct {
+	*generated.GetFieldsUsage_200_Usage_Actions
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageActions) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Actions == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Actions.Count
+}
+
+
+// FieldsUsageUsageAppHomePages wraps GetFieldsUsage_200_Usage_AppHomePages with convenience methods.
+type FieldsUsageUsageAppHomePages struct {
+	*generated.GetFieldsUsage_200_Usage_AppHomePages
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageAppHomePages) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_AppHomePages == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_AppHomePages.Count
+}
+
+
+// FieldsUsageUsageDefaultReports wraps GetFieldsUsage_200_Usage_DefaultReports with convenience methods.
+type FieldsUsageUsageDefaultReports struct {
+	*generated.GetFieldsUsage_200_Usage_DefaultReports
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageDefaultReports) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_DefaultReports == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_DefaultReports.Count
+}
+
+
+// FieldsUsageUsageExactForms wraps GetFieldsUsage_200_Usage_ExactForms with convenience methods.
+type FieldsUsageUsageExactForms struct {
+	*generated.GetFieldsUsage_200_Usage_ExactForms
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageExactForms) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_ExactForms == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_ExactForms.Count
+}
+
+
+// FieldsUsageUsageFields wraps GetFieldsUsage_200_Usage_Fields with convenience methods.
+type FieldsUsageUsageFields struct {
+	*generated.GetFieldsUsage_200_Usage_Fields
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageFields) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Fields == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Fields.Count
+}
+
+
+// FieldsUsageUsageForms wraps GetFieldsUsage_200_Usage_Forms with convenience methods.
+type FieldsUsageUsageForms struct {
+	*generated.GetFieldsUsage_200_Usage_Forms
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageForms) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Forms == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Forms.Count
+}
+
+
+// FieldsUsageUsageNotifications wraps GetFieldsUsage_200_Usage_Notifications with convenience methods.
+type FieldsUsageUsageNotifications struct {
+	*generated.GetFieldsUsage_200_Usage_Notifications
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageNotifications) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Notifications == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Notifications.Count
+}
+
+
+// FieldsUsageUsagePersonalReports wraps GetFieldsUsage_200_Usage_PersonalReports with convenience methods.
+type FieldsUsageUsagePersonalReports struct {
+	*generated.GetFieldsUsage_200_Usage_PersonalReports
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsagePersonalReports) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_PersonalReports == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_PersonalReports.Count
+}
+
+
+// FieldsUsageUsagePipelines wraps GetFieldsUsage_200_Usage_Pipelines with convenience methods.
+type FieldsUsageUsagePipelines struct {
+	*generated.GetFieldsUsage_200_Usage_Pipelines
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsagePipelines) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Pipelines == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Pipelines.Count
+}
+
+
+// FieldsUsageUsageRelationships wraps GetFieldsUsage_200_Usage_Relationships with convenience methods.
+type FieldsUsageUsageRelationships struct {
+	*generated.GetFieldsUsage_200_Usage_Relationships
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageRelationships) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Relationships == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Relationships.Count
+}
+
+
+// FieldsUsageUsageReminders wraps GetFieldsUsage_200_Usage_Reminders with convenience methods.
+type FieldsUsageUsageReminders struct {
+	*generated.GetFieldsUsage_200_Usage_Reminders
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageReminders) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Reminders == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Reminders.Count
+}
+
+
+// FieldsUsageUsageReports wraps GetFieldsUsage_200_Usage_Reports with convenience methods.
+type FieldsUsageUsageReports struct {
+	*generated.GetFieldsUsage_200_Usage_Reports
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageReports) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Reports == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Reports.Count
+}
+
+
+// FieldsUsageUsageRoles wraps GetFieldsUsage_200_Usage_Roles with convenience methods.
+type FieldsUsageUsageRoles struct {
+	*generated.GetFieldsUsage_200_Usage_Roles
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageRoles) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Roles == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Roles.Count
+}
+
+
+// FieldsUsageUsageWebhooks wraps GetFieldsUsage_200_Usage_Webhooks with convenience methods.
+type FieldsUsageUsageWebhooks struct {
+	*generated.GetFieldsUsage_200_Usage_Webhooks
+}
+
+// Count returns the Count field value.
+func (r *FieldsUsageUsageWebhooks) Count() int {
+	if r == nil || r.GetFieldsUsage_200_Usage_Webhooks == nil {
+		return 0
+	}
+	return r.GetFieldsUsage_200_Usage_Webhooks.Count
+}
+
+
+// FieldsProperties wraps GetFields_200_Properties with convenience methods.
+type FieldsProperties struct {
+	*generated.GetFields_200_Properties
+}
+
+// Abbreviate returns the Abbreviate field value, or zero value if nil.
+func (r *FieldsProperties) Abbreviate() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Abbreviate == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.Abbreviate
+}
+
+// AllowHTML returns the AllowHTML field value, or zero value if nil.
+func (r *FieldsProperties) AllowHTML() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AllowHTML == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.AllowHTML
+}
+
+// AllowMentions returns the AllowMentions field value, or zero value if nil.
+func (r *FieldsProperties) AllowMentions() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AllowMentions == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.AllowMentions
+}
+
+// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
+func (r *FieldsProperties) AllowNewChoices() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AllowNewChoices == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.AllowNewChoices
+}
+
+// AppearsAs returns the AppearsAs field value, or zero value if nil.
+func (r *FieldsProperties) AppearsAs() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AppearsAs == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.AppearsAs
+}
+
+// AppendOnly returns the AppendOnly field value, or zero value if nil.
+func (r *FieldsProperties) AppendOnly() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AppendOnly == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.AppendOnly
+}
+
+// AutoSave returns the AutoSave field value, or zero value if nil.
+func (r *FieldsProperties) AutoSave() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.AutoSave == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.AutoSave
+}
+
+// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
+func (r *FieldsProperties) BlankIsZero() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.BlankIsZero == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.BlankIsZero
+}
+
+// CarryChoices returns the CarryChoices field value, or zero value if nil.
+func (r *FieldsProperties) CarryChoices() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.CarryChoices == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.CarryChoices
+}
+
+// CommaStart returns the CommaStart field value, or zero value if nil.
+func (r *FieldsProperties) CommaStart() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.CommaStart == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.CommaStart
+}
+
+// Comments returns the Comments field value, or zero value if nil.
+func (r *FieldsProperties) Comments() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Comments == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.Comments
+}
+
+// CoverText returns the CoverText field value, or zero value if nil.
+func (r *FieldsProperties) CoverText() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.CoverText == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.CoverText
+}
+
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *FieldsProperties) CurrencyFormat() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.GetFields_200_Properties.CurrencyFormat)
+}
+
+// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
+func (r *FieldsProperties) CurrencySymbol() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.CurrencySymbol == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.CurrencySymbol
+}
+
+// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
+func (r *FieldsProperties) DecimalPlaces() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DecimalPlaces == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.DecimalPlaces
+}
+
+// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
+func (r *FieldsProperties) DefaultCountryCode() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultCountryCode == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DefaultCountryCode
+}
+
+// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
+func (r *FieldsProperties) DefaultDomain() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultDomain == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DefaultDomain
+}
+
+// DefaultKind returns the DefaultKind field value, or zero value if nil.
+func (r *FieldsProperties) DefaultKind() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultKind == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DefaultKind
+}
+
+// DefaultToday returns the DefaultToday field value, or zero value if nil.
+func (r *FieldsProperties) DefaultToday() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultToday == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DefaultToday
+}
+
+// DefaultValue returns the DefaultValue field value, or zero value if nil.
+func (r *FieldsProperties) DefaultValue() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultValue == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DefaultValue
+}
+
+// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
+func (r *FieldsProperties) DefaultValueLuid() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DefaultValueLuid == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.DefaultValueLuid
+}
+
+// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
+func (r *FieldsProperties) DisplayAsLink() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayAsLink == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayAsLink
+}
+
+// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
+func (r *FieldsProperties) DisplayCheckboxAsText() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayCheckboxAsText == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayCheckboxAsText
+}
+
+// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
+func (r *FieldsProperties) DisplayDayOfWeek() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayDayOfWeek == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayDayOfWeek
+}
+
+// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
+func (r *FieldsProperties) DisplayEmail() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayEmail == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DisplayEmail
+}
+
+// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
+func (r *FieldsProperties) DisplayMonth() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayMonth == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DisplayMonth
+}
+
+// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
+func (r *FieldsProperties) DisplayRelative() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayRelative == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayRelative
+}
+
+// DisplayTime returns the DisplayTime field value, or zero value if nil.
+func (r *FieldsProperties) DisplayTime() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayTime == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayTime
+}
+
+// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
+func (r *FieldsProperties) DisplayTimezone() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayTimezone == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DisplayTimezone
+}
+
+// DisplayUser returns the DisplayUser field value, or zero value if nil.
+func (r *FieldsProperties) DisplayUser() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DisplayUser == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.DisplayUser
+}
+
+// DoesAverage returns the DoesAverage field value, or zero value if nil.
+func (r *FieldsProperties) DoesAverage() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DoesAverage == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DoesAverage
+}
+
+// DoesTotal returns the DoesTotal field value, or zero value if nil.
+func (r *FieldsProperties) DoesTotal() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DoesTotal == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.DoesTotal
+}
+
+// DurationField returns the DurationField field value, or zero value if nil.
+func (r *FieldsProperties) DurationField() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.DurationField == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.DurationField
+}
+
+// Exact returns the Exact field value, or zero value if nil.
+func (r *FieldsProperties) Exact() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Exact == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.Exact
+}
+
+// ForeignKey returns the ForeignKey field value, or zero value if nil.
+func (r *FieldsProperties) ForeignKey() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.ForeignKey == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.ForeignKey
+}
+
+// Format returns the Format field value, or zero value if nil.
+func (r *FieldsProperties) Format() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Format == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.Format
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *FieldsProperties) Formula() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Formula == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.Formula
+}
+
+// HasExtension returns the HasExtension field value, or zero value if nil.
+func (r *FieldsProperties) HasExtension() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.HasExtension == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.HasExtension
+}
+
+// Hours24 returns the Hours24 field value, or zero value if nil.
+func (r *FieldsProperties) Hours24() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Hours24 == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.Hours24
+}
+
+// LinkText returns the LinkText field value, or zero value if nil.
+func (r *FieldsProperties) LinkText() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.LinkText == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.LinkText
+}
+
+// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
+func (r *FieldsProperties) LookupReferenceFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.LookupReferenceFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.LookupReferenceFieldId
+}
+
+// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
+func (r *FieldsProperties) LookupTargetFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.LookupTargetFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.LookupTargetFieldId
+}
+
+// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
+func (r *FieldsProperties) MasterChoiceFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.MasterChoiceFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.MasterChoiceFieldId
+}
+
+// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
+func (r *FieldsProperties) MasterChoiceTableId() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.MasterChoiceTableId == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.MasterChoiceTableId
+}
+
+// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
+func (r *FieldsProperties) MasterTableTag() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.MasterTableTag == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.MasterTableTag
+}
+
+// MaxLength returns the MaxLength field value, or zero value if nil.
+func (r *FieldsProperties) MaxLength() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.MaxLength == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.MaxLength
+}
+
+// MaxVersions returns the MaxVersions field value, or zero value if nil.
+func (r *FieldsProperties) MaxVersions() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.MaxVersions == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.MaxVersions
+}
+
+// NumLines returns the NumLines field value, or zero value if nil.
+func (r *FieldsProperties) NumLines() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.NumLines == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.NumLines
+}
+
+// NumberFormat returns the NumberFormat field value, or zero value if nil.
+func (r *FieldsProperties) NumberFormat() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.NumberFormat == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.NumberFormat
+}
+
+// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
+func (r *FieldsProperties) ParentFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.ParentFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.ParentFieldId
+}
+
+// PostTempToken returns the PostTempToken field value, or zero value if nil.
+func (r *FieldsProperties) PostTempToken() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.PostTempToken == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.PostTempToken
+}
+
+// SeeVersions returns the SeeVersions field value, or zero value if nil.
+func (r *FieldsProperties) SeeVersions() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SeeVersions == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.SeeVersions
+}
+
+// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
+func (r *FieldsProperties) SnapFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SnapFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.SnapFieldId
+}
+
+// SortAlpha returns the SortAlpha field value, or zero value if nil.
+func (r *FieldsProperties) SortAlpha() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SortAlpha == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.SortAlpha
+}
+
+// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
+func (r *FieldsProperties) SortAsGiven() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SortAsGiven == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.SortAsGiven
+}
+
+// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
+func (r *FieldsProperties) SourceFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SourceFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.SourceFieldId
+}
+
+// StartField returns the StartField field value, or zero value if nil.
+func (r *FieldsProperties) StartField() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.StartField == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.StartField
+}
+
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *FieldsProperties) SummaryFunction() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.GetFields_200_Properties.SummaryFunction)
+}
+
+// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
+func (r *FieldsProperties) SummaryReferenceFieldId() int64 {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SummaryReferenceFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.SummaryReferenceFieldId
+}
+
+// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
+func (r *FieldsProperties) SummaryTargetFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.SummaryTargetFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.SummaryTargetFieldId
+}
+
+// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
+func (r *FieldsProperties) TargetFieldId() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.TargetFieldId == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.TargetFieldId
+}
+
+// TargetTableId returns the TargetTableId field value, or zero value if nil.
+func (r *FieldsProperties) TargetTableId() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.TargetTableId == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.TargetTableId
+}
+
+// TargetTableName returns the TargetTableName field value, or zero value if nil.
+func (r *FieldsProperties) TargetTableName() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.TargetTableName == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.TargetTableName
+}
+
+// Units returns the Units field value, or zero value if nil.
+func (r *FieldsProperties) Units() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Units == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.Units
+}
+
+// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
+func (r *FieldsProperties) UseI18NFormat() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.UseI18NFormat == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.UseI18NFormat
+}
+
+// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
+func (r *FieldsProperties) UseNewWindow() bool {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.UseNewWindow == nil {
+		return false
+	}
+	return *r.GetFields_200_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *FieldsProperties) VersionMode() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.GetFields_200_Properties.VersionMode)
+}
+
+// Width returns the Width field value, or zero value if nil.
+func (r *FieldsProperties) Width() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.Width == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.Width
+}
+
+// WorkWeek returns the WorkWeek field value, or zero value if nil.
+func (r *FieldsProperties) WorkWeek() int {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.WorkWeek == nil {
+		return 0
+	}
+	return *r.GetFields_200_Properties.WorkWeek
+}
+
+// XmlTag returns the XmlTag field value, or zero value if nil.
+func (r *FieldsProperties) XmlTag() string {
+	if r == nil || r.GetFields_200_Properties == nil || r.GetFields_200_Properties.XmlTag == nil {
+		return ""
+	}
+	return *r.GetFields_200_Properties.XmlTag
+}
+
+
+// FieldsPropertiesCompositeFieldsItem wraps GetFields_200_Properties_CompositeFields_Item with convenience methods.
+type FieldsPropertiesCompositeFieldsItem struct {
+	*generated.GetFields_200_Properties_CompositeFields_Item
+}
+
+
+// RelationshipsMetadata wraps GetRelationships_200_Metadata with convenience methods.
+type RelationshipsMetadata struct {
+	*generated.GetRelationships_200_Metadata
+}
+
+// NumRelationships returns the NumRelationships field value, or zero value if nil.
+func (r *RelationshipsMetadata) NumRelationships() int {
+	if r == nil || r.GetRelationships_200_Metadata == nil || r.GetRelationships_200_Metadata.NumRelationships == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Metadata.NumRelationships
+}
+
+// Skip returns the Skip field value, or zero value if nil.
+func (r *RelationshipsMetadata) Skip() int {
+	if r == nil || r.GetRelationships_200_Metadata == nil || r.GetRelationships_200_Metadata.Skip == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Metadata.Skip
+}
+
+// TotalRelationships returns the TotalRelationships field value, or zero value if nil.
+func (r *RelationshipsMetadata) TotalRelationships() int {
+	if r == nil || r.GetRelationships_200_Metadata == nil || r.GetRelationships_200_Metadata.TotalRelationships == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Metadata.TotalRelationships
+}
+
+
+// RelationshipsRelationshipsForeignKeyField wraps GetRelationships_200_Relationships_ForeignKeyField with convenience methods.
+type RelationshipsRelationshipsForeignKeyField struct {
+	*generated.GetRelationships_200_Relationships_ForeignKeyField
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RelationshipsRelationshipsForeignKeyField) Id() int {
+	if r == nil || r.GetRelationships_200_Relationships_ForeignKeyField == nil || r.GetRelationships_200_Relationships_ForeignKeyField.Id == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Relationships_ForeignKeyField.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *RelationshipsRelationshipsForeignKeyField) Label() string {
+	if r == nil || r.GetRelationships_200_Relationships_ForeignKeyField == nil || r.GetRelationships_200_Relationships_ForeignKeyField.Label == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_ForeignKeyField.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *RelationshipsRelationshipsForeignKeyField) Type() string {
+	if r == nil || r.GetRelationships_200_Relationships_ForeignKeyField == nil || r.GetRelationships_200_Relationships_ForeignKeyField.Type == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_ForeignKeyField.Type
+}
+
+
+// RelationshipsRelationshipsItem wraps GetRelationships_200_Relationships_Item with convenience methods.
+type RelationshipsRelationshipsItem struct {
+	*generated.GetRelationships_200_Relationships_Item
+}
+
+// ChildTableId returns the ChildTableId field value.
+func (r *RelationshipsRelationshipsItem) ChildTableId() string {
+	if r == nil || r.GetRelationships_200_Relationships_Item == nil {
+		return ""
+	}
+	return r.GetRelationships_200_Relationships_Item.ChildTableId
+}
+
+// Id returns the Id field value.
+func (r *RelationshipsRelationshipsItem) Id() int {
+	if r == nil || r.GetRelationships_200_Relationships_Item == nil {
+		return 0
+	}
+	return r.GetRelationships_200_Relationships_Item.Id
+}
+
+// IsCrossApp returns the IsCrossApp field value.
+func (r *RelationshipsRelationshipsItem) IsCrossApp() bool {
+	if r == nil || r.GetRelationships_200_Relationships_Item == nil {
+		return false
+	}
+	return r.GetRelationships_200_Relationships_Item.IsCrossApp
+}
+
+// ParentTableId returns the ParentTableId field value.
+func (r *RelationshipsRelationshipsItem) ParentTableId() string {
+	if r == nil || r.GetRelationships_200_Relationships_Item == nil {
+		return ""
+	}
+	return r.GetRelationships_200_Relationships_Item.ParentTableId
+}
+
+
+// RelationshipsRelationshipsLookupFieldsItem wraps GetRelationships_200_Relationships_LookupFields_Item with convenience methods.
+type RelationshipsRelationshipsLookupFieldsItem struct {
+	*generated.GetRelationships_200_Relationships_LookupFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RelationshipsRelationshipsLookupFieldsItem) Id() int {
+	if r == nil || r.GetRelationships_200_Relationships_LookupFields_Item == nil || r.GetRelationships_200_Relationships_LookupFields_Item.Id == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Relationships_LookupFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *RelationshipsRelationshipsLookupFieldsItem) Label() string {
+	if r == nil || r.GetRelationships_200_Relationships_LookupFields_Item == nil || r.GetRelationships_200_Relationships_LookupFields_Item.Label == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_LookupFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *RelationshipsRelationshipsLookupFieldsItem) Type() string {
+	if r == nil || r.GetRelationships_200_Relationships_LookupFields_Item == nil || r.GetRelationships_200_Relationships_LookupFields_Item.Type == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_LookupFields_Item.Type
+}
+
+
+// RelationshipsRelationshipsSummaryFieldsItem wraps GetRelationships_200_Relationships_SummaryFields_Item with convenience methods.
+type RelationshipsRelationshipsSummaryFieldsItem struct {
+	*generated.GetRelationships_200_Relationships_SummaryFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RelationshipsRelationshipsSummaryFieldsItem) Id() int {
+	if r == nil || r.GetRelationships_200_Relationships_SummaryFields_Item == nil || r.GetRelationships_200_Relationships_SummaryFields_Item.Id == nil {
+		return 0
+	}
+	return *r.GetRelationships_200_Relationships_SummaryFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *RelationshipsRelationshipsSummaryFieldsItem) Label() string {
+	if r == nil || r.GetRelationships_200_Relationships_SummaryFields_Item == nil || r.GetRelationships_200_Relationships_SummaryFields_Item.Label == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_SummaryFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *RelationshipsRelationshipsSummaryFieldsItem) Type() string {
+	if r == nil || r.GetRelationships_200_Relationships_SummaryFields_Item == nil || r.GetRelationships_200_Relationships_SummaryFields_Item.Type == nil {
+		return ""
+	}
+	return *r.GetRelationships_200_Relationships_SummaryFields_Item.Type
+}
+
+
+// ReportQuery wraps GetReport_200_Query with convenience methods.
+type ReportQuery struct {
+	*generated.GetReport_200_Query
+}
+
+// Filter returns the Filter field value, or zero value if nil.
+func (r *ReportQuery) Filter() string {
+	if r == nil || r.GetReport_200_Query == nil || r.GetReport_200_Query.Filter == nil {
+		return ""
+	}
+	return *r.GetReport_200_Query.Filter
+}
+
+// TableId returns the TableId field value, or zero value if nil.
+func (r *ReportQuery) TableId() string {
+	if r == nil || r.GetReport_200_Query == nil || r.GetReport_200_Query.TableId == nil {
+		return ""
+	}
+	return *r.GetReport_200_Query.TableId
+}
+
+
+// ReportQueryFormulaFieldsItem wraps GetReport_200_Query_FormulaFields_Item with convenience methods.
+type ReportQueryFormulaFieldsItem struct {
+	*generated.GetReport_200_Query_FormulaFields_Item
+}
+
+// DecimalPrecision returns the DecimalPrecision field value, or zero value if nil.
+func (r *ReportQueryFormulaFieldsItem) DecimalPrecision() int {
+	if r == nil || r.GetReport_200_Query_FormulaFields_Item == nil || r.GetReport_200_Query_FormulaFields_Item.DecimalPrecision == nil {
+		return 0
+	}
+	return *r.GetReport_200_Query_FormulaFields_Item.DecimalPrecision
+}
+
+// FieldType returns the FieldType field value as a string, or empty string if nil.
+func (r *ReportQueryFormulaFieldsItem) FieldType() string {
+	if r == nil || r.GetReport_200_Query_FormulaFields_Item == nil || r.GetReport_200_Query_FormulaFields_Item.FieldType == nil {
+		return ""
+	}
+	return string(*r.GetReport_200_Query_FormulaFields_Item.FieldType)
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *ReportQueryFormulaFieldsItem) Formula() string {
+	if r == nil || r.GetReport_200_Query_FormulaFields_Item == nil || r.GetReport_200_Query_FormulaFields_Item.Formula == nil {
+		return ""
+	}
+	return *r.GetReport_200_Query_FormulaFields_Item.Formula
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *ReportQueryFormulaFieldsItem) Id() int {
+	if r == nil || r.GetReport_200_Query_FormulaFields_Item == nil || r.GetReport_200_Query_FormulaFields_Item.Id == nil {
+		return 0
+	}
+	return *r.GetReport_200_Query_FormulaFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *ReportQueryFormulaFieldsItem) Label() string {
+	if r == nil || r.GetReport_200_Query_FormulaFields_Item == nil || r.GetReport_200_Query_FormulaFields_Item.Label == nil {
+		return ""
+	}
+	return *r.GetReport_200_Query_FormulaFields_Item.Label
+}
+
+
+// RolesAccess wraps GetRoles_200_Access with convenience methods.
+type RolesAccess struct {
+	*generated.GetRoles_200_Access
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RolesAccess) Id() int {
+	if r == nil || r.GetRoles_200_Access == nil || r.GetRoles_200_Access.Id == nil {
+		return 0
+	}
+	return *r.GetRoles_200_Access.Id
+}
+
+// Type returns the Type field value as a string, or empty string if nil.
+func (r *RolesAccess) Type() string {
+	if r == nil || r.GetRoles_200_Access == nil || r.GetRoles_200_Access.Type == nil {
+		return ""
+	}
+	return string(*r.GetRoles_200_Access.Type)
+}
+
+
+// TableReportsQuery wraps GetTableReports_200_Query with convenience methods.
+type TableReportsQuery struct {
+	*generated.GetTableReports_200_Query
+}
+
+// Filter returns the Filter field value, or zero value if nil.
+func (r *TableReportsQuery) Filter() string {
+	if r == nil || r.GetTableReports_200_Query == nil || r.GetTableReports_200_Query.Filter == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Query.Filter
+}
+
+// TableId returns the TableId field value, or zero value if nil.
+func (r *TableReportsQuery) TableId() string {
+	if r == nil || r.GetTableReports_200_Query == nil || r.GetTableReports_200_Query.TableId == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Query.TableId
+}
+
+
+// TableReportsQueryFormulaFieldsItem wraps GetTableReports_200_Query_FormulaFields_Item with convenience methods.
+type TableReportsQueryFormulaFieldsItem struct {
+	*generated.GetTableReports_200_Query_FormulaFields_Item
+}
+
+// DecimalPrecision returns the DecimalPrecision field value, or zero value if nil.
+func (r *TableReportsQueryFormulaFieldsItem) DecimalPrecision() int {
+	if r == nil || r.GetTableReports_200_Query_FormulaFields_Item == nil || r.GetTableReports_200_Query_FormulaFields_Item.DecimalPrecision == nil {
+		return 0
+	}
+	return *r.GetTableReports_200_Query_FormulaFields_Item.DecimalPrecision
+}
+
+// FieldType returns the FieldType field value as a string, or empty string if nil.
+func (r *TableReportsQueryFormulaFieldsItem) FieldType() string {
+	if r == nil || r.GetTableReports_200_Query_FormulaFields_Item == nil || r.GetTableReports_200_Query_FormulaFields_Item.FieldType == nil {
+		return ""
+	}
+	return string(*r.GetTableReports_200_Query_FormulaFields_Item.FieldType)
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *TableReportsQueryFormulaFieldsItem) Formula() string {
+	if r == nil || r.GetTableReports_200_Query_FormulaFields_Item == nil || r.GetTableReports_200_Query_FormulaFields_Item.Formula == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Query_FormulaFields_Item.Formula
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *TableReportsQueryFormulaFieldsItem) Id() int {
+	if r == nil || r.GetTableReports_200_Query_FormulaFields_Item == nil || r.GetTableReports_200_Query_FormulaFields_Item.Id == nil {
+		return 0
+	}
+	return *r.GetTableReports_200_Query_FormulaFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *TableReportsQueryFormulaFieldsItem) Label() string {
+	if r == nil || r.GetTableReports_200_Query_FormulaFields_Item == nil || r.GetTableReports_200_Query_FormulaFields_Item.Label == nil {
+		return ""
+	}
+	return *r.GetTableReports_200_Query_FormulaFields_Item.Label
+}
+
+
+// UsersMetadata wraps GetUsers_200_Metadata with convenience methods.
+type UsersMetadata struct {
+	*generated.GetUsers_200_Metadata
+}
+
+// NextPageToken returns the NextPageToken field value.
+func (r *UsersMetadata) NextPageToken() string {
+	if r == nil || r.GetUsers_200_Metadata == nil {
+		return ""
+	}
+	return r.GetUsers_200_Metadata.NextPageToken
+}
+
+
+// UsersUsersItem wraps GetUsers_200_Users_Item with convenience methods.
+type UsersUsersItem struct {
+	*generated.GetUsers_200_Users_Item
+}
+
+// EmailAddress returns the EmailAddress field value.
+func (r *UsersUsersItem) EmailAddress() string {
+	if r == nil || r.GetUsers_200_Users_Item == nil {
+		return ""
+	}
+	return r.GetUsers_200_Users_Item.EmailAddress
+}
+
+// FirstName returns the FirstName field value.
+func (r *UsersUsersItem) FirstName() string {
+	if r == nil || r.GetUsers_200_Users_Item == nil {
+		return ""
+	}
+	return r.GetUsers_200_Users_Item.FirstName
+}
+
+// HashId returns the HashId field value.
+func (r *UsersUsersItem) HashId() string {
+	if r == nil || r.GetUsers_200_Users_Item == nil {
+		return ""
+	}
+	return r.GetUsers_200_Users_Item.HashId
+}
+
+// LastName returns the LastName field value.
+func (r *UsersUsersItem) LastName() string {
+	if r == nil || r.GetUsers_200_Users_Item == nil {
+		return ""
+	}
+	return r.GetUsers_200_Users_Item.LastName
+}
+
+// UserName returns the UserName field value.
+func (r *UsersUsersItem) UserName() string {
+	if r == nil || r.GetUsers_200_Users_Item == nil {
+		return ""
+	}
+	return r.GetUsers_200_Users_Item.UserName
+}
+
+
+// PlatformAnalyticReadsData wraps PlatformAnalyticReads_200_Data with convenience methods.
+type PlatformAnalyticReadsData struct {
+	*generated.PlatformAnalyticReads_200_Data
+}
+
+
+// PlatformAnalyticReadsDataDailyDetailedReads wraps PlatformAnalyticReads_200_Data_DailyDetailedReads with convenience methods.
+type PlatformAnalyticReadsDataDailyDetailedReads struct {
+	*generated.PlatformAnalyticReads_200_Data_DailyDetailedReads
+}
+
+
+// PlatformAnalyticReadsDataDailyDetailedReadsReads wraps PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads with convenience methods.
+type PlatformAnalyticReadsDataDailyDetailedReadsReads struct {
+	*generated.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads
+}
+
+// User returns the User field value.
+func (r *PlatformAnalyticReadsDataDailyDetailedReadsReads) User() int {
+	if r == nil || r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads == nil {
+		return 0
+	}
+	return r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads.User
+}
+
+
+// PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations wraps PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations with convenience methods.
+type PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations struct {
+	*generated.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations
+}
+
+// Api returns the Api field value.
+func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Api() int {
+	if r == nil || r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations == nil {
+		return 0
+	}
+	return r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations.Api
+}
+
+// Eoti returns the Eoti field value.
+func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Eoti() int {
+	if r == nil || r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations == nil {
+		return 0
+	}
+	return r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations.Eoti
+}
+
+// Pipelines returns the Pipelines field value.
+func (r *PlatformAnalyticReadsDataDailyDetailedReadsReadsIntegrations) Pipelines() int {
+	if r == nil || r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations == nil {
+		return 0
+	}
+	return r.PlatformAnalyticReads_200_Data_DailyDetailedReads_Reads_Integrations.Pipelines
+}
+
+
+// RecordsModifiedSinceChangesItem wraps RecordsModifiedSince_200_Changes_Item with convenience methods.
+type RecordsModifiedSinceChangesItem struct {
+	*generated.RecordsModifiedSince_200_Changes_Item
+}
+
+// ChangeType returns the ChangeType field value as a string, or empty string if nil.
+func (r *RecordsModifiedSinceChangesItem) ChangeType() string {
+	if r == nil || r.RecordsModifiedSince_200_Changes_Item == nil || r.RecordsModifiedSince_200_Changes_Item.ChangeType == nil {
+		return ""
+	}
+	return string(*r.RecordsModifiedSince_200_Changes_Item.ChangeType)
+}
+
+// RecordId returns the RecordId field value, or zero value if nil.
+func (r *RecordsModifiedSinceChangesItem) RecordId() int {
+	if r == nil || r.RecordsModifiedSince_200_Changes_Item == nil || r.RecordsModifiedSince_200_Changes_Item.RecordId == nil {
+		return 0
+	}
+	return *r.RecordsModifiedSince_200_Changes_Item.RecordId
+}
+
+
+// RunQueryFieldsItem wraps RunQuery_200_Fields_Item with convenience methods.
+type RunQueryFieldsItem struct {
+	*generated.RunQuery_200_Fields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RunQueryFieldsItem) Id() int {
+	if r == nil || r.RunQuery_200_Fields_Item == nil || r.RunQuery_200_Fields_Item.Id == nil {
+		return 0
+	}
+	return *r.RunQuery_200_Fields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *RunQueryFieldsItem) Label() string {
+	if r == nil || r.RunQuery_200_Fields_Item == nil || r.RunQuery_200_Fields_Item.Label == nil {
+		return ""
+	}
+	return *r.RunQuery_200_Fields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *RunQueryFieldsItem) Type() string {
+	if r == nil || r.RunQuery_200_Fields_Item == nil || r.RunQuery_200_Fields_Item.Type == nil {
+		return ""
+	}
+	return *r.RunQuery_200_Fields_Item.Type
+}
+
+
+// RunQueryMetadata wraps RunQuery_200_Metadata with convenience methods.
+type RunQueryMetadata struct {
+	*generated.RunQuery_200_Metadata
+}
+
+// NumFields returns the NumFields field value.
+func (r *RunQueryMetadata) NumFields() int {
+	if r == nil || r.RunQuery_200_Metadata == nil {
+		return 0
+	}
+	return r.RunQuery_200_Metadata.NumFields
+}
+
+// NumRecords returns the NumRecords field value.
+func (r *RunQueryMetadata) NumRecords() int {
+	if r == nil || r.RunQuery_200_Metadata == nil {
+		return 0
+	}
+	return r.RunQuery_200_Metadata.NumRecords
+}
+
+// Skip returns the Skip field value, or zero value if nil.
+func (r *RunQueryMetadata) Skip() int {
+	if r == nil || r.RunQuery_200_Metadata == nil || r.RunQuery_200_Metadata.Skip == nil {
+		return 0
+	}
+	return *r.RunQuery_200_Metadata.Skip
+}
+
+// Top returns the Top field value, or zero value if nil.
+func (r *RunQueryMetadata) Top() int {
+	if r == nil || r.RunQuery_200_Metadata == nil || r.RunQuery_200_Metadata.Top == nil {
+		return 0
+	}
+	return *r.RunQuery_200_Metadata.Top
+}
+
+// TotalRecords returns the TotalRecords field value.
+func (r *RunQueryMetadata) TotalRecords() int {
+	if r == nil || r.RunQuery_200_Metadata == nil {
+		return 0
+	}
+	return r.RunQuery_200_Metadata.TotalRecords
+}
+
+
+// RunReportFieldsItem wraps RunReport_200_Fields_Item with convenience methods.
+type RunReportFieldsItem struct {
+	*generated.RunReport_200_Fields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *RunReportFieldsItem) Id() int {
+	if r == nil || r.RunReport_200_Fields_Item == nil || r.RunReport_200_Fields_Item.Id == nil {
+		return 0
+	}
+	return *r.RunReport_200_Fields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *RunReportFieldsItem) Label() string {
+	if r == nil || r.RunReport_200_Fields_Item == nil || r.RunReport_200_Fields_Item.Label == nil {
+		return ""
+	}
+	return *r.RunReport_200_Fields_Item.Label
+}
+
+// LabelOverride returns the LabelOverride field value, or zero value if nil.
+func (r *RunReportFieldsItem) LabelOverride() string {
+	if r == nil || r.RunReport_200_Fields_Item == nil || r.RunReport_200_Fields_Item.LabelOverride == nil {
+		return ""
+	}
+	return *r.RunReport_200_Fields_Item.LabelOverride
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *RunReportFieldsItem) Type() string {
+	if r == nil || r.RunReport_200_Fields_Item == nil || r.RunReport_200_Fields_Item.Type == nil {
+		return ""
+	}
+	return *r.RunReport_200_Fields_Item.Type
+}
+
+
+// RunReportMetadata wraps RunReport_200_Metadata with convenience methods.
+type RunReportMetadata struct {
+	*generated.RunReport_200_Metadata
+}
+
+// NumFields returns the NumFields field value.
+func (r *RunReportMetadata) NumFields() int {
+	if r == nil || r.RunReport_200_Metadata == nil {
+		return 0
+	}
+	return r.RunReport_200_Metadata.NumFields
+}
+
+// NumRecords returns the NumRecords field value.
+func (r *RunReportMetadata) NumRecords() int {
+	if r == nil || r.RunReport_200_Metadata == nil {
+		return 0
+	}
+	return r.RunReport_200_Metadata.NumRecords
+}
+
+// Skip returns the Skip field value, or zero value if nil.
+func (r *RunReportMetadata) Skip() int {
+	if r == nil || r.RunReport_200_Metadata == nil || r.RunReport_200_Metadata.Skip == nil {
+		return 0
+	}
+	return *r.RunReport_200_Metadata.Skip
+}
+
+// Top returns the Top field value, or zero value if nil.
+func (r *RunReportMetadata) Top() int {
+	if r == nil || r.RunReport_200_Metadata == nil || r.RunReport_200_Metadata.Top == nil {
+		return 0
+	}
+	return *r.RunReport_200_Metadata.Top
+}
+
+// TotalRecords returns the TotalRecords field value.
+func (r *RunReportMetadata) TotalRecords() int {
+	if r == nil || r.RunReport_200_Metadata == nil {
+		return 0
+	}
+	return r.RunReport_200_Metadata.TotalRecords
+}
+
+
+// TransferUserTokenAppsItem wraps TransferUserToken_200_Apps_Item with convenience methods.
+type TransferUserTokenAppsItem struct {
+	*generated.TransferUserToken_200_Apps_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *TransferUserTokenAppsItem) Id() string {
+	if r == nil || r.TransferUserToken_200_Apps_Item == nil || r.TransferUserToken_200_Apps_Item.Id == nil {
+		return ""
+	}
+	return *r.TransferUserToken_200_Apps_Item.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *TransferUserTokenAppsItem) Name() string {
+	if r == nil || r.TransferUserToken_200_Apps_Item == nil || r.TransferUserToken_200_Apps_Item.Name == nil {
+		return ""
+	}
+	return *r.TransferUserToken_200_Apps_Item.Name
+}
+
+
+// UpdateAppSecurityProperties wraps UpdateApp_200_SecurityProperties with convenience methods.
+type UpdateAppSecurityProperties struct {
+	*generated.UpdateApp_200_SecurityProperties
+}
+
+// AllowClone returns the AllowClone field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) AllowClone() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.AllowClone == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.AllowClone
+}
+
+// AllowExport returns the AllowExport field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) AllowExport() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.AllowExport == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.AllowExport
+}
+
+// EnableAppTokens returns the EnableAppTokens field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) EnableAppTokens() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.EnableAppTokens == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.EnableAppTokens
+}
+
+// HideFromPublic returns the HideFromPublic field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) HideFromPublic() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.HideFromPublic == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.HideFromPublic
+}
+
+// MustBeRealmApproved returns the MustBeRealmApproved field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) MustBeRealmApproved() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.MustBeRealmApproved == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.MustBeRealmApproved
+}
+
+// UseIPFilter returns the UseIPFilter field value, or zero value if nil.
+func (r *UpdateAppSecurityProperties) UseIPFilter() bool {
+	if r == nil || r.UpdateApp_200_SecurityProperties == nil || r.UpdateApp_200_SecurityProperties.UseIPFilter == nil {
+		return false
+	}
+	return *r.UpdateApp_200_SecurityProperties.UseIPFilter
+}
+
+
+// UpdateAppVariablesItem wraps UpdateApp_200_Variables_Item with convenience methods.
+type UpdateAppVariablesItem struct {
+	*generated.UpdateApp_200_Variables_Item
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *UpdateAppVariablesItem) Name() string {
+	if r == nil || r.UpdateApp_200_Variables_Item == nil || r.UpdateApp_200_Variables_Item.Name == nil {
+		return ""
+	}
+	return *r.UpdateApp_200_Variables_Item.Name
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *UpdateAppVariablesItem) Value() string {
+	if r == nil || r.UpdateApp_200_Variables_Item == nil || r.UpdateApp_200_Variables_Item.Value == nil {
+		return ""
+	}
+	return *r.UpdateApp_200_Variables_Item.Value
+}
+
+
+// UpdateFieldProperties wraps UpdateField_200_Properties with convenience methods.
+type UpdateFieldProperties struct {
+	*generated.UpdateField_200_Properties
+}
+
+// Abbreviate returns the Abbreviate field value, or zero value if nil.
+func (r *UpdateFieldProperties) Abbreviate() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Abbreviate == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.Abbreviate
+}
+
+// AllowHTML returns the AllowHTML field value, or zero value if nil.
+func (r *UpdateFieldProperties) AllowHTML() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AllowHTML == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.AllowHTML
+}
+
+// AllowMentions returns the AllowMentions field value, or zero value if nil.
+func (r *UpdateFieldProperties) AllowMentions() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AllowMentions == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.AllowMentions
+}
+
+// AllowNewChoices returns the AllowNewChoices field value, or zero value if nil.
+func (r *UpdateFieldProperties) AllowNewChoices() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AllowNewChoices == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.AllowNewChoices
+}
+
+// AppearsAs returns the AppearsAs field value, or zero value if nil.
+func (r *UpdateFieldProperties) AppearsAs() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AppearsAs == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.AppearsAs
+}
+
+// AppendOnly returns the AppendOnly field value, or zero value if nil.
+func (r *UpdateFieldProperties) AppendOnly() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AppendOnly == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.AppendOnly
+}
+
+// AutoSave returns the AutoSave field value, or zero value if nil.
+func (r *UpdateFieldProperties) AutoSave() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.AutoSave == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.AutoSave
+}
+
+// BlankIsZero returns the BlankIsZero field value, or zero value if nil.
+func (r *UpdateFieldProperties) BlankIsZero() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.BlankIsZero == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.BlankIsZero
+}
+
+// CarryChoices returns the CarryChoices field value, or zero value if nil.
+func (r *UpdateFieldProperties) CarryChoices() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.CarryChoices == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.CarryChoices
+}
+
+// CommaStart returns the CommaStart field value, or zero value if nil.
+func (r *UpdateFieldProperties) CommaStart() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.CommaStart == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.CommaStart
+}
+
+// Comments returns the Comments field value, or zero value if nil.
+func (r *UpdateFieldProperties) Comments() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Comments == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.Comments
+}
+
+// CoverText returns the CoverText field value, or zero value if nil.
+func (r *UpdateFieldProperties) CoverText() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.CoverText == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.CoverText
+}
+
+// CurrencyFormat returns the CurrencyFormat field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) CurrencyFormat() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.CurrencyFormat == nil {
+		return ""
+	}
+	return string(*r.UpdateField_200_Properties.CurrencyFormat)
+}
+
+// CurrencySymbol returns the CurrencySymbol field value, or zero value if nil.
+func (r *UpdateFieldProperties) CurrencySymbol() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.CurrencySymbol == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.CurrencySymbol
+}
+
+// DecimalPlaces returns the DecimalPlaces field value, or zero value if nil.
+func (r *UpdateFieldProperties) DecimalPlaces() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DecimalPlaces == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.DecimalPlaces
+}
+
+// DefaultCountryCode returns the DefaultCountryCode field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultCountryCode() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultCountryCode == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DefaultCountryCode
+}
+
+// DefaultDomain returns the DefaultDomain field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultDomain() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultDomain == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DefaultDomain
+}
+
+// DefaultKind returns the DefaultKind field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultKind() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultKind == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DefaultKind
+}
+
+// DefaultToday returns the DefaultToday field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultToday() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultToday == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DefaultToday
+}
+
+// DefaultValue returns the DefaultValue field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultValue() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultValue == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DefaultValue
+}
+
+// DefaultValueLuid returns the DefaultValueLuid field value, or zero value if nil.
+func (r *UpdateFieldProperties) DefaultValueLuid() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DefaultValueLuid == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.DefaultValueLuid
+}
+
+// DisplayAsLink returns the DisplayAsLink field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayAsLink() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayAsLink == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayAsLink
+}
+
+// DisplayCheckboxAsText returns the DisplayCheckboxAsText field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayCheckboxAsText() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayCheckboxAsText == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayCheckboxAsText
+}
+
+// DisplayDayOfWeek returns the DisplayDayOfWeek field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayDayOfWeek() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayDayOfWeek == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayDayOfWeek
+}
+
+// DisplayEmail returns the DisplayEmail field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayEmail() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayEmail == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DisplayEmail
+}
+
+// DisplayMonth returns the DisplayMonth field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayMonth() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayMonth == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DisplayMonth
+}
+
+// DisplayRelative returns the DisplayRelative field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayRelative() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayRelative == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayRelative
+}
+
+// DisplayTime returns the DisplayTime field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayTime() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayTime == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayTime
+}
+
+// DisplayTimezone returns the DisplayTimezone field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayTimezone() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayTimezone == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DisplayTimezone
+}
+
+// DisplayUser returns the DisplayUser field value, or zero value if nil.
+func (r *UpdateFieldProperties) DisplayUser() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DisplayUser == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.DisplayUser
+}
+
+// DoesAverage returns the DoesAverage field value, or zero value if nil.
+func (r *UpdateFieldProperties) DoesAverage() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DoesAverage == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DoesAverage
+}
+
+// DoesTotal returns the DoesTotal field value, or zero value if nil.
+func (r *UpdateFieldProperties) DoesTotal() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DoesTotal == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.DoesTotal
+}
+
+// DurationField returns the DurationField field value, or zero value if nil.
+func (r *UpdateFieldProperties) DurationField() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.DurationField == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.DurationField
+}
+
+// Exact returns the Exact field value, or zero value if nil.
+func (r *UpdateFieldProperties) Exact() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Exact == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.Exact
+}
+
+// ForeignKey returns the ForeignKey field value, or zero value if nil.
+func (r *UpdateFieldProperties) ForeignKey() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.ForeignKey == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.ForeignKey
+}
+
+// Format returns the Format field value, or zero value if nil.
+func (r *UpdateFieldProperties) Format() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Format == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.Format
+}
+
+// Formula returns the Formula field value, or zero value if nil.
+func (r *UpdateFieldProperties) Formula() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Formula == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.Formula
+}
+
+// HasExtension returns the HasExtension field value, or zero value if nil.
+func (r *UpdateFieldProperties) HasExtension() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.HasExtension == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.HasExtension
+}
+
+// Hours24 returns the Hours24 field value, or zero value if nil.
+func (r *UpdateFieldProperties) Hours24() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Hours24 == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.Hours24
+}
+
+// LinkText returns the LinkText field value, or zero value if nil.
+func (r *UpdateFieldProperties) LinkText() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.LinkText == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.LinkText
+}
+
+// LookupReferenceFieldId returns the LookupReferenceFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) LookupReferenceFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.LookupReferenceFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.LookupReferenceFieldId
+}
+
+// LookupTargetFieldId returns the LookupTargetFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) LookupTargetFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.LookupTargetFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.LookupTargetFieldId
+}
+
+// MasterChoiceFieldId returns the MasterChoiceFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) MasterChoiceFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.MasterChoiceFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.MasterChoiceFieldId
+}
+
+// MasterChoiceTableId returns the MasterChoiceTableId field value, or zero value if nil.
+func (r *UpdateFieldProperties) MasterChoiceTableId() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.MasterChoiceTableId == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.MasterChoiceTableId
+}
+
+// MasterTableTag returns the MasterTableTag field value, or zero value if nil.
+func (r *UpdateFieldProperties) MasterTableTag() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.MasterTableTag == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.MasterTableTag
+}
+
+// MaxLength returns the MaxLength field value, or zero value if nil.
+func (r *UpdateFieldProperties) MaxLength() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.MaxLength == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.MaxLength
+}
+
+// MaxVersions returns the MaxVersions field value, or zero value if nil.
+func (r *UpdateFieldProperties) MaxVersions() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.MaxVersions == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.MaxVersions
+}
+
+// NumLines returns the NumLines field value, or zero value if nil.
+func (r *UpdateFieldProperties) NumLines() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.NumLines == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.NumLines
+}
+
+// NumberFormat returns the NumberFormat field value, or zero value if nil.
+func (r *UpdateFieldProperties) NumberFormat() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.NumberFormat == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.NumberFormat
+}
+
+// ParentFieldId returns the ParentFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) ParentFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.ParentFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.ParentFieldId
+}
+
+// PostTempToken returns the PostTempToken field value, or zero value if nil.
+func (r *UpdateFieldProperties) PostTempToken() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.PostTempToken == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.PostTempToken
+}
+
+// SeeVersions returns the SeeVersions field value, or zero value if nil.
+func (r *UpdateFieldProperties) SeeVersions() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SeeVersions == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.SeeVersions
+}
+
+// SnapFieldId returns the SnapFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) SnapFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SnapFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.SnapFieldId
+}
+
+// SortAlpha returns the SortAlpha field value, or zero value if nil.
+func (r *UpdateFieldProperties) SortAlpha() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SortAlpha == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.SortAlpha
+}
+
+// SortAsGiven returns the SortAsGiven field value, or zero value if nil.
+func (r *UpdateFieldProperties) SortAsGiven() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SortAsGiven == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.SortAsGiven
+}
+
+// SourceFieldId returns the SourceFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) SourceFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SourceFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.SourceFieldId
+}
+
+// StartField returns the StartField field value, or zero value if nil.
+func (r *UpdateFieldProperties) StartField() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.StartField == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.StartField
+}
+
+// SummaryFunction returns the SummaryFunction field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) SummaryFunction() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SummaryFunction == nil {
+		return ""
+	}
+	return string(*r.UpdateField_200_Properties.SummaryFunction)
+}
+
+// SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) SummaryReferenceFieldId() int64 {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SummaryReferenceFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.SummaryReferenceFieldId
+}
+
+// SummaryTargetFieldId returns the SummaryTargetFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) SummaryTargetFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.SummaryTargetFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.SummaryTargetFieldId
+}
+
+// TargetFieldId returns the TargetFieldId field value, or zero value if nil.
+func (r *UpdateFieldProperties) TargetFieldId() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.TargetFieldId == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.TargetFieldId
+}
+
+// TargetTableId returns the TargetTableId field value, or zero value if nil.
+func (r *UpdateFieldProperties) TargetTableId() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.TargetTableId == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.TargetTableId
+}
+
+// TargetTableName returns the TargetTableName field value, or zero value if nil.
+func (r *UpdateFieldProperties) TargetTableName() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.TargetTableName == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.TargetTableName
+}
+
+// Units returns the Units field value, or zero value if nil.
+func (r *UpdateFieldProperties) Units() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Units == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.Units
+}
+
+// UseI18NFormat returns the UseI18NFormat field value, or zero value if nil.
+func (r *UpdateFieldProperties) UseI18NFormat() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.UseI18NFormat == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.UseI18NFormat
+}
+
+// UseNewWindow returns the UseNewWindow field value, or zero value if nil.
+func (r *UpdateFieldProperties) UseNewWindow() bool {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.UseNewWindow == nil {
+		return false
+	}
+	return *r.UpdateField_200_Properties.UseNewWindow
+}
+
+// VersionMode returns the VersionMode field value as a string, or empty string if nil.
+func (r *UpdateFieldProperties) VersionMode() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.VersionMode == nil {
+		return ""
+	}
+	return string(*r.UpdateField_200_Properties.VersionMode)
+}
+
+// Width returns the Width field value, or zero value if nil.
+func (r *UpdateFieldProperties) Width() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.Width == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.Width
+}
+
+// WorkWeek returns the WorkWeek field value, or zero value if nil.
+func (r *UpdateFieldProperties) WorkWeek() int {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.WorkWeek == nil {
+		return 0
+	}
+	return *r.UpdateField_200_Properties.WorkWeek
+}
+
+// XmlTag returns the XmlTag field value, or zero value if nil.
+func (r *UpdateFieldProperties) XmlTag() string {
+	if r == nil || r.UpdateField_200_Properties == nil || r.UpdateField_200_Properties.XmlTag == nil {
+		return ""
+	}
+	return *r.UpdateField_200_Properties.XmlTag
+}
+
+
+// UpdateFieldPropertiesCompositeFieldsItem wraps UpdateField_200_Properties_CompositeFields_Item with convenience methods.
+type UpdateFieldPropertiesCompositeFieldsItem struct {
+	*generated.UpdateField_200_Properties_CompositeFields_Item
+}
+
+
+// UpdateRelationshipForeignKeyField wraps UpdateRelationship_200_ForeignKeyField with convenience methods.
+type UpdateRelationshipForeignKeyField struct {
+	*generated.UpdateRelationship_200_ForeignKeyField
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *UpdateRelationshipForeignKeyField) Id() int {
+	if r == nil || r.UpdateRelationship_200_ForeignKeyField == nil || r.UpdateRelationship_200_ForeignKeyField.Id == nil {
+		return 0
+	}
+	return *r.UpdateRelationship_200_ForeignKeyField.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *UpdateRelationshipForeignKeyField) Label() string {
+	if r == nil || r.UpdateRelationship_200_ForeignKeyField == nil || r.UpdateRelationship_200_ForeignKeyField.Label == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_ForeignKeyField.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *UpdateRelationshipForeignKeyField) Type() string {
+	if r == nil || r.UpdateRelationship_200_ForeignKeyField == nil || r.UpdateRelationship_200_ForeignKeyField.Type == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_ForeignKeyField.Type
+}
+
+
+// UpdateRelationshipLookupFieldsItem wraps UpdateRelationship_200_LookupFields_Item with convenience methods.
+type UpdateRelationshipLookupFieldsItem struct {
+	*generated.UpdateRelationship_200_LookupFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *UpdateRelationshipLookupFieldsItem) Id() int {
+	if r == nil || r.UpdateRelationship_200_LookupFields_Item == nil || r.UpdateRelationship_200_LookupFields_Item.Id == nil {
+		return 0
+	}
+	return *r.UpdateRelationship_200_LookupFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *UpdateRelationshipLookupFieldsItem) Label() string {
+	if r == nil || r.UpdateRelationship_200_LookupFields_Item == nil || r.UpdateRelationship_200_LookupFields_Item.Label == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_LookupFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *UpdateRelationshipLookupFieldsItem) Type() string {
+	if r == nil || r.UpdateRelationship_200_LookupFields_Item == nil || r.UpdateRelationship_200_LookupFields_Item.Type == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_LookupFields_Item.Type
+}
+
+
+// UpdateRelationshipSummaryFieldsItem wraps UpdateRelationship_200_SummaryFields_Item with convenience methods.
+type UpdateRelationshipSummaryFieldsItem struct {
+	*generated.UpdateRelationship_200_SummaryFields_Item
+}
+
+// Id returns the Id field value, or zero value if nil.
+func (r *UpdateRelationshipSummaryFieldsItem) Id() int {
+	if r == nil || r.UpdateRelationship_200_SummaryFields_Item == nil || r.UpdateRelationship_200_SummaryFields_Item.Id == nil {
+		return 0
+	}
+	return *r.UpdateRelationship_200_SummaryFields_Item.Id
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *UpdateRelationshipSummaryFieldsItem) Label() string {
+	if r == nil || r.UpdateRelationship_200_SummaryFields_Item == nil || r.UpdateRelationship_200_SummaryFields_Item.Label == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_SummaryFields_Item.Label
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *UpdateRelationshipSummaryFieldsItem) Type() string {
+	if r == nil || r.UpdateRelationship_200_SummaryFields_Item == nil || r.UpdateRelationship_200_SummaryFields_Item.Type == nil {
+		return ""
+	}
+	return *r.UpdateRelationship_200_SummaryFields_Item.Type
+}
+
+
+// UpsertMetadata wraps Upsert_200_Metadata with convenience methods.
 type UpsertMetadata struct {
-	*generated.UpsertData_Metadata
-}
-
-// CreatedRecordIds returns the CreatedRecordIds field value, or nil if not set.
-func (r *UpsertMetadata) CreatedRecordIds() []int {
-	if r == nil || r.UpsertData_Metadata == nil || r.UpsertData_Metadata.CreatedRecordIds == nil {
-		return nil
-	}
-	return *r.UpsertData_Metadata.CreatedRecordIds
+	*generated.Upsert_200_Metadata
 }
 
 // TotalNumberOfRecordsProcessed returns the TotalNumberOfRecordsProcessed field value, or zero value if nil.
 func (r *UpsertMetadata) TotalNumberOfRecordsProcessed() int {
-	if r == nil || r.UpsertData_Metadata == nil || r.UpsertData_Metadata.TotalNumberOfRecordsProcessed == nil {
+	if r == nil || r.Upsert_200_Metadata == nil || r.Upsert_200_Metadata.TotalNumberOfRecordsProcessed == nil {
 		return 0
 	}
-	return *r.UpsertData_Metadata.TotalNumberOfRecordsProcessed
+	return *r.Upsert_200_Metadata.TotalNumberOfRecordsProcessed
 }
-
-// UnchangedRecordIds returns the UnchangedRecordIds field value, or nil if not set.
-func (r *UpsertMetadata) UnchangedRecordIds() []int {
-	if r == nil || r.UpsertData_Metadata == nil || r.UpsertData_Metadata.UnchangedRecordIds == nil {
-		return nil
-	}
-	return *r.UpsertData_Metadata.UnchangedRecordIds
-}
-
-// UpdatedRecordIds returns the UpdatedRecordIds field value, or nil if not set.
-func (r *UpsertMetadata) UpdatedRecordIds() []int {
-	if r == nil || r.UpsertData_Metadata == nil || r.UpsertData_Metadata.UpdatedRecordIds == nil {
-		return nil
-	}
-	return *r.UpsertData_Metadata.UpdatedRecordIds
-}
-
 
 
