@@ -30,3 +30,6 @@ Thumbs.db
 # Integration test context (contains app IDs)
 .test-context.json
 tests/integration/.test-context.json
+
+# MCP archive database
+archive/

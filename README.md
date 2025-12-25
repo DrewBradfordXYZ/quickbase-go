@@ -1448,11 +1448,12 @@ cd ..
 git add spec
 git commit -m "Update quickbase-spec submodule"
 
-# Regenerate wrapper methods
-go run ./cmd/generate-wrappers/main.go
+# Regenerate builders and wrappers
+go run ./cmd/generate-builders
+go run ./cmd/generate-results
 ```
 
-This reads `spec/output/quickbase-patched.json` and generates `client/api_generated.go`.
+This generates `client/builders_generated.go` (fluent builders) and `client/results_generated.go` (wrapper types).
 
 ## Related Projects
 

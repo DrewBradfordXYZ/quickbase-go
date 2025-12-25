@@ -9,8 +9,10 @@ all: generate build test
 generate: spec
 	@echo "Generating Go client from OpenAPI spec..."
 	oapi-codegen -config oapi-codegen.yaml spec/output/quickbase-patched.json
-	@echo "Generating wrapper methods..."
-	cd cmd/generate-wrappers && go run main.go
+	@echo "Generating builders..."
+	go run ./cmd/generate-builders
+	@echo "Generating result wrappers..."
+	go run ./cmd/generate-results
 	@echo "Tidying dependencies..."
 	go mod tidy
 	@echo "Done!"
@@ -46,7 +48,8 @@ test-integration:
 # Clean generated files
 clean:
 	rm -f generated/quickbase.gen.go
-	rm -f client/api_generated.go
+	rm -f client/builders_generated.go
+	rm -f client/results_generated.go
 
 # Install development tools
 tools:
