@@ -334,12 +334,15 @@ func extractFields(structType *ast.StructType, parentName string, seenNested map
 			IsEnum:           isEnum,
 		}
 
-		// Check if this references a named nested struct (like GetApp_200_SecurityProperties)
+		// Check if this references a named nested struct
+		// Patterns to detect:
+		// - Old oapi-codegen: GetApp_200_SecurityProperties (contains "_200_")
+		// - New oapi-codegen: GetAppSecurityProperties, GetFieldsItemProperties (component schemas)
 		typeToCheck := baseType
 		if isSlice {
 			typeToCheck = sliceElement
 		}
-		if strings.Contains(typeToCheck, "_200_") && !seenNested[typeToCheck] {
+		if shouldGenerateNestedWrapper(typeToCheck) && !seenNested[typeToCheck] {
 			if nestedStruct, exists := allStructTypes[typeToCheck]; exists {
 				seenNested[typeToCheck] = true
 				nestedWrapperName := generateNestedWrapperName(typeToCheck)
@@ -382,6 +385,23 @@ func resolveWrappedFields(responses []ResponseInfo) {
 		}
 	}
 
+	// Also resolve for item types
+	for i := range itemTypes {
+		for j := range itemTypes[i].Fields {
+			field := &itemTypes[i].Fields[j]
+
+			typeToCheck := field.BaseType
+			if field.IsSlice {
+				typeToCheck = field.SliceElement
+			}
+
+			if wrapperName, exists := wrapperNames[typeToCheck]; exists {
+				field.IsWrappedType = true
+				field.WrapperTypeName = wrapperName
+			}
+		}
+	}
+
 	// Also resolve for nested types
 	for i := range nestedTypes {
 		for j := range nestedTypes[i].Fields {
@@ -409,22 +429,131 @@ func generateWrapperName(operationName string) string {
 
 // generateItemWrapperName creates wrapper name for array item types
 func generateItemWrapperName(typeName string) string {
-	// GetFields_200_Item -> FieldsItem
+	// Old pattern: GetFields_200_Item -> FieldsItem
+	if strings.Contains(typeName, "_200_") {
+		name := strings.TrimPrefix(typeName, "Get")
+		parts := strings.Split(name, "_")
+		if len(parts) >= 1 {
+			return parts[0] + "Item"
+		}
+		return name + "Item"
+	}
+
+	// New pattern: GetFieldsItem -> FieldsItem
+	// GetAppEventsItem -> AppEventsItem
 	name := strings.TrimPrefix(typeName, "Get")
-	parts := strings.Split(name, "_")
-	if len(parts) >= 1 {
-		return parts[0] + "Item"
+	name = strings.TrimPrefix(name, "Create")
+	name = strings.TrimPrefix(name, "Update")
+	name = strings.TrimPrefix(name, "Delete")
+	name = strings.TrimPrefix(name, "Run")
+
+	// If it already ends in Item, don't add another
+	if strings.HasSuffix(name, "Item") {
+		return name
 	}
 	return name + "Item"
 }
 
+// shouldGenerateNestedWrapper checks if a type should get a wrapper
+// This detects both old naming (GetApp_200_SecurityProperties) and new naming (GetAppSecurityProperties)
+func shouldGenerateNestedWrapper(typeName string) bool {
+	// Skip primitive types
+	if isPrimitive(typeName) {
+		return false
+	}
+
+	// Skip enum types
+	if enumTypes[typeName] {
+		return false
+	}
+
+	// Old oapi-codegen pattern: contains "_200_"
+	if strings.Contains(typeName, "_200_") {
+		return true
+	}
+
+	// Inline array item types from oapi-codegen: end with "_Item"
+	// Examples: GetRelationshipsRelationshipsItem_LookupFields_Item
+	//           GetTableReportsItemQuery_FormulaFields_Item
+	if strings.HasSuffix(typeName, "_Item") {
+		return true
+	}
+
+	// Inline nested types with underscores (from oapi-codegen for deeply nested structures)
+	// Examples: GetRelationshipsRelationshipsItem_ForeignKeyField
+	//           GetTableReportsItemQuery (contains underscore pattern)
+	// Match types that have underscore-separated parts after an operation prefix
+	if strings.Contains(typeName, "_") {
+		parts := strings.Split(typeName, "_")
+		if len(parts) >= 2 {
+			// Has underscore in the middle - likely an inline type
+			return true
+		}
+	}
+
+	// New oapi-codegen pattern for component schemas from our extractInlineSchemas patch:
+	// These follow patterns like:
+	// - {Operation}{Field}: GetAppMemoryInfo, GetFieldsItemProperties
+	// - {Operation}{Field}Item: GetFieldsItemPermissionsItem
+	// - {Operation}Item{Field}: GetRolesItemAccess
+
+	// Common suffixes that indicate nested types needing wrappers
+	nestedSuffixes := []string{
+		"Properties",
+		"MemoryInfo",
+		"SecurityProperties",
+		"PermissionsItem",
+		"RelationshipsItem",
+		"Metadata",
+		"Owner",
+		"Access",
+		"Query",
+		"Field",
+		"Usage",
+		"Creator",
+		"FieldsItem",
+		"Data",
+		"EventsItem",
+	}
+
+	for _, suffix := range nestedSuffixes {
+		if strings.HasSuffix(typeName, suffix) {
+			// Verify it starts with an operation prefix
+			if strings.HasPrefix(typeName, "Get") ||
+				strings.HasPrefix(typeName, "Create") ||
+				strings.HasPrefix(typeName, "Update") ||
+				strings.HasPrefix(typeName, "Delete") ||
+				strings.HasPrefix(typeName, "Run") ||
+				strings.HasPrefix(typeName, "Copy") ||
+				strings.HasPrefix(typeName, "Clone") ||
+				strings.HasPrefix(typeName, "Transfer") ||
+				strings.HasPrefix(typeName, "Add") ||
+				strings.HasPrefix(typeName, "Remove") ||
+				strings.HasPrefix(typeName, "Upsert") ||
+				strings.HasPrefix(typeName, "Audit") ||
+				strings.HasPrefix(typeName, "Platform") {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 // generateNestedWrapperName creates wrapper name for nested types
 func generateNestedWrapperName(typeName string) string {
-	// GetApp_200_SecurityProperties -> AppSecurityProperties
-	name := strings.TrimPrefix(typeName, "Get")
-	name = strings.ReplaceAll(name, "_200_", "")
-	name = strings.ReplaceAll(name, "_", "")
-	return name
+	// Old pattern: GetApp_200_SecurityProperties -> AppSecurityProperties
+	if strings.Contains(typeName, "_200_") {
+		name := strings.TrimPrefix(typeName, "Get")
+		name = strings.ReplaceAll(name, "_200_", "")
+		name = strings.ReplaceAll(name, "_", "")
+		return name
+	}
+
+	// New pattern: Keep the full name to avoid conflicts between Get/Create/Update variants
+	// GetAppSecurityProperties -> GetAppSecurityProperties (wrapper)
+	// This ensures each generated type gets its own unique wrapper
+	return typeName
 }
 
 // typeToString converts an AST type to a string representation
@@ -603,6 +732,40 @@ func (r *{{$item.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
 	}
 	return r.{{$item.Name}}.{{$field.Name}}
 }
+{{end}}{{if $field.IsPrimitiveSlice}}
+// {{$field.Name}} returns the {{$field.Name}} field value, or nil if not set.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() []{{$field.SliceElement}} {
+	if r == nil || r.{{$item.Name}} == nil || r.{{$item.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	return *r.{{$item.Name}}.{{$field.Name}}
+}
+{{end}}{{if and $field.IsPtr $field.IsWrappedType (not $field.IsSlice)}}
+// {{$field.Name}} returns the {{$field.Name}} field as a wrapped type, or nil if not set.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() *{{$field.WrapperTypeName}} {
+	if r == nil || r.{{$item.Name}} == nil || r.{{$item.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	return &{{$field.WrapperTypeName}}{r.{{$item.Name}}.{{$field.Name}}}
+}
+{{end}}{{if and $field.IsSlice $field.IsWrappedType}}
+// {{$field.Name}} returns the {{$field.Name}} field as wrapped types, or nil if not set.
+func (r *{{$item.WrapperName}}) {{$field.Name}}() []*{{$field.WrapperTypeName}} {
+	if r == nil || r.{{$item.Name}} == nil {
+		return nil
+	}
+	{{if hasPrefix $field.Type "*[]"}}if r.{{$item.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	items := make([]*{{$field.WrapperTypeName}}, len(*r.{{$item.Name}}.{{$field.Name}}))
+	for i := range *r.{{$item.Name}}.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&(*r.{{$item.Name}}.{{$field.Name}})[i]}
+	}{{else}}items := make([]*{{$field.WrapperTypeName}}, len(r.{{$item.Name}}.{{$field.Name}}))
+	for i := range r.{{$item.Name}}.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&r.{{$item.Name}}.{{$field.Name}}[i]}
+	}{{end}}
+	return items
+}
 {{end}}{{if $field.IsEnum}}
 // {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.
 func (r *{{$item.WrapperName}}) {{$field.Name}}() string {
@@ -634,6 +797,40 @@ func (r *{{$nested.WrapperName}}) {{$field.Name}}() {{$field.BaseType}} {
 		return {{zeroValue $field.BaseType}}
 	}
 	return r.{{$nested.Name}}.{{$field.Name}}
+}
+{{end}}{{if $field.IsPrimitiveSlice}}
+// {{$field.Name}} returns the {{$field.Name}} field value, or nil if not set.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() []{{$field.SliceElement}} {
+	if r == nil || r.{{$nested.Name}} == nil || r.{{$nested.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	return *r.{{$nested.Name}}.{{$field.Name}}
+}
+{{end}}{{if and $field.IsPtr $field.IsWrappedType (not $field.IsSlice)}}
+// {{$field.Name}} returns the {{$field.Name}} field as a wrapped type, or nil if not set.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() *{{$field.WrapperTypeName}} {
+	if r == nil || r.{{$nested.Name}} == nil || r.{{$nested.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	return &{{$field.WrapperTypeName}}{r.{{$nested.Name}}.{{$field.Name}}}
+}
+{{end}}{{if and $field.IsSlice $field.IsWrappedType}}
+// {{$field.Name}} returns the {{$field.Name}} field as wrapped types, or nil if not set.
+func (r *{{$nested.WrapperName}}) {{$field.Name}}() []*{{$field.WrapperTypeName}} {
+	if r == nil || r.{{$nested.Name}} == nil {
+		return nil
+	}
+	{{if hasPrefix $field.Type "*[]"}}if r.{{$nested.Name}}.{{$field.Name}} == nil {
+		return nil
+	}
+	items := make([]*{{$field.WrapperTypeName}}, len(*r.{{$nested.Name}}.{{$field.Name}}))
+	for i := range *r.{{$nested.Name}}.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&(*r.{{$nested.Name}}.{{$field.Name}})[i]}
+	}{{else}}items := make([]*{{$field.WrapperTypeName}}, len(r.{{$nested.Name}}.{{$field.Name}}))
+	for i := range r.{{$nested.Name}}.{{$field.Name}} {
+		items[i] = &{{$field.WrapperTypeName}}{&r.{{$nested.Name}}.{{$field.Name}}[i]}
+	}{{end}}
+	return items
 }
 {{end}}{{if $field.IsEnum}}
 // {{$field.Name}} returns the {{$field.Name}} field value as a string, or empty string if nil.

@@ -33,9 +33,9 @@ func StringToWhereUnion(s string) (*generated.RunQueryJSONBody_Where, error) {
 	return body.Where, nil
 }
 
-// SortFieldsToSortByUnion converts a slice of SortField to a RunQueryJSONBody_SortBy union type.
+// SortFieldsToSortByUnion converts a slice of SortField to a SortByUnion type.
 // The SortBy parameter accepts either an array of sort specifications or false (to disable sorting).
-func SortFieldsToSortByUnion(fields []generated.SortField) (*generated.RunQueryJSONBody_SortBy, error) {
+func SortFieldsToSortByUnion(fields []generated.SortField) (*generated.SortByUnion, error) {
 	// Convert SortField slice to raw format for JSON
 	sortByRaw := make([]map[string]any, len(fields))
 	for i, f := range fields {
@@ -118,9 +118,9 @@ func extractWhereString(where *generated.RunQueryJSONBody_Where) (string, bool) 
 	return "", false
 }
 
-// ExtractSortFields extracts the sort fields from a RunQueryJSONBody_SortBy union.
+// ExtractSortFields extracts the sort fields from a SortByUnion.
 // Returns the slice of SortField values and nil error if successful.
-func ExtractSortFields(sortBy *generated.RunQueryJSONBody_SortBy) ([]generated.SortField, error) {
+func ExtractSortFields(sortBy *generated.SortByUnion) ([]generated.SortField, error) {
 	if sortBy == nil {
 		return nil, nil
 	}

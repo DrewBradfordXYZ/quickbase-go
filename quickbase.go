@@ -794,7 +794,7 @@ type (
 	SortFieldOrder = generated.SortFieldOrder
 
 	// SortByUnion is the union type for sortBy ([]SortField or false)
-	SortByUnion = generated.RunQueryJSONBody_SortBy
+	SortByUnion = generated.SortByUnion
 )
 
 // Builder types for fluent API
