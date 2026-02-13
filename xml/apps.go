@@ -1,9 +1,12 @@
 package xml
 
 import (
+	"bytes"
 	"context"
 	"encoding/xml"
 	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
@@ -453,9 +456,14 @@ type getAppDTMInfoResponse struct {
 // GetAppDTMInfo returns modification timestamps for an app and its tables.
 //
 // This is a fast, unobtrusive call for detecting changes:
-//   - No authentication ticket required
+//   - No authentication required (sends no auth headers or tokens)
 //   - Doesn't load the app into memory
 //   - Returns timestamps as Unix milliseconds
+//
+// This method bypasses [Caller.DoXML] and makes a direct HTTP request without
+// authentication. The QuickBase docs state "No ticket or app token is required"
+// for this call, and sending a user token actually causes a rejection
+// ("User Tokens cannot be used to call this API").
 //
 // The response includes RequestNextAllowedTime to prevent abuse.
 // Calling again before that time returns error code 77.
@@ -482,10 +490,28 @@ func (c *Client) GetAppDTMInfo(ctx context.Context, appId string) (*GetAppDTMInf
 	inner := "<dbid>" + xmlEscape(resolvedID) + "</dbid>"
 	body := buildRequest(inner)
 
-	// GetAppDTMInfo is invoked on db/main
-	respBody, err := c.caller.DoXML(ctx, "main", "API_GetAppDTMInfo", body)
+	// GetAppDTMInfo requires NO authentication. Sending a user token causes
+	// QuickBase to reject the call with "User Tokens cannot be used to call
+	// this API". We bypass DoXML (which injects auth) and make a direct
+	// unauthenticated HTTP request.
+	url := fmt.Sprintf("https://%s.quickbase.com/db/main", c.caller.Realm())
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		return nil, fmt.Errorf("API_GetAppDTMInfo: creating request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/xml")
+	req.Header.Set("QUICKBASE-ACTION", "API_GetAppDTMInfo")
+
+	httpResp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("API_GetAppDTMInfo: %w", err)
+	}
+	defer httpResp.Body.Close()
+
+	respBody, err := io.ReadAll(httpResp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("API_GetAppDTMInfo: reading response: %w", err)
 	}
 
 	var resp getAppDTMInfoResponse

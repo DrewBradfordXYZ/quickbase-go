@@ -1,12 +1,22 @@
 package xml
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"io"
+	"net/http"
 	"testing"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
+
+// roundTripFunc is an adapter for using a function as an http.RoundTripper.
+type roundTripFunc func(req *http.Request) (*http.Response, error)
+
+func (f roundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
+	return f(req)
+}
 
 // mockCaller implements the Caller interface for testing.
 type mockCaller struct {
@@ -2089,10 +2099,7 @@ func TestGrantedDBsResultDatabase(t *testing.T) {
 }
 
 func TestGetAppDTMInfoResultTable(t *testing.T) {
-	t.Run("access table by alias", func(t *testing.T) {
-		mock := &mockCaller{
-			realm: "testrealm",
-			response: []byte(`<?xml version="1.0" ?>
+	dtmResponse := []byte(`<?xml version="1.0" ?>
 <qdbapi>
    <action>API_GetAppDTMInfo</action>
    <errcode>0</errcode>
@@ -2113,8 +2120,26 @@ func TestGetAppDTMInfoResultTable(t *testing.T) {
          <lastRecModTime>1234567300</lastRecModTime>
       </table>
    </tables>
-</qdbapi>`),
-		}
+</qdbapi>`)
+
+	// GetAppDTMInfo bypasses DoXML and makes a direct HTTP call,
+	// so we need a mock HTTP transport instead of a mock Caller.
+	mockHTTP := &http.Client{
+		Transport: roundTripFunc(func(req *http.Request) (*http.Response, error) {
+			// Verify no auth headers/tokens are sent
+			if req.Header.Get("Authorization") != "" {
+				t.Error("GetAppDTMInfo should not send Authorization header")
+			}
+			return &http.Response{
+				StatusCode: 200,
+				Body:       io.NopCloser(bytes.NewReader(dtmResponse)),
+				Header:     make(http.Header),
+			}, nil
+		}),
+	}
+
+	t.Run("access table by alias", func(t *testing.T) {
+		mock := &mockCaller{realm: "testrealm"}
 
 		schema := core.ResolveSchema(&core.Schema{
 			Tables: map[string]core.TableSchema{
@@ -2123,7 +2148,7 @@ func TestGetAppDTMInfoResultTable(t *testing.T) {
 			},
 		})
 
-		client := New(mock, WithSchema(schema))
+		client := New(mock, WithSchema(schema), WithHTTPClient(mockHTTP))
 		result, err := client.GetAppDTMInfo(context.Background(), "bqapp123")
 
 		if err != nil {

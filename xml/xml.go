@@ -102,6 +102,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/xml"
+	"net/http"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 )
@@ -126,8 +127,9 @@ type Caller interface {
 //
 // Create a Client using [New] with an existing quickbase.Client or client.Client.
 type Client struct {
-	caller Caller
-	schema *core.ResolvedSchema
+	caller     Caller
+	schema     *core.ResolvedSchema
+	httpClient *http.Client
 }
 
 // Option configures the XML client.
@@ -159,6 +161,16 @@ func WithSchema(schema *core.ResolvedSchema) Option {
 	}
 }
 
+// WithHTTPClient configures the XML client to use a custom HTTP client for
+// direct HTTP requests (e.g., [Client.GetAppDTMInfo] which bypasses [Caller.DoXML]).
+//
+// If not provided, [http.DefaultClient] is used.
+func WithHTTPClient(client *http.Client) Option {
+	return func(c *Client) {
+		c.httpClient = client
+	}
+}
+
 // New creates an XML API client from an existing QuickBase client.
 //
 // The caller parameter should be a *quickbase.Client or *client.Client,
@@ -175,6 +187,9 @@ func New(caller Caller, opts ...Option) *Client {
 	c := &Client{caller: caller}
 	for _, opt := range opts {
 		opt(c)
+	}
+	if c.httpClient == nil {
+		c.httpClient = http.DefaultClient
 	}
 	return c
 }
