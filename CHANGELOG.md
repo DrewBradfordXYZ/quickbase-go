@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.9.0] - 2025-12-17
+## [2.3.0] - 2026-03-02
+
+### Fixed
+
+- **XML API Token Refresh**: The legacy XML API (`DoXML`) now correctly handles expired authentication tickets (errcode 8) by attempting a token refresh and retrying the request. Previously, expired XML tickets would fail immediately even if refresh logic was available.
+
+### Changed
+
+- **Internal Request Logic**: Centralized the core request execution cycle (retries, exponential backoff, jitter, proactive throttling, and error recovery) into a single reusable path for both JSON and XML APIs.
+- **Refactored Unit Tests**: Updated client unit tests to call `calculateBackoff` directly on the `Client` struct, matching the new architecture.
+
+## [2.2.0] - 2025-12-25
 
 ### Fixed
 

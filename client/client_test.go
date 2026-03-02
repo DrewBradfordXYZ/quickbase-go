@@ -199,16 +199,15 @@ func TestValidateRealm(t *testing.T) {
 }
 
 func TestCalculateBackoff(t *testing.T) {
-	// Create a mock authHTTPClient to test backoff calculation
+	// Create a mock Client to test backoff calculation
 	client := &Client{
 		initialDelay: 100 * time.Millisecond,
 		maxDelay:     1000 * time.Millisecond,
 		backoffMult:  2,
 	}
-	h := &authHTTPClient{client: client}
 
 	t.Run("first attempt delay around initialDelay", func(t *testing.T) {
-		delay := h.calculateBackoff(1)
+		delay := client.calculateBackoff(1)
 		// 100ms ± 10% jitter = 90-110ms
 		if delay < 90*time.Millisecond || delay > 110*time.Millisecond {
 			t.Errorf("calculateBackoff(1) = %v, want 90-110ms", delay)
@@ -216,7 +215,7 @@ func TestCalculateBackoff(t *testing.T) {
 	})
 
 	t.Run("second attempt doubles delay", func(t *testing.T) {
-		delay := h.calculateBackoff(2)
+		delay := client.calculateBackoff(2)
 		// 100 * 2^1 = 200ms ± 10% = 180-220ms
 		if delay < 180*time.Millisecond || delay > 220*time.Millisecond {
 			t.Errorf("calculateBackoff(2) = %v, want 180-220ms", delay)
@@ -224,7 +223,7 @@ func TestCalculateBackoff(t *testing.T) {
 	})
 
 	t.Run("third attempt quadruples delay", func(t *testing.T) {
-		delay := h.calculateBackoff(3)
+		delay := client.calculateBackoff(3)
 		// 100 * 2^2 = 400ms ± 10% = 360-440ms
 		if delay < 360*time.Millisecond || delay > 440*time.Millisecond {
 			t.Errorf("calculateBackoff(3) = %v, want 360-440ms", delay)
@@ -232,7 +231,7 @@ func TestCalculateBackoff(t *testing.T) {
 	})
 
 	t.Run("caps at maxDelay", func(t *testing.T) {
-		delay := h.calculateBackoff(10)
+		delay := client.calculateBackoff(10)
 		// Should be capped at 1000ms + jitter max
 		if delay > 1100*time.Millisecond {
 			t.Errorf("calculateBackoff(10) = %v, should be capped at ~1100ms", delay)
@@ -245,9 +244,8 @@ func TestCalculateBackoff(t *testing.T) {
 			maxDelay:     10 * time.Second,
 			backoffMult:  3,
 		}
-		h := &authHTTPClient{client: client}
 
-		delay := h.calculateBackoff(2)
+		delay := client.calculateBackoff(2)
 		// 100 * 3^1 = 300ms ± 10% = 270-330ms
 		if delay < 270*time.Millisecond || delay > 330*time.Millisecond {
 			t.Errorf("calculateBackoff(2) with mult=3 = %v, want 270-330ms", delay)
@@ -262,7 +260,6 @@ func TestBackoffJitter(t *testing.T) {
 		maxDelay:     30 * time.Second,
 		backoffMult:  2,
 	}
-	h := &authHTTPClient{client: client}
 
 	// Expected base delay for attempt 1: 1s
 	baseDelay := 1 * time.Second
@@ -271,7 +268,7 @@ func TestBackoffJitter(t *testing.T) {
 
 	seenValues := make(map[time.Duration]bool)
 	for i := 0; i < 100; i++ {
-		delay := h.calculateBackoff(1)
+		delay := client.calculateBackoff(1)
 
 		if delay < minDelay || delay > maxDelay {
 			t.Errorf("calculateBackoff(1) = %v, want between %v and %v", delay, minDelay, maxDelay)
@@ -302,7 +299,6 @@ func TestExponentialBackoff(t *testing.T) {
 		maxDelay:     10 * time.Second,
 		backoffMult:  2,
 	}
-	h := &authHTTPClient{client: client}
 
 	expectedDelays := []time.Duration{
 		100 * time.Millisecond,  // 100 * 2^0
@@ -313,7 +309,7 @@ func TestExponentialBackoff(t *testing.T) {
 	}
 
 	for attempt, expected := range expectedDelays {
-		delay := h.calculateBackoff(attempt + 1)
+		delay := client.calculateBackoff(attempt + 1)
 		// Allow ±10% for jitter
 		minExpected := time.Duration(float64(expected) * 0.9)
 		maxExpected := time.Duration(float64(expected) * 1.1)
