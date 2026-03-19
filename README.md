@@ -26,7 +26,7 @@ A Go client for the QuickBase JSON RESTful API, with optional support for legacy
 ## Installation
 
 ```bash
-go get github.com/DrewBradfordXYZ/quickbase-go
+go get github.com/DrewBradfordXYZ/quickbase-go/v2
 ```
 
 ## Quick Start
@@ -39,7 +39,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/DrewBradfordXYZ/quickbase-go"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2"
 )
 
 func main() {
@@ -151,7 +151,7 @@ client, err := quickbase.New("mycompany",
 **With custom ticket validity:**
 
 ```go
-import "github.com/DrewBradfordXYZ/quickbase-go/auth"
+import "github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
 
 client, err := quickbase.New("mycompany",
     quickbase.WithTicketAuth("user@example.com", "password",
@@ -477,7 +477,7 @@ import (
     "encoding/json"
     "os"
 
-    "github.com/DrewBradfordXYZ/quickbase-go"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2"
 )
 
 // Load schema from JSON file
@@ -532,15 +532,15 @@ qb := client.Query("projects")           // Start query for table (alias or ID)
 ### Upsert Builder
 
 ```go
-result, err := client.UpsertTo("projects").
-    MergeOn("externalId").                                    // Merge field for updates
+result, err := client.Upsert("projects").
+    MergeFieldId(9).                                          // Merge field for updates
     Row("externalId", "EXT-001", "name", "Alpha", "status", "Active").
     Row("externalId", "EXT-002", "name", "Beta", "status", "Pending").
-    Return("name", "status").                                 // Fields to return
+    FieldsToReturn(6, 7).                                     // Fields to return
     Run(ctx)
 
 fmt.Printf("Created: %v, Updated: %v\n",
-    result.CreatedRecordIDs, result.UpdatedRecordIDs)
+    result.Metadata().CreatedRecordIds(), result.Metadata().UpdatedRecordIds())
 ```
 
 ### Asc/Desc Helpers
@@ -564,22 +564,22 @@ The SDK provides fluent builders that return generated data types directly (v2.0
 ```go
 ctx := context.Background()
 
-// Get app details - returns *generated.GetAppData
+// Get app details - returns *client.GetAppResult
 app, err := client.GetApp(appId).Run(ctx)
 fmt.Println("App name:", app.Name)
 fmt.Println("Created:", quickbase.Deref(app.Created))  // *string → string
 
-// Get table info - returns *generated.GetTableData
+// Get table info - returns *client.GetTableResult
 table, err := client.GetTable(tableId).Run(ctx)
 fmt.Println("Table:", *table.Name)
 
-// Get all tables in an app - returns []generated.GetAppTablesItem
+// Get all tables in an app - returns *client.GetAppTablesResult
 tables, err := client.GetAppTables(appId).Run(ctx)
 for _, t := range tables {
     fmt.Printf("Table %s: %s\n", quickbase.Deref(t.Id), quickbase.Deref(t.Name))
 }
 
-// Get fields for a table - returns []generated.GetFieldsItem
+// Get fields for a table - returns *client.GetFieldsResult
 fields, err := client.GetFields(tableId).Run(ctx)
 for _, f := range fields {
     fmt.Printf("Field %d: %s (%s)\n", f.Id, quickbase.Deref(f.Label), quickbase.Deref(f.FieldType))
@@ -588,17 +588,17 @@ for _, f := range fields {
 // Query records - IMPORTANT: QuickBase returns ~100 records per page by default
 // Use RunQueryAll to get all records, or RunQueryN to limit
 
-// Single page only - returns *generated.RunQueryData
+// Single page only - returns *client.RunQueryResult
 query, err := client.RunQuery(ctx, quickbase.RunQueryBody{
     From:   tableId,
     Select: quickbase.Ints(3, 6, 7),
     Where:  quickbase.Ptr("{6.GT.100}"),
 })
 fmt.Printf("Got %d of %d records\n",
-    query.Metadata.NumRecords,
-    query.Metadata.TotalRecords)
+    query.Metadata().NumRecords(),
+    query.Metadata().TotalRecords())
 
-// All records (auto-paginates) - returns []generated.QuickbaseRecord
+// All records (auto-paginates) - returns []quickbase.Record
 rawRecords, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
     From: tableId,
 })
@@ -609,27 +609,27 @@ first500, err := client.RunQueryN(ctx, quickbase.RunQueryBody{
     From: tableId,
 }, 500)
 
-// Insert/Update records - returns *generated.UpsertData
+// Insert/Update records - returns *client.UpsertResult
 data := []quickbase.Record{
     quickbase.Row("name", "New Record", "count", 42),
 }
 upsertResp, err := client.Upsert(tableId).Data(&data).Run(ctx)
-fmt.Println("Created:", upsertResp.Metadata.CreatedRecordIds)
-fmt.Println("Updated:", upsertResp.Metadata.UpdatedRecordIds)
+fmt.Println("Created:", upsertResp.Metadata().CreatedRecordIds())
+fmt.Println("Updated:", upsertResp.Metadata().UpdatedRecordIds())
 
-// Delete records - returns *generated.DeleteRecordsData
+// Delete records - returns *client.DeleteRecordsResult
 deleteResp, err := client.DeleteRecords(tableId).Where("{3.EX.123}").Run(ctx)
 fmt.Println("Deleted:", deleteResp.NumberDeleted)
 
-// Create an app - returns *generated.CreateAppData
+// Create an app - returns *client.CreateAppResult
 newApp, err := client.CreateApp().
     Name("My New App").
     Description("Created via API").
     Run(ctx)
 fmt.Println("Created app:", newApp.Id)
 
-// Get report info - returns *generated.GetReportData
-report, err := client.GetReport(tableId, reportId).Run(ctx)
+// Get report info - returns *client.GetReportResult
+report, err := client.GetReport(reportId, tableId).Run(ctx)
 fmt.Println("Report:", quickbase.Deref(report.Name))
 ```
 
@@ -1085,8 +1085,8 @@ records, err := client.RunQueryN(ctx, body, 500)
 // RunQuery returns just the first page
 resp, err := client.RunQuery(ctx, body)
 fmt.Printf("Got %d of %d total records\n",
-    resp.JSON200.Metadata.NumRecords,
-    resp.JSON200.Metadata.TotalRecords)
+    resp.Metadata().NumRecords(),
+    resp.Metadata().TotalRecords())
 ```
 
 ### Advanced: Manual Pagination
@@ -1094,7 +1094,7 @@ fmt.Printf("Got %d of %d total records\n",
 For custom pagination logic, use the low-level helpers:
 
 ```go
-import "github.com/DrewBradfordXYZ/quickbase-go/client"
+import "github.com/DrewBradfordXYZ/quickbase-go/v2/client"
 
 // Define a page fetcher
 fetcher := func(ctx context.Context, skip int, nextToken string) (*Response, error) {
@@ -1146,8 +1146,8 @@ The `xml` package is included with the SDK but imported separately:
 
 ```go
 import (
-    "github.com/DrewBradfordXYZ/quickbase-go"
-    "github.com/DrewBradfordXYZ/quickbase-go/xml"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
 )
 ```
 
@@ -1193,9 +1193,9 @@ The XML client supports the same schema aliases as the JSON API. Use `xml.WithSc
 
 ```go
 import (
-    "github.com/DrewBradfordXYZ/quickbase-go"
-    "github.com/DrewBradfordXYZ/quickbase-go/core"
-    "github.com/DrewBradfordXYZ/quickbase-go/xml"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+    "github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
 )
 
 // Define schema (same as JSON API)
