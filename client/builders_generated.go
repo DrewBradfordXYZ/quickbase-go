@@ -72,7 +72,6 @@ func (b *AddManagersToGroupBuilder) Run(ctx context.Context) (*AddManagersToGrou
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().AddManagersToGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -127,7 +126,6 @@ func (b *AddMembersToGroupBuilder) Run(ctx context.Context) (*AddMembersToGroupR
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().AddMembersToGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -182,7 +180,6 @@ func (b *AddSubgroupsToGroupBuilder) Run(ctx context.Context) (*AddSubgroupsToGr
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().AddSubgroupsToGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -237,7 +234,6 @@ func (b *AddTrusteesBuilder) Run(ctx context.Context) (*AddTrusteesResult, error
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().AddTrusteesWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -340,7 +336,6 @@ func (b *AuditBuilder) Run(ctx context.Context) (*AuditResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().AuditWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -397,7 +392,6 @@ func (b *ChangesetSolutionBuilder) Run(ctx context.Context) (*generated.Changese
 	}
 	// Build query params
 	params := &generated.ChangesetSolutionParams{}
-
 	resp, err := b.client.API().ChangesetSolutionWithResponse(ctx, b.solutionId, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -496,7 +490,6 @@ func (b *ChangesetSolutionFromRecordBuilder) Run(ctx context.Context) (*generate
 	if b.qpRecordId != nil {
 		params.RecordId = *b.qpRecordId
 	}
-
 	resp, err := b.client.API().ChangesetSolutionFromRecordWithResponse(ctx, b.solutionId, params)
 	if err != nil {
 		return nil, err
@@ -569,7 +562,6 @@ func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult,
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().CloneUserTokenWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -711,7 +703,6 @@ func (b *CopyAppBuilder) Run(ctx context.Context) (*CopyAppResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().CopyAppWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -901,7 +892,6 @@ func (b *CreateAppBuilder) Run(ctx context.Context) (*CreateAppResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().CreateAppWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -1971,7 +1961,6 @@ func (b *CreateFieldBuilder) Run(ctx context.Context) (*CreateFieldResult, error
 	// Build query params
 	params := &generated.CreateFieldParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().CreateFieldWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -2084,7 +2073,6 @@ func (b *CreateRelationshipBuilder) Run(ctx context.Context) (*CreateRelationshi
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().CreateRelationshipWithResponse(ctx, b.tableID, reqBody)
 	if err != nil {
 		return nil, err
@@ -2153,7 +2141,6 @@ func (b *CreateSolutionBuilder) Run(ctx context.Context) (*generated.CreateSolut
 	if b.qpAlias != nil {
 		params.Alias = b.qpAlias
 	}
-
 	resp, err := b.client.API().CreateSolutionWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -2264,7 +2251,6 @@ func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.C
 	if b.qpAlias != nil {
 		params.Alias = b.qpAlias
 	}
-
 	resp, err := b.client.API().CreateSolutionFromRecordWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -2387,7 +2373,6 @@ func (b *CreateTableBuilder) Run(ctx context.Context) (*CreateTableResult, error
 	if b.qpAppId != nil {
 		params.AppId = *b.qpAppId
 	}
-
 	resp, err := b.client.API().CreateTableWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -2424,7 +2409,6 @@ func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivateUserTo
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().DeactivateUserTokenWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -2496,7 +2480,6 @@ func (b *DeleteAppBuilder) Run(ctx context.Context) (*DeleteAppResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().DeleteAppWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -2584,7 +2567,6 @@ func (b *DeleteFieldsBuilder) Run(ctx context.Context) (*DeleteFieldsResult, err
 	// Build query params
 	params := &generated.DeleteFieldsParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().DeleteFieldsWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -2641,7 +2623,6 @@ func (b *DeleteFileBuilder) Run(ctx context.Context) (*DeleteFileResult, error) 
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().DeleteFileWithResponse(ctx, b.tableID, b.recordId, b.fieldId, b.versionNumber)
 	if err != nil {
 		return nil, err
@@ -2726,7 +2707,6 @@ func (b *DeleteRecordsBuilder) Run(ctx context.Context) (*DeleteRecordsResult, e
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().DeleteRecordsWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -2779,7 +2759,6 @@ func (b *DeleteRelationshipBuilder) Run(ctx context.Context) (*DeleteRelationshi
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().DeleteRelationshipWithResponse(ctx, b.tableID, b.relationshipId)
 	if err != nil {
 		return nil, err
@@ -2853,7 +2832,6 @@ func (b *DeleteTableBuilder) Run(ctx context.Context) (*DeleteTableResult, error
 	if b.qpAppId != nil {
 		params.AppId = *b.qpAppId
 	}
-
 	resp, err := b.client.API().DeleteTableWithResponse(ctx, b.tableID, params)
 	if err != nil {
 		return nil, err
@@ -2890,7 +2868,6 @@ func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResul
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().DeleteUserTokenWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -2959,7 +2936,6 @@ func (b *DenyUsersBuilder) Run(ctx context.Context) (*DenyUsersResult, error) {
 	if b.qpAccountId != nil {
 		params.AccountId = b.qpAccountId
 	}
-
 	resp, err := b.client.API().DenyUsersWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -3030,7 +3006,6 @@ func (b *DenyUsersAndGroupsBuilder) Run(ctx context.Context) (*DenyUsersAndGroup
 	if b.qpAccountId != nil {
 		params.AccountId = b.qpAccountId
 	}
-
 	resp, err := b.client.API().DenyUsersAndGroupsWithResponse(ctx, b.shouldDeleteFromGroups, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -3087,7 +3062,6 @@ func (b *DownloadFileBuilder) Run(ctx context.Context) (*generated.DownloadFileR
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().DownloadFileWithResponse(ctx, b.tableID, b.recordId, b.fieldId, b.versionNumber)
 	if err != nil {
 		return nil, err
@@ -3208,7 +3182,6 @@ func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenRes
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().ExchangeSsoTokenWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -3249,7 +3222,6 @@ func (b *ExportSolutionBuilder) Run(ctx context.Context) (*generated.ExportSolut
 	}
 	// Build query params
 	params := &generated.ExportSolutionParams{}
-
 	resp, err := b.client.API().ExportSolutionWithResponse(ctx, b.solutionId, params)
 	if err != nil {
 		return nil, err
@@ -3327,7 +3299,6 @@ func (b *ExportSolutionToRecordBuilder) Run(ctx context.Context) (*generated.Exp
 	if b.qpFieldId != nil {
 		params.FieldId = *b.qpFieldId
 	}
-
 	resp, err := b.client.API().ExportSolutionToRecordWithResponse(ctx, b.solutionId, params)
 	if err != nil {
 		return nil, err
@@ -3503,7 +3474,6 @@ func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentRes
 	if b.qpRealm != nil {
 		params.Realm = b.qpRealm
 	}
-
 	resp, err := b.client.API().GenerateDocumentWithResponse(ctx, b.templateId, params)
 	if err != nil {
 		return nil, err
@@ -3542,7 +3512,6 @@ func (b *GetAppBuilder) Run(ctx context.Context) (*AppResult, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().GetAppWithResponse(ctx, b.appId)
 	if err != nil {
 		return nil, err
@@ -3581,7 +3550,6 @@ func (b *GetAppEventsBuilder) Run(ctx context.Context) ([]*AppEventsItem, error)
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().GetAppEventsWithResponse(ctx, b.appId)
 	if err != nil {
 		return nil, err
@@ -3646,7 +3614,6 @@ func (b *GetAppTablesBuilder) Run(ctx context.Context) ([]*AppTablesItem, error)
 	if b.qpAppId != nil {
 		params.AppId = *b.qpAppId
 	}
-
 	resp, err := b.client.API().GetAppTablesWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -3722,7 +3689,6 @@ func (b *GetFieldBuilder) Run(ctx context.Context) (*FieldResult, error) {
 	if b.qpIncludeFieldPerms != nil {
 		params.IncludeFieldPerms = b.qpIncludeFieldPerms
 	}
-
 	resp, err := b.client.API().GetFieldWithResponse(ctx, b.fieldId, params)
 	if err != nil {
 		return nil, err
@@ -3779,7 +3745,6 @@ func (b *GetFieldUsageBuilder) Run(ctx context.Context) ([]*FieldUsageItem, erro
 	// Build query params
 	params := &generated.GetFieldUsageParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().GetFieldUsageWithResponse(ctx, b.fieldId, params)
 	if err != nil {
 		return nil, err
@@ -3853,7 +3818,6 @@ func (b *GetFieldsBuilder) Run(ctx context.Context) ([]*FieldsItem, error) {
 	if b.qpIncludeFieldPerms != nil {
 		params.IncludeFieldPerms = b.qpIncludeFieldPerms
 	}
-
 	resp, err := b.client.API().GetFieldsWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -3941,7 +3905,6 @@ func (b *GetFieldsUsageBuilder) Run(ctx context.Context) ([]*FieldsUsageItem, er
 	if b.qpTop != nil {
 		params.Top = b.qpTop
 	}
-
 	resp, err := b.client.API().GetFieldsUsageWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -4013,7 +3976,6 @@ func (b *GetRelationshipsBuilder) Run(ctx context.Context) (*RelationshipsResult
 	if b.qpSkip != nil {
 		params.Skip = b.qpSkip
 	}
-
 	resp, err := b.client.API().GetRelationshipsWithResponse(ctx, b.tableID, params)
 	if err != nil {
 		return nil, err
@@ -4070,7 +4032,6 @@ func (b *GetReportBuilder) Run(ctx context.Context) (*ReportResult, error) {
 	// Build query params
 	params := &generated.GetReportParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().GetReportWithResponse(ctx, b.reportId, params)
 	if err != nil {
 		return nil, err
@@ -4109,7 +4070,6 @@ func (b *GetRolesBuilder) Run(ctx context.Context) ([]*RolesItem, error) {
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().GetRolesWithResponse(ctx, b.appId)
 	if err != nil {
 		return nil, err
@@ -4155,7 +4115,6 @@ func (b *GetSolutionPublicBuilder) Run(ctx context.Context) (*generated.GetSolut
 	}
 	// Build query params
 	params := &generated.GetSolutionPublicParams{}
-
 	resp, err := b.client.API().GetSolutionPublicWithResponse(ctx, b.solutionId, params)
 	if err != nil {
 		return nil, err
@@ -4229,7 +4188,6 @@ func (b *GetTableBuilder) Run(ctx context.Context) (*TableResult, error) {
 	if b.qpAppId != nil {
 		params.AppId = *b.qpAppId
 	}
-
 	resp, err := b.client.API().GetTableWithResponse(ctx, b.tableID, params)
 	if err != nil {
 		return nil, err
@@ -4284,7 +4242,6 @@ func (b *GetTableReportsBuilder) Run(ctx context.Context) ([]*TableReportsItem, 
 	// Build query params
 	params := &generated.GetTableReportsParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().GetTableReportsWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -4330,7 +4287,6 @@ func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*TempTokenDBIDResult
 	}
 	// Build query params
 	params := &generated.GetTempTokenDBIDParams{}
-
 	resp, err := b.client.API().GetTempTokenDBIDWithResponse(ctx, b.dbid, params)
 	if err != nil {
 		return nil, err
@@ -4369,7 +4325,6 @@ func (b *GetTrusteesBuilder) Run(ctx context.Context) (*generated.GetTrusteesRes
 	if b.err != nil {
 		return nil, b.err
 	}
-
 	resp, err := b.client.API().GetTrusteesWithResponse(ctx, b.appId)
 	if err != nil {
 		return nil, err
@@ -4431,7 +4386,6 @@ func (b *GetUserAppsBuilder) Run(ctx context.Context) (*UserAppsResult, error) {
 	if b.qpAccountId != nil {
 		params.AccountId = *b.qpAccountId
 	}
-
 	resp, err := b.client.API().GetUserAppsWithResponse(ctx, b.userId, params)
 	if err != nil {
 		return nil, err
@@ -4530,7 +4484,6 @@ func (b *GetUsersBuilder) Run(ctx context.Context) (*UsersResult, error) {
 	if b.qpAccountId != nil {
 		params.AccountId = b.qpAccountId
 	}
-
 	resp, err := b.client.API().GetUsersWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -4670,7 +4623,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) Run(ctx context.Context) (*Platf
 	if b.qpAccountId != nil {
 		params.AccountId = b.qpAccountId
 	}
-
 	resp, err := b.client.API().PlatformAnalyticEventSummariesWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -4723,7 +4675,6 @@ func (b *PlatformAnalyticReadsBuilder) Run(ctx context.Context) (*PlatformAnalyt
 	if b.qpDay != nil {
 		params.Day = b.qpDay
 	}
-
 	resp, err := b.client.API().PlatformAnalyticReadsWithResponse(ctx, params)
 	if err != nil {
 		return nil, err
@@ -4823,7 +4774,6 @@ func (b *RecordsModifiedSinceBuilder) Run(ctx context.Context) (*RecordsModified
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RecordsModifiedSinceWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -4878,7 +4828,6 @@ func (b *RemoveManagersFromGroupBuilder) Run(ctx context.Context) (*RemoveManage
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RemoveManagersFromGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -4933,7 +4882,6 @@ func (b *RemoveMembersFromGroupBuilder) Run(ctx context.Context) (*RemoveMembers
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RemoveMembersFromGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -4988,7 +4936,6 @@ func (b *RemoveSubgroupsFromGroupBuilder) Run(ctx context.Context) (*RemoveSubgr
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RemoveSubgroupsFromGroupWithResponse(ctx, b.gid, reqBody)
 	if err != nil {
 		return nil, err
@@ -5043,7 +4990,6 @@ func (b *RemoveTrusteesBuilder) Run(ctx context.Context) (*RemoveTrusteesResult,
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RemoveTrusteesWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -5133,7 +5079,6 @@ func (b *RunFormulaBuilder) Run(ctx context.Context) (*RunFormulaResult, error) 
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().RunFormulaWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -5234,7 +5179,6 @@ func (b *RunReportBuilder) Run(ctx context.Context) (*RunReportResult, error) {
 	if b.qpTop != nil {
 		params.Top = b.qpTop
 	}
-
 	resp, err := b.client.API().RunReportWithResponse(ctx, b.reportId, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -5317,7 +5261,6 @@ func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenR
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().TransferUserTokenWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
@@ -5386,7 +5329,6 @@ func (b *UndenyUsersBuilder) Run(ctx context.Context) (*UndenyUsersResult, error
 	if b.qpAccountId != nil {
 		params.AccountId = b.qpAccountId
 	}
-
 	resp, err := b.client.API().UndenyUsersWithResponse(ctx, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -5561,7 +5503,6 @@ func (b *UpdateAppBuilder) Run(ctx context.Context) (*UpdateAppResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().UpdateAppWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -6734,7 +6675,6 @@ func (b *UpdateFieldBuilder) Run(ctx context.Context) (*UpdateFieldResult, error
 	// Build query params
 	params := &generated.UpdateFieldParams{}
 	params.TableId = b.tableID
-
 	resp, err := b.client.API().UpdateFieldWithResponse(ctx, b.fieldId, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -6824,7 +6764,6 @@ func (b *UpdateRelationshipBuilder) Run(ctx context.Context) (*UpdateRelationshi
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().UpdateRelationshipWithResponse(ctx, b.tableID, b.relationshipId, reqBody)
 	if err != nil {
 		return nil, err
@@ -6881,7 +6820,6 @@ func (b *UpdateSolutionBuilder) Run(ctx context.Context) (*generated.UpdateSolut
 	}
 	// Build query params
 	params := &generated.UpdateSolutionParams{}
-
 	resp, err := b.client.API().UpdateSolutionWithResponse(ctx, b.solutionId, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -6980,7 +6918,6 @@ func (b *UpdateSolutionToRecordBuilder) Run(ctx context.Context) (*generated.Upd
 	if b.qpRecordId != nil {
 		params.RecordId = *b.qpRecordId
 	}
-
 	resp, err := b.client.API().UpdateSolutionToRecordWithResponse(ctx, b.solutionId, params)
 	if err != nil {
 		return nil, err
@@ -7111,7 +7048,6 @@ func (b *UpdateTableBuilder) Run(ctx context.Context) (*UpdateTableResult, error
 	if b.qpAppId != nil {
 		params.AppId = *b.qpAppId
 	}
-
 	resp, err := b.client.API().UpdateTableWithResponse(ctx, b.tableID, params, reqBody)
 	if err != nil {
 		return nil, err
@@ -7166,7 +7102,6 @@ func (b *UpdateTrusteesBuilder) Run(ctx context.Context) (*UpdateTrusteesResult,
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().UpdateTrusteesWithResponse(ctx, b.appId, reqBody)
 	if err != nil {
 		return nil, err
@@ -7264,7 +7199,6 @@ func (b *UpsertBuilder) Run(ctx context.Context) (*UpsertResult, error) {
 	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
 		return nil, err
 	}
-
 	resp, err := b.client.API().UpsertWithResponse(ctx, reqBody)
 	if err != nil {
 		return nil, err
