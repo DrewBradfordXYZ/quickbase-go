@@ -93,7 +93,7 @@ func Example_runQuery() {
 		fmt.Println(rec["6"])
 	}
 
-	all, _ := client.RunQueryAll(ctx, body)    // every page
+	all, _ := client.RunQueryAll(ctx, body)      // every page
 	first, _ := client.RunQueryN(ctx, body, 500) // up to 500
 	fmt.Println(len(quickbase.UnwrapRecords(all)), len(first))
 }
@@ -376,4 +376,18 @@ func Example_xmlAliases() {
 		fmt.Println(u.Name, u.Roles)
 	}
 	_ = xml.IsUnauthorized(nil) || xml.IsNotFound(nil)
+}
+
+// docs/queries.md: streaming a large table a page at a time.
+func Example_iterator() {
+	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
+	ctx := context.Background()
+	body := quickbase.RunQueryBody{From: "bqtable1", Select: quickbase.Ints(3, 6)}
+
+	for record, err := range client.RunQueryIterator(ctx, body) {
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(record["6"].Value)
+	}
 }

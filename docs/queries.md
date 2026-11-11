@@ -51,6 +51,17 @@ all, _ := client.RunQueryAll(ctx, body)      // every page
 first, _ := client.RunQueryN(ctx, body, 500) // up to 500
 ```
 
+To process a large table without holding it all in memory, iterate: each page is fetched as the loop reaches it, and breaking out stops fetching.
+
+```go
+for record, err := range client.RunQueryIterator(ctx, body) {
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(record["6"].Value)
+}
+```
+
 QuickBase sizes pages by record size, often about 100 records. `RunQuery` and `RunRaw` return a single page; everything else follows the pages for you. `RunQueryAll` and `RunQueryN` return QuickBase's records (each value wrapped in `{value: ...}`); `quickbase.UnwrapRecords` turns them into plain maps, as the builder's `Run` does.
 
 ## Reports
@@ -62,7 +73,7 @@ reportRows, _ := client.RunReportAll(ctx, "7", "bqtable1") // report ID, table I
 fmt.Println(len(quickbase.UnwrapRecords(reportRows)))
 ```
 
-`RunReportN(ctx, reportID, tableID, n)` stops at `n` records; `client.RunReport(reportID, table)` is the one-page builder.
+`RunReportN(ctx, reportID, tableID, n)` stops at `n` records, `RunReportIterator` streams them, and `client.RunReport(reportID, table)` is the one-page builder.
 
 ## Upserts
 

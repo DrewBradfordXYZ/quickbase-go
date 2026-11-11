@@ -88,6 +88,9 @@ fmt.Printf("%d of %d records\n", page.Metadata().NumRecords(), page.Metadata().T
 
 all, _ := client.RunQueryAll(ctx, body)      // every page
 first, _ := client.RunQueryN(ctx, body, 500) // up to 500
+for record, err := range client.RunQueryIterator(ctx, body) { // a page at a time
+	_, _ = record, err
+}
 ```
 
 More in [docs/queries.md](docs/queries.md): running reports, upserts, deletes, and the helpers (`Row`, `Value`, `Ints`, `Ptr`, ...).

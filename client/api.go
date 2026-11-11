@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"encoding/json"
+	"iter"
 	"net/http"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
@@ -170,28 +171,69 @@ func (c *Client) transformRunQueryBody(body generated.RunQueryJSONRequestBody) (
 // RunQueryAll fetches all records across all pages.
 // This automatically handles pagination and returns raw QuickbaseRecord slices.
 // Use UnwrapRecords() from the quickbase package to convert to map[string]any.
+// Schema aliases in the body are resolved, as in RunQuery.
 func (c *Client) RunQueryAll(ctx context.Context, body generated.RunQueryJSONRequestBody) ([]generated.QuickbaseRecord, error) {
-	fetcher := c.runQueryFetcher(body)
+	fetcher, err := c.runQueryPages(body)
+	if err != nil {
+		return nil, err
+	}
 	return CollectAll(ctx, fetcher)
 }
 
 // RunQueryN fetches up to n records across pages.
 // This automatically handles pagination and returns raw QuickbaseRecord slices.
 // Use UnwrapRecords() from the quickbase package to convert to map[string]any.
+// Schema aliases in the body are resolved, as in RunQuery.
 func (c *Client) RunQueryN(ctx context.Context, body generated.RunQueryJSONRequestBody, n int) ([]generated.QuickbaseRecord, error) {
-	fetcher := c.runQueryFetcher(body)
+	fetcher, err := c.runQueryPages(body)
+	if err != nil {
+		return nil, err
+	}
 	return CollectN(ctx, fetcher, n)
+}
+
+// RunQueryIterator yields every record across all pages, fetching a page at
+// a time, so a large table never has to fit in memory. Stop early by
+// breaking out of the loop. Schema aliases in the body are resolved, as in
+// RunQuery.
+//
+//	for record, err := range client.RunQueryIterator(ctx, body) {
+//	    if err != nil {
+//	        return err
+//	    }
+//	    // process record
+//	}
+func (c *Client) RunQueryIterator(ctx context.Context, body generated.RunQueryJSONRequestBody) iter.Seq2[generated.QuickbaseRecord, error] {
+	fetcher, err := c.runQueryPages(body)
+	if err != nil {
+		return func(yield func(generated.QuickbaseRecord, error) bool) {
+			yield(nil, err)
+		}
+	}
+	return Paginate(ctx, fetcher)
+}
+
+// runQueryPages resolves schema aliases once, then fetches page by page.
+func (c *Client) runQueryPages(body generated.RunQueryJSONRequestBody) (PageFetcher[generated.QuickbaseRecord, *runQueryPageResponse], error) {
+	transformed, _, err := c.transformRunQueryBody(body)
+	if err != nil {
+		return nil, err
+	}
+	return c.runQueryFetcher(transformed), nil
 }
 
 // runQueryFetcher creates a page fetcher for RunQuery
 func (c *Client) runQueryFetcher(body generated.RunQueryJSONRequestBody) PageFetcher[generated.QuickbaseRecord, *runQueryPageResponse] {
 	return func(ctx context.Context, skip int, nextToken string) (*runQueryPageResponse, error) {
-		// Create a copy of body with updated skip
+		// Copy the body and its options: setting Skip on the caller's
+		// Options would change their body.
 		bodyCopy := body
-		if bodyCopy.Options == nil {
-			bodyCopy.Options = &generated.RunQueryJSONBody_Options{}
+		var opts generated.RunQueryJSONBody_Options
+		if body.Options != nil {
+			opts = *body.Options
 		}
-		bodyCopy.Options.Skip = &skip
+		opts.Skip = &skip
+		bodyCopy.Options = &opts
 
 		resp, err := c.API().RunQueryWithResponse(ctx, bodyCopy)
 		if err != nil {
@@ -247,6 +289,11 @@ func (c *Client) RunReportAll(ctx context.Context, reportID string, tableID stri
 func (c *Client) RunReportN(ctx context.Context, reportID string, tableID string, n int) ([]generated.QuickbaseRecord, error) {
 	fetcher := c.runReportFetcher(reportID, tableID)
 	return CollectN(ctx, fetcher, n)
+}
+
+// RunReportIterator yields every record of a report, a page at a time.
+func (c *Client) RunReportIterator(ctx context.Context, reportID string, tableID string) iter.Seq2[generated.QuickbaseRecord, error] {
+	return Paginate(ctx, c.runReportFetcher(reportID, tableID))
 }
 
 // runReportFetcher creates a page fetcher for RunReport

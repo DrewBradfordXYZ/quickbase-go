@@ -8,14 +8,14 @@
 //	// Fetch single page (default)
 //	page, err := client.RunQuery(ctx, params)
 //
-//	// Fetch all pages automatically
-//	all, err := client.RunQuery(ctx, params).All()
+//	// Fetch all pages
+//	all, err := client.RunQueryAll(ctx, body)
 //
-//	// Fetch with record limit
-//	limited, err := client.RunQuery(ctx, params).Paginate(PaginationOptions{Limit: 500})
+//	// Fetch up to 500 records
+//	limited, err := client.RunQueryN(ctx, body, 500)
 //
-//	// Iterate over results
-//	for record, err := range client.RunQueryIterator(ctx, params) {
+//	// Iterate over results, a page at a time
+//	for record, err := range client.RunQueryIterator(ctx, body) {
 //	    if err != nil { ... }
 //	    // process record
 //	}

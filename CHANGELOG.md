@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`RunQueryIterator` and `RunReportIterator`**: stream every record a page at a time (`for record, err := range ...`), so a large table never has to fit in memory. The package docs already pointed to `RunQueryIterator`; it didn't exist.
 - **Response properties the spec omitted**, found by comparing live responses with the spec (`spec/tools/audit-live.ts`):
   - Field properties: `SummaryQuery` (a summary field's filter), `PrimaryKey`, `MasterTableId`, `MasterTableKeyFid`, `FieldCaching`, `OpenTargetIn`. A reference field's parent table is `MasterTableId`; `MasterChoiceTableId` is not returned for it.
   - Field usage: `CustomEmails`, `DocumentTemplates`.
@@ -35,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`RunQueryAll` and `RunQueryN` ignored schema aliases**: `RunQuery` resolved them, but the paging methods sent the body as given, so `From: "projects"` or `'status'` in a filter reached QuickBase unresolved. They now resolve aliases first. They also set each page's skip on the caller's `Options`, changing the caller's body; they now use a copy.
 - **Cancelling a request didn't cancel its retry wait**: backoff waits used `time.Sleep`, so a call whose context ended kept waiting out the backoff (up to 30s by default). The wait now returns the context's error as soon as it ends.
 - **`WithMaxRetries(0)` made no request**: the option counts attempts in all (default 3: one try and two retries), so 0 skipped the request and returned neither a response nor an error, and callers dereferenced nil. Values below 1 now mean a single attempt; the doc comments said "retry attempts" and now describe what it counts.
 - **Solutions and file downloads**: QBL is YAML and file content isn't JSON, but they were declared JSON, so `ExportSolution` and `DownloadFile` returned an error on every success and `CreateSolution`, `UpdateSolution` and `ChangesetSolution` sent JSON. Now:
