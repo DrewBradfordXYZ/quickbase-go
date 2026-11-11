@@ -290,7 +290,8 @@ func WithTicket(ticket string) Option {
 	}
 }
 
-// WithMaxRetries sets the maximum number of retry attempts.
+// WithMaxRetries sets how many times a request is attempted in all,
+// counting the first (default 3). Values below 1 mean a single attempt.
 func WithMaxRetries(n int) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithMaxRetries(n))

@@ -125,7 +125,9 @@ type RetryInfo struct {
 // Option configures a Client.
 type Option func(*Client)
 
-// WithMaxRetries sets the maximum number of retry attempts (default 3).
+// WithMaxRetries sets how many times a request is attempted in all,
+// counting the first (default 3: one try and up to two retries). Values
+// below 1 mean a single attempt with no retries.
 func WithMaxRetries(n int) Option {
 	return func(c *Client) {
 		c.maxRetries = n
@@ -524,7 +526,10 @@ func (c *Client) do(
 	var lastResp *http.Response
 	var lastErr error
 
-	for attempt := 1; attempt <= c.maxRetries; attempt++ {
+	// At least one attempt: with maxRetries 0 the loop never ran and the
+	// caller got neither a response nor an error.
+	maxAttempts := max(c.maxRetries, 1)
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
 		// Check context before each attempt
 		if ctx.Err() != nil {
 			return nil, ctx.Err()
@@ -573,9 +578,9 @@ func (c *Client) do(
 				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
 			}
 
-			if attempt < c.maxRetries {
+			if attempt < maxAttempts {
 				delay := c.calculateBackoff(attempt)
-				c.logger.Retry(attempt, c.maxRetries, delay, "network error")
+				c.logger.Retry(attempt, maxAttempts, delay, "network error")
 
 				// Notify onRetry callback
 				if c.onRetry != nil {
@@ -631,14 +636,14 @@ func (c *Client) do(
 				c.onRateLimit(info)
 			}
 
-			if attempt < c.maxRetries {
+			if attempt < maxAttempts {
 				var delay time.Duration
 				if info.RetryAfter > 0 {
 					delay = time.Duration(info.RetryAfter) * time.Second
 				} else {
 					delay = c.calculateBackoff(attempt)
 				}
-				c.logger.Retry(attempt, c.maxRetries, delay, "rate limited (429)")
+				c.logger.Retry(attempt, maxAttempts, delay, "rate limited (429)")
 
 				// Notify onRetry callback
 				if c.onRetry != nil {
@@ -665,7 +670,7 @@ func (c *Client) do(
 		}
 
 		if shouldRefresh {
-			newToken, err := c.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, c.maxRetries)
+			newToken, err := c.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, maxAttempts)
 			if err != nil {
 				return nil, err
 			}
@@ -677,7 +682,7 @@ func (c *Client) do(
 		}
 
 		// Handle 5xx server errors with retry
-		if resp.StatusCode >= 500 && attempt < c.maxRetries {
+		if resp.StatusCode >= 500 && attempt < maxAttempts {
 			// Notify onRequest callback (5xx)
 			if c.onRequest != nil {
 				c.onRequest(RequestInfo{
@@ -692,7 +697,7 @@ func (c *Client) do(
 
 			resp.Body.Close()
 			delay := c.calculateBackoff(attempt)
-			c.logger.Retry(attempt, c.maxRetries, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
+			c.logger.Retry(attempt, maxAttempts, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
 
 			// Notify onRetry callback
 			if c.onRetry != nil {
