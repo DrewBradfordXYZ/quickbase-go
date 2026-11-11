@@ -48,16 +48,16 @@ type TableSchema struct {
 
 // SchemaOptions configures schema behavior.
 type SchemaOptions struct {
-	// TransformResponses controls whether response data keys are converted
-	// from field IDs to aliases. Default is true when schema is provided.
+	// TransformResponses keys the records the query builder returns (Run,
+	// RunN) by field alias instead of field ID. Off by default: records are
+	// keyed by field ID.
 	TransformResponses bool
 }
 
-// DefaultSchemaOptions returns the default schema options.
+// DefaultSchemaOptions returns the default schema options: records keyed by
+// field ID.
 func DefaultSchemaOptions() SchemaOptions {
-	return SchemaOptions{
-		TransformResponses: true,
-	}
+	return SchemaOptions{}
 }
 
 // ResolvedSchema contains precomputed lookup maps for efficient alias resolution.

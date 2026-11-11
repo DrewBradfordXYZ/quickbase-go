@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`SchemaOptions.TransformResponses` did nothing**: no code read it, so records were always keyed by field ID although it was documented as on by default. It now keys the query builder's records (`Run`, `RunN`) by alias, and is off by default (`DefaultSchemaOptions` returns it false), so nothing changes unless you turn it on with `WithSchemaOptions`.
 - **`RunQueryAll` and `RunQueryN` ignored schema aliases**: `RunQuery` resolved them, but the paging methods sent the body as given, so `From: "projects"` or `'status'` in a filter reached QuickBase unresolved. They now resolve aliases first. They also set each page's skip on the caller's `Options`, changing the caller's body; they now use a copy.
 - **Cancelling a request didn't cancel its retry wait**: backoff waits used `time.Sleep`, so a call whose context ended kept waiting out the backoff (up to 30s by default). The wait now returns the context's error as soon as it ends.
 - **`WithMaxRetries(0)` made no request**: the option counts attempts in all (default 3: one try and two retries), so 0 skipped the request and returned neither a response nor an error, and callers dereferenced nil. Values below 1 now mean a single attempt; the doc comments said "retry attempts" and now describe what it counts.

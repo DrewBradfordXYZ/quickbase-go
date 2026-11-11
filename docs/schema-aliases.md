@@ -45,7 +45,18 @@ client.Upsert("projects").
 	Run(ctx)
 ```
 
-Results still key values by field ID (`rec["6"]`). With `RunQueryBody`, resolve field aliases for `Select` with `quickbase.Fields(schema, "projects", "name", "status")`; the table, `Where` and `SortBy` take aliases directly.
+Results key values by field ID (`rec["6"]`). To have the query builder's records keyed by alias (`rec["name"]`), turn on `TransformResponses`:
+
+```go
+client, _ := quickbase.New("myrealm",
+	quickbase.WithUserToken("token"),
+	quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}),
+)
+records, _ := client.Query("projects").Select("name").Run(ctx)
+fmt.Println(records[0]["name"])
+```
+
+Fields the schema doesn't name keep their ID. With `RunQueryBody`, resolve field aliases for `Select` with `quickbase.Fields(schema, "projects", "name", "status")`; the table, `Where` and `SortBy` take aliases directly.
 
 A name the schema doesn't have is an error that lists the names it does, and suggests the closest: `... Did you mean 'status'?`
 

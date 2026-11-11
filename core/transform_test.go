@@ -270,7 +270,7 @@ func TestTransformWhereClause(t *testing.T) {
 }
 
 func TestTransformResponse(t *testing.T) {
-	schema := ResolveSchema(&Schema{
+	schema := ResolveSchemaWithOptions(&Schema{
 		Tables: map[string]TableSchema{
 			"projects": {
 				ID: "bqw3ryzab",
@@ -281,7 +281,7 @@ func TestTransformResponse(t *testing.T) {
 				},
 			},
 		},
-	})
+	}, SchemaOptions{TransformResponses: true})
 
 	t.Run("returns nil for nil response", func(t *testing.T) {
 		result := TransformResponse(nil, schema, "bqw3ryzab")

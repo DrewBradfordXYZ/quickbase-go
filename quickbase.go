@@ -537,12 +537,13 @@ func WithSchema(schema *Schema) Option {
 }
 
 // WithSchemaOptions sets the schema with custom options.
-// Use this to control schema behavior, such as disabling response transformation.
+// Use this to control schema behavior, such as keying the query builder's
+// records by field alias.
 //
 // Example:
 //
 //	quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{
-//	    TransformResponses: false, // Keep field IDs in responses
+//	    TransformResponses: true, // records keyed by alias, not field ID
 //	})
 func WithSchemaOptions(schema *Schema, opts SchemaOptions) Option {
 	return func(c *clientConfig) {

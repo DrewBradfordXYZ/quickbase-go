@@ -391,3 +391,16 @@ func Example_iterator() {
 		fmt.Println(record["6"].Value)
 	}
 }
+
+// docs/schema-aliases.md: records keyed by alias.
+func Example_recordsByAlias() {
+	schema := quickbase.NewSchema().Table("projects", "bqw3ryzab").Field("name", 6).Build()
+	client, _ := quickbase.New("myrealm",
+		quickbase.WithUserToken("token"),
+		quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}),
+	)
+	records, _ := client.Query("projects").Select("name").Run(context.Background())
+	for _, rec := range records {
+		fmt.Println(rec["name"])
+	}
+}

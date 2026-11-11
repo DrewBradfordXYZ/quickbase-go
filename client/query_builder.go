@@ -1,6 +1,7 @@
 package client
 
 import (
+	"strconv"
 	"context"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
@@ -314,7 +315,7 @@ func (b *QueryBuilder) Run(ctx context.Context) ([]Record, error) {
 		return nil, err
 	}
 
-	return unwrapRecords(records), nil
+	return b.keyRecords(unwrapRecords(records)), nil
 }
 
 // RunRaw executes the query and returns the result with convenience methods.
@@ -349,5 +350,28 @@ func (b *QueryBuilder) RunN(ctx context.Context, n int) ([]Record, error) {
 		return nil, err
 	}
 
-	return unwrapRecords(records), nil
+	return b.keyRecords(unwrapRecords(records)), nil
+}
+
+// keyRecords keys each record's values by field alias instead of field ID
+// when the schema's TransformResponses option is on. Fields the schema
+// doesn't name keep their ID.
+func (b *QueryBuilder) keyRecords(records []Record) []Record {
+	schema := b.client.schema
+	if schema == nil || !schema.Options.TransformResponses {
+		return records
+	}
+	for i, rec := range records {
+		keyed := make(Record, len(rec))
+		for key, value := range rec {
+			if id, err := strconv.Atoi(key); err == nil {
+				if alias := core.GetFieldAlias(schema, b.tableID, id); alias != "" {
+					key = alias
+				}
+			}
+			keyed[key] = value
+		}
+		records[i] = keyed
+	}
+	return records
 }

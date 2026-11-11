@@ -93,3 +93,29 @@ func TestRunQueryAllResolvesAliasesAndKeepsCallerOptions(t *testing.T) {
 		t.Errorf("caller's Options.Skip = %v, want 0 (unchanged)", body.Options.Skip)
 	}
 }
+
+// TransformResponses did nothing (no code read it). It now keys the query
+// builder's records by alias, and is off by default.
+func TestQueryBuilderKeysByAliasWhenAsked(t *testing.T) {
+	srv, _ := pagedServer(t)
+	schema := quickbase.NewSchema().Table("projects", "bqtable1").Field("id", 3).Build()
+
+	byID, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL), quickbase.WithSchema(schema))
+	recs, err := byID.Query("projects").Select("id").Run(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := recs[0]["3"]; !ok {
+		t.Errorf("default: record %v, want keyed by field ID", recs[0])
+	}
+
+	byAlias, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL),
+		quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}))
+	recs, err = byAlias.Query("projects").Select("id").RunN(context.Background(), 2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if recs[0]["id"] != float64(1) {
+		t.Errorf("TransformResponses: record %v, want keyed by alias", recs[0])
+	}
+}

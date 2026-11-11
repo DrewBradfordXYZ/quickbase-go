@@ -394,10 +394,10 @@ func TestSchemaBuilder(t *testing.T) {
 }
 
 func TestSchemaOptions(t *testing.T) {
-	t.Run("default options enable response transformation", func(t *testing.T) {
+	t.Run("default options keep field IDs", func(t *testing.T) {
 		opts := DefaultSchemaOptions()
-		if !opts.TransformResponses {
-			t.Error("TransformResponses should be true by default")
+		if opts.TransformResponses {
+			t.Error("TransformResponses should be false by default")
 		}
 	})
 
@@ -425,8 +425,8 @@ func TestSchemaOptions(t *testing.T) {
 
 		resolved := ResolveSchema(schema)
 
-		if !resolved.Options.TransformResponses {
-			t.Error("Default Options.TransformResponses should be true")
+		if resolved.Options.TransformResponses {
+			t.Error("Default Options.TransformResponses should be false")
 		}
 	})
 }
