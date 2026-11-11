@@ -35,3 +35,17 @@ jobs:
 
       # Integration tests skip without QB_REALM and QB_USER_TOKEN
       - run: go test ./...
+
+  # apidiff (golang.org/x/exp) against the pull request's base, or the commit
+  # before a push. Incompatible changes need a BREAKING entry in CHANGELOG.md
+  # in the same change.
+  api-compat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26" # apidiff needs it; the module itself needs 1.24
+      - run: .github/scripts/api-compat.sh "${{ github.event.pull_request.base.sha || github.event.before }}"
