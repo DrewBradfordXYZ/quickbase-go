@@ -2,32 +2,30 @@
 
 ## Overview
 
-v2.0 introduces **wrapper types that embed generated types**, providing both full API access and convenience methods. All fields from the OpenAPI spec are accessible directly, with nil-safe accessor methods for optional fields.
+v2.0 introduces **wrapper types around the generated responses**: every field has a nil-safe accessor method, and `Raw()` returns the full generated response.
 
 ## Key Changes
 
-### 1. Wrapper Types with Embedding
+### 1. Wrapper Types
 
-Builders now return wrapper types that embed the generated types:
+Builders now return wrapper types with accessor methods:
 
 ```go
 app, err := client.GetApp(appId).Run(ctx)
 
-// Required fields accessed directly (via embedding)
-name := app.Name  // string
-
-// Optional fields have nil-safe accessor methods
+// Every field has a nil-safe accessor method
+name := app.Name()                // string
 description := app.Description()  // returns "" if nil
 created := app.Created()          // returns "" if nil
 
-// Direct pointer access still available
-if app.GetAppData.Description != nil {
-    desc := *app.GetAppData.Description
+// Direct pointer access through the raw response
+if raw := app.Raw(); raw != nil && raw.JSON200 != nil && raw.JSON200.Description != nil {
+    desc := *raw.JSON200.Description
 }
 ```
 
 **Why this approach?**
-- **No data loss** - All generated fields are accessible via embedding
+- **No data loss** - `Raw()` on a result, or the embedded generated type on a list item, has every field
 - **Convenience** - Nil-safe methods for optional fields
 - **Fully generated** - No manual wrapper maintenance
 
@@ -42,8 +40,8 @@ for _, field := range fields {
     label := field.Label()       // nil-safe accessor
     fieldType := field.FieldType()
 
-    // Direct access via embedding
-    id := field.Id  // required field - direct access
+    // The generated item is embedded
+    id := field.GetFieldsItem.Id
 }
 ```
 
@@ -57,20 +55,20 @@ for _, rec := range result.Records() {
     fmt.Println(rec["6"])  // Field ID as key
 }
 
-// Direct access to metadata (via embedding)
-fmt.Printf("Total: %d\n", result.Metadata.TotalRecords)
-fmt.Printf("Returned: %d\n", result.Metadata.NumRecords)
+// Pagination metadata
+fmt.Printf("Total: %d\n", result.Metadata().TotalRecords())
+fmt.Printf("Returned: %d\n", result.Metadata().NumRecords())
 ```
 
 ### 4. Generated Package Exported
 
-The generated types are available at `github.com/DrewBradfordXYZ/quickbase-go/generated`:
+The generated types are available at `github.com/DrewBradfordXYZ/quickbase-go/v2/generated`:
 
 ```go
-import "github.com/DrewBradfordXYZ/quickbase-go/generated"
+import "github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 
-// Access the embedded type directly when needed
-var rawData *generated.RunQueryData = result.RunQueryData
+// The full generated response, when you need it
+var raw *generated.RunQueryResponse = result.Raw()
 ```
 
 ## Wrapper Type Pattern
@@ -78,18 +76,21 @@ var rawData *generated.RunQueryData = result.RunQueryData
 All wrapper types follow this pattern:
 
 ```go
-// Embeds the generated type - all fields accessible
+// Holds the generated response
 type AppResult struct {
-    *generated.GetAppData
+    resp *generated.GetAppResponse
 }
 
-// Nil-safe accessors for pointer fields
+// Nil-safe accessors for every field
 func (r *AppResult) Description() string {
-    if r == nil || r.GetAppData == nil || r.GetAppData.Description == nil {
+    if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
         return ""
     }
-    return *r.GetAppData.Description
+    return *r.resp.JSON200.Description
 }
+
+// The full response (status, headers, body) for anything else
+func (r *AppResult) Raw() *generated.GetAppResponse
 ```
 
 ## Migration Steps
@@ -97,7 +98,7 @@ func (r *AppResult) Description() string {
 1. Update builder `.Run()` calls - return types are now wrapper types
 2. Use accessor methods for optional fields (e.g., `app.Description()` instead of `quickbase.Deref(app.Description)`)
 3. Use `result.Records()` instead of `quickbase.UnwrapRecords(*result.Data)`
-4. Direct field access via embedding still works for all fields
+4. For anything the accessors don't cover, use `Raw()` on results and the embedded generated type on list items
 
 ## Examples
 
@@ -144,7 +145,7 @@ The following helpers are still available but less commonly needed:
 ```go
 // Still useful for nested or complex types
 app, _ := client.GetApp(appId).Run(ctx)
-description := quickbase.DerefOr(app.GetAppData.Description, "No description")
+description := quickbase.DerefOr(app.Raw().JSON200.Description, "No description")
 ```
 
 ### UnwrapRecords

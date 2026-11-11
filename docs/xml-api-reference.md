@@ -8,7 +8,7 @@ This document provides a comprehensive comparison of QuickBase's legacy XML API 
 
 | API | Endpoint Count | Unique Capabilities |
 |-----|----------------|---------------------|
-| **JSON API** | 62 operations | Relationships, Solutions, Platform Analytics, Field Usage, Audit Logs |
+| **JSON API** | 67 operations | Relationships, Solutions, Platform Analytics, Field Usage, Audit Logs |
 | **XML API** | 71 endpoints | Roles, Groups, DBVars, Code Pages, Webhooks, User Provisioning |
 | **Overlap** | ~20 operations | Apps, Tables, Fields, Records, Files, User Token Management |
 
