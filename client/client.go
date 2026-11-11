@@ -406,7 +406,10 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 // addHeaders adds required QuickBase headers to each request.
 func (c *Client) addHeaders(ctx context.Context, req *http.Request) error {
 	req.Header.Set("QB-Realm-Hostname", c.realm+".quickbase.com")
-	req.Header.Set("Content-Type", "application/json")
+	// Default to JSON; keep a body's own type (QBL is application/x-yaml)
+	if req.Header.Get("Content-Type") == "" {
+		req.Header.Set("Content-Type", "application/json")
+	}
 	return nil
 }
 

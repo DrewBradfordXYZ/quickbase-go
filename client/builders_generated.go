@@ -3,9 +3,11 @@
 package client
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
@@ -355,6 +357,13 @@ type ChangesetSolutionBuilder struct {
 	solutionId string
 	params  map[string]any
 	err     error
+	rawBody []byte
+}
+
+// Body sets the request body, sent as application/x-yaml.
+func (b *ChangesetSolutionBuilder) Body(body []byte) *ChangesetSolutionBuilder {
+	b.rawBody = body
+	return b
 }
 
 // ChangesetSolution starts building a changesetSolution request.
@@ -374,25 +383,9 @@ func (b *ChangesetSolutionBuilder) Run(ctx context.Context) (*generated.Changese
 	if b.err != nil {
 		return nil, b.err
 	}
-	// Build request body from params
-	body := make(map[string]any)
-	for k, v := range b.params {
-		body[k] = v
-	}
-
-	// Convert to JSON and back to the generated type
-	jsonBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-
-	var reqBody generated.ChangesetSolutionJSONRequestBody
-	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
-		return nil, err
-	}
 	// Build query params
 	params := &generated.ChangesetSolutionParams{}
-	resp, err := b.client.API().ChangesetSolutionWithResponse(ctx, b.solutionId, params, reqBody)
+	resp, err := b.client.API().ChangesetSolutionWithBodyWithResponse(ctx, b.solutionId, params, "application/x-yaml", bytes.NewReader(b.rawBody))
 	if err != nil {
 		return nil, err
 	}
@@ -853,7 +846,7 @@ func (b *CreateAppBuilder) UseIPFilter(value bool) *CreateAppBuilder {
 }
 
 
-// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 func (b *CreateAppBuilder) Variables(values ...map[string]any) *CreateAppBuilder {
 	if b.err != nil {
 		return b
@@ -2020,7 +2013,7 @@ func (b *CreateRelationshipBuilder) Label(value string) *CreateRelationshipBuild
 }
 
 
-// LookupFieldIds Array of field IDs in the parent table that will become lookup fields in the child table.
+// LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 func (b *CreateRelationshipBuilder) LookupFieldIds(values ...int) *CreateRelationshipBuilder {
 	if b.err != nil {
 		return b
@@ -2040,7 +2033,7 @@ func (b *CreateRelationshipBuilder) ParentTableId(value string) *CreateRelations
 }
 
 
-// SummaryFields Array of summary field objects which will turn into summary fields in the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
+// SummaryFields An array of objects, each representing a configuration of one field from the child table, that will become summary fields on the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
 func (b *CreateRelationshipBuilder) SummaryFields(values ...map[string]any) *CreateRelationshipBuilder {
 	if b.err != nil {
 		return b
@@ -2092,6 +2085,13 @@ type CreateSolutionBuilder struct {
 	qpAlias *string
 	params  map[string]any
 	err     error
+	rawBody []byte
+}
+
+// Body sets the request body, sent as application/x-yaml.
+func (b *CreateSolutionBuilder) Body(body []byte) *CreateSolutionBuilder {
+	b.rawBody = body
+	return b
 }
 
 // CreateSolution starts building a createSolution request.
@@ -2120,28 +2120,12 @@ func (b *CreateSolutionBuilder) Run(ctx context.Context) (*generated.CreateSolut
 	if b.err != nil {
 		return nil, b.err
 	}
-	// Build request body from params
-	body := make(map[string]any)
-	for k, v := range b.params {
-		body[k] = v
-	}
-
-	// Convert to JSON and back to the generated type
-	jsonBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-
-	var reqBody generated.CreateSolutionJSONRequestBody
-	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
-		return nil, err
-	}
 	// Build query params
 	params := &generated.CreateSolutionParams{}
 	if b.qpAlias != nil {
 		params.Alias = b.qpAlias
 	}
-	resp, err := b.client.API().CreateSolutionWithResponse(ctx, params, reqBody)
+	resp, err := b.client.API().CreateSolutionWithBodyWithResponse(ctx, params, "application/x-yaml", bytes.NewReader(b.rawBody))
 	if err != nil {
 		return nil, err
 	}
@@ -2159,9 +2143,9 @@ type CreateSolutionFromRecordBuilder struct {
 	client  *Client
 	table   string
 	tableID string
+	qpAlias *string
 	qpFieldId *int
 	qpRecordId *int
-	qpAlias *string
 	params  map[string]any
 	err     error
 }
@@ -2189,6 +2173,16 @@ func (c *Client) CreateSolutionFromRecord(table string) *CreateSolutionFromRecor
 
 
 
+// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+func (b *CreateSolutionFromRecordBuilder) Alias(value string) *CreateSolutionFromRecordBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.qpAlias = &value
+	return b
+}
+
+
 // FieldId The unique identifier (fid) of the field. It needs to be a file attachment field.
 func (b *CreateSolutionFromRecordBuilder) FieldId(value int) *CreateSolutionFromRecordBuilder {
 	if b.err != nil {
@@ -2205,16 +2199,6 @@ func (b *CreateSolutionFromRecordBuilder) RecordId(value int) *CreateSolutionFro
 		return b
 	}
 	b.qpRecordId = &value
-	return b
-}
-
-
-// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
-func (b *CreateSolutionFromRecordBuilder) Alias(value string) *CreateSolutionFromRecordBuilder {
-	if b.err != nil {
-		return b
-	}
-	b.qpAlias = &value
 	return b
 }
 
@@ -2242,14 +2226,14 @@ func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.C
 	// Build query params
 	params := &generated.CreateSolutionFromRecordParams{}
 	params.TableId = b.tableID
+	if b.qpAlias != nil {
+		params.Alias = b.qpAlias
+	}
 	if b.qpFieldId != nil {
 		params.FieldId = *b.qpFieldId
 	}
 	if b.qpRecordId != nil {
 		params.RecordId = *b.qpRecordId
-	}
-	if b.qpAlias != nil {
-		params.Alias = b.qpAlias
 	}
 	resp, err := b.client.API().CreateSolutionFromRecordWithResponse(ctx, params)
 	if err != nil {
@@ -3066,7 +3050,7 @@ func (b *DownloadFileBuilder) Run(ctx context.Context) (*generated.DownloadFileR
 	if err != nil {
 		return nil, err
 	}
-	if resp.JSON200 == nil {
+	if resp.StatusCode() != http.StatusOK {
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
@@ -3226,7 +3210,7 @@ func (b *ExportSolutionBuilder) Run(ctx context.Context) (*generated.ExportSolut
 	if err != nil {
 		return nil, err
 	}
-	if resp.JSON200 == nil {
+	if resp.StatusCode() != http.StatusOK {
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
@@ -3317,8 +3301,8 @@ type GenerateDocumentBuilder struct {
 	client  *Client
 	table   string
 	tableID string
-	templateId float32
-	qpRecordId *float32
+	templateId int
+	qpRecordId *int
 	qpFilename *string
 	qpFormat *generated.GenerateDocumentParamsFormat
 	qpMargin *string
@@ -3332,7 +3316,7 @@ type GenerateDocumentBuilder struct {
 
 // GenerateDocument starts building a generateDocument request.
 // The table parameter can be a table ID or an alias (if schema is configured).
-func (c *Client) GenerateDocument(templateId float32, table string) *GenerateDocumentBuilder {
+func (c *Client) GenerateDocument(templateId int, table string) *GenerateDocumentBuilder {
 	b := &GenerateDocumentBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -3355,7 +3339,7 @@ func (c *Client) GenerateDocument(templateId float32, table string) *GenerateDoc
 
 
 // RecordId The ID of the record
-func (b *GenerateDocumentBuilder) RecordId(value float32) *GenerateDocumentBuilder {
+func (b *GenerateDocumentBuilder) RecordId(value int) *GenerateDocumentBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -3440,13 +3424,6 @@ func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentRes
 		return nil, b.err
 	}
 	// tableId is validated via table resolution
-	if b.qpFilename == nil {
-		return nil, &core.ValidationError{
-			QuickbaseError: core.QuickbaseError{
-				Message: "filename is required for generateDocument",
-			},
-		}
-	}
 	// Build query params
 	params := &generated.GenerateDocumentParams{}
 	params.TableId = b.tableID
@@ -3454,7 +3431,7 @@ func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentRes
 		params.RecordId = b.qpRecordId
 	}
 	if b.qpFilename != nil {
-		params.Filename = *b.qpFilename
+		params.Filename = b.qpFilename
 	}
 	if b.qpFormat != nil {
 		params.Format = b.qpFormat
@@ -4515,7 +4492,7 @@ func (c *Client) PlatformAnalyticEventSummaries() *PlatformAnalyticEventSummarie
 }
 
 
-// End The end date and time of the requested summaries in ISO 8601 time format.
+// End Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure results stop at your intended boundary. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: An end of 3:00 PM UTC returns data through the end of the 3:00 PM bucket. A sub-hour value like 2:33 PM UTC returns the full 2:00 PM bucket instead.
 func (b *PlatformAnalyticEventSummariesBuilder) End(value string) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
 		return b
@@ -4545,7 +4522,7 @@ func (b *PlatformAnalyticEventSummariesBuilder) NextToken(value string) *Platfor
 }
 
 
-// Start The start date and time of the requested summaries in ISO 8601 time format.
+// Start Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure the boundary hour is included in results. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: A start of 2:00 PM UTC includes the 2:00 PM bucket. A sub-hour value like 2:15 PM UTC does not.
 func (b *PlatformAnalyticEventSummariesBuilder) Start(value string) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
 		return b
@@ -4670,10 +4647,17 @@ func (b *PlatformAnalyticReadsBuilder) Run(ctx context.Context) (*PlatformAnalyt
 	if b.err != nil {
 		return nil, b.err
 	}
+	if b.qpDay == nil {
+		return nil, &core.ValidationError{
+			QuickbaseError: core.QuickbaseError{
+				Message: "day is required for platformAnalyticReads",
+			},
+		}
+	}
 	// Build query params
 	params := &generated.PlatformAnalyticReadsParams{}
 	if b.qpDay != nil {
-		params.Day = b.qpDay
+		params.Day = *b.qpDay
 	}
 	resp, err := b.client.API().PlatformAnalyticReadsWithResponse(ctx, params)
 	if err != nil {
@@ -4725,7 +4709,7 @@ func (b *RecordsModifiedSinceBuilder) FieldList(values ...int) *RecordsModifiedS
 }
 
 
-// From The table identifier.
+// From The unique identifier (dbid) of the table.
 func (b *RecordsModifiedSinceBuilder) From(value string) *RecordsModifiedSinceBuilder {
 	if b.err != nil {
 		return b
@@ -5154,22 +5138,6 @@ func (b *RunReportBuilder) Run(ctx context.Context) (*RunReportResult, error) {
 		return nil, b.err
 	}
 	// tableId is validated via table resolution
-	// Build request body from params
-	body := make(map[string]any)
-	for k, v := range b.params {
-		body[k] = v
-	}
-
-	// Convert to JSON and back to the generated type
-	jsonBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-
-	var reqBody generated.RunReportJSONRequestBody
-	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
-		return nil, err
-	}
 	// Build query params
 	params := &generated.RunReportParams{}
 	params.TableId = b.tableID
@@ -5179,7 +5147,7 @@ func (b *RunReportBuilder) Run(ctx context.Context) (*RunReportResult, error) {
 	if b.qpTop != nil {
 		params.Top = b.qpTop
 	}
-	resp, err := b.client.API().RunReportWithResponse(ctx, b.reportId, params, reqBody)
+	resp, err := b.client.API().RunReportWithResponse(ctx, b.reportId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -5244,6 +5212,13 @@ func (b *TransferUserTokenBuilder) To(value string) *TransferUserTokenBuilder {
 func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenResult, error) {
 	if b.err != nil {
 		return nil, b.err
+	}
+	if _, ok := b.params["id"]; !ok {
+		return nil, &core.ValidationError{
+			QuickbaseError: core.QuickbaseError{
+				Message: "id is required for transferUserToken",
+			},
+		}
 	}
 	// Build request body from params
 	body := make(map[string]any)
@@ -5471,7 +5446,7 @@ func (b *UpdateAppBuilder) UseIPFilter(value bool) *UpdateAppBuilder {
 }
 
 
-// Variables The app variables. A maximum of 10 variables can be updated at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 func (b *UpdateAppBuilder) Variables(values ...map[string]any) *UpdateAppBuilder {
 	if b.err != nil {
 		return b
@@ -6721,7 +6696,7 @@ func (c *Client) UpdateRelationship(table string, relationshipId float32) *Updat
 }
 
 
-// LookupFieldIds An array of field IDs on the parent table that will become lookup fields on the child table.
+// LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 func (b *UpdateRelationshipBuilder) LookupFieldIds(values ...int) *UpdateRelationshipBuilder {
 	if b.err != nil {
 		return b
@@ -6783,6 +6758,13 @@ type UpdateSolutionBuilder struct {
 	solutionId string
 	params  map[string]any
 	err     error
+	rawBody []byte
+}
+
+// Body sets the request body, sent as application/x-yaml.
+func (b *UpdateSolutionBuilder) Body(body []byte) *UpdateSolutionBuilder {
+	b.rawBody = body
+	return b
 }
 
 // UpdateSolution starts building a updateSolution request.
@@ -6802,25 +6784,9 @@ func (b *UpdateSolutionBuilder) Run(ctx context.Context) (*generated.UpdateSolut
 	if b.err != nil {
 		return nil, b.err
 	}
-	// Build request body from params
-	body := make(map[string]any)
-	for k, v := range b.params {
-		body[k] = v
-	}
-
-	// Convert to JSON and back to the generated type
-	jsonBytes, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-
-	var reqBody generated.UpdateSolutionJSONRequestBody
-	if err := json.Unmarshal(jsonBytes, &reqBody); err != nil {
-		return nil, err
-	}
 	// Build query params
 	params := &generated.UpdateSolutionParams{}
-	resp, err := b.client.API().UpdateSolutionWithResponse(ctx, b.solutionId, params, reqBody)
+	resp, err := b.client.API().UpdateSolutionWithBodyWithResponse(ctx, b.solutionId, params, "application/x-yaml", bytes.NewReader(b.rawBody))
 	if err != nil {
 		return nil, err
 	}
@@ -7181,6 +7147,13 @@ func (b *UpsertBuilder) MergeFieldId(value int) *UpsertBuilder {
 func (b *UpsertBuilder) Run(ctx context.Context) (*UpsertResult, error) {
 	if b.err != nil {
 		return nil, b.err
+	}
+	if _, ok := b.params["data"]; !ok {
+		return nil, &core.ValidationError{
+			QuickbaseError: core.QuickbaseError{
+				Message: "data is required for upsert",
+			},
+		}
 	}
 	// Build request body from params
 	body := make(map[string]any)

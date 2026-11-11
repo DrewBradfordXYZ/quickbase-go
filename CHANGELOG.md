@@ -21,11 +21,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Generated from QuickBase's current spec.** The spec now builds from the OpenAPI 3 that QuickBase's API portal publishes (`spec/tools/fetch-upstream.ts`) instead of a December 2025 Swagger 2.0 copy. Where they differ, the current spec is followed:
+  - **BREAKING**: fields QuickBase marks required became values instead of pointers: app variables' `Name` and `Value` (`CreateApp`, `UpdateApp`, `CopyApp`, `GetApp` variables), `TransferUserToken`'s `From`, `To` and `Id`, and upsert's `Data` (`Data: data`, not `Data: &data`).
+  - **BREAKING**: audit payload changes (`Current`, `Previous`, `Fields`) are typed items instead of `[]interface{}`.
+  - **BREAKING**: `RunReport` takes no request body (the API never read one): `RunReportBody`, `RunReportJSONRequestBody` and `RunReportWithBody` are gone; use the builder.
+  - `GenerateDocumentParams.Accept` is a `*string` (the spec no longer lists its values).
 - **BREAKING**: Report `Properties` (`GetTableReports()`, `GetReport()`) changed from `*map[string]interface{}` to a struct with typed fields for table, chart, summary and map report settings (`ColumnProperties`, `ChartType`, `Summarize`, ...). Keys not listed are kept in `AdditionalProperties`. Replace `(*props)["columnProperties"]` with `props.ColumnProperties`, and other keys with `props.AdditionalProperties["key"]`.
 - `Query.Fields`, `Query.SortBy` and `Query.GroupBy` on reports are now typed fields, so they no longer appear in `Query.AdditionalProperties`.
 
 ### Fixed
 
+- **Solutions and file downloads**: QBL is YAML and file content isn't JSON, but they were declared JSON, so `ExportSolution` and `DownloadFile` returned an error on every success and `CreateSolution`, `UpdateSolution` and `ChangesetSolution` sent JSON. Now:
+  - `ExportSolution`, `DownloadFile` and `GenerateDocument` return the response with its raw content in `Body`.
+  - `CreateSolution().Body(qbl)`, `UpdateSolution(id).Body(qbl)` and `ChangesetSolution(id).Body(qbl)` send the QBL as `application/x-yaml` (the client no longer overwrites a body's content type with JSON).
+  - **BREAKING**: the JSON body types for those three (`CreateSolutionJSONRequestBody` and friends), `ExportSolutionResult`, `DownloadFileResult` and their `WithResponse` JSON variants are gone.
 - **Generation is deterministic**: `generate-builders` ordered each builder's methods by map iteration, so every run rewrote `builders_generated.go`. `make generate` and `make tools` now use oapi-codegen v2.4.0, the version that produced the committed code.
 
 ## [2.3.0] - 2026-03-02

@@ -358,12 +358,6 @@ const (
 	Portrait  GenerateDocumentParamsOrientation = "portrait"
 )
 
-// Defines values for GenerateDocumentParamsAccept.
-const (
-	Applicationjson        GenerateDocumentParamsAccept = "application/json"
-	ApplicationoctetStream GenerateDocumentParamsAccept = "application/octet-stream"
-)
-
 // Defines values for CreateFieldJSONBodyFieldType.
 const (
 	CreateFieldJSONBodyFieldTypeAddress            CreateFieldJSONBodyFieldType = "address"
@@ -445,6 +439,8 @@ const (
 
 // Defines values for RunQueryJSONBodyGroupByGrouping.
 const (
+	ASC         RunQueryJSONBodyGroupByGrouping = "ASC"
+	DESC        RunQueryJSONBodyGroupByGrouping = "DESC"
 	EqualValues RunQueryJSONBodyGroupByGrouping = "equal-values"
 )
 
@@ -480,20 +476,25 @@ type AddTrusteesFailureItem struct {
 	Error *string `json:"error,omitempty"`
 
 	// Trustee Object used for operations to read, create, or update trustees in an app.
-	Trustee *struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type AddTrusteesFailureItemTrusteeType `json:"type"`
-	} `json:"trustee,omitempty"`
+	Trustee              *AddTrusteesFailureItem_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}          `json:"-"`
 }
 
 // AddTrusteesFailureItemTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
 type AddTrusteesFailureItemTrusteeType string
+
+// AddTrusteesFailureItem_Trustee Object used for operations to read, create, or update trustees in an app.
+type AddTrusteesFailureItem_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 AddTrusteesFailureItemTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}            `json:"-"`
+}
 
 // AddTrusteesSuccessItem Object used for operations to read, create, or update trustees in an app.
 type AddTrusteesSuccessItem struct {
@@ -504,7 +505,8 @@ type AddTrusteesSuccessItem struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type AddTrusteesSuccessItemType `json:"type"`
+	Type                 AddTrusteesSuccessItemType `json:"type"`
+	AdditionalProperties map[string]interface{}     `json:"-"`
 }
 
 // AddTrusteesSuccessItemType The type of trustee being added. This can be a user, group, or email domain group.
@@ -547,17 +549,56 @@ type AuditEventsItem struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// AuditEventsItem_PayloadChanges_Changes_Current_Item defines model for AuditEventsItem.payloadChanges.changes.current.Item.
+type AuditEventsItem_PayloadChanges_Changes_Current_Item struct {
+	// Id The id of the field
+	Id int `json:"id"`
+
+	// PrintValue Optional printable value
+	PrintValue *string `json:"printValue,omitempty"`
+
+	// Value The value of the field
+	Value                string                 `json:"value"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// AuditEventsItem_PayloadChanges_Changes_Fields_Item defines model for AuditEventsItem.payloadChanges.changes.fields.Item.
+type AuditEventsItem_PayloadChanges_Changes_Fields_Item struct {
+	// Id The id of the field
+	Id int `json:"id"`
+
+	// Name The name of the field
+	Name *string `json:"name,omitempty"`
+
+	// Type The type of the field
+	Type                 string                 `json:"type"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// AuditEventsItem_PayloadChanges_Changes_Previous_Item defines model for AuditEventsItem.payloadChanges.changes.previous.Item.
+type AuditEventsItem_PayloadChanges_Changes_Previous_Item struct {
+	// Id The id of the field
+	Id int `json:"id"`
+
+	// PrintValue Optional printable value
+	PrintValue *string `json:"printValue,omitempty"`
+
+	// Value The value of the field
+	Value                string                 `json:"value"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // AuditEventsItem_PayloadChanges_Changes An object describing the changes that occured on record changes.
 type AuditEventsItem_PayloadChanges_Changes struct {
 	// Current The current value of the fields that have been changed.
-	Current []interface{} `json:"current"`
+	Current *[]AuditEventsItem_PayloadChanges_Changes_Current_Item `json:"current,omitempty"`
 
 	// Fields The list of fields and their types that have been changed.
-	Fields []interface{} `json:"fields"`
+	Fields []AuditEventsItem_PayloadChanges_Changes_Fields_Item `json:"fields"`
 
 	// Previous The previous value of the fields that have been changed.
-	Previous             []interface{}          `json:"previous"`
-	AdditionalProperties map[string]interface{} `json:"-"`
+	Previous             *[]AuditEventsItem_PayloadChanges_Changes_Previous_Item `json:"previous,omitempty"`
+	AdditionalProperties map[string]interface{}                                  `json:"-"`
 }
 
 // AuditEventsItem_PayloadChanges The data changes that have occured to a field that has been marked as audited.
@@ -588,11 +629,11 @@ type CloneUserTokenAppsItem struct {
 
 // CopyAppVariablesItem defines model for CopyAppVariablesItem.
 type CopyAppVariablesItem struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
+	// Name The name for the variable.
+	Name string `json:"name"`
 
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -602,7 +643,8 @@ type CreateAppMemoryInfo struct {
 	EstMemory *float32 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
 // CreateAppSecurityProperties Security properties of the application
@@ -629,11 +671,11 @@ type CreateAppSecurityProperties struct {
 
 // CreateAppVariablesItem defines model for CreateAppVariablesItem.
 type CreateAppVariablesItem struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
+	// Name The name for the variable.
+	Name string `json:"name"`
 
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -646,7 +688,8 @@ type CreateFieldPermissionsItem struct {
 	Role *string `json:"role,omitempty"`
 
 	// RoleId The Id of the given role
-	RoleId *int `json:"roleId,omitempty"`
+	RoleId               *int                   `json:"roleId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // CreateFieldProperties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
@@ -1023,7 +1066,8 @@ type GetAppMemoryInfo struct {
 	EstMemory *float32 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
 // GetAppSecurityProperties Security properties of the application
@@ -1105,11 +1149,11 @@ type GetAppTablesItemDefaultSortOrder string
 
 // GetAppVariablesItem defines model for GetAppVariablesItem.
 type GetAppVariablesItem struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
+	// Name The name for the variable.
+	Name string `json:"name"`
 
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -1122,7 +1166,8 @@ type GetFieldPermissionsItem struct {
 	Role *string `json:"role,omitempty"`
 
 	// RoleId The Id of the given role
-	RoleId *int `json:"roleId,omitempty"`
+	RoleId               *int                   `json:"roleId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // GetFieldProperties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
@@ -1421,10 +1466,7 @@ type GetFieldUsageItemUsage struct {
 	CustomEmails *GetFieldUsageItemUsage_CustomEmails `json:"customEmails,omitempty"`
 
 	// Dashboards The number of dashboards where the given field is referenced.
-	Dashboards struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"dashboards"`
+	Dashboards GetFieldUsageItemUsage_Dashboards `json:"dashboards"`
 
 	// DefaultReports The number of default reports where the given field is referenced.
 	DefaultReports GetFieldUsageItemUsage_DefaultReports `json:"defaultReports"`
@@ -1463,16 +1505,10 @@ type GetFieldUsageItemUsage struct {
 	Roles GetFieldUsageItemUsage_Roles `json:"roles"`
 
 	// TableImports The number of table imports where the given field is referenced.
-	TableImports struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableImports"`
+	TableImports GetFieldUsageItemUsage_TableImports `json:"tableImports"`
 
 	// TableRules The number of table rules where the given field is referenced.
-	TableRules struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableRules"`
+	TableRules GetFieldUsageItemUsage_TableRules `json:"tableRules"`
 
 	// Webhooks The number of webhooks where the given field is referenced.
 	Webhooks             GetFieldUsageItemUsage_Webhooks `json:"webhooks"`
@@ -1496,6 +1532,13 @@ type GetFieldUsageItemUsage_AppHomePages struct {
 // GetFieldUsageItemUsage_CustomEmails Custom emails that use the field.
 type GetFieldUsageItemUsage_CustomEmails struct {
 	Count                *int                   `json:"count,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldUsageItemUsage_Dashboards The number of dashboards where the given field is referenced.
+type GetFieldUsageItemUsage_Dashboards struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -1582,6 +1625,20 @@ type GetFieldUsageItemUsage_Roles struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// GetFieldUsageItemUsage_TableImports The number of table imports where the given field is referenced.
+type GetFieldUsageItemUsage_TableImports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldUsageItemUsage_TableRules The number of table rules where the given field is referenced.
+type GetFieldUsageItemUsage_TableRules struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetFieldUsageItemUsage_Webhooks The number of webhooks where the given field is referenced.
 type GetFieldUsageItemUsage_Webhooks struct {
 	// Count the number of times a field has been used for the given item.
@@ -1647,7 +1704,8 @@ type GetFieldsItemPermissionsItem struct {
 	Role *string `json:"role,omitempty"`
 
 	// RoleId The Id of the given role
-	RoleId *int `json:"roleId,omitempty"`
+	RoleId               *int                   `json:"roleId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // GetFieldsItemProperties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
@@ -1946,10 +2004,7 @@ type GetFieldsUsageItemUsage struct {
 	CustomEmails *GetFieldsUsageItemUsage_CustomEmails `json:"customEmails,omitempty"`
 
 	// Dashboards The number of dashboards where the given field is referenced.
-	Dashboards struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"dashboards"`
+	Dashboards GetFieldsUsageItemUsage_Dashboards `json:"dashboards"`
 
 	// DefaultReports The number of default reports where the given field is referenced.
 	DefaultReports GetFieldsUsageItemUsage_DefaultReports `json:"defaultReports"`
@@ -1988,16 +2043,10 @@ type GetFieldsUsageItemUsage struct {
 	Roles GetFieldsUsageItemUsage_Roles `json:"roles"`
 
 	// TableImports The number of table imports where the given field is referenced.
-	TableImports struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableImports"`
+	TableImports GetFieldsUsageItemUsage_TableImports `json:"tableImports"`
 
 	// TableRules The number of table rules where the given field is referenced.
-	TableRules struct {
-		// Count the number of times a field has been used for the given item.
-		Count int `json:"count"`
-	} `json:"tableRules"`
+	TableRules GetFieldsUsageItemUsage_TableRules `json:"tableRules"`
 
 	// Webhooks The number of webhooks where the given field is referenced.
 	Webhooks             GetFieldsUsageItemUsage_Webhooks `json:"webhooks"`
@@ -2021,6 +2070,13 @@ type GetFieldsUsageItemUsage_AppHomePages struct {
 // GetFieldsUsageItemUsage_CustomEmails Custom emails that use the field.
 type GetFieldsUsageItemUsage_CustomEmails struct {
 	Count                *int                   `json:"count,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldsUsageItemUsage_Dashboards The number of dashboards where the given field is referenced.
+type GetFieldsUsageItemUsage_Dashboards struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2102,6 +2158,20 @@ type GetFieldsUsageItemUsage_Reports struct {
 
 // GetFieldsUsageItemUsage_Roles The number of roles where the given field is referenced.
 type GetFieldsUsageItemUsage_Roles struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldsUsageItemUsage_TableImports The number of table imports where the given field is referenced.
+type GetFieldsUsageItemUsage_TableImports struct {
+	// Count the number of times a field has been used for the given item.
+	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldsUsageItemUsage_TableRules The number of table rules where the given field is referenced.
+type GetFieldsUsageItemUsage_TableRules struct {
 	// Count the number of times a field has been used for the given item.
 	Count                int                    `json:"count"`
 	AdditionalProperties map[string]interface{} `json:"-"`
@@ -2582,7 +2652,8 @@ type GetTrusteesItem struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type GetTrusteesItemType `json:"type"`
+	Type                 GetTrusteesItemType    `json:"type"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // GetTrusteesItemType The type of trustee being added. This can be a user, group, or email domain group.
@@ -2635,77 +2706,106 @@ type OwnerId = interface{}
 
 // PlatformAnalyticEventSummariesData defines model for PlatformAnalyticEventSummariesData.
 type PlatformAnalyticEventSummariesData struct {
-	EventsSummaries struct {
-		// AccountId The ID of the account the events are associated with.
-		AccountId string `json:"accountId"`
-
-		// End The end date and time of the requested summaries in ISO 8601 time format.
-		End time.Time `json:"end"`
-
-		// GroupBy How the events should be grouped.
-		GroupBy PlatformAnalyticEventSummariesDataEventsSummariesGroupBy `json:"groupBy"`
-
-		// Metadata Additional information about the results that may be helpful.
-		Metadata struct {
-			// NextToken Supply this token in a subsequent request to fetch the next page of results.
-			NextToken string `json:"nextToken"`
-		} `json:"metadata"`
-
-		// Results An array of objects that contains Application/User information and an events object with summaries by event type.
-		Results []struct {
-			// EventTypes An array of events that contains specific information associated with an Application/User broken down by event type.
-			EventTypes []struct {
-				// BillingCategory Billing category of the event type.
-				BillingCategory *PlatformAnalyticEventSummariesDataEventsSummariesResultsEventTypesBillingCategory `json:"billingCategory,omitempty"`
-
-				// Count Count of events associated with that event type and Application/User.
-				Count *int `json:"count,omitempty"`
-
-				// EventType Event type
-				EventType *string `json:"eventType,omitempty"`
-			} `json:"eventTypes"`
-
-			// Id Id of the Application/User.
-			Id string `json:"id"`
-
-			// Name Name of the Application/User.
-			Name string `json:"name"`
-
-			// Totals Totals by billing category for the event grouping.
-			Totals struct {
-				All         *float32 `json:"all,omitempty"`
-				Integration *float32 `json:"integration,omitempty"`
-				User        *float32 `json:"user,omitempty"`
-			} `json:"totals"`
-		} `json:"results"`
-
-		// Start The start date and time of the requested summaries in ISO 8601 time format.
-		Start time.Time `json:"start"`
-
-		// Totals Totals by billing category for all queried events.
-		Totals struct {
-			All         *float32 `json:"all,omitempty"`
-			Integration *float32 `json:"integration,omitempty"`
-			User        *float32 `json:"user,omitempty"`
-		} `json:"totals"`
-		Where []struct {
-			// Id Id of the item to filter by.
-			Id string `json:"id"`
-
-			// Type The type of item to filter by.
-			Type PlatformAnalyticEventSummariesDataEventsSummariesWhereType `json:"type"`
-		} `json:"where"`
-	} `json:"eventsSummaries"`
+	EventsSummaries      PlatformAnalyticEventSummariesData_EventsSummaries `json:"eventsSummaries"`
+	AdditionalProperties map[string]interface{}                             `json:"-"`
 }
 
 // PlatformAnalyticEventSummariesDataEventsSummariesGroupBy How the events should be grouped.
 type PlatformAnalyticEventSummariesDataEventsSummariesGroupBy string
 
+// PlatformAnalyticEventSummariesData_EventsSummaries_Metadata Additional information about the results that may be helpful.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Metadata struct {
+	// NextToken Supply this token in a subsequent request to fetch the next page of results.
+	NextToken            string                 `json:"nextToken"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // PlatformAnalyticEventSummariesDataEventsSummariesResultsEventTypesBillingCategory Billing category of the event type.
 type PlatformAnalyticEventSummariesDataEventsSummariesResultsEventTypesBillingCategory string
 
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item defines model for PlatformAnalyticEventSummariesData.eventsSummaries.results.eventTypes.Item.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item struct {
+	// BillingCategory Billing category of the event type.
+	BillingCategory *PlatformAnalyticEventSummariesDataEventsSummariesResultsEventTypesBillingCategory `json:"billingCategory,omitempty"`
+
+	// Count Count of events associated with that event type and Application/User.
+	Count *int `json:"count,omitempty"`
+
+	// EventType Event type
+	EventType            *string                `json:"eventType,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals Totals by billing category for the event grouping.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals struct {
+	All                  *float32               `json:"all,omitempty"`
+	Integration          *float32               `json:"integration,omitempty"`
+	User                 *float32               `json:"user,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item defines model for PlatformAnalyticEventSummariesData.EventsSummaries.Results.Item.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item struct {
+	// EventTypes An array of events that contains specific information associated with an Application/User broken down by event type.
+	EventTypes []PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item `json:"eventTypes"`
+
+	// Id Id of the Application/User.
+	Id string `json:"id"`
+
+	// Name Name of the Application/User.
+	Name string `json:"name"`
+
+	// Totals Totals by billing category for the event grouping.
+	Totals               PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals `json:"totals"`
+	AdditionalProperties map[string]interface{}                                            `json:"-"`
+}
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Totals Totals by billing category for all queried events.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Totals struct {
+	All                  *float32               `json:"all,omitempty"`
+	Integration          *float32               `json:"integration,omitempty"`
+	User                 *float32               `json:"user,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // PlatformAnalyticEventSummariesDataEventsSummariesWhereType The type of item to filter by.
 type PlatformAnalyticEventSummariesDataEventsSummariesWhereType string
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item defines model for PlatformAnalyticEventSummariesData.EventsSummaries.Where.Item.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item struct {
+	// Id Id of the item to filter by.
+	Id string `json:"id"`
+
+	// Type The type of item to filter by.
+	Type                 PlatformAnalyticEventSummariesDataEventsSummariesWhereType `json:"type"`
+	AdditionalProperties map[string]interface{}                                     `json:"-"`
+}
+
+// PlatformAnalyticEventSummariesData_EventsSummaries defines model for PlatformAnalyticEventSummariesData.EventsSummaries.
+type PlatformAnalyticEventSummariesData_EventsSummaries struct {
+	// AccountId The ID of the account the events are associated with.
+	AccountId string `json:"accountId"`
+
+	// End Reflects the hourly-resolution constraints of the request parameters. See start and end above.
+	End time.Time `json:"end"`
+
+	// GroupBy How the events should be grouped.
+	GroupBy PlatformAnalyticEventSummariesDataEventsSummariesGroupBy `json:"groupBy"`
+
+	// Metadata Additional information about the results that may be helpful.
+	Metadata *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata `json:"metadata,omitempty"`
+
+	// Results An array of objects that contains Application/User information and an events object with summaries by event type.
+	Results []PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item `json:"results"`
+
+	// Start Reflects the hourly-resolution constraints of the request parameters. See start and end above.
+	Start time.Time `json:"start"`
+
+	// Totals Totals by billing category for all queried events.
+	Totals               *PlatformAnalyticEventSummariesData_EventsSummaries_Totals      `json:"totals,omitempty"`
+	Where                []PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item `json:"where"`
+	AdditionalProperties map[string]interface{}                                          `json:"-"`
+}
 
 // PlatformAnalyticReadsData The data object containing the read summaries.
 type PlatformAnalyticReadsData struct {
@@ -2772,20 +2872,25 @@ type RemoveTrusteesFailureItem struct {
 	Error *string `json:"error,omitempty"`
 
 	// Trustee Object used for operations to read, create, or update trustees in an app.
-	Trustee *struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type RemoveTrusteesFailureItemTrusteeType `json:"type"`
-	} `json:"trustee,omitempty"`
+	Trustee              *RemoveTrusteesFailureItem_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}             `json:"-"`
 }
 
 // RemoveTrusteesFailureItemTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
 type RemoveTrusteesFailureItemTrusteeType string
+
+// RemoveTrusteesFailureItem_Trustee Object used for operations to read, create, or update trustees in an app.
+type RemoveTrusteesFailureItem_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 RemoveTrusteesFailureItemTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}               `json:"-"`
+}
 
 // RemoveTrusteesSuccessItem Object used for operations to read, create, or update trustees in an app.
 type RemoveTrusteesSuccessItem struct {
@@ -2796,7 +2901,8 @@ type RemoveTrusteesSuccessItem struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type RemoveTrusteesSuccessItemType `json:"type"`
+	Type                 RemoveTrusteesSuccessItemType `json:"type"`
+	AdditionalProperties map[string]interface{}        `json:"-"`
 }
 
 // RemoveTrusteesSuccessItemType The type of trustee being added. This can be a user, group, or email domain group.
@@ -2908,7 +3014,8 @@ type UpdateAppMemoryInfo struct {
 	EstMemory *float32 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32 `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
 // UpdateAppSecurityProperties Security properties of the application
@@ -2935,11 +3042,11 @@ type UpdateAppSecurityProperties struct {
 
 // UpdateAppVariablesItem defines model for UpdateAppVariablesItem.
 type UpdateAppVariablesItem struct {
-	// Name Variable name.
-	Name *string `json:"name,omitempty"`
+	// Name The name for the variable.
+	Name string `json:"name"`
 
-	// Value Variable value.
-	Value                *string                `json:"value,omitempty"`
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2952,7 +3059,8 @@ type UpdateFieldPermissionsItem struct {
 	Role *string `json:"role,omitempty"`
 
 	// RoleId The Id of the given role
-	RoleId *int `json:"roleId,omitempty"`
+	RoleId               *int                   `json:"roleId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // UpdateFieldProperties Additional properties for the field. Please see [Field type details](../fieldInfo) page for more details on the properties for each field type.
@@ -3243,23 +3351,28 @@ type UpdateTrusteesFailureItem struct {
 	Error *string `json:"error,omitempty"`
 
 	// Trustee Object used for operations to read, create, or update trustees in an app.
-	Trustee *struct {
-		// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-		Id string `json:"id"`
-
-		// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-		OldRoleId int `json:"oldRoleId"`
-
-		// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-		RoleId int `json:"roleId"`
-
-		// Type The type of trustee being added. This can be a user, group, or email domain group.
-		Type UpdateTrusteesFailureItemTrusteeType `json:"type"`
-	} `json:"trustee,omitempty"`
+	Trustee              *UpdateTrusteesFailureItem_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}             `json:"-"`
 }
 
 // UpdateTrusteesFailureItemTrusteeType The type of trustee being added. This can be a user, group, or email domain group.
 type UpdateTrusteesFailureItemTrusteeType string
+
+// UpdateTrusteesFailureItem_Trustee Object used for operations to read, create, or update trustees in an app.
+type UpdateTrusteesFailureItem_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+	OldRoleId int `json:"oldRoleId"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 UpdateTrusteesFailureItemTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}               `json:"-"`
+}
 
 // UpdateTrusteesSuccessItem Object used for operations to read, create, or update trustees in an app.
 type UpdateTrusteesSuccessItem struct {
@@ -3273,7 +3386,8 @@ type UpdateTrusteesSuccessItem struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type UpdateTrusteesSuccessItemType `json:"type"`
+	Type                 UpdateTrusteesSuccessItemType `json:"type"`
+	AdditionalProperties map[string]interface{}        `json:"-"`
 }
 
 // UpdateTrusteesSuccessItemType The type of trustee being added. This can be a user, group, or email domain group.
@@ -3300,7 +3414,7 @@ type UpsertMetadata struct {
 
 // PlatformAnalyticEventSummariesJSONBody defines parameters for PlatformAnalyticEventSummaries.
 type PlatformAnalyticEventSummariesJSONBody struct {
-	// End The end date and time of the requested summaries in ISO 8601 time format.
+	// End Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure results stop at your intended boundary. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: An end of 3:00 PM UTC returns data through the end of the 3:00 PM bucket. A sub-hour value like 2:33 PM UTC returns the full 2:00 PM bucket instead.
 	End time.Time `json:"end"`
 
 	// GroupBy How the events should be grouped.
@@ -3309,17 +3423,12 @@ type PlatformAnalyticEventSummariesJSONBody struct {
 	// NextToken A pagination token from a previous response made using the same parameters. Used to fetch the next page.
 	NextToken *string `json:"nextToken,omitempty"`
 
-	// Start The start date and time of the requested summaries in ISO 8601 time format.
+	// Start Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure the boundary hour is included in results. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: A start of 2:00 PM UTC includes the 2:00 PM bucket. A sub-hour value like 2:15 PM UTC does not.
 	Start time.Time `json:"start"`
 
 	// Where A list of items to filter events by. Only events which match ALL criteria will be included in the results.
-	Where *[]struct {
-		// Id Id of the item to filter by - the hash uid if filtering a user, or the app id if filtering an app.
-		Id string `json:"id"`
-
-		// Type The type of item to filter by.
-		Type PlatformAnalyticEventSummariesJSONBodyWhereType `json:"type"`
-	} `json:"where,omitempty"`
+	Where                *[]PlatformAnalyticEventSummariesJSONBody_Where_Item `json:"where,omitempty"`
+	AdditionalProperties map[string]interface{}                               `json:"-"`
 }
 
 // PlatformAnalyticEventSummariesParams defines parameters for PlatformAnalyticEventSummaries.
@@ -3334,14 +3443,30 @@ type PlatformAnalyticEventSummariesJSONBodyGroupBy string
 // PlatformAnalyticEventSummariesJSONBodyWhereType defines parameters for PlatformAnalyticEventSummaries.
 type PlatformAnalyticEventSummariesJSONBodyWhereType string
 
+// PlatformAnalyticEventSummariesJSONBody_Where_Item defines parameters for PlatformAnalyticEventSummaries.
+type PlatformAnalyticEventSummariesJSONBody_Where_Item struct {
+	// Id Id of the item to filter by - the hash uid if filtering a user, or the app id if filtering an app.
+	Id string `json:"id"`
+
+	// Type The type of item to filter by.
+	Type                 PlatformAnalyticEventSummariesJSONBodyWhereType `json:"type"`
+	AdditionalProperties map[string]interface{}                          `json:"-"`
+}
+
 // PlatformAnalyticReadsParams defines parameters for PlatformAnalyticReads.
 type PlatformAnalyticReadsParams struct {
 	// Day The date for which read summaries need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
-	Day *openapi_types.Date `form:"day,omitempty" json:"day,omitempty"`
+	Day openapi_types.Date `form:"day" json:"day"`
 }
 
 // RemoveTrusteesJSONBody defines parameters for RemoveTrustees.
-type RemoveTrusteesJSONBody = []struct {
+type RemoveTrusteesJSONBody = []RemoveTrusteesJSONBody_Item
+
+// RemoveTrusteesJSONBodyType defines parameters for RemoveTrustees.
+type RemoveTrusteesJSONBodyType string
+
+// RemoveTrusteesJSONBody_Item defines parameters for RemoveTrustees.
+type RemoveTrusteesJSONBody_Item struct {
 	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
 	Id string `json:"id"`
 
@@ -3349,14 +3474,18 @@ type RemoveTrusteesJSONBody = []struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type RemoveTrusteesJSONBodyType `json:"type"`
+	Type                 RemoveTrusteesJSONBodyType `json:"type"`
+	AdditionalProperties map[string]interface{}     `json:"-"`
 }
 
-// RemoveTrusteesJSONBodyType defines parameters for RemoveTrustees.
-type RemoveTrusteesJSONBodyType string
-
 // UpdateTrusteesJSONBody defines parameters for UpdateTrustees.
-type UpdateTrusteesJSONBody = []struct {
+type UpdateTrusteesJSONBody = []UpdateTrusteesJSONBody_Item
+
+// UpdateTrusteesJSONBodyType defines parameters for UpdateTrustees.
+type UpdateTrusteesJSONBodyType string
+
+// UpdateTrusteesJSONBody_Item defines parameters for UpdateTrustees.
+type UpdateTrusteesJSONBody_Item struct {
 	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
 	Id string `json:"id"`
 
@@ -3367,14 +3496,18 @@ type UpdateTrusteesJSONBody = []struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type UpdateTrusteesJSONBodyType `json:"type"`
+	Type                 UpdateTrusteesJSONBodyType `json:"type"`
+	AdditionalProperties map[string]interface{}     `json:"-"`
 }
 
-// UpdateTrusteesJSONBodyType defines parameters for UpdateTrustees.
-type UpdateTrusteesJSONBodyType string
-
 // AddTrusteesJSONBody defines parameters for AddTrustees.
-type AddTrusteesJSONBody = []struct {
+type AddTrusteesJSONBody = []AddTrusteesJSONBody_Item
+
+// AddTrusteesJSONBodyType defines parameters for AddTrustees.
+type AddTrusteesJSONBodyType string
+
+// AddTrusteesJSONBody_Item defines parameters for AddTrustees.
+type AddTrusteesJSONBody_Item struct {
 	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
 	Id string `json:"id"`
 
@@ -3382,11 +3515,9 @@ type AddTrusteesJSONBody = []struct {
 	RoleId int `json:"roleId"`
 
 	// Type The type of trustee being added. This can be a user, group, or email domain group.
-	Type AddTrusteesJSONBodyType `json:"type"`
+	Type                 AddTrusteesJSONBodyType `json:"type"`
+	AdditionalProperties map[string]interface{}  `json:"-"`
 }
-
-// AddTrusteesJSONBodyType defines parameters for AddTrustees.
-type AddTrusteesJSONBodyType string
 
 // CreateAppJSONBody defines parameters for CreateApp.
 type CreateAppJSONBody struct {
@@ -3399,41 +3530,51 @@ type CreateAppJSONBody struct {
 	// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
 	Name string `json:"name"`
 
-	// SecurityProperties Application security properties.
-	SecurityProperties *struct {
-		// AllowClone Allow users who are not administrators to copy
-		AllowClone *bool `json:"allowClone,omitempty"`
+	// SecurityProperties Security properties of the application
+	SecurityProperties *CreateAppJSONBody_SecurityProperties `json:"securityProperties,omitempty"`
 
-		// AllowExport Allow users who are not administrators to export data
-		AllowExport *bool `json:"allowExport,omitempty"`
+	// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+	Variables            *[]CreateAppJSONBody_Variables_Item `json:"variables,omitempty"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
 
-		// EnableAppTokens Require Application Tokens
-		EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
+// CreateAppJSONBody_SecurityProperties defines parameters for CreateApp.
+type CreateAppJSONBody_SecurityProperties struct {
+	// AllowClone Allow users who are not administrators to copy
+	AllowClone *bool `json:"allowClone,omitempty"`
 
-		// HideFromPublic Hide from public application searches
-		HideFromPublic *bool `json:"hideFromPublic,omitempty"`
+	// AllowExport Allow users who are not administrators to export data
+	AllowExport *bool `json:"allowExport,omitempty"`
 
-		// MustBeRealmApproved Only "approved" users may access this application
-		MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
+	// EnableAppTokens Require Application Tokens
+	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
 
-		// UseIPFilter Only users logging in from "approved" IP addresses may access this application
-		UseIPFilter *bool `json:"useIPFilter,omitempty"`
-	} `json:"securityProperties,omitempty"`
+	// HideFromPublic Hide from public application searches
+	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
 
-	// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-	Variables *[]struct {
-		// Name The name for the variable.
-		Name string `json:"name"`
+	// MustBeRealmApproved Only "approved" users may access this application
+	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
 
-		// Value The value for the variable.
-		Value string `json:"value"`
-	} `json:"variables,omitempty"`
+	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
+	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// CreateAppJSONBody_Variables_Item defines parameters for CreateApp.
+type CreateAppJSONBody_Variables_Item struct {
+	// Name The name for the variable.
+	Name string `json:"name"`
+
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // DeleteAppJSONBody defines parameters for DeleteApp.
 type DeleteAppJSONBody struct {
 	// Name To confirm application deletion we ask for application name.
-	Name string `json:"name"`
+	Name                 string                 `json:"name"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // UpdateAppJSONBody defines parameters for UpdateApp.
@@ -3445,34 +3586,43 @@ type UpdateAppJSONBody struct {
 	Name *string `json:"name,omitempty"`
 
 	// SecurityProperties Security properties of the application
-	SecurityProperties *struct {
-		// AllowClone Allow users who are not administrators to copy
-		AllowClone *bool `json:"allowClone,omitempty"`
+	SecurityProperties *UpdateAppJSONBody_SecurityProperties `json:"securityProperties,omitempty"`
 
-		// AllowExport Allow users who are not administrators to export data
-		AllowExport *bool `json:"allowExport,omitempty"`
+	// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+	Variables            *[]UpdateAppJSONBody_Variables_Item `json:"variables,omitempty"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
 
-		// EnableAppTokens Require Application Tokens
-		EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
+// UpdateAppJSONBody_SecurityProperties defines parameters for UpdateApp.
+type UpdateAppJSONBody_SecurityProperties struct {
+	// AllowClone Allow users who are not administrators to copy
+	AllowClone *bool `json:"allowClone,omitempty"`
 
-		// HideFromPublic Hide from public application searches
-		HideFromPublic *bool `json:"hideFromPublic,omitempty"`
+	// AllowExport Allow users who are not administrators to export data
+	AllowExport *bool `json:"allowExport,omitempty"`
 
-		// MustBeRealmApproved Only "approved" users may access this application
-		MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
+	// EnableAppTokens Require Application Tokens
+	EnableAppTokens *bool `json:"enableAppTokens,omitempty"`
 
-		// UseIPFilter Only users logging in from "approved" IP addresses may access this application
-		UseIPFilter *bool `json:"useIPFilter,omitempty"`
-	} `json:"securityProperties,omitempty"`
+	// HideFromPublic Hide from public application searches
+	HideFromPublic *bool `json:"hideFromPublic,omitempty"`
 
-	// Variables The app variables. A maximum of 10 variables can be updated at a time. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
-	Variables *[]struct {
-		// Name The name for the variable.
-		Name string `json:"name"`
+	// MustBeRealmApproved Only "approved" users may access this application
+	MustBeRealmApproved *bool `json:"mustBeRealmApproved,omitempty"`
 
-		// Value The value for the variable.
-		Value string `json:"value"`
-	} `json:"variables,omitempty"`
+	// UseIPFilter Only users logging in from "approved" IP addresses may access this application
+	UseIPFilter          *bool                  `json:"useIPFilter,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// UpdateAppJSONBody_Variables_Item defines parameters for UpdateApp.
+type UpdateAppJSONBody_Variables_Item struct {
+	// Name The name for the variable.
+	Name string `json:"name"`
+
+	// Value The value for the variable.
+	Value                string                 `json:"value"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // CopyAppJSONBody defines parameters for CopyApp.
@@ -3484,19 +3634,24 @@ type CopyAppJSONBody struct {
 	Name string `json:"name"`
 
 	// Properties The configuration properties for performing the app copy
-	Properties *struct {
-		// AssignUserToken Whether to add the user token used to make this request to the new app
-		AssignUserToken *bool `json:"assignUserToken,omitempty"`
+	Properties           *CopyAppJSONBody_Properties `json:"properties,omitempty"`
+	AdditionalProperties map[string]interface{}      `json:"-"`
+}
 
-		// ExcludeFiles If keepData is true, whether to copy the file attachments as well. If keepData is false, this property is ignored
-		ExcludeFiles *bool `json:"excludeFiles,omitempty"`
+// CopyAppJSONBody_Properties defines parameters for CopyApp.
+type CopyAppJSONBody_Properties struct {
+	// AssignUserToken Whether to add the user token used to make this request to the new app
+	AssignUserToken *bool `json:"assignUserToken,omitempty"`
 
-		// KeepData Whether to copy the app's data along with the schema
-		KeepData *bool `json:"keepData,omitempty"`
+	// ExcludeFiles If keepData is true, whether to copy the file attachments as well. If keepData is false, this property is ignored
+	ExcludeFiles *bool `json:"excludeFiles,omitempty"`
 
-		// UsersAndRoles If true, users will be copied along with their assigned roles. If false, users and roles will be copied but roles will not be assigned
-		UsersAndRoles *bool `json:"usersAndRoles,omitempty"`
-	} `json:"properties,omitempty"`
+	// KeepData Whether to copy the app's data along with the schema
+	KeepData *bool `json:"keepData,omitempty"`
+
+	// UsersAndRoles If true, users will be copied along with their assigned roles. If false, users and roles will be copied but roles will not be assigned
+	UsersAndRoles        *bool                  `json:"usersAndRoles,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // AuditJSONBody defines parameters for Audit.
@@ -3514,7 +3669,8 @@ type AuditJSONBody struct {
 	QueryId *string `json:"queryId,omitempty"`
 
 	// Topics An array that may contain up to 20 [topics](https://resources.quickbase.com/nav/app/budurkasx/action/showpage/2b2941e4-f34d-4d41-9b0e-db790d20e9ab?pageIdV2=quickbase.com-DashboardGroup-15760d74-2243-4ce9-9495-7cc8790f12e7) to filter by. If empty, all topics are returned.
-	Topics *[]string `json:"topics,omitempty"`
+	Topics               *[]string              `json:"topics,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // ExchangeSsoTokenJSONBody defines parameters for ExchangeSsoToken.
@@ -3529,7 +3685,8 @@ type ExchangeSsoTokenJSONBody struct {
 	SubjectToken string `json:"subject_token"`
 
 	// SubjectTokenType An identifier that indicates the type of the security token in the `subject_token` parameter.
-	SubjectTokenType ExchangeSsoTokenJSONBodySubjectTokenType `json:"subject_token_type"`
+	SubjectTokenType     ExchangeSsoTokenJSONBodySubjectTokenType `json:"subject_token_type"`
+	AdditionalProperties map[string]interface{}                   `json:"-"`
 }
 
 // ExchangeSsoTokenJSONBodyGrantType defines parameters for ExchangeSsoToken.
@@ -3549,14 +3706,14 @@ type GetTempTokenDBIDParams struct {
 
 // GenerateDocumentParams defines parameters for GenerateDocument.
 type GenerateDocumentParams struct {
-	// TableId The unique identifier of the table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 
 	// RecordId The ID of the record
-	RecordId *float32 `form:"recordId,omitempty" json:"recordId,omitempty"`
+	RecordId *int `form:"recordId,omitempty" json:"recordId,omitempty"`
 
 	// Filename File name for the downloaded file
-	Filename string `form:"filename" json:"filename"`
+	Filename *string `form:"filename,omitempty" json:"filename,omitempty"`
 
 	// Format The format of the file that is returned. Default is "pdf".
 	Format *GenerateDocumentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
@@ -3577,7 +3734,7 @@ type GenerateDocumentParams struct {
 	Realm *string `form:"realm,omitempty" json:"realm,omitempty"`
 
 	// Accept The content-type of the response. application/json will return a JSON payload with a base64 encoded file. application/octet-stream will download the file directly.
-	Accept *GenerateDocumentParamsAccept `json:"Accept,omitempty"`
+	Accept *string `json:"Accept,omitempty"`
 }
 
 // GenerateDocumentParamsFormat defines parameters for GenerateDocument.
@@ -3592,9 +3749,6 @@ type GenerateDocumentParamsPageSize string
 // GenerateDocumentParamsOrientation defines parameters for GenerateDocument.
 type GenerateDocumentParamsOrientation string
 
-// GenerateDocumentParamsAccept defines parameters for GenerateDocument.
-type GenerateDocumentParamsAccept string
-
 // DeleteFieldsJSONBody defines parameters for DeleteFields.
 type DeleteFieldsJSONBody struct {
 	// FieldIds List of field IDs to be deleted.
@@ -3604,7 +3758,7 @@ type DeleteFieldsJSONBody struct {
 
 // DeleteFieldsParams defines parameters for DeleteFields.
 type DeleteFieldsParams struct {
-	// TableId The unique identifier of the table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 }
 
@@ -3841,7 +3995,7 @@ type CreateFieldJSONBody struct {
 
 // CreateFieldParams defines parameters for CreateField.
 type CreateFieldParams struct {
-	// TableId The unique identifier of the table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 }
 
@@ -4143,7 +4297,7 @@ type UpdateFieldJSONBody struct {
 
 // UpdateFieldParams defines parameters for UpdateField.
 type UpdateFieldParams struct {
-	// TableId The unique identifier of the table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 }
 
@@ -4179,7 +4333,8 @@ type RunFormulaJSONBody struct {
 	From string `json:"from"`
 
 	// Rid The record ID to run the formula against. Only necessary for formulas that are run in the context of a record. For example, the formula User() does not need a record ID.
-	Rid *int `json:"rid,omitempty"`
+	Rid                  *int                   `json:"rid,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // RemoveManagersFromGroupJSONBody defines parameters for RemoveManagersFromGroup.
@@ -4202,7 +4357,7 @@ type AddSubgroupsToGroupJSONBody = []string
 
 // DeleteRecordsJSONBody defines parameters for DeleteRecords.
 type DeleteRecordsJSONBody struct {
-	// From The unique identifier of the table.
+	// From The unique identifier (dbid) of the table.
 	From string `json:"from"`
 
 	// Where The filter to delete records. To delete all records specify a filter that will include all records, for example {3.GT.0} where 3 is the ID of the Record ID field. Or supply a JSON array of Record IDs.
@@ -4224,7 +4379,7 @@ type DeleteRecordsJSONBody_Where struct {
 // UpsertJSONBody defines parameters for Upsert.
 type UpsertJSONBody struct {
 	// Data Record data array, where each record contains key-value mappings of fields to be defined/updated and their values.
-	Data *[]QuickbaseRecord `json:"data,omitempty"`
+	Data []QuickbaseRecord `json:"data"`
 
 	// FieldsToReturn Specify an array of field IDs that will return data for any updates or added record. Record ID (FID 3) is always returned if any field ID is requested.
 	FieldsToReturn *[]int `json:"fieldsToReturn,omitempty"`
@@ -4232,7 +4387,7 @@ type UpsertJSONBody struct {
 	// MergeFieldId The merge field id.
 	MergeFieldId *int `json:"mergeFieldId,omitempty"`
 
-	// To The table identifier.
+	// To The unique identifier (dbid) of the table.
 	To                   string                 `json:"to"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
@@ -4243,28 +4398,29 @@ type RecordsModifiedSinceJSONBody struct {
 	After time.Time `json:"after"`
 
 	// FieldList List of field IDs. Each field is crawled across the entire record dependency graph to find its source record's date modified. If one is not provided, only the current table will be referenced.
-	FieldList *[]int `json:"fieldList,omitempty"`
+	FieldList *[]int `json:"fieldList"`
 
-	// From The table identifier.
+	// From The unique identifier (dbid) of the table.
 	From string `json:"from"`
 
 	// IncludeDetails When true, the individual record IDs and timestamps will be returned. If false, only the count of changes will be returned.
-	IncludeDetails *bool `json:"includeDetails,omitempty"`
+	IncludeDetails       *bool                  `json:"includeDetails,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // RunQueryJSONBody defines parameters for RunQuery.
 type RunQueryJSONBody struct {
-	// From The table identifier.
+	// From The unique identifier (dbid) of the table.
 	From string `json:"from"`
 
 	// GroupBy An array that contains the fields to group the records by.
-	GroupBy *[]RunQueryJSONBody_GroupBy_Item `json:"groupBy,omitempty"`
+	GroupBy *[]RunQueryJSONBody_GroupBy_Item `json:"groupBy"`
 
 	// Options Additional query options.
-	Options *RunQueryJSONBody_Options `json:"options,omitempty"`
+	Options *RunQueryJSONBody_Options `json:"options"`
 
 	// Select An array of field IDs for the fields that should be returned in the response. If empty, the default columns on the table will be returned.
-	Select *[]int `json:"select,omitempty"`
+	Select *[]int `json:"select"`
 
 	// SortBy An array of field IDs and sort directions. Set to false to disable sorting for better performance.
 	SortBy *SortByUnion `json:"sortBy,omitempty"`
@@ -4282,14 +4438,14 @@ type RunQueryJSONBody_GroupBy_Item struct {
 	// FieldId The unique identifier of a field in a table.
 	FieldId *int `json:"fieldId,omitempty"`
 
-	// Grouping Group by based on equal values (equal-values)
+	// Grouping Group by based on ascending order (ASC), descending order (DESC) or equal values (equal-values)
 	Grouping             *RunQueryJSONBodyGroupByGrouping `json:"grouping,omitempty"`
 	AdditionalProperties map[string]interface{}           `json:"-"`
 }
 
 // RunQueryJSONBody_Options defines parameters for RunQuery.
 type RunQueryJSONBody_Options struct {
-	// CompareWithAppLocalTime Whether to run the query against a date time field with respect to the application's local time. The query is run with UTC time by default.  This parameter is ignored when querying by ISO8601, which is always in UTC.
+	// CompareWithAppLocalTime Whether to run the query against a date time field with respect to the application's local time. The query is run with UTC time by default. This parameter is ignored when querying by ISO8601, which is always in UTC.
 	CompareWithAppLocalTime *bool `json:"compareWithAppLocalTime,omitempty"`
 
 	// Skip The number of records to skip.
@@ -4313,22 +4469,19 @@ type RunQueryJSONBody_Where struct {
 
 // GetTableReportsParams defines parameters for GetTableReports.
 type GetTableReportsParams struct {
-	// TableId The unique identifier of the table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 }
 
 // GetReportParams defines parameters for GetReport.
 type GetReportParams struct {
-	// TableId The unique identifier of table.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 }
 
-// RunReportJSONBody defines parameters for RunReport.
-type RunReportJSONBody = interface{}
-
 // RunReportParams defines parameters for RunReport.
 type RunReportParams struct {
-	// TableId The identifier of the table for the report.
+	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 
 	// Skip The number of records to skip. You can set this value when paginating through a set of results.
@@ -4337,9 +4490,6 @@ type RunReportParams struct {
 	// Top The maximum number of records to return. You can override the default Quickbase pagination to get more or fewer results. If your requested value here exceeds the dynamic maximums, we will return a subset of results and the rest can be gathered in subsequent API calls.
 	Top *int `form:"top,omitempty" json:"top,omitempty"`
 }
-
-// CreateSolutionJSONBody defines parameters for CreateSolution.
-type CreateSolutionJSONBody = interface{}
 
 // CreateSolutionParams defines parameters for CreateSolution.
 type CreateSolutionParams struct {
@@ -4352,6 +4502,9 @@ type CreateSolutionParams struct {
 
 // CreateSolutionFromRecordParams defines parameters for CreateSolutionFromRecord.
 type CreateSolutionFromRecordParams struct {
+	// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+	Alias *string `form:"alias,omitempty" json:"alias,omitempty"`
+
 	// TableId The unique identifier (dbid) of the table.
 	TableId string `form:"tableId" json:"tableId"`
 
@@ -4360,9 +4513,6 @@ type CreateSolutionFromRecordParams struct {
 
 	// RecordId The unique identifier of the record.
 	RecordId int `form:"recordId" json:"recordId"`
-
-	// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
-	Alias *string `form:"alias,omitempty" json:"alias,omitempty"`
 
 	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
 	XQBLErrorsAsSuccess *bool `json:"X-QBL-Errors-As-Success,omitempty"`
@@ -4374,17 +4524,11 @@ type ExportSolutionParams struct {
 	QBLVersion *string `json:"QBL-Version,omitempty"`
 }
 
-// UpdateSolutionJSONBody defines parameters for UpdateSolution.
-type UpdateSolutionJSONBody = interface{}
-
 // UpdateSolutionParams defines parameters for UpdateSolution.
 type UpdateSolutionParams struct {
 	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
 	XQBLErrorsAsSuccess *bool `json:"X-QBL-Errors-As-Success,omitempty"`
 }
-
-// ChangesetSolutionJSONBody defines parameters for ChangesetSolution.
-type ChangesetSolutionJSONBody = interface{}
 
 // ChangesetSolutionParams defines parameters for ChangesetSolution.
 type ChangesetSolutionParams struct {
@@ -4424,7 +4568,7 @@ type UpdateSolutionToRecordParams struct {
 
 // GetSolutionPublicParams defines parameters for GetSolutionPublic.
 type GetSolutionPublicParams struct {
-	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-Original-Status header with the original error code, and the response body will include the error details.
+	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
 	XQBLErrorsAsSuccess *bool `json:"X-QBL-Errors-As-Success,omitempty"`
 }
 
@@ -4507,17 +4651,18 @@ type UpdateTableParams struct {
 
 // CreateRelationshipJSONBody defines parameters for CreateRelationship.
 type CreateRelationshipJSONBody struct {
-	// ForeignKeyField This property is optional.  If it is not provided, the foreign key field will be created with the label ‘Related <record>', where <record> is the name of a record in the parent table.
+	// ForeignKeyField This property is optional. If it is not provided, the foreign key field will be created with the label 'Related <record>', where <record> is the name of a record in the parent table.
 	ForeignKeyField *CreateRelationshipJSONBody_ForeignKeyField `json:"foreignKeyField,omitempty"`
 
-	// LookupFieldIds Array of field IDs in the parent table that will become lookup fields in the child table.
+	// LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 	LookupFieldIds *[]int `json:"lookupFieldIds,omitempty"`
 
 	// ParentTableId The parent table id for the relationship.
 	ParentTableId string `json:"parentTableId"`
 
-	// SummaryFields Array of summary field objects which will turn into summary fields in the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
-	SummaryFields *[]CreateRelationshipJSONBody_SummaryFields_Item `json:"summaryFields,omitempty"`
+	// SummaryFields An array of objects, each representing a configuration of one field from the child table, that will become summary fields on the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
+	SummaryFields        *[]CreateRelationshipJSONBody_SummaryFields_Item `json:"summaryFields,omitempty"`
+	AdditionalProperties map[string]interface{}                           `json:"-"`
 }
 
 // CreateRelationshipJSONBody_ForeignKeyField defines parameters for CreateRelationship.
@@ -4548,11 +4693,12 @@ type CreateRelationshipJSONBody_SummaryFields_Item struct {
 
 // UpdateRelationshipJSONBody defines parameters for UpdateRelationship.
 type UpdateRelationshipJSONBody struct {
-	// LookupFieldIds An array of field IDs on the parent table that will become lookup fields on the child table.
+	// LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 	LookupFieldIds *[]int `json:"lookupFieldIds,omitempty"`
 
 	// SummaryFields An array of objects, each representing a configuration of one field from the child table, that will become summary fields on the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
-	SummaryFields *[]UpdateRelationshipJSONBody_SummaryFields_Item `json:"summaryFields,omitempty"`
+	SummaryFields        *[]UpdateRelationshipJSONBody_SummaryFields_Item `json:"summaryFields,omitempty"`
+	AdditionalProperties map[string]interface{}                           `json:"-"`
 }
 
 // UpdateRelationshipJSONBodySummaryFieldsAccumulationType defines parameters for UpdateRelationship.
@@ -4638,19 +4784,21 @@ type CloneUserTokenJSONBody struct {
 	Description *string `json:"description,omitempty"`
 
 	// Name The new name for the cloned user token.
-	Name *string `json:"name,omitempty"`
+	Name                 *string                `json:"name,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // TransferUserTokenJSONBody defines parameters for TransferUserToken.
 type TransferUserTokenJSONBody struct {
 	// From The id of the user to transfer the user token from
-	From *string `json:"from,omitempty"`
+	From string `json:"from"`
 
 	// Id The id of the user token to transfer
-	Id *float32 `json:"id,omitempty"`
+	Id float32 `json:"id"`
 
 	// To The id of the user to transfer the user token to
-	To *string `json:"to,omitempty"`
+	To                   string                 `json:"to"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // PlatformAnalyticEventSummariesJSONRequestBody defines body for PlatformAnalyticEventSummaries for application/json ContentType.
@@ -4725,18 +4873,6 @@ type RecordsModifiedSinceJSONRequestBody RecordsModifiedSinceJSONBody
 // RunQueryJSONRequestBody defines body for RunQuery for application/json ContentType.
 type RunQueryJSONRequestBody RunQueryJSONBody
 
-// RunReportJSONRequestBody defines body for RunReport for application/json ContentType.
-type RunReportJSONRequestBody = RunReportJSONBody
-
-// CreateSolutionJSONRequestBody defines body for CreateSolution for application/json ContentType.
-type CreateSolutionJSONRequestBody = CreateSolutionJSONBody
-
-// UpdateSolutionJSONRequestBody defines body for UpdateSolution for application/json ContentType.
-type UpdateSolutionJSONRequestBody = UpdateSolutionJSONBody
-
-// ChangesetSolutionJSONRequestBody defines body for ChangesetSolution for application/json ContentType.
-type ChangesetSolutionJSONRequestBody = ChangesetSolutionJSONBody
-
 // CreateTableJSONRequestBody defines body for CreateTable for application/json ContentType.
 type CreateTableJSONRequestBody CreateTableJSONBody
 
@@ -4766,6 +4902,1687 @@ type CloneUserTokenJSONRequestBody CloneUserTokenJSONBody
 
 // TransferUserTokenJSONRequestBody defines body for TransferUserToken for application/json ContentType.
 type TransferUserTokenJSONRequestBody TransferUserTokenJSONBody
+
+// Getter for additional properties for PlatformAnalyticEventSummariesJSONBody. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesJSONBody
+func (a *PlatformAnalyticEventSummariesJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesJSONBody to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["end"]; found {
+		err = json.Unmarshal(raw, &a.End)
+		if err != nil {
+			return fmt.Errorf("error reading 'end': %w", err)
+		}
+		delete(object, "end")
+	}
+
+	if raw, found := object["groupBy"]; found {
+		err = json.Unmarshal(raw, &a.GroupBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'groupBy': %w", err)
+		}
+		delete(object, "groupBy")
+	}
+
+	if raw, found := object["nextToken"]; found {
+		err = json.Unmarshal(raw, &a.NextToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'nextToken': %w", err)
+		}
+		delete(object, "nextToken")
+	}
+
+	if raw, found := object["start"]; found {
+		err = json.Unmarshal(raw, &a.Start)
+		if err != nil {
+			return fmt.Errorf("error reading 'start': %w", err)
+		}
+		delete(object, "start")
+	}
+
+	if raw, found := object["where"]; found {
+		err = json.Unmarshal(raw, &a.Where)
+		if err != nil {
+			return fmt.Errorf("error reading 'where': %w", err)
+		}
+		delete(object, "where")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesJSONBody to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["end"], err = json.Marshal(a.End)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'end': %w", err)
+	}
+
+	object["groupBy"], err = json.Marshal(a.GroupBy)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'groupBy': %w", err)
+	}
+
+	if a.NextToken != nil {
+		object["nextToken"], err = json.Marshal(a.NextToken)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'nextToken': %w", err)
+		}
+	}
+
+	object["start"], err = json.Marshal(a.Start)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'start': %w", err)
+	}
+
+	if a.Where != nil {
+		object["where"], err = json.Marshal(a.Where)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'where': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesJSONBody_Where_Item. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesJSONBody_Where_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesJSONBody_Where_Item
+func (a *PlatformAnalyticEventSummariesJSONBody_Where_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesJSONBody_Where_Item to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesJSONBody_Where_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesJSONBody_Where_Item to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesJSONBody_Where_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RemoveTrusteesJSONBody_Item. Returns the specified
+// element and whether it was found
+func (a RemoveTrusteesJSONBody_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RemoveTrusteesJSONBody_Item
+func (a *RemoveTrusteesJSONBody_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RemoveTrusteesJSONBody_Item to handle AdditionalProperties
+func (a *RemoveTrusteesJSONBody_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RemoveTrusteesJSONBody_Item to handle AdditionalProperties
+func (a RemoveTrusteesJSONBody_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateTrusteesJSONBody_Item. Returns the specified
+// element and whether it was found
+func (a UpdateTrusteesJSONBody_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateTrusteesJSONBody_Item
+func (a *UpdateTrusteesJSONBody_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateTrusteesJSONBody_Item to handle AdditionalProperties
+func (a *UpdateTrusteesJSONBody_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["oldRoleId"]; found {
+		err = json.Unmarshal(raw, &a.OldRoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'oldRoleId': %w", err)
+		}
+		delete(object, "oldRoleId")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateTrusteesJSONBody_Item to handle AdditionalProperties
+func (a UpdateTrusteesJSONBody_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["oldRoleId"], err = json.Marshal(a.OldRoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'oldRoleId': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddTrusteesJSONBody_Item. Returns the specified
+// element and whether it was found
+func (a AddTrusteesJSONBody_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddTrusteesJSONBody_Item
+func (a *AddTrusteesJSONBody_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddTrusteesJSONBody_Item to handle AdditionalProperties
+func (a *AddTrusteesJSONBody_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddTrusteesJSONBody_Item to handle AdditionalProperties
+func (a AddTrusteesJSONBody_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CreateAppJSONBody. Returns the specified
+// element and whether it was found
+func (a CreateAppJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateAppJSONBody
+func (a *CreateAppJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateAppJSONBody to handle AdditionalProperties
+func (a *CreateAppJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["assignToken"]; found {
+		err = json.Unmarshal(raw, &a.AssignToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'assignToken': %w", err)
+		}
+		delete(object, "assignToken")
+	}
+
+	if raw, found := object["description"]; found {
+		err = json.Unmarshal(raw, &a.Description)
+		if err != nil {
+			return fmt.Errorf("error reading 'description': %w", err)
+		}
+		delete(object, "description")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["securityProperties"]; found {
+		err = json.Unmarshal(raw, &a.SecurityProperties)
+		if err != nil {
+			return fmt.Errorf("error reading 'securityProperties': %w", err)
+		}
+		delete(object, "securityProperties")
+	}
+
+	if raw, found := object["variables"]; found {
+		err = json.Unmarshal(raw, &a.Variables)
+		if err != nil {
+			return fmt.Errorf("error reading 'variables': %w", err)
+		}
+		delete(object, "variables")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateAppJSONBody to handle AdditionalProperties
+func (a CreateAppJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AssignToken != nil {
+		object["assignToken"], err = json.Marshal(a.AssignToken)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'assignToken': %w", err)
+		}
+	}
+
+	if a.Description != nil {
+		object["description"], err = json.Marshal(a.Description)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'description': %w", err)
+		}
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	if a.SecurityProperties != nil {
+		object["securityProperties"], err = json.Marshal(a.SecurityProperties)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'securityProperties': %w", err)
+		}
+	}
+
+	if a.Variables != nil {
+		object["variables"], err = json.Marshal(a.Variables)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CreateAppJSONBody_SecurityProperties. Returns the specified
+// element and whether it was found
+func (a CreateAppJSONBody_SecurityProperties) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateAppJSONBody_SecurityProperties
+func (a *CreateAppJSONBody_SecurityProperties) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateAppJSONBody_SecurityProperties to handle AdditionalProperties
+func (a *CreateAppJSONBody_SecurityProperties) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["allowClone"]; found {
+		err = json.Unmarshal(raw, &a.AllowClone)
+		if err != nil {
+			return fmt.Errorf("error reading 'allowClone': %w", err)
+		}
+		delete(object, "allowClone")
+	}
+
+	if raw, found := object["allowExport"]; found {
+		err = json.Unmarshal(raw, &a.AllowExport)
+		if err != nil {
+			return fmt.Errorf("error reading 'allowExport': %w", err)
+		}
+		delete(object, "allowExport")
+	}
+
+	if raw, found := object["enableAppTokens"]; found {
+		err = json.Unmarshal(raw, &a.EnableAppTokens)
+		if err != nil {
+			return fmt.Errorf("error reading 'enableAppTokens': %w", err)
+		}
+		delete(object, "enableAppTokens")
+	}
+
+	if raw, found := object["hideFromPublic"]; found {
+		err = json.Unmarshal(raw, &a.HideFromPublic)
+		if err != nil {
+			return fmt.Errorf("error reading 'hideFromPublic': %w", err)
+		}
+		delete(object, "hideFromPublic")
+	}
+
+	if raw, found := object["mustBeRealmApproved"]; found {
+		err = json.Unmarshal(raw, &a.MustBeRealmApproved)
+		if err != nil {
+			return fmt.Errorf("error reading 'mustBeRealmApproved': %w", err)
+		}
+		delete(object, "mustBeRealmApproved")
+	}
+
+	if raw, found := object["useIPFilter"]; found {
+		err = json.Unmarshal(raw, &a.UseIPFilter)
+		if err != nil {
+			return fmt.Errorf("error reading 'useIPFilter': %w", err)
+		}
+		delete(object, "useIPFilter")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateAppJSONBody_SecurityProperties to handle AdditionalProperties
+func (a CreateAppJSONBody_SecurityProperties) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AllowClone != nil {
+		object["allowClone"], err = json.Marshal(a.AllowClone)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'allowClone': %w", err)
+		}
+	}
+
+	if a.AllowExport != nil {
+		object["allowExport"], err = json.Marshal(a.AllowExport)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'allowExport': %w", err)
+		}
+	}
+
+	if a.EnableAppTokens != nil {
+		object["enableAppTokens"], err = json.Marshal(a.EnableAppTokens)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enableAppTokens': %w", err)
+		}
+	}
+
+	if a.HideFromPublic != nil {
+		object["hideFromPublic"], err = json.Marshal(a.HideFromPublic)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'hideFromPublic': %w", err)
+		}
+	}
+
+	if a.MustBeRealmApproved != nil {
+		object["mustBeRealmApproved"], err = json.Marshal(a.MustBeRealmApproved)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'mustBeRealmApproved': %w", err)
+		}
+	}
+
+	if a.UseIPFilter != nil {
+		object["useIPFilter"], err = json.Marshal(a.UseIPFilter)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'useIPFilter': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CreateAppJSONBody_Variables_Item. Returns the specified
+// element and whether it was found
+func (a CreateAppJSONBody_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateAppJSONBody_Variables_Item
+func (a *CreateAppJSONBody_Variables_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateAppJSONBody_Variables_Item to handle AdditionalProperties
+func (a *CreateAppJSONBody_Variables_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateAppJSONBody_Variables_Item to handle AdditionalProperties
+func (a CreateAppJSONBody_Variables_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for DeleteAppJSONBody. Returns the specified
+// element and whether it was found
+func (a DeleteAppJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for DeleteAppJSONBody
+func (a *DeleteAppJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for DeleteAppJSONBody to handle AdditionalProperties
+func (a *DeleteAppJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for DeleteAppJSONBody to handle AdditionalProperties
+func (a DeleteAppJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateAppJSONBody. Returns the specified
+// element and whether it was found
+func (a UpdateAppJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateAppJSONBody
+func (a *UpdateAppJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateAppJSONBody to handle AdditionalProperties
+func (a *UpdateAppJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["description"]; found {
+		err = json.Unmarshal(raw, &a.Description)
+		if err != nil {
+			return fmt.Errorf("error reading 'description': %w", err)
+		}
+		delete(object, "description")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["securityProperties"]; found {
+		err = json.Unmarshal(raw, &a.SecurityProperties)
+		if err != nil {
+			return fmt.Errorf("error reading 'securityProperties': %w", err)
+		}
+		delete(object, "securityProperties")
+	}
+
+	if raw, found := object["variables"]; found {
+		err = json.Unmarshal(raw, &a.Variables)
+		if err != nil {
+			return fmt.Errorf("error reading 'variables': %w", err)
+		}
+		delete(object, "variables")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateAppJSONBody to handle AdditionalProperties
+func (a UpdateAppJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Description != nil {
+		object["description"], err = json.Marshal(a.Description)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'description': %w", err)
+		}
+	}
+
+	if a.Name != nil {
+		object["name"], err = json.Marshal(a.Name)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+		}
+	}
+
+	if a.SecurityProperties != nil {
+		object["securityProperties"], err = json.Marshal(a.SecurityProperties)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'securityProperties': %w", err)
+		}
+	}
+
+	if a.Variables != nil {
+		object["variables"], err = json.Marshal(a.Variables)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'variables': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateAppJSONBody_SecurityProperties. Returns the specified
+// element and whether it was found
+func (a UpdateAppJSONBody_SecurityProperties) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateAppJSONBody_SecurityProperties
+func (a *UpdateAppJSONBody_SecurityProperties) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateAppJSONBody_SecurityProperties to handle AdditionalProperties
+func (a *UpdateAppJSONBody_SecurityProperties) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["allowClone"]; found {
+		err = json.Unmarshal(raw, &a.AllowClone)
+		if err != nil {
+			return fmt.Errorf("error reading 'allowClone': %w", err)
+		}
+		delete(object, "allowClone")
+	}
+
+	if raw, found := object["allowExport"]; found {
+		err = json.Unmarshal(raw, &a.AllowExport)
+		if err != nil {
+			return fmt.Errorf("error reading 'allowExport': %w", err)
+		}
+		delete(object, "allowExport")
+	}
+
+	if raw, found := object["enableAppTokens"]; found {
+		err = json.Unmarshal(raw, &a.EnableAppTokens)
+		if err != nil {
+			return fmt.Errorf("error reading 'enableAppTokens': %w", err)
+		}
+		delete(object, "enableAppTokens")
+	}
+
+	if raw, found := object["hideFromPublic"]; found {
+		err = json.Unmarshal(raw, &a.HideFromPublic)
+		if err != nil {
+			return fmt.Errorf("error reading 'hideFromPublic': %w", err)
+		}
+		delete(object, "hideFromPublic")
+	}
+
+	if raw, found := object["mustBeRealmApproved"]; found {
+		err = json.Unmarshal(raw, &a.MustBeRealmApproved)
+		if err != nil {
+			return fmt.Errorf("error reading 'mustBeRealmApproved': %w", err)
+		}
+		delete(object, "mustBeRealmApproved")
+	}
+
+	if raw, found := object["useIPFilter"]; found {
+		err = json.Unmarshal(raw, &a.UseIPFilter)
+		if err != nil {
+			return fmt.Errorf("error reading 'useIPFilter': %w", err)
+		}
+		delete(object, "useIPFilter")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateAppJSONBody_SecurityProperties to handle AdditionalProperties
+func (a UpdateAppJSONBody_SecurityProperties) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AllowClone != nil {
+		object["allowClone"], err = json.Marshal(a.AllowClone)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'allowClone': %w", err)
+		}
+	}
+
+	if a.AllowExport != nil {
+		object["allowExport"], err = json.Marshal(a.AllowExport)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'allowExport': %w", err)
+		}
+	}
+
+	if a.EnableAppTokens != nil {
+		object["enableAppTokens"], err = json.Marshal(a.EnableAppTokens)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enableAppTokens': %w", err)
+		}
+	}
+
+	if a.HideFromPublic != nil {
+		object["hideFromPublic"], err = json.Marshal(a.HideFromPublic)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'hideFromPublic': %w", err)
+		}
+	}
+
+	if a.MustBeRealmApproved != nil {
+		object["mustBeRealmApproved"], err = json.Marshal(a.MustBeRealmApproved)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'mustBeRealmApproved': %w", err)
+		}
+	}
+
+	if a.UseIPFilter != nil {
+		object["useIPFilter"], err = json.Marshal(a.UseIPFilter)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'useIPFilter': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateAppJSONBody_Variables_Item. Returns the specified
+// element and whether it was found
+func (a UpdateAppJSONBody_Variables_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateAppJSONBody_Variables_Item
+func (a *UpdateAppJSONBody_Variables_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateAppJSONBody_Variables_Item to handle AdditionalProperties
+func (a *UpdateAppJSONBody_Variables_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateAppJSONBody_Variables_Item to handle AdditionalProperties
+func (a UpdateAppJSONBody_Variables_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CopyAppJSONBody. Returns the specified
+// element and whether it was found
+func (a CopyAppJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CopyAppJSONBody
+func (a *CopyAppJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CopyAppJSONBody to handle AdditionalProperties
+func (a *CopyAppJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["description"]; found {
+		err = json.Unmarshal(raw, &a.Description)
+		if err != nil {
+			return fmt.Errorf("error reading 'description': %w", err)
+		}
+		delete(object, "description")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["properties"]; found {
+		err = json.Unmarshal(raw, &a.Properties)
+		if err != nil {
+			return fmt.Errorf("error reading 'properties': %w", err)
+		}
+		delete(object, "properties")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CopyAppJSONBody to handle AdditionalProperties
+func (a CopyAppJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Description != nil {
+		object["description"], err = json.Marshal(a.Description)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'description': %w", err)
+		}
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	if a.Properties != nil {
+		object["properties"], err = json.Marshal(a.Properties)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'properties': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CopyAppJSONBody_Properties. Returns the specified
+// element and whether it was found
+func (a CopyAppJSONBody_Properties) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CopyAppJSONBody_Properties
+func (a *CopyAppJSONBody_Properties) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CopyAppJSONBody_Properties to handle AdditionalProperties
+func (a *CopyAppJSONBody_Properties) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["assignUserToken"]; found {
+		err = json.Unmarshal(raw, &a.AssignUserToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'assignUserToken': %w", err)
+		}
+		delete(object, "assignUserToken")
+	}
+
+	if raw, found := object["excludeFiles"]; found {
+		err = json.Unmarshal(raw, &a.ExcludeFiles)
+		if err != nil {
+			return fmt.Errorf("error reading 'excludeFiles': %w", err)
+		}
+		delete(object, "excludeFiles")
+	}
+
+	if raw, found := object["keepData"]; found {
+		err = json.Unmarshal(raw, &a.KeepData)
+		if err != nil {
+			return fmt.Errorf("error reading 'keepData': %w", err)
+		}
+		delete(object, "keepData")
+	}
+
+	if raw, found := object["usersAndRoles"]; found {
+		err = json.Unmarshal(raw, &a.UsersAndRoles)
+		if err != nil {
+			return fmt.Errorf("error reading 'usersAndRoles': %w", err)
+		}
+		delete(object, "usersAndRoles")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CopyAppJSONBody_Properties to handle AdditionalProperties
+func (a CopyAppJSONBody_Properties) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AssignUserToken != nil {
+		object["assignUserToken"], err = json.Marshal(a.AssignUserToken)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'assignUserToken': %w", err)
+		}
+	}
+
+	if a.ExcludeFiles != nil {
+		object["excludeFiles"], err = json.Marshal(a.ExcludeFiles)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'excludeFiles': %w", err)
+		}
+	}
+
+	if a.KeepData != nil {
+		object["keepData"], err = json.Marshal(a.KeepData)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'keepData': %w", err)
+		}
+	}
+
+	if a.UsersAndRoles != nil {
+		object["usersAndRoles"], err = json.Marshal(a.UsersAndRoles)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'usersAndRoles': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AuditJSONBody. Returns the specified
+// element and whether it was found
+func (a AuditJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AuditJSONBody
+func (a *AuditJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AuditJSONBody to handle AdditionalProperties
+func (a *AuditJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["date"]; found {
+		err = json.Unmarshal(raw, &a.Date)
+		if err != nil {
+			return fmt.Errorf("error reading 'date': %w", err)
+		}
+		delete(object, "date")
+	}
+
+	if raw, found := object["nextToken"]; found {
+		err = json.Unmarshal(raw, &a.NextToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'nextToken': %w", err)
+		}
+		delete(object, "nextToken")
+	}
+
+	if raw, found := object["numRows"]; found {
+		err = json.Unmarshal(raw, &a.NumRows)
+		if err != nil {
+			return fmt.Errorf("error reading 'numRows': %w", err)
+		}
+		delete(object, "numRows")
+	}
+
+	if raw, found := object["queryId"]; found {
+		err = json.Unmarshal(raw, &a.QueryId)
+		if err != nil {
+			return fmt.Errorf("error reading 'queryId': %w", err)
+		}
+		delete(object, "queryId")
+	}
+
+	if raw, found := object["topics"]; found {
+		err = json.Unmarshal(raw, &a.Topics)
+		if err != nil {
+			return fmt.Errorf("error reading 'topics': %w", err)
+		}
+		delete(object, "topics")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AuditJSONBody to handle AdditionalProperties
+func (a AuditJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Date != nil {
+		object["date"], err = json.Marshal(a.Date)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'date': %w", err)
+		}
+	}
+
+	if a.NextToken != nil {
+		object["nextToken"], err = json.Marshal(a.NextToken)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'nextToken': %w", err)
+		}
+	}
+
+	if a.NumRows != nil {
+		object["numRows"], err = json.Marshal(a.NumRows)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'numRows': %w", err)
+		}
+	}
+
+	if a.QueryId != nil {
+		object["queryId"], err = json.Marshal(a.QueryId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'queryId': %w", err)
+		}
+	}
+
+	if a.Topics != nil {
+		object["topics"], err = json.Marshal(a.Topics)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'topics': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for ExchangeSsoTokenJSONBody. Returns the specified
+// element and whether it was found
+func (a ExchangeSsoTokenJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for ExchangeSsoTokenJSONBody
+func (a *ExchangeSsoTokenJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for ExchangeSsoTokenJSONBody to handle AdditionalProperties
+func (a *ExchangeSsoTokenJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["grant_type"]; found {
+		err = json.Unmarshal(raw, &a.GrantType)
+		if err != nil {
+			return fmt.Errorf("error reading 'grant_type': %w", err)
+		}
+		delete(object, "grant_type")
+	}
+
+	if raw, found := object["requested_token_type"]; found {
+		err = json.Unmarshal(raw, &a.RequestedTokenType)
+		if err != nil {
+			return fmt.Errorf("error reading 'requested_token_type': %w", err)
+		}
+		delete(object, "requested_token_type")
+	}
+
+	if raw, found := object["subject_token"]; found {
+		err = json.Unmarshal(raw, &a.SubjectToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'subject_token': %w", err)
+		}
+		delete(object, "subject_token")
+	}
+
+	if raw, found := object["subject_token_type"]; found {
+		err = json.Unmarshal(raw, &a.SubjectTokenType)
+		if err != nil {
+			return fmt.Errorf("error reading 'subject_token_type': %w", err)
+		}
+		delete(object, "subject_token_type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for ExchangeSsoTokenJSONBody to handle AdditionalProperties
+func (a ExchangeSsoTokenJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["grant_type"], err = json.Marshal(a.GrantType)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'grant_type': %w", err)
+	}
+
+	object["requested_token_type"], err = json.Marshal(a.RequestedTokenType)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'requested_token_type': %w", err)
+	}
+
+	object["subject_token"], err = json.Marshal(a.SubjectToken)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'subject_token': %w", err)
+	}
+
+	object["subject_token_type"], err = json.Marshal(a.SubjectTokenType)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'subject_token_type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
 
 // Getter for additional properties for DeleteFieldsJSONBody. Returns the specified
 // element and whether it was found
@@ -4822,6 +6639,100 @@ func (a DeleteFieldsJSONBody) MarshalJSON() ([]byte, error) {
 	object["fieldIds"], err = json.Marshal(a.FieldIds)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'fieldIds': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RunFormulaJSONBody. Returns the specified
+// element and whether it was found
+func (a RunFormulaJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RunFormulaJSONBody
+func (a *RunFormulaJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RunFormulaJSONBody to handle AdditionalProperties
+func (a *RunFormulaJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["formula"]; found {
+		err = json.Unmarshal(raw, &a.Formula)
+		if err != nil {
+			return fmt.Errorf("error reading 'formula': %w", err)
+		}
+		delete(object, "formula")
+	}
+
+	if raw, found := object["from"]; found {
+		err = json.Unmarshal(raw, &a.From)
+		if err != nil {
+			return fmt.Errorf("error reading 'from': %w", err)
+		}
+		delete(object, "from")
+	}
+
+	if raw, found := object["rid"]; found {
+		err = json.Unmarshal(raw, &a.Rid)
+		if err != nil {
+			return fmt.Errorf("error reading 'rid': %w", err)
+		}
+		delete(object, "rid")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RunFormulaJSONBody to handle AdditionalProperties
+func (a RunFormulaJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["formula"], err = json.Marshal(a.Formula)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'formula': %w", err)
+	}
+
+	object["from"], err = json.Marshal(a.From)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'from': %w", err)
+	}
+
+	if a.Rid != nil {
+		object["rid"], err = json.Marshal(a.Rid)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'rid': %w", err)
+		}
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -4988,11 +6899,9 @@ func (a UpsertJSONBody) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	if a.Data != nil {
-		object["data"], err = json.Marshal(a.Data)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'data': %w", err)
-		}
+	object["data"], err = json.Marshal(a.Data)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'data': %w", err)
 	}
 
 	if a.FieldsToReturn != nil {
@@ -5012,6 +6921,115 @@ func (a UpsertJSONBody) MarshalJSON() ([]byte, error) {
 	object["to"], err = json.Marshal(a.To)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'to': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RecordsModifiedSinceJSONBody. Returns the specified
+// element and whether it was found
+func (a RecordsModifiedSinceJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RecordsModifiedSinceJSONBody
+func (a *RecordsModifiedSinceJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RecordsModifiedSinceJSONBody to handle AdditionalProperties
+func (a *RecordsModifiedSinceJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["after"]; found {
+		err = json.Unmarshal(raw, &a.After)
+		if err != nil {
+			return fmt.Errorf("error reading 'after': %w", err)
+		}
+		delete(object, "after")
+	}
+
+	if raw, found := object["fieldList"]; found {
+		err = json.Unmarshal(raw, &a.FieldList)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldList': %w", err)
+		}
+		delete(object, "fieldList")
+	}
+
+	if raw, found := object["from"]; found {
+		err = json.Unmarshal(raw, &a.From)
+		if err != nil {
+			return fmt.Errorf("error reading 'from': %w", err)
+		}
+		delete(object, "from")
+	}
+
+	if raw, found := object["includeDetails"]; found {
+		err = json.Unmarshal(raw, &a.IncludeDetails)
+		if err != nil {
+			return fmt.Errorf("error reading 'includeDetails': %w", err)
+		}
+		delete(object, "includeDetails")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RecordsModifiedSinceJSONBody to handle AdditionalProperties
+func (a RecordsModifiedSinceJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["after"], err = json.Marshal(a.After)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'after': %w", err)
+	}
+
+	if a.FieldList != nil {
+		object["fieldList"], err = json.Marshal(a.FieldList)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldList': %w", err)
+		}
+	}
+
+	object["from"], err = json.Marshal(a.From)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'from': %w", err)
+	}
+
+	if a.IncludeDetails != nil {
+		object["includeDetails"], err = json.Marshal(a.IncludeDetails)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'includeDetails': %w", err)
+		}
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -5569,6 +7587,117 @@ func (a UpdateTableJSONBody) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for CreateRelationshipJSONBody. Returns the specified
+// element and whether it was found
+func (a CreateRelationshipJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateRelationshipJSONBody
+func (a *CreateRelationshipJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateRelationshipJSONBody to handle AdditionalProperties
+func (a *CreateRelationshipJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["foreignKeyField"]; found {
+		err = json.Unmarshal(raw, &a.ForeignKeyField)
+		if err != nil {
+			return fmt.Errorf("error reading 'foreignKeyField': %w", err)
+		}
+		delete(object, "foreignKeyField")
+	}
+
+	if raw, found := object["lookupFieldIds"]; found {
+		err = json.Unmarshal(raw, &a.LookupFieldIds)
+		if err != nil {
+			return fmt.Errorf("error reading 'lookupFieldIds': %w", err)
+		}
+		delete(object, "lookupFieldIds")
+	}
+
+	if raw, found := object["parentTableId"]; found {
+		err = json.Unmarshal(raw, &a.ParentTableId)
+		if err != nil {
+			return fmt.Errorf("error reading 'parentTableId': %w", err)
+		}
+		delete(object, "parentTableId")
+	}
+
+	if raw, found := object["summaryFields"]; found {
+		err = json.Unmarshal(raw, &a.SummaryFields)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryFields': %w", err)
+		}
+		delete(object, "summaryFields")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateRelationshipJSONBody to handle AdditionalProperties
+func (a CreateRelationshipJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.ForeignKeyField != nil {
+		object["foreignKeyField"], err = json.Marshal(a.ForeignKeyField)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'foreignKeyField': %w", err)
+		}
+	}
+
+	if a.LookupFieldIds != nil {
+		object["lookupFieldIds"], err = json.Marshal(a.LookupFieldIds)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'lookupFieldIds': %w", err)
+		}
+	}
+
+	object["parentTableId"], err = json.Marshal(a.ParentTableId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'parentTableId': %w", err)
+	}
+
+	if a.SummaryFields != nil {
+		object["summaryFields"], err = json.Marshal(a.SummaryFields)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryFields': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for CreateRelationshipJSONBody_ForeignKeyField. Returns the specified
 // element and whether it was found
 func (a CreateRelationshipJSONBody_ForeignKeyField) Get(fieldName string) (value interface{}, found bool) {
@@ -5736,6 +7865,89 @@ func (a CreateRelationshipJSONBody_SummaryFields_Item) MarshalJSON() ([]byte, er
 		object["where"], err = json.Marshal(a.Where)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'where': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateRelationshipJSONBody. Returns the specified
+// element and whether it was found
+func (a UpdateRelationshipJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateRelationshipJSONBody
+func (a *UpdateRelationshipJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateRelationshipJSONBody to handle AdditionalProperties
+func (a *UpdateRelationshipJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["lookupFieldIds"]; found {
+		err = json.Unmarshal(raw, &a.LookupFieldIds)
+		if err != nil {
+			return fmt.Errorf("error reading 'lookupFieldIds': %w", err)
+		}
+		delete(object, "lookupFieldIds")
+	}
+
+	if raw, found := object["summaryFields"]; found {
+		err = json.Unmarshal(raw, &a.SummaryFields)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryFields': %w", err)
+		}
+		delete(object, "summaryFields")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateRelationshipJSONBody to handle AdditionalProperties
+func (a UpdateRelationshipJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.LookupFieldIds != nil {
+		object["lookupFieldIds"], err = json.Marshal(a.LookupFieldIds)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'lookupFieldIds': %w", err)
+		}
+	}
+
+	if a.SummaryFields != nil {
+		object["summaryFields"], err = json.Marshal(a.SummaryFields)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryFields': %w", err)
 		}
 	}
 
@@ -5957,6 +8169,448 @@ func (a GetUsersJSONBody) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for CloneUserTokenJSONBody. Returns the specified
+// element and whether it was found
+func (a CloneUserTokenJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CloneUserTokenJSONBody
+func (a *CloneUserTokenJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CloneUserTokenJSONBody to handle AdditionalProperties
+func (a *CloneUserTokenJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["description"]; found {
+		err = json.Unmarshal(raw, &a.Description)
+		if err != nil {
+			return fmt.Errorf("error reading 'description': %w", err)
+		}
+		delete(object, "description")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CloneUserTokenJSONBody to handle AdditionalProperties
+func (a CloneUserTokenJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Description != nil {
+		object["description"], err = json.Marshal(a.Description)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'description': %w", err)
+		}
+	}
+
+	if a.Name != nil {
+		object["name"], err = json.Marshal(a.Name)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for TransferUserTokenJSONBody. Returns the specified
+// element and whether it was found
+func (a TransferUserTokenJSONBody) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for TransferUserTokenJSONBody
+func (a *TransferUserTokenJSONBody) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for TransferUserTokenJSONBody to handle AdditionalProperties
+func (a *TransferUserTokenJSONBody) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["from"]; found {
+		err = json.Unmarshal(raw, &a.From)
+		if err != nil {
+			return fmt.Errorf("error reading 'from': %w", err)
+		}
+		delete(object, "from")
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["to"]; found {
+		err = json.Unmarshal(raw, &a.To)
+		if err != nil {
+			return fmt.Errorf("error reading 'to': %w", err)
+		}
+		delete(object, "to")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for TransferUserTokenJSONBody to handle AdditionalProperties
+func (a TransferUserTokenJSONBody) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["from"], err = json.Marshal(a.From)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'from': %w", err)
+	}
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["to"], err = json.Marshal(a.To)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'to': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddTrusteesFailureItem. Returns the specified
+// element and whether it was found
+func (a AddTrusteesFailureItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddTrusteesFailureItem
+func (a *AddTrusteesFailureItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddTrusteesFailureItem to handle AdditionalProperties
+func (a *AddTrusteesFailureItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["error"]; found {
+		err = json.Unmarshal(raw, &a.Error)
+		if err != nil {
+			return fmt.Errorf("error reading 'error': %w", err)
+		}
+		delete(object, "error")
+	}
+
+	if raw, found := object["trustee"]; found {
+		err = json.Unmarshal(raw, &a.Trustee)
+		if err != nil {
+			return fmt.Errorf("error reading 'trustee': %w", err)
+		}
+		delete(object, "trustee")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddTrusteesFailureItem to handle AdditionalProperties
+func (a AddTrusteesFailureItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Error != nil {
+		object["error"], err = json.Marshal(a.Error)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'error': %w", err)
+		}
+	}
+
+	if a.Trustee != nil {
+		object["trustee"], err = json.Marshal(a.Trustee)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'trustee': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddTrusteesFailureItem_Trustee. Returns the specified
+// element and whether it was found
+func (a AddTrusteesFailureItem_Trustee) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddTrusteesFailureItem_Trustee
+func (a *AddTrusteesFailureItem_Trustee) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a *AddTrusteesFailureItem_Trustee) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a AddTrusteesFailureItem_Trustee) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AddTrusteesSuccessItem. Returns the specified
+// element and whether it was found
+func (a AddTrusteesSuccessItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AddTrusteesSuccessItem
+func (a *AddTrusteesSuccessItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AddTrusteesSuccessItem to handle AdditionalProperties
+func (a *AddTrusteesSuccessItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AddTrusteesSuccessItem to handle AdditionalProperties
+func (a AddTrusteesSuccessItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for AuditEventsItem. Returns the specified
 // element and whether it was found
 func (a AuditEventsItem) Get(fieldName string) (value interface{}, found bool) {
@@ -6155,6 +8809,288 @@ func (a AuditEventsItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for AuditEventsItem_PayloadChanges_Changes_Current_Item. Returns the specified
+// element and whether it was found
+func (a AuditEventsItem_PayloadChanges_Changes_Current_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AuditEventsItem_PayloadChanges_Changes_Current_Item
+func (a *AuditEventsItem_PayloadChanges_Changes_Current_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Current_Item to handle AdditionalProperties
+func (a *AuditEventsItem_PayloadChanges_Changes_Current_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["printValue"]; found {
+		err = json.Unmarshal(raw, &a.PrintValue)
+		if err != nil {
+			return fmt.Errorf("error reading 'printValue': %w", err)
+		}
+		delete(object, "printValue")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Current_Item to handle AdditionalProperties
+func (a AuditEventsItem_PayloadChanges_Changes_Current_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	if a.PrintValue != nil {
+		object["printValue"], err = json.Marshal(a.PrintValue)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'printValue': %w", err)
+		}
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AuditEventsItem_PayloadChanges_Changes_Fields_Item. Returns the specified
+// element and whether it was found
+func (a AuditEventsItem_PayloadChanges_Changes_Fields_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AuditEventsItem_PayloadChanges_Changes_Fields_Item
+func (a *AuditEventsItem_PayloadChanges_Changes_Fields_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Fields_Item to handle AdditionalProperties
+func (a *AuditEventsItem_PayloadChanges_Changes_Fields_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Fields_Item to handle AdditionalProperties
+func (a AuditEventsItem_PayloadChanges_Changes_Fields_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	if a.Name != nil {
+		object["name"], err = json.Marshal(a.Name)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+		}
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for AuditEventsItem_PayloadChanges_Changes_Previous_Item. Returns the specified
+// element and whether it was found
+func (a AuditEventsItem_PayloadChanges_Changes_Previous_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AuditEventsItem_PayloadChanges_Changes_Previous_Item
+func (a *AuditEventsItem_PayloadChanges_Changes_Previous_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Previous_Item to handle AdditionalProperties
+func (a *AuditEventsItem_PayloadChanges_Changes_Previous_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["printValue"]; found {
+		err = json.Unmarshal(raw, &a.PrintValue)
+		if err != nil {
+			return fmt.Errorf("error reading 'printValue': %w", err)
+		}
+		delete(object, "printValue")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AuditEventsItem_PayloadChanges_Changes_Previous_Item to handle AdditionalProperties
+func (a AuditEventsItem_PayloadChanges_Changes_Previous_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	if a.PrintValue != nil {
+		object["printValue"], err = json.Marshal(a.PrintValue)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'printValue': %w", err)
+		}
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for AuditEventsItem_PayloadChanges_Changes. Returns the specified
 // element and whether it was found
 func (a AuditEventsItem_PayloadChanges_Changes) Get(fieldName string) (value interface{}, found bool) {
@@ -6223,9 +9159,11 @@ func (a AuditEventsItem_PayloadChanges_Changes) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	object["current"], err = json.Marshal(a.Current)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'current': %w", err)
+	if a.Current != nil {
+		object["current"], err = json.Marshal(a.Current)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'current': %w", err)
+		}
 	}
 
 	object["fields"], err = json.Marshal(a.Fields)
@@ -6233,9 +9171,11 @@ func (a AuditEventsItem_PayloadChanges_Changes) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("error marshaling 'fields': %w", err)
 	}
 
-	object["previous"], err = json.Marshal(a.Previous)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'previous': %w", err)
+	if a.Previous != nil {
+		object["previous"], err = json.Marshal(a.Previous)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'previous': %w", err)
+		}
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -6495,17 +9435,96 @@ func (a CopyAppVariablesItem) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CreateAppMemoryInfo. Returns the specified
+// element and whether it was found
+func (a CreateAppMemoryInfo) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateAppMemoryInfo
+func (a *CreateAppMemoryInfo) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateAppMemoryInfo to handle AdditionalProperties
+func (a *CreateAppMemoryInfo) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["estMemory"]; found {
+		err = json.Unmarshal(raw, &a.EstMemory)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemory': %w", err)
+		}
+		delete(object, "estMemory")
+	}
+
+	if raw, found := object["estMemoryInclDependentApps"]; found {
+		err = json.Unmarshal(raw, &a.EstMemoryInclDependentApps)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemoryInclDependentApps': %w", err)
+		}
+		delete(object, "estMemoryInclDependentApps")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateAppMemoryInfo to handle AdditionalProperties
+func (a CreateAppMemoryInfo) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.EstMemory != nil {
+		object["estMemory"], err = json.Marshal(a.EstMemory)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'estMemory': %w", err)
 		}
 	}
 
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
+	if a.EstMemoryInclDependentApps != nil {
+		object["estMemoryInclDependentApps"], err = json.Marshal(a.EstMemoryInclDependentApps)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+			return nil, fmt.Errorf("error marshaling 'estMemoryInclDependentApps': %w", err)
 		}
 	}
 
@@ -6721,17 +9740,111 @@ func (a CreateAppVariablesItem) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for CreateFieldPermissionsItem. Returns the specified
+// element and whether it was found
+func (a CreateFieldPermissionsItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for CreateFieldPermissionsItem
+func (a *CreateFieldPermissionsItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for CreateFieldPermissionsItem to handle AdditionalProperties
+func (a *CreateFieldPermissionsItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["permissionType"]; found {
+		err = json.Unmarshal(raw, &a.PermissionType)
+		if err != nil {
+			return fmt.Errorf("error reading 'permissionType': %w", err)
+		}
+		delete(object, "permissionType")
+	}
+
+	if raw, found := object["role"]; found {
+		err = json.Unmarshal(raw, &a.Role)
+		if err != nil {
+			return fmt.Errorf("error reading 'role': %w", err)
+		}
+		delete(object, "role")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for CreateFieldPermissionsItem to handle AdditionalProperties
+func (a CreateFieldPermissionsItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.PermissionType != nil {
+		object["permissionType"], err = json.Marshal(a.PermissionType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'permissionType': %w", err)
 		}
 	}
 
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
+	if a.Role != nil {
+		object["role"], err = json.Marshal(a.Role)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+			return nil, fmt.Errorf("error marshaling 'role': %w", err)
+		}
+	}
+
+	if a.RoleId != nil {
+		object["roleId"], err = json.Marshal(a.RoleId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
 		}
 	}
 
@@ -8555,6 +11668,89 @@ func (a GetAppEventsItemOwner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetAppMemoryInfo. Returns the specified
+// element and whether it was found
+func (a GetAppMemoryInfo) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetAppMemoryInfo
+func (a *GetAppMemoryInfo) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetAppMemoryInfo to handle AdditionalProperties
+func (a *GetAppMemoryInfo) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["estMemory"]; found {
+		err = json.Unmarshal(raw, &a.EstMemory)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemory': %w", err)
+		}
+		delete(object, "estMemory")
+	}
+
+	if raw, found := object["estMemoryInclDependentApps"]; found {
+		err = json.Unmarshal(raw, &a.EstMemoryInclDependentApps)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemoryInclDependentApps': %w", err)
+		}
+		delete(object, "estMemoryInclDependentApps")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetAppMemoryInfo to handle AdditionalProperties
+func (a GetAppMemoryInfo) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.EstMemory != nil {
+		object["estMemory"], err = json.Marshal(a.EstMemory)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'estMemory': %w", err)
+		}
+	}
+
+	if a.EstMemoryInclDependentApps != nil {
+		object["estMemoryInclDependentApps"], err = json.Marshal(a.EstMemoryInclDependentApps)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'estMemoryInclDependentApps': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetAppSecurityProperties. Returns the specified
 // element and whether it was found
 func (a GetAppSecurityProperties) Get(fieldName string) (value interface{}, found bool) {
@@ -9051,17 +12247,111 @@ func (a GetAppVariablesItem) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldPermissionsItem. Returns the specified
+// element and whether it was found
+func (a GetFieldPermissionsItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldPermissionsItem
+func (a *GetFieldPermissionsItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldPermissionsItem to handle AdditionalProperties
+func (a *GetFieldPermissionsItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["permissionType"]; found {
+		err = json.Unmarshal(raw, &a.PermissionType)
+		if err != nil {
+			return fmt.Errorf("error reading 'permissionType': %w", err)
+		}
+		delete(object, "permissionType")
+	}
+
+	if raw, found := object["role"]; found {
+		err = json.Unmarshal(raw, &a.Role)
+		if err != nil {
+			return fmt.Errorf("error reading 'role': %w", err)
+		}
+		delete(object, "role")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldPermissionsItem to handle AdditionalProperties
+func (a GetFieldPermissionsItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.PermissionType != nil {
+		object["permissionType"], err = json.Marshal(a.PermissionType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'permissionType': %w", err)
 		}
 	}
 
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
+	if a.Role != nil {
+		object["role"], err = json.Marshal(a.Role)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+			return nil, fmt.Errorf("error marshaling 'role': %w", err)
+		}
+	}
+
+	if a.RoleId != nil {
+		object["roleId"], err = json.Marshal(a.RoleId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
 		}
 	}
 
@@ -10987,6 +14277,72 @@ func (a GetFieldUsageItemUsage_CustomEmails) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetFieldUsageItemUsage_Dashboards. Returns the specified
+// element and whether it was found
+func (a GetFieldUsageItemUsage_Dashboards) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldUsageItemUsage_Dashboards
+func (a *GetFieldUsageItemUsage_Dashboards) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_Dashboards to handle AdditionalProperties
+func (a *GetFieldUsageItemUsage_Dashboards) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_Dashboards to handle AdditionalProperties
+func (a GetFieldUsageItemUsage_Dashboards) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetFieldUsageItemUsage_DefaultReports. Returns the specified
 // element and whether it was found
 func (a GetFieldUsageItemUsage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
@@ -11781,6 +15137,138 @@ func (a GetFieldUsageItemUsage_Roles) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetFieldUsageItemUsage_TableImports. Returns the specified
+// element and whether it was found
+func (a GetFieldUsageItemUsage_TableImports) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldUsageItemUsage_TableImports
+func (a *GetFieldUsageItemUsage_TableImports) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_TableImports to handle AdditionalProperties
+func (a *GetFieldUsageItemUsage_TableImports) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_TableImports to handle AdditionalProperties
+func (a GetFieldUsageItemUsage_TableImports) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldUsageItemUsage_TableRules. Returns the specified
+// element and whether it was found
+func (a GetFieldUsageItemUsage_TableRules) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldUsageItemUsage_TableRules
+func (a *GetFieldUsageItemUsage_TableRules) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_TableRules to handle AdditionalProperties
+func (a *GetFieldUsageItemUsage_TableRules) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_TableRules to handle AdditionalProperties
+func (a GetFieldUsageItemUsage_TableRules) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetFieldUsageItemUsage_Webhooks. Returns the specified
 // element and whether it was found
 func (a GetFieldUsageItemUsage_Webhooks) Get(fieldName string) (value interface{}, found bool) {
@@ -12111,6 +15599,104 @@ func (a GetFieldsItem) MarshalJSON() ([]byte, error) {
 		object["unique"], err = json.Marshal(a.Unique)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'unique': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldsItemPermissionsItem. Returns the specified
+// element and whether it was found
+func (a GetFieldsItemPermissionsItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsItemPermissionsItem
+func (a *GetFieldsItemPermissionsItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsItemPermissionsItem to handle AdditionalProperties
+func (a *GetFieldsItemPermissionsItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["permissionType"]; found {
+		err = json.Unmarshal(raw, &a.PermissionType)
+		if err != nil {
+			return fmt.Errorf("error reading 'permissionType': %w", err)
+		}
+		delete(object, "permissionType")
+	}
+
+	if raw, found := object["role"]; found {
+		err = json.Unmarshal(raw, &a.Role)
+		if err != nil {
+			return fmt.Errorf("error reading 'role': %w", err)
+		}
+		delete(object, "role")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsItemPermissionsItem to handle AdditionalProperties
+func (a GetFieldsItemPermissionsItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.PermissionType != nil {
+		object["permissionType"], err = json.Marshal(a.PermissionType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'permissionType': %w", err)
+		}
+	}
+
+	if a.Role != nil {
+		object["role"], err = json.Marshal(a.Role)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'role': %w", err)
+		}
+	}
+
+	if a.RoleId != nil {
+		object["roleId"], err = json.Marshal(a.RoleId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
 		}
 	}
 
@@ -14036,6 +17622,72 @@ func (a GetFieldsUsageItemUsage_CustomEmails) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetFieldsUsageItemUsage_Dashboards. Returns the specified
+// element and whether it was found
+func (a GetFieldsUsageItemUsage_Dashboards) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsUsageItemUsage_Dashboards
+func (a *GetFieldsUsageItemUsage_Dashboards) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_Dashboards to handle AdditionalProperties
+func (a *GetFieldsUsageItemUsage_Dashboards) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_Dashboards to handle AdditionalProperties
+func (a GetFieldsUsageItemUsage_Dashboards) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetFieldsUsageItemUsage_DefaultReports. Returns the specified
 // element and whether it was found
 func (a GetFieldsUsageItemUsage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
@@ -14813,6 +18465,138 @@ func (a *GetFieldsUsageItemUsage_Roles) UnmarshalJSON(b []byte) error {
 
 // Override default JSON handling for GetFieldsUsageItemUsage_Roles to handle AdditionalProperties
 func (a GetFieldsUsageItemUsage_Roles) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldsUsageItemUsage_TableImports. Returns the specified
+// element and whether it was found
+func (a GetFieldsUsageItemUsage_TableImports) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsUsageItemUsage_TableImports
+func (a *GetFieldsUsageItemUsage_TableImports) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_TableImports to handle AdditionalProperties
+func (a *GetFieldsUsageItemUsage_TableImports) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_TableImports to handle AdditionalProperties
+func (a GetFieldsUsageItemUsage_TableImports) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["count"], err = json.Marshal(a.Count)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldsUsageItemUsage_TableRules. Returns the specified
+// element and whether it was found
+func (a GetFieldsUsageItemUsage_TableRules) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsUsageItemUsage_TableRules
+func (a *GetFieldsUsageItemUsage_TableRules) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_TableRules to handle AdditionalProperties
+func (a *GetFieldsUsageItemUsage_TableRules) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_TableRules to handle AdditionalProperties
+func (a GetFieldsUsageItemUsage_TableRules) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
@@ -18707,6 +22491,98 @@ func (a GetTableReportsItemQuery_SortBy_Item) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetTrusteesItem. Returns the specified
+// element and whether it was found
+func (a GetTrusteesItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTrusteesItem
+func (a *GetTrusteesItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTrusteesItem to handle AdditionalProperties
+func (a *GetTrusteesItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTrusteesItem to handle AdditionalProperties
+func (a GetTrusteesItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetUserAppsAppsItem. Returns the specified
 // element and whether it was found
 func (a GetUserAppsAppsItem) Get(fieldName string) (value interface{}, found bool) {
@@ -19064,6 +22940,777 @@ func (a GetUsersUsersItem) MarshalJSON() ([]byte, error) {
 	object["userName"], err = json.Marshal(a.UserName)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'userName': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData
+func (a *PlatformAnalyticEventSummariesData) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["eventsSummaries"]; found {
+		err = json.Unmarshal(raw, &a.EventsSummaries)
+		if err != nil {
+			return fmt.Errorf("error reading 'eventsSummaries': %w", err)
+		}
+		delete(object, "eventsSummaries")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["eventsSummaries"], err = json.Marshal(a.EventsSummaries)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'eventsSummaries': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Metadata. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Metadata
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Metadata to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["nextToken"]; found {
+		err = json.Unmarshal(raw, &a.NextToken)
+		if err != nil {
+			return fmt.Errorf("error reading 'nextToken': %w", err)
+		}
+		delete(object, "nextToken")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Metadata to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["nextToken"], err = json.Marshal(a.NextToken)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'nextToken': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["billingCategory"]; found {
+		err = json.Unmarshal(raw, &a.BillingCategory)
+		if err != nil {
+			return fmt.Errorf("error reading 'billingCategory': %w", err)
+		}
+		delete(object, "billingCategory")
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if raw, found := object["eventType"]; found {
+		err = json.Unmarshal(raw, &a.EventType)
+		if err != nil {
+			return fmt.Errorf("error reading 'eventType': %w", err)
+		}
+		delete(object, "eventType")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.BillingCategory != nil {
+		object["billingCategory"], err = json.Marshal(a.BillingCategory)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'billingCategory': %w", err)
+		}
+	}
+
+	if a.Count != nil {
+		object["count"], err = json.Marshal(a.Count)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'count': %w", err)
+		}
+	}
+
+	if a.EventType != nil {
+		object["eventType"], err = json.Marshal(a.EventType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'eventType': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["all"]; found {
+		err = json.Unmarshal(raw, &a.All)
+		if err != nil {
+			return fmt.Errorf("error reading 'all': %w", err)
+		}
+		delete(object, "all")
+	}
+
+	if raw, found := object["integration"]; found {
+		err = json.Unmarshal(raw, &a.Integration)
+		if err != nil {
+			return fmt.Errorf("error reading 'integration': %w", err)
+		}
+		delete(object, "integration")
+	}
+
+	if raw, found := object["user"]; found {
+		err = json.Unmarshal(raw, &a.User)
+		if err != nil {
+			return fmt.Errorf("error reading 'user': %w", err)
+		}
+		delete(object, "user")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.All != nil {
+		object["all"], err = json.Marshal(a.All)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'all': %w", err)
+		}
+	}
+
+	if a.Integration != nil {
+		object["integration"], err = json.Marshal(a.Integration)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'integration': %w", err)
+		}
+	}
+
+	if a.User != nil {
+		object["user"], err = json.Marshal(a.User)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'user': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["eventTypes"]; found {
+		err = json.Unmarshal(raw, &a.EventTypes)
+		if err != nil {
+			return fmt.Errorf("error reading 'eventTypes': %w", err)
+		}
+		delete(object, "eventTypes")
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["totals"]; found {
+		err = json.Unmarshal(raw, &a.Totals)
+		if err != nil {
+			return fmt.Errorf("error reading 'totals': %w", err)
+		}
+		delete(object, "totals")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["eventTypes"], err = json.Marshal(a.EventTypes)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'eventTypes': %w", err)
+	}
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["totals"], err = json.Marshal(a.Totals)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'totals': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Totals. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Totals
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Totals to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["all"]; found {
+		err = json.Unmarshal(raw, &a.All)
+		if err != nil {
+			return fmt.Errorf("error reading 'all': %w", err)
+		}
+		delete(object, "all")
+	}
+
+	if raw, found := object["integration"]; found {
+		err = json.Unmarshal(raw, &a.Integration)
+		if err != nil {
+			return fmt.Errorf("error reading 'integration': %w", err)
+		}
+		delete(object, "integration")
+	}
+
+	if raw, found := object["user"]; found {
+		err = json.Unmarshal(raw, &a.User)
+		if err != nil {
+			return fmt.Errorf("error reading 'user': %w", err)
+		}
+		delete(object, "user")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Totals to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Totals) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.All != nil {
+		object["all"], err = json.Marshal(a.All)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'all': %w", err)
+		}
+	}
+
+	if a.Integration != nil {
+		object["integration"], err = json.Marshal(a.Integration)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'integration': %w", err)
+		}
+	}
+
+	if a.User != nil {
+		object["user"], err = json.Marshal(a.User)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'user': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries. Returns the specified
+// element and whether it was found
+func (a PlatformAnalyticEventSummariesData_EventsSummaries) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for PlatformAnalyticEventSummariesData_EventsSummaries
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries to handle AdditionalProperties
+func (a *PlatformAnalyticEventSummariesData_EventsSummaries) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["accountId"]; found {
+		err = json.Unmarshal(raw, &a.AccountId)
+		if err != nil {
+			return fmt.Errorf("error reading 'accountId': %w", err)
+		}
+		delete(object, "accountId")
+	}
+
+	if raw, found := object["end"]; found {
+		err = json.Unmarshal(raw, &a.End)
+		if err != nil {
+			return fmt.Errorf("error reading 'end': %w", err)
+		}
+		delete(object, "end")
+	}
+
+	if raw, found := object["groupBy"]; found {
+		err = json.Unmarshal(raw, &a.GroupBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'groupBy': %w", err)
+		}
+		delete(object, "groupBy")
+	}
+
+	if raw, found := object["metadata"]; found {
+		err = json.Unmarshal(raw, &a.Metadata)
+		if err != nil {
+			return fmt.Errorf("error reading 'metadata': %w", err)
+		}
+		delete(object, "metadata")
+	}
+
+	if raw, found := object["results"]; found {
+		err = json.Unmarshal(raw, &a.Results)
+		if err != nil {
+			return fmt.Errorf("error reading 'results': %w", err)
+		}
+		delete(object, "results")
+	}
+
+	if raw, found := object["start"]; found {
+		err = json.Unmarshal(raw, &a.Start)
+		if err != nil {
+			return fmt.Errorf("error reading 'start': %w", err)
+		}
+		delete(object, "start")
+	}
+
+	if raw, found := object["totals"]; found {
+		err = json.Unmarshal(raw, &a.Totals)
+		if err != nil {
+			return fmt.Errorf("error reading 'totals': %w", err)
+		}
+		delete(object, "totals")
+	}
+
+	if raw, found := object["where"]; found {
+		err = json.Unmarshal(raw, &a.Where)
+		if err != nil {
+			return fmt.Errorf("error reading 'where': %w", err)
+		}
+		delete(object, "where")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for PlatformAnalyticEventSummariesData_EventsSummaries to handle AdditionalProperties
+func (a PlatformAnalyticEventSummariesData_EventsSummaries) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["accountId"], err = json.Marshal(a.AccountId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'accountId': %w", err)
+	}
+
+	object["end"], err = json.Marshal(a.End)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'end': %w", err)
+	}
+
+	object["groupBy"], err = json.Marshal(a.GroupBy)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'groupBy': %w", err)
+	}
+
+	if a.Metadata != nil {
+		object["metadata"], err = json.Marshal(a.Metadata)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
+		}
+	}
+
+	object["results"], err = json.Marshal(a.Results)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'results': %w", err)
+	}
+
+	object["start"], err = json.Marshal(a.Start)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'start': %w", err)
+	}
+
+	if a.Totals != nil {
+		object["totals"], err = json.Marshal(a.Totals)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'totals': %w", err)
+		}
+	}
+
+	object["where"], err = json.Marshal(a.Where)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'where': %w", err)
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -19478,6 +24125,273 @@ func (a RecordsModifiedSinceChangesItem) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'timestamp': %w", err)
 		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RemoveTrusteesFailureItem. Returns the specified
+// element and whether it was found
+func (a RemoveTrusteesFailureItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RemoveTrusteesFailureItem
+func (a *RemoveTrusteesFailureItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RemoveTrusteesFailureItem to handle AdditionalProperties
+func (a *RemoveTrusteesFailureItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["error"]; found {
+		err = json.Unmarshal(raw, &a.Error)
+		if err != nil {
+			return fmt.Errorf("error reading 'error': %w", err)
+		}
+		delete(object, "error")
+	}
+
+	if raw, found := object["trustee"]; found {
+		err = json.Unmarshal(raw, &a.Trustee)
+		if err != nil {
+			return fmt.Errorf("error reading 'trustee': %w", err)
+		}
+		delete(object, "trustee")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RemoveTrusteesFailureItem to handle AdditionalProperties
+func (a RemoveTrusteesFailureItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Error != nil {
+		object["error"], err = json.Marshal(a.Error)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'error': %w", err)
+		}
+	}
+
+	if a.Trustee != nil {
+		object["trustee"], err = json.Marshal(a.Trustee)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'trustee': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RemoveTrusteesFailureItem_Trustee. Returns the specified
+// element and whether it was found
+func (a RemoveTrusteesFailureItem_Trustee) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RemoveTrusteesFailureItem_Trustee
+func (a *RemoveTrusteesFailureItem_Trustee) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RemoveTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a *RemoveTrusteesFailureItem_Trustee) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RemoveTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a RemoveTrusteesFailureItem_Trustee) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RemoveTrusteesSuccessItem. Returns the specified
+// element and whether it was found
+func (a RemoveTrusteesSuccessItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RemoveTrusteesSuccessItem
+func (a *RemoveTrusteesSuccessItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RemoveTrusteesSuccessItem to handle AdditionalProperties
+func (a *RemoveTrusteesSuccessItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RemoveTrusteesSuccessItem to handle AdditionalProperties
+func (a RemoveTrusteesSuccessItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -20027,6 +24941,89 @@ func (a TransferUserTokenAppsItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for UpdateAppMemoryInfo. Returns the specified
+// element and whether it was found
+func (a UpdateAppMemoryInfo) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateAppMemoryInfo
+func (a *UpdateAppMemoryInfo) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateAppMemoryInfo to handle AdditionalProperties
+func (a *UpdateAppMemoryInfo) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["estMemory"]; found {
+		err = json.Unmarshal(raw, &a.EstMemory)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemory': %w", err)
+		}
+		delete(object, "estMemory")
+	}
+
+	if raw, found := object["estMemoryInclDependentApps"]; found {
+		err = json.Unmarshal(raw, &a.EstMemoryInclDependentApps)
+		if err != nil {
+			return fmt.Errorf("error reading 'estMemoryInclDependentApps': %w", err)
+		}
+		delete(object, "estMemoryInclDependentApps")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateAppMemoryInfo to handle AdditionalProperties
+func (a UpdateAppMemoryInfo) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.EstMemory != nil {
+		object["estMemory"], err = json.Marshal(a.EstMemory)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'estMemory': %w", err)
+		}
+	}
+
+	if a.EstMemoryInclDependentApps != nil {
+		object["estMemoryInclDependentApps"], err = json.Marshal(a.EstMemoryInclDependentApps)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'estMemoryInclDependentApps': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for UpdateAppSecurityProperties. Returns the specified
 // element and whether it was found
 func (a UpdateAppSecurityProperties) Get(fieldName string) (value interface{}, found bool) {
@@ -20230,17 +25227,111 @@ func (a UpdateAppVariablesItem) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
-	if a.Name != nil {
-		object["name"], err = json.Marshal(a.Name)
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	object["value"], err = json.Marshal(a.Value)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'value': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'name': %w", err)
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateFieldPermissionsItem. Returns the specified
+// element and whether it was found
+func (a UpdateFieldPermissionsItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateFieldPermissionsItem
+func (a *UpdateFieldPermissionsItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateFieldPermissionsItem to handle AdditionalProperties
+func (a *UpdateFieldPermissionsItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["permissionType"]; found {
+		err = json.Unmarshal(raw, &a.PermissionType)
+		if err != nil {
+			return fmt.Errorf("error reading 'permissionType': %w", err)
+		}
+		delete(object, "permissionType")
+	}
+
+	if raw, found := object["role"]; found {
+		err = json.Unmarshal(raw, &a.Role)
+		if err != nil {
+			return fmt.Errorf("error reading 'role': %w", err)
+		}
+		delete(object, "role")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateFieldPermissionsItem to handle AdditionalProperties
+func (a UpdateFieldPermissionsItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.PermissionType != nil {
+		object["permissionType"], err = json.Marshal(a.PermissionType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'permissionType': %w", err)
 		}
 	}
 
-	if a.Value != nil {
-		object["value"], err = json.Marshal(a.Value)
+	if a.Role != nil {
+		object["role"], err = json.Marshal(a.Role)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+			return nil, fmt.Errorf("error marshaling 'role': %w", err)
+		}
+	}
+
+	if a.RoleId != nil {
+		object["roleId"], err = json.Marshal(a.RoleId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
 		}
 	}
 
@@ -21695,6 +26786,299 @@ func (a UpdateRelationshipSummaryFieldsItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for UpdateTrusteesFailureItem. Returns the specified
+// element and whether it was found
+func (a UpdateTrusteesFailureItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateTrusteesFailureItem
+func (a *UpdateTrusteesFailureItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateTrusteesFailureItem to handle AdditionalProperties
+func (a *UpdateTrusteesFailureItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["error"]; found {
+		err = json.Unmarshal(raw, &a.Error)
+		if err != nil {
+			return fmt.Errorf("error reading 'error': %w", err)
+		}
+		delete(object, "error")
+	}
+
+	if raw, found := object["trustee"]; found {
+		err = json.Unmarshal(raw, &a.Trustee)
+		if err != nil {
+			return fmt.Errorf("error reading 'trustee': %w", err)
+		}
+		delete(object, "trustee")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateTrusteesFailureItem to handle AdditionalProperties
+func (a UpdateTrusteesFailureItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Error != nil {
+		object["error"], err = json.Marshal(a.Error)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'error': %w", err)
+		}
+	}
+
+	if a.Trustee != nil {
+		object["trustee"], err = json.Marshal(a.Trustee)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'trustee': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateTrusteesFailureItem_Trustee. Returns the specified
+// element and whether it was found
+func (a UpdateTrusteesFailureItem_Trustee) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateTrusteesFailureItem_Trustee
+func (a *UpdateTrusteesFailureItem_Trustee) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a *UpdateTrusteesFailureItem_Trustee) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["oldRoleId"]; found {
+		err = json.Unmarshal(raw, &a.OldRoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'oldRoleId': %w", err)
+		}
+		delete(object, "oldRoleId")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateTrusteesFailureItem_Trustee to handle AdditionalProperties
+func (a UpdateTrusteesFailureItem_Trustee) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["oldRoleId"], err = json.Marshal(a.OldRoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'oldRoleId': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for UpdateTrusteesSuccessItem. Returns the specified
+// element and whether it was found
+func (a UpdateTrusteesSuccessItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for UpdateTrusteesSuccessItem
+func (a *UpdateTrusteesSuccessItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for UpdateTrusteesSuccessItem to handle AdditionalProperties
+func (a *UpdateTrusteesSuccessItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["oldRoleId"]; found {
+		err = json.Unmarshal(raw, &a.OldRoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'oldRoleId': %w", err)
+		}
+		delete(object, "oldRoleId")
+	}
+
+	if raw, found := object["roleId"]; found {
+		err = json.Unmarshal(raw, &a.RoleId)
+		if err != nil {
+			return fmt.Errorf("error reading 'roleId': %w", err)
+		}
+		delete(object, "roleId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for UpdateTrusteesSuccessItem to handle AdditionalProperties
+func (a UpdateTrusteesSuccessItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["oldRoleId"], err = json.Marshal(a.OldRoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'oldRoleId': %w", err)
+	}
+
+	object["roleId"], err = json.Marshal(a.RoleId)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'roleId': %w", err)
+	}
+
+	object["type"], err = json.Marshal(a.Type)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for UpsertMetadata. Returns the specified
 // element and whether it was found
 func (a UpsertMetadata) Get(fieldName string) (value interface{}, found bool) {
@@ -22415,7 +27799,7 @@ type ClientInterface interface {
 	GetTempTokenDBID(ctx context.Context, dbid string, params *GetTempTokenDBIDParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GenerateDocument request
-	GenerateDocument(ctx context.Context, templateId float32, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GenerateDocument(ctx context.Context, templateId int, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteFieldsWithBody request with any body
 	DeleteFieldsWithBody(ctx context.Context, params *DeleteFieldsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -22511,15 +27895,11 @@ type ClientInterface interface {
 	// GetReport request
 	GetReport(ctx context.Context, reportId string, params *GetReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RunReportWithBody request with any body
-	RunReportWithBody(ctx context.Context, reportId string, params *RunReportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	RunReport(ctx context.Context, reportId string, params *RunReportParams, body RunReportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// RunReport request
+	RunReport(ctx context.Context, reportId string, params *RunReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateSolutionWithBody request with any body
 	CreateSolutionWithBody(ctx context.Context, params *CreateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateSolution(ctx context.Context, params *CreateSolutionParams, body CreateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateSolutionFromRecord request
 	CreateSolutionFromRecord(ctx context.Context, params *CreateSolutionFromRecordParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -22530,12 +27910,8 @@ type ClientInterface interface {
 	// UpdateSolutionWithBody request with any body
 	UpdateSolutionWithBody(ctx context.Context, solutionId string, params *UpdateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateSolution(ctx context.Context, solutionId string, params *UpdateSolutionParams, body UpdateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ChangesetSolutionWithBody request with any body
 	ChangesetSolutionWithBody(ctx context.Context, solutionId string, params *ChangesetSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	ChangesetSolution(ctx context.Context, solutionId string, params *ChangesetSolutionParams, body ChangesetSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ChangesetSolutionFromRecord request
 	ChangesetSolutionFromRecord(ctx context.Context, solutionId string, params *ChangesetSolutionFromRecordParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -22936,7 +28312,7 @@ func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, params *GetT
 	return c.Client.Do(req)
 }
 
-func (c *Client) GenerateDocument(ctx context.Context, templateId float32, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GenerateDocument(ctx context.Context, templateId int, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGenerateDocumentRequest(c.Server, templateId, params)
 	if err != nil {
 		return nil, err
@@ -23380,20 +28756,8 @@ func (c *Client) GetReport(ctx context.Context, reportId string, params *GetRepo
 	return c.Client.Do(req)
 }
 
-func (c *Client) RunReportWithBody(ctx context.Context, reportId string, params *RunReportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewRunReportRequestWithBody(c.Server, reportId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) RunReport(ctx context.Context, reportId string, params *RunReportParams, body RunReportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewRunReportRequest(c.Server, reportId, params, body)
+func (c *Client) RunReport(ctx context.Context, reportId string, params *RunReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRunReportRequest(c.Server, reportId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -23406,18 +28770,6 @@ func (c *Client) RunReport(ctx context.Context, reportId string, params *RunRepo
 
 func (c *Client) CreateSolutionWithBody(ctx context.Context, params *CreateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateSolutionRequestWithBody(c.Server, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateSolution(ctx context.Context, params *CreateSolutionParams, body CreateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateSolutionRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -23464,32 +28816,8 @@ func (c *Client) UpdateSolutionWithBody(ctx context.Context, solutionId string, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params *UpdateSolutionParams, body UpdateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateSolutionRequest(c.Server, solutionId, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) ChangesetSolutionWithBody(ctx context.Context, solutionId string, params *ChangesetSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewChangesetSolutionRequestWithBody(c.Server, solutionId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, params *ChangesetSolutionParams, body ChangesetSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewChangesetSolutionRequest(c.Server, solutionId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -23968,20 +29296,16 @@ func NewPlatformAnalyticReadsRequest(server string, params *PlatformAnalyticRead
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if params.Day != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "day", runtime.ParamLocationQuery, *params.Day); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
+		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "day", runtime.ParamLocationQuery, params.Day); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
 				}
 			}
-
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -24583,7 +29907,7 @@ func NewGetTempTokenDBIDRequest(server string, dbid string, params *GetTempToken
 }
 
 // NewGenerateDocumentRequest generates requests for GenerateDocument
-func NewGenerateDocumentRequest(server string, templateId float32, params *GenerateDocumentParams) (*http.Request, error) {
+func NewGenerateDocumentRequest(server string, templateId int, params *GenerateDocumentParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -24639,16 +29963,20 @@ func NewGenerateDocumentRequest(server string, templateId float32, params *Gener
 
 		}
 
-		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filename", runtime.ParamLocationQuery, params.Filename); err != nil {
-			return nil, err
-		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-			return nil, err
-		} else {
-			for k, v := range parsed {
-				for _, v2 := range v {
-					queryValues.Add(k, v2)
+		if params.Filename != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "filename", runtime.ParamLocationQuery, *params.Filename); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
 				}
 			}
+
 		}
 
 		if params.Format != nil {
@@ -25901,19 +31229,8 @@ func NewGetReportRequest(server string, reportId string, params *GetReportParams
 	return req, nil
 }
 
-// NewRunReportRequest calls the generic RunReport builder with application/json body
-func NewRunReportRequest(server string, reportId string, params *RunReportParams, body RunReportJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewRunReportRequestWithBody(server, reportId, params, "application/json", bodyReader)
-}
-
-// NewRunReportRequestWithBody generates requests for RunReport with any type of body
-func NewRunReportRequestWithBody(server string, reportId string, params *RunReportParams, contentType string, body io.Reader) (*http.Request, error) {
+// NewRunReportRequest generates requests for RunReport
+func NewRunReportRequest(server string, reportId string, params *RunReportParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -25988,25 +31305,12 @@ func NewRunReportRequestWithBody(server string, reportId string, params *RunRepo
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
-	req, err := http.NewRequest("POST", queryURL.String(), body)
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-
-	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
-}
-
-// NewCreateSolutionRequest calls the generic CreateSolution builder with application/json body
-func NewCreateSolutionRequest(server string, params *CreateSolutionParams, body CreateSolutionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateSolutionRequestWithBody(server, params, "application/json", bodyReader)
 }
 
 // NewCreateSolutionRequestWithBody generates requests for CreateSolution with any type of body
@@ -26097,6 +31401,22 @@ func NewCreateSolutionFromRecordRequest(server string, params *CreateSolutionFro
 	if params != nil {
 		queryValues := queryURL.Query()
 
+		if params.Alias != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "alias", runtime.ParamLocationQuery, *params.Alias); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "tableId", runtime.ParamLocationQuery, params.TableId); err != nil {
 			return nil, err
 		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
@@ -26131,22 +31451,6 @@ func NewCreateSolutionFromRecordRequest(server string, params *CreateSolutionFro
 					queryValues.Add(k, v2)
 				}
 			}
-		}
-
-		if params.Alias != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "alias", runtime.ParamLocationQuery, *params.Alias); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -26224,17 +31528,6 @@ func NewExportSolutionRequest(server string, solutionId string, params *ExportSo
 	return req, nil
 }
 
-// NewUpdateSolutionRequest calls the generic UpdateSolution builder with application/json body
-func NewUpdateSolutionRequest(server string, solutionId string, params *UpdateSolutionParams, body UpdateSolutionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateSolutionRequestWithBody(server, solutionId, params, "application/json", bodyReader)
-}
-
 // NewUpdateSolutionRequestWithBody generates requests for UpdateSolution with any type of body
 func NewUpdateSolutionRequestWithBody(server string, solutionId string, params *UpdateSolutionParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -26284,17 +31577,6 @@ func NewUpdateSolutionRequestWithBody(server string, solutionId string, params *
 	}
 
 	return req, nil
-}
-
-// NewChangesetSolutionRequest calls the generic ChangesetSolution builder with application/json body
-func NewChangesetSolutionRequest(server string, solutionId string, params *ChangesetSolutionParams, body ChangesetSolutionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewChangesetSolutionRequestWithBody(server, solutionId, params, "application/json", bodyReader)
 }
 
 // NewChangesetSolutionRequestWithBody generates requests for ChangesetSolution with any type of body
@@ -27692,7 +32974,7 @@ type ClientWithResponsesInterface interface {
 	GetTempTokenDBIDWithResponse(ctx context.Context, dbid string, params *GetTempTokenDBIDParams, reqEditors ...RequestEditorFn) (*GetTempTokenDBIDResponse, error)
 
 	// GenerateDocumentWithResponse request
-	GenerateDocumentWithResponse(ctx context.Context, templateId float32, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*GenerateDocumentResponse, error)
+	GenerateDocumentWithResponse(ctx context.Context, templateId int, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*GenerateDocumentResponse, error)
 
 	// DeleteFieldsWithBodyWithResponse request with any body
 	DeleteFieldsWithBodyWithResponse(ctx context.Context, params *DeleteFieldsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeleteFieldsResponse, error)
@@ -27788,15 +33070,11 @@ type ClientWithResponsesInterface interface {
 	// GetReportWithResponse request
 	GetReportWithResponse(ctx context.Context, reportId string, params *GetReportParams, reqEditors ...RequestEditorFn) (*GetReportResponse, error)
 
-	// RunReportWithBodyWithResponse request with any body
-	RunReportWithBodyWithResponse(ctx context.Context, reportId string, params *RunReportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RunReportResponse, error)
-
-	RunReportWithResponse(ctx context.Context, reportId string, params *RunReportParams, body RunReportJSONRequestBody, reqEditors ...RequestEditorFn) (*RunReportResponse, error)
+	// RunReportWithResponse request
+	RunReportWithResponse(ctx context.Context, reportId string, params *RunReportParams, reqEditors ...RequestEditorFn) (*RunReportResponse, error)
 
 	// CreateSolutionWithBodyWithResponse request with any body
 	CreateSolutionWithBodyWithResponse(ctx context.Context, params *CreateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSolutionResponse, error)
-
-	CreateSolutionWithResponse(ctx context.Context, params *CreateSolutionParams, body CreateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSolutionResponse, error)
 
 	// CreateSolutionFromRecordWithResponse request
 	CreateSolutionFromRecordWithResponse(ctx context.Context, params *CreateSolutionFromRecordParams, reqEditors ...RequestEditorFn) (*CreateSolutionFromRecordResponse, error)
@@ -27807,12 +33085,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateSolutionWithBodyWithResponse request with any body
 	UpdateSolutionWithBodyWithResponse(ctx context.Context, solutionId string, params *UpdateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSolutionResponse, error)
 
-	UpdateSolutionWithResponse(ctx context.Context, solutionId string, params *UpdateSolutionParams, body UpdateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSolutionResponse, error)
-
 	// ChangesetSolutionWithBodyWithResponse request with any body
 	ChangesetSolutionWithBodyWithResponse(ctx context.Context, solutionId string, params *ChangesetSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ChangesetSolutionResponse, error)
-
-	ChangesetSolutionWithResponse(ctx context.Context, solutionId string, params *ChangesetSolutionParams, body ChangesetSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*ChangesetSolutionResponse, error)
 
 	// ChangesetSolutionFromRecordWithResponse request
 	ChangesetSolutionFromRecordWithResponse(ctx context.Context, solutionId string, params *ChangesetSolutionFromRecordParams, reqEditors ...RequestEditorFn) (*ChangesetSolutionFromRecordResponse, error)
@@ -27905,7 +33179,8 @@ type PlatformAnalyticEventSummariesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
-		Data PlatformAnalyticEventSummariesData `json:"data"`
+		Data                 PlatformAnalyticEventSummariesData `json:"data"`
+		AdditionalProperties map[string]interface{}             `json:"-"`
 	}
 }
 
@@ -27959,42 +33234,50 @@ type RemoveTrusteesResponse struct {
 		Failure []RemoveTrusteesFailureItem `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []RemoveTrusteesSuccessItem `json:"success"`
+		Success              []RemoveTrusteesSuccessItem `json:"success"`
+		AdditionalProperties map[string]interface{}      `json:"-"`
 	}
 	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-		Failure []struct {
-			// Error The error message associated with the trustee that could not be updated.
-			Error *string `json:"error,omitempty"`
-
-			// Trustee Object used for operations to read, create, or update trustees in an app.
-			Trustee *struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type RemoveTrustees207FailureTrusteeType `json:"type"`
-			} `json:"trustee,omitempty"`
-		} `json:"failure"`
+		Failure []RemoveTrustees_207_Failure_Item `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type RemoveTrustees207SuccessType `json:"type"`
-		} `json:"success"`
+		Success              []RemoveTrustees_207_Success_Item `json:"success"`
+		AdditionalProperties map[string]interface{}            `json:"-"`
 	}
 }
 type RemoveTrustees207FailureTrusteeType string
+type RemoveTrustees_207_Failure_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 RemoveTrustees207FailureTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
+type RemoveTrustees_207_Failure_Item struct {
+	// Error The error message associated with the trustee that could not be updated.
+	Error *string `json:"error,omitempty"`
+
+	// Trustee Object used for operations to read, create, or update trustees in an app.
+	Trustee              *RemoveTrustees_207_Failure_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
 type RemoveTrustees207SuccessType string
+type RemoveTrustees_207_Success_Item struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 RemoveTrustees207SuccessType `json:"type"`
+	AdditionalProperties map[string]interface{}       `json:"-"`
+}
 
 // Status returns HTTPResponse.Status
 func (r RemoveTrusteesResponse) Status() string {
@@ -28042,48 +33325,56 @@ type UpdateTrusteesResponse struct {
 		Failure []UpdateTrusteesFailureItem `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []UpdateTrusteesSuccessItem `json:"success"`
+		Success              []UpdateTrusteesSuccessItem `json:"success"`
+		AdditionalProperties map[string]interface{}      `json:"-"`
 	}
 	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-		Failure []struct {
-			// Error The error message associated with the trustee that could not be updated.
-			Error *string `json:"error,omitempty"`
-
-			// Trustee Object used for operations to read, create, or update trustees in an app.
-			Trustee *struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-				OldRoleId int `json:"oldRoleId"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type UpdateTrustees207FailureTrusteeType `json:"type"`
-			} `json:"trustee,omitempty"`
-		} `json:"failure"`
+		Failure []UpdateTrustees_207_Failure_Item `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-			OldRoleId int `json:"oldRoleId"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type UpdateTrustees207SuccessType `json:"type"`
-		} `json:"success"`
+		Success              []UpdateTrustees_207_Success_Item `json:"success"`
+		AdditionalProperties map[string]interface{}            `json:"-"`
 	}
 }
 type UpdateTrustees207FailureTrusteeType string
+type UpdateTrustees_207_Failure_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+	OldRoleId int `json:"oldRoleId"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 UpdateTrustees207FailureTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
+type UpdateTrustees_207_Failure_Item struct {
+	// Error The error message associated with the trustee that could not be updated.
+	Error *string `json:"error,omitempty"`
+
+	// Trustee Object used for operations to read, create, or update trustees in an app.
+	Trustee              *UpdateTrustees_207_Failure_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}              `json:"-"`
+}
 type UpdateTrustees207SuccessType string
+type UpdateTrustees_207_Success_Item struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
+	OldRoleId int `json:"oldRoleId"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 UpdateTrustees207SuccessType `json:"type"`
+	AdditionalProperties map[string]interface{}       `json:"-"`
+}
 
 // Status returns HTTPResponse.Status
 func (r UpdateTrusteesResponse) Status() string {
@@ -28109,42 +33400,50 @@ type AddTrusteesResponse struct {
 		Failure []AddTrusteesFailureItem `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []AddTrusteesSuccessItem `json:"success"`
+		Success              []AddTrusteesSuccessItem `json:"success"`
+		AdditionalProperties map[string]interface{}   `json:"-"`
 	}
 	JSON207 *struct {
 		// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-		Failure []struct {
-			// Error The error message associated with the trustee that could not be updated.
-			Error *string `json:"error,omitempty"`
-
-			// Trustee Object used for operations to read, create, or update trustees in an app.
-			Trustee *struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type AddTrustees207FailureTrusteeType `json:"type"`
-			} `json:"trustee,omitempty"`
-		} `json:"failure"`
+		Failure []AddTrustees_207_Failure_Item `json:"failure"`
 
 		// Success A list of trustees that have been successfully updated.
-		Success []struct {
-			// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-			Id string `json:"id"`
-
-			// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-			RoleId int `json:"roleId"`
-
-			// Type The type of trustee being added. This can be a user, group, or email domain group.
-			Type AddTrustees207SuccessType `json:"type"`
-		} `json:"success"`
+		Success              []AddTrustees_207_Success_Item `json:"success"`
+		AdditionalProperties map[string]interface{}         `json:"-"`
 	}
 }
 type AddTrustees207FailureTrusteeType string
+type AddTrustees_207_Failure_Trustee struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 AddTrustees207FailureTrusteeType `json:"type"`
+	AdditionalProperties map[string]interface{}           `json:"-"`
+}
+type AddTrustees_207_Failure_Item struct {
+	// Error The error message associated with the trustee that could not be updated.
+	Error *string `json:"error,omitempty"`
+
+	// Trustee Object used for operations to read, create, or update trustees in an app.
+	Trustee              *AddTrustees_207_Failure_Trustee `json:"trustee,omitempty"`
+	AdditionalProperties map[string]interface{}           `json:"-"`
+}
 type AddTrustees207SuccessType string
+type AddTrustees_207_Success_Item struct {
+	// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
+	Id string `json:"id"`
+
+	// RoleId The ID of the role to be assigned or currently assigned to the trustee.
+	RoleId int `json:"roleId"`
+
+	// Type The type of trustee being added. This can be a user, group, or email domain group.
+	Type                 AddTrustees207SuccessType `json:"type"`
+	AdditionalProperties map[string]interface{}    `json:"-"`
+}
 
 // Status returns HTTPResponse.Status
 func (r AddTrusteesResponse) Status() string {
@@ -28175,7 +33474,7 @@ type CreateAppResponse struct {
 		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
 		DataClassification *string `json:"dataClassification,omitempty"`
 
-		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
 		DateFormat *string `json:"dateFormat,omitempty"`
 
 		// Description The description for the app. If this property is left out, the app description will be blank.
@@ -28196,7 +33495,7 @@ type CreateAppResponse struct {
 		// SecurityProperties Security properties of the application
 		SecurityProperties *CreateAppSecurityProperties `json:"securityProperties,omitempty"`
 
-		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
 		TimeZone *string `json:"timeZone,omitempty"`
 
 		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
@@ -28269,7 +33568,7 @@ type GetAppResponse struct {
 		// Description The description for the app. If this property is left out, the app description will be blank.
 		Description *string `json:"description,omitempty"`
 
-		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
 		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
 
 		// Id The unique identifier for this application.
@@ -28290,7 +33589,7 @@ type GetAppResponse struct {
 		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 		Updated *string `json:"updated,omitempty"`
 
-		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
 		Variables            *[]GetAppVariablesItem `json:"variables,omitempty"`
 		AdditionalProperties map[string]interface{} `json:"-"`
 	}
@@ -28331,7 +33630,7 @@ type UpdateAppResponse struct {
 		// Description The description for the app. If this property is left out, the app description will be blank.
 		Description *string `json:"description,omitempty"`
 
-		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+		// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
 		HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
 
 		// Id The unique identifier for this application.
@@ -28387,7 +33686,7 @@ type CopyAppResponse struct {
 		// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
 		DataClassification *string `json:"dataClassification,omitempty"`
 
-		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+		// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
 		DateFormat *string `json:"dateFormat,omitempty"`
 
 		// Description The description for the app
@@ -28400,15 +33699,15 @@ type CopyAppResponse struct {
 		Id *string `json:"id,omitempty"`
 
 		// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-		Name string `json:"name"`
+		Name *string `json:"name,omitempty"`
 
-		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+		// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
 		TimeZone *string `json:"timeZone,omitempty"`
 
 		// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 		Updated *string `json:"updated,omitempty"`
 
-		// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+		// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 		Variables            *[]CopyAppVariablesItem `json:"variables,omitempty"`
 		AdditionalProperties map[string]interface{}  `json:"-"`
 	}
@@ -28940,7 +34239,6 @@ func (r DeleteFileResponse) StatusCode() int {
 type DownloadFileResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29421,10 +34719,11 @@ func (r RunReportResponse) StatusCode() int {
 type CreateSolutionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
+	JSON200      *map[string]interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
-	JSONDefault  *interface{}
+	JSON403      *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29449,8 +34748,9 @@ type CreateSolutionFromRecordResponse struct {
 	JSON200      *interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29472,11 +34772,11 @@ func (r CreateSolutionFromRecordResponse) StatusCode() int {
 type ExportSolutionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29509,11 +34809,14 @@ type UpdateSolutionResponse struct {
 		SolutionId *string `json:"solutionId,omitempty"`
 
 		// Warnings Any warnings that occurred during solution update
-		Warnings *[]string `json:"warnings,omitempty"`
+		Warnings             *[]string              `json:"warnings,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
 	}
-	JSON400     *interface{}
-	JSON401     *interface{}
-	JSONDefault *interface{}
+	JSON400 *interface{}
+	JSON401 *interface{}
+	JSON403 *interface{}
+	JSON404 *interface{}
+	JSON5XX *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29535,11 +34838,12 @@ func (r UpdateSolutionResponse) StatusCode() int {
 type ChangesetSolutionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
+	JSON200      *map[string]interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29564,8 +34868,9 @@ type ChangesetSolutionFromRecordResponse struct {
 	JSON200      *interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29590,8 +34895,9 @@ type UpdateSolutionToRecordResponse struct {
 	JSON200      *interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29631,12 +34937,34 @@ type GetSolutionPublicResponse struct {
 		UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 
 		// Uuid The unique identifier (UUID) of the solution
-		Uuid *string `json:"uuid,omitempty"`
+		Uuid                 *string                `json:"uuid,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
 	}
-	JSON400 *interface{}
-	JSON401 *interface{}
-	JSON404 *interface{}
-	JSON500 *interface{}
+	JSON400 *struct {
+		Description          *string                `json:"description,omitempty"`
+		Message              *string                `json:"message,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+	JSON401 *struct {
+		Description          *string                `json:"description,omitempty"`
+		Message              *string                `json:"message,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+	JSON403 *struct {
+		Description          *string                `json:"description,omitempty"`
+		Message              *string                `json:"message,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+	JSON404 *struct {
+		Description          *string                `json:"description,omitempty"`
+		Message              *string                `json:"message,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+	JSON500 *struct {
+		Description          *string                `json:"description,omitempty"`
+		Message              *string                `json:"message,omitempty"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -29661,8 +34989,9 @@ type ExportSolutionToRecordResponse struct {
 	JSON200      *interface{}
 	JSON400      *interface{}
 	JSON401      *interface{}
+	JSON403      *interface{}
 	JSON404      *interface{}
-	JSONDefault  *interface{}
+	JSON5XX      *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29994,7 +35323,7 @@ type DeleteRelationshipResponse struct {
 	HTTPResponse *http.Response
 	JSON200      *struct {
 		// RelationshipId The relationship id.
-		RelationshipId       int                    `json:"relationshipId"`
+		RelationshipId       *int                   `json:"relationshipId,omitempty"`
 		AdditionalProperties map[string]interface{} `json:"-"`
 	}
 }
@@ -30592,7 +35921,7 @@ func (c *ClientWithResponses) GetTempTokenDBIDWithResponse(ctx context.Context, 
 }
 
 // GenerateDocumentWithResponse request returning *GenerateDocumentResponse
-func (c *ClientWithResponses) GenerateDocumentWithResponse(ctx context.Context, templateId float32, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*GenerateDocumentResponse, error) {
+func (c *ClientWithResponses) GenerateDocumentWithResponse(ctx context.Context, templateId int, params *GenerateDocumentParams, reqEditors ...RequestEditorFn) (*GenerateDocumentResponse, error) {
 	rsp, err := c.GenerateDocument(ctx, templateId, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -30910,17 +36239,9 @@ func (c *ClientWithResponses) GetReportWithResponse(ctx context.Context, reportI
 	return ParseGetReportResponse(rsp)
 }
 
-// RunReportWithBodyWithResponse request with arbitrary body returning *RunReportResponse
-func (c *ClientWithResponses) RunReportWithBodyWithResponse(ctx context.Context, reportId string, params *RunReportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RunReportResponse, error) {
-	rsp, err := c.RunReportWithBody(ctx, reportId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseRunReportResponse(rsp)
-}
-
-func (c *ClientWithResponses) RunReportWithResponse(ctx context.Context, reportId string, params *RunReportParams, body RunReportJSONRequestBody, reqEditors ...RequestEditorFn) (*RunReportResponse, error) {
-	rsp, err := c.RunReport(ctx, reportId, params, body, reqEditors...)
+// RunReportWithResponse request returning *RunReportResponse
+func (c *ClientWithResponses) RunReportWithResponse(ctx context.Context, reportId string, params *RunReportParams, reqEditors ...RequestEditorFn) (*RunReportResponse, error) {
+	rsp, err := c.RunReport(ctx, reportId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -30930,14 +36251,6 @@ func (c *ClientWithResponses) RunReportWithResponse(ctx context.Context, reportI
 // CreateSolutionWithBodyWithResponse request with arbitrary body returning *CreateSolutionResponse
 func (c *ClientWithResponses) CreateSolutionWithBodyWithResponse(ctx context.Context, params *CreateSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSolutionResponse, error) {
 	rsp, err := c.CreateSolutionWithBody(ctx, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateSolutionResponse(rsp)
-}
-
-func (c *ClientWithResponses) CreateSolutionWithResponse(ctx context.Context, params *CreateSolutionParams, body CreateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSolutionResponse, error) {
-	rsp, err := c.CreateSolution(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -30971,25 +36284,9 @@ func (c *ClientWithResponses) UpdateSolutionWithBodyWithResponse(ctx context.Con
 	return ParseUpdateSolutionResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateSolutionWithResponse(ctx context.Context, solutionId string, params *UpdateSolutionParams, body UpdateSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSolutionResponse, error) {
-	rsp, err := c.UpdateSolution(ctx, solutionId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateSolutionResponse(rsp)
-}
-
 // ChangesetSolutionWithBodyWithResponse request with arbitrary body returning *ChangesetSolutionResponse
 func (c *ClientWithResponses) ChangesetSolutionWithBodyWithResponse(ctx context.Context, solutionId string, params *ChangesetSolutionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ChangesetSolutionResponse, error) {
 	rsp, err := c.ChangesetSolutionWithBody(ctx, solutionId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseChangesetSolutionResponse(rsp)
-}
-
-func (c *ClientWithResponses) ChangesetSolutionWithResponse(ctx context.Context, solutionId string, params *ChangesetSolutionParams, body ChangesetSolutionJSONRequestBody, reqEditors ...RequestEditorFn) (*ChangesetSolutionResponse, error) {
-	rsp, err := c.ChangesetSolution(ctx, solutionId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -31290,7 +36587,8 @@ func ParsePlatformAnalyticEventSummariesResponse(rsp *http.Response) (*PlatformA
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data PlatformAnalyticEventSummariesData `json:"data"`
+			Data                 PlatformAnalyticEventSummariesData `json:"data"`
+			AdditionalProperties map[string]interface{}             `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31352,7 +36650,8 @@ func ParseRemoveTrusteesResponse(rsp *http.Response) (*RemoveTrusteesResponse, e
 			Failure []RemoveTrusteesFailureItem `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []RemoveTrusteesSuccessItem `json:"success"`
+			Success              []RemoveTrusteesSuccessItem `json:"success"`
+			AdditionalProperties map[string]interface{}      `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31362,34 +36661,11 @@ func ParseRemoveTrusteesResponse(rsp *http.Response) (*RemoveTrusteesResponse, e
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 207:
 		var dest struct {
 			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-			Failure []struct {
-				// Error The error message associated with the trustee that could not be updated.
-				Error *string `json:"error,omitempty"`
-
-				// Trustee Object used for operations to read, create, or update trustees in an app.
-				Trustee *struct {
-					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-					Id string `json:"id"`
-
-					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-					RoleId int `json:"roleId"`
-
-					// Type The type of trustee being added. This can be a user, group, or email domain group.
-					Type RemoveTrustees207FailureTrusteeType `json:"type"`
-				} `json:"trustee,omitempty"`
-			} `json:"failure"`
+			Failure []RemoveTrustees_207_Failure_Item `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type RemoveTrustees207SuccessType `json:"type"`
-			} `json:"success"`
+			Success              []RemoveTrustees_207_Success_Item `json:"success"`
+			AdditionalProperties map[string]interface{}            `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31447,7 +36723,8 @@ func ParseUpdateTrusteesResponse(rsp *http.Response) (*UpdateTrusteesResponse, e
 			Failure []UpdateTrusteesFailureItem `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []UpdateTrusteesSuccessItem `json:"success"`
+			Success              []UpdateTrusteesSuccessItem `json:"success"`
+			AdditionalProperties map[string]interface{}      `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31457,40 +36734,11 @@ func ParseUpdateTrusteesResponse(rsp *http.Response) (*UpdateTrusteesResponse, e
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 207:
 		var dest struct {
 			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-			Failure []struct {
-				// Error The error message associated with the trustee that could not be updated.
-				Error *string `json:"error,omitempty"`
-
-				// Trustee Object used for operations to read, create, or update trustees in an app.
-				Trustee *struct {
-					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-					Id string `json:"id"`
-
-					// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-					OldRoleId int `json:"oldRoleId"`
-
-					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-					RoleId int `json:"roleId"`
-
-					// Type The type of trustee being added. This can be a user, group, or email domain group.
-					Type UpdateTrustees207FailureTrusteeType `json:"type"`
-				} `json:"trustee,omitempty"`
-			} `json:"failure"`
+			Failure []UpdateTrustees_207_Failure_Item `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// OldRoleId The ID of the role to be changed for the trustee. This is used to identify the current role before updating it.
-				OldRoleId int `json:"oldRoleId"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type UpdateTrustees207SuccessType `json:"type"`
-			} `json:"success"`
+			Success              []UpdateTrustees_207_Success_Item `json:"success"`
+			AdditionalProperties map[string]interface{}            `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31522,7 +36770,8 @@ func ParseAddTrusteesResponse(rsp *http.Response) (*AddTrusteesResponse, error) 
 			Failure []AddTrusteesFailureItem `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []AddTrusteesSuccessItem `json:"success"`
+			Success              []AddTrusteesSuccessItem `json:"success"`
+			AdditionalProperties map[string]interface{}   `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31532,34 +36781,11 @@ func ParseAddTrusteesResponse(rsp *http.Response) (*AddTrusteesResponse, error) 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 207:
 		var dest struct {
 			// Failure A list of trustees that were not updated. This includes invalid IDs or IDs that could not be processed.
-			Failure []struct {
-				// Error The error message associated with the trustee that could not be updated.
-				Error *string `json:"error,omitempty"`
-
-				// Trustee Object used for operations to read, create, or update trustees in an app.
-				Trustee *struct {
-					// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-					Id string `json:"id"`
-
-					// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-					RoleId int `json:"roleId"`
-
-					// Type The type of trustee being added. This can be a user, group, or email domain group.
-					Type AddTrustees207FailureTrusteeType `json:"type"`
-				} `json:"trustee,omitempty"`
-			} `json:"failure"`
+			Failure []AddTrustees_207_Failure_Item `json:"failure"`
 
 			// Success A list of trustees that have been successfully updated.
-			Success []struct {
-				// Id The ID of the user, group, or email domain group to be added as a trustee. For users and groups, this is the user's or group's ID in Quickbase. For email domain groups, this is the email domain.
-				Id string `json:"id"`
-
-				// RoleId The ID of the role to be assigned or currently assigned to the trustee.
-				RoleId int `json:"roleId"`
-
-				// Type The type of trustee being added. This can be a user, group, or email domain group.
-				Type AddTrustees207SuccessType `json:"type"`
-			} `json:"success"`
+			Success              []AddTrustees_207_Success_Item `json:"success"`
+			AdditionalProperties map[string]interface{}         `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -31596,7 +36822,7 @@ func ParseCreateAppResponse(rsp *http.Response) (*CreateAppResponse, error) {
 			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
 			DataClassification *string `json:"dataClassification,omitempty"`
 
-			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
 			DateFormat *string `json:"dateFormat,omitempty"`
 
 			// Description The description for the app. If this property is left out, the app description will be blank.
@@ -31617,7 +36843,7 @@ func ParseCreateAppResponse(rsp *http.Response) (*CreateAppResponse, error) {
 			// SecurityProperties Security properties of the application
 			SecurityProperties *CreateAppSecurityProperties `json:"securityProperties,omitempty"`
 
-			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
 			TimeZone *string `json:"timeZone,omitempty"`
 
 			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
@@ -31698,7 +36924,7 @@ func ParseGetAppResponse(rsp *http.Response) (*GetAppResponse, error) {
 			// Description The description for the app. If this property is left out, the app description will be blank.
 			Description *string `json:"description,omitempty"`
 
-			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
 			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
 
 			// Id The unique identifier for this application.
@@ -31719,7 +36945,7 @@ func ParseGetAppResponse(rsp *http.Response) (*GetAppResponse, error) {
 			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 			Updated *string `json:"updated,omitempty"`
 
-			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
+			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
 			Variables            *[]GetAppVariablesItem `json:"variables,omitempty"`
 			AdditionalProperties map[string]interface{} `json:"-"`
 		}
@@ -31764,7 +36990,7 @@ func ParseUpdateAppResponse(rsp *http.Response) (*UpdateAppResponse, error) {
 			// Description The description for the app. If this property is left out, the app description will be blank.
 			Description *string `json:"description,omitempty"`
 
-			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/user-assistance/share_with_everyone_on_internet.html)
+			// HasEveryoneOnTheInternet Indicates whether app includes Everyone On The Internet access. See [Sharing apps with Everyone on the Internet (EOTI).](https://help.quickbase.com/docs/sharing-apps-publicly)
 			HasEveryoneOnTheInternet *bool `json:"hasEveryoneOnTheInternet,omitempty"`
 
 			// Id The unique identifier for this application.
@@ -31824,7 +37050,7 @@ func ParseCopyAppResponse(rsp *http.Response) (*CopyAppResponse, error) {
 			// DataClassification The Data Classification label assigned to the application. If Data Classification is not turned on, this will not be returned. If Data Classification is turned on, but application is not labeled, we return “None".  Data Classification labels can be added in the Admin Console by a Realm Administrator for Platform+ plans.
 			DataClassification *string `json:"dataClassification,omitempty"`
 
-			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/user-assistance/about_localizing_dates_numbers.html) to set the app's date format.
+			// DateFormat A description of the format used when displaying date values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the API Guide for how time values are returned in API calls. See [About Localizing Dates](https://help.quickbase.com/docs/how-to-localize-dates) to set the app's date format.
 			DateFormat *string `json:"dateFormat,omitempty"`
 
 			// Description The description for the app
@@ -31837,15 +37063,15 @@ func ParseCopyAppResponse(rsp *http.Response) (*CopyAppResponse, error) {
 			Id *string `json:"id,omitempty"`
 
 			// Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
-			Name string `json:"name"`
+			Name *string `json:"name,omitempty"`
 
-			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/user-assistance/application_local_timezone.html) to set the application's time zone.
+			// TimeZone A description of the time zone used when displaying time values in this app. Note that this is a browser-only parameter - see the [Field type details](../fieldInfo) page in the portal for how time values are returned in API calls. See [Set the Time Zone for Both the Application and the Account](https://help.quickbase.com/docs/set-the-time-zone-for-both-the-application-and-the-account) to set the application's time zone.
 			TimeZone *string `json:"timeZone,omitempty"`
 
 			// Updated The time and date the app was last updated, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 			Updated *string `json:"updated,omitempty"`
 
-			// Variables The app variables. See [About Application Variables](https://help.quickbase.com/user-assistance/variables.html)
+			// Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 			Variables            *[]CopyAppVariablesItem `json:"variables,omitempty"`
 			AdditionalProperties map[string]interface{}  `json:"-"`
 		}
@@ -32054,6 +37280,9 @@ func ParseGenerateDocumentResponse(rsp *http.Response) (*GenerateDocumentRespons
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case rsp.StatusCode == 200:
+		// Content-type (text/html) unsupported
 
 	}
 
@@ -32437,16 +37666,6 @@ func ParseDownloadFileResponse(rsp *http.Response) (*DownloadFileResponse, error
 	response := &DownloadFileResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
 	}
 
 	return response, nil
@@ -32977,7 +38196,7 @@ func ParseCreateSolutionResponse(rsp *http.Response) (*CreateSolutionResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -32997,12 +38216,19 @@ func ParseCreateSolutionResponse(rsp *http.Response) (*CreateSolutionResponse, e
 		}
 		response.JSON401 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON5XX = &dest
 
 	}
 
@@ -33044,6 +38270,13 @@ func ParseCreateSolutionFromRecordResponse(rsp *http.Response) (*CreateSolutionF
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33051,12 +38284,12 @@ func ParseCreateSolutionFromRecordResponse(rsp *http.Response) (*CreateSolutionF
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33077,13 +38310,6 @@ func ParseExportSolutionResponse(rsp *http.Response) (*ExportSolutionResponse, e
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33098,6 +38324,13 @@ func ParseExportSolutionResponse(rsp *http.Response) (*ExportSolutionResponse, e
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33105,12 +38338,12 @@ func ParseExportSolutionResponse(rsp *http.Response) (*ExportSolutionResponse, e
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33143,7 +38376,8 @@ func ParseUpdateSolutionResponse(rsp *http.Response) (*UpdateSolutionResponse, e
 			SolutionId *string `json:"solutionId,omitempty"`
 
 			// Warnings Any warnings that occurred during solution update
-			Warnings *[]string `json:"warnings,omitempty"`
+			Warnings             *[]string              `json:"warnings,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -33164,12 +38398,26 @@ func ParseUpdateSolutionResponse(rsp *http.Response) (*UpdateSolutionResponse, e
 		}
 		response.JSON401 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON5XX = &dest
 
 	}
 
@@ -33191,7 +38439,7 @@ func ParseChangesetSolutionResponse(rsp *http.Response) (*ChangesetSolutionRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33211,6 +38459,13 @@ func ParseChangesetSolutionResponse(rsp *http.Response) (*ChangesetSolutionRespo
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33218,12 +38473,12 @@ func ParseChangesetSolutionResponse(rsp *http.Response) (*ChangesetSolutionRespo
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33265,6 +38520,13 @@ func ParseChangesetSolutionFromRecordResponse(rsp *http.Response) (*ChangesetSol
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33272,12 +38534,12 @@ func ParseChangesetSolutionFromRecordResponse(rsp *http.Response) (*ChangesetSol
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33319,6 +38581,13 @@ func ParseUpdateSolutionToRecordResponse(rsp *http.Response) (*UpdateSolutionToR
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33326,12 +38595,12 @@ func ParseUpdateSolutionToRecordResponse(rsp *http.Response) (*UpdateSolutionToR
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33371,7 +38640,8 @@ func ParseGetSolutionPublicResponse(rsp *http.Response) (*GetSolutionPublicRespo
 			UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 
 			// Uuid The unique identifier (UUID) of the solution
-			Uuid *string `json:"uuid,omitempty"`
+			Uuid                 *string                `json:"uuid,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -33379,28 +38649,55 @@ func ParseGetSolutionPublicResponse(rsp *http.Response) (*GetSolutionPublicRespo
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest interface{}
+		var dest struct {
+			Description          *string                `json:"description,omitempty"`
+			Message              *string                `json:"message,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest interface{}
+		var dest struct {
+			Description          *string                `json:"description,omitempty"`
+			Message              *string                `json:"message,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Description          *string                `json:"description,omitempty"`
+			Message              *string                `json:"message,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest interface{}
+		var dest struct {
+			Description          *string                `json:"description,omitempty"`
+			Message              *string                `json:"message,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest interface{}
+		var dest struct {
+			Description          *string                `json:"description,omitempty"`
+			Message              *string                `json:"message,omitempty"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33446,6 +38743,13 @@ func ParseExportSolutionToRecordResponse(rsp *http.Response) (*ExportSolutionToR
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -33453,12 +38757,12 @@ func ParseExportSolutionToRecordResponse(rsp *http.Response) (*ExportSolutionToR
 		}
 		response.JSON404 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode/100 == 5:
 		var dest interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.JSON5XX = &dest
 
 	}
 
@@ -33811,7 +39115,7 @@ func ParseDeleteRelationshipResponse(rsp *http.Response) (*DeleteRelationshipRes
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
 			// RelationshipId The relationship id.
-			RelationshipId       int                    `json:"relationshipId"`
+			RelationshipId       *int                   `json:"relationshipId,omitempty"`
 			AdditionalProperties map[string]interface{} `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {

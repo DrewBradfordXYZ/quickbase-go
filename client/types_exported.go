@@ -51,13 +51,11 @@ type AddManagersToGroupJSONRequestBody = generated.AddManagersToGroupJSONRequest
 type AddMembersToGroupJSONRequestBody = generated.AddMembersToGroupJSONRequestBody
 type AddSubgroupsToGroupJSONRequestBody = generated.AddSubgroupsToGroupJSONRequestBody
 type AuditJSONRequestBody = generated.AuditJSONRequestBody
-type ChangesetSolutionJSONRequestBody = generated.ChangesetSolutionJSONRequestBody
 type CloneUserTokenJSONRequestBody = generated.CloneUserTokenJSONRequestBody
 type CopyAppJSONRequestBody = generated.CopyAppJSONRequestBody
 type CreateAppJSONRequestBody = generated.CreateAppJSONRequestBody
 type CreateFieldJSONRequestBody = generated.CreateFieldJSONRequestBody
 type CreateRelationshipJSONRequestBody = generated.CreateRelationshipJSONRequestBody
-type CreateSolutionJSONRequestBody = generated.CreateSolutionJSONRequestBody
 type CreateTableJSONRequestBody = generated.CreateTableJSONRequestBody
 type DeleteAppJSONRequestBody = generated.DeleteAppJSONRequestBody
 type DeleteFieldsJSONRequestBody = generated.DeleteFieldsJSONRequestBody
@@ -70,13 +68,11 @@ type RemoveManagersFromGroupJSONRequestBody = generated.RemoveManagersFromGroupJ
 type RemoveMembersFromGroupJSONRequestBody = generated.RemoveMembersFromGroupJSONRequestBody
 type RemoveSubgroupsFromGroupJSONRequestBody = generated.RemoveSubgroupsFromGroupJSONRequestBody
 type RunFormulaJSONRequestBody = generated.RunFormulaJSONRequestBody
-type RunReportJSONRequestBody = generated.RunReportJSONRequestBody
 type TransferUserTokenJSONRequestBody = generated.TransferUserTokenJSONRequestBody
 type UndenyUsersJSONRequestBody = generated.UndenyUsersJSONRequestBody
 type UpdateAppJSONRequestBody = generated.UpdateAppJSONRequestBody
 type UpdateFieldJSONRequestBody = generated.UpdateFieldJSONRequestBody
 type UpdateRelationshipJSONRequestBody = generated.UpdateRelationshipJSONRequestBody
-type UpdateSolutionJSONRequestBody = generated.UpdateSolutionJSONRequestBody
 type UpdateTableJSONRequestBody = generated.UpdateTableJSONRequestBody
 
 // =============================================================================

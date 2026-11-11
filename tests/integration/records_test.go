@@ -35,7 +35,7 @@ func TestUpsertRecords(t *testing.T) {
 
 		resp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &data,
+			Data:           data,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID, testCtx.NumberFieldID},
 		})
 		if err != nil {
@@ -66,7 +66,7 @@ func TestUpsertRecords(t *testing.T) {
 		}
 		createResp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &createData,
+			Data:           createData,
 			FieldsToReturn: &[]int{3},
 		})
 		if err != nil {
@@ -89,7 +89,7 @@ func TestUpsertRecords(t *testing.T) {
 		}
 		updateResp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &updateData,
+			Data:           updateData,
 			MergeFieldId:   &mergeFieldID,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID, testCtx.NumberFieldID},
 		})
@@ -248,7 +248,7 @@ func insertTestRecords(t *testing.T, ctx context.Context, n int) {
 
 	_, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 		To:   testCtx.TableID,
-		Data: &data,
+		Data: data,
 	})
 	if err != nil {
 		t.Fatalf("Failed to insert test records: %v", err)

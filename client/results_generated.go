@@ -275,12 +275,12 @@ func (r *CopyAppResult) Id() string {
 	return *r.resp.JSON200.Id
 }
 
-// Name returns the Name field value.
+// Name returns the Name field value, or zero value if nil.
 func (r *CopyAppResult) Name() string {
-	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
 		return ""
 	}
-	return r.resp.JSON200.Name
+	return *r.resp.JSON200.Name
 }
 
 // TimeZone returns the TimeZone field value, or zero value if nil.
@@ -956,12 +956,12 @@ func (r *DeleteRelationshipResult) Raw() *generated.DeleteRelationshipResponse {
 	return r.resp
 }
 
-// RelationshipId returns the RelationshipId field value.
+// RelationshipId returns the RelationshipId field value, or zero value if nil.
 func (r *DeleteRelationshipResult) RelationshipId() int {
-	if r == nil || r.resp == nil || r.resp.JSON200 == nil {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.RelationshipId == nil {
 		return 0
 	}
-	return r.resp.JSON200.RelationshipId
+	return *r.resp.JSON200.RelationshipId
 }
 
 
@@ -1042,21 +1042,6 @@ func (r *DenyUsersResult) Raw() *generated.DenyUsersResponse {
 
 
 
-// DownloadFileResult wraps DownloadFileResponse with convenience methods.
-type DownloadFileResult struct {
-	resp *generated.DownloadFileResponse
-}
-
-// Raw returns the underlying generated response.
-func (r *DownloadFileResult) Raw() *generated.DownloadFileResponse {
-	if r == nil {
-		return nil
-	}
-	return r.resp
-}
-
-
-
 // ExchangeSsoTokenResult wraps ExchangeSsoTokenResponse with convenience methods.
 type ExchangeSsoTokenResult struct {
 	resp *generated.ExchangeSsoTokenResponse
@@ -1092,21 +1077,6 @@ func (r *ExchangeSsoTokenResult) TokenType() string {
 		return ""
 	}
 	return string(*r.resp.JSON200.TokenType)
-}
-
-
-
-// ExportSolutionResult wraps ExportSolutionResponse with convenience methods.
-type ExportSolutionResult struct {
-	resp *generated.ExportSolutionResponse
-}
-
-// Raw returns the underlying generated response.
-func (r *ExportSolutionResult) Raw() *generated.ExportSolutionResponse {
-	if r == nil {
-		return nil
-	}
-	return r.resp
 }
 
 
@@ -3389,6 +3359,138 @@ type AuditEventsItem_PayloadChanges_Changes struct {
 	*generated.AuditEventsItem_PayloadChanges_Changes
 }
 
+// Current returns the Current field as wrapped types, or nil if not set.
+func (r *AuditEventsItem_PayloadChanges_Changes) Current() []*AuditEventsItem_PayloadChanges_Changes_Current_Item {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes == nil {
+		return nil
+	}
+	if r.AuditEventsItem_PayloadChanges_Changes.Current == nil {
+		return nil
+	}
+	items := make([]*AuditEventsItem_PayloadChanges_Changes_Current_Item, len(*r.AuditEventsItem_PayloadChanges_Changes.Current))
+	for i := range *r.AuditEventsItem_PayloadChanges_Changes.Current {
+		items[i] = &AuditEventsItem_PayloadChanges_Changes_Current_Item{&(*r.AuditEventsItem_PayloadChanges_Changes.Current)[i]}
+	}
+	return items
+}
+
+// Fields returns the Fields field as wrapped types, or nil if not set.
+func (r *AuditEventsItem_PayloadChanges_Changes) Fields() []*AuditEventsItem_PayloadChanges_Changes_Fields_Item {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes == nil {
+		return nil
+	}
+	items := make([]*AuditEventsItem_PayloadChanges_Changes_Fields_Item, len(r.AuditEventsItem_PayloadChanges_Changes.Fields))
+	for i := range r.AuditEventsItem_PayloadChanges_Changes.Fields {
+		items[i] = &AuditEventsItem_PayloadChanges_Changes_Fields_Item{&r.AuditEventsItem_PayloadChanges_Changes.Fields[i]}
+	}
+	return items
+}
+
+// Previous returns the Previous field as wrapped types, or nil if not set.
+func (r *AuditEventsItem_PayloadChanges_Changes) Previous() []*AuditEventsItem_PayloadChanges_Changes_Previous_Item {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes == nil {
+		return nil
+	}
+	if r.AuditEventsItem_PayloadChanges_Changes.Previous == nil {
+		return nil
+	}
+	items := make([]*AuditEventsItem_PayloadChanges_Changes_Previous_Item, len(*r.AuditEventsItem_PayloadChanges_Changes.Previous))
+	for i := range *r.AuditEventsItem_PayloadChanges_Changes.Previous {
+		items[i] = &AuditEventsItem_PayloadChanges_Changes_Previous_Item{&(*r.AuditEventsItem_PayloadChanges_Changes.Previous)[i]}
+	}
+	return items
+}
+
+
+// AuditEventsItem_PayloadChanges_Changes_Current_Item wraps AuditEventsItem_PayloadChanges_Changes_Current_Item with convenience methods.
+type AuditEventsItem_PayloadChanges_Changes_Current_Item struct {
+	*generated.AuditEventsItem_PayloadChanges_Changes_Current_Item
+}
+
+// Id returns the Id field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Current_Item) Id() int {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Current_Item == nil {
+		return 0
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Current_Item.Id
+}
+
+// PrintValue returns the PrintValue field value, or zero value if nil.
+func (r *AuditEventsItem_PayloadChanges_Changes_Current_Item) PrintValue() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Current_Item == nil || r.AuditEventsItem_PayloadChanges_Changes_Current_Item.PrintValue == nil {
+		return ""
+	}
+	return *r.AuditEventsItem_PayloadChanges_Changes_Current_Item.PrintValue
+}
+
+// Value returns the Value field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Current_Item) Value() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Current_Item == nil {
+		return ""
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Current_Item.Value
+}
+
+
+// AuditEventsItem_PayloadChanges_Changes_Fields_Item wraps AuditEventsItem_PayloadChanges_Changes_Fields_Item with convenience methods.
+type AuditEventsItem_PayloadChanges_Changes_Fields_Item struct {
+	*generated.AuditEventsItem_PayloadChanges_Changes_Fields_Item
+}
+
+// Id returns the Id field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Fields_Item) Id() int {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Fields_Item == nil {
+		return 0
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Fields_Item.Id
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *AuditEventsItem_PayloadChanges_Changes_Fields_Item) Name() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Fields_Item == nil || r.AuditEventsItem_PayloadChanges_Changes_Fields_Item.Name == nil {
+		return ""
+	}
+	return *r.AuditEventsItem_PayloadChanges_Changes_Fields_Item.Name
+}
+
+// Type returns the Type field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Fields_Item) Type() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Fields_Item == nil {
+		return ""
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Fields_Item.Type
+}
+
+
+// AuditEventsItem_PayloadChanges_Changes_Previous_Item wraps AuditEventsItem_PayloadChanges_Changes_Previous_Item with convenience methods.
+type AuditEventsItem_PayloadChanges_Changes_Previous_Item struct {
+	*generated.AuditEventsItem_PayloadChanges_Changes_Previous_Item
+}
+
+// Id returns the Id field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Previous_Item) Id() int {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Previous_Item == nil {
+		return 0
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Previous_Item.Id
+}
+
+// PrintValue returns the PrintValue field value, or zero value if nil.
+func (r *AuditEventsItem_PayloadChanges_Changes_Previous_Item) PrintValue() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Previous_Item == nil || r.AuditEventsItem_PayloadChanges_Changes_Previous_Item.PrintValue == nil {
+		return ""
+	}
+	return *r.AuditEventsItem_PayloadChanges_Changes_Previous_Item.PrintValue
+}
+
+// Value returns the Value field value.
+func (r *AuditEventsItem_PayloadChanges_Changes_Previous_Item) Value() string {
+	if r == nil || r.AuditEventsItem_PayloadChanges_Changes_Previous_Item == nil {
+		return ""
+	}
+	return r.AuditEventsItem_PayloadChanges_Changes_Previous_Item.Value
+}
+
 
 // CreateAppMemoryInfo wraps CreateAppMemoryInfo with convenience methods.
 type CreateAppMemoryInfo struct {
@@ -5116,6 +5218,20 @@ func (r *GetFieldUsageItemUsage_CustomEmails) Count() int {
 }
 
 
+// GetFieldUsageItemUsage_Dashboards wraps GetFieldUsageItemUsage_Dashboards with convenience methods.
+type GetFieldUsageItemUsage_Dashboards struct {
+	*generated.GetFieldUsageItemUsage_Dashboards
+}
+
+// Count returns the Count field value.
+func (r *GetFieldUsageItemUsage_Dashboards) Count() int {
+	if r == nil || r.GetFieldUsageItemUsage_Dashboards == nil {
+		return 0
+	}
+	return r.GetFieldUsageItemUsage_Dashboards.Count
+}
+
+
 // GetFieldUsageItemUsage_DefaultReports wraps GetFieldUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldUsageItemUsage_DefaultReports
@@ -5281,6 +5397,34 @@ func (r *GetFieldUsageItemUsage_Roles) Count() int {
 		return 0
 	}
 	return r.GetFieldUsageItemUsage_Roles.Count
+}
+
+
+// GetFieldUsageItemUsage_TableImports wraps GetFieldUsageItemUsage_TableImports with convenience methods.
+type GetFieldUsageItemUsage_TableImports struct {
+	*generated.GetFieldUsageItemUsage_TableImports
+}
+
+// Count returns the Count field value.
+func (r *GetFieldUsageItemUsage_TableImports) Count() int {
+	if r == nil || r.GetFieldUsageItemUsage_TableImports == nil {
+		return 0
+	}
+	return r.GetFieldUsageItemUsage_TableImports.Count
+}
+
+
+// GetFieldUsageItemUsage_TableRules wraps GetFieldUsageItemUsage_TableRules with convenience methods.
+type GetFieldUsageItemUsage_TableRules struct {
+	*generated.GetFieldUsageItemUsage_TableRules
+}
+
+// Count returns the Count field value.
+func (r *GetFieldUsageItemUsage_TableRules) Count() int {
+	if r == nil || r.GetFieldUsageItemUsage_TableRules == nil {
+		return 0
+	}
+	return r.GetFieldUsageItemUsage_TableRules.Count
 }
 
 
@@ -6073,6 +6217,20 @@ func (r *GetFieldsUsageItemUsage_CustomEmails) Count() int {
 }
 
 
+// GetFieldsUsageItemUsage_Dashboards wraps GetFieldsUsageItemUsage_Dashboards with convenience methods.
+type GetFieldsUsageItemUsage_Dashboards struct {
+	*generated.GetFieldsUsageItemUsage_Dashboards
+}
+
+// Count returns the Count field value.
+func (r *GetFieldsUsageItemUsage_Dashboards) Count() int {
+	if r == nil || r.GetFieldsUsageItemUsage_Dashboards == nil {
+		return 0
+	}
+	return r.GetFieldsUsageItemUsage_Dashboards.Count
+}
+
+
 // GetFieldsUsageItemUsage_DefaultReports wraps GetFieldsUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldsUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldsUsageItemUsage_DefaultReports
@@ -6238,6 +6396,34 @@ func (r *GetFieldsUsageItemUsage_Roles) Count() int {
 		return 0
 	}
 	return r.GetFieldsUsageItemUsage_Roles.Count
+}
+
+
+// GetFieldsUsageItemUsage_TableImports wraps GetFieldsUsageItemUsage_TableImports with convenience methods.
+type GetFieldsUsageItemUsage_TableImports struct {
+	*generated.GetFieldsUsageItemUsage_TableImports
+}
+
+// Count returns the Count field value.
+func (r *GetFieldsUsageItemUsage_TableImports) Count() int {
+	if r == nil || r.GetFieldsUsageItemUsage_TableImports == nil {
+		return 0
+	}
+	return r.GetFieldsUsageItemUsage_TableImports.Count
+}
+
+
+// GetFieldsUsageItemUsage_TableRules wraps GetFieldsUsageItemUsage_TableRules with convenience methods.
+type GetFieldsUsageItemUsage_TableRules struct {
+	*generated.GetFieldsUsageItemUsage_TableRules
+}
+
+// Count returns the Count field value.
+func (r *GetFieldsUsageItemUsage_TableRules) Count() int {
+	if r == nil || r.GetFieldsUsageItemUsage_TableRules == nil {
+		return 0
+	}
+	return r.GetFieldsUsageItemUsage_TableRules.Count
 }
 
 
@@ -7472,6 +7658,212 @@ func (r *GetUsersMetadata) NextPageToken() string {
 // PlatformAnalyticEventSummariesData wraps PlatformAnalyticEventSummariesData with convenience methods.
 type PlatformAnalyticEventSummariesData struct {
 	*generated.PlatformAnalyticEventSummariesData
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries wraps PlatformAnalyticEventSummariesData_EventsSummaries with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries
+}
+
+// AccountId returns the AccountId field value.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries) AccountId() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries == nil {
+		return ""
+	}
+	return r.PlatformAnalyticEventSummariesData_EventsSummaries.AccountId
+}
+
+// Metadata returns the Metadata field as a wrapped type, or nil if not set.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries) Metadata() *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries.Metadata == nil {
+		return nil
+	}
+	return &PlatformAnalyticEventSummariesData_EventsSummaries_Metadata{r.PlatformAnalyticEventSummariesData_EventsSummaries.Metadata}
+}
+
+// Results returns the Results field as wrapped types, or nil if not set.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries) Results() []*PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries == nil {
+		return nil
+	}
+	items := make([]*PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item, len(r.PlatformAnalyticEventSummariesData_EventsSummaries.Results))
+	for i := range r.PlatformAnalyticEventSummariesData_EventsSummaries.Results {
+		items[i] = &PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item{&r.PlatformAnalyticEventSummariesData_EventsSummaries.Results[i]}
+	}
+	return items
+}
+
+// Totals returns the Totals field as a wrapped type, or nil if not set.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries) Totals() *PlatformAnalyticEventSummariesData_EventsSummaries_Totals {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries.Totals == nil {
+		return nil
+	}
+	return &PlatformAnalyticEventSummariesData_EventsSummaries_Totals{r.PlatformAnalyticEventSummariesData_EventsSummaries.Totals}
+}
+
+// Where returns the Where field as wrapped types, or nil if not set.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries) Where() []*PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries == nil {
+		return nil
+	}
+	items := make([]*PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item, len(r.PlatformAnalyticEventSummariesData_EventsSummaries.Where))
+	for i := range r.PlatformAnalyticEventSummariesData_EventsSummaries.Where {
+		items[i] = &PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item{&r.PlatformAnalyticEventSummariesData_EventsSummaries.Where[i]}
+	}
+	return items
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Metadata wraps PlatformAnalyticEventSummariesData_EventsSummaries_Metadata with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Metadata struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Metadata
+}
+
+// NextToken returns the NextToken field value.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) NextToken() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Metadata == nil {
+		return ""
+	}
+	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Metadata.NextToken
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item
+}
+
+// BillingCategory returns the BillingCategory field value as a string, or empty string if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) BillingCategory() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.BillingCategory == nil {
+		return ""
+	}
+	return string(*r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.BillingCategory)
+}
+
+// Count returns the Count field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) Count() int {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.Count == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.Count
+}
+
+// EventType returns the EventType field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item) EventType() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.EventType == nil {
+		return ""
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.EventType
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item
+}
+
+// EventTypes returns the EventTypes field as wrapped types, or nil if not set.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) EventTypes() []*PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item == nil {
+		return nil
+	}
+	items := make([]*PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item, len(r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.EventTypes))
+	for i := range r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.EventTypes {
+		items[i] = &PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item{&r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.EventTypes[i]}
+	}
+	return items
+}
+
+// Id returns the Id field value.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) Id() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item == nil {
+		return ""
+	}
+	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.Id
+}
+
+// Name returns the Name field value.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) Name() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item == nil {
+		return ""
+	}
+	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.Name
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals
+}
+
+// All returns the All field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) All() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.All == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.All
+}
+
+// Integration returns the Integration field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Integration() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.Integration == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.Integration
+}
+
+// User returns the User field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) User() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.User == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.User
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Totals wraps PlatformAnalyticEventSummariesData_EventsSummaries_Totals with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Totals struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Totals
+}
+
+// All returns the All field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) All() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.All == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.All
+}
+
+// Integration returns the Integration field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Integration() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.Integration == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.Integration
+}
+
+// User returns the User field value, or zero value if nil.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) User() float32 {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.User == nil {
+		return 0
+	}
+	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.User
+}
+
+
+// PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item with convenience methods.
+type PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item struct {
+	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item
+}
+
+// Id returns the Id field value.
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) Id() string {
+	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item == nil {
+		return ""
+	}
+	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item.Id
 }
 
 

@@ -697,9 +697,6 @@ type (
 	// UpdateRelationshipBody is the request body for UpdateRelationship
 	UpdateRelationshipBody = generated.UpdateRelationshipJSONRequestBody
 
-	// RunReportBody is the request body for RunReport
-	RunReportBody = generated.RunReportJSONRequestBody
-
 	// RunFormulaBody is the request body for RunFormula
 	RunFormulaBody = generated.RunFormulaJSONRequestBody
 

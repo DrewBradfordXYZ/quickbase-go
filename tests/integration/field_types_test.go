@@ -32,7 +32,7 @@ func TestDateFields(t *testing.T) {
 
 		resp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &data,
+			Data:           data,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID, testCtx.DateFieldID},
 		})
 		if err != nil {
@@ -96,7 +96,7 @@ func TestDateFields(t *testing.T) {
 
 		_, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:   testCtx.TableID,
-			Data: &data,
+			Data: data,
 		})
 		if err != nil {
 			t.Fatalf("Upsert failed: %v", err)
@@ -146,7 +146,7 @@ func TestCheckboxFields(t *testing.T) {
 
 		resp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &data,
+			Data:           data,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID, testCtx.CheckboxFieldID},
 		})
 		if err != nil {
@@ -198,7 +198,7 @@ func TestCheckboxFields(t *testing.T) {
 
 		_, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:   testCtx.TableID,
-			Data: &data,
+			Data: data,
 		})
 		if err != nil {
 			t.Fatalf("Upsert failed: %v", err)
@@ -245,7 +245,7 @@ func TestSpecialCharacters(t *testing.T) {
 
 		resp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &data,
+			Data:           data,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID},
 		})
 		if err != nil {
@@ -301,7 +301,7 @@ func TestNullValues(t *testing.T) {
 
 		resp, err := client.API().UpsertWithResponse(ctx, generated.UpsertJSONRequestBody{
 			To:             testCtx.TableID,
-			Data:           &data,
+			Data:           data,
 			FieldsToReturn: &[]int{3, testCtx.TextFieldID, testCtx.NumberFieldID, testCtx.DateFieldID, testCtx.CheckboxFieldID},
 		})
 		if err != nil {
