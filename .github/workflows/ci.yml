@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: spec/package-lock.json
+      - run: npm ci
+        working-directory: spec
+
+      # Regenerating from the pinned spec must reproduce the committed code
+      # (make generate pins oapi-codegen; generate-builders is deterministic).
+      - name: Generated code matches the spec
+        run: |
+          make generate
+          git diff --exit-code
+          git -C spec diff --exit-code
+
+      - run: go vet ./...
+
+      # Integration tests skip without QB_REALM and QB_USER_TOKEN
+      - run: go test ./...
