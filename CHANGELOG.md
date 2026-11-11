@@ -21,10 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Generated from QuickBase's current spec.** The spec now builds from the OpenAPI 3 that QuickBase's API portal publishes (`spec/tools/fetch-upstream.ts`) instead of a December 2025 Swagger 2.0 copy. Where they differ, the current spec is followed:
-  - **BREAKING**: fields QuickBase marks required became values instead of pointers: app variables' `Name` and `Value` (`CreateApp`, `UpdateApp`, `CopyApp`, `GetApp` variables), `TransferUserToken`'s `From`, `To` and `Id`, and upsert's `Data` (`Data: data`, not `Data: &data`).
+- **Generated from QuickBase's current spec.** The spec now builds from the OpenAPI 3 that QuickBase's API portal publishes (`spec/tools/fetch-upstream.ts`) instead of a December 2025 Swagger 2.0 copy. `apidiff` (golang.org/x/exp) counts 198 incompatible changes against the previous commit; by kind:
+  - **BREAKING** (18): fields QuickBase marks required became values instead of pointers: app variables' `Name` and `Value` (`CreateApp`, `UpdateApp`, `CopyApp`, `GetApp`), `TransferUserToken`'s `From`, `To` and `Id`, and upsert's `Data` (`Data: data`, not `Data: &data`).
+  - **BREAKING** (46 + 15): inline struct types became named types (every object now keeps unlisted keys, which needs a named type with `AdditionalProperties`): field-usage counts (`Dashboards`, `TableImports`, `TableRules`), trustee items, analytics summaries, request bodies such as `AddTrusteesJSONRequestBody`, and others. Reading fields is unchanged; code that writes these as struct literals must use the named type.
+  - **BREAKING** (40): types that now carry `AdditionalProperties` are no longer comparable with `==` (for example `AddTrusteesFailureItem`).
+  - **BREAKING** (8): `GenerateDocument`'s `templateId` and `recordId` are `int`, not `float32`.
   - **BREAKING**: audit payload changes (`Current`, `Previous`, `Fields`) are typed items instead of `[]interface{}`.
   - **BREAKING**: `RunReport` takes no request body (the API never read one): `RunReportBody`, `RunReportJSONRequestBody` and `RunReportWithBody` are gone; use the builder.
+  - Solution responses are typed more closely: `CreateSolutionResponse.JSON200` and `ChangesetSolutionResponse.JSON200` are `*map[string]interface{}`, and `GetSolutionPublicResponse`'s error responses are error structs.
   - `GenerateDocumentParams.Accept` is a `*string` (the spec no longer lists its values).
 - **BREAKING**: Report `Properties` (`GetTableReports()`, `GetReport()`) changed from `*map[string]interface{}` to a struct with typed fields for table, chart, summary and map report settings (`ColumnProperties`, `ChartType`, `Summarize`, ...). Keys not listed are kept in `AdditionalProperties`. Replace `(*props)["columnProperties"]` with `props.ColumnProperties`, and other keys with `props.AdditionalProperties["key"]`.
 - `Query.Fields`, `Query.SortBy` and `Query.GroupBy` on reports are now typed fields, so they no longer appear in `Query.AdditionalProperties`.
