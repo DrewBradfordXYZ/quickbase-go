@@ -4760,6 +4760,14 @@ func (r *GetFieldProperties) SummaryFunction() string {
 	return string(*r.GetFieldProperties.SummaryFunction)
 }
 
+// SummaryQuery returns the SummaryQuery field value, or zero value if nil.
+func (r *GetFieldProperties) SummaryQuery() string {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.SummaryQuery == nil {
+		return ""
+	}
+	return *r.GetFieldProperties.SummaryQuery
+}
+
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.
 func (r *GetFieldProperties) SummaryReferenceFieldId() int64 {
 	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.SummaryReferenceFieldId == nil {
@@ -5623,6 +5631,14 @@ func (r *GetFieldsItemProperties) SummaryFunction() string {
 		return ""
 	}
 	return string(*r.GetFieldsItemProperties.SummaryFunction)
+}
+
+// SummaryQuery returns the SummaryQuery field value, or zero value if nil.
+func (r *GetFieldsItemProperties) SummaryQuery() string {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.SummaryQuery == nil {
+		return ""
+	}
+	return *r.GetFieldsItemProperties.SummaryQuery
 }
 
 // SummaryReferenceFieldId returns the SummaryReferenceFieldId field value, or zero value if nil.

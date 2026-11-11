@@ -1310,6 +1310,9 @@ type GetFieldProperties struct {
 	// SummaryFunction The summary accumulation function type.
 	SummaryFunction *GetFieldPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
 
+	// SummaryQuery The summary field's filter (matching criteria) in Quickbase query language, when it has one.
+	SummaryQuery *string `json:"summaryQuery,omitempty"`
+
 	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
 	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
 
@@ -1798,6 +1801,9 @@ type GetFieldsItemProperties struct {
 
 	// SummaryFunction The summary accumulation function type.
 	SummaryFunction *GetFieldsItemPropertiesSummaryFunction `json:"summaryFunction,omitempty"`
+
+	// SummaryQuery The summary field's filter (matching criteria) in Quickbase query language, when it has one.
+	SummaryQuery *string `json:"summaryQuery,omitempty"`
 
 	// SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
 	SummaryReferenceFieldId *int64 `json:"summaryReferenceFieldId,omitempty"`
@@ -9222,6 +9228,14 @@ func (a *GetFieldProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "summaryFunction")
 	}
 
+	if raw, found := object["summaryQuery"]; found {
+		err = json.Unmarshal(raw, &a.SummaryQuery)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryQuery': %w", err)
+		}
+		delete(object, "summaryQuery")
+	}
+
 	if raw, found := object["summaryReferenceFieldId"]; found {
 		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
 		if err != nil {
@@ -9761,6 +9775,13 @@ func (a GetFieldProperties) MarshalJSON() ([]byte, error) {
 		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
+		}
+	}
+
+	if a.SummaryQuery != nil {
+		object["summaryQuery"], err = json.Marshal(a.SummaryQuery)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryQuery': %w", err)
 		}
 	}
 
@@ -12015,6 +12036,14 @@ func (a *GetFieldsItemProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "summaryFunction")
 	}
 
+	if raw, found := object["summaryQuery"]; found {
+		err = json.Unmarshal(raw, &a.SummaryQuery)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryQuery': %w", err)
+		}
+		delete(object, "summaryQuery")
+	}
+
 	if raw, found := object["summaryReferenceFieldId"]; found {
 		err = json.Unmarshal(raw, &a.SummaryReferenceFieldId)
 		if err != nil {
@@ -12554,6 +12583,13 @@ func (a GetFieldsItemProperties) MarshalJSON() ([]byte, error) {
 		object["summaryFunction"], err = json.Marshal(a.SummaryFunction)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'summaryFunction': %w", err)
+		}
+	}
+
+	if a.SummaryQuery != nil {
+		object["summaryQuery"], err = json.Marshal(a.SummaryQuery)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryQuery': %w", err)
 		}
 	}
 
