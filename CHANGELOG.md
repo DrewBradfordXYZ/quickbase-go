@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Cancelling a request didn't cancel its retry wait**: backoff waits used `time.Sleep`, so a call whose context ended kept waiting out the backoff (up to 30s by default). The wait now returns the context's error as soon as it ends.
 - **`WithMaxRetries(0)` made no request**: the option counts attempts in all (default 3: one try and two retries), so 0 skipped the request and returned neither a response nor an error, and callers dereferenced nil. Values below 1 now mean a single attempt; the doc comments said "retry attempts" and now describe what it counts.
 - **Solutions and file downloads**: QBL is YAML and file content isn't JSON, but they were declared JSON, so `ExportSolution` and `DownloadFile` returned an error on every success and `CreateSolution`, `UpdateSolution` and `ChangesetSolution` sent JSON. Now:
   - `ExportSolution`, `DownloadFile` and `GenerateDocument` return the response with its raw content in `Body`.

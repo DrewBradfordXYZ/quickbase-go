@@ -59,10 +59,10 @@ type Client struct {
 	baseURL   string
 
 	// Retry configuration
-	maxRetries     int
-	initialDelay   time.Duration
-	maxDelay       time.Duration
-	backoffMult    float64
+	maxRetries   int
+	initialDelay time.Duration
+	maxDelay     time.Duration
+	backoffMult  float64
 
 	// Request timeout
 	timeout time.Duration
@@ -115,11 +115,11 @@ type RequestInfo struct {
 // RetryInfo contains information about a retry attempt.
 // This is passed to the OnRetry callback before each retry.
 type RetryInfo struct {
-	Method     string        // HTTP method
-	Path       string        // URL path
-	Attempt    int           // Which attempt is about to happen (2 = first retry)
-	Reason     string        // Why we're retrying (e.g., "429", "503", "timeout")
-	WaitTime   time.Duration // How long we'll wait before retrying
+	Method   string        // HTTP method
+	Path     string        // URL path
+	Attempt  int           // Which attempt is about to happen (2 = first retry)
+	Reason   string        // Why we're retrying (e.g., "429", "503", "timeout")
+	WaitTime time.Duration // How long we'll wait before retrying
 }
 
 // Option configures a Client.
@@ -593,7 +593,9 @@ func (c *Client) do(
 					})
 				}
 
-				time.Sleep(delay)
+				if err := sleepCtx(ctx, delay); err != nil {
+					return nil, err
+				}
 				continue
 			}
 			return nil, err
@@ -656,7 +658,9 @@ func (c *Client) do(
 					})
 				}
 
-				time.Sleep(delay)
+				if err := sleepCtx(ctx, delay); err != nil {
+					return nil, err
+				}
 				continue
 			}
 
@@ -710,7 +714,9 @@ func (c *Client) do(
 				})
 			}
 
-			time.Sleep(delay)
+			if err := sleepCtx(ctx, delay); err != nil {
+				return nil, err
+			}
 			continue
 		}
 
@@ -855,6 +861,19 @@ func (c *Client) calculateBackoff(attempt int) time.Duration {
 	}
 
 	return time.Duration(delay)
+}
+
+// sleepCtx waits for d, or returns the context's error if it ends first, so
+// cancelling a request also cancels a retry's backoff wait.
+func sleepCtx(ctx context.Context, d time.Duration) error {
+	t := time.NewTimer(d)
+	defer t.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-t.C:
+		return nil
+	}
 }
 
 // calculateXMLBackoff is kept for backward compatibility but calls calculateBackoff
@@ -1061,13 +1080,13 @@ var jsonReadOnlyPOSTEndpoints = map[string]bool{
 // These are blocked when the client is in read-only mode.
 var xmlWriteActions = map[string]bool{
 	// User/Role management
-	"API_AddUserToRole":       true,
-	"API_RemoveUserFromRole":  true,
-	"API_ChangeUserRole":      true,
-	"API_ProvisionUser":       true,
-	"API_SendInvitation":      true,
-	"API_ChangeManager":       true,
-	"API_ChangeRecordOwner":   true,
+	"API_AddUserToRole":      true,
+	"API_RemoveUserFromRole": true,
+	"API_ChangeUserRole":     true,
+	"API_ProvisionUser":      true,
+	"API_SendInvitation":     true,
+	"API_ChangeManager":      true,
+	"API_ChangeRecordOwner":  true,
 
 	// Group management
 	"API_CreateGroup":         true,
