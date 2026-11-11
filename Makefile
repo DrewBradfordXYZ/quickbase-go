@@ -2,13 +2,17 @@
 
 .PHONY: all generate spec build test clean
 
+# The oapi-codegen version that produced generated/quickbase.gen.go. Another
+# version rewrites unrelated code (v2.5.1 changes how optional fields marshal).
+OAPI_CODEGEN := go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@v2.4.0
+
 # Default target
 all: generate build test
 
 # Regenerate code from OpenAPI spec
 generate: spec
 	@echo "Generating Go client from OpenAPI spec..."
-	oapi-codegen -config oapi-codegen.yaml spec/output/quickbase-patched.json
+	$(OAPI_CODEGEN) -config oapi-codegen.yaml spec/output/quickbase-patched.json
 	@echo "Generating builders..."
 	go run ./cmd/generate-builders
 	@echo "Generating result wrappers..."
@@ -53,7 +57,7 @@ clean:
 
 # Install development tools
 tools:
-	go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
+	go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@v2.4.0
 
 # Help
 help:

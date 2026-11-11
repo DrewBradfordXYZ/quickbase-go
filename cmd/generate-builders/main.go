@@ -358,7 +358,8 @@ func extractFields(schema *Schema, parentPath string, operationID string) []Fiel
 		return fields
 	}
 
-	for propName, propSchema := range schema.Properties {
+	for _, propName := range sortedKeys(schema.Properties) {
+		propSchema := schema.Properties[propName]
 		constructorParams := getConstructorParams(operationID, nil)
 		isConstructorParam := false
 		for _, cp := range constructorParams {
@@ -405,7 +406,8 @@ func extractFields(schema *Schema, parentPath string, operationID string) []Fiel
 func extractNestedFields(parentName string, schema *Schema) []FieldSpec {
 	var fields []FieldSpec
 
-	for propName, propSchema := range schema.Properties {
+	for _, propName := range sortedKeys(schema.Properties) {
+		propSchema := schema.Properties[propName]
 		field := FieldSpec{
 			MethodName:  toPascalCase(propName),
 			ParamName:   propName,
@@ -418,6 +420,17 @@ func extractNestedFields(parentName string, schema *Schema) []FieldSpec {
 	}
 
 	return fields
+}
+
+// sortedKeys returns a schema's property names in order. Ranging over the
+// map directly made every run order the generated methods differently.
+func sortedKeys(props map[string]*Schema) []string {
+	keys := make([]string, 0, len(props))
+	for k := range props {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }
 
 // snakeToPascal converts snake_case to PascalCase
@@ -443,7 +456,8 @@ func extractResponseFields(schema *Schema, opName string) []ResponseField {
 		requiredSet[r] = true
 	}
 
-	for propName, propSchema := range schema.Properties {
+	for _, propName := range sortedKeys(schema.Properties) {
+		propSchema := schema.Properties[propName]
 		isRequired := requiredSet[propName]
 
 		// Convert JSON name to Go field name (handle snake_case)
