@@ -785,11 +785,24 @@ func uniqueTransformTypes(builders []BuilderSpec) []UniqueTransformType {
 	return result
 }
 
-// hasImportTime checks if any builder needs the time package
+// emitsResponseFields reports whether the template writes a builder's
+// ResponseFields into its result type; only those can need an import.
+func emitsResponseFields(b BuilderSpec) bool {
+	return needsResultType(b) && !hasTransform(b) && !b.ResponseIsArray
+}
+
+// hasImportTime checks if any generated code uses the time package
 func hasImportTime(builders []BuilderSpec) bool {
 	for _, b := range builders {
-		for _, rf := range b.ResponseFields {
-			if rf.GoType == "time.Time" {
+		if emitsResponseFields(b) {
+			for _, rf := range b.ResponseFields {
+				if rf.GoType == "time.Time" {
+					return true
+				}
+			}
+		}
+		for _, tf := range b.Transform.Fields {
+			if strings.Contains(tf.Type, "time.") {
 				return true
 			}
 		}
@@ -800,9 +813,11 @@ func hasImportTime(builders []BuilderSpec) bool {
 // hasImportTypes checks if any builder needs the types package
 func hasImportTypes(builders []BuilderSpec) bool {
 	for _, b := range builders {
-		for _, rf := range b.ResponseFields {
-			if rf.GoType == "types.Date" {
-				return true
+		if emitsResponseFields(b) {
+			for _, rf := range b.ResponseFields {
+				if rf.GoType == "types.Date" {
+					return true
+				}
 			}
 		}
 		for _, qp := range b.QueryParams {
