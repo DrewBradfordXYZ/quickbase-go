@@ -58,3 +58,34 @@ func TestFieldsItem_ReferenceFieldParent(t *testing.T) {
 		t.Errorf("AdditionalProperties = %v, want every property typed", props.AdditionalProperties)
 	}
 }
+
+// Report properties are typed for the settings the spec lists; a report
+// type's other settings stay in AdditionalProperties.
+func TestReportProperties_TypedAndKept(t *testing.T) {
+	body := `{"id": "7", "name": "Board", "type": "kanban",
+		"query": {"fields": [3, 6], "sortBy": [{"fieldId": 6, "order": "ASC"}], "groupBy": [{"fieldId": 9, "grouping": "equal-values"}]},
+		"properties": {"displayOnlyNewOrChangedRecords": true, "stagesFromFieldId": 12,
+		               "columnProperties": [{"fieldId": 6, "labelOverride": "Unit", "width": 120}]}}`
+
+	var item generated.GetTableReportsItem
+	if err := json.Unmarshal([]byte(body), &item); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+	if q := item.Query; q == nil || q.Fields == nil || len(*q.Fields) != 2 || (*q.SortBy)[0].FieldId == nil || *(*q.GroupBy)[0].FieldId != 9 {
+		t.Errorf("query = %+v", item.Query)
+	}
+	p := item.Properties
+	if p == nil || p.DisplayOnlyNewOrChangedRecords == nil || !*p.DisplayOnlyNewOrChangedRecords {
+		t.Fatalf("properties = %+v", p)
+	}
+	if _, ok := p.AdditionalProperties["stagesFromFieldId"]; !ok {
+		t.Error("kanban setting stagesFromFieldId was dropped")
+	}
+	col := (*p.ColumnProperties)[0]
+	if *col.LabelOverride != "Unit" {
+		t.Errorf("labelOverride = %q", *col.LabelOverride)
+	}
+	if _, ok := col.AdditionalProperties["width"]; !ok {
+		t.Error("unlisted column key width was dropped")
+	}
+}

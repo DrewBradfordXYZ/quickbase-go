@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Response properties the spec omitted**, found by comparing live responses with the spec (`spec/tools/audit-live.ts`):
+  - Field properties: `SummaryQuery` (a summary field's filter), `PrimaryKey`, `MasterTableId`, `MasterTableKeyFid`, `FieldCaching`, `OpenTargetIn`. A reference field's parent table is `MasterTableId`; `MasterChoiceTableId` is not returned for it.
+  - Field usage: `CustomEmails`, `DocumentTemplates`.
+  - Reports: `Incomplete`, and `Query.Fields`, `Query.SortBy`, `Query.GroupBy`.
+
+### Changed
+
+- **BREAKING**: Report `Properties` (`GetTableReports()`, `GetReport()`) changed from `*map[string]interface{}` to a struct with typed fields for table, chart, summary and map report settings (`ColumnProperties`, `ChartType`, `Summarize`, ...). Keys not listed are kept in `AdditionalProperties`. Replace `(*props)["columnProperties"]` with `props.ColumnProperties`, and other keys with `props.AdditionalProperties["key"]`.
+- `Query.Fields`, `Query.SortBy` and `Query.GroupBy` on reports are now typed fields, so they no longer appear in `Query.AdditionalProperties`.
+
+### Fixed
+
+- **Generation is deterministic**: `generate-builders` ordered each builder's methods by map iteration, so every run rewrote `builders_generated.go`. `make generate` and `make tools` now use oapi-codegen v2.4.0, the version that produced the committed code.
+
 ## [2.3.0] - 2026-03-02
 
 ### Fixed

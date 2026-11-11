@@ -1418,9 +1418,7 @@ type GetFieldUsageItemUsage struct {
 	AppHomePages GetFieldUsageItemUsage_AppHomePages `json:"appHomePages"`
 
 	// CustomEmails Custom emails that use the field.
-	CustomEmails *struct {
-		Count *int `json:"count,omitempty"`
-	} `json:"customEmails,omitempty"`
+	CustomEmails *GetFieldUsageItemUsage_CustomEmails `json:"customEmails,omitempty"`
 
 	// Dashboards The number of dashboards where the given field is referenced.
 	Dashboards struct {
@@ -1432,9 +1430,7 @@ type GetFieldUsageItemUsage struct {
 	DefaultReports GetFieldUsageItemUsage_DefaultReports `json:"defaultReports"`
 
 	// DocumentTemplates Document templates that use the field.
-	DocumentTemplates *struct {
-		Count *int `json:"count,omitempty"`
-	} `json:"documentTemplates,omitempty"`
+	DocumentTemplates *GetFieldUsageItemUsage_DocumentTemplates `json:"documentTemplates,omitempty"`
 
 	// ExactForms The number of exact forms where the given field is referenced.
 	ExactForms GetFieldUsageItemUsage_ExactForms `json:"exactForms"`
@@ -1497,10 +1493,22 @@ type GetFieldUsageItemUsage_AppHomePages struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// GetFieldUsageItemUsage_CustomEmails Custom emails that use the field.
+type GetFieldUsageItemUsage_CustomEmails struct {
+	Count                *int                   `json:"count,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetFieldUsageItemUsage_DefaultReports The number of default reports where the given field is referenced.
 type GetFieldUsageItemUsage_DefaultReports struct {
 	// Count the number of times a field has been used for the given item.
 	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldUsageItemUsage_DocumentTemplates Document templates that use the field.
+type GetFieldUsageItemUsage_DocumentTemplates struct {
+	Count                *int                   `json:"count,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -1935,9 +1943,7 @@ type GetFieldsUsageItemUsage struct {
 	AppHomePages GetFieldsUsageItemUsage_AppHomePages `json:"appHomePages"`
 
 	// CustomEmails Custom emails that use the field.
-	CustomEmails *struct {
-		Count *int `json:"count,omitempty"`
-	} `json:"customEmails,omitempty"`
+	CustomEmails *GetFieldsUsageItemUsage_CustomEmails `json:"customEmails,omitempty"`
 
 	// Dashboards The number of dashboards where the given field is referenced.
 	Dashboards struct {
@@ -1949,9 +1955,7 @@ type GetFieldsUsageItemUsage struct {
 	DefaultReports GetFieldsUsageItemUsage_DefaultReports `json:"defaultReports"`
 
 	// DocumentTemplates Document templates that use the field.
-	DocumentTemplates *struct {
-		Count *int `json:"count,omitempty"`
-	} `json:"documentTemplates,omitempty"`
+	DocumentTemplates *GetFieldsUsageItemUsage_DocumentTemplates `json:"documentTemplates,omitempty"`
 
 	// ExactForms The number of exact forms where the given field is referenced.
 	ExactForms GetFieldsUsageItemUsage_ExactForms `json:"exactForms"`
@@ -2014,10 +2018,22 @@ type GetFieldsUsageItemUsage_AppHomePages struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// GetFieldsUsageItemUsage_CustomEmails Custom emails that use the field.
+type GetFieldsUsageItemUsage_CustomEmails struct {
+	Count                *int                   `json:"count,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetFieldsUsageItemUsage_DefaultReports The number of default reports where the given field is referenced.
 type GetFieldsUsageItemUsage_DefaultReports struct {
 	// Count the number of times a field has been used for the given item.
 	Count                int                    `json:"count"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetFieldsUsageItemUsage_DocumentTemplates Document templates that use the field.
+type GetFieldsUsageItemUsage_DocumentTemplates struct {
+	Count                *int                   `json:"count,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2175,6 +2191,94 @@ type GetRelationshipsRelationshipsItem_SummaryFields_Item struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// GetReportProperties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
+type GetReportProperties struct {
+	// AddressFieldId Map reports: the address field.
+	AddressFieldId *int `json:"addressFieldId,omitempty"`
+
+	// Categories Chart reports: the category axis.
+	Categories *GetReportProperties_Categories `json:"categories,omitempty"`
+
+	// ChartType Chart reports: the chart type.
+	ChartType *string `json:"chartType,omitempty"`
+
+	// ColumnProperties Table reports: per-column settings.
+	ColumnProperties *[]GetReportProperties_ColumnProperties_Item `json:"columnProperties,omitempty"`
+	DataLabel        *string                                      `json:"dataLabel,omitempty"`
+	DataSourceLabel  *string                                      `json:"dataSourceLabel,omitempty"`
+
+	// DataSources Chart reports: the plotted values.
+	DataSources                    *[]GetReportProperties_DataSources_Item `json:"dataSources,omitempty"`
+	DisplayOnlyNewOrChangedRecords *bool                                   `json:"displayOnlyNewOrChangedRecords,omitempty"`
+	Goal                           *GetReportProperties_Goal               `json:"goal,omitempty"`
+
+	// MapViewType Map reports: the map view.
+	MapViewType    *string `json:"mapViewType,omitempty"`
+	ShowRowNumbers *bool   `json:"showRowNumbers,omitempty"`
+
+	// SortBy Chart reports: how categories are ordered.
+	SortBy *[]GetReportProperties_SortBy_Item `json:"sortBy,omitempty"`
+
+	// Summarize Summary reports: the summarized columns.
+	Summarize *[]GetReportProperties_Summarize_Item `json:"summarize,omitempty"`
+
+	// SummaryFormulas Summary reports: summary formula columns.
+	SummaryFormulas *[]interface{} `json:"summaryFormulas,omitempty"`
+
+	// SummaryVariables Summary reports: summary variables.
+	SummaryVariables     *[]interface{}         `json:"summaryVariables,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_Categories Chart reports: the category axis.
+type GetReportProperties_Categories struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Grouping             *string                `json:"grouping,omitempty"`
+	Label                *string                `json:"label,omitempty"`
+	Order                *string                `json:"order,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_ColumnProperties_Item defines model for GetReportProperties.columnProperties.Item.
+type GetReportProperties_ColumnProperties_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Justification        *float32               `json:"justification,omitempty"`
+	LabelOverride        *string                `json:"labelOverride,omitempty"`
+	Required             *bool                  `json:"required,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_DataSources_Item defines model for GetReportProperties.dataSources.Item.
+type GetReportProperties_DataSources_Item struct {
+	Aggregation          *string                `json:"aggregation,omitempty"`
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_Goal defines model for GetReportProperties.Goal.
+type GetReportProperties_Goal struct {
+	Label                *string                `json:"label,omitempty"`
+	Value                *float32               `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_SortBy_Item defines model for GetReportProperties.sortBy.Item.
+type GetReportProperties_SortBy_Item struct {
+	By                   *string                `json:"by,omitempty"`
+	Order                *string                `json:"order,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportProperties_Summarize_Item defines model for GetReportProperties.summarize.Item.
+type GetReportProperties_Summarize_Item struct {
+	Aggregation          *string                `json:"aggregation,omitempty"`
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	ShowAs               *int                   `json:"showAs,omitempty"`
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetReportQuery The query definition as configured in Quickbase that gets executed when the report is run.
 type GetReportQuery struct {
 	// Fields The report's columns, as field ids in display order.
@@ -2187,16 +2291,10 @@ type GetReportQuery struct {
 	FormulaFields *[]GetReportQuery_FormulaFields_Item `json:"formulaFields,omitempty"`
 
 	// GroupBy Fields the report groups by.
-	GroupBy *[]struct {
-		FieldId  *int    `json:"fieldId,omitempty"`
-		Grouping *string `json:"grouping,omitempty"`
-	} `json:"groupBy,omitempty"`
+	GroupBy *[]GetReportQuery_GroupBy_Item `json:"groupBy,omitempty"`
 
 	// SortBy Fields the report sorts by.
-	SortBy *[]struct {
-		FieldId *int    `json:"fieldId,omitempty"`
-		Order   *string `json:"order,omitempty"`
-	} `json:"sortBy,omitempty"`
+	SortBy *[]GetReportQuery_SortBy_Item `json:"sortBy,omitempty"`
 
 	// TableId The table identifier for the report.
 	TableId              *string                `json:"tableId,omitempty"`
@@ -2222,6 +2320,20 @@ type GetReportQuery_FormulaFields_Item struct {
 
 	// Label Formula field label.
 	Label                *string                `json:"label,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportQuery_GroupBy_Item defines model for GetReportQuery.groupBy.Item.
+type GetReportQuery_GroupBy_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Grouping             *string                `json:"grouping,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetReportQuery_SortBy_Item defines model for GetReportQuery.sortBy.Item.
+type GetReportQuery_SortBy_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Order                *string                `json:"order,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2269,7 +2381,7 @@ type GetTableReportsItem struct {
 	OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 	// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
-	Properties *map[string]interface{} `json:"properties,omitempty"`
+	Properties *GetTableReportsItemProperties `json:"properties,omitempty"`
 
 	// Query The query definition as configured in Quickbase that gets executed when the report is run.
 	Query *GetTableReportsItemQuery `json:"query,omitempty"`
@@ -2285,6 +2397,94 @@ type GetTableReportsItem struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
+// GetTableReportsItemProperties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
+type GetTableReportsItemProperties struct {
+	// AddressFieldId Map reports: the address field.
+	AddressFieldId *int `json:"addressFieldId,omitempty"`
+
+	// Categories Chart reports: the category axis.
+	Categories *GetTableReportsItemProperties_Categories `json:"categories,omitempty"`
+
+	// ChartType Chart reports: the chart type.
+	ChartType *string `json:"chartType,omitempty"`
+
+	// ColumnProperties Table reports: per-column settings.
+	ColumnProperties *[]GetTableReportsItemProperties_ColumnProperties_Item `json:"columnProperties,omitempty"`
+	DataLabel        *string                                                `json:"dataLabel,omitempty"`
+	DataSourceLabel  *string                                                `json:"dataSourceLabel,omitempty"`
+
+	// DataSources Chart reports: the plotted values.
+	DataSources                    *[]GetTableReportsItemProperties_DataSources_Item `json:"dataSources,omitempty"`
+	DisplayOnlyNewOrChangedRecords *bool                                             `json:"displayOnlyNewOrChangedRecords,omitempty"`
+	Goal                           *GetTableReportsItemProperties_Goal               `json:"goal,omitempty"`
+
+	// MapViewType Map reports: the map view.
+	MapViewType    *string `json:"mapViewType,omitempty"`
+	ShowRowNumbers *bool   `json:"showRowNumbers,omitempty"`
+
+	// SortBy Chart reports: how categories are ordered.
+	SortBy *[]GetTableReportsItemProperties_SortBy_Item `json:"sortBy,omitempty"`
+
+	// Summarize Summary reports: the summarized columns.
+	Summarize *[]GetTableReportsItemProperties_Summarize_Item `json:"summarize,omitempty"`
+
+	// SummaryFormulas Summary reports: summary formula columns.
+	SummaryFormulas *[]interface{} `json:"summaryFormulas,omitempty"`
+
+	// SummaryVariables Summary reports: summary variables.
+	SummaryVariables     *[]interface{}         `json:"summaryVariables,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_Categories Chart reports: the category axis.
+type GetTableReportsItemProperties_Categories struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Grouping             *string                `json:"grouping,omitempty"`
+	Label                *string                `json:"label,omitempty"`
+	Order                *string                `json:"order,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_ColumnProperties_Item defines model for GetTableReportsItemProperties.columnProperties.Item.
+type GetTableReportsItemProperties_ColumnProperties_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Justification        *float32               `json:"justification,omitempty"`
+	LabelOverride        *string                `json:"labelOverride,omitempty"`
+	Required             *bool                  `json:"required,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_DataSources_Item defines model for GetTableReportsItemProperties.dataSources.Item.
+type GetTableReportsItemProperties_DataSources_Item struct {
+	Aggregation          *string                `json:"aggregation,omitempty"`
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_Goal defines model for GetTableReportsItemProperties.Goal.
+type GetTableReportsItemProperties_Goal struct {
+	Label                *string                `json:"label,omitempty"`
+	Value                *float32               `json:"value,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_SortBy_Item defines model for GetTableReportsItemProperties.sortBy.Item.
+type GetTableReportsItemProperties_SortBy_Item struct {
+	By                   *string                `json:"by,omitempty"`
+	Order                *string                `json:"order,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemProperties_Summarize_Item defines model for GetTableReportsItemProperties.summarize.Item.
+type GetTableReportsItemProperties_Summarize_Item struct {
+	Aggregation          *string                `json:"aggregation,omitempty"`
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	ShowAs               *int                   `json:"showAs,omitempty"`
+	Type                 *string                `json:"type,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetTableReportsItemQuery The query definition as configured in Quickbase that gets executed when the report is run.
 type GetTableReportsItemQuery struct {
 	// Fields The report's columns, as field ids in display order.
@@ -2297,16 +2497,10 @@ type GetTableReportsItemQuery struct {
 	FormulaFields *[]GetTableReportsItemQuery_FormulaFields_Item `json:"formulaFields,omitempty"`
 
 	// GroupBy Fields the report groups by.
-	GroupBy *[]struct {
-		FieldId  *int    `json:"fieldId,omitempty"`
-		Grouping *string `json:"grouping,omitempty"`
-	} `json:"groupBy,omitempty"`
+	GroupBy *[]GetTableReportsItemQuery_GroupBy_Item `json:"groupBy,omitempty"`
 
 	// SortBy Fields the report sorts by.
-	SortBy *[]struct {
-		FieldId *int    `json:"fieldId,omitempty"`
-		Order   *string `json:"order,omitempty"`
-	} `json:"sortBy,omitempty"`
+	SortBy *[]GetTableReportsItemQuery_SortBy_Item `json:"sortBy,omitempty"`
 
 	// TableId The table identifier for the report.
 	TableId              *string                `json:"tableId,omitempty"`
@@ -2332,6 +2526,20 @@ type GetTableReportsItemQuery_FormulaFields_Item struct {
 
 	// Label Formula field label.
 	Label                *string                `json:"label,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemQuery_GroupBy_Item defines model for GetTableReportsItemQuery.groupBy.Item.
+type GetTableReportsItemQuery_GroupBy_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Grouping             *string                `json:"grouping,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetTableReportsItemQuery_SortBy_Item defines model for GetTableReportsItemQuery.sortBy.Item.
+type GetTableReportsItemQuery_SortBy_Item struct {
+	FieldId              *int                   `json:"fieldId,omitempty"`
+	Order                *string                `json:"order,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -10643,6 +10851,74 @@ func (a GetFieldUsageItemUsage_AppHomePages) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetFieldUsageItemUsage_CustomEmails. Returns the specified
+// element and whether it was found
+func (a GetFieldUsageItemUsage_CustomEmails) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldUsageItemUsage_CustomEmails
+func (a *GetFieldUsageItemUsage_CustomEmails) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_CustomEmails to handle AdditionalProperties
+func (a *GetFieldUsageItemUsage_CustomEmails) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_CustomEmails to handle AdditionalProperties
+func (a GetFieldUsageItemUsage_CustomEmails) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Count != nil {
+		object["count"], err = json.Marshal(a.Count)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'count': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetFieldUsageItemUsage_DefaultReports. Returns the specified
 // element and whether it was found
 func (a GetFieldUsageItemUsage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
@@ -10698,6 +10974,74 @@ func (a GetFieldUsageItemUsage_DefaultReports) MarshalJSON() ([]byte, error) {
 	object["count"], err = json.Marshal(a.Count)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldUsageItemUsage_DocumentTemplates. Returns the specified
+// element and whether it was found
+func (a GetFieldUsageItemUsage_DocumentTemplates) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldUsageItemUsage_DocumentTemplates
+func (a *GetFieldUsageItemUsage_DocumentTemplates) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_DocumentTemplates to handle AdditionalProperties
+func (a *GetFieldUsageItemUsage_DocumentTemplates) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldUsageItemUsage_DocumentTemplates to handle AdditionalProperties
+func (a GetFieldUsageItemUsage_DocumentTemplates) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Count != nil {
+		object["count"], err = json.Marshal(a.Count)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'count': %w", err)
+		}
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -13556,6 +13900,74 @@ func (a GetFieldsUsageItemUsage_AppHomePages) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetFieldsUsageItemUsage_CustomEmails. Returns the specified
+// element and whether it was found
+func (a GetFieldsUsageItemUsage_CustomEmails) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsUsageItemUsage_CustomEmails
+func (a *GetFieldsUsageItemUsage_CustomEmails) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_CustomEmails to handle AdditionalProperties
+func (a *GetFieldsUsageItemUsage_CustomEmails) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_CustomEmails to handle AdditionalProperties
+func (a GetFieldsUsageItemUsage_CustomEmails) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Count != nil {
+		object["count"], err = json.Marshal(a.Count)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'count': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetFieldsUsageItemUsage_DefaultReports. Returns the specified
 // element and whether it was found
 func (a GetFieldsUsageItemUsage_DefaultReports) Get(fieldName string) (value interface{}, found bool) {
@@ -13611,6 +14023,74 @@ func (a GetFieldsUsageItemUsage_DefaultReports) MarshalJSON() ([]byte, error) {
 	object["count"], err = json.Marshal(a.Count)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'count': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetFieldsUsageItemUsage_DocumentTemplates. Returns the specified
+// element and whether it was found
+func (a GetFieldsUsageItemUsage_DocumentTemplates) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetFieldsUsageItemUsage_DocumentTemplates
+func (a *GetFieldsUsageItemUsage_DocumentTemplates) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_DocumentTemplates to handle AdditionalProperties
+func (a *GetFieldsUsageItemUsage_DocumentTemplates) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["count"]; found {
+		err = json.Unmarshal(raw, &a.Count)
+		if err != nil {
+			return fmt.Errorf("error reading 'count': %w", err)
+		}
+		delete(object, "count")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetFieldsUsageItemUsage_DocumentTemplates to handle AdditionalProperties
+func (a GetFieldsUsageItemUsage_DocumentTemplates) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Count != nil {
+		object["count"], err = json.Marshal(a.Count)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'count': %w", err)
+		}
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -14890,6 +15370,887 @@ func (a GetRelationshipsRelationshipsItem_SummaryFields_Item) MarshalJSON() ([]b
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetReportProperties. Returns the specified
+// element and whether it was found
+func (a GetReportProperties) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties
+func (a *GetReportProperties) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties to handle AdditionalProperties
+func (a *GetReportProperties) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["addressFieldId"]; found {
+		err = json.Unmarshal(raw, &a.AddressFieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'addressFieldId': %w", err)
+		}
+		delete(object, "addressFieldId")
+	}
+
+	if raw, found := object["categories"]; found {
+		err = json.Unmarshal(raw, &a.Categories)
+		if err != nil {
+			return fmt.Errorf("error reading 'categories': %w", err)
+		}
+		delete(object, "categories")
+	}
+
+	if raw, found := object["chartType"]; found {
+		err = json.Unmarshal(raw, &a.ChartType)
+		if err != nil {
+			return fmt.Errorf("error reading 'chartType': %w", err)
+		}
+		delete(object, "chartType")
+	}
+
+	if raw, found := object["columnProperties"]; found {
+		err = json.Unmarshal(raw, &a.ColumnProperties)
+		if err != nil {
+			return fmt.Errorf("error reading 'columnProperties': %w", err)
+		}
+		delete(object, "columnProperties")
+	}
+
+	if raw, found := object["dataLabel"]; found {
+		err = json.Unmarshal(raw, &a.DataLabel)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataLabel': %w", err)
+		}
+		delete(object, "dataLabel")
+	}
+
+	if raw, found := object["dataSourceLabel"]; found {
+		err = json.Unmarshal(raw, &a.DataSourceLabel)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataSourceLabel': %w", err)
+		}
+		delete(object, "dataSourceLabel")
+	}
+
+	if raw, found := object["dataSources"]; found {
+		err = json.Unmarshal(raw, &a.DataSources)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataSources': %w", err)
+		}
+		delete(object, "dataSources")
+	}
+
+	if raw, found := object["displayOnlyNewOrChangedRecords"]; found {
+		err = json.Unmarshal(raw, &a.DisplayOnlyNewOrChangedRecords)
+		if err != nil {
+			return fmt.Errorf("error reading 'displayOnlyNewOrChangedRecords': %w", err)
+		}
+		delete(object, "displayOnlyNewOrChangedRecords")
+	}
+
+	if raw, found := object["goal"]; found {
+		err = json.Unmarshal(raw, &a.Goal)
+		if err != nil {
+			return fmt.Errorf("error reading 'goal': %w", err)
+		}
+		delete(object, "goal")
+	}
+
+	if raw, found := object["mapViewType"]; found {
+		err = json.Unmarshal(raw, &a.MapViewType)
+		if err != nil {
+			return fmt.Errorf("error reading 'mapViewType': %w", err)
+		}
+		delete(object, "mapViewType")
+	}
+
+	if raw, found := object["showRowNumbers"]; found {
+		err = json.Unmarshal(raw, &a.ShowRowNumbers)
+		if err != nil {
+			return fmt.Errorf("error reading 'showRowNumbers': %w", err)
+		}
+		delete(object, "showRowNumbers")
+	}
+
+	if raw, found := object["sortBy"]; found {
+		err = json.Unmarshal(raw, &a.SortBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'sortBy': %w", err)
+		}
+		delete(object, "sortBy")
+	}
+
+	if raw, found := object["summarize"]; found {
+		err = json.Unmarshal(raw, &a.Summarize)
+		if err != nil {
+			return fmt.Errorf("error reading 'summarize': %w", err)
+		}
+		delete(object, "summarize")
+	}
+
+	if raw, found := object["summaryFormulas"]; found {
+		err = json.Unmarshal(raw, &a.SummaryFormulas)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryFormulas': %w", err)
+		}
+		delete(object, "summaryFormulas")
+	}
+
+	if raw, found := object["summaryVariables"]; found {
+		err = json.Unmarshal(raw, &a.SummaryVariables)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryVariables': %w", err)
+		}
+		delete(object, "summaryVariables")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties to handle AdditionalProperties
+func (a GetReportProperties) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AddressFieldId != nil {
+		object["addressFieldId"], err = json.Marshal(a.AddressFieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'addressFieldId': %w", err)
+		}
+	}
+
+	if a.Categories != nil {
+		object["categories"], err = json.Marshal(a.Categories)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'categories': %w", err)
+		}
+	}
+
+	if a.ChartType != nil {
+		object["chartType"], err = json.Marshal(a.ChartType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'chartType': %w", err)
+		}
+	}
+
+	if a.ColumnProperties != nil {
+		object["columnProperties"], err = json.Marshal(a.ColumnProperties)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'columnProperties': %w", err)
+		}
+	}
+
+	if a.DataLabel != nil {
+		object["dataLabel"], err = json.Marshal(a.DataLabel)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataLabel': %w", err)
+		}
+	}
+
+	if a.DataSourceLabel != nil {
+		object["dataSourceLabel"], err = json.Marshal(a.DataSourceLabel)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataSourceLabel': %w", err)
+		}
+	}
+
+	if a.DataSources != nil {
+		object["dataSources"], err = json.Marshal(a.DataSources)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataSources': %w", err)
+		}
+	}
+
+	if a.DisplayOnlyNewOrChangedRecords != nil {
+		object["displayOnlyNewOrChangedRecords"], err = json.Marshal(a.DisplayOnlyNewOrChangedRecords)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'displayOnlyNewOrChangedRecords': %w", err)
+		}
+	}
+
+	if a.Goal != nil {
+		object["goal"], err = json.Marshal(a.Goal)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'goal': %w", err)
+		}
+	}
+
+	if a.MapViewType != nil {
+		object["mapViewType"], err = json.Marshal(a.MapViewType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'mapViewType': %w", err)
+		}
+	}
+
+	if a.ShowRowNumbers != nil {
+		object["showRowNumbers"], err = json.Marshal(a.ShowRowNumbers)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'showRowNumbers': %w", err)
+		}
+	}
+
+	if a.SortBy != nil {
+		object["sortBy"], err = json.Marshal(a.SortBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'sortBy': %w", err)
+		}
+	}
+
+	if a.Summarize != nil {
+		object["summarize"], err = json.Marshal(a.Summarize)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summarize': %w", err)
+		}
+	}
+
+	if a.SummaryFormulas != nil {
+		object["summaryFormulas"], err = json.Marshal(a.SummaryFormulas)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryFormulas': %w", err)
+		}
+	}
+
+	if a.SummaryVariables != nil {
+		object["summaryVariables"], err = json.Marshal(a.SummaryVariables)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryVariables': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_Categories. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_Categories) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_Categories
+func (a *GetReportProperties_Categories) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_Categories to handle AdditionalProperties
+func (a *GetReportProperties_Categories) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["grouping"]; found {
+		err = json.Unmarshal(raw, &a.Grouping)
+		if err != nil {
+			return fmt.Errorf("error reading 'grouping': %w", err)
+		}
+		delete(object, "grouping")
+	}
+
+	if raw, found := object["label"]; found {
+		err = json.Unmarshal(raw, &a.Label)
+		if err != nil {
+			return fmt.Errorf("error reading 'label': %w", err)
+		}
+		delete(object, "label")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_Categories to handle AdditionalProperties
+func (a GetReportProperties_Categories) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Grouping != nil {
+		object["grouping"], err = json.Marshal(a.Grouping)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'grouping': %w", err)
+		}
+	}
+
+	if a.Label != nil {
+		object["label"], err = json.Marshal(a.Label)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_ColumnProperties_Item. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_ColumnProperties_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_ColumnProperties_Item
+func (a *GetReportProperties_ColumnProperties_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_ColumnProperties_Item to handle AdditionalProperties
+func (a *GetReportProperties_ColumnProperties_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["justification"]; found {
+		err = json.Unmarshal(raw, &a.Justification)
+		if err != nil {
+			return fmt.Errorf("error reading 'justification': %w", err)
+		}
+		delete(object, "justification")
+	}
+
+	if raw, found := object["labelOverride"]; found {
+		err = json.Unmarshal(raw, &a.LabelOverride)
+		if err != nil {
+			return fmt.Errorf("error reading 'labelOverride': %w", err)
+		}
+		delete(object, "labelOverride")
+	}
+
+	if raw, found := object["required"]; found {
+		err = json.Unmarshal(raw, &a.Required)
+		if err != nil {
+			return fmt.Errorf("error reading 'required': %w", err)
+		}
+		delete(object, "required")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_ColumnProperties_Item to handle AdditionalProperties
+func (a GetReportProperties_ColumnProperties_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Justification != nil {
+		object["justification"], err = json.Marshal(a.Justification)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'justification': %w", err)
+		}
+	}
+
+	if a.LabelOverride != nil {
+		object["labelOverride"], err = json.Marshal(a.LabelOverride)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'labelOverride': %w", err)
+		}
+	}
+
+	if a.Required != nil {
+		object["required"], err = json.Marshal(a.Required)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'required': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_DataSources_Item. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_DataSources_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_DataSources_Item
+func (a *GetReportProperties_DataSources_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_DataSources_Item to handle AdditionalProperties
+func (a *GetReportProperties_DataSources_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["aggregation"]; found {
+		err = json.Unmarshal(raw, &a.Aggregation)
+		if err != nil {
+			return fmt.Errorf("error reading 'aggregation': %w", err)
+		}
+		delete(object, "aggregation")
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_DataSources_Item to handle AdditionalProperties
+func (a GetReportProperties_DataSources_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Aggregation != nil {
+		object["aggregation"], err = json.Marshal(a.Aggregation)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'aggregation': %w", err)
+		}
+	}
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Type != nil {
+		object["type"], err = json.Marshal(a.Type)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_Goal. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_Goal) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_Goal
+func (a *GetReportProperties_Goal) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_Goal to handle AdditionalProperties
+func (a *GetReportProperties_Goal) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["label"]; found {
+		err = json.Unmarshal(raw, &a.Label)
+		if err != nil {
+			return fmt.Errorf("error reading 'label': %w", err)
+		}
+		delete(object, "label")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_Goal to handle AdditionalProperties
+func (a GetReportProperties_Goal) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Label != nil {
+		object["label"], err = json.Marshal(a.Label)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	if a.Value != nil {
+		object["value"], err = json.Marshal(a.Value)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_SortBy_Item. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_SortBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_SortBy_Item
+func (a *GetReportProperties_SortBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_SortBy_Item to handle AdditionalProperties
+func (a *GetReportProperties_SortBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["by"]; found {
+		err = json.Unmarshal(raw, &a.By)
+		if err != nil {
+			return fmt.Errorf("error reading 'by': %w", err)
+		}
+		delete(object, "by")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_SortBy_Item to handle AdditionalProperties
+func (a GetReportProperties_SortBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.By != nil {
+		object["by"], err = json.Marshal(a.By)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'by': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportProperties_Summarize_Item. Returns the specified
+// element and whether it was found
+func (a GetReportProperties_Summarize_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportProperties_Summarize_Item
+func (a *GetReportProperties_Summarize_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportProperties_Summarize_Item to handle AdditionalProperties
+func (a *GetReportProperties_Summarize_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["aggregation"]; found {
+		err = json.Unmarshal(raw, &a.Aggregation)
+		if err != nil {
+			return fmt.Errorf("error reading 'aggregation': %w", err)
+		}
+		delete(object, "aggregation")
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["showAs"]; found {
+		err = json.Unmarshal(raw, &a.ShowAs)
+		if err != nil {
+			return fmt.Errorf("error reading 'showAs': %w", err)
+		}
+		delete(object, "showAs")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportProperties_Summarize_Item to handle AdditionalProperties
+func (a GetReportProperties_Summarize_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Aggregation != nil {
+		object["aggregation"], err = json.Marshal(a.Aggregation)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'aggregation': %w", err)
+		}
+	}
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.ShowAs != nil {
+		object["showAs"], err = json.Marshal(a.ShowAs)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'showAs': %w", err)
+		}
+	}
+
+	if a.Type != nil {
+		object["type"], err = json.Marshal(a.Type)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetReportQuery. Returns the specified
 // element and whether it was found
 func (a GetReportQuery) Get(fieldName string) (value interface{}, found bool) {
@@ -15149,6 +16510,172 @@ func (a GetReportQuery_FormulaFields_Item) MarshalJSON() ([]byte, error) {
 		object["label"], err = json.Marshal(a.Label)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportQuery_GroupBy_Item. Returns the specified
+// element and whether it was found
+func (a GetReportQuery_GroupBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportQuery_GroupBy_Item
+func (a *GetReportQuery_GroupBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportQuery_GroupBy_Item to handle AdditionalProperties
+func (a *GetReportQuery_GroupBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["grouping"]; found {
+		err = json.Unmarshal(raw, &a.Grouping)
+		if err != nil {
+			return fmt.Errorf("error reading 'grouping': %w", err)
+		}
+		delete(object, "grouping")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportQuery_GroupBy_Item to handle AdditionalProperties
+func (a GetReportQuery_GroupBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Grouping != nil {
+		object["grouping"], err = json.Marshal(a.Grouping)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'grouping': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetReportQuery_SortBy_Item. Returns the specified
+// element and whether it was found
+func (a GetReportQuery_SortBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetReportQuery_SortBy_Item
+func (a *GetReportQuery_SortBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetReportQuery_SortBy_Item to handle AdditionalProperties
+func (a *GetReportQuery_SortBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetReportQuery_SortBy_Item to handle AdditionalProperties
+func (a GetReportQuery_SortBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
 		}
 	}
 
@@ -15545,6 +17072,887 @@ func (a GetTableReportsItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetTableReportsItemProperties. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties
+func (a *GetTableReportsItemProperties) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties to handle AdditionalProperties
+func (a *GetTableReportsItemProperties) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["addressFieldId"]; found {
+		err = json.Unmarshal(raw, &a.AddressFieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'addressFieldId': %w", err)
+		}
+		delete(object, "addressFieldId")
+	}
+
+	if raw, found := object["categories"]; found {
+		err = json.Unmarshal(raw, &a.Categories)
+		if err != nil {
+			return fmt.Errorf("error reading 'categories': %w", err)
+		}
+		delete(object, "categories")
+	}
+
+	if raw, found := object["chartType"]; found {
+		err = json.Unmarshal(raw, &a.ChartType)
+		if err != nil {
+			return fmt.Errorf("error reading 'chartType': %w", err)
+		}
+		delete(object, "chartType")
+	}
+
+	if raw, found := object["columnProperties"]; found {
+		err = json.Unmarshal(raw, &a.ColumnProperties)
+		if err != nil {
+			return fmt.Errorf("error reading 'columnProperties': %w", err)
+		}
+		delete(object, "columnProperties")
+	}
+
+	if raw, found := object["dataLabel"]; found {
+		err = json.Unmarshal(raw, &a.DataLabel)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataLabel': %w", err)
+		}
+		delete(object, "dataLabel")
+	}
+
+	if raw, found := object["dataSourceLabel"]; found {
+		err = json.Unmarshal(raw, &a.DataSourceLabel)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataSourceLabel': %w", err)
+		}
+		delete(object, "dataSourceLabel")
+	}
+
+	if raw, found := object["dataSources"]; found {
+		err = json.Unmarshal(raw, &a.DataSources)
+		if err != nil {
+			return fmt.Errorf("error reading 'dataSources': %w", err)
+		}
+		delete(object, "dataSources")
+	}
+
+	if raw, found := object["displayOnlyNewOrChangedRecords"]; found {
+		err = json.Unmarshal(raw, &a.DisplayOnlyNewOrChangedRecords)
+		if err != nil {
+			return fmt.Errorf("error reading 'displayOnlyNewOrChangedRecords': %w", err)
+		}
+		delete(object, "displayOnlyNewOrChangedRecords")
+	}
+
+	if raw, found := object["goal"]; found {
+		err = json.Unmarshal(raw, &a.Goal)
+		if err != nil {
+			return fmt.Errorf("error reading 'goal': %w", err)
+		}
+		delete(object, "goal")
+	}
+
+	if raw, found := object["mapViewType"]; found {
+		err = json.Unmarshal(raw, &a.MapViewType)
+		if err != nil {
+			return fmt.Errorf("error reading 'mapViewType': %w", err)
+		}
+		delete(object, "mapViewType")
+	}
+
+	if raw, found := object["showRowNumbers"]; found {
+		err = json.Unmarshal(raw, &a.ShowRowNumbers)
+		if err != nil {
+			return fmt.Errorf("error reading 'showRowNumbers': %w", err)
+		}
+		delete(object, "showRowNumbers")
+	}
+
+	if raw, found := object["sortBy"]; found {
+		err = json.Unmarshal(raw, &a.SortBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'sortBy': %w", err)
+		}
+		delete(object, "sortBy")
+	}
+
+	if raw, found := object["summarize"]; found {
+		err = json.Unmarshal(raw, &a.Summarize)
+		if err != nil {
+			return fmt.Errorf("error reading 'summarize': %w", err)
+		}
+		delete(object, "summarize")
+	}
+
+	if raw, found := object["summaryFormulas"]; found {
+		err = json.Unmarshal(raw, &a.SummaryFormulas)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryFormulas': %w", err)
+		}
+		delete(object, "summaryFormulas")
+	}
+
+	if raw, found := object["summaryVariables"]; found {
+		err = json.Unmarshal(raw, &a.SummaryVariables)
+		if err != nil {
+			return fmt.Errorf("error reading 'summaryVariables': %w", err)
+		}
+		delete(object, "summaryVariables")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties to handle AdditionalProperties
+func (a GetTableReportsItemProperties) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AddressFieldId != nil {
+		object["addressFieldId"], err = json.Marshal(a.AddressFieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'addressFieldId': %w", err)
+		}
+	}
+
+	if a.Categories != nil {
+		object["categories"], err = json.Marshal(a.Categories)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'categories': %w", err)
+		}
+	}
+
+	if a.ChartType != nil {
+		object["chartType"], err = json.Marshal(a.ChartType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'chartType': %w", err)
+		}
+	}
+
+	if a.ColumnProperties != nil {
+		object["columnProperties"], err = json.Marshal(a.ColumnProperties)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'columnProperties': %w", err)
+		}
+	}
+
+	if a.DataLabel != nil {
+		object["dataLabel"], err = json.Marshal(a.DataLabel)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataLabel': %w", err)
+		}
+	}
+
+	if a.DataSourceLabel != nil {
+		object["dataSourceLabel"], err = json.Marshal(a.DataSourceLabel)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataSourceLabel': %w", err)
+		}
+	}
+
+	if a.DataSources != nil {
+		object["dataSources"], err = json.Marshal(a.DataSources)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'dataSources': %w", err)
+		}
+	}
+
+	if a.DisplayOnlyNewOrChangedRecords != nil {
+		object["displayOnlyNewOrChangedRecords"], err = json.Marshal(a.DisplayOnlyNewOrChangedRecords)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'displayOnlyNewOrChangedRecords': %w", err)
+		}
+	}
+
+	if a.Goal != nil {
+		object["goal"], err = json.Marshal(a.Goal)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'goal': %w", err)
+		}
+	}
+
+	if a.MapViewType != nil {
+		object["mapViewType"], err = json.Marshal(a.MapViewType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'mapViewType': %w", err)
+		}
+	}
+
+	if a.ShowRowNumbers != nil {
+		object["showRowNumbers"], err = json.Marshal(a.ShowRowNumbers)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'showRowNumbers': %w", err)
+		}
+	}
+
+	if a.SortBy != nil {
+		object["sortBy"], err = json.Marshal(a.SortBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'sortBy': %w", err)
+		}
+	}
+
+	if a.Summarize != nil {
+		object["summarize"], err = json.Marshal(a.Summarize)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summarize': %w", err)
+		}
+	}
+
+	if a.SummaryFormulas != nil {
+		object["summaryFormulas"], err = json.Marshal(a.SummaryFormulas)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryFormulas': %w", err)
+		}
+	}
+
+	if a.SummaryVariables != nil {
+		object["summaryVariables"], err = json.Marshal(a.SummaryVariables)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'summaryVariables': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_Categories. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_Categories) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_Categories
+func (a *GetTableReportsItemProperties_Categories) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Categories to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_Categories) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["grouping"]; found {
+		err = json.Unmarshal(raw, &a.Grouping)
+		if err != nil {
+			return fmt.Errorf("error reading 'grouping': %w", err)
+		}
+		delete(object, "grouping")
+	}
+
+	if raw, found := object["label"]; found {
+		err = json.Unmarshal(raw, &a.Label)
+		if err != nil {
+			return fmt.Errorf("error reading 'label': %w", err)
+		}
+		delete(object, "label")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Categories to handle AdditionalProperties
+func (a GetTableReportsItemProperties_Categories) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Grouping != nil {
+		object["grouping"], err = json.Marshal(a.Grouping)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'grouping': %w", err)
+		}
+	}
+
+	if a.Label != nil {
+		object["label"], err = json.Marshal(a.Label)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_ColumnProperties_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_ColumnProperties_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_ColumnProperties_Item
+func (a *GetTableReportsItemProperties_ColumnProperties_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_ColumnProperties_Item to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_ColumnProperties_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["justification"]; found {
+		err = json.Unmarshal(raw, &a.Justification)
+		if err != nil {
+			return fmt.Errorf("error reading 'justification': %w", err)
+		}
+		delete(object, "justification")
+	}
+
+	if raw, found := object["labelOverride"]; found {
+		err = json.Unmarshal(raw, &a.LabelOverride)
+		if err != nil {
+			return fmt.Errorf("error reading 'labelOverride': %w", err)
+		}
+		delete(object, "labelOverride")
+	}
+
+	if raw, found := object["required"]; found {
+		err = json.Unmarshal(raw, &a.Required)
+		if err != nil {
+			return fmt.Errorf("error reading 'required': %w", err)
+		}
+		delete(object, "required")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_ColumnProperties_Item to handle AdditionalProperties
+func (a GetTableReportsItemProperties_ColumnProperties_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Justification != nil {
+		object["justification"], err = json.Marshal(a.Justification)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'justification': %w", err)
+		}
+	}
+
+	if a.LabelOverride != nil {
+		object["labelOverride"], err = json.Marshal(a.LabelOverride)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'labelOverride': %w", err)
+		}
+	}
+
+	if a.Required != nil {
+		object["required"], err = json.Marshal(a.Required)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'required': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_DataSources_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_DataSources_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_DataSources_Item
+func (a *GetTableReportsItemProperties_DataSources_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_DataSources_Item to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_DataSources_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["aggregation"]; found {
+		err = json.Unmarshal(raw, &a.Aggregation)
+		if err != nil {
+			return fmt.Errorf("error reading 'aggregation': %w", err)
+		}
+		delete(object, "aggregation")
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_DataSources_Item to handle AdditionalProperties
+func (a GetTableReportsItemProperties_DataSources_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Aggregation != nil {
+		object["aggregation"], err = json.Marshal(a.Aggregation)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'aggregation': %w", err)
+		}
+	}
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Type != nil {
+		object["type"], err = json.Marshal(a.Type)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_Goal. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_Goal) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_Goal
+func (a *GetTableReportsItemProperties_Goal) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Goal to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_Goal) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["label"]; found {
+		err = json.Unmarshal(raw, &a.Label)
+		if err != nil {
+			return fmt.Errorf("error reading 'label': %w", err)
+		}
+		delete(object, "label")
+	}
+
+	if raw, found := object["value"]; found {
+		err = json.Unmarshal(raw, &a.Value)
+		if err != nil {
+			return fmt.Errorf("error reading 'value': %w", err)
+		}
+		delete(object, "value")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Goal to handle AdditionalProperties
+func (a GetTableReportsItemProperties_Goal) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Label != nil {
+		object["label"], err = json.Marshal(a.Label)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	if a.Value != nil {
+		object["value"], err = json.Marshal(a.Value)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_SortBy_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_SortBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_SortBy_Item
+func (a *GetTableReportsItemProperties_SortBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_SortBy_Item to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_SortBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["by"]; found {
+		err = json.Unmarshal(raw, &a.By)
+		if err != nil {
+			return fmt.Errorf("error reading 'by': %w", err)
+		}
+		delete(object, "by")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_SortBy_Item to handle AdditionalProperties
+func (a GetTableReportsItemProperties_SortBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.By != nil {
+		object["by"], err = json.Marshal(a.By)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'by': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemProperties_Summarize_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemProperties_Summarize_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemProperties_Summarize_Item
+func (a *GetTableReportsItemProperties_Summarize_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Summarize_Item to handle AdditionalProperties
+func (a *GetTableReportsItemProperties_Summarize_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["aggregation"]; found {
+		err = json.Unmarshal(raw, &a.Aggregation)
+		if err != nil {
+			return fmt.Errorf("error reading 'aggregation': %w", err)
+		}
+		delete(object, "aggregation")
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["showAs"]; found {
+		err = json.Unmarshal(raw, &a.ShowAs)
+		if err != nil {
+			return fmt.Errorf("error reading 'showAs': %w", err)
+		}
+		delete(object, "showAs")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemProperties_Summarize_Item to handle AdditionalProperties
+func (a GetTableReportsItemProperties_Summarize_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Aggregation != nil {
+		object["aggregation"], err = json.Marshal(a.Aggregation)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'aggregation': %w", err)
+		}
+	}
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.ShowAs != nil {
+		object["showAs"], err = json.Marshal(a.ShowAs)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'showAs': %w", err)
+		}
+	}
+
+	if a.Type != nil {
+		object["type"], err = json.Marshal(a.Type)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetTableReportsItemQuery. Returns the specified
 // element and whether it was found
 func (a GetTableReportsItemQuery) Get(fieldName string) (value interface{}, found bool) {
@@ -15804,6 +18212,172 @@ func (a GetTableReportsItemQuery_FormulaFields_Item) MarshalJSON() ([]byte, erro
 		object["label"], err = json.Marshal(a.Label)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'label': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemQuery_GroupBy_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemQuery_GroupBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemQuery_GroupBy_Item
+func (a *GetTableReportsItemQuery_GroupBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemQuery_GroupBy_Item to handle AdditionalProperties
+func (a *GetTableReportsItemQuery_GroupBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["grouping"]; found {
+		err = json.Unmarshal(raw, &a.Grouping)
+		if err != nil {
+			return fmt.Errorf("error reading 'grouping': %w", err)
+		}
+		delete(object, "grouping")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemQuery_GroupBy_Item to handle AdditionalProperties
+func (a GetTableReportsItemQuery_GroupBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Grouping != nil {
+		object["grouping"], err = json.Marshal(a.Grouping)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'grouping': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetTableReportsItemQuery_SortBy_Item. Returns the specified
+// element and whether it was found
+func (a GetTableReportsItemQuery_SortBy_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetTableReportsItemQuery_SortBy_Item
+func (a *GetTableReportsItemQuery_SortBy_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetTableReportsItemQuery_SortBy_Item to handle AdditionalProperties
+func (a *GetTableReportsItemQuery_SortBy_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["fieldId"]; found {
+		err = json.Unmarshal(raw, &a.FieldId)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldId': %w", err)
+		}
+		delete(object, "fieldId")
+	}
+
+	if raw, found := object["order"]; found {
+		err = json.Unmarshal(raw, &a.Order)
+		if err != nil {
+			return fmt.Errorf("error reading 'order': %w", err)
+		}
+		delete(object, "order")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetTableReportsItemQuery_SortBy_Item to handle AdditionalProperties
+func (a GetTableReportsItemQuery_SortBy_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.FieldId != nil {
+		object["fieldId"], err = json.Marshal(a.FieldId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldId': %w", err)
+		}
+	}
+
+	if a.Order != nil {
+		object["order"], err = json.Marshal(a.Order)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'order': %w", err)
 		}
 	}
 
@@ -26167,7 +28741,7 @@ type GetReportResponse struct {
 		OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 		// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
-		Properties *map[string]interface{} `json:"properties,omitempty"`
+		Properties *GetReportProperties `json:"properties,omitempty"`
 
 		// Query The query definition as configured in Quickbase that gets executed when the report is run.
 		Query *GetReportQuery `json:"query,omitempty"`
@@ -29646,7 +32220,7 @@ func ParseGetReportResponse(rsp *http.Response) (*GetReportResponse, error) {
 			OwnerId *OwnerId `json:"ownerId,omitempty"`
 
 			// Properties A list of properties specific to the report type. To see a detailed description of the properties for each report type, See [Report Types.](../reportTypes)
-			Properties *map[string]interface{} `json:"properties,omitempty"`
+			Properties *GetReportProperties `json:"properties,omitempty"`
 
 			// Query The query definition as configured in Quickbase that gets executed when the report is run.
 			Query *GetReportQuery `json:"query,omitempty"`

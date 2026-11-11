@@ -1565,6 +1565,14 @@ func (r *ReportResult) Name() string {
 	return *r.resp.JSON200.Name
 }
 
+// Properties returns the Properties field as a wrapped type, or nil if not set.
+func (r *ReportResult) Properties() *GetReportProperties {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Properties == nil {
+		return nil
+	}
+	return &GetReportProperties{r.resp.JSON200.Properties}
+}
+
 // Query returns the Query field as a wrapped type, or nil if not set.
 func (r *ReportResult) Query() *GetReportQuery {
 	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Query == nil {
@@ -3106,6 +3114,14 @@ func (r *TableReportsItem) Name() string {
 		return ""
 	}
 	return *r.GetTableReportsItem.Name
+}
+
+// Properties returns the Properties field as a wrapped type, or nil if not set.
+func (r *TableReportsItem) Properties() *GetTableReportsItemProperties {
+	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Properties == nil {
+		return nil
+	}
+	return &GetTableReportsItemProperties{r.GetTableReportsItem.Properties}
 }
 
 // Query returns the Query field as a wrapped type, or nil if not set.
@@ -4962,6 +4978,22 @@ type GetFieldUsageItemUsage struct {
 	*generated.GetFieldUsageItemUsage
 }
 
+// CustomEmails returns the CustomEmails field as a wrapped type, or nil if not set.
+func (r *GetFieldUsageItemUsage) CustomEmails() *GetFieldUsageItemUsage_CustomEmails {
+	if r == nil || r.GetFieldUsageItemUsage == nil || r.GetFieldUsageItemUsage.CustomEmails == nil {
+		return nil
+	}
+	return &GetFieldUsageItemUsage_CustomEmails{r.GetFieldUsageItemUsage.CustomEmails}
+}
+
+// DocumentTemplates returns the DocumentTemplates field as a wrapped type, or nil if not set.
+func (r *GetFieldUsageItemUsage) DocumentTemplates() *GetFieldUsageItemUsage_DocumentTemplates {
+	if r == nil || r.GetFieldUsageItemUsage == nil || r.GetFieldUsageItemUsage.DocumentTemplates == nil {
+		return nil
+	}
+	return &GetFieldUsageItemUsage_DocumentTemplates{r.GetFieldUsageItemUsage.DocumentTemplates}
+}
+
 
 // GetFieldUsageItemUsage_Actions wraps GetFieldUsageItemUsage_Actions with convenience methods.
 type GetFieldUsageItemUsage_Actions struct {
@@ -4991,6 +5023,20 @@ func (r *GetFieldUsageItemUsage_AppHomePages) Count() int {
 }
 
 
+// GetFieldUsageItemUsage_CustomEmails wraps GetFieldUsageItemUsage_CustomEmails with convenience methods.
+type GetFieldUsageItemUsage_CustomEmails struct {
+	*generated.GetFieldUsageItemUsage_CustomEmails
+}
+
+// Count returns the Count field value, or zero value if nil.
+func (r *GetFieldUsageItemUsage_CustomEmails) Count() int {
+	if r == nil || r.GetFieldUsageItemUsage_CustomEmails == nil || r.GetFieldUsageItemUsage_CustomEmails.Count == nil {
+		return 0
+	}
+	return *r.GetFieldUsageItemUsage_CustomEmails.Count
+}
+
+
 // GetFieldUsageItemUsage_DefaultReports wraps GetFieldUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldUsageItemUsage_DefaultReports
@@ -5002,6 +5048,20 @@ func (r *GetFieldUsageItemUsage_DefaultReports) Count() int {
 		return 0
 	}
 	return r.GetFieldUsageItemUsage_DefaultReports.Count
+}
+
+
+// GetFieldUsageItemUsage_DocumentTemplates wraps GetFieldUsageItemUsage_DocumentTemplates with convenience methods.
+type GetFieldUsageItemUsage_DocumentTemplates struct {
+	*generated.GetFieldUsageItemUsage_DocumentTemplates
+}
+
+// Count returns the Count field value, or zero value if nil.
+func (r *GetFieldUsageItemUsage_DocumentTemplates) Count() int {
+	if r == nil || r.GetFieldUsageItemUsage_DocumentTemplates == nil || r.GetFieldUsageItemUsage_DocumentTemplates.Count == nil {
+		return 0
+	}
+	return *r.GetFieldUsageItemUsage_DocumentTemplates.Count
 }
 
 
@@ -5875,6 +5935,22 @@ type GetFieldsUsageItemUsage struct {
 	*generated.GetFieldsUsageItemUsage
 }
 
+// CustomEmails returns the CustomEmails field as a wrapped type, or nil if not set.
+func (r *GetFieldsUsageItemUsage) CustomEmails() *GetFieldsUsageItemUsage_CustomEmails {
+	if r == nil || r.GetFieldsUsageItemUsage == nil || r.GetFieldsUsageItemUsage.CustomEmails == nil {
+		return nil
+	}
+	return &GetFieldsUsageItemUsage_CustomEmails{r.GetFieldsUsageItemUsage.CustomEmails}
+}
+
+// DocumentTemplates returns the DocumentTemplates field as a wrapped type, or nil if not set.
+func (r *GetFieldsUsageItemUsage) DocumentTemplates() *GetFieldsUsageItemUsage_DocumentTemplates {
+	if r == nil || r.GetFieldsUsageItemUsage == nil || r.GetFieldsUsageItemUsage.DocumentTemplates == nil {
+		return nil
+	}
+	return &GetFieldsUsageItemUsage_DocumentTemplates{r.GetFieldsUsageItemUsage.DocumentTemplates}
+}
+
 
 // GetFieldsUsageItemUsage_Actions wraps GetFieldsUsageItemUsage_Actions with convenience methods.
 type GetFieldsUsageItemUsage_Actions struct {
@@ -5904,6 +5980,20 @@ func (r *GetFieldsUsageItemUsage_AppHomePages) Count() int {
 }
 
 
+// GetFieldsUsageItemUsage_CustomEmails wraps GetFieldsUsageItemUsage_CustomEmails with convenience methods.
+type GetFieldsUsageItemUsage_CustomEmails struct {
+	*generated.GetFieldsUsageItemUsage_CustomEmails
+}
+
+// Count returns the Count field value, or zero value if nil.
+func (r *GetFieldsUsageItemUsage_CustomEmails) Count() int {
+	if r == nil || r.GetFieldsUsageItemUsage_CustomEmails == nil || r.GetFieldsUsageItemUsage_CustomEmails.Count == nil {
+		return 0
+	}
+	return *r.GetFieldsUsageItemUsage_CustomEmails.Count
+}
+
+
 // GetFieldsUsageItemUsage_DefaultReports wraps GetFieldsUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldsUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldsUsageItemUsage_DefaultReports
@@ -5915,6 +6005,20 @@ func (r *GetFieldsUsageItemUsage_DefaultReports) Count() int {
 		return 0
 	}
 	return r.GetFieldsUsageItemUsage_DefaultReports.Count
+}
+
+
+// GetFieldsUsageItemUsage_DocumentTemplates wraps GetFieldsUsageItemUsage_DocumentTemplates with convenience methods.
+type GetFieldsUsageItemUsage_DocumentTemplates struct {
+	*generated.GetFieldsUsageItemUsage_DocumentTemplates
+}
+
+// Count returns the Count field value, or zero value if nil.
+func (r *GetFieldsUsageItemUsage_DocumentTemplates) Count() int {
+	if r == nil || r.GetFieldsUsageItemUsage_DocumentTemplates == nil || r.GetFieldsUsageItemUsage_DocumentTemplates.Count == nil {
+		return 0
+	}
+	return *r.GetFieldsUsageItemUsage_DocumentTemplates.Count
 }
 
 
@@ -6268,6 +6372,332 @@ func (r *GetRelationshipsRelationshipsItem_SummaryFields_Item) Type() string {
 }
 
 
+// GetReportProperties wraps GetReportProperties with convenience methods.
+type GetReportProperties struct {
+	*generated.GetReportProperties
+}
+
+// AddressFieldId returns the AddressFieldId field value, or zero value if nil.
+func (r *GetReportProperties) AddressFieldId() int {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.AddressFieldId == nil {
+		return 0
+	}
+	return *r.GetReportProperties.AddressFieldId
+}
+
+// Categories returns the Categories field as a wrapped type, or nil if not set.
+func (r *GetReportProperties) Categories() *GetReportProperties_Categories {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.Categories == nil {
+		return nil
+	}
+	return &GetReportProperties_Categories{r.GetReportProperties.Categories}
+}
+
+// ChartType returns the ChartType field value, or zero value if nil.
+func (r *GetReportProperties) ChartType() string {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.ChartType == nil {
+		return ""
+	}
+	return *r.GetReportProperties.ChartType
+}
+
+// ColumnProperties returns the ColumnProperties field as wrapped types, or nil if not set.
+func (r *GetReportProperties) ColumnProperties() []*GetReportProperties_ColumnProperties_Item {
+	if r == nil || r.GetReportProperties == nil {
+		return nil
+	}
+	if r.GetReportProperties.ColumnProperties == nil {
+		return nil
+	}
+	items := make([]*GetReportProperties_ColumnProperties_Item, len(*r.GetReportProperties.ColumnProperties))
+	for i := range *r.GetReportProperties.ColumnProperties {
+		items[i] = &GetReportProperties_ColumnProperties_Item{&(*r.GetReportProperties.ColumnProperties)[i]}
+	}
+	return items
+}
+
+// DataLabel returns the DataLabel field value, or zero value if nil.
+func (r *GetReportProperties) DataLabel() string {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.DataLabel == nil {
+		return ""
+	}
+	return *r.GetReportProperties.DataLabel
+}
+
+// DataSourceLabel returns the DataSourceLabel field value, or zero value if nil.
+func (r *GetReportProperties) DataSourceLabel() string {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.DataSourceLabel == nil {
+		return ""
+	}
+	return *r.GetReportProperties.DataSourceLabel
+}
+
+// DataSources returns the DataSources field as wrapped types, or nil if not set.
+func (r *GetReportProperties) DataSources() []*GetReportProperties_DataSources_Item {
+	if r == nil || r.GetReportProperties == nil {
+		return nil
+	}
+	if r.GetReportProperties.DataSources == nil {
+		return nil
+	}
+	items := make([]*GetReportProperties_DataSources_Item, len(*r.GetReportProperties.DataSources))
+	for i := range *r.GetReportProperties.DataSources {
+		items[i] = &GetReportProperties_DataSources_Item{&(*r.GetReportProperties.DataSources)[i]}
+	}
+	return items
+}
+
+// DisplayOnlyNewOrChangedRecords returns the DisplayOnlyNewOrChangedRecords field value, or zero value if nil.
+func (r *GetReportProperties) DisplayOnlyNewOrChangedRecords() bool {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.DisplayOnlyNewOrChangedRecords == nil {
+		return false
+	}
+	return *r.GetReportProperties.DisplayOnlyNewOrChangedRecords
+}
+
+// Goal returns the Goal field as a wrapped type, or nil if not set.
+func (r *GetReportProperties) Goal() *GetReportProperties_Goal {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.Goal == nil {
+		return nil
+	}
+	return &GetReportProperties_Goal{r.GetReportProperties.Goal}
+}
+
+// MapViewType returns the MapViewType field value, or zero value if nil.
+func (r *GetReportProperties) MapViewType() string {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.MapViewType == nil {
+		return ""
+	}
+	return *r.GetReportProperties.MapViewType
+}
+
+// ShowRowNumbers returns the ShowRowNumbers field value, or zero value if nil.
+func (r *GetReportProperties) ShowRowNumbers() bool {
+	if r == nil || r.GetReportProperties == nil || r.GetReportProperties.ShowRowNumbers == nil {
+		return false
+	}
+	return *r.GetReportProperties.ShowRowNumbers
+}
+
+// SortBy returns the SortBy field as wrapped types, or nil if not set.
+func (r *GetReportProperties) SortBy() []*GetReportProperties_SortBy_Item {
+	if r == nil || r.GetReportProperties == nil {
+		return nil
+	}
+	if r.GetReportProperties.SortBy == nil {
+		return nil
+	}
+	items := make([]*GetReportProperties_SortBy_Item, len(*r.GetReportProperties.SortBy))
+	for i := range *r.GetReportProperties.SortBy {
+		items[i] = &GetReportProperties_SortBy_Item{&(*r.GetReportProperties.SortBy)[i]}
+	}
+	return items
+}
+
+// Summarize returns the Summarize field as wrapped types, or nil if not set.
+func (r *GetReportProperties) Summarize() []*GetReportProperties_Summarize_Item {
+	if r == nil || r.GetReportProperties == nil {
+		return nil
+	}
+	if r.GetReportProperties.Summarize == nil {
+		return nil
+	}
+	items := make([]*GetReportProperties_Summarize_Item, len(*r.GetReportProperties.Summarize))
+	for i := range *r.GetReportProperties.Summarize {
+		items[i] = &GetReportProperties_Summarize_Item{&(*r.GetReportProperties.Summarize)[i]}
+	}
+	return items
+}
+
+
+// GetReportProperties_Categories wraps GetReportProperties_Categories with convenience methods.
+type GetReportProperties_Categories struct {
+	*generated.GetReportProperties_Categories
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportProperties_Categories) FieldId() int {
+	if r == nil || r.GetReportProperties_Categories == nil || r.GetReportProperties_Categories.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportProperties_Categories.FieldId
+}
+
+// Grouping returns the Grouping field value, or zero value if nil.
+func (r *GetReportProperties_Categories) Grouping() string {
+	if r == nil || r.GetReportProperties_Categories == nil || r.GetReportProperties_Categories.Grouping == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Categories.Grouping
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *GetReportProperties_Categories) Label() string {
+	if r == nil || r.GetReportProperties_Categories == nil || r.GetReportProperties_Categories.Label == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Categories.Label
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetReportProperties_Categories) Order() string {
+	if r == nil || r.GetReportProperties_Categories == nil || r.GetReportProperties_Categories.Order == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Categories.Order
+}
+
+
+// GetReportProperties_ColumnProperties_Item wraps GetReportProperties_ColumnProperties_Item with convenience methods.
+type GetReportProperties_ColumnProperties_Item struct {
+	*generated.GetReportProperties_ColumnProperties_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportProperties_ColumnProperties_Item) FieldId() int {
+	if r == nil || r.GetReportProperties_ColumnProperties_Item == nil || r.GetReportProperties_ColumnProperties_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportProperties_ColumnProperties_Item.FieldId
+}
+
+// Justification returns the Justification field value, or zero value if nil.
+func (r *GetReportProperties_ColumnProperties_Item) Justification() float32 {
+	if r == nil || r.GetReportProperties_ColumnProperties_Item == nil || r.GetReportProperties_ColumnProperties_Item.Justification == nil {
+		return 0
+	}
+	return *r.GetReportProperties_ColumnProperties_Item.Justification
+}
+
+// LabelOverride returns the LabelOverride field value, or zero value if nil.
+func (r *GetReportProperties_ColumnProperties_Item) LabelOverride() string {
+	if r == nil || r.GetReportProperties_ColumnProperties_Item == nil || r.GetReportProperties_ColumnProperties_Item.LabelOverride == nil {
+		return ""
+	}
+	return *r.GetReportProperties_ColumnProperties_Item.LabelOverride
+}
+
+// Required returns the Required field value, or zero value if nil.
+func (r *GetReportProperties_ColumnProperties_Item) Required() bool {
+	if r == nil || r.GetReportProperties_ColumnProperties_Item == nil || r.GetReportProperties_ColumnProperties_Item.Required == nil {
+		return false
+	}
+	return *r.GetReportProperties_ColumnProperties_Item.Required
+}
+
+
+// GetReportProperties_DataSources_Item wraps GetReportProperties_DataSources_Item with convenience methods.
+type GetReportProperties_DataSources_Item struct {
+	*generated.GetReportProperties_DataSources_Item
+}
+
+// Aggregation returns the Aggregation field value, or zero value if nil.
+func (r *GetReportProperties_DataSources_Item) Aggregation() string {
+	if r == nil || r.GetReportProperties_DataSources_Item == nil || r.GetReportProperties_DataSources_Item.Aggregation == nil {
+		return ""
+	}
+	return *r.GetReportProperties_DataSources_Item.Aggregation
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportProperties_DataSources_Item) FieldId() int {
+	if r == nil || r.GetReportProperties_DataSources_Item == nil || r.GetReportProperties_DataSources_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportProperties_DataSources_Item.FieldId
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *GetReportProperties_DataSources_Item) Type() string {
+	if r == nil || r.GetReportProperties_DataSources_Item == nil || r.GetReportProperties_DataSources_Item.Type == nil {
+		return ""
+	}
+	return *r.GetReportProperties_DataSources_Item.Type
+}
+
+
+// GetReportProperties_Goal wraps GetReportProperties_Goal with convenience methods.
+type GetReportProperties_Goal struct {
+	*generated.GetReportProperties_Goal
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *GetReportProperties_Goal) Label() string {
+	if r == nil || r.GetReportProperties_Goal == nil || r.GetReportProperties_Goal.Label == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Goal.Label
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *GetReportProperties_Goal) Value() float32 {
+	if r == nil || r.GetReportProperties_Goal == nil || r.GetReportProperties_Goal.Value == nil {
+		return 0
+	}
+	return *r.GetReportProperties_Goal.Value
+}
+
+
+// GetReportProperties_SortBy_Item wraps GetReportProperties_SortBy_Item with convenience methods.
+type GetReportProperties_SortBy_Item struct {
+	*generated.GetReportProperties_SortBy_Item
+}
+
+// By returns the By field value, or zero value if nil.
+func (r *GetReportProperties_SortBy_Item) By() string {
+	if r == nil || r.GetReportProperties_SortBy_Item == nil || r.GetReportProperties_SortBy_Item.By == nil {
+		return ""
+	}
+	return *r.GetReportProperties_SortBy_Item.By
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetReportProperties_SortBy_Item) Order() string {
+	if r == nil || r.GetReportProperties_SortBy_Item == nil || r.GetReportProperties_SortBy_Item.Order == nil {
+		return ""
+	}
+	return *r.GetReportProperties_SortBy_Item.Order
+}
+
+
+// GetReportProperties_Summarize_Item wraps GetReportProperties_Summarize_Item with convenience methods.
+type GetReportProperties_Summarize_Item struct {
+	*generated.GetReportProperties_Summarize_Item
+}
+
+// Aggregation returns the Aggregation field value, or zero value if nil.
+func (r *GetReportProperties_Summarize_Item) Aggregation() string {
+	if r == nil || r.GetReportProperties_Summarize_Item == nil || r.GetReportProperties_Summarize_Item.Aggregation == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Summarize_Item.Aggregation
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportProperties_Summarize_Item) FieldId() int {
+	if r == nil || r.GetReportProperties_Summarize_Item == nil || r.GetReportProperties_Summarize_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportProperties_Summarize_Item.FieldId
+}
+
+// ShowAs returns the ShowAs field value, or zero value if nil.
+func (r *GetReportProperties_Summarize_Item) ShowAs() int {
+	if r == nil || r.GetReportProperties_Summarize_Item == nil || r.GetReportProperties_Summarize_Item.ShowAs == nil {
+		return 0
+	}
+	return *r.GetReportProperties_Summarize_Item.ShowAs
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *GetReportProperties_Summarize_Item) Type() string {
+	if r == nil || r.GetReportProperties_Summarize_Item == nil || r.GetReportProperties_Summarize_Item.Type == nil {
+		return ""
+	}
+	return *r.GetReportProperties_Summarize_Item.Type
+}
+
+
 // GetReportQuery wraps GetReportQuery with convenience methods.
 type GetReportQuery struct {
 	*generated.GetReportQuery
@@ -6300,6 +6730,36 @@ func (r *GetReportQuery) FormulaFields() []*GetReportQuery_FormulaFields_Item {
 	items := make([]*GetReportQuery_FormulaFields_Item, len(*r.GetReportQuery.FormulaFields))
 	for i := range *r.GetReportQuery.FormulaFields {
 		items[i] = &GetReportQuery_FormulaFields_Item{&(*r.GetReportQuery.FormulaFields)[i]}
+	}
+	return items
+}
+
+// GroupBy returns the GroupBy field as wrapped types, or nil if not set.
+func (r *GetReportQuery) GroupBy() []*GetReportQuery_GroupBy_Item {
+	if r == nil || r.GetReportQuery == nil {
+		return nil
+	}
+	if r.GetReportQuery.GroupBy == nil {
+		return nil
+	}
+	items := make([]*GetReportQuery_GroupBy_Item, len(*r.GetReportQuery.GroupBy))
+	for i := range *r.GetReportQuery.GroupBy {
+		items[i] = &GetReportQuery_GroupBy_Item{&(*r.GetReportQuery.GroupBy)[i]}
+	}
+	return items
+}
+
+// SortBy returns the SortBy field as wrapped types, or nil if not set.
+func (r *GetReportQuery) SortBy() []*GetReportQuery_SortBy_Item {
+	if r == nil || r.GetReportQuery == nil {
+		return nil
+	}
+	if r.GetReportQuery.SortBy == nil {
+		return nil
+	}
+	items := make([]*GetReportQuery_SortBy_Item, len(*r.GetReportQuery.SortBy))
+	for i := range *r.GetReportQuery.SortBy {
+		items[i] = &GetReportQuery_SortBy_Item{&(*r.GetReportQuery.SortBy)[i]}
 	}
 	return items
 }
@@ -6359,6 +6819,50 @@ func (r *GetReportQuery_FormulaFields_Item) Label() string {
 }
 
 
+// GetReportQuery_GroupBy_Item wraps GetReportQuery_GroupBy_Item with convenience methods.
+type GetReportQuery_GroupBy_Item struct {
+	*generated.GetReportQuery_GroupBy_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportQuery_GroupBy_Item) FieldId() int {
+	if r == nil || r.GetReportQuery_GroupBy_Item == nil || r.GetReportQuery_GroupBy_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportQuery_GroupBy_Item.FieldId
+}
+
+// Grouping returns the Grouping field value, or zero value if nil.
+func (r *GetReportQuery_GroupBy_Item) Grouping() string {
+	if r == nil || r.GetReportQuery_GroupBy_Item == nil || r.GetReportQuery_GroupBy_Item.Grouping == nil {
+		return ""
+	}
+	return *r.GetReportQuery_GroupBy_Item.Grouping
+}
+
+
+// GetReportQuery_SortBy_Item wraps GetReportQuery_SortBy_Item with convenience methods.
+type GetReportQuery_SortBy_Item struct {
+	*generated.GetReportQuery_SortBy_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetReportQuery_SortBy_Item) FieldId() int {
+	if r == nil || r.GetReportQuery_SortBy_Item == nil || r.GetReportQuery_SortBy_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetReportQuery_SortBy_Item.FieldId
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetReportQuery_SortBy_Item) Order() string {
+	if r == nil || r.GetReportQuery_SortBy_Item == nil || r.GetReportQuery_SortBy_Item.Order == nil {
+		return ""
+	}
+	return *r.GetReportQuery_SortBy_Item.Order
+}
+
+
 // GetRolesItemAccess wraps GetRolesItemAccess with convenience methods.
 type GetRolesItemAccess struct {
 	*generated.GetRolesItemAccess
@@ -6378,6 +6882,332 @@ func (r *GetRolesItemAccess) Type() string {
 		return ""
 	}
 	return string(*r.GetRolesItemAccess.Type)
+}
+
+
+// GetTableReportsItemProperties wraps GetTableReportsItemProperties with convenience methods.
+type GetTableReportsItemProperties struct {
+	*generated.GetTableReportsItemProperties
+}
+
+// AddressFieldId returns the AddressFieldId field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) AddressFieldId() int {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.AddressFieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties.AddressFieldId
+}
+
+// Categories returns the Categories field as a wrapped type, or nil if not set.
+func (r *GetTableReportsItemProperties) Categories() *GetTableReportsItemProperties_Categories {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.Categories == nil {
+		return nil
+	}
+	return &GetTableReportsItemProperties_Categories{r.GetTableReportsItemProperties.Categories}
+}
+
+// ChartType returns the ChartType field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) ChartType() string {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.ChartType == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties.ChartType
+}
+
+// ColumnProperties returns the ColumnProperties field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemProperties) ColumnProperties() []*GetTableReportsItemProperties_ColumnProperties_Item {
+	if r == nil || r.GetTableReportsItemProperties == nil {
+		return nil
+	}
+	if r.GetTableReportsItemProperties.ColumnProperties == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemProperties_ColumnProperties_Item, len(*r.GetTableReportsItemProperties.ColumnProperties))
+	for i := range *r.GetTableReportsItemProperties.ColumnProperties {
+		items[i] = &GetTableReportsItemProperties_ColumnProperties_Item{&(*r.GetTableReportsItemProperties.ColumnProperties)[i]}
+	}
+	return items
+}
+
+// DataLabel returns the DataLabel field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) DataLabel() string {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.DataLabel == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties.DataLabel
+}
+
+// DataSourceLabel returns the DataSourceLabel field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) DataSourceLabel() string {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.DataSourceLabel == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties.DataSourceLabel
+}
+
+// DataSources returns the DataSources field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemProperties) DataSources() []*GetTableReportsItemProperties_DataSources_Item {
+	if r == nil || r.GetTableReportsItemProperties == nil {
+		return nil
+	}
+	if r.GetTableReportsItemProperties.DataSources == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemProperties_DataSources_Item, len(*r.GetTableReportsItemProperties.DataSources))
+	for i := range *r.GetTableReportsItemProperties.DataSources {
+		items[i] = &GetTableReportsItemProperties_DataSources_Item{&(*r.GetTableReportsItemProperties.DataSources)[i]}
+	}
+	return items
+}
+
+// DisplayOnlyNewOrChangedRecords returns the DisplayOnlyNewOrChangedRecords field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) DisplayOnlyNewOrChangedRecords() bool {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.DisplayOnlyNewOrChangedRecords == nil {
+		return false
+	}
+	return *r.GetTableReportsItemProperties.DisplayOnlyNewOrChangedRecords
+}
+
+// Goal returns the Goal field as a wrapped type, or nil if not set.
+func (r *GetTableReportsItemProperties) Goal() *GetTableReportsItemProperties_Goal {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.Goal == nil {
+		return nil
+	}
+	return &GetTableReportsItemProperties_Goal{r.GetTableReportsItemProperties.Goal}
+}
+
+// MapViewType returns the MapViewType field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) MapViewType() string {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.MapViewType == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties.MapViewType
+}
+
+// ShowRowNumbers returns the ShowRowNumbers field value, or zero value if nil.
+func (r *GetTableReportsItemProperties) ShowRowNumbers() bool {
+	if r == nil || r.GetTableReportsItemProperties == nil || r.GetTableReportsItemProperties.ShowRowNumbers == nil {
+		return false
+	}
+	return *r.GetTableReportsItemProperties.ShowRowNumbers
+}
+
+// SortBy returns the SortBy field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemProperties) SortBy() []*GetTableReportsItemProperties_SortBy_Item {
+	if r == nil || r.GetTableReportsItemProperties == nil {
+		return nil
+	}
+	if r.GetTableReportsItemProperties.SortBy == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemProperties_SortBy_Item, len(*r.GetTableReportsItemProperties.SortBy))
+	for i := range *r.GetTableReportsItemProperties.SortBy {
+		items[i] = &GetTableReportsItemProperties_SortBy_Item{&(*r.GetTableReportsItemProperties.SortBy)[i]}
+	}
+	return items
+}
+
+// Summarize returns the Summarize field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemProperties) Summarize() []*GetTableReportsItemProperties_Summarize_Item {
+	if r == nil || r.GetTableReportsItemProperties == nil {
+		return nil
+	}
+	if r.GetTableReportsItemProperties.Summarize == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemProperties_Summarize_Item, len(*r.GetTableReportsItemProperties.Summarize))
+	for i := range *r.GetTableReportsItemProperties.Summarize {
+		items[i] = &GetTableReportsItemProperties_Summarize_Item{&(*r.GetTableReportsItemProperties.Summarize)[i]}
+	}
+	return items
+}
+
+
+// GetTableReportsItemProperties_Categories wraps GetTableReportsItemProperties_Categories with convenience methods.
+type GetTableReportsItemProperties_Categories struct {
+	*generated.GetTableReportsItemProperties_Categories
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Categories) FieldId() int {
+	if r == nil || r.GetTableReportsItemProperties_Categories == nil || r.GetTableReportsItemProperties_Categories.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_Categories.FieldId
+}
+
+// Grouping returns the Grouping field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Categories) Grouping() string {
+	if r == nil || r.GetTableReportsItemProperties_Categories == nil || r.GetTableReportsItemProperties_Categories.Grouping == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Categories.Grouping
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Categories) Label() string {
+	if r == nil || r.GetTableReportsItemProperties_Categories == nil || r.GetTableReportsItemProperties_Categories.Label == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Categories.Label
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Categories) Order() string {
+	if r == nil || r.GetTableReportsItemProperties_Categories == nil || r.GetTableReportsItemProperties_Categories.Order == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Categories.Order
+}
+
+
+// GetTableReportsItemProperties_ColumnProperties_Item wraps GetTableReportsItemProperties_ColumnProperties_Item with convenience methods.
+type GetTableReportsItemProperties_ColumnProperties_Item struct {
+	*generated.GetTableReportsItemProperties_ColumnProperties_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_ColumnProperties_Item) FieldId() int {
+	if r == nil || r.GetTableReportsItemProperties_ColumnProperties_Item == nil || r.GetTableReportsItemProperties_ColumnProperties_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_ColumnProperties_Item.FieldId
+}
+
+// Justification returns the Justification field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_ColumnProperties_Item) Justification() float32 {
+	if r == nil || r.GetTableReportsItemProperties_ColumnProperties_Item == nil || r.GetTableReportsItemProperties_ColumnProperties_Item.Justification == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_ColumnProperties_Item.Justification
+}
+
+// LabelOverride returns the LabelOverride field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_ColumnProperties_Item) LabelOverride() string {
+	if r == nil || r.GetTableReportsItemProperties_ColumnProperties_Item == nil || r.GetTableReportsItemProperties_ColumnProperties_Item.LabelOverride == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_ColumnProperties_Item.LabelOverride
+}
+
+// Required returns the Required field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_ColumnProperties_Item) Required() bool {
+	if r == nil || r.GetTableReportsItemProperties_ColumnProperties_Item == nil || r.GetTableReportsItemProperties_ColumnProperties_Item.Required == nil {
+		return false
+	}
+	return *r.GetTableReportsItemProperties_ColumnProperties_Item.Required
+}
+
+
+// GetTableReportsItemProperties_DataSources_Item wraps GetTableReportsItemProperties_DataSources_Item with convenience methods.
+type GetTableReportsItemProperties_DataSources_Item struct {
+	*generated.GetTableReportsItemProperties_DataSources_Item
+}
+
+// Aggregation returns the Aggregation field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_DataSources_Item) Aggregation() string {
+	if r == nil || r.GetTableReportsItemProperties_DataSources_Item == nil || r.GetTableReportsItemProperties_DataSources_Item.Aggregation == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_DataSources_Item.Aggregation
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_DataSources_Item) FieldId() int {
+	if r == nil || r.GetTableReportsItemProperties_DataSources_Item == nil || r.GetTableReportsItemProperties_DataSources_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_DataSources_Item.FieldId
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_DataSources_Item) Type() string {
+	if r == nil || r.GetTableReportsItemProperties_DataSources_Item == nil || r.GetTableReportsItemProperties_DataSources_Item.Type == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_DataSources_Item.Type
+}
+
+
+// GetTableReportsItemProperties_Goal wraps GetTableReportsItemProperties_Goal with convenience methods.
+type GetTableReportsItemProperties_Goal struct {
+	*generated.GetTableReportsItemProperties_Goal
+}
+
+// Label returns the Label field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Goal) Label() string {
+	if r == nil || r.GetTableReportsItemProperties_Goal == nil || r.GetTableReportsItemProperties_Goal.Label == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Goal.Label
+}
+
+// Value returns the Value field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Goal) Value() float32 {
+	if r == nil || r.GetTableReportsItemProperties_Goal == nil || r.GetTableReportsItemProperties_Goal.Value == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_Goal.Value
+}
+
+
+// GetTableReportsItemProperties_SortBy_Item wraps GetTableReportsItemProperties_SortBy_Item with convenience methods.
+type GetTableReportsItemProperties_SortBy_Item struct {
+	*generated.GetTableReportsItemProperties_SortBy_Item
+}
+
+// By returns the By field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_SortBy_Item) By() string {
+	if r == nil || r.GetTableReportsItemProperties_SortBy_Item == nil || r.GetTableReportsItemProperties_SortBy_Item.By == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_SortBy_Item.By
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_SortBy_Item) Order() string {
+	if r == nil || r.GetTableReportsItemProperties_SortBy_Item == nil || r.GetTableReportsItemProperties_SortBy_Item.Order == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_SortBy_Item.Order
+}
+
+
+// GetTableReportsItemProperties_Summarize_Item wraps GetTableReportsItemProperties_Summarize_Item with convenience methods.
+type GetTableReportsItemProperties_Summarize_Item struct {
+	*generated.GetTableReportsItemProperties_Summarize_Item
+}
+
+// Aggregation returns the Aggregation field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Summarize_Item) Aggregation() string {
+	if r == nil || r.GetTableReportsItemProperties_Summarize_Item == nil || r.GetTableReportsItemProperties_Summarize_Item.Aggregation == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Summarize_Item.Aggregation
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Summarize_Item) FieldId() int {
+	if r == nil || r.GetTableReportsItemProperties_Summarize_Item == nil || r.GetTableReportsItemProperties_Summarize_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_Summarize_Item.FieldId
+}
+
+// ShowAs returns the ShowAs field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Summarize_Item) ShowAs() int {
+	if r == nil || r.GetTableReportsItemProperties_Summarize_Item == nil || r.GetTableReportsItemProperties_Summarize_Item.ShowAs == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemProperties_Summarize_Item.ShowAs
+}
+
+// Type returns the Type field value, or zero value if nil.
+func (r *GetTableReportsItemProperties_Summarize_Item) Type() string {
+	if r == nil || r.GetTableReportsItemProperties_Summarize_Item == nil || r.GetTableReportsItemProperties_Summarize_Item.Type == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemProperties_Summarize_Item.Type
 }
 
 
@@ -6413,6 +7243,36 @@ func (r *GetTableReportsItemQuery) FormulaFields() []*GetTableReportsItemQuery_F
 	items := make([]*GetTableReportsItemQuery_FormulaFields_Item, len(*r.GetTableReportsItemQuery.FormulaFields))
 	for i := range *r.GetTableReportsItemQuery.FormulaFields {
 		items[i] = &GetTableReportsItemQuery_FormulaFields_Item{&(*r.GetTableReportsItemQuery.FormulaFields)[i]}
+	}
+	return items
+}
+
+// GroupBy returns the GroupBy field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemQuery) GroupBy() []*GetTableReportsItemQuery_GroupBy_Item {
+	if r == nil || r.GetTableReportsItemQuery == nil {
+		return nil
+	}
+	if r.GetTableReportsItemQuery.GroupBy == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemQuery_GroupBy_Item, len(*r.GetTableReportsItemQuery.GroupBy))
+	for i := range *r.GetTableReportsItemQuery.GroupBy {
+		items[i] = &GetTableReportsItemQuery_GroupBy_Item{&(*r.GetTableReportsItemQuery.GroupBy)[i]}
+	}
+	return items
+}
+
+// SortBy returns the SortBy field as wrapped types, or nil if not set.
+func (r *GetTableReportsItemQuery) SortBy() []*GetTableReportsItemQuery_SortBy_Item {
+	if r == nil || r.GetTableReportsItemQuery == nil {
+		return nil
+	}
+	if r.GetTableReportsItemQuery.SortBy == nil {
+		return nil
+	}
+	items := make([]*GetTableReportsItemQuery_SortBy_Item, len(*r.GetTableReportsItemQuery.SortBy))
+	for i := range *r.GetTableReportsItemQuery.SortBy {
+		items[i] = &GetTableReportsItemQuery_SortBy_Item{&(*r.GetTableReportsItemQuery.SortBy)[i]}
 	}
 	return items
 }
@@ -6469,6 +7329,50 @@ func (r *GetTableReportsItemQuery_FormulaFields_Item) Label() string {
 		return ""
 	}
 	return *r.GetTableReportsItemQuery_FormulaFields_Item.Label
+}
+
+
+// GetTableReportsItemQuery_GroupBy_Item wraps GetTableReportsItemQuery_GroupBy_Item with convenience methods.
+type GetTableReportsItemQuery_GroupBy_Item struct {
+	*generated.GetTableReportsItemQuery_GroupBy_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemQuery_GroupBy_Item) FieldId() int {
+	if r == nil || r.GetTableReportsItemQuery_GroupBy_Item == nil || r.GetTableReportsItemQuery_GroupBy_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemQuery_GroupBy_Item.FieldId
+}
+
+// Grouping returns the Grouping field value, or zero value if nil.
+func (r *GetTableReportsItemQuery_GroupBy_Item) Grouping() string {
+	if r == nil || r.GetTableReportsItemQuery_GroupBy_Item == nil || r.GetTableReportsItemQuery_GroupBy_Item.Grouping == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemQuery_GroupBy_Item.Grouping
+}
+
+
+// GetTableReportsItemQuery_SortBy_Item wraps GetTableReportsItemQuery_SortBy_Item with convenience methods.
+type GetTableReportsItemQuery_SortBy_Item struct {
+	*generated.GetTableReportsItemQuery_SortBy_Item
+}
+
+// FieldId returns the FieldId field value, or zero value if nil.
+func (r *GetTableReportsItemQuery_SortBy_Item) FieldId() int {
+	if r == nil || r.GetTableReportsItemQuery_SortBy_Item == nil || r.GetTableReportsItemQuery_SortBy_Item.FieldId == nil {
+		return 0
+	}
+	return *r.GetTableReportsItemQuery_SortBy_Item.FieldId
+}
+
+// Order returns the Order field value, or zero value if nil.
+func (r *GetTableReportsItemQuery_SortBy_Item) Order() string {
+	if r == nil || r.GetTableReportsItemQuery_SortBy_Item == nil || r.GetTableReportsItemQuery_SortBy_Item.Order == nil {
+		return ""
+	}
+	return *r.GetTableReportsItemQuery_SortBy_Item.Order
 }
 
 
