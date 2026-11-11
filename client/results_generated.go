@@ -1549,6 +1549,14 @@ func (r *ReportResult) Id() string {
 	return *r.resp.JSON200.Id
 }
 
+// Incomplete returns the Incomplete field value, or zero value if nil.
+func (r *ReportResult) Incomplete() bool {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Incomplete == nil {
+		return false
+	}
+	return *r.resp.JSON200.Incomplete
+}
+
 // Name returns the Name field value, or zero value if nil.
 func (r *ReportResult) Name() string {
 	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
@@ -3084,6 +3092,14 @@ func (r *TableReportsItem) Id() string {
 	return *r.GetTableReportsItem.Id
 }
 
+// Incomplete returns the Incomplete field value, or zero value if nil.
+func (r *TableReportsItem) Incomplete() bool {
+	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Incomplete == nil {
+		return false
+	}
+	return *r.GetTableReportsItem.Incomplete
+}
+
 // Name returns the Name field value, or zero value if nil.
 func (r *TableReportsItem) Name() string {
 	if r == nil || r.GetTableReportsItem == nil || r.GetTableReportsItem.Name == nil {
@@ -4568,6 +4584,14 @@ func (r *GetFieldProperties) Exact() bool {
 	return *r.GetFieldProperties.Exact
 }
 
+// FieldCaching returns the FieldCaching field value, or zero value if nil.
+func (r *GetFieldProperties) FieldCaching() bool {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.FieldCaching == nil {
+		return false
+	}
+	return *r.GetFieldProperties.FieldCaching
+}
+
 // ForeignKey returns the ForeignKey field value, or zero value if nil.
 func (r *GetFieldProperties) ForeignKey() bool {
 	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.ForeignKey == nil {
@@ -4648,6 +4672,22 @@ func (r *GetFieldProperties) MasterChoiceTableId() string {
 	return *r.GetFieldProperties.MasterChoiceTableId
 }
 
+// MasterTableId returns the MasterTableId field value, or zero value if nil.
+func (r *GetFieldProperties) MasterTableId() string {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.MasterTableId == nil {
+		return ""
+	}
+	return *r.GetFieldProperties.MasterTableId
+}
+
+// MasterTableKeyFid returns the MasterTableKeyFid field value, or zero value if nil.
+func (r *GetFieldProperties) MasterTableKeyFid() int {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.MasterTableKeyFid == nil {
+		return 0
+	}
+	return *r.GetFieldProperties.MasterTableKeyFid
+}
+
 // MasterTableTag returns the MasterTableTag field value, or zero value if nil.
 func (r *GetFieldProperties) MasterTableTag() string {
 	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.MasterTableTag == nil {
@@ -4688,6 +4728,14 @@ func (r *GetFieldProperties) NumberFormat() int {
 	return *r.GetFieldProperties.NumberFormat
 }
 
+// OpenTargetIn returns the OpenTargetIn field value, or zero value if nil.
+func (r *GetFieldProperties) OpenTargetIn() string {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.OpenTargetIn == nil {
+		return ""
+	}
+	return *r.GetFieldProperties.OpenTargetIn
+}
+
 // ParentFieldId returns the ParentFieldId field value, or zero value if nil.
 func (r *GetFieldProperties) ParentFieldId() int {
 	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.ParentFieldId == nil {
@@ -4702,6 +4750,14 @@ func (r *GetFieldProperties) PostTempToken() bool {
 		return false
 	}
 	return *r.GetFieldProperties.PostTempToken
+}
+
+// PrimaryKey returns the PrimaryKey field value, or zero value if nil.
+func (r *GetFieldProperties) PrimaryKey() bool {
+	if r == nil || r.GetFieldProperties == nil || r.GetFieldProperties.PrimaryKey == nil {
+		return false
+	}
+	return *r.GetFieldProperties.PrimaryKey
 }
 
 // SeeVersions returns the SeeVersions field value, or zero value if nil.
@@ -5441,6 +5497,14 @@ func (r *GetFieldsItemProperties) Exact() bool {
 	return *r.GetFieldsItemProperties.Exact
 }
 
+// FieldCaching returns the FieldCaching field value, or zero value if nil.
+func (r *GetFieldsItemProperties) FieldCaching() bool {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.FieldCaching == nil {
+		return false
+	}
+	return *r.GetFieldsItemProperties.FieldCaching
+}
+
 // ForeignKey returns the ForeignKey field value, or zero value if nil.
 func (r *GetFieldsItemProperties) ForeignKey() bool {
 	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.ForeignKey == nil {
@@ -5521,6 +5585,22 @@ func (r *GetFieldsItemProperties) MasterChoiceTableId() string {
 	return *r.GetFieldsItemProperties.MasterChoiceTableId
 }
 
+// MasterTableId returns the MasterTableId field value, or zero value if nil.
+func (r *GetFieldsItemProperties) MasterTableId() string {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.MasterTableId == nil {
+		return ""
+	}
+	return *r.GetFieldsItemProperties.MasterTableId
+}
+
+// MasterTableKeyFid returns the MasterTableKeyFid field value, or zero value if nil.
+func (r *GetFieldsItemProperties) MasterTableKeyFid() int {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.MasterTableKeyFid == nil {
+		return 0
+	}
+	return *r.GetFieldsItemProperties.MasterTableKeyFid
+}
+
 // MasterTableTag returns the MasterTableTag field value, or zero value if nil.
 func (r *GetFieldsItemProperties) MasterTableTag() string {
 	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.MasterTableTag == nil {
@@ -5561,6 +5641,14 @@ func (r *GetFieldsItemProperties) NumberFormat() int {
 	return *r.GetFieldsItemProperties.NumberFormat
 }
 
+// OpenTargetIn returns the OpenTargetIn field value, or zero value if nil.
+func (r *GetFieldsItemProperties) OpenTargetIn() string {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.OpenTargetIn == nil {
+		return ""
+	}
+	return *r.GetFieldsItemProperties.OpenTargetIn
+}
+
 // ParentFieldId returns the ParentFieldId field value, or zero value if nil.
 func (r *GetFieldsItemProperties) ParentFieldId() int {
 	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.ParentFieldId == nil {
@@ -5575,6 +5663,14 @@ func (r *GetFieldsItemProperties) PostTempToken() bool {
 		return false
 	}
 	return *r.GetFieldsItemProperties.PostTempToken
+}
+
+// PrimaryKey returns the PrimaryKey field value, or zero value if nil.
+func (r *GetFieldsItemProperties) PrimaryKey() bool {
+	if r == nil || r.GetFieldsItemProperties == nil || r.GetFieldsItemProperties.PrimaryKey == nil {
+		return false
+	}
+	return *r.GetFieldsItemProperties.PrimaryKey
 }
 
 // SeeVersions returns the SeeVersions field value, or zero value if nil.
@@ -6177,6 +6273,14 @@ type GetReportQuery struct {
 	*generated.GetReportQuery
 }
 
+// Fields returns the Fields field value, or nil if not set.
+func (r *GetReportQuery) Fields() []int {
+	if r == nil || r.GetReportQuery == nil || r.GetReportQuery.Fields == nil {
+		return nil
+	}
+	return *r.GetReportQuery.Fields
+}
+
 // Filter returns the Filter field value, or zero value if nil.
 func (r *GetReportQuery) Filter() string {
 	if r == nil || r.GetReportQuery == nil || r.GetReportQuery.Filter == nil {
@@ -6280,6 +6384,14 @@ func (r *GetRolesItemAccess) Type() string {
 // GetTableReportsItemQuery wraps GetTableReportsItemQuery with convenience methods.
 type GetTableReportsItemQuery struct {
 	*generated.GetTableReportsItemQuery
+}
+
+// Fields returns the Fields field value, or nil if not set.
+func (r *GetTableReportsItemQuery) Fields() []int {
+	if r == nil || r.GetTableReportsItemQuery == nil || r.GetTableReportsItemQuery.Fields == nil {
+		return nil
+	}
+	return *r.GetTableReportsItemQuery.Fields
 }
 
 // Filter returns the Filter field value, or zero value if nil.

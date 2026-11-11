@@ -35,3 +35,26 @@ func TestFieldsItem_SummaryQuery(t *testing.T) {
 		t.Errorf("unfiltered SummaryQuery() = %q, want empty", got)
 	}
 }
+
+// A reference field's parent table comes back as masterTableId; the
+// documented masterChoiceTableId is absent.
+func TestFieldsItem_ReferenceFieldParent(t *testing.T) {
+	body := `[{"id": 8, "label": "Related Project", "fieldType": "numeric", "mode": "",
+		"properties": {"foreignKey": true, "masterTableId": "bqparent1", "masterTableKeyFid": 3,
+		               "fieldCaching": true, "openTargetIn": "sameWindow", "primaryKey": false}}]`
+
+	var items []generated.GetFieldsItem
+	if err := json.Unmarshal([]byte(body), &items); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+	props := (&FieldsItem{&items[0]}).Properties()
+	if got := props.MasterTableId(); got != "bqparent1" {
+		t.Errorf("MasterTableId() = %q, want bqparent1", got)
+	}
+	if got := props.MasterTableKeyFid(); got != 3 {
+		t.Errorf("MasterTableKeyFid() = %d, want 3", got)
+	}
+	if len(props.AdditionalProperties) != 0 {
+		t.Errorf("AdditionalProperties = %v, want every property typed", props.AdditionalProperties)
+	}
+}

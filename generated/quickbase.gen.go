@@ -1238,6 +1238,9 @@ type GetFieldProperties struct {
 	// Exact Whether an exact match is required for a report link.
 	Exact *bool `json:"exact,omitempty"`
 
+	// FieldCaching For a reference field: whether lookup values through it are cached.
+	FieldCaching *bool `json:"fieldCaching,omitempty"`
+
 	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
 	ForeignKey *bool `json:"foreignKey,omitempty"`
 
@@ -1268,6 +1271,12 @@ type GetFieldProperties struct {
 	// MasterChoiceTableId The id of the table that is the master in this relationship.
 	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
 
+	// MasterTableId For a reference field: the id of the parent table in its relationship.
+	MasterTableId *string `json:"masterTableId,omitempty"`
+
+	// MasterTableKeyFid For a reference field: the parent table's key field id.
+	MasterTableKeyFid *int `json:"masterTableKeyFid,omitempty"`
+
 	// MasterTableTag The table alias for the master table in the relationship this field is part of.
 	MasterTableTag *string `json:"masterTableTag,omitempty"`
 
@@ -1283,11 +1292,17 @@ type GetFieldProperties struct {
 	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
 	NumberFormat *int `json:"numberFormat,omitempty"`
 
+	// OpenTargetIn For a reference field: where the parent record opens when the link is followed.
+	OpenTargetIn *string `json:"openTargetIn,omitempty"`
+
 	// ParentFieldId The id of the parent composite field, when applicable.
 	ParentFieldId *int `json:"parentFieldId,omitempty"`
 
 	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
 	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// PrimaryKey Whether the field is the table's key field.
+	PrimaryKey *bool `json:"primaryKey,omitempty"`
 
 	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
 	SeeVersions *bool `json:"seeVersions,omitempty"`
@@ -1402,6 +1417,11 @@ type GetFieldUsageItemUsage struct {
 	// AppHomePages The number of app home pages where the given field is referenced.
 	AppHomePages GetFieldUsageItemUsage_AppHomePages `json:"appHomePages"`
 
+	// CustomEmails Custom emails that use the field.
+	CustomEmails *struct {
+		Count *int `json:"count,omitempty"`
+	} `json:"customEmails,omitempty"`
+
 	// Dashboards The number of dashboards where the given field is referenced.
 	Dashboards struct {
 		// Count the number of times a field has been used for the given item.
@@ -1410,6 +1430,11 @@ type GetFieldUsageItemUsage struct {
 
 	// DefaultReports The number of default reports where the given field is referenced.
 	DefaultReports GetFieldUsageItemUsage_DefaultReports `json:"defaultReports"`
+
+	// DocumentTemplates Document templates that use the field.
+	DocumentTemplates *struct {
+		Count *int `json:"count,omitempty"`
+	} `json:"documentTemplates,omitempty"`
 
 	// ExactForms The number of exact forms where the given field is referenced.
 	ExactForms GetFieldUsageItemUsage_ExactForms `json:"exactForms"`
@@ -1730,6 +1755,9 @@ type GetFieldsItemProperties struct {
 	// Exact Whether an exact match is required for a report link.
 	Exact *bool `json:"exact,omitempty"`
 
+	// FieldCaching For a reference field: whether lookup values through it are cached.
+	FieldCaching *bool `json:"fieldCaching,omitempty"`
+
 	// ForeignKey Indicates if the field is a foreign key (or reference field) in a relationship.
 	ForeignKey *bool `json:"foreignKey,omitempty"`
 
@@ -1760,6 +1788,12 @@ type GetFieldsItemProperties struct {
 	// MasterChoiceTableId The id of the table that is the master in this relationship.
 	MasterChoiceTableId *string `json:"masterChoiceTableId,omitempty"`
 
+	// MasterTableId For a reference field: the id of the parent table in its relationship.
+	MasterTableId *string `json:"masterTableId,omitempty"`
+
+	// MasterTableKeyFid For a reference field: the parent table's key field id.
+	MasterTableKeyFid *int `json:"masterTableKeyFid,omitempty"`
+
 	// MasterTableTag The table alias for the master table in the relationship this field is part of.
 	MasterTableTag *string `json:"masterTableTag,omitempty"`
 
@@ -1775,11 +1809,17 @@ type GetFieldsItemProperties struct {
 	// NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
 	NumberFormat *int `json:"numberFormat,omitempty"`
 
+	// OpenTargetIn For a reference field: where the parent record opens when the link is followed.
+	OpenTargetIn *string `json:"openTargetIn,omitempty"`
+
 	// ParentFieldId The id of the parent composite field, when applicable.
 	ParentFieldId *int `json:"parentFieldId,omitempty"`
 
 	// PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
 	PostTempToken *bool `json:"postTempToken,omitempty"`
+
+	// PrimaryKey Whether the field is the table's key field.
+	PrimaryKey *bool `json:"primaryKey,omitempty"`
 
 	// SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
 	SeeVersions *bool `json:"seeVersions,omitempty"`
@@ -1894,6 +1934,11 @@ type GetFieldsUsageItemUsage struct {
 	// AppHomePages The number of app home pages where the given field is referenced.
 	AppHomePages GetFieldsUsageItemUsage_AppHomePages `json:"appHomePages"`
 
+	// CustomEmails Custom emails that use the field.
+	CustomEmails *struct {
+		Count *int `json:"count,omitempty"`
+	} `json:"customEmails,omitempty"`
+
 	// Dashboards The number of dashboards where the given field is referenced.
 	Dashboards struct {
 		// Count the number of times a field has been used for the given item.
@@ -1902,6 +1947,11 @@ type GetFieldsUsageItemUsage struct {
 
 	// DefaultReports The number of default reports where the given field is referenced.
 	DefaultReports GetFieldsUsageItemUsage_DefaultReports `json:"defaultReports"`
+
+	// DocumentTemplates Document templates that use the field.
+	DocumentTemplates *struct {
+		Count *int `json:"count,omitempty"`
+	} `json:"documentTemplates,omitempty"`
 
 	// ExactForms The number of exact forms where the given field is referenced.
 	ExactForms GetFieldsUsageItemUsage_ExactForms `json:"exactForms"`
@@ -2127,11 +2177,26 @@ type GetRelationshipsRelationshipsItem_SummaryFields_Item struct {
 
 // GetReportQuery The query definition as configured in Quickbase that gets executed when the report is run.
 type GetReportQuery struct {
+	// Fields The report's columns, as field ids in display order.
+	Fields *[]int `json:"fields,omitempty"`
+
 	// Filter Filter used to query for data.
 	Filter *string `json:"filter,omitempty"`
 
 	// FormulaFields Calculated formula fields.
 	FormulaFields *[]GetReportQuery_FormulaFields_Item `json:"formulaFields,omitempty"`
+
+	// GroupBy Fields the report groups by.
+	GroupBy *[]struct {
+		FieldId  *int    `json:"fieldId,omitempty"`
+		Grouping *string `json:"grouping,omitempty"`
+	} `json:"groupBy,omitempty"`
+
+	// SortBy Fields the report sorts by.
+	SortBy *[]struct {
+		FieldId *int    `json:"fieldId,omitempty"`
+		Order   *string `json:"order,omitempty"`
+	} `json:"sortBy,omitempty"`
 
 	// TableId The table identifier for the report.
 	TableId              *string                `json:"tableId,omitempty"`
@@ -2194,6 +2259,9 @@ type GetTableReportsItem struct {
 	// Id The identifier of the report, unique to the table.
 	Id *string `json:"id,omitempty"`
 
+	// Incomplete Whether the report definition could not be fully returned.
+	Incomplete *bool `json:"incomplete,omitempty"`
+
 	// Name The configured name of the report.
 	Name *string `json:"name,omitempty"`
 
@@ -2219,11 +2287,26 @@ type GetTableReportsItem struct {
 
 // GetTableReportsItemQuery The query definition as configured in Quickbase that gets executed when the report is run.
 type GetTableReportsItemQuery struct {
+	// Fields The report's columns, as field ids in display order.
+	Fields *[]int `json:"fields,omitempty"`
+
 	// Filter Filter used to query for data.
 	Filter *string `json:"filter,omitempty"`
 
 	// FormulaFields Calculated formula fields.
 	FormulaFields *[]GetTableReportsItemQuery_FormulaFields_Item `json:"formulaFields,omitempty"`
+
+	// GroupBy Fields the report groups by.
+	GroupBy *[]struct {
+		FieldId  *int    `json:"fieldId,omitempty"`
+		Grouping *string `json:"grouping,omitempty"`
+	} `json:"groupBy,omitempty"`
+
+	// SortBy Fields the report sorts by.
+	SortBy *[]struct {
+		FieldId *int    `json:"fieldId,omitempty"`
+		Order   *string `json:"order,omitempty"`
+	} `json:"sortBy,omitempty"`
 
 	// TableId The table identifier for the report.
 	TableId              *string                `json:"tableId,omitempty"`
@@ -9036,6 +9119,14 @@ func (a *GetFieldProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "exact")
 	}
 
+	if raw, found := object["fieldCaching"]; found {
+		err = json.Unmarshal(raw, &a.FieldCaching)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldCaching': %w", err)
+		}
+		delete(object, "fieldCaching")
+	}
+
 	if raw, found := object["foreignKey"]; found {
 		err = json.Unmarshal(raw, &a.ForeignKey)
 		if err != nil {
@@ -9116,6 +9207,22 @@ func (a *GetFieldProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "masterChoiceTableId")
 	}
 
+	if raw, found := object["masterTableId"]; found {
+		err = json.Unmarshal(raw, &a.MasterTableId)
+		if err != nil {
+			return fmt.Errorf("error reading 'masterTableId': %w", err)
+		}
+		delete(object, "masterTableId")
+	}
+
+	if raw, found := object["masterTableKeyFid"]; found {
+		err = json.Unmarshal(raw, &a.MasterTableKeyFid)
+		if err != nil {
+			return fmt.Errorf("error reading 'masterTableKeyFid': %w", err)
+		}
+		delete(object, "masterTableKeyFid")
+	}
+
 	if raw, found := object["masterTableTag"]; found {
 		err = json.Unmarshal(raw, &a.MasterTableTag)
 		if err != nil {
@@ -9156,6 +9263,14 @@ func (a *GetFieldProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "numberFormat")
 	}
 
+	if raw, found := object["openTargetIn"]; found {
+		err = json.Unmarshal(raw, &a.OpenTargetIn)
+		if err != nil {
+			return fmt.Errorf("error reading 'openTargetIn': %w", err)
+		}
+		delete(object, "openTargetIn")
+	}
+
 	if raw, found := object["parentFieldId"]; found {
 		err = json.Unmarshal(raw, &a.ParentFieldId)
 		if err != nil {
@@ -9170,6 +9285,14 @@ func (a *GetFieldProperties) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'postTempToken': %w", err)
 		}
 		delete(object, "postTempToken")
+	}
+
+	if raw, found := object["primaryKey"]; found {
+		err = json.Unmarshal(raw, &a.PrimaryKey)
+		if err != nil {
+			return fmt.Errorf("error reading 'primaryKey': %w", err)
+		}
+		delete(object, "primaryKey")
 	}
 
 	if raw, found := object["seeVersions"]; found {
@@ -9610,6 +9733,13 @@ func (a GetFieldProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.FieldCaching != nil {
+		object["fieldCaching"], err = json.Marshal(a.FieldCaching)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldCaching': %w", err)
+		}
+	}
+
 	if a.ForeignKey != nil {
 		object["foreignKey"], err = json.Marshal(a.ForeignKey)
 		if err != nil {
@@ -9680,6 +9810,20 @@ func (a GetFieldProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.MasterTableId != nil {
+		object["masterTableId"], err = json.Marshal(a.MasterTableId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'masterTableId': %w", err)
+		}
+	}
+
+	if a.MasterTableKeyFid != nil {
+		object["masterTableKeyFid"], err = json.Marshal(a.MasterTableKeyFid)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'masterTableKeyFid': %w", err)
+		}
+	}
+
 	if a.MasterTableTag != nil {
 		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
 		if err != nil {
@@ -9715,6 +9859,13 @@ func (a GetFieldProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.OpenTargetIn != nil {
+		object["openTargetIn"], err = json.Marshal(a.OpenTargetIn)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'openTargetIn': %w", err)
+		}
+	}
+
 	if a.ParentFieldId != nil {
 		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
 		if err != nil {
@@ -9726,6 +9877,13 @@ func (a GetFieldProperties) MarshalJSON() ([]byte, error) {
 		object["postTempToken"], err = json.Marshal(a.PostTempToken)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
+		}
+	}
+
+	if a.PrimaryKey != nil {
+		object["primaryKey"], err = json.Marshal(a.PrimaryKey)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'primaryKey': %w", err)
 		}
 	}
 
@@ -10090,6 +10248,14 @@ func (a *GetFieldUsageItemUsage) UnmarshalJSON(b []byte) error {
 		delete(object, "appHomePages")
 	}
 
+	if raw, found := object["customEmails"]; found {
+		err = json.Unmarshal(raw, &a.CustomEmails)
+		if err != nil {
+			return fmt.Errorf("error reading 'customEmails': %w", err)
+		}
+		delete(object, "customEmails")
+	}
+
 	if raw, found := object["dashboards"]; found {
 		err = json.Unmarshal(raw, &a.Dashboards)
 		if err != nil {
@@ -10104,6 +10270,14 @@ func (a *GetFieldUsageItemUsage) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'defaultReports': %w", err)
 		}
 		delete(object, "defaultReports")
+	}
+
+	if raw, found := object["documentTemplates"]; found {
+		err = json.Unmarshal(raw, &a.DocumentTemplates)
+		if err != nil {
+			return fmt.Errorf("error reading 'documentTemplates': %w", err)
+		}
+		delete(object, "documentTemplates")
 	}
 
 	if raw, found := object["exactForms"]; found {
@@ -10239,6 +10413,13 @@ func (a GetFieldUsageItemUsage) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("error marshaling 'appHomePages': %w", err)
 	}
 
+	if a.CustomEmails != nil {
+		object["customEmails"], err = json.Marshal(a.CustomEmails)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'customEmails': %w", err)
+		}
+	}
+
 	object["dashboards"], err = json.Marshal(a.Dashboards)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'dashboards': %w", err)
@@ -10247,6 +10428,13 @@ func (a GetFieldUsageItemUsage) MarshalJSON() ([]byte, error) {
 	object["defaultReports"], err = json.Marshal(a.DefaultReports)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'defaultReports': %w", err)
+	}
+
+	if a.DocumentTemplates != nil {
+		object["documentTemplates"], err = json.Marshal(a.DocumentTemplates)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'documentTemplates': %w", err)
+		}
 	}
 
 	object["exactForms"], err = json.Marshal(a.ExactForms)
@@ -11844,6 +12032,14 @@ func (a *GetFieldsItemProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "exact")
 	}
 
+	if raw, found := object["fieldCaching"]; found {
+		err = json.Unmarshal(raw, &a.FieldCaching)
+		if err != nil {
+			return fmt.Errorf("error reading 'fieldCaching': %w", err)
+		}
+		delete(object, "fieldCaching")
+	}
+
 	if raw, found := object["foreignKey"]; found {
 		err = json.Unmarshal(raw, &a.ForeignKey)
 		if err != nil {
@@ -11924,6 +12120,22 @@ func (a *GetFieldsItemProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "masterChoiceTableId")
 	}
 
+	if raw, found := object["masterTableId"]; found {
+		err = json.Unmarshal(raw, &a.MasterTableId)
+		if err != nil {
+			return fmt.Errorf("error reading 'masterTableId': %w", err)
+		}
+		delete(object, "masterTableId")
+	}
+
+	if raw, found := object["masterTableKeyFid"]; found {
+		err = json.Unmarshal(raw, &a.MasterTableKeyFid)
+		if err != nil {
+			return fmt.Errorf("error reading 'masterTableKeyFid': %w", err)
+		}
+		delete(object, "masterTableKeyFid")
+	}
+
 	if raw, found := object["masterTableTag"]; found {
 		err = json.Unmarshal(raw, &a.MasterTableTag)
 		if err != nil {
@@ -11964,6 +12176,14 @@ func (a *GetFieldsItemProperties) UnmarshalJSON(b []byte) error {
 		delete(object, "numberFormat")
 	}
 
+	if raw, found := object["openTargetIn"]; found {
+		err = json.Unmarshal(raw, &a.OpenTargetIn)
+		if err != nil {
+			return fmt.Errorf("error reading 'openTargetIn': %w", err)
+		}
+		delete(object, "openTargetIn")
+	}
+
 	if raw, found := object["parentFieldId"]; found {
 		err = json.Unmarshal(raw, &a.ParentFieldId)
 		if err != nil {
@@ -11978,6 +12198,14 @@ func (a *GetFieldsItemProperties) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'postTempToken': %w", err)
 		}
 		delete(object, "postTempToken")
+	}
+
+	if raw, found := object["primaryKey"]; found {
+		err = json.Unmarshal(raw, &a.PrimaryKey)
+		if err != nil {
+			return fmt.Errorf("error reading 'primaryKey': %w", err)
+		}
+		delete(object, "primaryKey")
 	}
 
 	if raw, found := object["seeVersions"]; found {
@@ -12418,6 +12646,13 @@ func (a GetFieldsItemProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.FieldCaching != nil {
+		object["fieldCaching"], err = json.Marshal(a.FieldCaching)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fieldCaching': %w", err)
+		}
+	}
+
 	if a.ForeignKey != nil {
 		object["foreignKey"], err = json.Marshal(a.ForeignKey)
 		if err != nil {
@@ -12488,6 +12723,20 @@ func (a GetFieldsItemProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.MasterTableId != nil {
+		object["masterTableId"], err = json.Marshal(a.MasterTableId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'masterTableId': %w", err)
+		}
+	}
+
+	if a.MasterTableKeyFid != nil {
+		object["masterTableKeyFid"], err = json.Marshal(a.MasterTableKeyFid)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'masterTableKeyFid': %w", err)
+		}
+	}
+
 	if a.MasterTableTag != nil {
 		object["masterTableTag"], err = json.Marshal(a.MasterTableTag)
 		if err != nil {
@@ -12523,6 +12772,13 @@ func (a GetFieldsItemProperties) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.OpenTargetIn != nil {
+		object["openTargetIn"], err = json.Marshal(a.OpenTargetIn)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'openTargetIn': %w", err)
+		}
+	}
+
 	if a.ParentFieldId != nil {
 		object["parentFieldId"], err = json.Marshal(a.ParentFieldId)
 		if err != nil {
@@ -12534,6 +12790,13 @@ func (a GetFieldsItemProperties) MarshalJSON() ([]byte, error) {
 		object["postTempToken"], err = json.Marshal(a.PostTempToken)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'postTempToken': %w", err)
+		}
+	}
+
+	if a.PrimaryKey != nil {
+		object["primaryKey"], err = json.Marshal(a.PrimaryKey)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'primaryKey': %w", err)
 		}
 	}
 
@@ -12898,6 +13161,14 @@ func (a *GetFieldsUsageItemUsage) UnmarshalJSON(b []byte) error {
 		delete(object, "appHomePages")
 	}
 
+	if raw, found := object["customEmails"]; found {
+		err = json.Unmarshal(raw, &a.CustomEmails)
+		if err != nil {
+			return fmt.Errorf("error reading 'customEmails': %w", err)
+		}
+		delete(object, "customEmails")
+	}
+
 	if raw, found := object["dashboards"]; found {
 		err = json.Unmarshal(raw, &a.Dashboards)
 		if err != nil {
@@ -12912,6 +13183,14 @@ func (a *GetFieldsUsageItemUsage) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'defaultReports': %w", err)
 		}
 		delete(object, "defaultReports")
+	}
+
+	if raw, found := object["documentTemplates"]; found {
+		err = json.Unmarshal(raw, &a.DocumentTemplates)
+		if err != nil {
+			return fmt.Errorf("error reading 'documentTemplates': %w", err)
+		}
+		delete(object, "documentTemplates")
 	}
 
 	if raw, found := object["exactForms"]; found {
@@ -13047,6 +13326,13 @@ func (a GetFieldsUsageItemUsage) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("error marshaling 'appHomePages': %w", err)
 	}
 
+	if a.CustomEmails != nil {
+		object["customEmails"], err = json.Marshal(a.CustomEmails)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'customEmails': %w", err)
+		}
+	}
+
 	object["dashboards"], err = json.Marshal(a.Dashboards)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'dashboards': %w", err)
@@ -13055,6 +13341,13 @@ func (a GetFieldsUsageItemUsage) MarshalJSON() ([]byte, error) {
 	object["defaultReports"], err = json.Marshal(a.DefaultReports)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling 'defaultReports': %w", err)
+	}
+
+	if a.DocumentTemplates != nil {
+		object["documentTemplates"], err = json.Marshal(a.DocumentTemplates)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'documentTemplates': %w", err)
+		}
 	}
 
 	object["exactForms"], err = json.Marshal(a.ExactForms)
@@ -14622,6 +14915,14 @@ func (a *GetReportQuery) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
+	if raw, found := object["fields"]; found {
+		err = json.Unmarshal(raw, &a.Fields)
+		if err != nil {
+			return fmt.Errorf("error reading 'fields': %w", err)
+		}
+		delete(object, "fields")
+	}
+
 	if raw, found := object["filter"]; found {
 		err = json.Unmarshal(raw, &a.Filter)
 		if err != nil {
@@ -14636,6 +14937,22 @@ func (a *GetReportQuery) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'formulaFields': %w", err)
 		}
 		delete(object, "formulaFields")
+	}
+
+	if raw, found := object["groupBy"]; found {
+		err = json.Unmarshal(raw, &a.GroupBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'groupBy': %w", err)
+		}
+		delete(object, "groupBy")
+	}
+
+	if raw, found := object["sortBy"]; found {
+		err = json.Unmarshal(raw, &a.SortBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'sortBy': %w", err)
+		}
+		delete(object, "sortBy")
 	}
 
 	if raw, found := object["tableId"]; found {
@@ -14665,6 +14982,13 @@ func (a GetReportQuery) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
+	if a.Fields != nil {
+		object["fields"], err = json.Marshal(a.Fields)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fields': %w", err)
+		}
+	}
+
 	if a.Filter != nil {
 		object["filter"], err = json.Marshal(a.Filter)
 		if err != nil {
@@ -14676,6 +15000,20 @@ func (a GetReportQuery) MarshalJSON() ([]byte, error) {
 		object["formulaFields"], err = json.Marshal(a.FormulaFields)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'formulaFields': %w", err)
+		}
+	}
+
+	if a.GroupBy != nil {
+		object["groupBy"], err = json.Marshal(a.GroupBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'groupBy': %w", err)
+		}
+	}
+
+	if a.SortBy != nil {
+		object["sortBy"], err = json.Marshal(a.SortBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'sortBy': %w", err)
 		}
 	}
 
@@ -15045,6 +15383,14 @@ func (a *GetTableReportsItem) UnmarshalJSON(b []byte) error {
 		delete(object, "id")
 	}
 
+	if raw, found := object["incomplete"]; found {
+		err = json.Unmarshal(raw, &a.Incomplete)
+		if err != nil {
+			return fmt.Errorf("error reading 'incomplete': %w", err)
+		}
+		delete(object, "incomplete")
+	}
+
 	if raw, found := object["name"]; found {
 		err = json.Unmarshal(raw, &a.Name)
 		if err != nil {
@@ -15134,6 +15480,13 @@ func (a GetTableReportsItem) MarshalJSON() ([]byte, error) {
 		}
 	}
 
+	if a.Incomplete != nil {
+		object["incomplete"], err = json.Marshal(a.Incomplete)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'incomplete': %w", err)
+		}
+	}
+
 	if a.Name != nil {
 		object["name"], err = json.Marshal(a.Name)
 		if err != nil {
@@ -15217,6 +15570,14 @@ func (a *GetTableReportsItemQuery) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
+	if raw, found := object["fields"]; found {
+		err = json.Unmarshal(raw, &a.Fields)
+		if err != nil {
+			return fmt.Errorf("error reading 'fields': %w", err)
+		}
+		delete(object, "fields")
+	}
+
 	if raw, found := object["filter"]; found {
 		err = json.Unmarshal(raw, &a.Filter)
 		if err != nil {
@@ -15231,6 +15592,22 @@ func (a *GetTableReportsItemQuery) UnmarshalJSON(b []byte) error {
 			return fmt.Errorf("error reading 'formulaFields': %w", err)
 		}
 		delete(object, "formulaFields")
+	}
+
+	if raw, found := object["groupBy"]; found {
+		err = json.Unmarshal(raw, &a.GroupBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'groupBy': %w", err)
+		}
+		delete(object, "groupBy")
+	}
+
+	if raw, found := object["sortBy"]; found {
+		err = json.Unmarshal(raw, &a.SortBy)
+		if err != nil {
+			return fmt.Errorf("error reading 'sortBy': %w", err)
+		}
+		delete(object, "sortBy")
 	}
 
 	if raw, found := object["tableId"]; found {
@@ -15260,6 +15637,13 @@ func (a GetTableReportsItemQuery) MarshalJSON() ([]byte, error) {
 	var err error
 	object := make(map[string]json.RawMessage)
 
+	if a.Fields != nil {
+		object["fields"], err = json.Marshal(a.Fields)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'fields': %w", err)
+		}
+	}
+
 	if a.Filter != nil {
 		object["filter"], err = json.Marshal(a.Filter)
 		if err != nil {
@@ -15271,6 +15655,20 @@ func (a GetTableReportsItemQuery) MarshalJSON() ([]byte, error) {
 		object["formulaFields"], err = json.Marshal(a.FormulaFields)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'formulaFields': %w", err)
+		}
+	}
+
+	if a.GroupBy != nil {
+		object["groupBy"], err = json.Marshal(a.GroupBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'groupBy': %w", err)
+		}
+	}
+
+	if a.SortBy != nil {
+		object["sortBy"], err = json.Marshal(a.SortBy)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'sortBy': %w", err)
 		}
 	}
 
@@ -25759,6 +26157,9 @@ type GetReportResponse struct {
 		// Id The identifier of the report, unique to the table.
 		Id *string `json:"id,omitempty"`
 
+		// Incomplete Whether the report definition could not be fully returned.
+		Incomplete *bool `json:"incomplete,omitempty"`
+
 		// Name The configured name of the report.
 		Name *string `json:"name,omitempty"`
 
@@ -29234,6 +29635,9 @@ func ParseGetReportResponse(rsp *http.Response) (*GetReportResponse, error) {
 
 			// Id The identifier of the report, unique to the table.
 			Id *string `json:"id,omitempty"`
+
+			// Incomplete Whether the report definition could not be fully returned.
+			Incomplete *bool `json:"incomplete,omitempty"`
 
 			// Name The configured name of the report.
 			Name *string `json:"name,omitempty"`
