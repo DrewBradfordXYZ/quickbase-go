@@ -2101,6 +2101,7 @@ func (b *CreateRelationshipBuilder) Run(ctx context.Context) (*CreateRelationshi
 // Create a solution
 type CreateSolutionBuilder struct {
 	client  *Client
+	qpAlias *string
 	params  map[string]any
 	err     error
 }
@@ -2114,6 +2115,16 @@ func (c *Client) CreateSolution() *CreateSolutionBuilder {
 	return b
 }
 
+
+
+// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+func (b *CreateSolutionBuilder) Alias(value string) *CreateSolutionBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.qpAlias = &value
+	return b
+}
 
 
 // Run executes the createSolution request and returns the response data directly.
@@ -2139,6 +2150,9 @@ func (b *CreateSolutionBuilder) Run(ctx context.Context) (*generated.CreateSolut
 	}
 	// Build query params
 	params := &generated.CreateSolutionParams{}
+	if b.qpAlias != nil {
+		params.Alias = b.qpAlias
+	}
 
 	resp, err := b.client.API().CreateSolutionWithResponse(ctx, params, reqBody)
 	if err != nil {
@@ -2160,6 +2174,7 @@ type CreateSolutionFromRecordBuilder struct {
 	tableID string
 	qpFieldId *int
 	qpRecordId *int
+	qpAlias *string
 	params  map[string]any
 	err     error
 }
@@ -2207,6 +2222,16 @@ func (b *CreateSolutionFromRecordBuilder) RecordId(value int) *CreateSolutionFro
 }
 
 
+// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+func (b *CreateSolutionFromRecordBuilder) Alias(value string) *CreateSolutionFromRecordBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.qpAlias = &value
+	return b
+}
+
+
 // Run executes the createSolutionFromRecord request and returns the response data directly.
 func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.CreateSolutionFromRecordResponse, error) {
 	if b.err != nil {
@@ -2235,6 +2260,9 @@ func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.C
 	}
 	if b.qpRecordId != nil {
 		params.RecordId = *b.qpRecordId
+	}
+	if b.qpAlias != nil {
+		params.Alias = b.qpAlias
 	}
 
 	resp, err := b.client.API().CreateSolutionFromRecordWithResponse(ctx, params)
@@ -4350,6 +4378,68 @@ func (b *GetTrusteesBuilder) Run(ctx context.Context) (*generated.GetTrusteesRes
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 	return resp, nil
+}
+
+
+
+// GetUserAppsBuilder provides a fluent API for the getUserApps operation.
+// Get apps for a user
+type GetUserAppsBuilder struct {
+	client  *Client
+	userId string
+	qpAccountId *float32
+	params  map[string]any
+	err     error
+}
+
+// GetUserApps starts building a getUserApps request.
+func (c *Client) GetUserApps(userId string) *GetUserAppsBuilder {
+	b := &GetUserAppsBuilder{
+		client: c,
+		params: make(map[string]any),
+	}
+	b.userId = userId
+	return b
+}
+
+
+
+// AccountId The account id used to scope the request.
+func (b *GetUserAppsBuilder) AccountId(value float32) *GetUserAppsBuilder {
+	if b.err != nil {
+		return b
+	}
+	b.qpAccountId = &value
+	return b
+}
+
+
+// Run executes the getUserApps request and returns the response data directly.
+func (b *GetUserAppsBuilder) Run(ctx context.Context) (*UserAppsResult, error) {
+	if b.err != nil {
+		return nil, b.err
+	}
+	if b.qpAccountId == nil {
+		return nil, &core.ValidationError{
+			QuickbaseError: core.QuickbaseError{
+				Message: "accountId is required for getUserApps",
+			},
+		}
+	}
+	// Build query params
+	params := &generated.GetUserAppsParams{}
+	if b.qpAccountId != nil {
+		params.AccountId = *b.qpAccountId
+	}
+
+	resp, err := b.client.API().GetUserAppsWithResponse(ctx, b.userId, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.JSON200 == nil {
+		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
+	}
+	return &UserAppsResult{resp: resp}, nil
 }
 
 

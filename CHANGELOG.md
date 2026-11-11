@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Field properties: `SummaryQuery` (a summary field's filter), `PrimaryKey`, `MasterTableId`, `MasterTableKeyFid`, `FieldCaching`, `OpenTargetIn`. A reference field's parent table is `MasterTableId`; `MasterChoiceTableId` is not returned for it.
   - Field usage: `CustomEmails`, `DocumentTemplates`.
   - Reports: `Incomplete`, and `Query.Fields`, `Query.SortBy`, `Query.GroupBy`.
+- **Changes from QuickBase's current spec** (merged add-only from the API portal; see `spec/tools/fetch-upstream.ts`):
+  - `GetUserApps` (`GET /users/{userId}/apps`).
+  - `alias` query parameter on `CreateSolution` and `CreateSolutionFromRecord`.
+  - Response properties on `CreateApp` (`AncestorId`), `UpdateSolution` and `GetSolutionPublic`.
+  - `UpdateSolutionToRecord` keeps its name; QuickBase now calls it `updateSolutionFromRecord`.
 
 ### Changed
 

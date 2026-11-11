@@ -314,6 +314,14 @@ func (r *CreateAppResult) Raw() *generated.CreateAppResponse {
 	return r.resp
 }
 
+// AncestorId returns the AncestorId field value, or zero value if nil.
+func (r *CreateAppResult) AncestorId() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.AncestorId == nil {
+		return ""
+	}
+	return *r.resp.JSON200.AncestorId
+}
+
 // Created returns the Created field value, or zero value if nil.
 func (r *CreateAppResult) Created() string {
 	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Created == nil {
@@ -1635,6 +1643,38 @@ func (r *SolutionPublicResult) Raw() *generated.GetSolutionPublicResponse {
 	return r.resp
 }
 
+// Alias returns the Alias field value, or zero value if nil.
+func (r *SolutionPublicResult) Alias() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Alias == nil {
+		return ""
+	}
+	return *r.resp.JSON200.Alias
+}
+
+// Description returns the Description field value, or zero value if nil.
+func (r *SolutionPublicResult) Description() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
+		return ""
+	}
+	return *r.resp.JSON200.Description
+}
+
+// Name returns the Name field value, or zero value if nil.
+func (r *SolutionPublicResult) Name() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Name == nil {
+		return ""
+	}
+	return *r.resp.JSON200.Name
+}
+
+// Uuid returns the Uuid field value, or zero value if nil.
+func (r *SolutionPublicResult) Uuid() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Uuid == nil {
+		return ""
+	}
+	return *r.resp.JSON200.Uuid
+}
+
 
 
 // TableReportsResult wraps GetTableReportsResponse with convenience methods.
@@ -1825,6 +1865,21 @@ type TrusteesResult struct {
 
 // Raw returns the underlying generated response.
 func (r *TrusteesResult) Raw() *generated.GetTrusteesResponse {
+	if r == nil {
+		return nil
+	}
+	return r.resp
+}
+
+
+
+// UserAppsResult wraps GetUserAppsResponse with convenience methods.
+type UserAppsResult struct {
+	resp *generated.GetUserAppsResponse
+}
+
+// Raw returns the underlying generated response.
+func (r *UserAppsResult) Raw() *generated.GetUserAppsResponse {
 	if r == nil {
 		return nil
 	}
@@ -2505,6 +2560,30 @@ func (r *UpdateSolutionResult) Raw() *generated.UpdateSolutionResponse {
 		return nil
 	}
 	return r.resp
+}
+
+// Alias returns the Alias field value, or zero value if nil.
+func (r *UpdateSolutionResult) Alias() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Alias == nil {
+		return ""
+	}
+	return *r.resp.JSON200.Alias
+}
+
+// SolutionId returns the SolutionId field value, or zero value if nil.
+func (r *UpdateSolutionResult) SolutionId() string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.SolutionId == nil {
+		return ""
+	}
+	return *r.resp.JSON200.SolutionId
+}
+
+// Warnings returns the Warnings field value, or nil if not set.
+func (r *UpdateSolutionResult) Warnings() []string {
+	if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Warnings == nil {
+		return nil
+	}
+	return *r.resp.JSON200.Warnings
 }
 
 

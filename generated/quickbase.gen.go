@@ -2363,6 +2363,36 @@ type GetRolesItemAccess struct {
 // GetRolesItemAccessType The type of access the role is given.
 type GetRolesItemAccessType string
 
+// GetSolutionPublicResources defines model for GetSolutionPublicResources.
+type GetSolutionPublicResources struct {
+	// Apps List of applications contained within the solution
+	Apps *[]GetSolutionPublicResources_Apps_Item `json:"apps,omitempty"`
+
+	// Pipelines List of pipelines contained within the solution
+	Pipelines            *[]GetSolutionPublicResources_Pipelines_Item `json:"pipelines,omitempty"`
+	AdditionalProperties map[string]interface{}                       `json:"-"`
+}
+
+// GetSolutionPublicResources_Apps_Item defines model for GetSolutionPublicResources.apps.Item.
+type GetSolutionPublicResources_Apps_Item struct {
+	// Id The real ID of the application
+	Id *string `json:"id,omitempty"`
+
+	// LogicalId The logical ID of the application
+	LogicalId            *string                `json:"logicalId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetSolutionPublicResources_Pipelines_Item defines model for GetSolutionPublicResources.pipelines.Item.
+type GetSolutionPublicResources_Pipelines_Item struct {
+	// Id The real ID of the pipeline
+	Id *string `json:"id,omitempty"`
+
+	// LogicalId The logical ID of the pipeline
+	LogicalId            *string                `json:"logicalId,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
 // GetTableReportsItem defines model for GetTableReportsItem.
 type GetTableReportsItem struct {
 	// Description The configured description of a report.
@@ -2557,6 +2587,32 @@ type GetTrusteesItem struct {
 
 // GetTrusteesItemType The type of trustee being added. This can be a user, group, or email domain group.
 type GetTrusteesItemType string
+
+// GetUserAppsAppsItem defines model for GetUserAppsAppsItem.
+type GetUserAppsAppsItem struct {
+	// Id The unique identifier of the application.
+	Id string `json:"id"`
+
+	// LastAccess The date and time the user last accessed this application, in ISO 8601 format.
+	LastAccess string `json:"lastAccess"`
+
+	// Manager The manager of the application.
+	Manager GetUserAppsAppsItem_Manager `json:"manager"`
+
+	// Name The name of the application.
+	Name                 string                 `json:"name"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// GetUserAppsAppsItem_Manager The manager of the application.
+type GetUserAppsAppsItem_Manager struct {
+	// Id The hashed user ID of the application manager.
+	Id string `json:"id"`
+
+	// Name The full name of the application manager.
+	Name                 string                 `json:"name"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
 
 // GetUsersMetadata Additional request information
 type GetUsersMetadata struct {
@@ -4287,6 +4343,9 @@ type CreateSolutionJSONBody = interface{}
 
 // CreateSolutionParams defines parameters for CreateSolution.
 type CreateSolutionParams struct {
+	// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+	Alias *string `form:"alias,omitempty" json:"alias,omitempty"`
+
 	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
 	XQBLErrorsAsSuccess *bool `json:"X-QBL-Errors-As-Success,omitempty"`
 }
@@ -4301,6 +4360,9 @@ type CreateSolutionFromRecordParams struct {
 
 	// RecordId The unique identifier of the record.
 	RecordId int `form:"recordId" json:"recordId"`
+
+	// Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
+	Alias *string `form:"alias,omitempty" json:"alias,omitempty"`
 
 	// XQBLErrorsAsSuccess If this header is set to true, the API will return a 207 status code even if errors occur. The response will contain X-QBL-ORIGINAL-STATUS header with the original error code, and the response body will include the error details.
 	XQBLErrorsAsSuccess *bool `json:"X-QBL-Errors-As-Success,omitempty"`
@@ -4562,6 +4624,12 @@ type UndenyUsersJSONBody = []string
 type UndenyUsersParams struct {
 	// AccountId The account id being used to undeny users. If no value is specified, the first account associated with the requesting user token is chosen.
 	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+}
+
+// GetUserAppsParams defines parameters for GetUserApps.
+type GetUserAppsParams struct {
+	// AccountId The account id used to scope the request.
+	AccountId float32 `form:"accountId" json:"accountId"`
 }
 
 // CloneUserTokenJSONBody defines parameters for CloneUserToken.
@@ -16869,6 +16937,255 @@ func (a GetRolesItemAccess) MarshalJSON() ([]byte, error) {
 	return json.Marshal(object)
 }
 
+// Getter for additional properties for GetSolutionPublicResources. Returns the specified
+// element and whether it was found
+func (a GetSolutionPublicResources) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetSolutionPublicResources
+func (a *GetSolutionPublicResources) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetSolutionPublicResources to handle AdditionalProperties
+func (a *GetSolutionPublicResources) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["apps"]; found {
+		err = json.Unmarshal(raw, &a.Apps)
+		if err != nil {
+			return fmt.Errorf("error reading 'apps': %w", err)
+		}
+		delete(object, "apps")
+	}
+
+	if raw, found := object["pipelines"]; found {
+		err = json.Unmarshal(raw, &a.Pipelines)
+		if err != nil {
+			return fmt.Errorf("error reading 'pipelines': %w", err)
+		}
+		delete(object, "pipelines")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetSolutionPublicResources to handle AdditionalProperties
+func (a GetSolutionPublicResources) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Apps != nil {
+		object["apps"], err = json.Marshal(a.Apps)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'apps': %w", err)
+		}
+	}
+
+	if a.Pipelines != nil {
+		object["pipelines"], err = json.Marshal(a.Pipelines)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'pipelines': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetSolutionPublicResources_Apps_Item. Returns the specified
+// element and whether it was found
+func (a GetSolutionPublicResources_Apps_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetSolutionPublicResources_Apps_Item
+func (a *GetSolutionPublicResources_Apps_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetSolutionPublicResources_Apps_Item to handle AdditionalProperties
+func (a *GetSolutionPublicResources_Apps_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["logicalId"]; found {
+		err = json.Unmarshal(raw, &a.LogicalId)
+		if err != nil {
+			return fmt.Errorf("error reading 'logicalId': %w", err)
+		}
+		delete(object, "logicalId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetSolutionPublicResources_Apps_Item to handle AdditionalProperties
+func (a GetSolutionPublicResources_Apps_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Id != nil {
+		object["id"], err = json.Marshal(a.Id)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'id': %w", err)
+		}
+	}
+
+	if a.LogicalId != nil {
+		object["logicalId"], err = json.Marshal(a.LogicalId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'logicalId': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetSolutionPublicResources_Pipelines_Item. Returns the specified
+// element and whether it was found
+func (a GetSolutionPublicResources_Pipelines_Item) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetSolutionPublicResources_Pipelines_Item
+func (a *GetSolutionPublicResources_Pipelines_Item) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetSolutionPublicResources_Pipelines_Item to handle AdditionalProperties
+func (a *GetSolutionPublicResources_Pipelines_Item) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["logicalId"]; found {
+		err = json.Unmarshal(raw, &a.LogicalId)
+		if err != nil {
+			return fmt.Errorf("error reading 'logicalId': %w", err)
+		}
+		delete(object, "logicalId")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetSolutionPublicResources_Pipelines_Item to handle AdditionalProperties
+func (a GetSolutionPublicResources_Pipelines_Item) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Id != nil {
+		object["id"], err = json.Marshal(a.Id)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'id': %w", err)
+		}
+	}
+
+	if a.LogicalId != nil {
+		object["logicalId"], err = json.Marshal(a.LogicalId)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'logicalId': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
 // Getter for additional properties for GetTableReportsItem. Returns the specified
 // element and whether it was found
 func (a GetTableReportsItem) Get(fieldName string) (value interface{}, found bool) {
@@ -18379,6 +18696,190 @@ func (a GetTableReportsItemQuery_SortBy_Item) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'order': %w", err)
 		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetUserAppsAppsItem. Returns the specified
+// element and whether it was found
+func (a GetUserAppsAppsItem) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetUserAppsAppsItem
+func (a *GetUserAppsAppsItem) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetUserAppsAppsItem to handle AdditionalProperties
+func (a *GetUserAppsAppsItem) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["lastAccess"]; found {
+		err = json.Unmarshal(raw, &a.LastAccess)
+		if err != nil {
+			return fmt.Errorf("error reading 'lastAccess': %w", err)
+		}
+		delete(object, "lastAccess")
+	}
+
+	if raw, found := object["manager"]; found {
+		err = json.Unmarshal(raw, &a.Manager)
+		if err != nil {
+			return fmt.Errorf("error reading 'manager': %w", err)
+		}
+		delete(object, "manager")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetUserAppsAppsItem to handle AdditionalProperties
+func (a GetUserAppsAppsItem) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["lastAccess"], err = json.Marshal(a.LastAccess)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'lastAccess': %w", err)
+	}
+
+	object["manager"], err = json.Marshal(a.Manager)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'manager': %w", err)
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for GetUserAppsAppsItem_Manager. Returns the specified
+// element and whether it was found
+func (a GetUserAppsAppsItem_Manager) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for GetUserAppsAppsItem_Manager
+func (a *GetUserAppsAppsItem_Manager) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for GetUserAppsAppsItem_Manager to handle AdditionalProperties
+func (a *GetUserAppsAppsItem_Manager) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["id"]; found {
+		err = json.Unmarshal(raw, &a.Id)
+		if err != nil {
+			return fmt.Errorf("error reading 'id': %w", err)
+		}
+		delete(object, "id")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for GetUserAppsAppsItem_Manager to handle AdditionalProperties
+func (a GetUserAppsAppsItem_Manager) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["id"], err = json.Marshal(a.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'id': %w", err)
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -22103,6 +22604,9 @@ type ClientInterface interface {
 
 	UndenyUsers(ctx context.Context, params *UndenyUsersParams, body UndenyUsersJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetUserApps request
+	GetUserApps(ctx context.Context, userId string, params *GetUserAppsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteUserToken request
 	DeleteUserToken(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -23286,6 +23790,18 @@ func (c *Client) UndenyUsersWithBody(ctx context.Context, params *UndenyUsersPar
 
 func (c *Client) UndenyUsers(ctx context.Context, params *UndenyUsersParams, body UndenyUsersJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUndenyUsersRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetUserApps(ctx context.Context, userId string, params *GetUserAppsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUserAppsRequest(c.Server, userId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -25512,6 +26028,28 @@ func NewCreateSolutionRequestWithBody(server string, params *CreateSolutionParam
 		return nil, err
 	}
 
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Alias != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "alias", runtime.ParamLocationQuery, *params.Alias); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
 	req, err := http.NewRequest("POST", queryURL.String(), body)
 	if err != nil {
 		return nil, err
@@ -25593,6 +26131,22 @@ func NewCreateSolutionFromRecordRequest(server string, params *CreateSolutionFro
 					queryValues.Add(k, v2)
 				}
 			}
+		}
+
+		if params.Alias != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "alias", runtime.ParamLocationQuery, *params.Alias); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
 		}
 
 		queryURL.RawQuery = queryValues.Encode()
@@ -26840,6 +27394,58 @@ func NewUndenyUsersRequestWithBody(server string, params *UndenyUsersParams, con
 	return req, nil
 }
 
+// NewGetUserAppsRequest generates requests for GetUserApps
+func NewGetUserAppsRequest(server string, userId string, params *GetUserAppsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "userId", runtime.ParamLocationPath, userId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/%s/apps", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if queryFrag, err := runtime.StyleParamWithLocation("form", true, "accountId", runtime.ParamLocationQuery, params.AccountId); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewDeleteUserTokenRequest generates requests for DeleteUserToken
 func NewDeleteUserTokenRequest(server string) (*http.Request, error) {
 	var err error
@@ -27275,6 +27881,9 @@ type ClientWithResponsesInterface interface {
 
 	UndenyUsersWithResponse(ctx context.Context, params *UndenyUsersParams, body UndenyUsersJSONRequestBody, reqEditors ...RequestEditorFn) (*UndenyUsersResponse, error)
 
+	// GetUserAppsWithResponse request
+	GetUserAppsWithResponse(ctx context.Context, userId string, params *GetUserAppsParams, reqEditors ...RequestEditorFn) (*GetUserAppsResponse, error)
+
 	// DeleteUserTokenWithResponse request
 	DeleteUserTokenWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteUserTokenResponse, error)
 
@@ -27557,6 +28166,9 @@ type CreateAppResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
+		// AncestorId The id of the app from which this app was copied
+		AncestorId *string `json:"ancestorId,omitempty"`
+
 		// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 		Created *string `json:"created,omitempty"`
 
@@ -28886,10 +29498,22 @@ func (r ExportSolutionResponse) StatusCode() int {
 type UpdateSolutionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
-	JSON400      *interface{}
-	JSON401      *interface{}
-	JSONDefault  *interface{}
+	JSON200      *struct {
+		// Alias The optional alias for the solution
+		Alias *string `json:"alias"`
+
+		// CreatedResources Information about resources created or updated in the solution
+		CreatedResources *map[string]interface{} `json:"createdResources,omitempty"`
+
+		// SolutionId The unique identifier (UUID) of the updated solution
+		SolutionId *string `json:"solutionId,omitempty"`
+
+		// Warnings Any warnings that occurred during solution update
+		Warnings *[]string `json:"warnings,omitempty"`
+	}
+	JSON400     *interface{}
+	JSON401     *interface{}
+	JSONDefault *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -28989,11 +29613,30 @@ func (r UpdateSolutionToRecordResponse) StatusCode() int {
 type GetSolutionPublicResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *interface{}
-	JSON400      *interface{}
-	JSON401      *interface{}
-	JSON404      *interface{}
-	JSON500      *interface{}
+	JSON200      *struct {
+		// Alias The alias of the solution
+		Alias *string `json:"alias,omitempty"`
+
+		// CreatedAt The date and time when the solution was created
+		CreatedAt *time.Time `json:"createdAt,omitempty"`
+
+		// Description The description of the solution
+		Description *string `json:"description,omitempty"`
+
+		// Name The name of the solution
+		Name      *string                     `json:"name,omitempty"`
+		Resources *GetSolutionPublicResources `json:"resources,omitempty"`
+
+		// UpdatedAt The date and time when the solution was last updated
+		UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+
+		// Uuid The unique identifier (UUID) of the solution
+		Uuid *string `json:"uuid,omitempty"`
+	}
+	JSON400 *interface{}
+	JSON401 *interface{}
+	JSON404 *interface{}
+	JSON500 *interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -29555,6 +30198,32 @@ func (r UndenyUsersResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UndenyUsersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetUserAppsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *struct {
+		// Apps A list of applications the specified user has access to.
+		Apps                 []GetUserAppsAppsItem  `json:"apps"`
+		AdditionalProperties map[string]interface{} `json:"-"`
+	}
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUserAppsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUserAppsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -30544,6 +31213,15 @@ func (c *ClientWithResponses) UndenyUsersWithResponse(ctx context.Context, param
 	return ParseUndenyUsersResponse(rsp)
 }
 
+// GetUserAppsWithResponse request returning *GetUserAppsResponse
+func (c *ClientWithResponses) GetUserAppsWithResponse(ctx context.Context, userId string, params *GetUserAppsParams, reqEditors ...RequestEditorFn) (*GetUserAppsResponse, error) {
+	rsp, err := c.GetUserApps(ctx, userId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUserAppsResponse(rsp)
+}
+
 // DeleteUserTokenWithResponse request returning *DeleteUserTokenResponse
 func (c *ClientWithResponses) DeleteUserTokenWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteUserTokenResponse, error) {
 	rsp, err := c.DeleteUserToken(ctx, reqEditors...)
@@ -30909,6 +31587,9 @@ func ParseCreateAppResponse(rsp *http.Response) (*CreateAppResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			// AncestorId The id of the app from which this app was copied
+			AncestorId *string `json:"ancestorId,omitempty"`
+
 			// Created The time and date the app was created, in the ISO 8601 time format YYYY-MM-DDThh:mm:ss.sssZ (in UTC time zone).
 			Created *string `json:"created,omitempty"`
 
@@ -32451,7 +33132,19 @@ func ParseUpdateSolutionResponse(rsp *http.Response) (*UpdateSolutionResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
+		var dest struct {
+			// Alias The optional alias for the solution
+			Alias *string `json:"alias"`
+
+			// CreatedResources Information about resources created or updated in the solution
+			CreatedResources *map[string]interface{} `json:"createdResources,omitempty"`
+
+			// SolutionId The unique identifier (UUID) of the updated solution
+			SolutionId *string `json:"solutionId,omitempty"`
+
+			// Warnings Any warnings that occurred during solution update
+			Warnings *[]string `json:"warnings,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -32660,7 +33353,26 @@ func ParseGetSolutionPublicResponse(rsp *http.Response) (*GetSolutionPublicRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest interface{}
+		var dest struct {
+			// Alias The alias of the solution
+			Alias *string `json:"alias,omitempty"`
+
+			// CreatedAt The date and time when the solution was created
+			CreatedAt *time.Time `json:"createdAt,omitempty"`
+
+			// Description The description of the solution
+			Description *string `json:"description,omitempty"`
+
+			// Name The name of the solution
+			Name      *string                     `json:"name,omitempty"`
+			Resources *GetSolutionPublicResources `json:"resources,omitempty"`
+
+			// UpdatedAt The date and time when the solution was last updated
+			UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+
+			// Uuid The unique identifier (UUID) of the solution
+			Uuid *string `json:"uuid,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33313,6 +34025,36 @@ func ParseUndenyUsersResponse(rsp *http.Response) (*UndenyUsersResponse, error) 
 
 			// Success A list of users that have successfully been undenied.
 			Success              []string               `json:"success"`
+			AdditionalProperties map[string]interface{} `json:"-"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetUserAppsResponse parses an HTTP response from a GetUserAppsWithResponse call
+func ParseGetUserAppsResponse(rsp *http.Response) (*GetUserAppsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUserAppsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			// Apps A list of applications the specified user has access to.
+			Apps                 []GetUserAppsAppsItem  `json:"apps"`
 			AdditionalProperties map[string]interface{} `json:"-"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
