@@ -21,7 +21,9 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -48,9 +50,9 @@ type TableSchema struct {
 
 // SchemaOptions configures schema behavior.
 type SchemaOptions struct {
-	// TransformResponses keys the records the query builder returns (Run,
-	// RunN) by field alias instead of field ID. Off by default: records are
-	// keyed by field ID.
+	// TransformResponses keys the records RunQueryAll, RunQueryN,
+	// RunQueryIterator and the RunReport equivalents return by field alias
+	// instead of field ID. Off by default: records are keyed by field ID.
 	TransformResponses bool
 }
 
@@ -141,8 +143,9 @@ func ResolveTableAlias(schema *ResolvedSchema, tableRef string) (string, error) 
 		return tableID, nil
 	}
 
-	// Check if it's already a table ID
-	if _, ok := schema.TableIDToAlias[tableRef]; ok {
+	// Check if it's already a table ID, the schema's or any other: a request
+	// to a table the schema doesn't name goes as given
+	if _, ok := schema.TableIDToAlias[tableRef]; ok || tableIDPattern.MatchString(tableRef) {
 		return tableRef, nil
 	}
 
@@ -172,9 +175,20 @@ func ResolveTableAlias(schema *ResolvedSchema, tableRef string) (string, error) 
 // If the input is already a field ID (int), returns it unchanged.
 // Returns an error if the alias is not found.
 func ResolveFieldAlias(schema *ResolvedSchema, tableID string, fieldRef any) (int, error) {
-	// If it's already an int, return as-is
-	if id, ok := fieldRef.(int); ok {
+	// A field ID passes as given: an int, or a number decoded from JSON
+	switch id := fieldRef.(type) {
+	case int:
 		return id, nil
+	case int64:
+		return int(id), nil
+	case float64:
+		if id == float64(int(id)) {
+			return int(id), nil
+		}
+	case json.Number:
+		if n, err := id.Int64(); err == nil {
+			return int(n), nil
+		}
 	}
 
 	// Must be a string alias
@@ -366,3 +380,7 @@ func (b *SchemaBuilder) Field(alias string, fieldID int) *SchemaBuilder {
 func (b *SchemaBuilder) Build() *Schema {
 	return b.schema
 }
+
+// tableIDPattern matches a QuickBase table or app ID (bqw3ryzab): "b" and
+// lowercase letters and digits.
+var tableIDPattern = regexp.MustCompile(`^b[a-z0-9]{5,}$`)

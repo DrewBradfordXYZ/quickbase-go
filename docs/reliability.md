@@ -88,12 +88,12 @@ Label by path only after replacing IDs in it, or every app and table becomes its
 
 ## Values QuickBase rejects
 
-An upsert whose values QuickBase rejects (a date in the wrong form, text in a numeric field) still saves the records, with those fields blank, and answers 207. The result's `Metadata().LineErrors` has the rejections, keyed by each record's 1-based position. `WithLineErrorsAsErrors()` returns them as a `*LineErrorsError` too, alongside the result, so the saved records' IDs aren't lost:
+An upsert whose values QuickBase rejects (a date in the wrong form, text in a numeric field) still saves the records, with those fields blank, and answers 207. The result's `Metadata.LineErrors` has the rejections, keyed by each record's 1-based position. `WithLineErrorsAsErrors()` returns them as a `*LineErrorsError` too, alongside the result, so the saved records' IDs aren't lost:
 
 ```go
-result, err := client.Upsert(tableID).Data(records...).Run(ctx)
+result, err := client.Upsert(ctx, quickbase.UpsertBody{To: tableID, Data: records})
 var rejected *quickbase.LineErrorsError
 if errors.As(err, &rejected) {
-	log.Printf("saved %v; rejected %v", result.Metadata().CreatedRecordIds(), rejected.LineErrors)
+	log.Printf("saved %v; rejected %v", result.Metadata.CreatedRecordIds, rejected.LineErrors)
 }
 ```

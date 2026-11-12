@@ -6,8 +6,8 @@ The JSON API doesn't cover everything QuickBase can do. The `xml` package reache
 
 ```go
 import (
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/xml"
 )
 
 x := xml.New(client)

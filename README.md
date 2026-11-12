@@ -2,16 +2,16 @@
 
 A Go client for the [QuickBase JSON API](https://developer.quickbase.com/), with the legacy XML API for what JSON lacks.
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/DrewBradfordXYZ/quickbase-go/v2.svg)](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/DrewBradfordXYZ/quickbase-go/v3.svg)](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v3)
 
-- **Every operation** as a fluent builder, generated from a spec checked against live responses
+- **Every operation** as one method, generated from a spec checked against live responses: request struct in, plain result out
 - **Queries that paginate** for you, with readable **schema aliases** instead of table and field IDs
 - **Retries, throttling and hooks** for QuickBase's rate limits
 - **Read-only mode** for tools that must never write
 - **User token, ticket, temporary token and SSO** authentication
 
 ```bash
-go get github.com/DrewBradfordXYZ/quickbase-go/v2
+go get github.com/DrewBradfordXYZ/quickbase-go/v3
 ```
 
 ## Quick start
@@ -24,56 +24,58 @@ if err != nil {
 defer client.Close()
 ctx := context.Background()
 
-app, err := client.GetApp("bqxyz123").Run(ctx)
+app, err := client.GetApp(ctx, "bqxyz123")
 if err != nil {
 	log.Fatal(err)
 }
-fmt.Println("App:", app.Name())
+fmt.Println("App:", app.Name)
 
-records, err := client.Query("bqtable1").
-	Select(3, 6, 7).
-	Where("{7.EX.'Active'}").
-	Run(ctx) // every page; RunN(ctx, n) stops at n records
+records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+	From:   "bqtable1",
+	Select: quickbase.Ints(3, 6, 7),
+	Where:  quickbase.Where("{7.EX.'Active'}"),
+}) // every page; RunQueryN(ctx, body, n) stops at n records
 if err != nil {
 	log.Fatal(err)
 }
 for _, rec := range records {
-	fmt.Println(rec["6"]) // values by field ID
+	fmt.Println(rec["6"].Value) // values by field ID
 }
 
-result, err := client.Upsert("bqtable1").
-	Data(quickbase.Row(6, "New project", 7, "Active")).
-	Run(ctx)
+result, err := client.Upsert(ctx, quickbase.UpsertBody{
+	To:   "bqtable1",
+	Data: []quickbase.Record{quickbase.Row(6, "New project", 7, "Active")},
+})
 if err != nil {
 	log.Fatal(err)
 }
-fmt.Println("Created:", result.Metadata().CreatedRecordIds())
+fmt.Println("Created:", result.Metadata.CreatedRecordIds)
 ```
 
-## Builders for every operation
+## One method per operation
 
-Each QuickBase operation is a method that returns a builder: set what you need, then `Run(ctx)`. Results have nil-safe accessors, so an absent value is its zero value rather than a nil pointer.
+Every QuickBase operation is a method on the client. Path parameters are arguments, query parameters a params struct, and the body its request type. A method returns the result or QuickBase's error. Results have plain fields: a value QuickBase didn't send is its zero value, so there's nothing to nil-check.
 
 ```go
-tables, _ := client.GetAppTables().AppId("bqxyz123").Run(ctx)
+tables, _ := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: "bqxyz123"})
 for _, t := range tables {
-	fmt.Println(t.Id(), t.Name())
+	fmt.Println(t.Id, t.Name)
 }
 
-fields, _ := client.GetFields("bqtable1").Run(ctx)
+fields, _ := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: "bqtable1"})
 for _, f := range fields {
-	fmt.Println(f.Id(), f.Label(), f.FieldType())
+	fmt.Println(f.Id, f.Label, f.FieldType)
 }
 
-newApp, _ := client.CreateApp().Name("My App").Description("Created via API").Run(ctx)
-deleted, _ := client.DeleteRecords("bqtable1").Where("{3.EX.123}").Run(ctx)
+newApp, _ := client.CreateApp(ctx, quickbase.CreateAppBody{Name: "My App", Description: quickbase.Ptr("Created via API")})
+deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: quickbase.DeleteWhere("{3.EX.123}")})
 ```
 
-The builders and result types are generated from [quickbase-spec](https://github.com/DrewBradfordXYZ/quickbase-spec), so they follow QuickBase's API as it is, including properties QuickBase returns but doesn't document. Browse them on [pkg.go.dev](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v2/client).
+Optional request fields are pointers (`quickbase.Ptr`), so a `false` or `0` you set reaches QuickBase. The methods and types are generated from [quickbase-spec](https://github.com/DrewBradfordXYZ/quickbase-spec), so they follow QuickBase's API as it is, including properties QuickBase returns but doesn't document. Browse them on [pkg.go.dev](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v3/client). Why it's shaped this way: [docs/architecture.md](docs/architecture.md).
 
 ## Queries and pagination
 
-QuickBase returns a page of records at a time (often about 100). The query builder fetches every page; `RunQuery` gives you one page and its metadata.
+QuickBase returns a page of records at a time (often about 100). `RunQuery` gives you one page and its metadata; `RunQueryAll`, `RunQueryN` and `RunQueryIterator` fetch the pages for you.
 
 ```go
 body := quickbase.RunQueryBody{
@@ -84,7 +86,7 @@ body := quickbase.RunQueryBody{
 }
 
 page, _ := client.RunQuery(ctx, body)
-fmt.Printf("%d of %d records\n", page.Metadata().NumRecords(), page.Metadata().TotalRecords())
+fmt.Printf("%d of %d records\n", page.Metadata.NumRecords, page.Metadata.TotalRecords)
 
 all, _ := client.RunQueryAll(ctx, body)      // every page
 first, _ := client.RunQueryN(ctx, body, 500) // up to 500
@@ -97,7 +99,7 @@ More in [docs/queries.md](docs/queries.md): running reports, upserts, deletes, a
 
 ## Schema aliases
 
-Name your tables and fields once, then use the names everywhere. The client translates them to IDs in requests.
+Name your tables and fields once, then use the names in any request: the client translates them to IDs in bodies (`From`, `To`, `Where`, record data) and in a `TableId` parameter.
 
 ```go
 schema := quickbase.NewSchema().
@@ -112,11 +114,11 @@ client, _ := quickbase.New("myrealm",
 	quickbase.WithSchema(schema),
 )
 
-active, _ := client.Query("projects").
-	Select("name", "status").
-	Where("{'status'.EX.'Active'}").
-	SortBy(quickbase.Asc("name")).
-	Run(ctx)
+active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+	From:   "projects",
+	Select: quickbase.Fields(schema, "projects", "name", "status"),
+	Where:  quickbase.Where("{'status'.EX.'Active'}"),
+})
 ```
 
 A misspelled alias is an error that suggests the closest name. `go run ./cmd/schema` generates a schema from an existing app. See [docs/schema-aliases.md](docs/schema-aliases.md).
@@ -172,24 +174,24 @@ case errors.As(err, &notFound):
 
 ## Solutions and files
 
-Solutions are QBL, which is YAML, and file downloads are raw content. Their builders send and return bytes:
+Solutions are QBL, which is YAML, and file downloads are raw content. Their methods send and return bytes:
 
 ```go
-exported, _ := client.ExportSolution("solution-id").Run(ctx)
-qbl := exported.Body // the QBL document
+qbl, _ := client.ExportSolution(ctx, "solution-id", quickbase.ExportSolutionParams{}) // the QBL document
 
-client.UpdateSolution("solution-id").Body(qbl).Run(ctx)
+client.UpdateSolution(ctx, "solution-id", quickbase.UpdateSolutionParams{}, qbl)
 
-file, _ := client.DownloadFile("bqtable1", 12, 8, 0).Run(ctx)
-fmt.Println(len(file.Body)) // base64 file content
+file, _ := client.DownloadFile(ctx, "bqtable1", 12, 8, 0)
+fmt.Println(len(file)) // base64 file content
 ```
 
 ## Going lower
 
-Every result's `Raw()` returns the full generated response, headers included, and `client.API()` is the generated client itself, for anything the builders don't cover.
+`client.API()` is the generated client itself, for the full response (status, headers):
 
 ```go
 resp, _ := client.API().GetAppWithResponse(ctx, "bqxyz123")
+fmt.Println(resp.StatusCode(), resp.HTTPResponse.Header.Get("qb-api-ray"))
 if resp.JSON200 != nil {
 	fmt.Println(resp.JSON200.Name)
 }
@@ -216,9 +218,10 @@ Every method, schema aliases and error handling: [docs/xml-api.md](docs/xml-api.
 - [docs/authentication.md](docs/authentication.md): every authentication method
 - [docs/reliability.md](docs/reliability.md): rate limits, retries, throttling, monitoring
 - [docs/xml-api.md](docs/xml-api.md): the XML API
-- [MIGRATION.md](MIGRATION.md): moving from v1
+- [docs/architecture.md](docs/architecture.md): why the SDK is shaped as it is
+- [MIGRATION.md](MIGRATION.md): moving from v2 (and from v1)
 - [CHANGELOG.md](CHANGELOG.md)
-- [pkg.go.dev](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v2): the API reference and runnable examples
+- [pkg.go.dev](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v3): the API reference and runnable examples
 
 ## Development
 

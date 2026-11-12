@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 func TestExtractDBID(t *testing.T) {

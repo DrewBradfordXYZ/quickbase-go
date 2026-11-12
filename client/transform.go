@@ -3,7 +3,7 @@ package client
 import (
 	"encoding/json"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // --- Union Type Helpers ---
@@ -172,61 +172,32 @@ func ExtractSortFields(sortBy *generated.SortByUnion) ([]generated.SortField, er
 // --- Record Transformation ---
 // These functions transform records from generated types to friendly user-facing types.
 
-// Record is a friendly type alias for query result records.
-// Field keys are either field IDs (as strings like "6") or aliases (if schema is configured).
-// Values are unwrapped from FieldValue wrappers to their actual Go types.
+// Record is a record as a map: field ID keys ("6"), or aliases with a schema
+// (WithSchemaOptions TransformResponses), to plain values (string, float64,
+// bool, []any, map[string]any, nil).
 type Record = map[string]any
 
-// unwrapRecord converts a generated QuickbaseRecord to a friendly map[string]any.
-// It unwraps each FieldValue to expose the actual value directly.
-func unwrapRecord(record generated.QuickbaseRecord) Record {
-	result := make(Record)
-	for k, fv := range record {
-		result[k] = extractValue(fv.Value)
+// UnwrapRecord turns a generated record ({"6": {"value": "Alpha"}}) into a
+// Record ({"6": "Alpha"}).
+func UnwrapRecord(record generated.QuickbaseRecord) Record {
+	result := make(Record, len(record))
+	for k, v := range record {
+		result[k] = v.Value
 	}
 	return result
 }
 
-// unwrapRecords converts a slice of generated QuickbaseRecords to friendly Records.
-func unwrapRecords(records []generated.QuickbaseRecord) []Record {
+// UnwrapRecords turns generated records into Records.
+func UnwrapRecords(records []generated.QuickbaseRecord) []Record {
 	result := make([]Record, len(records))
 	for i, record := range records {
-		result[i] = unwrapRecord(record)
+		result[i] = UnwrapRecord(record)
 	}
 	return result
 }
 
-// UnwrapRecords converts QuickbaseRecord slices to []map[string]any.
-// This is an opt-in helper for when you want friendlier access to record data.
-// The raw QuickbaseRecord wraps each field value in a FieldValue struct;
-// this function extracts the actual values.
-//
-// Example:
-//
-//	resp, _ := client.RunQuery(ctx, body)
-//	if resp.JSON200.Data != nil {
-//	    records := quickbase.UnwrapRecords(*resp.JSON200.Data)
-//	    for _, rec := range records {
-//	        name := rec["6"] // access by field ID
-//	    }
-//	}
-func UnwrapRecords(records []generated.QuickbaseRecord) []Record {
-	return unwrapRecords(records)
-}
-
-// UnwrapRecord converts a single QuickbaseRecord to map[string]any.
-func UnwrapRecord(record generated.QuickbaseRecord) Record {
-	return unwrapRecord(record)
-}
-
-// Deref returns the value of a pointer, or zero value if nil.
-// This is an opt-in helper for working with the many optional (pointer) fields
-// in generated response types.
-//
-// Example:
-//
-//	resp, _ := client.GetApp(appId).Run(ctx)
-//	name := quickbase.Deref(resp.JSON200.Name) // string, not *string
+// Deref returns the value of a pointer, or the zero value if it is nil: for
+// the optional fields of request types, which stay pointers.
 func Deref[T any](ptr *T) T {
 	if ptr == nil {
 		var zero T
@@ -235,59 +206,10 @@ func Deref[T any](ptr *T) T {
 	return *ptr
 }
 
-// DerefOr returns the value of a pointer, or the default if nil.
-// This is an opt-in helper for working with optional pointer fields.
-//
-// Example:
-//
-//	resp, _ := client.GetApp(appId).Run(ctx)
-//	name := quickbase.DerefOr(resp.JSON200.Name, "Unknown")
-func DerefOr[T any](ptr *T, defaultVal T) T {
+// DerefOr returns the value of a pointer, or def if it is nil.
+func DerefOr[T any](ptr *T, def T) T {
 	if ptr == nil {
-		return defaultVal
+		return def
 	}
 	return *ptr
-}
-
-// extractValue unwraps a FieldValue_Value union to its actual Go value.
-// The FieldValue_Value is a union type that can contain:
-// - string (text, rich text, phone, email, URL, etc.)
-// - float64 (numeric, currency, percent, rating, duration)
-// - bool (checkbox)
-// - []any (multi-select, address, etc.)
-// - map[string]any (user, file attachment, etc.)
-func extractValue(v generated.FieldValue_Value) any {
-	// The union type stores data as json.RawMessage internally.
-	// We marshal it to JSON and then unmarshal to any to get the actual value.
-	data, err := v.MarshalJSON()
-	if err != nil {
-		return nil
-	}
-	var result any
-	if err := json.Unmarshal(data, &result); err != nil {
-		return nil
-	}
-	return result
-}
-
-// --- Value Wrapping (for creating records) ---
-
-// wrapValue converts a Go value to a FieldValue suitable for record creation.
-// This is the inverse of extractValue.
-func wrapValue(v any) generated.FieldValue {
-	wrapped := map[string]any{"value": v}
-	data, _ := json.Marshal(wrapped)
-	var fv generated.FieldValue
-	_ = json.Unmarshal(data, &fv)
-	return fv
-}
-
-// wrapRecord converts a friendly Record to a generated QuickbaseRecord.
-// This is the inverse of unwrapRecord.
-func wrapRecord(record Record) generated.QuickbaseRecord {
-	result := make(generated.QuickbaseRecord)
-	for k, v := range record {
-		result[k] = wrapValue(v)
-	}
-	return result
 }

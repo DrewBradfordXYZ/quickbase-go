@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 // exportSolution returns QBL as application/x-yaml, and createSolution takes
@@ -39,15 +39,15 @@ func TestSolutionsSendAndReturnQBL(t *testing.T) {
 	}
 	ctx := context.Background()
 
-	resp, err := qb.ExportSolution("abc").Run(ctx)
+	exported, err := qb.ExportSolution(ctx, "abc", quickbase.ExportSolutionParams{})
 	if err != nil {
 		t.Fatalf("ExportSolution: %v", err)
 	}
-	if string(resp.Body) != qbl {
-		t.Errorf("ExportSolution body = %q, want the QBL", resp.Body)
+	if string(exported) != qbl {
+		t.Errorf("ExportSolution = %q, want the QBL", exported)
 	}
 
-	if _, err := qb.CreateSolution().Body([]byte(qbl)).Run(ctx); err != nil {
+	if _, err := qb.CreateSolution(ctx, quickbase.CreateSolutionParams{}, []byte(qbl)); err != nil {
 		t.Fatalf("CreateSolution: %v", err)
 	}
 	if gotType != "application/x-yaml" || gotBody != qbl {

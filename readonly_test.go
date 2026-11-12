@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 // Read-only mode let two solution GETs through that write: updating a
@@ -57,7 +57,7 @@ func TestUpsertRefusesPlainTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = qb.Upsert("bqtable").Data(map[string]any{"7": map[string]any{"value": time.Now()}}).Run(context.Background())
+	_, err = qb.Upsert(context.Background(), quickbase.UpsertBody{To: "bqtable", Data: []quickbase.Record{{"7": {Value: time.Now()}}}})
 	var plain *quickbase.PlainTimeError
 	if !errors.As(err, &plain) {
 		t.Errorf("err = %v, want PlainTimeError", err)
@@ -80,24 +80,24 @@ func TestUpsert207KeepsTheResult(t *testing.T) {
 	ctx := context.Background()
 
 	qb, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL))
-	result, err := qb.Upsert("bqtable").Data(quickbase.Row(6, "a"), quickbase.Row(6, "b")).Run(ctx)
+	result, err := qb.Upsert(ctx, quickbase.UpsertBody{To: "bqtable", Data: []quickbase.Record{quickbase.Row(6, "a"), quickbase.Row(6, "b")}})
 	if err != nil {
 		t.Fatalf("err = %v", err)
 	}
-	if got := result.Metadata().CreatedRecordIds(); len(got) != 2 {
+	if got := result.Metadata.CreatedRecordIds; len(got) != 2 {
 		t.Errorf("CreatedRecordIds = %v", got)
 	}
-	if got := *result.Metadata().LineErrors; len(got["2"]) != 1 {
+	if got := result.Metadata.LineErrors; len(got["2"]) != 1 {
 		t.Errorf("LineErrors = %v", got)
 	}
 
 	strict, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL), quickbase.WithLineErrorsAsErrors())
-	result, err = strict.Upsert("bqtable").Data(quickbase.Row(6, "a"), quickbase.Row(6, "b")).Run(ctx)
+	result, err = strict.Upsert(ctx, quickbase.UpsertBody{To: "bqtable", Data: []quickbase.Record{quickbase.Row(6, "a"), quickbase.Row(6, "b")}})
 	var lineErrs *quickbase.LineErrorsError
 	if !errors.As(err, &lineErrs) || !strings.Contains(err.Error(), "record 2: Incompatible value") {
 		t.Errorf("err = %v, want LineErrorsError naming record 2", err)
 	}
-	if result == nil || len(result.Metadata().CreatedRecordIds()) != 2 {
+	if result == nil || len(result.Metadata.CreatedRecordIds) != 2 {
 		t.Error("the result should come back with the error")
 	}
 }

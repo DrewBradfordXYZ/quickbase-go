@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 func TestGetApp(t *testing.T) {
@@ -22,7 +22,7 @@ func TestGetApp(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if resp.JSON200.Id == nil || *resp.JSON200.Id != testCtx.AppID {
+		if resp.JSON200.Id != testCtx.AppID {
 			t.Errorf("App ID = %v, want %s", resp.JSON200.Id, testCtx.AppID)
 		}
 		if resp.JSON200.Name == "" {
@@ -48,10 +48,10 @@ func TestGetTable(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if *resp.JSON200.Id != testCtx.TableID {
-			t.Errorf("Table ID = %s, want %s", *resp.JSON200.Id, testCtx.TableID)
+		if resp.JSON200.Id != testCtx.TableID {
+			t.Errorf("Table ID = %s, want %s", resp.JSON200.Id, testCtx.TableID)
 		}
-		if resp.JSON200.Name == nil || *resp.JSON200.Name == "" {
+		if resp.JSON200.Name == "" {
 			t.Error("Expected table name")
 		}
 	})
@@ -82,7 +82,7 @@ func TestGetAppTables(t *testing.T) {
 		// Find our test table
 		found := false
 		for _, table := range *resp.JSON200 {
-			if *table.Id == testCtx.TableID {
+			if table.Id == testCtx.TableID {
 				found = true
 				break
 			}
@@ -156,10 +156,10 @@ func TestGetField(t *testing.T) {
 		if resp.JSON200.Id != int64(testCtx.TextFieldID) {
 			t.Errorf("Field ID = %d, want %d", resp.JSON200.Id, testCtx.TextFieldID)
 		}
-		if resp.JSON200.Label == nil || *resp.JSON200.Label != "Name" {
+		if resp.JSON200.Label != "Name" {
 			t.Errorf("Field label = %v, want 'Name'", resp.JSON200.Label)
 		}
-		if resp.JSON200.FieldType == nil || *resp.JSON200.FieldType != "text" {
+		if resp.JSON200.FieldType != "text" {
 			t.Errorf("Field type = %v, want 'text'", resp.JSON200.FieldType)
 		}
 	})

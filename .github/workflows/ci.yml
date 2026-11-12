@@ -24,8 +24,10 @@ jobs:
         working-directory: spec
 
       # Regenerating from the pinned spec must reproduce the committed code
-      # (make generate pins oapi-codegen; generate-builders is deterministic).
+      # (make generate pins oapi-codegen; gospec and generate-methods are deterministic).
       - name: Generated code matches the spec
+        env:
+          GOTOOLCHAIN: auto # oapi-codegen v2.8.2 runs on Go 1.25+; the module needs 1.24
         run: |
           make generate
           git diff --exit-code

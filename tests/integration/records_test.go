@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 func TestUpsertRecords(t *testing.T) {
@@ -45,11 +45,11 @@ func TestUpsertRecords(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if resp.JSON200.Metadata == nil || resp.JSON200.Metadata.CreatedRecordIds == nil {
+		if resp.JSON200.Metadata.CreatedRecordIds == nil {
 			t.Fatal("Expected createdRecordIds in metadata")
 		}
-		if len(*resp.JSON200.Metadata.CreatedRecordIds) != 2 {
-			t.Errorf("Created %d records, want 2", len(*resp.JSON200.Metadata.CreatedRecordIds))
+		if len(resp.JSON200.Metadata.CreatedRecordIds) != 2 {
+			t.Errorf("Created %d records, want 2", len(resp.JSON200.Metadata.CreatedRecordIds))
 		}
 	})
 
@@ -72,11 +72,11 @@ func TestUpsertRecords(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Create failed: %v", err)
 		}
-		if createResp.JSON200 == nil || createResp.JSON200.Metadata == nil {
+		if createResp.JSON200 == nil {
 			t.Fatal("Expected metadata in create response")
 		}
 
-		recordID := (*createResp.JSON200.Metadata.CreatedRecordIds)[0]
+		recordID := (createResp.JSON200.Metadata.CreatedRecordIds)[0]
 
 		// Update the record using merge field
 		mergeFieldID := 3 // Record ID#
@@ -101,12 +101,12 @@ func TestUpsertRecords(t *testing.T) {
 		}
 
 		// Verify the update
-		if updateResp.JSON200.Metadata == nil || updateResp.JSON200.Metadata.UpdatedRecordIds == nil {
+		if updateResp.JSON200.Metadata.UpdatedRecordIds == nil {
 			t.Fatal("Expected updatedRecordIds in metadata")
 		}
 
 		found := false
-		for _, id := range *updateResp.JSON200.Metadata.UpdatedRecordIds {
+		for _, id := range updateResp.JSON200.Metadata.UpdatedRecordIds {
 			if id == recordID {
 				found = true
 				break
@@ -146,8 +146,8 @@ func TestRunQuery(t *testing.T) {
 		if resp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*resp.JSON200.Data) != 3 {
-			t.Errorf("Got %d records, want 3", len(*resp.JSON200.Data))
+		if len(resp.JSON200.Data) != 3 {
+			t.Errorf("Got %d records, want 3", len(resp.JSON200.Data))
 		}
 	})
 
@@ -167,8 +167,8 @@ func TestRunQuery(t *testing.T) {
 		if resp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*resp.JSON200.Data) != 5 {
-			t.Errorf("Got %d records, want 5", len(*resp.JSON200.Data))
+		if len(resp.JSON200.Data) != 5 {
+			t.Errorf("Got %d records, want 5", len(resp.JSON200.Data))
 		}
 	})
 }
@@ -192,7 +192,7 @@ func TestDeleteRecords(t *testing.T) {
 		if err != nil {
 			t.Fatalf("RunQuery before delete failed: %v", err)
 		}
-		if beforeResp.JSON200 == nil || len(*beforeResp.JSON200.Data) == 0 {
+		if beforeResp.JSON200 == nil || len(beforeResp.JSON200.Data) == 0 {
 			t.Fatal("Expected records before delete")
 		}
 
@@ -208,7 +208,7 @@ func TestDeleteRecords(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", deleteResp.StatusCode())
 		}
 
-		if deleteResp.JSON200.NumberDeleted == nil || *deleteResp.JSON200.NumberDeleted == 0 {
+		if deleteResp.JSON200.NumberDeleted == 0 {
 			t.Error("Expected records to be deleted")
 		}
 
@@ -223,8 +223,8 @@ func TestDeleteRecords(t *testing.T) {
 		if afterResp.JSON200 == nil {
 			t.Fatalf("Expected JSON200 response, got status %d", afterResp.StatusCode())
 		}
-		if afterResp.JSON200.Data != nil && len(*afterResp.JSON200.Data) > 0 {
-			t.Errorf("Expected 0 records after delete, got %d", len(*afterResp.JSON200.Data))
+		if afterResp.JSON200.Data != nil && len(afterResp.JSON200.Data) > 0 {
+			t.Errorf("Expected 0 records after delete, got %d", len(afterResp.JSON200.Data))
 		}
 	})
 }
@@ -255,18 +255,7 @@ func insertTestRecords(t *testing.T, ctx context.Context, n int) {
 	}
 }
 
-// toFieldValue converts a value to a FieldValue_Value union type
-func toFieldValue(v any) generated.FieldValue_Value {
-	var fv generated.FieldValue_Value
-	switch val := v.(type) {
-	case string:
-		fv.FromFieldValueValue0(val)
-	case int:
-		fv.FromFieldValueValue1(float64(val))
-	case float32:
-		fv.FromFieldValueValue1(float64(val))
-	case float64:
-		fv.FromFieldValueValue1(val)
-	}
-	return fv
+// toFieldValue is a record value: record values are plain Go values
+func toFieldValue(v any) any {
+	return v
 }

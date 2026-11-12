@@ -13,10 +13,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/xml"
 )
 
 // The README's quick start: get an app, query a table, add records.
@@ -28,52 +28,55 @@ func Example_quickStart() {
 	defer client.Close()
 	ctx := context.Background()
 
-	app, err := client.GetApp("bqxyz123").Run(ctx)
+	app, err := client.GetApp(ctx, "bqxyz123")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("App:", app.Name())
+	fmt.Println("App:", app.Name)
 
-	records, err := client.Query("bqtable1").
-		Select(3, 6, 7).
-		Where("{7.EX.'Active'}").
-		Run(ctx) // every page; RunN(ctx, n) stops at n records
+	records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+		From:   "bqtable1",
+		Select: quickbase.Ints(3, 6, 7),
+		Where:  quickbase.Where("{7.EX.'Active'}"),
+	}) // every page; RunQueryN(ctx, body, n) stops at n records
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, rec := range records {
-		fmt.Println(rec["6"]) // values by field ID
+		fmt.Println(rec["6"].Value) // values by field ID
 	}
 
-	result, err := client.Upsert("bqtable1").
-		Data(quickbase.Row(6, "New project", 7, "Active")).
-		Run(ctx)
+	result, err := client.Upsert(ctx, quickbase.UpsertBody{
+		To:   "bqtable1",
+		Data: []quickbase.Record{quickbase.Row(6, "New project", 7, "Active")},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Created:", result.Metadata().CreatedRecordIds())
+	fmt.Println("Created:", result.Metadata.CreatedRecordIds)
 }
 
-// Builders exist for every operation; results have nil-safe accessors.
-func Example_builders() {
+// One method per operation: arguments for the path, a params struct for the
+// query, the body type for the body. Results have plain fields.
+func Example_methods() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
 	ctx := context.Background()
 
-	tables, _ := client.GetAppTables().AppId("bqxyz123").Run(ctx)
+	tables, _ := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: "bqxyz123"})
 	for _, t := range tables {
-		fmt.Println(t.Id(), t.Name())
+		fmt.Println(t.Id, t.Name)
 	}
 
-	fields, _ := client.GetFields("bqtable1").Run(ctx)
+	fields, _ := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: "bqtable1"})
 	for _, f := range fields {
-		fmt.Println(f.Id(), f.Label(), f.FieldType())
+		fmt.Println(f.Id, f.Label, f.FieldType)
 	}
 
-	newApp, _ := client.CreateApp().Name("My App").Description("Created via API").Run(ctx)
-	fmt.Println(newApp.Id())
+	newApp, _ := client.CreateApp(ctx, quickbase.CreateAppBody{Name: "My App", Description: quickbase.Ptr("Created via API")})
+	fmt.Println(newApp.Id)
 
-	deleted, _ := client.DeleteRecords("bqtable1").Where("{3.EX.123}").Run(ctx)
-	fmt.Println(deleted.NumberDeleted())
+	deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: quickbase.DeleteWhere("{3.EX.123}")})
+	fmt.Println(deleted.NumberDeleted)
 }
 
 // RunQuery returns one page; RunQueryAll and RunQueryN paginate.
@@ -88,17 +91,18 @@ func Example_runQuery() {
 	}
 
 	page, _ := client.RunQuery(ctx, body)
-	fmt.Printf("%d of %d records\n", page.Metadata().NumRecords(), page.Metadata().TotalRecords())
-	for _, rec := range page.Records() {
+	fmt.Printf("%d of %d records\n", page.Metadata.NumRecords, page.Metadata.TotalRecords)
+	for _, rec := range quickbase.UnwrapRecords(page.Data) {
 		fmt.Println(rec["6"])
 	}
 
 	all, _ := client.RunQueryAll(ctx, body)      // every page
 	first, _ := client.RunQueryN(ctx, body, 500) // up to 500
-	fmt.Println(len(quickbase.UnwrapRecords(all)), len(first))
+	fmt.Println(len(all), len(first))
 }
 
-// Schema aliases: readable table and field names instead of IDs.
+// Schema aliases: readable table and field names instead of IDs, resolved
+// for every request.
 func Example_schemaAliases() {
 	schema := quickbase.NewSchema().
 		Table("projects", "bqw3ryzab").
@@ -113,16 +117,17 @@ func Example_schemaAliases() {
 	)
 	ctx := context.Background()
 
-	active, _ := client.Query("projects").
-		Select("name", "status").
-		Where("{'status'.EX.'Active'}").
-		SortBy(quickbase.Asc("name")).
-		Run(ctx)
+	active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+		From:   "projects",
+		Select: quickbase.Fields(schema, "projects", "name", "status"),
+		Where:  quickbase.Where("{'status'.EX.'Active'}"),
+	})
 	fmt.Println(len(active))
 
-	_, _ = client.Upsert("projects").
-		Data(quickbase.Row("name", "Alpha", "status", "Active")).
-		Run(ctx)
+	_, _ = client.Upsert(ctx, quickbase.UpsertBody{
+		To:   "projects",
+		Data: []quickbase.Record{quickbase.Row("name", "Alpha", "status", "Active")},
+	})
 }
 
 // Loading a schema from JSON (as cmd/schema -f json writes it).
@@ -188,7 +193,7 @@ func Example_reliability() {
 // Typed errors.
 func Example_errors() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"), quickbase.WithReadOnly())
-	_, err := client.GetApp("bqxyz123").Run(context.Background())
+	_, err := client.GetApp(context.Background(), "bqxyz123")
 
 	var rateLimited *quickbase.RateLimitError
 	var notFound *quickbase.NotFoundError
@@ -210,26 +215,20 @@ func Example_solutionsAndFiles() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
 	ctx := context.Background()
 
-	exported, _ := client.ExportSolution("solution-id").Run(ctx)
-	qbl := exported.Body // the QBL document
+	qbl, _ := client.ExportSolution(ctx, "solution-id", quickbase.ExportSolutionParams{}) // the QBL document
 
-	_, _ = client.UpdateSolution("solution-id").Body(qbl).Run(ctx)
+	_, _ = client.UpdateSolution(ctx, "solution-id", quickbase.UpdateSolutionParams{}, qbl)
 
-	file, _ := client.DownloadFile("bqtable1", 12, 8, 0).Run(ctx)
-	fmt.Println(len(file.Body)) // base64 file content
+	file, _ := client.DownloadFile(ctx, "bqtable1", 12, 8, 0)
+	fmt.Println(len(file)) // base64 file content
 }
 
-// Escape hatches: the full response, and the generated client.
+// The generated client, for the full response (status, headers).
 func Example_rawAccess() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
-	ctx := context.Background()
 
-	app, _ := client.GetApp("bqxyz123").Run(ctx)
-	if raw := app.Raw(); raw != nil && raw.JSON200 != nil {
-		fmt.Println(raw.HTTPResponse.Header.Get("qb-api-ray"))
-	}
-
-	resp, _ := client.API().GetAppWithResponse(ctx, "bqxyz123")
+	resp, _ := client.API().GetAppWithResponse(context.Background(), "bqxyz123")
+	fmt.Println(resp.StatusCode(), resp.HTTPResponse.Header.Get("qb-api-ray"))
 	if resp.JSON200 != nil {
 		fmt.Println(resp.JSON200.Name)
 	}
@@ -257,48 +256,53 @@ func Example_xmlAPI() {
 	fmt.Println(len(page))
 }
 
-// docs/queries.md: the query builder's options, reports, upserts, helpers.
+// docs/queries.md: query options, reports, upserts, helpers.
 func Example_queriesGuide() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
 	ctx := context.Background()
 
-	// Query builder: fields and sorts by ID (or alias, with a schema)
-	records, _ := client.Query("bqtable1").
-		Select(3, 6, 7).
-		Where("{7.EX.'Active'}").
-		SortBy(quickbase.Asc(6), quickbase.Desc(3)).
-		GroupBy(7).
-		RunN(ctx, 1000) // stop at 1,000 records
+	// Fields, filter, sort and group by field ID
+	records, _ := client.RunQueryN(ctx, quickbase.RunQueryBody{
+		From:   "bqtable1",
+		Select: quickbase.Ints(3, 6, 7),
+		Where:  quickbase.Where("{7.EX.'Active'}"),
+		SortBy: quickbase.SortBy(quickbase.Sort(6, quickbase.ASC), quickbase.Sort(3, quickbase.DESC)),
+	}, 1000) // stop at 1,000 records
 	fmt.Println(len(records))
 
 	// One page, with metadata
-	page, _ := client.Query("bqtable1").Select(3, 6).Top(50).Skip(100).RunRaw(ctx)
-	fmt.Println(page.Metadata().TotalRecords())
+	page, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
+		From:    "bqtable1",
+		Select:  quickbase.Ints(3, 6),
+		Options: &quickbase.QueryOptions{Top: quickbase.Ptr(50), Skip: quickbase.Ptr(100)},
+	})
+	fmt.Println(page.Metadata.TotalRecords)
 
 	// Reports run with the report's own filter, sort and columns
 	reportRows, _ := client.RunReportAll(ctx, "7", "bqtable1")
 	fmt.Println(len(quickbase.UnwrapRecords(reportRows)))
 
 	// Upsert: insert, or update the record whose merge field matches
-	result, _ := client.Upsert("bqtable1").
-		MergeFieldId(9). // a unique field, e.g. an external ID
-		Data(
+	result, _ := client.Upsert(ctx, quickbase.UpsertBody{
+		To:           "bqtable1",
+		MergeFieldId: quickbase.Ptr(9), // a unique field, e.g. an external ID
+		Data: []quickbase.Record{
 			quickbase.Row(9, "EXT-001", 6, "Alpha", 7, "Active"),
 			quickbase.Row(9, "EXT-002", 6, "Beta", 7, "Pending"),
-		).
-		FieldsToReturn(6, 7).
-		Run(ctx)
-	fmt.Println(result.Metadata().CreatedRecordIds(), result.Metadata().UpdatedRecordIds())
+		},
+		FieldsToReturn: quickbase.Ints(6, 7),
+	})
+	fmt.Println(result.Metadata.CreatedRecordIds, result.Metadata.UpdatedRecordIds)
 
-	// Values with explicit types, for when Row's inference isn't what you want
-	_ = quickbase.Record{"6": quickbase.Value("text"), "8": quickbase.Value([]string{"a", "b"})}
+	// A record by hand: field ID to {value}
+	_ = quickbase.Record{"6": {Value: "text"}, "8": {Value: []string{"a", "b"}}}
 
-	// Pointers for optional fields
+	// Pointers for optional request fields
 	_ = quickbase.Ptr(100)
 	_ = quickbase.DerefOr((*string)(nil), "default")
 }
 
-// docs/schema-aliases.md: aliases in RunQueryBody.
+// docs/schema-aliases.md: aliases in the body of any request.
 func Example_schemaAliasesBody() {
 	schema := quickbase.NewSchema().Table("projects", "bqw3ryzab").Field("name", 6).Field("status", 7).Build()
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"), quickbase.WithSchema(schema))
@@ -307,7 +311,7 @@ func Example_schemaAliasesBody() {
 		Select: quickbase.Fields(schema, "projects", "name", "status"),
 		Where:  quickbase.Where("{'status'.EX.'Active'}"),
 	})
-	for _, rec := range page.Records() {
+	for _, rec := range quickbase.UnwrapRecords(page.Data) {
 		fmt.Println(rec["6"])
 	}
 	_ = &quickbase.Schema{Tables: map[string]quickbase.TableSchema{"projects": {ID: "bqw3ryzab", Fields: map[string]int{"id": 3}}}}
@@ -326,7 +330,7 @@ func Example_tempTokenHandler() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		records, err := client.Query("bqtable1").Select(3, 6).Run(r.Context())
+		records, err := client.RunQueryAll(r.Context(), quickbase.RunQueryBody{From: "bqtable1", Select: quickbase.Ints(3, 6)})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadGateway)
 			return
@@ -399,9 +403,12 @@ func Example_recordsByAlias() {
 		quickbase.WithUserToken("token"),
 		quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}),
 	)
-	records, _ := client.Query("projects").Select("name").Run(context.Background())
+	records, _ := client.RunQueryAll(context.Background(), quickbase.RunQueryBody{
+		From:   "projects",
+		Select: quickbase.Fields(schema, "projects", "name"),
+	})
 	for _, rec := range records {
-		fmt.Println(rec["name"])
+		fmt.Println(rec["name"].Value)
 	}
 }
 

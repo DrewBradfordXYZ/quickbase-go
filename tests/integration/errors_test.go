@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 func TestNotFoundErrors(t *testing.T) {
@@ -105,8 +105,8 @@ func TestEmptyResults(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if resp.JSON200.Data != nil && len(*resp.JSON200.Data) != 0 {
-			t.Errorf("Expected 0 records, got %d", len(*resp.JSON200.Data))
+		if resp.JSON200.Data != nil && len(resp.JSON200.Data) != 0 {
+			t.Errorf("Expected 0 records, got %d", len(resp.JSON200.Data))
 		}
 	})
 
@@ -122,7 +122,7 @@ func TestEmptyResults(t *testing.T) {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
 
-		if resp.JSON200.NumberDeleted == nil || *resp.JSON200.NumberDeleted != 0 {
+		if resp.JSON200.NumberDeleted != 0 {
 			t.Errorf("Expected 0 deleted, got %v", resp.JSON200.NumberDeleted)
 		}
 	})

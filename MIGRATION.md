@@ -1,157 +1,82 @@
-# Migration Guide: v1.x to v2.0
+# Migrating from v2 to v3
 
-## Overview
+v3 has one way to call each operation: a method that takes a request struct and returns a plain result. The builders, the result wrappers with their accessor methods, and the `Query()` builder are gone. Why: [docs/architecture.md](docs/architecture.md).
 
-v2.0 introduces **wrapper types around the generated responses**: every field has a nil-safe accessor method, and `Raw()` returns the full generated response.
-
-## Key Changes
-
-### 1. Wrapper Types
-
-Builders now return wrapper types with accessor methods:
+## Import path
 
 ```go
-app, err := client.GetApp(appId).Run(ctx)
-
-// Every field has a nil-safe accessor method
-name := app.Name()                // string
-description := app.Description()  // returns "" if nil
-created := app.Created()          // returns "" if nil
-
-// Direct pointer access through the raw response
-if raw := app.Raw(); raw != nil && raw.JSON200 != nil && raw.JSON200.Description != nil {
-    desc := *raw.JSON200.Description
-}
+import "github.com/DrewBradfordXYZ/quickbase-go/v3"
 ```
 
-**Why this approach?**
-- **No data loss** - `Raw()` on a result, or the embedded generated type on a list item, has every field
-- **Convenience** - Nil-safe methods for optional fields
-- **Fully generated** - No manual wrapper maintenance
+## Calls
 
-### 2. Array Responses Return Wrapped Items
+Path parameters are arguments, query parameters a params struct, a body its request type. `ctx` comes first.
+
+| v2 | v3 |
+|---|---|
+| `client.GetApp(appID).Run(ctx)` | `client.GetApp(ctx, appID)` |
+| `client.GetAppTables().AppId(appID).Run(ctx)` | `client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: appID})` |
+| `client.GetFields(tableID).Run(ctx)` | `client.GetFields(ctx, quickbase.GetFieldsParams{TableId: tableID})` |
+| `client.CreateApp().Name("A").Description("B").Run(ctx)` | `client.CreateApp(ctx, quickbase.CreateAppBody{Name: "A", Description: quickbase.Ptr("B")})` |
+| `client.DeleteRecords(t).Where(q).Run(ctx)` | `client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: t, Where: quickbase.DeleteWhere(q)})` |
+| `client.Upsert(t).Data(rows...).MergeFieldId(9).Run(ctx)` | `client.Upsert(ctx, quickbase.UpsertBody{To: t, Data: rows, MergeFieldId: quickbase.Ptr(9)})` |
+| `client.GetRelationships(t).Run(ctx)` | `client.GetRelationships(ctx, t, quickbase.GetRelationshipsParams{})` |
+| `client.ExportSolution(id).Run(ctx)` then `.Body` | `client.ExportSolution(ctx, id, quickbase.ExportSolutionParams{})` returns `[]byte` |
+| `client.UpdateSolution(id).Body(qbl).Run(ctx)` | `client.UpdateSolution(ctx, id, quickbase.UpdateSolutionParams{}, qbl)` |
+| `client.DownloadFile(t, r, f, v).Run(ctx)` then `.Body` | `client.DownloadFile(ctx, t, r, f, v)` returns `[]byte` |
+
+The method names and parameter types match the generated client's (`client.API()`), which v3 keeps.
+
+## Results
+
+Results are the generated types with plain fields. Accessor methods become fields, and `Raw()` is gone: a field QuickBase didn't send is its zero value.
+
+| v2 | v3 |
+|---|---|
+| `app.Name()` | `app.Name` |
+| `t.Id()`, `f.Label()`, `f.FieldType()` | `t.Id`, `f.Label`, `f.FieldType` |
+| `result.Metadata().CreatedRecordIds()` | `result.Metadata.CreatedRecordIds` |
+| `deleted.NumberDeleted()` | `deleted.NumberDeleted` |
+| `resp.Relationships()` | `resp.Relationships` |
+| `if x.Foo != nil && *x.Foo == ...` | `if x.Foo == ...` |
+| `app.Raw()` (status, headers) | `client.API().GetAppWithResponse(ctx, appID)` |
+
+Request types keep pointers for optional fields, so a `false` or `0` you set reaches QuickBase: `quickbase.Ptr(v)`.
+
+## Queries
+
+`Query()` is gone; `RunQueryAll`, `RunQueryN` and `RunQueryIterator` take a `RunQueryBody`.
 
 ```go
-fields, err := client.GetFields("tableId").Run(ctx)
-// fields is []*FieldsItem (wrapped)
+// v2
+records, _ := client.Query("projects").Select("name").Where("{'status'.EX.'Active'}").Run(ctx)
 
-for _, field := range fields {
-    // Convenience methods
-    label := field.Label()       // nil-safe accessor
-    fieldType := field.FieldType()
-
-    // The generated item is embedded
-    id := field.GetFieldsItem.Id
-}
+// v3
+records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+	From:   "projects",
+	Select: quickbase.Fields(schema, "projects", "name"),
+	Where:  quickbase.Where("{'status'.EX.'Active'}"),
+})
 ```
 
-### 3. RunQuery with Records() Method
+`RunQuery` returns one page: `page.Data`, `page.Metadata.TotalRecords`; `page.Records()` becomes `quickbase.UnwrapRecords(page.Data)`. `TransformResponses` now keys the paging helpers' records by alias (it keyed `Query()`'s).
 
-```go
-result, err := client.RunQuery(ctx, body)
+## Record values
 
-// Convenience method for unwrapped records
-for _, rec := range result.Records() {
-    fmt.Println(rec["6"])  // Field ID as key
-}
+A record value is a plain Go value (`string`, `float64`, `bool`, `[]any`, `map[string]any`, `nil`), not a union type.
 
-// Pagination metadata
-fmt.Printf("Total: %d\n", result.Metadata().TotalRecords())
-fmt.Printf("Returned: %d\n", result.Metadata().NumRecords())
-```
+| v2 | v3 |
+|---|---|
+| `rec["6"].Value.AsFieldValueValue0()` | `rec["6"].Value.(string)` |
+| `fv.FromFieldValueValue1(42)` | `quickbase.FieldValue{Value: 42}` |
+| `quickbase.Value(x)` | still works (and refuses a bare `time.Time`), or `{Value: x}` |
 
-### 4. Generated Package Exported
+## Schema aliases
 
-The generated types are available at `github.com/DrewBradfordXYZ/quickbase-go/v2/generated`:
+Aliases now work in every request, resolved in one place: bodies (`From`, `To`, `Where`, record data, `FieldsToReturn`, `MergeFieldId`) and a `TableId` parameter. A table ID the schema doesn't name goes as given; it was an error.
 
-```go
-import "github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+## Removed
 
-// The full generated response, when you need it
-var raw *generated.RunQueryResponse = result.Raw()
-```
-
-## Wrapper Type Pattern
-
-All wrapper types follow this pattern:
-
-```go
-// Holds the generated response
-type AppResult struct {
-    resp *generated.GetAppResponse
-}
-
-// Nil-safe accessors for every field
-func (r *AppResult) Description() string {
-    if r == nil || r.resp == nil || r.resp.JSON200 == nil || r.resp.JSON200.Description == nil {
-        return ""
-    }
-    return *r.resp.JSON200.Description
-}
-
-// The full response (status, headers, body) for anything else
-func (r *AppResult) Raw() *generated.GetAppResponse
-```
-
-## Migration Steps
-
-1. Update builder `.Run()` calls - return types are now wrapper types
-2. Use accessor methods for optional fields (e.g., `app.Description()` instead of `quickbase.Deref(app.Description)`)
-3. Use `result.Records()` instead of `quickbase.UnwrapRecords(*result.Data)`
-4. For anything the accessors don't cover, use `Raw()` on results and the embedded generated type on list items
-
-## Examples
-
-### Before and After
-
-```go
-// v1.x - Manual dereferencing
-app, _ := client.GetApp(appId).Run(ctx)
-description := quickbase.Deref(app.Description)
-
-// v2.0 - Nil-safe accessor method
-app, _ := client.GetApp(appId).Run(ctx)
-description := app.Description()
-
-// v1.x - Manual unwrap
-result, _ := client.RunQuery(ctx, body)
-if result.Data != nil {
-    records := quickbase.UnwrapRecords(*result.Data)
-}
-
-// v2.0 - Convenience method
-result, _ := client.RunQuery(ctx, body)
-records := result.Records()  // nil-safe, returns empty slice if no data
-
-// v1.x - Array response
-fields, _ := client.GetFields("tableId").Run(ctx)
-for _, f := range fields {
-    label := quickbase.Deref(f.Label)
-}
-
-// v2.0 - Wrapped array items
-fields, _ := client.GetFields("tableId").Run(ctx)
-for _, f := range fields {
-    label := f.Label()  // nil-safe accessor
-}
-```
-
-## Helper Functions
-
-The following helpers are still available but less commonly needed:
-
-### Deref / DerefOr
-
-```go
-// Still useful for nested or complex types
-app, _ := client.GetApp(appId).Run(ctx)
-description := quickbase.DerefOr(app.Raw().JSON200.Description, "No description")
-```
-
-### UnwrapRecords
-
-```go
-// Still available for RunQueryAll which returns raw records
-rawRecords, _ := client.RunQueryAll(ctx, body)
-records := quickbase.UnwrapRecords(rawRecords)
-```
+- Every builder (`GetAppBuilder`, ...) and result wrapper (`AppResult`, `FieldsItem`, ...); `Asc`, `Desc` and `SortSpec` (use `Sort(id, quickbase.ASC)`)
+- `Query()`, `QueryBuilder`
+- `FieldValueUnion` and the `From…`/`As…` union helpers for record values

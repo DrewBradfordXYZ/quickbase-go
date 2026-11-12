@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/xml"
 )
 
 // getXMLClient creates an XML client from the test client
@@ -492,12 +492,12 @@ func getFirstRecordID(t *testing.T, ctx context.Context) int {
 	if err != nil {
 		t.Fatalf("Failed to query for record ID: %v", err)
 	}
-	if resp.JSON200 == nil || resp.JSON200.Data == nil || len(*resp.JSON200.Data) == 0 {
+	if resp.JSON200 == nil || resp.JSON200.Data == nil || len(resp.JSON200.Data) == 0 {
 		t.Fatal("No records found")
 	}
 
 	// Extract the record ID from the response
-	recordData := (*resp.JSON200.Data)[0]
+	recordData := (resp.JSON200.Data)[0]
 	recordIDVal, ok := recordData["3"]
 	if !ok {
 		t.Fatal("Record ID field (3) not in response")
@@ -516,7 +516,7 @@ func extractRecordID(v interface{}) int {
 	switch val := v.(type) {
 	case generated.FieldValue:
 		// Try to get the value as a float
-		if inner, err := val.Value.AsFieldValueValue1(); err == nil {
+		if inner, ok := val.Value.(float64); ok {
 			return int(inner)
 		}
 	case map[string]interface{}:

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+v3: one method per operation, with plain results. The module path is `github.com/DrewBradfordXYZ/quickbase-go/v3`. [MIGRATION.md](MIGRATION.md) maps every v2 call; [docs/architecture.md](docs/architecture.md) has the reasons.
+
+### Changed
+- **BREAKING: one method per operation.** `client.GetApp(ctx, appID)`, `client.GetFields(ctx, quickbase.GetFieldsParams{...})`, `client.Upsert(ctx, quickbase.UpsertBody{...})`: path parameters are arguments, query parameters a params struct, a body its request type. They return the result (`*GetAppResult`, `[]GetFieldsItem`, `[]byte` for QBL and files) or QuickBase's typed error. Generated from the spec (`cmd/generate-methods`).
+- **BREAKING: results have plain fields.** Response types' optional fields are values, not pointers (`app.Name`, `result.Metadata.CreatedRecordIds`), and every response is a named type (`<Operation>Result`). `cmd/gospec` adapts the shared spec for Go; generated with oapi-codegen v2.8.2, whose runtime (v1.8.0) still needs only Go 1.24.
+- **BREAKING: a record value is a plain Go value** (`any`), not a union type: `rec["6"].Value.(string)`, `quickbase.FieldValue{Value: 42}`.
+- **BREAKING: schema aliases are resolved for every request** in the HTTP layer (bodies' `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn`, `mergeFieldId`, and a `tableId` parameter), not only by `RunQuery` and `Query()`. A table ID the schema doesn't name goes as given; it was an error.
+- `TransformResponses` keys the paging helpers' records by alias (`RunQueryAll`, `RunQueryN`, `RunQueryIterator`, `RunReport*`); it keyed `Query()`'s.
+- Every generated type is re-exported from the root package under its own name (`quickbase.GetAppResult`), so callers need one import.
+
+### Removed
+- **BREAKING:** the fluent builders, the result wrappers with accessor methods (`Raw()`, `Name()`, ...), the `Query()` builder, `Asc`/`Desc`/`SortSpec`, and the union helpers for record values (`FieldValueUnion`). `client.API()` remains for the full generated response.
+
+### Fixed
+- The schema generator's Go output imports `github.com/DrewBradfordXYZ/quickbase-go/v3`; it imported the module path without its major version, which didn't compile.
+
 ## [2.4.0] - 2026-11-12
 
 ### Added

@@ -443,8 +443,8 @@ for _, role := range roles.Roles {
 }
 
 // Get relationships (JSON-only)
-rels, _ := qb.GetRelationships(tableId).Run(ctx)
-for _, rel := range rels {
+rels, _ := qb.GetRelationships(ctx, tableId, quickbase.GetRelationshipsParams{})
+for _, rel := range rels.Relationships {
     fmt.Printf("Relationship: %s -> %s\n", rel.ParentTableId, rel.ChildTableId)
 }
 ```

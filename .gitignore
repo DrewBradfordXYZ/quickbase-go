@@ -33,3 +33,6 @@ tests/integration/.test-context.json
 
 # MCP archive database
 archive/
+
+# Go-adapted spec (cmd/gospec), rebuilt by make generate
+.build/

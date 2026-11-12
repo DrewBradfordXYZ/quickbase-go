@@ -105,6 +105,26 @@ func TransformRequest(body map[string]any, schema *ResolvedSchema) (map[string]a
 		result["groupBy"] = resolved
 	}
 
+	// Resolve upsert's fieldsToReturn and mergeFieldId
+	if fields, ok := result["fieldsToReturn"].([]any); ok {
+		resolved := make([]int, 0, len(fields))
+		for _, field := range fields {
+			fieldID, err := ResolveFieldAlias(schema, tableID, field)
+			if err != nil {
+				return nil, "", err
+			}
+			resolved = append(resolved, fieldID)
+		}
+		result["fieldsToReturn"] = resolved
+	}
+	if merge, ok := result["mergeFieldId"]; ok && merge != nil {
+		fieldID, err := ResolveFieldAlias(schema, tableID, merge)
+		if err != nil {
+			return nil, "", err
+		}
+		result["mergeFieldId"] = fieldID
+	}
+
 	// Resolve where clause (string replacement)
 	if where, ok := result["where"].(string); ok {
 		result["where"] = transformWhereClause(where, schema, tableID)

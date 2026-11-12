@@ -18,8 +18,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 	"github.com/joho/godotenv"
 )
 
@@ -135,7 +135,7 @@ func setup() error {
 		return fmt.Errorf("creating app: unexpected response %d", createAppResp.StatusCode())
 	}
 
-	appID := *createAppResp.JSON200.Id
+	appID := createAppResp.JSON200.Id
 	fmt.Printf("   App created: %s\n", appID)
 
 	// Create test table
@@ -153,7 +153,7 @@ func setup() error {
 		return fmt.Errorf("creating table: unexpected response %d", createTableResp.StatusCode())
 	}
 
-	tableID := *createTableResp.JSON200.Id
+	tableID := createTableResp.JSON200.Id
 	fmt.Printf("   Table created: %s\n", tableID)
 
 	// Create test fields

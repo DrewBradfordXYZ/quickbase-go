@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 // GrantedDBInfo contains information about an accessible app or table.

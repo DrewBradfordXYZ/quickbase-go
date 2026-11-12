@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // TestRelationships tests all relationship CRUD operations
@@ -52,13 +52,12 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Get relationships from child table
-		resp, err := client.GetRelationships(childTableID).Run(ctx)
+		resp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
 		if err != nil {
 			t.Fatalf("GetRelationships failed: %v", err)
 		}
 
-		// Access response via accessor method
-		rels := resp.Relationships()
+		rels := resp.Relationships
 		if len(rels) == 0 {
 			t.Error("Expected at least one relationship")
 		}
@@ -66,11 +65,11 @@ func TestRelationships(t *testing.T) {
 		// Find our relationship
 		found := false
 		for _, rel := range rels {
-			if int64(rel.Id()) == relationshipID {
+			if int64(rel.Id) == relationshipID {
 				found = true
 				// Verify parent table ID
-				if rel.ParentTableId() != testCtx.TableID {
-					t.Errorf("ParentTableId = %s, want %s", rel.ParentTableId(), testCtx.TableID)
+				if rel.ParentTableId != testCtx.TableID {
+					t.Errorf("ParentTableId = %s, want %s", rel.ParentTableId, testCtx.TableID)
 				}
 				break
 			}
@@ -86,15 +85,15 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Test the builder pattern (this was the bug - it should use tableID correctly)
-		resp, err := client.GetRelationships(childTableID).Run(ctx)
+		resp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
 		if err != nil {
 			t.Fatalf("GetRelationships builder failed: %v", err)
 		}
 
 		// Verify we got relationships via accessor method
-		rels := resp.Relationships()
+		rels := resp.Relationships
 		if len(rels) == 0 {
-			t.Error("Expected relationships from builder")
+			t.Error("Expected relationships")
 		}
 	})
 
@@ -119,7 +118,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Verify lookup fields were added
-		if resp.JSON200.LookupFields == nil || len(*resp.JSON200.LookupFields) == 0 {
+		if len(resp.JSON200.LookupFields) == 0 {
 			t.Error("Expected lookup fields in response")
 		}
 	})
@@ -139,13 +138,13 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Verify GetRelationships no longer returns it
-		getResp, err := client.GetRelationships(childTableID).Run(ctx)
+		getResp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
 		if err != nil {
 			t.Fatalf("GetRelationships after delete failed: %v", err)
 		}
 
-		for _, rel := range getResp.Relationships() {
-			if int64(rel.Id()) == relationshipID {
+		for _, rel := range getResp.Relationships {
+			if int64(rel.Id) == relationshipID {
 				t.Error("Relationship still exists after delete")
 			}
 		}
@@ -160,13 +159,13 @@ func TestGetRelationships_NoRelationships(t *testing.T) {
 	testCtx := getTestContext(t)
 
 	// The main test table has no relationships initially
-	resp, err := client.GetRelationships(testCtx.TableID).Run(ctx)
+	resp, err := client.GetRelationships(ctx, testCtx.TableID, generated.GetRelationshipsParams{})
 	if err != nil {
 		t.Fatalf("GetRelationships failed: %v", err)
 	}
 
 	// Should return empty relationships array, not an error
-	rels := resp.Relationships()
+	rels := resp.Relationships
 	t.Logf("Relationships count: %d", len(rels))
 }
 
@@ -187,7 +186,7 @@ func createChildTable(t *testing.T, ctx context.Context, appID string) string {
 		t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 	}
 
-	tableID := *resp.JSON200.Id
+	tableID := resp.JSON200.Id
 	t.Logf("Created child table: %s", tableID)
 	return tableID
 }

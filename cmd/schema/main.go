@@ -28,7 +28,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 func main() {
@@ -197,14 +197,9 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 	defer cancel()
 
 	// Fetch all tables
-	tablesResp, err := client.API().GetAppTablesWithResponse(ctx, &quickbase.GetAppTablesParams{
-		AppId: appID,
-	})
+	tables, err := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: appID})
 	if err != nil {
 		return nil, fmt.Errorf("fetching tables: %w", err)
-	}
-	if tablesResp.JSON200 == nil {
-		return nil, fmt.Errorf("fetching tables: status %d", tablesResp.StatusCode())
 	}
 
 	schema := &quickbase.Schema{
@@ -213,46 +208,31 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 
 	tableAliases := make(map[string]bool)
 
-	for _, table := range *tablesResp.JSON200 {
-		if table.Id == nil || table.Name == nil {
+	for _, table := range tables {
+		if table.Id == "" || table.Name == "" {
 			continue
 		}
 
-		tableID := *table.Id
-		tableName := *table.Name
-
 		// Generate table alias from name
-		tableAlias := labelToAlias(tableName)
-		tableAlias = makeUnique(tableAlias, tableAliases)
+		tableAlias := makeUnique(labelToAlias(table.Name), tableAliases)
 
-		// Fetch fields for this table
-		fieldsResp, err := client.API().GetFieldsWithResponse(ctx, &quickbase.GetFieldsParams{
-			TableId: tableID,
-		})
+		fields, err := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: table.Id})
 		if err != nil {
-			return nil, fmt.Errorf("fetching fields for table %s: %w", tableID, err)
-		}
-		if fieldsResp.JSON200 == nil {
-			return nil, fmt.Errorf("fetching fields for table %s: status %d", tableID, fieldsResp.StatusCode())
+			return nil, fmt.Errorf("fetching fields for table %s: %w", table.Id, err)
 		}
 
 		fieldAliases := make(map[string]bool)
 		fieldMap := make(map[string]int)
 
-		for _, field := range *fieldsResp.JSON200 {
-			if field.Label == nil {
+		for _, field := range fields {
+			if field.Label == "" {
 				continue
 			}
-
-			// Generate field alias from label
-			alias := labelToAlias(*field.Label)
-			alias = makeUnique(alias, fieldAliases)
-
-			fieldMap[alias] = int(field.Id)
+			fieldMap[makeUnique(labelToAlias(field.Label), fieldAliases)] = int(field.Id)
 		}
 
 		schema.Tables[tableAlias] = quickbase.TableSchema{
-			ID:     tableID,
+			ID:     table.Id,
 			Fields: fieldMap,
 		}
 	}
@@ -504,7 +484,7 @@ func formatAsGo(schema *quickbase.Schema) string {
 	b.WriteString("\n")
 	b.WriteString("package main\n")
 	b.WriteString("\n")
-	b.WriteString("import \"github.com/DrewBradfordXYZ/quickbase-go\"\n")
+	b.WriteString("import \"github.com/DrewBradfordXYZ/quickbase-go/v3\"\n")
 	b.WriteString("\n")
 	b.WriteString("var schema = &quickbase.Schema{\n")
 	b.WriteString("\tTables: map[string]quickbase.TableSchema{\n")

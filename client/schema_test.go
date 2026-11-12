@@ -3,7 +3,7 @@ package client
 import (
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 func TestClient_Table(t *testing.T) {

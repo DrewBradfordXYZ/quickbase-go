@@ -38,9 +38,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // Client wraps the generated QuickBase client with authentication, automatic retry,
@@ -498,9 +498,6 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
-	// Extract dbid from request for temp token auth
-	dbid := extractDBID(req)
-
 	// Read body once for potential retries
 	var bodyBytes []byte
 	if req.Body != nil {
@@ -510,7 +507,19 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			return nil, fmt.Errorf("reading request body: %w", err)
 		}
 		req.Body.Close()
+	}
 
+	// Schema aliases, for every request
+	if c.schema != nil {
+		var err error
+		if bodyBytes, err = c.resolveAliases(req, bodyBytes); err != nil {
+			return nil, err
+		}
+	}
+
+	// Extract dbid from request for temp token auth
+	dbid := extractDBID(req)
+	if bodyBytes != nil {
 		// Also check body for dbid if not found elsewhere
 		if dbid == "" {
 			dbid = extractDBIDFromBody(bodyBytes)
@@ -521,7 +530,9 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	requestFactory := func(ctx context.Context, token string) (*http.Request, error) {
 		reqCopy := req.Clone(ctx)
 		if bodyBytes != nil {
+			// The body may have changed (aliases resolved), so its length too
 			reqCopy.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+			reqCopy.ContentLength = int64(len(bodyBytes))
 		}
 		c.auth.ApplyAuth(reqCopy, token)
 		return reqCopy, nil
@@ -538,6 +549,39 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 	retrySafe := !isJSONWrite(req.Method, c.apiPath(req.URL.Path))
 	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, retrySafe, requestFactory, responseHandler)
+}
+
+// resolveAliases resolves the schema's table and field aliases in a request:
+// a JSON body's from, to, select, sortBy, groupBy, where, record data,
+// fieldsToReturn and mergeFieldId, and a tableId query parameter. Numbers in
+// the body keep their exact values.
+func (c *Client) resolveAliases(req *http.Request, body []byte) ([]byte, error) {
+	query := req.URL.Query()
+	if tableID := query.Get("tableId"); tableID != "" {
+		resolved, err := core.ResolveTableAlias(c.schema, tableID)
+		if err != nil {
+			return nil, err
+		}
+		if resolved != tableID {
+			query.Set("tableId", resolved)
+			req.URL.RawQuery = query.Encode()
+		}
+	}
+
+	if len(body) == 0 || !strings.HasPrefix(req.Header.Get("Content-Type"), "application/json") {
+		return body, nil
+	}
+	decoder := json.NewDecoder(bytes.NewReader(body))
+	decoder.UseNumber()
+	var fields map[string]any
+	if err := decoder.Decode(&fields); err != nil {
+		return body, nil // not an object; nothing to resolve
+	}
+	resolved, _, err := core.TransformRequest(fields, c.schema)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(resolved)
 }
 
 // requestFactory creates an authenticated request for a retry attempt.

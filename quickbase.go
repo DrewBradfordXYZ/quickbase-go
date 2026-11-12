@@ -72,15 +72,13 @@
 package quickbase
 
 import (
-	"encoding/json"
-	"fmt"
 	"strconv"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/client"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/client"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // Client is the main QuickBase API client.
@@ -88,8 +86,6 @@ type Client = client.Client
 
 // Re-export types for convenience
 type (
-	// Generated client types
-	ClientWithResponses = generated.ClientWithResponses
 
 	// Error types
 	QuickbaseError      = core.QuickbaseError
@@ -391,254 +387,12 @@ type (
 )
 
 // Param types
-type (
-	// GetFieldsParams are the parameters for GetFields
-	GetFieldsParams = generated.GetFieldsParams
-
-	// GetAppTablesParams are the parameters for GetAppTables
-	GetAppTablesParams = generated.GetAppTablesParams
-
-	// GetTableParams are the parameters for GetTable
-	GetTableParams = generated.GetTableParams
-
-	// DeleteTableParams are the parameters for DeleteTable
-	DeleteTableParams = generated.DeleteTableParams
-
-	// CreateTableParams are the parameters for CreateTable
-	CreateTableParams = generated.CreateTableParams
-
-	// UpdateTableParams are the parameters for UpdateTable
-	UpdateTableParams = generated.UpdateTableParams
-
-	// GetFieldParams are the parameters for GetField
-	GetFieldParams = generated.GetFieldParams
-
-	// CreateFieldParams are the parameters for CreateField
-	CreateFieldParams = generated.CreateFieldParams
-
-	// UpdateFieldParams are the parameters for UpdateField
-	UpdateFieldParams = generated.UpdateFieldParams
-
-	// DeleteFieldsParams are the parameters for DeleteFields
-	DeleteFieldsParams = generated.DeleteFieldsParams
-
-	// GetRelationshipsParams are the parameters for GetRelationships
-	GetRelationshipsParams = generated.GetRelationshipsParams
-
-	// GetReportParams are the parameters for GetReport
-	GetReportParams = generated.GetReportParams
-
-	// GetTableReportsParams are the parameters for GetTableReports
-	GetTableReportsParams = generated.GetTableReportsParams
-
-	// RunReportParams are the parameters for RunReport
-	RunReportParams = generated.RunReportParams
-
-	// GetUsersParams are the parameters for GetUsers
-	GetUsersParams = generated.GetUsersParams
-
-	// GetFieldsUsageParams are the parameters for GetFieldsUsage
-	GetFieldsUsageParams = generated.GetFieldsUsageParams
-
-	// GetFieldUsageParams are the parameters for GetFieldUsage
-	GetFieldUsageParams = generated.GetFieldUsageParams
-)
-
-// NOTE: Named response data types (GetAppData, RunQueryData, etc.) were removed
-// in v2.1 due to oapi-codegen generating inline anonymous structs instead of named types.
-// Use the wrapper types from the client package instead:
-//   - AppResult, FieldsItem, etc. for nil-safe access
-//   - Use result.Raw().JSON200 for direct access to the response data
+type ()
 
 // Core types
 type (
 	// Record is a QuickBase record (map of field ID to value)
 	Record = generated.QuickbaseRecord
-
-	// FieldValue is a field value in a record
-	FieldValue = generated.FieldValue
-
-	// FieldValueUnion is the union type for field values
-	FieldValueUnion = generated.FieldValue_Value
-
-	// SortField specifies a field to sort by
-	SortField = generated.SortField
-
-	// SortFieldOrder is the sort order (ASC, DESC)
-	SortFieldOrder = generated.SortFieldOrder
-
-	// SortByUnion is the union type for sortBy ([]SortField or false)
-	SortByUnion = generated.SortByUnion
-)
-
-// Builder types for fluent API
-// These are auto-generated from the OpenAPI spec and provide a chainable API
-// for building and executing API requests. Method names match QuickBase operation IDs.
-type (
-	// AddManagersToGroupBuilder provides a fluent API for adding managers to groups.
-	AddManagersToGroupBuilder = client.AddManagersToGroupBuilder
-
-	// AddMembersToGroupBuilder provides a fluent API for adding members to groups.
-	AddMembersToGroupBuilder = client.AddMembersToGroupBuilder
-
-	// AddSubgroupsToGroupBuilder provides a fluent API for adding subgroups to groups.
-	AddSubgroupsToGroupBuilder = client.AddSubgroupsToGroupBuilder
-
-	// AuditBuilder provides a fluent API for querying audit logs.
-	AuditBuilder = client.AuditBuilder
-
-	// ChangesetSolutionBuilder provides a fluent API for modifying solutions.
-	ChangesetSolutionBuilder = client.ChangesetSolutionBuilder
-
-	// ChangesetSolutionFromRecordBuilder provides a fluent API for solution changesets from records.
-	ChangesetSolutionFromRecordBuilder = client.ChangesetSolutionFromRecordBuilder
-
-	// CloneUserTokenBuilder provides a fluent API for cloning user tokens.
-	CloneUserTokenBuilder = client.CloneUserTokenBuilder
-
-	// CopyAppBuilder provides a fluent API for copying apps.
-	CopyAppBuilder = client.CopyAppBuilder
-
-	// CreateAppBuilder provides a fluent API for creating apps.
-	CreateAppBuilder = client.CreateAppBuilder
-
-	// CreateFieldBuilder provides a fluent API for creating fields.
-	CreateFieldBuilder = client.CreateFieldBuilder
-
-	// CreateRelationshipBuilder provides a fluent API for creating relationships.
-	CreateRelationshipBuilder = client.CreateRelationshipBuilder
-
-	// CreateSolutionBuilder provides a fluent API for creating solutions.
-	CreateSolutionBuilder = client.CreateSolutionBuilder
-
-	// CreateSolutionFromRecordBuilder provides a fluent API for creating solutions from records.
-	CreateSolutionFromRecordBuilder = client.CreateSolutionFromRecordBuilder
-
-	// CreateTableBuilder provides a fluent API for creating tables.
-	CreateTableBuilder = client.CreateTableBuilder
-
-	// DeactivateUserTokenBuilder provides a fluent API for deactivating user tokens.
-	DeactivateUserTokenBuilder = client.DeactivateUserTokenBuilder
-
-	// DeleteAppBuilder provides a fluent API for deleting apps.
-	DeleteAppBuilder = client.DeleteAppBuilder
-
-	// DeleteFieldsBuilder provides a fluent API for deleting fields.
-	DeleteFieldsBuilder = client.DeleteFieldsBuilder
-
-	// DeleteFileBuilder provides a fluent API for deleting files.
-	DeleteFileBuilder = client.DeleteFileBuilder
-
-	// DeleteRelationshipBuilder provides a fluent API for deleting relationships.
-	DeleteRelationshipBuilder = client.DeleteRelationshipBuilder
-
-	// DeleteTableBuilder provides a fluent API for deleting tables.
-	DeleteTableBuilder = client.DeleteTableBuilder
-
-	// DeleteUserTokenBuilder provides a fluent API for deleting user tokens.
-	DeleteUserTokenBuilder = client.DeleteUserTokenBuilder
-
-	// DenyUsersBuilder provides a fluent API for denying users.
-	DenyUsersBuilder = client.DenyUsersBuilder
-
-	// DenyUsersAndGroupsBuilder provides a fluent API for denying users and groups.
-	DenyUsersAndGroupsBuilder = client.DenyUsersAndGroupsBuilder
-
-	// DownloadFileBuilder provides a fluent API for downloading files.
-	DownloadFileBuilder = client.DownloadFileBuilder
-
-	// ExchangeSsoTokenBuilder provides a fluent API for exchanging SSO tokens.
-	ExchangeSsoTokenBuilder = client.ExchangeSsoTokenBuilder
-
-	// ExportSolutionBuilder provides a fluent API for exporting solutions.
-	ExportSolutionBuilder = client.ExportSolutionBuilder
-
-	// ExportSolutionToRecordBuilder provides a fluent API for exporting solutions to records.
-	ExportSolutionToRecordBuilder = client.ExportSolutionToRecordBuilder
-
-	// GenerateDocumentBuilder provides a fluent API for generating documents.
-	GenerateDocumentBuilder = client.GenerateDocumentBuilder
-
-	// GetAppEventsBuilder provides a fluent API for getting app events.
-	GetAppEventsBuilder = client.GetAppEventsBuilder
-
-	// GetAppTablesBuilder provides a fluent API for getting app tables.
-	GetAppTablesBuilder = client.GetAppTablesBuilder
-
-	// GetFieldBuilder provides a fluent API for getting a field.
-	GetFieldBuilder = client.GetFieldBuilder
-
-	// GetFieldUsageBuilder provides a fluent API for getting field usage.
-	GetFieldUsageBuilder = client.GetFieldUsageBuilder
-
-	// GetFieldsUsageBuilder provides a fluent API for getting fields usage.
-	GetFieldsUsageBuilder = client.GetFieldsUsageBuilder
-
-	// GetRelationshipsBuilder provides a fluent API for getting relationships.
-	GetRelationshipsBuilder = client.GetRelationshipsBuilder
-
-	// GetReportBuilder provides a fluent API for getting a report.
-	GetReportBuilder = client.GetReportBuilder
-
-	// GetTableBuilder provides a fluent API for getting a table.
-	GetTableBuilder = client.GetTableBuilder
-
-	// GetTableReportsBuilder provides a fluent API for getting table reports.
-	GetTableReportsBuilder = client.GetTableReportsBuilder
-
-	// GetTempTokenDBIDBuilder provides a fluent API for getting temp tokens.
-	GetTempTokenDBIDBuilder = client.GetTempTokenDBIDBuilder
-
-	// GetUsersBuilder provides a fluent API for getting users.
-	GetUsersBuilder = client.GetUsersBuilder
-
-	// PlatformAnalyticEventSummariesBuilder provides a fluent API for platform analytics.
-	PlatformAnalyticEventSummariesBuilder = client.PlatformAnalyticEventSummariesBuilder
-
-	// PlatformAnalyticReadsBuilder provides a fluent API for platform analytic reads.
-	PlatformAnalyticReadsBuilder = client.PlatformAnalyticReadsBuilder
-
-	// RemoveManagersFromGroupBuilder provides a fluent API for removing managers from groups.
-	RemoveManagersFromGroupBuilder = client.RemoveManagersFromGroupBuilder
-
-	// RemoveMembersFromGroupBuilder provides a fluent API for removing members from groups.
-	RemoveMembersFromGroupBuilder = client.RemoveMembersFromGroupBuilder
-
-	// RemoveSubgroupsFromGroupBuilder provides a fluent API for removing subgroups from groups.
-	RemoveSubgroupsFromGroupBuilder = client.RemoveSubgroupsFromGroupBuilder
-
-	// RunFormulaBuilder provides a fluent API for running formulas.
-	RunFormulaBuilder = client.RunFormulaBuilder
-
-	// RunReportBuilder provides a fluent API for running reports.
-	RunReportBuilder = client.RunReportBuilder
-
-	// TransferUserTokenBuilder provides a fluent API for transferring user tokens.
-	TransferUserTokenBuilder = client.TransferUserTokenBuilder
-
-	// UndenyUsersBuilder provides a fluent API for undenying users.
-	UndenyUsersBuilder = client.UndenyUsersBuilder
-
-	// UpdateAppBuilder provides a fluent API for updating apps.
-	UpdateAppBuilder = client.UpdateAppBuilder
-
-	// UpdateFieldBuilder provides a fluent API for updating fields.
-	UpdateFieldBuilder = client.UpdateFieldBuilder
-
-	// UpdateRelationshipBuilder provides a fluent API for updating relationships.
-	UpdateRelationshipBuilder = client.UpdateRelationshipBuilder
-
-	// UpdateSolutionBuilder provides a fluent API for updating solutions.
-	UpdateSolutionBuilder = client.UpdateSolutionBuilder
-
-	// UpdateSolutionToRecordBuilder provides a fluent API for updating solutions to records.
-	UpdateSolutionToRecordBuilder = client.UpdateSolutionToRecordBuilder
-
-	// UpdateTableBuilder provides a fluent API for updating tables.
-	UpdateTableBuilder = client.UpdateTableBuilder
-
-	// SortSpec specifies a sort field and order for RunQuery.
-	SortSpec = client.SortSpec
 )
 
 // FieldType is the type of a field for CreateField
@@ -751,10 +505,7 @@ func Strings(strs ...string) *[]string {
 // the record with the field blank when the form is wrong. Wrap it with
 // [DateOf] or [DateTimeOf].
 //
-// This helper hides the complexity of Go's lack of union types.
-// The QuickBase API allows field values to be different types (text, number,
-// boolean, multi-select), and oapi-codegen generates verbose wrapper types
-// to handle this. Value() provides a clean interface.
+// FieldValue{Value: v} is the same, without the time.Time check.
 //
 // Example:
 //
@@ -771,39 +522,12 @@ func Strings(strs ...string) *[]string {
 //	    Data: &data,
 //	})
 func Value(v any) FieldValue {
-	var fv generated.FieldValue_Value
-	switch val := v.(type) {
-	case string:
-		fv.FromFieldValueValue0(val)
-	case int:
-		fv.FromFieldValueValue1(float64(val))
-	case int32:
-		fv.FromFieldValueValue1(float64(val))
-	case int64:
-		fv.FromFieldValueValue1(float64(val))
-	case float32:
-		fv.FromFieldValueValue1(float64(val))
-	case float64:
-		fv.FromFieldValueValue1(val)
-	case bool:
-		fv.FromFieldValueValue2(val)
-	case []string:
-		fv.FromFieldValueValue3(val)
-	case nil:
-		// The zero union marshals as null, which clears the field
-	case time.Time:
+	if _, ok := v.(time.Time); ok {
 		panic("quickbase.Value: a time.Time could go to a Date field or a Date/Time field, which accept " +
 			"different forms; use quickbase.Value(quickbase.DateOf(t)) or quickbase.Value(quickbase.DateTimeOf(t))")
-	default:
-		// Date, DateTime, and anything else: sent as its JSON. It went as null
-		// before, which cleared the field.
-		raw, err := json.Marshal(val)
-		if err != nil {
-			panic(fmt.Sprintf("quickbase.Value(%T): %v", v, err))
-		}
-		_ = fv.UnmarshalJSON(raw)
 	}
-	return FieldValue{Value: fv}
+	// Date and DateTime marshal as their fields expect; nil clears the field
+	return FieldValue{Value: v}
 }
 
 // Row creates a Record from alternating key-value pairs.
@@ -868,34 +592,6 @@ func Sort(fieldId int, order generated.SortFieldOrder) SortField {
 	return SortField{
 		FieldId: fieldId,
 		Order:   order,
-	}
-}
-
-// Asc creates a SortSpec for ascending order.
-// Accepts field ID (int) or alias (string) when used with schema.
-//
-// Example:
-//
-//	quickbase.Asc(6)       // Sort by field 6 ascending
-//	quickbase.Asc("name")  // Sort by "name" alias ascending (with schema)
-func Asc(field any) SortSpec {
-	return SortSpec{
-		Field: field,
-		Order: generated.SortFieldOrderASC,
-	}
-}
-
-// Desc creates a SortSpec for descending order.
-// Accepts field ID (int) or alias (string) when used with schema.
-//
-// Example:
-//
-//	quickbase.Desc(6)        // Sort by field 6 descending
-//	quickbase.Desc("dueDate") // Sort by "dueDate" alias descending (with schema)
-func Desc(field any) SortSpec {
-	return SortSpec{
-		Field: field,
-		Order: generated.SortFieldOrderDESC,
 	}
 }
 
