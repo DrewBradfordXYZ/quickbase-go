@@ -22,6 +22,8 @@ func TestGoName(t *testing.T) {
 		"Website URL":       "WebsiteURL",
 		"State/Region":      "StateRegion",
 		"   ":               "Field9",
+		"Año Fiscal":        "AñoFiscal",
+		"日付":                "F日付",
 	} {
 		if got := goName(label, 9); got != want {
 			t.Errorf("goName(%q) = %q, want %q", label, got, want)

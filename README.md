@@ -99,7 +99,7 @@ More in [docs/queries.md](docs/queries.md): running reports, upserts, deletes, a
 
 ## Schema aliases
 
-Name your tables and fields once, then use the names in any request: the client translates them to IDs in bodies (`From`, `To`, `Where`, record data) and in a `TableId` parameter.
+Name your tables and fields once, then use the names with any method: the client translates them to IDs wherever a table goes (a `TableId` parameter or path) and in record operations' bodies (`From`, `To`, `Where`, record data).
 
 ```go
 schema := quickbase.NewSchema().

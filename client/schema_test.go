@@ -23,7 +23,8 @@ func TestClient_Table(t *testing.T) {
 		{"resolve alias", "projects", "bqxyz123", false},
 		{"resolve another alias", "tasks", "bqabc456", false},
 		{"passthrough ID", "bqxyz123", "bqxyz123", false},
-		{"unknown alias", "unknown", "", true},
+		{"misspelled alias", "projcts", "", true},
+		{"a table the schema doesn't name", "bqother12", "bqother12", false},
 	}
 
 	for _, tt := range tests {

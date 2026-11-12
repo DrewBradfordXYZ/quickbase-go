@@ -43,7 +43,7 @@ This needs oapi-codegen v2.8.2 (v2.4.0 generates code that doesn't compile with 
 
 `API()` stays, for the raw generated client and its responses.
 
-**Aliases, once.** With a schema, table and field aliases are resolved in the HTTP layer for every request: `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn`, `mergeFieldId`, and a `tableId` query parameter. No method resolves them on its own.
+**Aliases, once.** With a schema, table and field aliases are resolved in the HTTP layer, for every method: a table in a path (`/tables/{tableId}`, `/files/{tableId}`) or a `tableId` parameter; and, for record operations (query, upsert, delete records, modified since, run formula), the body's `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn` and `mergeFieldId`. Other bodies are left alone (`transferUserToken`'s `from` and `to` are user IDs). A table reference the schema doesn't name goes as given, unless it is a near miss of an alias, which is an error suggesting it: telling IDs from aliases by shape rejected real IDs. No method resolves aliases on its own.
 
 **Records, once.** A record is `map[string]any`. One decoder turns QuickBase's records into these, and into the typed tables' structs (next).
 

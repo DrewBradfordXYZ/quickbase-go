@@ -282,7 +282,7 @@ func describe(f appField) string {
 	return d + ")"
 }
 
-var nonWord = regexp.MustCompile(`[^A-Za-z0-9]+`)
+var nonWord = regexp.MustCompile(`[^\p{L}\p{N}]+`)
 
 // initialisms Go writes in capitals.
 var initialisms = map[string]string{"id": "ID", "url": "URL", "api": "API", "html": "HTML", "json": "JSON", "uuid": "UUID", "ip": "IP", "sku": "SKU"}
@@ -305,7 +305,9 @@ func goName(label string, id int) string {
 	if name == "" {
 		return fmt.Sprintf("Field%d", id)
 	}
-	if unicode.IsDigit([]rune(name)[0]) {
+	// Exported names start with an upper-case letter: "2nd" and scripts
+	// without case ("日付") get a prefix
+	if first := []rune(name)[0]; !unicode.IsUpper(first) {
 		name = "F" + name
 	}
 	return name

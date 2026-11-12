@@ -71,6 +71,10 @@ projects, err := quickbase.DecodeRecords[Project](records) // a slice at once
 
 To send a struct, `quickbase.RecordFrom(v)` builds a record from its tags; a nil pointer field is left out, so a struct of pointers says exactly which fields to change.
 
+## Other lists
+
+`GetRelationshipsIterator(ctx, tableID)` and `GetUsersIterator(ctx, params, body)` yield every relationship or user, fetching a page at a time; `GetRelationships` and `GetUsers` return one page.
+
 ## Reports
 
 A report runs with its own filter, sort and columns:

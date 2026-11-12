@@ -59,6 +59,11 @@ func (t *Table[R, C]) body(q TableQuery) RunQueryBody {
 	if len(q.SortBy) > 0 {
 		body.SortBy = SortBy(q.SortBy...)
 	}
+	if q.Limit > 0 {
+		// QuickBase sends at most Limit records, not a full page
+		top := q.Limit
+		body.Options = &QueryOptions{Top: &top}
+	}
 	return body
 }
 
@@ -117,6 +122,9 @@ func (t *Table[R, C]) Get(ctx context.Context, qb *Client, recordID int) (R, err
 // QuickBase rejects are in the result's Metadata.LineErrors (and an error,
 // with WithLineErrorsAsErrors).
 func (t *Table[R, C]) Upsert(ctx context.Context, qb *Client, changes ...C) (*UpsertResult, error) {
+	if len(changes) == 0 {
+		return nil, fmt.Errorf("quickbase: Upsert on table %s has no changes", t.ID)
+	}
 	data := make([]Record, len(changes))
 	for i, c := range changes {
 		record, err := core.RecordFrom(c)

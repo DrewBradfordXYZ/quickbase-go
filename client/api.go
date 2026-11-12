@@ -214,3 +214,52 @@ type recordPage struct {
 func (r *recordPage) GetData() []generated.QuickbaseRecord { return r.data }
 
 func (r *recordPage) GetMetadata() PaginationMetadata { return r.metadata }
+
+// GetRelationshipsIterator yields every relationship of a table, a page at a
+// time (getRelationships pages by skip).
+func (c *Client) GetRelationshipsIterator(ctx context.Context, tableID string) iter.Seq2[generated.GetRelationshipsRelationshipsItem, error] {
+	return func(yield func(generated.GetRelationshipsRelationshipsItem, error) bool) {
+		skip := 0
+		for {
+			page, err := c.GetRelationships(ctx, tableID, generated.GetRelationshipsParams{Skip: &skip})
+			if err != nil {
+				yield(generated.GetRelationshipsRelationshipsItem{}, err)
+				return
+			}
+			for _, rel := range page.Relationships {
+				if !yield(rel, nil) {
+					return
+				}
+			}
+			skip += len(page.Relationships)
+			if len(page.Relationships) == 0 || skip >= page.Metadata.TotalRelationships {
+				return
+			}
+		}
+	}
+}
+
+// GetUsersIterator yields every user getUsers finds, a page at a time
+// (getUsers pages by nextPageToken). body filters by email or app; its
+// NextPageToken is set for each page.
+func (c *Client) GetUsersIterator(ctx context.Context, params generated.GetUsersParams, body generated.GetUsersJSONRequestBody) iter.Seq2[generated.GetUsersUsersItem, error] {
+	return func(yield func(generated.GetUsersUsersItem, error) bool) {
+		for {
+			page, err := c.GetUsers(ctx, params, body)
+			if err != nil {
+				yield(generated.GetUsersUsersItem{}, err)
+				return
+			}
+			for _, user := range page.Users {
+				if !yield(user, nil) {
+					return
+				}
+			}
+			token := page.Metadata.NextPageToken
+			if token == "" || len(page.Users) == 0 {
+				return
+			}
+			body.NextPageToken = &token
+		}
+	}
+}

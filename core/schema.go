@@ -23,7 +23,6 @@ package core
 import (
 	"encoding/json"
 	"fmt"
-	"regexp"
 	"strings"
 )
 
@@ -143,23 +142,25 @@ func ResolveTableAlias(schema *ResolvedSchema, tableRef string) (string, error) 
 		return tableID, nil
 	}
 
-	// Check if it's already a table ID, the schema's or any other: a request
-	// to a table the schema doesn't name goes as given
-	if _, ok := schema.TableIDToAlias[tableRef]; ok || tableIDPattern.MatchString(tableRef) {
+	// Check if it's already one of the schema's table IDs
+	if _, ok := schema.TableIDToAlias[tableRef]; ok {
 		return tableRef, nil
 	}
 
-	// Unknown alias - throw helpful error
+	// Anything else is a table the schema doesn't name, and goes as given,
+	// unless it is a near miss of an alias: then it's a typo, and an error
+	// that suggests the alias. (Telling IDs from aliases by their shape
+	// rejected real IDs: older ones don't start with "b".)
 	available := make([]string, 0, len(schema.TableAliasToID))
 	for alias := range schema.TableAliasToID {
 		available = append(available, alias)
 	}
 
 	suggestion := findSimilar(tableRef, available)
-	suggestionText := ""
-	if suggestion != "" {
-		suggestionText = fmt.Sprintf(" Did you mean '%s'?", suggestion)
+	if suggestion == "" {
+		return tableRef, nil
 	}
+	suggestionText := fmt.Sprintf(" Did you mean '%s'?", suggestion)
 
 	availableText := ""
 	if len(available) > 0 {
@@ -380,7 +381,3 @@ func (b *SchemaBuilder) Field(alias string, fieldID int) *SchemaBuilder {
 func (b *SchemaBuilder) Build() *Schema {
 	return b.schema
 }
-
-// tableIDPattern matches a QuickBase table or app ID (bqw3ryzab): "b" and
-// lowercase letters and digits.
-var tableIDPattern = regexp.MustCompile(`^b[a-z0-9]{5,}$`)

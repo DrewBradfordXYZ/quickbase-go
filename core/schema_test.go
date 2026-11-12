@@ -1,6 +1,7 @@
 package core
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -99,10 +100,20 @@ func TestResolveTableAlias(t *testing.T) {
 		}
 	})
 
-	t.Run("returns error for unknown alias", func(t *testing.T) {
-		_, err := ResolveTableAlias(schema, "unknown")
-		if err == nil {
-			t.Fatal("expected error for unknown alias")
+	// A table the schema doesn't name goes as given, whatever its shape:
+	// older table IDs don't start with "b"
+	t.Run("passes a table the schema doesn't name", func(t *testing.T) {
+		for _, ref := range []string{"bqother12", "9kaw8phg"} {
+			if got, err := ResolveTableAlias(schema, ref); err != nil || got != ref {
+				t.Errorf("ResolveTableAlias(%q) = %q, %v", ref, got, err)
+			}
+		}
+	})
+
+	t.Run("returns error for a near miss of an alias", func(t *testing.T) {
+		_, err := ResolveTableAlias(schema, "projcts")
+		if err == nil || !strings.Contains(err.Error(), "Did you mean 'projects'") {
+			t.Fatalf("err = %v, want a suggestion", err)
 		}
 		schemaErr, ok := err.(*SchemaError)
 		if !ok {

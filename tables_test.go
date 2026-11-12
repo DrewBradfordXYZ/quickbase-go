@@ -146,3 +146,68 @@ func TestNewTableNeedsFieldIDTags(t *testing.T) {
 	}
 	quickbase.NewTable[byAlias, byAlias]("bqx")
 }
+
+func TestTableUpsertRefusesNoChanges(t *testing.T) {
+	qb, sent := tableServer(t, nil)
+	if _, err := projects.Upsert(context.Background(), qb); err == nil || len(sent()) != 0 {
+		t.Errorf("an empty upsert: err = %v, %d sent", err, len(sent()))
+	}
+}
+
+// Limit asks QuickBase for that many records, not a full page
+func TestTableLimitSendsTop(t *testing.T) {
+	qb, sent := tableServer(t, []map[string]any{row(1, "a", "", nil), row(2, "b", "", nil)})
+	_, _ = projects.Query(context.Background(), qb, quickbase.TableQuery{Limit: 1})
+	opts, _ := sent()[0]["options"].(map[string]any)
+	if opts["top"] != float64(1) {
+		t.Errorf("sent options %v, want top 1", opts)
+	}
+}
+
+func TestListIterators(t *testing.T) {
+	var calls int
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		switch {
+		case strings.Contains(r.URL.Path, "/relationships"):
+			if r.URL.Query().Get("skip") == "0" {
+				_, _ = io.WriteString(w, `{"relationships":[{"id":6},{"id":7}],"metadata":{"skip":0,"numRelationships":2,"totalRelationships":3}}`)
+			} else {
+				_, _ = io.WriteString(w, `{"relationships":[{"id":8}],"metadata":{"skip":2,"numRelationships":1,"totalRelationships":3}}`)
+			}
+		default: // users
+			raw, _ := io.ReadAll(r.Body)
+			if strings.Contains(string(raw), "page2") {
+				_, _ = io.WriteString(w, `{"users":[{"userName":"c"}],"metadata":{"nextPageToken":""}}`)
+			} else {
+				_, _ = io.WriteString(w, `{"users":[{"userName":"a"},{"userName":"b"}],"metadata":{"nextPageToken":"page2"}}`)
+			}
+		}
+	}))
+	defer srv.Close()
+	qb, _ := quickbase.New("r", quickbase.WithUserToken("t"), quickbase.WithBaseURL(srv.URL))
+	ctx := context.Background()
+
+	var rels []int
+	for rel, err := range qb.GetRelationshipsIterator(ctx, "bqchild") {
+		if err != nil {
+			t.Fatal(err)
+		}
+		rels = append(rels, rel.Id)
+	}
+	if len(rels) != 3 || rels[2] != 8 {
+		t.Errorf("relationships = %v", rels)
+	}
+
+	var users []string
+	for u, err := range qb.GetUsersIterator(ctx, quickbase.GetUsersParams{}, quickbase.GetUsersJSONRequestBody{}) {
+		if err != nil {
+			t.Fatal(err)
+		}
+		users = append(users, u.UserName)
+	}
+	if strings.Join(users, ",") != "a,b,c" {
+		t.Errorf("users = %v", users)
+	}
+}

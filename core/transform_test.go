@@ -190,9 +190,9 @@ func TestTransformRequest(t *testing.T) {
 		}
 	})
 
-	t.Run("returns error for unknown table alias", func(t *testing.T) {
+	t.Run("returns error for a misspelled table alias", func(t *testing.T) {
 		body := map[string]any{
-			"from": "unknown",
+			"from": "projcts",
 		}
 
 		_, _, err := TransformRequest(body, schema)

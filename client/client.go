@@ -551,11 +551,36 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, retrySafe, requestFactory, responseHandler)
 }
 
+// tableBodies are the operations whose JSON body names a table and its
+// fields. Other bodies are left alone: transferUserToken's from and to are
+// user IDs, and analytics' where and groupBy aren't record queries.
+var tableBodies = map[string]bool{
+	"/v1/records":               true, // upsert (to), deleteRecords (from)
+	"/v1/records/query":         true,
+	"/v1/records/modifiedSince": true,
+	"/v1/formula/run":           true,
+}
+
+// tablePath matches a table ID in a path: /tables/{tableId}, /files/{tableId}.
+var tablePath = regexp.MustCompile(`^(.*/(?:tables|files)/)([^/]+)(.*)$`)
+
 // resolveAliases resolves the schema's table and field aliases in a request:
-// a JSON body's from, to, select, sortBy, groupBy, where, record data,
-// fieldsToReturn and mergeFieldId, and a tableId query parameter. Numbers in
-// the body keep their exact values.
+// a table in the path (/tables/{tableId}, /files/{tableId}) or a tableId
+// query parameter; and, for the record operations, a JSON body's from, to,
+// select, sortBy, groupBy, where, record data, fieldsToReturn and
+// mergeFieldId. Numbers in the body keep their exact values.
 func (c *Client) resolveAliases(req *http.Request, body []byte) ([]byte, error) {
+	if m := tablePath.FindStringSubmatch(req.URL.Path); m != nil {
+		resolved, err := core.ResolveTableAlias(c.schema, m[2])
+		if err != nil {
+			return nil, err
+		}
+		if resolved != m[2] {
+			req.URL.Path = m[1] + resolved + m[3]
+			req.URL.RawPath = ""
+		}
+	}
+
 	query := req.URL.Query()
 	if tableID := query.Get("tableId"); tableID != "" {
 		resolved, err := core.ResolveTableAlias(c.schema, tableID)
@@ -568,7 +593,7 @@ func (c *Client) resolveAliases(req *http.Request, body []byte) ([]byte, error) 
 		}
 	}
 
-	if len(body) == 0 || !strings.HasPrefix(req.Header.Get("Content-Type"), "application/json") {
+	if len(body) == 0 || !tableBodies[c.apiPath(req.URL.Path)] || !strings.HasPrefix(req.Header.Get("Content-Type"), "application/json") {
 		return body, nil
 	}
 	decoder := json.NewDecoder(bytes.NewReader(body))

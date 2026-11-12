@@ -33,7 +33,7 @@ schema := &quickbase.Schema{
 
 ## Using aliases
 
-Aliases work in any request: the client resolves them in the HTTP layer, in a body's `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn` and `mergeFieldId`, and in a `TableId` parameter. A table ID the schema doesn't name goes as given.
+Aliases work with any method. The client resolves them in the HTTP layer: a table in a path (`/tables/{tableId}`, `/files/{tableId}`) or a `TableId` parameter, and, in record operations (query, upsert, delete records, modified since, run formula), the body's `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn` and `mergeFieldId`. Other bodies are left alone (`transferUserToken`'s `from` and `to` are user IDs). A table the schema doesn't name goes as given, unless its name is a near miss of an alias: then it's an error suggesting the alias.
 
 ```go
 active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{

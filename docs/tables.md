@@ -60,7 +60,7 @@ _, err = app.Payments.Upsert(ctx, qb, app.PaymentChanges{RecordID: &id, PaymentS
 n, err := app.Payments.Delete(ctx, qb, fmt.Sprintf("{3.EX.%d}", id)) // an empty query is refused
 ```
 
-`Iterate` yields records a page at a time, for a table too large to hold in memory. A query selects the record struct's fields; a smaller struct with the same tags selects fewer:
+`Limit` stops at that many records (and asks QuickBase for no more). `Iterate` yields records a page at a time, for a table too large to hold in memory. A query selects the record struct's fields; a smaller struct with the same tags selects fewer:
 
 ```go
 type PaymentSummary struct {

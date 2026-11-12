@@ -197,7 +197,7 @@ func packageFor(output string) string {
 	if err != nil {
 		return "main"
 	}
-	name := strings.ToLower(nonWord.ReplaceAllString(filepath.Base(filepath.Dir(abs)), ""))
+	name := regexp.MustCompile(`[^a-z0-9]`).ReplaceAllString(strings.ToLower(filepath.Base(filepath.Dir(abs))), "")
 	if name == "" || unicode.IsDigit([]rune(name)[0]) {
 		return "main"
 	}

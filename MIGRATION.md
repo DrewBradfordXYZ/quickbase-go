@@ -73,7 +73,7 @@ A record value is a plain Go value (`string`, `float64`, `bool`, `[]any`, `map[s
 
 ## Schema aliases
 
-Aliases now work in every request, resolved in one place: bodies (`From`, `To`, `Where`, record data, `FieldsToReturn`, `MergeFieldId`) and a `TableId` parameter. A table ID the schema doesn't name goes as given; it was an error.
+Aliases now work with every method, resolved in one place: wherever a table goes (a `TableId` parameter or path) and in record operations' bodies (`From`, `To`, `Where`, record data, `FieldsToReturn`, `MergeFieldId`). A table the schema doesn't name goes as given (it was an error), unless it's a near miss of an alias.
 
 ## Removed
 
