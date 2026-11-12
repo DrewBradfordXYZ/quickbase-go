@@ -404,3 +404,15 @@ func Example_recordsByAlias() {
 		fmt.Println(rec["name"])
 	}
 }
+
+// docs/queries.md, Dates: a date says which kind of field it's for.
+func Example_dates() {
+	due := time.Date(2024, time.January, 15, 9, 0, 0, 0, time.UTC)
+	record := quickbase.Row(
+		7, quickbase.DateOf(due), // Date field: due's day, in due's location
+		8, quickbase.DateTimeOf(due), // Date/Time field: sent in UTC
+	)
+	b, _ := json.Marshal(record)
+	fmt.Println(string(b))
+	// Output: {"7":{"value":"2024-01-15"},"8":{"value":"2024-01-15T09:00:00Z"}}
+}

@@ -7155,6 +7155,11 @@ func (b *UpsertBuilder) Run(ctx context.Context) (*UpsertResult, error) {
 			},
 		}
 	}
+	// A time.Time could be a Date or a Date/Time value, which QuickBase
+	// accepts in different forms; refuse it before anything is sent
+	if err := core.CheckRecordData(b.params["data"]); err != nil {
+		return nil, err
+	}
 	// Build request body from params
 	body := make(map[string]any)
 	body["to"] = b.tableID

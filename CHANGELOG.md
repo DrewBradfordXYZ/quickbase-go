@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`Date` and `DateTime`**, values for Date and Date/Time fields, which QuickBase accepts in different forms (a Date field only `"2024-01-15"`, a Date/Time field only RFC 3339; checked against a live realm). `DateOf(t)` is t's day in t's location; `DateTimeOf(t)` marshals in UTC. `ParseDate` and `ParseDateTime` read what QuickBase returns. See [docs/queries.md](docs/queries.md#dates).
 - **`RunQueryIterator` and `RunReportIterator`**: stream every record a page at a time (`for record, err := range ...`), so a large table never has to fit in memory. The package docs already pointed to `RunQueryIterator`; it didn't exist.
 - **Response properties the spec omitted**, found by comparing live responses with the spec (`spec/tools/audit-live.ts`):
   - Field properties: `SummaryQuery` (a summary field's filter), `PrimaryKey`, `MasterTableId`, `MasterTableKeyFid`, `FieldCaching`, `OpenTargetIn`. A reference field's parent table is `MasterTableId`; `MasterChoiceTableId` is not returned for it.
@@ -37,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **BREAKING: `Value` sent `null` for every type it didn't list**, which clears the field: a `time.Time`, a `uint`, a file attachment's map. It now sends `Date` and `DateTime` in their fields' forms and anything else as its JSON, and panics on a `time.Time`, which could be either kind of date; wrap it with `DateOf` or `DateTimeOf`. `nil` still clears the field.
+- **BREAKING: `Upsert` refuses a `time.Time` in its data** with a `PlainTimeError`, before sending. It went as a timestamp with its offset, which a Date field rejects, leaving the field blank on a record QuickBase still saves.
 - **Read-only mode let two solution writes through**: `UpdateSolutionToRecord` (`GET /solutions/{id}/fromrecord`, which changes apps) and `ExportSolutionToRecord` (`GET /solutions/{id}/torecord`, which writes a record) are GETs, and only `/solutions/fromrecord` was blocked. Both now return `ReadOnlyError`. `ChangesetSolutionFromRecord` only reads and is still allowed.
 - **`Value` rounded numbers**: it sent every number as `float32`, so `Value(1234567.89)` wrote 1234567.875 and `Value(20000001)` wrote 20000000. Numbers are sent as `float64`.
 - **A cancelled request reported a timeout**: cancelling the context returned a `TimeoutError` naming the client's timeout. It now returns the context's error (`context.Canceled` or `context.DeadlineExceeded`), and `TimeoutError` means `WithTimeout` ran out, which before came back as a raw `*url.Error`.

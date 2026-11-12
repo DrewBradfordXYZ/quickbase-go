@@ -97,6 +97,19 @@ fmt.Println(result.Metadata().CreatedRecordIds(), result.Metadata().UpdatedRecor
 quickbase.Record{"6": quickbase.Value("text"), "8": quickbase.Value([]string{"a", "b"})}
 ```
 
+### Dates
+
+QuickBase has two kinds of date field, and neither accepts the other's form: a Date field takes only `"2024-01-15"`, a Date/Time field only a timestamp (RFC 3339). A value in the wrong form doesn't fail the upsert; QuickBase saves the record with that field blank. So a date says which it is:
+
+```go
+quickbase.Row(
+	7, quickbase.DateOf(due),            // Date field: due's day, in due's location
+	8, quickbase.DateTimeOf(time.Now()), // Date/Time field: sent in UTC
+)
+```
+
+A bare `time.Time` could be either: `Value` panics on one, and `Upsert` returns a `PlainTimeError` for one in its data, before sending. QuickBase returns dates as strings, and records keep them as strings; `ParseDate` and `ParseDateTime` read them. `Date{Year, Month, Day}` is a day with no time zone, and `d.In(loc)` is its midnight in `loc`.
+
 ## Deletes
 
 ```go
@@ -110,6 +123,7 @@ fmt.Println(deleted.NumberDeleted())
 |---|---|---|
 | `Row(field, value, ...)` | `Record` | Upsert data |
 | `Value(v)` | `FieldValue` | A single record value |
+| `DateOf(t)`, `DateTimeOf(t)` | `Date`, `DateTime` | Date and Date/Time field values |
 | `Ints(3, 6, 7)` | `*[]int` | `Select` |
 | `Fields(schema, table, aliases...)` | `*[]int` | `Select` from aliases |
 | `Where(query)` | `*WhereUnion` | `RunQueryBody.Where` |

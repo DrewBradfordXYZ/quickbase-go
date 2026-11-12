@@ -1113,6 +1113,13 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getWrapperTypeName $b}
 {{- end}}
 {{- end}}
 
+{{- if eq $b.OperationID "upsert"}}
+	// A time.Time could be a Date or a Date/Time value, which QuickBase
+	// accepts in different forms; refuse it before anything is sent
+	if err := core.CheckRecordData(b.params["data"]); err != nil {
+		return nil, err
+	}
+{{- end}}
 {{- if and $b.HasBody (not $b.RawBodyType)}}
 	// Build request body from params
 	body := make(map[string]any)

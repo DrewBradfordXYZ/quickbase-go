@@ -72,6 +72,7 @@
 package quickbase
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"time"
@@ -101,7 +102,12 @@ type (
 	ServerError         = core.ServerError
 	MissingTokenError   = core.MissingTokenError
 	ReadOnlyError       = core.ReadOnlyError
+	PlainTimeError      = core.PlainTimeError
 	RateLimitInfo       = core.RateLimitInfo
+
+	// Date and Date/Time field values
+	Date     = core.Date
+	DateTime = core.DateTime
 
 	// Schema types
 	Schema         = core.Schema
@@ -610,6 +616,18 @@ var (
 	// ParseISODate parses an ISO 8601 date string to time.Time.
 	ParseISODate = core.ParseISODate
 
+	// DateOf returns t's calendar day in t's location, for a Date field.
+	DateOf = core.DateOf
+
+	// DateTimeOf returns t as a Date/Time field's value.
+	DateTimeOf = core.DateTimeOf
+
+	// ParseDate parses a Date field's value ("2024-01-15").
+	ParseDate = core.ParseDate
+
+	// ParseDateTime parses a Date/Time field's value ("2024-01-15T15:30:00Z").
+	ParseDateTime = core.ParseDateTime
+
 	// TransformDates recursively transforms ISO date strings to time.Time in a map.
 	TransformDates = core.TransformDates
 )
@@ -1071,7 +1089,14 @@ func Strings(strs ...string) *[]string {
 }
 
 // Value creates a FieldValue for use in record upserts.
-// It accepts string, int, float, bool, or []string values.
+// It accepts string, int, float, bool, []string, [Date] (a Date field) and
+// [DateTime] (a Date/Time field); nil clears the field, and any other value is
+// sent as its JSON (a file attachment's {"fileName", "data"}, for example).
+//
+// A time.Time panics: it could go to a Date field or a Date/Time field, which
+// accept different forms (a Date field only "2024-01-15"), and QuickBase saves
+// the record with the field blank when the form is wrong. Wrap it with
+// [DateOf] or [DateTimeOf].
 //
 // This helper hides the complexity of Go's lack of union types.
 // The QuickBase API allows field values to be different types (text, number,
@@ -1111,6 +1136,19 @@ func Value(v any) FieldValue {
 		fv.FromFieldValueValue2(val)
 	case []string:
 		fv.FromFieldValueValue3(val)
+	case nil:
+		// The zero union marshals as null, which clears the field
+	case time.Time:
+		panic("quickbase.Value: a time.Time could go to a Date field or a Date/Time field, which accept " +
+			"different forms; use quickbase.Value(quickbase.DateOf(t)) or quickbase.Value(quickbase.DateTimeOf(t))")
+	default:
+		// Date, DateTime, and anything else: sent as its JSON. It went as null
+		// before, which cleared the field.
+		raw, err := json.Marshal(val)
+		if err != nil {
+			panic(fmt.Sprintf("quickbase.Value(%T): %v", v, err))
+		}
+		_ = fv.UnmarshalJSON(raw)
 	}
 	return FieldValue{Value: fv}
 }
