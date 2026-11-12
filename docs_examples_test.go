@@ -442,4 +442,3 @@ func Example_records() {
 	fmt.Println(p.ID, p.Name, p.Due, p.Budget == nil, rec.Values()["6"])
 	// Output: 12 Alpha 2024-01-15 true Alpha
 }
-
