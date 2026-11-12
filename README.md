@@ -123,6 +123,21 @@ active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 
 A misspelled alias is an error that suggests the closest name. `go run ./cmd/schema` generates a schema from an existing app. See [docs/schema-aliases.md](docs/schema-aliases.md).
 
+## Typed tables
+
+`go run ./cmd/schema -f structs` turns every table of an app into Go types, typed from QuickBase's fields, and queries and upserts use them:
+
+```go
+paid, err := app.Payments.Query(ctx, qb, quickbase.TableQuery{
+	Where: fmt.Sprintf("{%d.EX.'Paid'}", app.PaymentFields.PaymentStatus),
+})
+fmt.Println(paid[0].PaymentDate, *paid[0].PaymentAmount)
+
+_, err = app.Payments.Upsert(ctx, qb, app.PaymentChanges{RecordID: &id, PaymentStatus: quickbase.Ptr("Paid")}) // only this field changes
+```
+
+Formula, lookup and summary fields are in the record struct but not the changes struct, so writing one doesn't compile. See [docs/tables.md](docs/tables.md).
+
 ## Authentication
 
 | Method | Option | Use it for |
@@ -214,6 +229,7 @@ Every method, schema aliases and error handling: [docs/xml-api.md](docs/xml-api.
 ## Documentation
 
 - [docs/queries.md](docs/queries.md): queries, pagination, upserts, deletes and helpers
+- [docs/tables.md](docs/tables.md): typed tables generated from an app
 - [docs/schema-aliases.md](docs/schema-aliases.md): aliases, the schema generator, loading from JSON
 - [docs/authentication.md](docs/authentication.md): every authentication method
 - [docs/reliability.md](docs/reliability.md): rate limits, retries, throttling, monitoring

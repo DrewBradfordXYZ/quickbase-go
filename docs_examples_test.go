@@ -442,3 +442,56 @@ func Example_records() {
 	fmt.Println(p.ID, p.Name, p.Due, p.Budget == nil, rec.Values()["6"])
 	// Output: 12 Alpha 2024-01-15 true Alpha
 }
+
+// docs/tables.md: typed tables. go run ./cmd/schema -f structs writes these
+// types for every table of an app; here, by hand.
+type Payment struct {
+	RecordID      int             `qb:"3"`
+	PaymentAmount *float64        `qb:"6"` // nil when blank
+	PaymentDate   quickbase.Date  `qb:"7"`
+	PaymentStatus string          `qb:"9"`
+	RecordOwner   *quickbase.User `qb:"4"`
+}
+
+type PaymentChanges struct {
+	RecordID      *int            `qb:"3"`
+	PaymentAmount *float64        `qb:"6"`
+	PaymentDate   *quickbase.Date `qb:"7"`
+	PaymentStatus *string         `qb:"9"`
+}
+
+var PaymentFields = struct{ RecordID, PaymentAmount, PaymentDate, PaymentStatus int }{3, 6, 7, 9}
+
+var Payments = quickbase.NewTable[Payment, PaymentChanges]("bu3e4di4p")
+
+func Example_tables() {
+	qb, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
+	ctx := context.Background()
+
+	paid, err := Payments.Query(ctx, qb, quickbase.TableQuery{
+		Where:  fmt.Sprintf("{%d.EX.'Paid'}", PaymentFields.PaymentStatus),
+		SortBy: []quickbase.SortField{quickbase.Sort(PaymentFields.PaymentDate, quickbase.ASC)},
+		Limit:  100,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, p := range paid {
+		fmt.Println(p.RecordID, p.PaymentDate, p.PaymentStatus)
+	}
+
+	one, _ := Payments.Get(ctx, qb, 1)
+	fmt.Println(one.PaymentAmount)
+
+	// Add a record: only the fields set are sent
+	created, _ := Payments.Upsert(ctx, qb, PaymentChanges{
+		PaymentAmount: quickbase.Ptr(42.5),
+		PaymentDate:   &quickbase.Date{Year: 2024, Month: time.February, Day: 29},
+	})
+	id := created.Metadata.CreatedRecordIds[0]
+
+	// Change one field of it; the others keep their values
+	_, _ = Payments.Upsert(ctx, qb, PaymentChanges{RecordID: &id, PaymentStatus: quickbase.Ptr("Paid")})
+
+	_, _ = Payments.Delete(ctx, qb, fmt.Sprintf("{3.EX.%d}", id))
+}

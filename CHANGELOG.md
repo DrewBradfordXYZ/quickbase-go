@@ -18,6 +18,10 @@ v3: one method per operation, with plain results. The module path is `github.com
 - Every generated type is re-exported from the root package under its own name (`quickbase.GetAppResult`), so callers need one import.
 - **BREAKING: one record type, with a decoder.** `quickbase.Record` (`core.Record`) is a record as QuickBase sends it, field ID to `{Value}`, everywhere: query and report results, upsert data. `rec.Values()` gives a plain map, `rec.Decode(&v)` and `quickbase.DecodeRecords[T]` fill structs by `qb:"<id or alias>"` tags (a blank value leaves the zero value; `Date`, `DateTime` and `User` decode from their forms), and `quickbase.RecordFrom(v)` builds a record to send, leaving out nil pointer fields. `UnwrapRecord`, `UnwrapRecords` and the `client.Record` map type are removed.
 
+### Added
+- **Typed tables.** `go run ./cmd/schema -f structs` writes, for every table of an app, a record struct and a changes struct typed from QuickBase's fields, the field IDs, and a `quickbase.Table[Record, Changes]` with `Query`, `Iterate`, `Get`, `Upsert` and `Delete`. A changes struct's fields are pointers, so a nil field isn't sent, and it leaves out what an upsert can't set (formula, lookup and summary fields, built-in fields), so writing one doesn't compile. `--merge` keeps renamed types and fields. What each field type reads and writes as was checked against a live realm, including that a user field is set by email (a bare user ID stores a wrong user without an error). See [docs/tables.md](docs/tables.md).
+- `-p` sets the package of the schema generator's Go output, which was always `main`.
+
 ### Removed
 - **BREAKING:** the fluent builders, the result wrappers with accessor methods (`Raw()`, `Name()`, ...), the `Query()` builder, `Asc`/`Desc`/`SortSpec`, and the union helpers for record values (`FieldValueUnion`). `client.API()` remains for the full generated response.
 
