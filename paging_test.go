@@ -55,7 +55,7 @@ func TestRunQueryIteratorStreamsPages(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		got = append(got, quickbase.UnwrapRecords([]quickbase.Record{rec})[0]["3"])
+		got = append(got, rec.Values()["3"])
 	}
 	if len(got) != 3 || got[2] != float64(3) {
 		t.Errorf("records = %v, want 1, 2, 3", got)

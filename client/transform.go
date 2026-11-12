@@ -172,30 +172,6 @@ func ExtractSortFields(sortBy *generated.SortByUnion) ([]generated.SortField, er
 // --- Record Transformation ---
 // These functions transform records from generated types to friendly user-facing types.
 
-// Record is a record as a map: field ID keys ("6"), or aliases with a schema
-// (WithSchemaOptions TransformResponses), to plain values (string, float64,
-// bool, []any, map[string]any, nil).
-type Record = map[string]any
-
-// UnwrapRecord turns a generated record ({"6": {"value": "Alpha"}}) into a
-// Record ({"6": "Alpha"}).
-func UnwrapRecord(record generated.QuickbaseRecord) Record {
-	result := make(Record, len(record))
-	for k, v := range record {
-		result[k] = v.Value
-	}
-	return result
-}
-
-// UnwrapRecords turns generated records into Records.
-func UnwrapRecords(records []generated.QuickbaseRecord) []Record {
-	result := make([]Record, len(records))
-	for i, record := range records {
-		result[i] = UnwrapRecord(record)
-	}
-	return result
-}
-
 // Deref returns the value of a pointer, or the zero value if it is nil: for
 // the optional fields of request types, which stay pointers.
 func Deref[T any](ptr *T) T {

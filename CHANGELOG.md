@@ -16,6 +16,7 @@ v3: one method per operation, with plain results. The module path is `github.com
 - **BREAKING: schema aliases are resolved for every request** in the HTTP layer (bodies' `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn`, `mergeFieldId`, and a `tableId` parameter), not only by `RunQuery` and `Query()`. A table ID the schema doesn't name goes as given; it was an error.
 - `TransformResponses` keys the paging helpers' records by alias (`RunQueryAll`, `RunQueryN`, `RunQueryIterator`, `RunReport*`); it keyed `Query()`'s.
 - Every generated type is re-exported from the root package under its own name (`quickbase.GetAppResult`), so callers need one import.
+- **BREAKING: one record type, with a decoder.** `quickbase.Record` (`core.Record`) is a record as QuickBase sends it, field ID to `{Value}`, everywhere: query and report results, upsert data. `rec.Values()` gives a plain map, `rec.Decode(&v)` and `quickbase.DecodeRecords[T]` fill structs by `qb:"<id or alias>"` tags (a blank value leaves the zero value; `Date`, `DateTime` and `User` decode from their forms), and `quickbase.RecordFrom(v)` builds a record to send, leaving out nil pointer fields. `UnwrapRecord`, `UnwrapRecords` and the `client.Record` map type are removed.
 
 ### Removed
 - **BREAKING:** the fluent builders, the result wrappers with accessor methods (`Raw()`, `Name()`, ...), the `Query()` builder, `Asc`/`Desc`/`SortSpec`, and the union helpers for record values (`FieldValueUnion`). `client.API()` remains for the full generated response.

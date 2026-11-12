@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
@@ -2614,10 +2615,7 @@ type ExchangeSsoTokenResultIssuedTokenType string
 type ExchangeSsoTokenResultTokenType string
 
 // FieldValue A field value in a QuickBase record. The value type depends on the field type.
-type FieldValue struct {
-	// Value The field value. Type depends on field type: string (text, email, URL, date), number (numeric fields), boolean (checkbox), string[] (multi-select), or object[] (file attachments).
-	Value any `json:"value"`
-}
+type FieldValue = core.FieldValue
 
 // GenerateDocumentResult Example: {"contentType":"application/pdf","data":"data","fileName":"Document.pdf"}
 type GenerateDocumentResult struct {
@@ -4722,7 +4720,7 @@ type PlatformAnalyticReadsResult struct {
 }
 
 // QuickbaseRecord A QuickBase record where keys are field IDs (as strings) and values are FieldValue objects.
-type QuickbaseRecord map[string]FieldValue
+type QuickbaseRecord = core.Record
 
 // RecordsModifiedSinceChangesItem defines model for RecordsModifiedSinceChangesItem.
 type RecordsModifiedSinceChangesItem struct {

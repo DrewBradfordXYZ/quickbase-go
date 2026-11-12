@@ -59,7 +59,7 @@ records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 })
 ```
 
-`RunQuery` returns one page: `page.Data`, `page.Metadata.TotalRecords`; `page.Records()` becomes `quickbase.UnwrapRecords(page.Data)`. `TransformResponses` now keys the paging helpers' records by alias (it keyed `Query()`'s).
+`RunQuery` returns one page: `page.Data`, `page.Metadata.TotalRecords`. `page.Records()` and `quickbase.UnwrapRecords(records)` become `rec.Values()` per record, or `rec.Decode(&v)` into a struct with `qb` tags. `TransformResponses` now keys the paging helpers' records by alias (it keyed `Query()`'s).
 
 ## Record values
 
@@ -80,3 +80,4 @@ Aliases now work in every request, resolved in one place: bodies (`From`, `To`, 
 - Every builder (`GetAppBuilder`, ...) and result wrapper (`AppResult`, `FieldsItem`, ...); `Asc`, `Desc` and `SortSpec` (use `Sort(id, quickbase.ASC)`)
 - `Query()`, `QueryBuilder`
 - `FieldValueUnion` and the `From…`/`As…` union helpers for record values
+- `UnwrapRecord`, `UnwrapRecords` and `client.Record` (`rec.Values()`)

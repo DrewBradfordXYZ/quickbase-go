@@ -208,7 +208,7 @@ func ExampleClient_RunQuery() {
 	}
 
 	// Records as maps of field ID to value
-	for _, rec := range quickbase.UnwrapRecords(result.Data) {
+	for _, rec := range result.Data {
 		fmt.Printf("Record: %v\n", rec)
 	}
 
@@ -343,7 +343,7 @@ func ExampleWithSchema() {
 		Where:  quickbase.Where("{'status'.EX.'Active'}"),              // aliases in where
 	})
 
-	for _, record := range quickbase.UnwrapRecords(result.Data) {
+	for _, record := range result.Data {
 		// Field IDs are the keys (as strings)
 		fmt.Printf("Name: %v, Status: %v\n", record["6"], record["7"])
 	}

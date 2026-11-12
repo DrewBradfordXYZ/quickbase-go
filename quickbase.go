@@ -106,6 +106,9 @@ type (
 	Date     = core.Date
 	DateTime = core.DateTime
 
+	// User is a user field's value, for decoding records
+	User = core.User
+
 	// Schema types
 	Schema         = core.Schema
 	TableSchema    = core.TableSchema
@@ -439,22 +442,12 @@ func Ptr[T any](v T) *T {
 // --- v2.0 Raw-First Helpers ---
 // These opt-in helpers make working with raw generated types more convenient.
 
-// UnwrapRecords converts QuickbaseRecord slices to []map[string]any.
-// This extracts the actual field values from FieldValue wrappers.
-//
-// Example:
-//
-//	resp, _ := client.RunQuery(ctx, body)
-//	if resp.JSON200.Data != nil {
-//	    records := quickbase.UnwrapRecords(*resp.JSON200.Data)
-//	    for _, rec := range records {
-//	        name := rec["6"] // access by field ID
-//	    }
-//	}
-var UnwrapRecords = client.UnwrapRecords
+// DecodeRecords decodes records into structs with qb tags: see Record.Decode.
+func DecodeRecords[T any](records []Record) ([]T, error) { return core.DecodeRecords[T](records) }
 
-// UnwrapRecord converts a single QuickbaseRecord to map[string]any.
-var UnwrapRecord = client.UnwrapRecord
+// RecordFrom builds a record to send from a struct with qb tags; a nil
+// pointer field is left out. See core.RecordFrom.
+var RecordFrom = core.RecordFrom
 
 // Deref returns the value of a pointer, or zero value if nil.
 // Use this to safely access optional (pointer) fields in generated types.

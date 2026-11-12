@@ -92,8 +92,8 @@ func Example_runQuery() {
 
 	page, _ := client.RunQuery(ctx, body)
 	fmt.Printf("%d of %d records\n", page.Metadata.NumRecords, page.Metadata.TotalRecords)
-	for _, rec := range quickbase.UnwrapRecords(page.Data) {
-		fmt.Println(rec["6"])
+	for _, rec := range page.Data {
+		fmt.Println(rec["6"].Value)
 	}
 
 	all, _ := client.RunQueryAll(ctx, body)      // every page
@@ -280,7 +280,7 @@ func Example_queriesGuide() {
 
 	// Reports run with the report's own filter, sort and columns
 	reportRows, _ := client.RunReportAll(ctx, "7", "bqtable1")
-	fmt.Println(len(quickbase.UnwrapRecords(reportRows)))
+	fmt.Println(len(reportRows), reportRows[0].Values())
 
 	// Upsert: insert, or update the record whose merge field matches
 	result, _ := client.Upsert(ctx, quickbase.UpsertBody{
@@ -311,8 +311,8 @@ func Example_schemaAliasesBody() {
 		Select: quickbase.Fields(schema, "projects", "name", "status"),
 		Where:  quickbase.Where("{'status'.EX.'Active'}"),
 	})
-	for _, rec := range quickbase.UnwrapRecords(page.Data) {
-		fmt.Println(rec["6"])
+	for _, rec := range page.Data {
+		fmt.Println(rec["6"].Value)
 	}
 	_ = &quickbase.Schema{Tables: map[string]quickbase.TableSchema{"projects": {ID: "bqw3ryzab", Fields: map[string]int{"id": 3}}}}
 }
@@ -423,3 +423,23 @@ func Example_dates() {
 	fmt.Println(string(b))
 	// Output: {"7":{"value":"2024-01-15"},"8":{"value":"2024-01-15T09:00:00Z"}}
 }
+
+// docs/queries.md, Records: values, and decoding into a struct by qb tags.
+func Example_records() {
+	var rec quickbase.Record
+	_ = json.Unmarshal([]byte(`{"3":{"value":12},"6":{"value":"Alpha"},"7":{"value":"2024-01-15"},"9":{"value":null}}`), &rec)
+
+	type Project struct {
+		ID     int            `qb:"3"`
+		Name   string         `qb:"6"`
+		Due    quickbase.Date `qb:"7"` // Date field
+		Budget *float64       `qb:"9"` // nil when blank
+	}
+	var p Project
+	if err := rec.Decode(&p); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(p.ID, p.Name, p.Due, p.Budget == nil, rec.Values()["6"])
+	// Output: 12 Alpha 2024-01-15 true Alpha
+}
+

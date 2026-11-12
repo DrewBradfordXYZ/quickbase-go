@@ -40,7 +40,36 @@ for record, err := range client.RunQueryIterator(ctx, body) {
 }
 ```
 
-QuickBase sizes pages by record size, often about 100 records. Records come as QuickBase sends them, field ID to `{Value}`, where `Value` is a plain Go value (`string`, `float64`, `bool`, `[]any`, `map[string]any`, `nil`); `quickbase.UnwrapRecords` turns them into maps of field ID to value.
+QuickBase sizes pages by record size, often about 100 records.
+
+## Records
+
+A `Record` is what QuickBase sends: field ID (or alias, with `TransformResponses`) to `{Value}`, where `Value` is a plain Go value (`string`, `float64`, `bool`, `[]any`, `map[string]any`, `nil`).
+
+```go
+rec["6"].Value   // one value
+rec.Values()     // map[string]any
+```
+
+`Decode` fills a struct by `qb` tags (the field ID, or an alias), converting each value to the field's Go type. A blank value leaves the zero value, so use a pointer where blank must differ from zero:
+
+```go
+type Project struct {
+	ID     int                `qb:"3"`
+	Name   string             `qb:"6"`
+	Due    quickbase.Date     `qb:"7"`  // Date field
+	Closed quickbase.DateTime `qb:"8"`  // Date/Time field
+	Budget *float64           `qb:"9"`  // nil when blank
+	Owner  *quickbase.User    `qb:"4"`
+}
+
+var p Project
+err := rec.Decode(&p)
+
+projects, err := quickbase.DecodeRecords[Project](records) // a slice at once
+```
+
+To send a struct, `quickbase.RecordFrom(v)` builds a record from its tags; a nil pointer field is left out, so a struct of pointers says exactly which fields to change.
 
 ## Reports
 
@@ -48,7 +77,7 @@ A report runs with its own filter, sort and columns:
 
 ```go
 reportRows, _ := client.RunReportAll(ctx, "7", "bqtable1") // report ID, table ID
-fmt.Println(len(quickbase.UnwrapRecords(reportRows)))
+fmt.Println(len(reportRows), reportRows[0].Values())
 ```
 
 `RunReportN(ctx, reportID, tableID, n)` stops at `n` records, `RunReportIterator` streams them, and `client.RunReport(ctx, reportID, quickbase.RunReportParams{TableId: table})` returns one page.
@@ -114,6 +143,8 @@ fmt.Println(deleted.NumberDeleted)
 | `Options(top, skip)` | `*QueryOptions` | `RunQueryBody.Options` |
 | `Ptr(v)` | `*T` | Optional request fields |
 | `Deref(p)`, `DerefOr(p, def)` | `T` | Reading optional request fields |
-| `UnwrapRecords(records)` | `[]map[string]any` | Records as maps of field ID to value |
+| `rec.Values()` | `map[string]any` | A record as field ID to value |
+| `rec.Decode(&v)`, `DecodeRecords[T](records)` | | Records into structs with `qb` tags |
+| `RecordFrom(v)` | `Record` | A struct with `qb` tags into a record to send |
 
 Query strings use QuickBase's syntax: `{field.OPERATOR.'value'}`, joined with `AND` and `OR`. See QuickBase's [query components](https://help.quickbase.com/docs/components-of-a-query).

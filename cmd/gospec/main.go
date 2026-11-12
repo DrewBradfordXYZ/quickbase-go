@@ -12,9 +12,10 @@
 //     a missing field reads as its zero value, so results need no nil checks.
 //     Schemas used in requests keep pointers, where "not set" must differ
 //     from zero (a false that turns a setting off).
-//  3. Plain record values. A record field's value is any
-//     (x-go-type: any): text, numbers, lists and objects decode into plain Go
-//     values instead of a union type.
+//  3. Records as core.Record. A record (QuickbaseRecord) is core.Record and
+//     a field value (FieldValue) core.FieldValue (x-go-type): its value is a
+//     plain Go value instead of a union type, and the record has methods
+//     (Values, Decode) that a generated type can't.
 //
 // Usage:
 //
@@ -216,15 +217,17 @@ func markOptional(node any) int {
 	return marked
 }
 
-// plainRecordValues makes a record field's value any.
+// plainRecordValues maps records and field values to core's types.
 func plainRecordValues(spec obj) {
-	fieldValue, _ := schemas(spec)["FieldValue"].(obj)
-	props, _ := fieldValue["properties"].(obj)
-	value, ok := props["value"].(obj)
-	if !ok {
-		fail(fmt.Errorf("FieldValue.value not found"))
+	core := obj{"path": "github.com/DrewBradfordXYZ/quickbase-go/v3/core"}
+	for name, goType := range map[string]string{"QuickbaseRecord": "core.Record", "FieldValue": "core.FieldValue"} {
+		schema, ok := schemas(spec)[name].(obj)
+		if !ok {
+			fail(fmt.Errorf("%s not found", name))
+		}
+		schema["x-go-type"] = goType
+		schema["x-go-type-import"] = core
 	}
-	value["x-go-type"] = "any"
 }
 
 // pascal turns an operationId (getApp) into a type name (GetApp).
