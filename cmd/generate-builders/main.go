@@ -4,8 +4,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"go/format"
 	"os"
 	"regexp"
 	"sort"
@@ -104,9 +106,9 @@ type PathParam struct {
 
 type QueryParam struct {
 	Name        string
-	GoName      string  // PascalCase name for Go
-	Type        string  // The Go type (may be generated enum type)
-	GenType     string  // The generated type name (e.g., "generated.XxxParamsFormat")
+	GoName      string // PascalCase name for Go
+	Type        string // The Go type (may be generated enum type)
+	GenType     string // The generated type name (e.g., "generated.XxxParamsFormat")
 	Required    bool
 	IsEnum      bool
 	Description string
@@ -129,8 +131,8 @@ type ResponseField struct {
 	GenAccess   string // How to access from resp.JSON200 (e.g., ".Id", ".AccessToken")
 	IsPointer   bool   // Whether the field is a pointer in the generated type
 	IsArray     bool
-	IsEnum      bool   // Whether this is an enum type
-	NeedsCast   bool   // Whether we need to cast (e.g., enum to string)
+	IsEnum      bool // Whether this is an enum type
+	NeedsCast   bool // Whether we need to cast (e.g., enum to string)
 	Description string
 }
 
@@ -698,18 +700,19 @@ func generateCode(builders []BuilderSpec) error {
 
 	tmpl := template.Must(template.New("builders").Funcs(funcMap).Parse(buildersTemplate))
 
-	outputPath := findOutputPath()
-	f, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	return tmpl.Execute(f, struct {
+	var buf bytes.Buffer
+	if err := tmpl.Execute(&buf, struct {
 		Builders []BuilderSpec
 	}{
 		Builders: builders,
-	})
+	}); err != nil {
+		return err
+	}
+	formatted, err := format.Source(buf.Bytes())
+	if err != nil {
+		return fmt.Errorf("formatting generated builders: %w", err)
+	}
+	return os.WriteFile(findOutputPath(), formatted, 0644)
 }
 
 // needsResultType returns true if we should generate a friendly result type.
@@ -1170,6 +1173,15 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getWrapperTypeName $b}
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
 {{- else}}
+{{- if eq $b.OperationID "upsert"}}
+	// 207: QuickBase rejected some values and saved the rest. The body has
+	// the 200 shape; keep it, so the saved records' IDs aren't lost
+	if resp.JSON200 == nil && resp.StatusCode() == http.StatusMultiStatus {
+		if err := json.Unmarshal(resp.Body, &resp.JSON200); err != nil {
+			return nil, err
+		}
+	}
+{{- end}}
 	if resp.JSON200 == nil {
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
@@ -1262,7 +1274,17 @@ func (b *{{$b.BuilderName}}) Run(ctx context.Context) (*{{getWrapperTypeName $b}
 	}
 	return items, nil
 {{- else}}
+{{- if eq $b.OperationID "upsert"}}
+	result := &{{getWrapperTypeName $b}}{resp: resp}
+	if b.client.lineErrorsAsErrors {
+		if lineErrors := resp.JSON200.Metadata; lineErrors != nil && lineErrors.LineErrors != nil && len(*lineErrors.LineErrors) > 0 {
+			return result, core.NewLineErrorsError(*lineErrors.LineErrors)
+		}
+	}
+	return result, nil
+{{- else}}
 	return &{{getWrapperTypeName $b}}{resp: resp}, nil
+{{- end}}
 {{- end}}
 }
 

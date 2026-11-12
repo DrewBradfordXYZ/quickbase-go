@@ -90,11 +90,11 @@ func TestSSOTokenStrategy_RequestFormat(t *testing.T) {
 // TestSSOTokenStrategy_ResponseParsing verifies we correctly parse the token response.
 func TestSSOTokenStrategy_ResponseParsing(t *testing.T) {
 	tests := []struct {
-		name         string
-		response     map[string]string
-		wantToken    string
-		wantErr      bool
-		wantErrMsg   string
+		name       string
+		response   map[string]string
+		wantToken  string
+		wantErr    bool
+		wantErrMsg string
 	}{
 		{
 			name: "valid response with temp_token type",

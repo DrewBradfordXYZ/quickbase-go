@@ -103,6 +103,7 @@ type (
 	MissingTokenError   = core.MissingTokenError
 	ReadOnlyError       = core.ReadOnlyError
 	PlainTimeError      = core.PlainTimeError
+	LineErrorsError     = core.LineErrorsError
 	RateLimitInfo       = core.RateLimitInfo
 
 	// Date and Date/Time field values
@@ -130,7 +131,6 @@ type (
 	// Monitoring types
 	RequestInfo = client.RequestInfo
 	RetryInfo   = client.RetryInfo
-
 )
 
 // Pagination type constants
@@ -140,457 +140,110 @@ const (
 	PaginationTypeNone  = client.PaginationTypeNone
 )
 
-// Option configures a Client.
-type Option func(*clientConfig)
+// Option configures a Client. It is the client package's Option: each With
+// function here returns that package's, which documents it in full.
+type Option = client.Option
 
-type clientConfig struct {
-	authStrategy any // Can be auth.Strategy or a marker type
-	clientOpts   []client.Option
-	realm        string
-}
+// WithUserToken configures user token authentication. See [client.WithUserToken].
+func WithUserToken(token string) Option { return client.WithUserToken(token) }
 
-// WithUserToken configures user token authentication.
-func WithUserToken(token string) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = auth.NewUserTokenStrategy(token)
-	}
-}
+// WithTempTokenAuth configures temporary token authentication. See [client.WithTempTokenAuth].
+//
+// Deprecated: see [client.WithTempTokenAuth].
+func WithTempTokenAuth(opts ...auth.TempTokenOption) Option { return client.WithTempTokenAuth(opts...) }
 
-// tempTokenMarker and ssoTokenMarker are used to identify auth strategy type
-type tempTokenMarker struct {
-	opts []auth.TempTokenOption
-}
+// WithTempTokens configures temporary token authentication with a map of tokens. See [client.WithTempTokens].
+func WithTempTokens(tokens map[string]string) Option { return client.WithTempTokens(tokens) }
 
-type ssoTokenMarker struct {
-	samlToken string
-	opts      []auth.SSOTokenOption
-}
-
-// ticketMarker is used for ticket (XML API) authentication.
-// XML-API-TICKET: Remove this struct if XML API is discontinued.
-type ticketMarker struct {
-	username string
-	password string
-	opts     []auth.TicketOption
-}
-
-// WithTempTokenAuth configures temporary token authentication.
-//
-// Temp tokens are short-lived (~5 min), table-scoped tokens that verify a user
-// is logged into QuickBase. Go servers receive these tokens from browser clients
-// (e.g., Code Pages) that can fetch them using the user's browser session.
-//
-// For the simpler map-based API, see [WithTempTokens].
-//
-// Deprecated: Use [WithTempTokens] instead for clearer token-to-table mapping.
-func WithTempTokenAuth(opts ...auth.TempTokenOption) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = &tempTokenMarker{opts: opts}
-	}
-}
-
-// WithTempTokens configures temporary token authentication with a map of tokens.
-//
-// This is the preferred way to configure temp token auth when you have tokens
-// mapped to table IDs (dbids).
-//
-// Example:
-//
-//	client, err := quickbase.New("myrealm",
-//	    quickbase.WithTempTokens(map[string]string{
-//	        "bqxyz123": tokenForTable1,
-//	        "bqabc456": tokenForTable2,
-//	    }),
-//	)
-func WithTempTokens(tokens map[string]string) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = &tempTokenMarker{opts: []auth.TempTokenOption{auth.WithTempTokens(tokens)}}
-	}
-}
-
-// WithSSOTokenAuth configures SSO (SAML) token authentication.
-//
-// SSO authentication lets your Go server make API calls as a specific QuickBase
-// user rather than a shared service account. The SDK exchanges a SAML assertion
-// for a QuickBase temp token using RFC 8693 token exchange.
-//
-// Benefits:
-//   - Audit accuracy: "Created By" and "Modified By" show the actual user
-//   - Security: No long-lived user token; each user gets a short-lived token
-//   - Per-user permissions: API calls respect each user's individual QuickBase permissions
-//
-// Prerequisites:
-//   - Your QuickBase realm has SAML SSO configured
-//   - Your identity provider (Okta, Azure AD, etc.) can generate SAML assertions
-//
-// Example:
-//
-//	// Get SAML assertion from your IdP for the authenticated user
-//	samlAssertion := getAssertionFromIdP(userId) // base64url-encoded
-//
-//	client, err := quickbase.New("myrealm",
-//	    quickbase.WithSSOTokenAuth(samlAssertion),
-//	)
-//
-//	// API calls are now made as that specific user
-//
-// See https://developer.quickbase.com/operation/exchangeSsoToken
+// WithSSOTokenAuth configures SSO (SAML) token authentication. See [client.WithSSOTokenAuth].
 func WithSSOTokenAuth(samlToken string, opts ...auth.SSOTokenOption) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = &ssoTokenMarker{samlToken: samlToken, opts: opts}
-	}
+	return client.WithSSOTokenAuth(samlToken, opts...)
 }
 
-// WithTicketAuth configures ticket authentication using username/password.
-//
-// This calls the XML API_Authenticate endpoint to obtain a ticket, which is then
-// used with REST API calls. Unlike user tokens, tickets properly attribute record
-// changes (createdBy/modifiedBy) to the authenticated user.
-//
-// The password is used once for authentication and then discarded from memory.
-// When the ticket expires (default 12 hours), an AuthenticationError is returned
-// and a new client must be created with fresh credentials.
-//
-// Example:
-//
-//	qb, err := quickbase.New("myrealm",
-//	    quickbase.WithTicketAuth("user@example.com", "password"),
-//	)
-//
-// With custom ticket validity (max ~6 months):
-//
-//	qb, err := quickbase.New("myrealm",
-//	    quickbase.WithTicketAuth("user@example.com", "password",
-//	        auth.WithTicketHours(24*7), // 1 week
-//	    ),
-//	)
-//
-// XML-API-TICKET: Remove this function if XML API is discontinued.
+// WithTicketAuth configures ticket authentication using username/password. See [client.WithTicketAuth].
 func WithTicketAuth(username, password string, opts ...auth.TicketOption) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = &ticketMarker{username: username, password: password, opts: opts}
-	}
+	return client.WithTicketAuth(username, password, opts...)
 }
 
-// WithTicket configures authentication using a pre-existing ticket.
-//
-// Use this when the ticket was obtained elsewhere (e.g., by a browser client
-// calling API_Authenticate directly). The server never sees user credentials.
-//
-// This is the recommended approach for Code Page cookie mode:
-//  1. Browser calls QuickBase API_Authenticate with user credentials
-//  2. Browser sends ticket to Go server
-//  3. Server stores encrypted ticket in HttpOnly cookie
-//  4. Server uses WithTicket for API calls
-//
-// Example:
-//
-//	qb, err := quickbase.New("myrealm",
-//	    quickbase.WithTicket(ticketFromCookie),
-//	)
-//
-// XML-API-TICKET: Remove this function if XML API is discontinued.
-func WithTicket(ticket string) Option {
-	return func(c *clientConfig) {
-		c.authStrategy = auth.NewExistingTicketStrategy(ticket)
-	}
-}
+// WithTicket configures authentication using a pre-existing ticket. See [client.WithTicket].
+func WithTicket(ticket string) Option { return client.WithTicket(ticket) }
 
-// WithMaxRetries sets how many times a request is attempted in all,
-// counting the first (default 3). Values below 1 mean a single attempt.
-func WithMaxRetries(n int) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithMaxRetries(n))
-	}
-}
+// WithMaxRetries sets how many times a request is attempted in all, counting the first (default 3). See [client.WithMaxRetries].
+func WithMaxRetries(n int) Option { return client.WithMaxRetries(n) }
 
-// WithRetryDelay sets the initial delay between retries.
-func WithRetryDelay(d time.Duration) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithRetryDelay(d))
-	}
-}
+// WithRetryDelay sets the initial delay between retries. See [client.WithRetryDelay].
+func WithRetryDelay(d time.Duration) Option { return client.WithRetryDelay(d) }
 
-// WithMaxRetryDelay sets the maximum delay between retries.
-func WithMaxRetryDelay(d time.Duration) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithMaxRetryDelay(d))
-	}
-}
+// WithMaxRetryDelay sets the maximum delay between retries. See [client.WithMaxRetryDelay].
+func WithMaxRetryDelay(d time.Duration) Option { return client.WithMaxRetryDelay(d) }
 
-// WithBackoffMultiplier sets the exponential backoff multiplier.
-func WithBackoffMultiplier(m float64) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithBackoffMultiplier(m))
-	}
-}
+// WithBackoffMultiplier sets the exponential backoff multiplier. See [client.WithBackoffMultiplier].
+func WithBackoffMultiplier(m float64) Option { return client.WithBackoffMultiplier(m) }
 
-// WithTimeout sets the request timeout.
-func WithTimeout(d time.Duration) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithTimeout(d))
-	}
-}
+// WithTimeout sets the request timeout. See [client.WithTimeout].
+func WithTimeout(d time.Duration) Option { return client.WithTimeout(d) }
 
-// WithMaxIdleConns sets the maximum number of idle connections across all hosts.
-// Default is 100. This controls total connection pool size.
-func WithMaxIdleConns(n int) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithMaxIdleConns(n))
-	}
-}
+// WithMaxIdleConns sets the maximum number of idle connections across all hosts. See [client.WithMaxIdleConns].
+func WithMaxIdleConns(n int) Option { return client.WithMaxIdleConns(n) }
 
-// WithMaxIdleConnsPerHost sets maximum idle connections to QuickBase (default 6).
-// The default of 6 matches browser standards and handles typical concurrency.
-// For heavy batch operations, consider 10-20 alongside WithProactiveThrottle.
-func WithMaxIdleConnsPerHost(n int) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithMaxIdleConnsPerHost(n))
-	}
-}
+// WithMaxIdleConnsPerHost sets maximum idle connections to QuickBase (default 6). See [client.WithMaxIdleConnsPerHost].
+func WithMaxIdleConnsPerHost(n int) Option { return client.WithMaxIdleConnsPerHost(n) }
 
-// WithIdleConnTimeout sets how long idle connections stay in the pool.
-// Default is 90 seconds.
-func WithIdleConnTimeout(d time.Duration) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithIdleConnTimeout(d))
-	}
-}
+// WithIdleConnTimeout sets how long idle connections stay in the pool. See [client.WithIdleConnTimeout].
+func WithIdleConnTimeout(d time.Duration) Option { return client.WithIdleConnTimeout(d) }
 
-// WithProactiveThrottle enables sliding window throttling.
-// QuickBase's limit is 100 requests per 10 seconds per user token.
+// WithProactiveThrottle enables sliding window throttling. See [client.WithProactiveThrottle].
 func WithProactiveThrottle(requestsPer10Seconds int) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithProactiveThrottle(requestsPer10Seconds))
-	}
+	return client.WithProactiveThrottle(requestsPer10Seconds)
 }
 
-// WithThrottle sets a custom throttle implementation.
-func WithThrottle(t client.Throttle) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithThrottle(t))
-	}
-}
+// WithThrottle sets a custom throttle implementation. See [client.WithThrottle].
+func WithThrottle(t Throttle) Option { return client.WithThrottle(t) }
 
-// WithDebug enables debug logging.
-func WithDebug(enabled bool) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithDebug(enabled))
-	}
-}
+// WithDebug enables debug logging. See [client.WithDebug].
+func WithDebug(enabled bool) Option { return client.WithDebug(enabled) }
 
-// WithConvertDates has no effect: the client never converted dates. Responses
-// keep dates as the strings QuickBase sends; parse them with [ParseISODate].
+// WithConvertDates has no effect: the client never converted dates. See [client.WithConvertDates].
 //
-// Deprecated: it does nothing and will be removed.
-func WithConvertDates(enabled bool) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithConvertDates(enabled))
-	}
-}
+// Deprecated: see [client.WithConvertDates].
+func WithConvertDates(enabled bool) Option { return client.WithConvertDates(enabled) }
 
-// WithOnRateLimit sets a callback for rate limit events.
-func WithOnRateLimit(callback func(RateLimitInfo)) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithOnRateLimit(callback))
-	}
-}
+// WithOnRateLimit sets a callback for rate limit events. See [client.WithOnRateLimit].
+func WithOnRateLimit(callback func(RateLimitInfo)) Option { return client.WithOnRateLimit(callback) }
 
-// WithOnRequest sets a callback that fires after every API request completes.
-// Use this for monitoring request latency, status codes, and errors.
-//
-// Example:
-//
-//	quickbase.WithOnRequest(func(info quickbase.RequestInfo) {
-//	    log.Printf("%s %s → %d (%v)", info.Method, info.Path, info.StatusCode, info.Duration)
-//	})
-func WithOnRequest(callback func(RequestInfo)) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithOnRequest(callback))
-	}
-}
+// WithOnRequest sets a callback that fires after every API request completes. See [client.WithOnRequest].
+func WithOnRequest(callback func(RequestInfo)) Option { return client.WithOnRequest(callback) }
 
-// WithOnRetry sets a callback that fires before each retry attempt.
-// Use this for monitoring retry behavior and debugging transient failures.
-//
-// Example:
-//
-//	quickbase.WithOnRetry(func(info quickbase.RetryInfo) {
-//	    log.Printf("Retrying %s %s (attempt %d, reason: %s)", info.Method, info.Path, info.Attempt, info.Reason)
-//	})
-func WithOnRetry(callback func(RetryInfo)) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithOnRetry(callback))
-	}
-}
+// WithOnRetry sets a callback that fires before each retry attempt. See [client.WithOnRetry].
+func WithOnRetry(callback func(RetryInfo)) Option { return client.WithOnRetry(callback) }
 
-// WithBaseURL sets a custom base URL.
-func WithBaseURL(url string) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithBaseURL(url))
-	}
-}
+// WithBaseURL sets a custom base URL. See [client.WithBaseURL].
+func WithBaseURL(url string) Option { return client.WithBaseURL(url) }
 
-// WithReadOnly enables read-only mode, blocking all write operations.
-//
-// When enabled, any attempt to make a write request returns a [ReadOnlyError]:
-//   - JSON API: POST, PUT, DELETE, PATCH methods are blocked
-//   - JSON API: GET endpoints that modify data are also blocked (GenerateDocument,
-//     CreateSolutionFromRecord, UpdateSolutionFromRecord, ExportSolutionToRecord)
-//   - XML API: Write actions like API_AddUserToRole, API_SetDBVar, etc. are blocked
-//
-// This is useful for data extraction tools, reporting systems, or any context
-// where you want to ensure the client can only read data, never modify it.
-//
-// Example:
-//
-//	client, _ := quickbase.New("myrealm",
-//	    quickbase.WithUserToken(token),
-//	    quickbase.WithReadOnly(),
-//	)
-//
-//	// These work:
-//	app, _ := client.GetApp("bqxyz123").Run(ctx)
-//	fields, _ := client.GetFields("bqtable").Run(ctx)
-//
-//	// These fail with ReadOnlyError:
-//	_, err := client.Upsert("bqtable").Data(records).Run(ctx)
-//	// err = &ReadOnlyError{Method: "POST", Path: "/v1/records"}
-//
-//	// XML API writes are also blocked:
-//	err = xmlClient.AddUserToRole(ctx, appId, "user@example.com", 10)
-//	// err = &ReadOnlyError{Method: "POST", Path: "/db/...", Action: "API_AddUserToRole"}
-func WithReadOnly() Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithReadOnly())
-	}
-}
+// WithReadOnly enables read-only mode, blocking all write operations. See [client.WithReadOnly].
+func WithReadOnly() Option { return client.WithReadOnly() }
 
-// WithAppToken sets an application token for XML API calls.
-//
-// App tokens are only needed for the XML API when:
-//   - The app has "Require Application Tokens" enabled, AND
-//   - You're NOT using user token authentication (which bypasses app token checks)
-//
-// Common scenarios requiring app tokens:
-//   - Using ticket auth ([WithTicketAuth]) with XML API methods
-//   - Using temp tokens ([WithTempTokens]) with XML API methods
-//
-// The JSON API does not use app tokens - user tokens and temp tokens provide
-// sufficient authentication. This option only affects XML API calls made via
-// the xml sub-package.
-//
-// Example:
-//
-//	client, _ := quickbase.New("myrealm",
-//	    quickbase.WithTicketAuth("user@example.com", "password"),
-//	    quickbase.WithAppToken("your-app-token"),
-//	)
-//
-//	// XML API calls will include the app token
-//	xmlClient := xml.New(client)
-//	roles, _ := xmlClient.GetRoleInfo(ctx, appId)
-func WithAppToken(token string) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithAppToken(token))
-	}
-}
+// WithLineErrorsAsErrors makes Upsert return a [LineErrorsError] when QuickBase rejects values. See [client.WithLineErrorsAsErrors].
+func WithLineErrorsAsErrors() Option { return client.WithLineErrorsAsErrors() }
 
-// WithSchema sets the schema for table and field aliases.
-//
-// When configured, the client automatically:
-//   - Transforms table aliases to IDs in requests (from, to fields)
-//   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
-//   - Keys the query builder's records by alias, if WithSchemaOptions sets
-//     TransformResponses (off by default: records are keyed by field ID)
-//   - Unwraps { value: X } to just X in response records
-//
-// Example with struct:
-//
-//	schema := &quickbase.Schema{
-//	    Tables: map[string]quickbase.TableSchema{
-//	        "projects": {
-//	            ID: "bqw3ryzab",
-//	            Fields: map[string]int{
-//	                "id":     3,
-//	                "name":   6,
-//	                "status": 7,
-//	            },
-//	        },
-//	    },
-//	}
-//
-// Example with builder:
-//
-//	schema := quickbase.NewSchema().
-//	    Table("projects", "bqw3ryzab").
-//	        Field("id", 3).
-//	        Field("name", 6).
-//	        Field("status", 7).
-//	    Build()
-//
-//	client, _ := quickbase.New("myrealm",
-//	    quickbase.WithUserToken("token"),
-//	    quickbase.WithSchema(schema),
-//	)
-//
-//	// Now use aliases in queries
-//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
-//	    From:   "projects",                                            // alias instead of "bqw3ryzab"
-//	    Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
-//	    Where:  quickbase.Ptr("{'status'.EX.'Active'}"),                // aliases in where
-//	})
-func WithSchema(schema *Schema) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithSchema(schema))
-	}
-}
+// WithAppToken sets an application token for XML API calls. See [client.WithAppToken].
+func WithAppToken(token string) Option { return client.WithAppToken(token) }
 
-// WithSchemaOptions sets the schema with custom options.
-// Use this to control schema behavior, such as keying the query builder's
-// records by field alias.
-//
-// Example:
-//
-//	quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{
-//	    TransformResponses: true, // records keyed by alias, not field ID
-//	})
+// WithSchema sets the schema for table and field aliases. See [client.WithSchema].
+func WithSchema(schema *Schema) Option { return client.WithSchema(schema) }
+
+// WithSchemaOptions sets the schema with custom options. See [client.WithSchemaOptions].
 func WithSchemaOptions(schema *Schema, opts SchemaOptions) Option {
-	return func(c *clientConfig) {
-		c.clientOpts = append(c.clientOpts, client.WithSchemaOptions(schema, opts))
-	}
+	return client.WithSchemaOptions(schema, opts)
 }
 
-// New creates a new QuickBase client.
+// New creates a new QuickBase client. One auth option is required:
+// WithUserToken, WithTempTokens, WithSSOTokenAuth, WithTicketAuth or WithTicket.
 func New(realm string, opts ...Option) (*Client, error) {
-	// Validate realm
 	if err := client.ValidateRealm(realm); err != nil {
 		return nil, err
 	}
-
-	cfg := &clientConfig{realm: realm}
-	for _, opt := range opts {
-		opt(cfg)
-	}
-
-	// Resolve auth strategy
-	var authStrategy auth.Strategy
-	switch s := cfg.authStrategy.(type) {
-	case *tempTokenMarker:
-		authStrategy = auth.NewTempTokenStrategy(realm, s.opts...)
-	case *ssoTokenMarker:
-		authStrategy = auth.NewSSOTokenStrategy(s.samlToken, realm, s.opts...)
-	case *ticketMarker: // XML-API-TICKET: Remove this case if XML API is discontinued.
-		authStrategy = auth.NewTicketStrategy(s.username, s.password, realm, s.opts...)
-	case auth.Strategy:
-		authStrategy = s
-	case nil:
-		return nil, &Error{Message: "no authentication strategy configured; use WithUserToken, WithTempTokenAuth, WithSSOTokenAuth, or WithTicketAuth"}
-	default:
-		return nil, &Error{Message: fmt.Sprintf("unknown auth strategy type: %T", cfg.authStrategy)}
-	}
-
-	return client.New(realm, authStrategy, cfg.clientOpts...)
+	return client.New(realm, nil, opts...)
 }
 
 // Error represents a QuickBase SDK error.
@@ -993,25 +646,25 @@ type FieldType = generated.CreateFieldJSONBodyFieldType
 
 // Field type constants
 const (
-	FieldTypeText          FieldType = "text"
-	FieldTypeMultiText     FieldType = "text-multi-line"
-	FieldTypeRichText      FieldType = "rich-text"
-	FieldTypeNumber        FieldType = "numeric"
-	FieldTypeCurrency      FieldType = "currency"
-	FieldTypePercent       FieldType = "percent"
-	FieldTypeRating        FieldType = "rating"
-	FieldTypeDate          FieldType = "date"
-	FieldTypeDateTime      FieldType = "datetime"
-	FieldTypeTimeOfDay     FieldType = "timeofday"
-	FieldTypeDuration      FieldType = "duration"
-	FieldTypeCheckbox      FieldType = "checkbox"
-	FieldTypeEmail         FieldType = "email"
-	FieldTypePhone         FieldType = "phone"
-	FieldTypeURL           FieldType = "url"
-	FieldTypeAddress       FieldType = "address"
-	FieldTypeFile          FieldType = "file"
-	FieldTypeUser          FieldType = "user"
-	FieldTypeMultiUser     FieldType = "multiuser"
+	FieldTypeText      FieldType = "text"
+	FieldTypeMultiText FieldType = "text-multi-line"
+	FieldTypeRichText  FieldType = "rich-text"
+	FieldTypeNumber    FieldType = "numeric"
+	FieldTypeCurrency  FieldType = "currency"
+	FieldTypePercent   FieldType = "percent"
+	FieldTypeRating    FieldType = "rating"
+	FieldTypeDate      FieldType = "date"
+	FieldTypeDateTime  FieldType = "datetime"
+	FieldTypeTimeOfDay FieldType = "timeofday"
+	FieldTypeDuration  FieldType = "duration"
+	FieldTypeCheckbox  FieldType = "checkbox"
+	FieldTypeEmail     FieldType = "email"
+	FieldTypePhone     FieldType = "phone"
+	FieldTypeURL       FieldType = "url"
+	FieldTypeAddress   FieldType = "address"
+	FieldTypeFile      FieldType = "file"
+	FieldTypeUser      FieldType = "user"
+	FieldTypeMultiUser FieldType = "multiuser"
 )
 
 // --- Helper Functions ---

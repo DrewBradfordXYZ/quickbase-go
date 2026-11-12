@@ -32,6 +32,7 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -91,7 +92,11 @@ type Client struct {
 	onRequest   func(RequestInfo)
 	onRetry     func(RetryInfo)
 
-	// Transport for cleanup
+	// One HTTP client for every attempt; its transport is closed by Close
+	http *http.Client
+	// basePath is the base URL's path ("/v1" by default), which apiPath swaps
+	// for "/v1" so endpoint lists match under any base URL
+	basePath  string
 	transport *http.Transport
 
 	// Read-only mode blocks all write operations
@@ -100,6 +105,12 @@ type Client struct {
 	// App token for apps requiring application tokens
 	// Only needed when NOT using user tokens (which bypass app token checks)
 	appToken string
+
+	// Upsert returns a LineErrorsError when QuickBase rejects values
+	lineErrorsAsErrors bool
+
+	// authFor builds the auth strategy from the realm (the auth options)
+	authFor func(realm string) auth.Strategy
 }
 
 // RequestInfo contains information about a completed API request.
@@ -289,6 +300,17 @@ func WithReadOnly() Option {
 	}
 }
 
+// WithLineErrorsAsErrors makes Upsert return a [core.LineErrorsError] when
+// QuickBase rejects values. QuickBase still saves those records, with the
+// rejected fields blank, and answers 207; without this option the rejections
+// are only in the result's metadata (LineErrors). The result is returned with
+// the error, so the saved records' IDs aren't lost.
+func WithLineErrorsAsErrors() Option {
+	return func(c *Client) {
+		c.lineErrorsAsErrors = true
+	}
+}
+
 // WithAppToken sets an application token for XML API calls.
 //
 // App tokens are only needed for the XML API when:
@@ -347,7 +369,8 @@ func WithSchemaOptions(schema *core.Schema, opts core.SchemaOptions) Option {
 	}
 }
 
-// New creates a new QuickBase client.
+// New creates a new QuickBase client. authStrategy may be nil when an option
+// sets one (WithUserToken, WithTempTokens, WithAuth, ...).
 func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, error) {
 	c := &Client{
 		auth:         authStrategy,
@@ -364,6 +387,12 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 
 	for _, opt := range opts {
 		opt(c)
+	}
+	if c.auth == nil && c.authFor != nil {
+		c.auth = c.authFor(realm)
+	}
+	if c.auth == nil {
+		return nil, fmt.Errorf("no authentication strategy configured; use WithUserToken, WithTempTokens, WithSSOTokenAuth, WithTicketAuth or WithTicket")
 	}
 
 	// Create throttle if not provided (disabled by default, like JS SDK)
@@ -389,18 +418,16 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 		transport.IdleConnTimeout = c.idleConnTimeout
 	}
 
-	// Create the generated client with our custom HTTP doer
-	httpClient := &authHTTPClient{
-		client: c,
-		httpClient: &http.Client{
-			Timeout:   c.timeout,
-			Transport: transport,
-		},
+	c.transport = transport
+	c.http = &http.Client{Timeout: c.timeout, Transport: transport}
+	if u, err := url.Parse(c.baseURL); err == nil {
+		c.basePath = strings.TrimSuffix(u.Path, "/")
 	}
 
+	// The generated client sends through authHTTPClient: auth, retry, throttle
 	genClient, err := generated.NewClientWithResponses(
 		c.baseURL,
-		generated.WithHTTPClient(httpClient),
+		generated.WithHTTPClient(&authHTTPClient{client: c}),
 		generated.WithRequestEditorFn(c.addHeaders),
 	)
 	if err != nil {
@@ -408,7 +435,6 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 	}
 
 	c.generated = genClient
-	c.transport = transport
 	return c, nil
 }
 
@@ -457,10 +483,10 @@ func (c *Client) Realm() string {
 	return c.realm
 }
 
-// authHTTPClient wraps http.Client to add auth, retry, and rate limiting.
+// authHTTPClient is the generated client's HTTP doer: it adds auth, retry,
+// and rate limiting.
 type authHTTPClient struct {
-	client     *Client
-	httpClient *http.Client
+	client *Client
 }
 
 func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
@@ -510,7 +536,8 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		return false, nil // No special handling, use standard logic
 	}
 
-	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, requestFactory, responseHandler)
+	retrySafe := !isJSONWrite(req.Method, c.apiPath(req.URL.Path))
+	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, retrySafe, requestFactory, responseHandler)
 }
 
 // requestFactory creates an authenticated request for a retry attempt.
@@ -519,252 +546,150 @@ type requestFactory func(ctx context.Context, token string) (*http.Request, erro
 // responseHandler handles a response and returns true if a retry with token refresh is needed.
 type responseHandler func(resp *http.Response) (bool, error)
 
-// do centralizes request execution logic (retry, throttle, auth, callbacks).
+// do sends a request, retrying it with backoff:
+//   - after a 429, always (QuickBase didn't process it), waiting Retry-After
+//     when given;
+//   - after a 401 the auth strategy has a new token for;
+//   - after a network error or a 5xx only when retrySafe. A write (an upsert,
+//     a create) that timed out or got a 502 may have been applied, and
+//     sending it again could, for example, add its records twice. A write
+//     whose connection never opened is retried: it wasn't sent.
 func (c *Client) do(
 	ctx context.Context,
 	dbid string,
 	method string,
 	path string,
 	bodyBytes []byte,
+	retrySafe bool,
 	factory requestFactory,
 	handler responseHandler,
 ) (*http.Response, error) {
 	startTime := time.Now()
-	var lastResp *http.Response
-	var lastErr error
 
 	// At least one attempt: with maxRetries 0 the loop never ran and the
 	// caller got neither a response nor an error.
 	maxAttempts := max(c.maxRetries, 1)
-	for attempt := 1; attempt <= maxAttempts; attempt++ {
-		// Check context before each attempt
-		if ctx.Err() != nil {
-			return nil, ctx.Err()
+	for attempt := 1; ; attempt++ {
+		if err := ctx.Err(); err != nil {
+			return nil, err
 		}
-
-		// Throttling
 		if err := c.throttle.Acquire(ctx); err != nil {
 			return nil, fmt.Errorf("throttle: %w", err)
 		}
-
-		// Get auth token
 		token, err := c.auth.GetToken(ctx, dbid)
 		if err != nil {
 			return nil, fmt.Errorf("getting auth token: %w", err)
 		}
-
-		// Create authenticated request
 		req, err := factory(ctx, token)
 		if err != nil {
 			return nil, fmt.Errorf("creating request: %w", err)
 		}
 
-		// Make request
-		reqStartTime := time.Now()
-		resp, err := c.httpClient().Do(req)
-		duration := time.Since(reqStartTime)
+		sent := time.Now()
+		resp, err := c.http.Do(req)
+		info := RequestInfo{Method: method, Path: path, Duration: time.Since(sent), Attempt: attempt, Error: err, RequestBody: bodyBytes}
+		if resp != nil {
+			info.StatusCode = resp.StatusCode
+		}
+		if c.onRequest != nil {
+			c.onRequest(info)
+		}
+		last := attempt >= maxAttempts
 
-		if err != nil {
-			lastErr = err
-
-			// Notify onRequest callback (with error)
-			if c.onRequest != nil {
-				c.onRequest(RequestInfo{
-					Method:      method,
-					Path:        path,
-					StatusCode:  0,
-					Duration:    duration,
-					Attempt:     attempt,
-					Error:       err,
-					RequestBody: bodyBytes,
-				})
-			}
-
+		var wait time.Duration
+		var reason, logReason string
+		switch {
+		case err != nil:
 			// The caller's context ended (cancelled, or its own deadline):
 			// report that, not a timeout of ours
 			if ctx.Err() != nil {
 				return nil, ctx.Err()
 			}
-
-			if attempt < maxAttempts {
-				delay := c.calculateBackoff(attempt)
-				c.logger.Retry(attempt, maxAttempts, delay, "network error")
-
-				// Notify onRetry callback
-				if c.onRetry != nil {
-					c.onRetry(RetryInfo{
-						Method:   method,
-						Path:     path,
-						Attempt:  attempt + 1,
-						Reason:   "network error",
-						WaitTime: delay,
-					})
-				}
-
-				if err := sleepCtx(ctx, delay); err != nil {
-					return nil, err
-				}
-				continue
+			if last || !(retrySafe || neverSent(err)) {
+				return nil, timeoutOr(err, c.timeout)
 			}
-			// Our own per-request timeout (WithTimeout) ran out
-			var netErr net.Error
-			if errors.As(err, &netErr) && netErr.Timeout() {
-				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
-			}
-			return nil, err
-		}
+			wait, reason, logReason = c.calculateBackoff(attempt), "network error", "network error"
 
-		// Handle 429 Too Many Requests
-		if resp.StatusCode == http.StatusTooManyRequests {
-			// Notify onRequest callback (429)
-			if c.onRequest != nil {
-				c.onRequest(RequestInfo{
-					Method:      method,
-					Path:        path,
-					StatusCode:  resp.StatusCode,
-					Duration:    duration,
-					Attempt:     attempt,
-					RequestBody: bodyBytes,
-				})
-			}
-
+		case resp.StatusCode == http.StatusTooManyRequests:
 			resp.Body.Close()
-
-			info := core.RateLimitInfo{
+			rl := core.RateLimitInfo{
 				Timestamp:  time.Now(),
 				RequestURL: req.URL.String(),
-				HTTPStatus: 429,
+				HTTPStatus: http.StatusTooManyRequests,
 				CFRay:      resp.Header.Get("cf-ray"),
 				TID:        resp.Header.Get("tid"),
 				QBAPIRay:   resp.Header.Get("qb-api-ray"),
 				Attempt:    attempt,
 			}
-
 			if ra := resp.Header.Get("Retry-After"); ra != "" {
-				info.RetryAfter, _ = strconv.Atoi(ra)
+				rl.RetryAfter, _ = strconv.Atoi(ra)
 			}
-
-			c.logger.RateLimit(info)
-
-			// Notify callback
+			c.logger.RateLimit(rl)
 			if c.onRateLimit != nil {
-				c.onRateLimit(info)
+				c.onRateLimit(rl)
 			}
+			if last {
+				return nil, core.NewRateLimitError(rl, "")
+			}
+			wait = c.calculateBackoff(attempt)
+			if rl.RetryAfter > 0 {
+				wait = time.Duration(rl.RetryAfter) * time.Second
+			}
+			reason, logReason = "429", "rate limited (429)"
 
-			if attempt < maxAttempts {
-				var delay time.Duration
-				if info.RetryAfter > 0 {
-					delay = time.Duration(info.RetryAfter) * time.Second
-				} else {
-					delay = c.calculateBackoff(attempt)
-				}
-				c.logger.Retry(attempt, maxAttempts, delay, "rate limited (429)")
-
-				// Notify onRetry callback
-				if c.onRetry != nil {
-					c.onRetry(RetryInfo{
-						Method:   method,
-						Path:     path,
-						Attempt:  attempt + 1,
-						Reason:   "429",
-						WaitTime: delay,
-					})
-				}
-
-				if err := sleepCtx(ctx, delay); err != nil {
+		default:
+			// The JSON handler asks for a token refresh on 401; the XML one
+			// on errcode 8 (and reads the body)
+			refresh, err := handler(resp)
+			if err != nil {
+				resp.Body.Close()
+				return nil, err
+			}
+			if refresh && !last {
+				newToken, err := c.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, maxAttempts)
+				if err != nil {
+					resp.Body.Close()
 					return nil, err
 				}
-				continue
+				if newToken != "" {
+					resp.Body.Close()
+					c.logger.Debug("Token refreshed, retrying request")
+					continue
+				}
 			}
-
-			return nil, core.NewRateLimitError(info, "")
+			if resp.StatusCode < 500 || last || !retrySafe {
+				c.logger.Timing(method, path, time.Since(startTime))
+				return resp, nil
+			}
+			resp.Body.Close()
+			wait, reason, logReason = c.calculateBackoff(attempt), strconv.Itoa(resp.StatusCode), fmt.Sprintf("server error (%d)", resp.StatusCode)
 		}
 
-		// Specialized response handling (e.g., XML errcode check or JSON 401 refresh)
-		shouldRefresh, err := handler(resp)
-		if err != nil {
+		c.logger.Retry(attempt, maxAttempts, wait, logReason)
+		if c.onRetry != nil {
+			c.onRetry(RetryInfo{Method: method, Path: path, Attempt: attempt + 1, Reason: reason, WaitTime: wait})
+		}
+		if err := sleepCtx(ctx, wait); err != nil {
 			return nil, err
 		}
-
-		if shouldRefresh {
-			newToken, err := c.auth.HandleAuthError(ctx, resp.StatusCode, dbid, attempt, maxAttempts)
-			if err != nil {
-				return nil, err
-			}
-			if newToken != "" {
-				resp.Body.Close()
-				c.logger.Debug("Token refreshed, retrying request")
-				continue
-			}
-			// If we couldn't refresh but should have, proceed to standard error handling
-		}
-
-		// Handle 5xx server errors with retry
-		if resp.StatusCode >= 500 && attempt < maxAttempts {
-			// Notify onRequest callback (5xx)
-			if c.onRequest != nil {
-				c.onRequest(RequestInfo{
-					Method:      method,
-					Path:        path,
-					StatusCode:  resp.StatusCode,
-					Duration:    duration,
-					Attempt:     attempt,
-					RequestBody: bodyBytes,
-				})
-			}
-
-			resp.Body.Close()
-			delay := c.calculateBackoff(attempt)
-			c.logger.Retry(attempt, maxAttempts, delay, fmt.Sprintf("server error (%d)", resp.StatusCode))
-
-			// Notify onRetry callback
-			if c.onRetry != nil {
-				c.onRetry(RetryInfo{
-					Method:   method,
-					Path:     path,
-					Attempt:  attempt + 1,
-					Reason:   fmt.Sprintf("%d", resp.StatusCode),
-					WaitTime: delay,
-				})
-			}
-
-			if err := sleepCtx(ctx, delay); err != nil {
-				return nil, err
-			}
-			continue
-		}
-
-		// Notify onRequest callback (success or final attempt)
-		if c.onRequest != nil {
-			c.onRequest(RequestInfo{
-				Method:      method,
-				Path:        path,
-				StatusCode:  resp.StatusCode,
-				Duration:    duration,
-				Attempt:     attempt,
-				RequestBody: bodyBytes,
-			})
-		}
-
-		lastResp = resp
-		lastErr = nil
-		break
 	}
-
-	if lastErr != nil {
-		return nil, lastErr
-	}
-
-	c.logger.Timing(method, path, time.Since(startTime))
-	return lastResp, nil
 }
 
-// httpClient returns the base http.Client.
-func (c *Client) httpClient() *http.Client {
-	return &http.Client{
-		Timeout:   c.timeout,
-		Transport: c.transport,
+// neverSent reports whether a request failed before its connection opened
+// (DNS, connection refused), so QuickBase can't have received it.
+func neverSent(err error) bool {
+	var op *net.OpError
+	return errors.As(err, &op) && op.Op == "dial"
+}
+
+// timeoutOr returns a TimeoutError if err is the client's own timeout
+// (WithTimeout) running out, and err otherwise.
+func timeoutOr(err error, timeout time.Duration) error {
+	var netErr net.Error
+	if errors.As(err, &netErr) && netErr.Timeout() {
+		return core.NewTimeoutError(int(timeout.Milliseconds()))
 	}
+	return err
 }
 
 // DoXML makes an XML API request to the legacy QuickBase XML API.
@@ -795,7 +720,7 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 
 		// Inject app token into XML body if configured
 		if c.appToken != "" {
-			xmlBody = injectAppToken(xmlBody, c.appToken)
+			xmlBody = injectXMLElement(xmlBody, "apptoken", c.appToken)
 		}
 
 		// Inject auth token into XML body if the strategy supports it
@@ -803,7 +728,7 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 		usesXMLAuth := false
 		if xmlAuth, ok := c.auth.(auth.XMLAuthProvider); ok {
 			elemName, elemValue := xmlAuth.XMLAuthElement(token)
-			xmlBody = injectXMLAuth(xmlBody, elemName, elemValue)
+			xmlBody = injectXMLElement(xmlBody, elemName, elemValue)
 			usesXMLAuth = true
 		}
 
@@ -854,7 +779,7 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 		return false, nil
 	}
 
-	_, err := c.do(ctx, dbid, http.MethodPost, "/db/"+dbid, body, requestFactory, responseHandler)
+	_, err := c.do(ctx, dbid, http.MethodPost, "/db/"+dbid, body, !isXMLWriteAction(action), requestFactory, responseHandler)
 	if err != nil {
 		return nil, err
 	}
@@ -890,42 +815,25 @@ func sleepCtx(ctx context.Context, d time.Duration) error {
 	}
 }
 
-// calculateXMLBackoff is kept for backward compatibility but calls calculateBackoff
-func (c *Client) calculateXMLBackoff(attempt int) time.Duration {
-	return c.calculateBackoff(attempt)
-}
-
-// injectAppToken inserts an <apptoken> element into an XML request body.
-// The body is expected to have the format <qdbapi>...</qdbapi>.
-// The apptoken is inserted right after the opening <qdbapi> tag.
-func injectAppToken(body []byte, token string) []byte {
-	const openTag = "<qdbapi>"
-	bodyStr := string(body)
-	idx := strings.Index(bodyStr, openTag)
-	if idx == -1 {
-		return body // Can't find tag, return unchanged
-	}
-	insertPos := idx + len(openTag)
-	appTokenElem := "<apptoken>" + token + "</apptoken>"
-	return []byte(bodyStr[:insertPos] + appTokenElem + bodyStr[insertPos:])
-}
-
-// injectXMLAuth inserts an authentication element into an XML request body.
-// The body is expected to have the format <qdbapi>...</qdbapi>.
-// The element is inserted right after the opening <qdbapi> tag.
-//
-// The XML API requires tokens as body parameters, not Authorization headers.
+// injectXMLElement inserts <name>value</name> right after the opening
+// <qdbapi> tag of an XML request body: the XML API takes app tokens and auth
+// tokens as body elements, not headers. The value is escaped.
 // See: https://help.quickbase.com/docs/api-getdbpage
-func injectXMLAuth(body []byte, elemName, elemValue string) []byte {
+func injectXMLElement(body []byte, name, value string) []byte {
 	const openTag = "<qdbapi>"
-	bodyStr := string(body)
-	idx := strings.Index(bodyStr, openTag)
+	idx := bytes.Index(body, []byte(openTag))
 	if idx == -1 {
 		return body // Can't find tag, return unchanged
 	}
+	var escaped bytes.Buffer
+	_ = xml.EscapeText(&escaped, []byte(value))
 	insertPos := idx + len(openTag)
-	authElem := "<" + elemName + ">" + elemValue + "</" + elemName + ">"
-	return []byte(bodyStr[:insertPos] + authElem + bodyStr[insertPos:])
+	out := make([]byte, 0, len(body)+len(name)*2+escaped.Len()+5)
+	out = append(out, body[:insertPos]...)
+	out = append(out, "<"+name+">"...)
+	out = append(out, escaped.Bytes()...)
+	out = append(out, "</"+name+">"...)
+	return append(out, body[insertPos:]...)
 }
 
 // Close closes idle connections and releases resources.
@@ -1224,7 +1132,7 @@ func (c *Client) checkReadOnly(req *http.Request) error {
 	}
 
 	method := req.Method
-	path := req.URL.Path
+	path := c.apiPath(req.URL.Path)
 
 	// Check for XML API requests first (they use POST for everything)
 	if action := req.Header.Get("QUICKBASE-ACTION"); action != "" {
@@ -1234,23 +1142,27 @@ func (c *Client) checkReadOnly(req *http.Request) error {
 		return nil // Allow read-only XML actions
 	}
 
-	// Layer 1: Explicit blocklist check (defense-in-depth)
-	if isJSONWriteEndpoint(method, path) {
-		// Exception: Some POST endpoints are read-only (RunQuery, RunReport, etc.)
-		if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
-			return nil
-		}
+	if isJSONWrite(method, path) {
 		return core.NewReadOnlyError(method, path, "")
 	}
-
-	// Layer 2: HTTP method check (catch-all for any endpoints not in blocklist)
-	if isWriteMethod(method) {
-		// Exception: Some POST endpoints are read-only
-		if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
-			return nil
-		}
-		return core.NewReadOnlyError(method, path, "")
-	}
-
 	return nil
+}
+
+// apiPath returns a request's path as the endpoint lists name it, under
+// /v1, whatever the base URL: WithBaseURL("https://proxy/qb") sends
+// /qb/records/query, which is /v1/records/query.
+func (c *Client) apiPath(path string) string {
+	return "/v1" + strings.TrimPrefix(path, c.basePath)
+}
+
+// isJSONWrite reports whether a JSON API request can change data: a known
+// write endpoint (including GETs that write), or any POST, PUT, DELETE or
+// PATCH that isn't a known read sent as POST (runQuery, runReport, ...).
+// Read-only mode refuses these, and they aren't retried after a timeout or
+// 5xx.
+func isJSONWrite(method, path string) bool {
+	if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
+		return false
+	}
+	return isJSONWriteEndpoint(method, path) || isWriteMethod(method)
 }

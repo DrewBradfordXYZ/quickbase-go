@@ -20,7 +20,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -332,4 +334,34 @@ func NewReadOnlyError(method, path, action string) *ReadOnlyError {
 		Path:   path,
 		Action: action,
 	}
+}
+
+// LineErrorsError reports values QuickBase rejected in an upsert, returned
+// with the upsert's result when the client has WithLineErrorsAsErrors. Each
+// rejected value's field is left blank on a record QuickBase still saved: the
+// result lists the created and updated records.
+type LineErrorsError struct {
+	// LineErrors maps each record's 1-based position in the request to its
+	// errors, as QuickBase reports them.
+	LineErrors map[string][]string
+}
+
+// NewLineErrorsError creates a LineErrorsError.
+func NewLineErrorsError(lineErrors map[string][]string) *LineErrorsError {
+	return &LineErrorsError{LineErrors: lineErrors}
+}
+
+func (e *LineErrorsError) Error() string {
+	lines := make([]string, 0, len(e.LineErrors))
+	for line := range e.LineErrors {
+		lines = append(lines, line)
+	}
+	sort.Slice(lines, func(i, j int) bool {
+		a, _ := strconv.Atoi(lines[i])
+		b, _ := strconv.Atoi(lines[j])
+		return a < b
+	})
+	first := lines[0]
+	return fmt.Sprintf("upsert: QuickBase rejected values in %d record(s), saved with those fields blank; record %s: %s",
+		len(lines), first, strings.Join(e.LineErrors[first], "; "))
 }

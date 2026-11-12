@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"fmt"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
 	"os"
@@ -111,8 +112,14 @@ func main() {
 		os.Exit(1)
 	}
 
+	formatted, err := format.Source([]byte(code))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error formatting wrappers: %v\n", err)
+		os.Exit(1)
+	}
+
 	// Write output
-	if err := os.WriteFile("client/results_generated.go", []byte(code), 0644); err != nil {
+	if err := os.WriteFile("client/results_generated.go", formatted, 0644); err != nil {
 		fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)
 		os.Exit(1)
 	}

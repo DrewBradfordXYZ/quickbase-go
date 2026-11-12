@@ -14,7 +14,6 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 
 	"github.com/oapi-codegen/runtime/types"
-
 )
 
 // --- Auto-generated builder types ---
@@ -29,16 +28,13 @@ type SortSpec struct {
 
 // --- Result types for transformed responses ---
 
-
-
-
 // AddManagersToGroupBuilder provides a fluent API for the addManagersToGroup operation.
 // Add managers
 type AddManagersToGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // AddManagersToGroup starts building a addManagersToGroup request.
@@ -50,8 +46,6 @@ func (c *Client) AddManagersToGroup(gid int64) *AddManagersToGroupBuilder {
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the addManagersToGroup request and returns the response data directly.
 func (b *AddManagersToGroupBuilder) Run(ctx context.Context) (*AddManagersToGroupResult, error) {
@@ -84,15 +78,13 @@ func (b *AddManagersToGroupBuilder) Run(ctx context.Context) (*AddManagersToGrou
 	return &AddManagersToGroupResult{resp: resp}, nil
 }
 
-
-
 // AddMembersToGroupBuilder provides a fluent API for the addMembersToGroup operation.
 // Add members
 type AddMembersToGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // AddMembersToGroup starts building a addMembersToGroup request.
@@ -104,8 +96,6 @@ func (c *Client) AddMembersToGroup(gid int64) *AddMembersToGroupBuilder {
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the addMembersToGroup request and returns the response data directly.
 func (b *AddMembersToGroupBuilder) Run(ctx context.Context) (*AddMembersToGroupResult, error) {
@@ -138,15 +128,13 @@ func (b *AddMembersToGroupBuilder) Run(ctx context.Context) (*AddMembersToGroupR
 	return &AddMembersToGroupResult{resp: resp}, nil
 }
 
-
-
 // AddSubgroupsToGroupBuilder provides a fluent API for the addSubgroupsToGroup operation.
 // Add child groups
 type AddSubgroupsToGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // AddSubgroupsToGroup starts building a addSubgroupsToGroup request.
@@ -158,8 +146,6 @@ func (c *Client) AddSubgroupsToGroup(gid int64) *AddSubgroupsToGroupBuilder {
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the addSubgroupsToGroup request and returns the response data directly.
 func (b *AddSubgroupsToGroupBuilder) Run(ctx context.Context) (*AddSubgroupsToGroupResult, error) {
@@ -192,15 +178,13 @@ func (b *AddSubgroupsToGroupBuilder) Run(ctx context.Context) (*AddSubgroupsToGr
 	return &AddSubgroupsToGroupResult{resp: resp}, nil
 }
 
-
-
 // AddTrusteesBuilder provides a fluent API for the addTrustees operation.
 // Add trustees to an app
 type AddTrusteesBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // AddTrustees starts building a addTrustees request.
@@ -212,8 +196,6 @@ func (c *Client) AddTrustees(appId string) *AddTrusteesBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the addTrustees request and returns the response data directly.
 func (b *AddTrusteesBuilder) Run(ctx context.Context) (*AddTrusteesResult, error) {
@@ -246,14 +228,12 @@ func (b *AddTrusteesBuilder) Run(ctx context.Context) (*AddTrusteesResult, error
 	return &AddTrusteesResult{resp: resp}, nil
 }
 
-
-
 // AuditBuilder provides a fluent API for the audit operation.
 // Get audit logs
 type AuditBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // Audit starts building a audit request.
@@ -265,7 +245,6 @@ func (c *Client) Audit() *AuditBuilder {
 	return b
 }
 
-
 // Date The date for which audit logs need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
 func (b *AuditBuilder) Date(value string) *AuditBuilder {
 	if b.err != nil {
@@ -274,7 +253,6 @@ func (b *AuditBuilder) Date(value string) *AuditBuilder {
 	b.params["date"] = value
 	return b
 }
-
 
 // NextToken Token specifying start of page. For first page don't supply this.
 func (b *AuditBuilder) NextToken(value string) *AuditBuilder {
@@ -285,7 +263,6 @@ func (b *AuditBuilder) NextToken(value string) *AuditBuilder {
 	return b
 }
 
-
 // NumRows Number of logs to return per page, default is 10000, minimum is 1000, max is 50000.
 func (b *AuditBuilder) NumRows(value int) *AuditBuilder {
 	if b.err != nil {
@@ -294,7 +271,6 @@ func (b *AuditBuilder) NumRows(value int) *AuditBuilder {
 	b.params["numRows"] = value
 	return b
 }
-
 
 // QueryId The query id of an audit log request. This id is needed to fetch subsequent paged results of a single query.
 func (b *AuditBuilder) QueryId(value string) *AuditBuilder {
@@ -305,7 +281,6 @@ func (b *AuditBuilder) QueryId(value string) *AuditBuilder {
 	return b
 }
 
-
 // Topics An array that may contain up to 20 [topics](https://resources.quickbase.com/nav/app/budurkasx/action/showpage/2b2941e4-f34d-4d41-9b0e-db790d20e9ab?pageIdV2=quickbase.com-DashboardGroup-15760d74-2243-4ce9-9495-7cc8790f12e7) to filter by. If empty, all topics are returned.
 func (b *AuditBuilder) Topics(values ...string) *AuditBuilder {
 	if b.err != nil {
@@ -314,8 +289,6 @@ func (b *AuditBuilder) Topics(values ...string) *AuditBuilder {
 	b.params["topics"] = values
 	return b
 }
-
-
 
 // Run executes the audit request and returns the response data directly.
 func (b *AuditBuilder) Run(ctx context.Context) (*AuditResult, error) {
@@ -348,16 +321,14 @@ func (b *AuditBuilder) Run(ctx context.Context) (*AuditResult, error) {
 	return &AuditResult{resp: resp}, nil
 }
 
-
-
 // ChangesetSolutionBuilder provides a fluent API for the changesetSolution operation.
 // List solution changes
 type ChangesetSolutionBuilder struct {
-	client  *Client
+	client     *Client
 	solutionId string
-	params  map[string]any
-	err     error
-	rawBody []byte
+	params     map[string]any
+	err        error
+	rawBody    []byte
 }
 
 // Body sets the request body, sent as application/x-yaml.
@@ -376,8 +347,6 @@ func (c *Client) ChangesetSolution(solutionId string) *ChangesetSolutionBuilder 
 	return b
 }
 
-
-
 // Run executes the changesetSolution request and returns the response data directly.
 func (b *ChangesetSolutionBuilder) Run(ctx context.Context) (*generated.ChangesetSolutionResponse, error) {
 	if b.err != nil {
@@ -395,19 +364,17 @@ func (b *ChangesetSolutionBuilder) Run(ctx context.Context) (*generated.Changese
 	return resp, nil
 }
 
-
-
 // ChangesetSolutionFromRecordBuilder provides a fluent API for the changesetSolutionFromRecord operation.
 // List solution changes from record
 type ChangesetSolutionFromRecordBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client     *Client
+	table      string
+	tableID    string
 	solutionId string
-	qpFieldId *int
+	qpFieldId  *int
 	qpRecordId *int
-	params  map[string]any
-	err     error
+	params     map[string]any
+	err        error
 }
 
 // ChangesetSolutionFromRecord starts building a changesetSolutionFromRecord request.
@@ -432,8 +399,6 @@ func (c *Client) ChangesetSolutionFromRecord(solutionId string, table string) *C
 	return b
 }
 
-
-
 // FieldId The unique identifier (fid) of the field. It needs to be a file attachment field.
 func (b *ChangesetSolutionFromRecordBuilder) FieldId(value int) *ChangesetSolutionFromRecordBuilder {
 	if b.err != nil {
@@ -443,7 +408,6 @@ func (b *ChangesetSolutionFromRecordBuilder) FieldId(value int) *ChangesetSoluti
 	return b
 }
 
-
 // RecordId The unique identifier of the record.
 func (b *ChangesetSolutionFromRecordBuilder) RecordId(value int) *ChangesetSolutionFromRecordBuilder {
 	if b.err != nil {
@@ -452,7 +416,6 @@ func (b *ChangesetSolutionFromRecordBuilder) RecordId(value int) *ChangesetSolut
 	b.qpRecordId = &value
 	return b
 }
-
 
 // Run executes the changesetSolutionFromRecord request and returns the response data directly.
 func (b *ChangesetSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.ChangesetSolutionFromRecordResponse, error) {
@@ -493,14 +456,12 @@ func (b *ChangesetSolutionFromRecordBuilder) Run(ctx context.Context) (*generate
 	return resp, nil
 }
 
-
-
 // CloneUserTokenBuilder provides a fluent API for the cloneUserToken operation.
 // Clone a user token
 type CloneUserTokenBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // CloneUserToken starts building a cloneUserToken request.
@@ -512,7 +473,6 @@ func (c *Client) CloneUserToken() *CloneUserTokenBuilder {
 	return b
 }
 
-
 // Description The description for the cloned user token.
 func (b *CloneUserTokenBuilder) Description(value string) *CloneUserTokenBuilder {
 	if b.err != nil {
@@ -522,7 +482,6 @@ func (b *CloneUserTokenBuilder) Description(value string) *CloneUserTokenBuilder
 	return b
 }
 
-
 // Name The new name for the cloned user token.
 func (b *CloneUserTokenBuilder) Name(value string) *CloneUserTokenBuilder {
 	if b.err != nil {
@@ -531,8 +490,6 @@ func (b *CloneUserTokenBuilder) Name(value string) *CloneUserTokenBuilder {
 	b.params["name"] = value
 	return b
 }
-
-
 
 // Run executes the cloneUserToken request and returns the response data directly.
 func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult, error) {
@@ -565,15 +522,13 @@ func (b *CloneUserTokenBuilder) Run(ctx context.Context) (*CloneUserTokenResult,
 	return &CloneUserTokenResult{resp: resp}, nil
 }
 
-
-
 // CopyAppBuilder provides a fluent API for the copyApp operation.
 // Copy an app
 type CopyAppBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // CopyApp starts building a copyApp request.
@@ -586,7 +541,6 @@ func (c *Client) CopyApp(appId string) *CopyAppBuilder {
 	return b
 }
 
-
 // Description The description of the newly copied app
 func (b *CopyAppBuilder) Description(value string) *CopyAppBuilder {
 	if b.err != nil {
@@ -596,7 +550,6 @@ func (b *CopyAppBuilder) Description(value string) *CopyAppBuilder {
 	return b
 }
 
-
 // Name The name of the newly copied app
 func (b *CopyAppBuilder) Name(value string) *CopyAppBuilder {
 	if b.err != nil {
@@ -605,7 +558,6 @@ func (b *CopyAppBuilder) Name(value string) *CopyAppBuilder {
 	b.params["name"] = value
 	return b
 }
-
 
 // AssignUserToken Whether to add the user token used to make this request to the new app
 func (b *CopyAppBuilder) AssignUserToken(value bool) *CopyAppBuilder {
@@ -621,7 +573,6 @@ func (b *CopyAppBuilder) AssignUserToken(value bool) *CopyAppBuilder {
 	return b
 }
 
-
 // ExcludeFiles If keepData is true, whether to copy the file attachments as well. If keepData is false, this property is ignored
 func (b *CopyAppBuilder) ExcludeFiles(value bool) *CopyAppBuilder {
 	if b.err != nil {
@@ -635,7 +586,6 @@ func (b *CopyAppBuilder) ExcludeFiles(value bool) *CopyAppBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // KeepData Whether to copy the app's data along with the schema
 func (b *CopyAppBuilder) KeepData(value bool) *CopyAppBuilder {
@@ -651,7 +601,6 @@ func (b *CopyAppBuilder) KeepData(value bool) *CopyAppBuilder {
 	return b
 }
 
-
 // UsersAndRoles If true, users will be copied along with their assigned roles. If false, users and roles will be copied but roles will not be assigned
 func (b *CopyAppBuilder) UsersAndRoles(value bool) *CopyAppBuilder {
 	if b.err != nil {
@@ -665,8 +614,6 @@ func (b *CopyAppBuilder) UsersAndRoles(value bool) *CopyAppBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
-
 
 // Run executes the copyApp request and returns the response data directly.
 func (b *CopyAppBuilder) Run(ctx context.Context) (*CopyAppResult, error) {
@@ -706,14 +653,12 @@ func (b *CopyAppBuilder) Run(ctx context.Context) (*CopyAppResult, error) {
 	return &CopyAppResult{resp: resp}, nil
 }
 
-
-
 // CreateAppBuilder provides a fluent API for the createApp operation.
 // Create an app
 type CreateAppBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // CreateApp starts building a createApp request.
@@ -725,7 +670,6 @@ func (c *Client) CreateApp() *CreateAppBuilder {
 	return b
 }
 
-
 // AssignToken Set to true if you would like to assign the app to the user token you used to create the application. The default is false.
 func (b *CreateAppBuilder) AssignToken(value bool) *CreateAppBuilder {
 	if b.err != nil {
@@ -734,7 +678,6 @@ func (b *CreateAppBuilder) AssignToken(value bool) *CreateAppBuilder {
 	b.params["assignToken"] = value
 	return b
 }
-
 
 // Description The description for the app. If this property is left out, the app description will be blank.
 func (b *CreateAppBuilder) Description(value string) *CreateAppBuilder {
@@ -745,7 +688,6 @@ func (b *CreateAppBuilder) Description(value string) *CreateAppBuilder {
 	return b
 }
 
-
 // Name The app name. You are allowed to create multiple apps with the same name, in the same realm, because they will have different dbid values. We urge you to be careful about doing this.
 func (b *CreateAppBuilder) Name(value string) *CreateAppBuilder {
 	if b.err != nil {
@@ -754,7 +696,6 @@ func (b *CreateAppBuilder) Name(value string) *CreateAppBuilder {
 	b.params["name"] = value
 	return b
 }
-
 
 // AllowClone Allow users who are not administrators to copy
 func (b *CreateAppBuilder) AllowClone(value bool) *CreateAppBuilder {
@@ -770,7 +711,6 @@ func (b *CreateAppBuilder) AllowClone(value bool) *CreateAppBuilder {
 	return b
 }
 
-
 // AllowExport Allow users who are not administrators to export data
 func (b *CreateAppBuilder) AllowExport(value bool) *CreateAppBuilder {
 	if b.err != nil {
@@ -784,7 +724,6 @@ func (b *CreateAppBuilder) AllowExport(value bool) *CreateAppBuilder {
 	b.params["securityProperties"] = nested
 	return b
 }
-
 
 // EnableAppTokens Require Application Tokens
 func (b *CreateAppBuilder) EnableAppTokens(value bool) *CreateAppBuilder {
@@ -800,7 +739,6 @@ func (b *CreateAppBuilder) EnableAppTokens(value bool) *CreateAppBuilder {
 	return b
 }
 
-
 // HideFromPublic Hide from public application searches
 func (b *CreateAppBuilder) HideFromPublic(value bool) *CreateAppBuilder {
 	if b.err != nil {
@@ -814,7 +752,6 @@ func (b *CreateAppBuilder) HideFromPublic(value bool) *CreateAppBuilder {
 	b.params["securityProperties"] = nested
 	return b
 }
-
 
 // MustBeRealmApproved Only "approved" users may access this application
 func (b *CreateAppBuilder) MustBeRealmApproved(value bool) *CreateAppBuilder {
@@ -830,7 +767,6 @@ func (b *CreateAppBuilder) MustBeRealmApproved(value bool) *CreateAppBuilder {
 	return b
 }
 
-
 // UseIPFilter Only users logging in from "approved" IP addresses may access this application
 func (b *CreateAppBuilder) UseIPFilter(value bool) *CreateAppBuilder {
 	if b.err != nil {
@@ -845,7 +781,6 @@ func (b *CreateAppBuilder) UseIPFilter(value bool) *CreateAppBuilder {
 	return b
 }
 
-
 // Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 func (b *CreateAppBuilder) Variables(values ...map[string]any) *CreateAppBuilder {
 	if b.err != nil {
@@ -854,8 +789,6 @@ func (b *CreateAppBuilder) Variables(values ...map[string]any) *CreateAppBuilder
 	b.params["variables"] = values
 	return b
 }
-
-
 
 // Run executes the createApp request and returns the response data directly.
 func (b *CreateAppBuilder) Run(ctx context.Context) (*CreateAppResult, error) {
@@ -895,8 +828,6 @@ func (b *CreateAppBuilder) Run(ctx context.Context) (*CreateAppResult, error) {
 	return &CreateAppResult{resp: resp}, nil
 }
 
-
-
 // CreateFieldBuilder provides a fluent API for the createField operation.
 // Create a field
 type CreateFieldBuilder struct {
@@ -928,7 +859,6 @@ func (c *Client) CreateField(table string) *CreateFieldBuilder {
 	return b
 }
 
-
 // AddToForms Whether the field you are adding should appear on forms. Defaults to false.
 func (b *CreateFieldBuilder) AddToForms(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -937,7 +867,6 @@ func (b *CreateFieldBuilder) AddToForms(value bool) *CreateFieldBuilder {
 	b.params["addToForms"] = value
 	return b
 }
-
 
 // AppearsByDefault Indicates if the field is marked as a default in reports. Defaults to true.
 func (b *CreateFieldBuilder) AppearsByDefault(value bool) *CreateFieldBuilder {
@@ -948,7 +877,6 @@ func (b *CreateFieldBuilder) AppearsByDefault(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // Audited Indicates if the field is being tracked as part of Quickbase Audit Logs. You can only set this property to "true" if the app has audit logs enabled. See Enable data change logs under [Quickbase Audit Logs](https://help.quickbase.com/docs/audit-logs). Defaults to false.
 func (b *CreateFieldBuilder) Audited(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -957,7 +885,6 @@ func (b *CreateFieldBuilder) Audited(value bool) *CreateFieldBuilder {
 	b.params["audited"] = value
 	return b
 }
-
 
 // Bold Indicates if the field is configured to display in bold in the product. Defaults to false.
 func (b *CreateFieldBuilder) Bold(value bool) *CreateFieldBuilder {
@@ -968,7 +895,6 @@ func (b *CreateFieldBuilder) Bold(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // FieldHelp The configured help text shown to users within the product.
 func (b *CreateFieldBuilder) FieldHelp(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -977,7 +903,6 @@ func (b *CreateFieldBuilder) FieldHelp(value string) *CreateFieldBuilder {
 	b.params["fieldHelp"] = value
 	return b
 }
-
 
 // FieldType The [field types](https://help.quickbase.com/docs/field-types), click on any of the field type links for more info.
 func (b *CreateFieldBuilder) FieldType(value string) *CreateFieldBuilder {
@@ -988,7 +913,6 @@ func (b *CreateFieldBuilder) FieldType(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // FindEnabled Indicates if the field is marked as searchable. Defaults to true.
 func (b *CreateFieldBuilder) FindEnabled(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -997,7 +921,6 @@ func (b *CreateFieldBuilder) FindEnabled(value bool) *CreateFieldBuilder {
 	b.params["findEnabled"] = value
 	return b
 }
-
 
 // Label The label (name) of the field.
 func (b *CreateFieldBuilder) Label(value string) *CreateFieldBuilder {
@@ -1008,7 +931,6 @@ func (b *CreateFieldBuilder) Label(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // NoWrap Indicates if the field is configured to not wrap when displayed in the product. Defaults to false.
 func (b *CreateFieldBuilder) NoWrap(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1018,7 +940,6 @@ func (b *CreateFieldBuilder) NoWrap(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // Permissions Field Permissions for different roles.
 func (b *CreateFieldBuilder) Permissions(values ...map[string]any) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1027,7 +948,6 @@ func (b *CreateFieldBuilder) Permissions(values ...map[string]any) *CreateFieldB
 	b.params["permissions"] = values
 	return b
 }
-
 
 // Abbreviate Don't show the URL protocol when showing the URL.
 func (b *CreateFieldBuilder) Abbreviate(value bool) *CreateFieldBuilder {
@@ -1043,7 +963,6 @@ func (b *CreateFieldBuilder) Abbreviate(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // AllowMentions If someone can @mention users in the rich text field to generate an email notification.
 func (b *CreateFieldBuilder) AllowMentions(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1057,7 +976,6 @@ func (b *CreateFieldBuilder) AllowMentions(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // AllowNewChoices Indicates if users can add new choices to a selection list.
 func (b *CreateFieldBuilder) AllowNewChoices(value bool) *CreateFieldBuilder {
@@ -1073,7 +991,6 @@ func (b *CreateFieldBuilder) AllowNewChoices(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // AppearsAs The link text, if empty, the url will be used as link text.
 func (b *CreateFieldBuilder) AppearsAs(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1087,7 +1004,6 @@ func (b *CreateFieldBuilder) AppearsAs(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // AppendOnly Whether this field is append only.
 func (b *CreateFieldBuilder) AppendOnly(value bool) *CreateFieldBuilder {
@@ -1103,7 +1019,6 @@ func (b *CreateFieldBuilder) AppendOnly(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // AutoSave Whether the link field will auto save.
 func (b *CreateFieldBuilder) AutoSave(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1117,7 +1032,6 @@ func (b *CreateFieldBuilder) AutoSave(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
 func (b *CreateFieldBuilder) BlankIsZero(value bool) *CreateFieldBuilder {
@@ -1133,7 +1047,6 @@ func (b *CreateFieldBuilder) BlankIsZero(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // CarryChoices Whether the field should carry its multiple choice fields when copied.
 func (b *CreateFieldBuilder) CarryChoices(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1147,7 +1060,6 @@ func (b *CreateFieldBuilder) CarryChoices(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
 func (b *CreateFieldBuilder) Choices(value []string) *CreateFieldBuilder {
@@ -1163,7 +1075,6 @@ func (b *CreateFieldBuilder) Choices(value []string) *CreateFieldBuilder {
 	return b
 }
 
-
 // CommaStart The number of digits before commas display in the product, when applicable.
 func (b *CreateFieldBuilder) CommaStart(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1177,7 +1088,6 @@ func (b *CreateFieldBuilder) CommaStart(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Comments The comments entered on the field properties by an administrator.
 func (b *CreateFieldBuilder) Comments(value string) *CreateFieldBuilder {
@@ -1193,7 +1103,6 @@ func (b *CreateFieldBuilder) Comments(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // CompositeFields An array of the fields that make up a composite field (e.g., address).
 func (b *CreateFieldBuilder) CompositeFields(value []any) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1207,7 +1116,6 @@ func (b *CreateFieldBuilder) CompositeFields(value []any) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // CoverText An alternate user friendly text that can be used to display a link in the browser.
 func (b *CreateFieldBuilder) CoverText(value string) *CreateFieldBuilder {
@@ -1223,7 +1131,6 @@ func (b *CreateFieldBuilder) CoverText(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // CurrencyFormat The currency format used when displaying field values within the product.
 func (b *CreateFieldBuilder) CurrencyFormat(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1237,7 +1144,6 @@ func (b *CreateFieldBuilder) CurrencyFormat(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // CurrencySymbol The current symbol used when displaying field values within the product.
 func (b *CreateFieldBuilder) CurrencySymbol(value string) *CreateFieldBuilder {
@@ -1253,7 +1159,6 @@ func (b *CreateFieldBuilder) CurrencySymbol(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // DecimalPlaces The number of decimal places displayed in the product for this field.
 func (b *CreateFieldBuilder) DecimalPlaces(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1267,7 +1172,6 @@ func (b *CreateFieldBuilder) DecimalPlaces(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
 func (b *CreateFieldBuilder) DefaultCountryCode(value string) *CreateFieldBuilder {
@@ -1283,7 +1187,6 @@ func (b *CreateFieldBuilder) DefaultCountryCode(value string) *CreateFieldBuilde
 	return b
 }
 
-
 // DefaultDomain Default email domain.
 func (b *CreateFieldBuilder) DefaultDomain(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1297,7 +1200,6 @@ func (b *CreateFieldBuilder) DefaultDomain(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultKind The user default type.
 func (b *CreateFieldBuilder) DefaultKind(value string) *CreateFieldBuilder {
@@ -1313,7 +1215,6 @@ func (b *CreateFieldBuilder) DefaultKind(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // DefaultToday Indicates if the field value is defaulted today for new records.
 func (b *CreateFieldBuilder) DefaultToday(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1327,7 +1228,6 @@ func (b *CreateFieldBuilder) DefaultToday(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultValue The default value configured for a field when a new record is added.
 func (b *CreateFieldBuilder) DefaultValue(value string) *CreateFieldBuilder {
@@ -1343,7 +1243,6 @@ func (b *CreateFieldBuilder) DefaultValue(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // DefaultValueLuid Default user id value.
 func (b *CreateFieldBuilder) DefaultValueLuid(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1357,7 +1256,6 @@ func (b *CreateFieldBuilder) DefaultValueLuid(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
 func (b *CreateFieldBuilder) DisplayAsLink(value bool) *CreateFieldBuilder {
@@ -1373,7 +1271,6 @@ func (b *CreateFieldBuilder) DisplayAsLink(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
 func (b *CreateFieldBuilder) DisplayCheckboxAsText(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1387,7 +1284,6 @@ func (b *CreateFieldBuilder) DisplayCheckboxAsText(value bool) *CreateFieldBuild
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayDayOfWeek Indicates whether to display the day of the week within the product.
 func (b *CreateFieldBuilder) DisplayDayOfWeek(value bool) *CreateFieldBuilder {
@@ -1403,7 +1299,6 @@ func (b *CreateFieldBuilder) DisplayDayOfWeek(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // DisplayEmail How the email is displayed.
 func (b *CreateFieldBuilder) DisplayEmail(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1417,7 +1312,6 @@ func (b *CreateFieldBuilder) DisplayEmail(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayMonth How to display months.
 func (b *CreateFieldBuilder) DisplayMonth(value string) *CreateFieldBuilder {
@@ -1433,7 +1327,6 @@ func (b *CreateFieldBuilder) DisplayMonth(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // DisplayRelative Whether to display time as relative.
 func (b *CreateFieldBuilder) DisplayRelative(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1447,7 +1340,6 @@ func (b *CreateFieldBuilder) DisplayRelative(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayTime Indicates whether to display the time, in addition to the date.
 func (b *CreateFieldBuilder) DisplayTime(value bool) *CreateFieldBuilder {
@@ -1463,7 +1355,6 @@ func (b *CreateFieldBuilder) DisplayTime(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // DisplayTimezone Indicates whether to display the timezone within the product.
 func (b *CreateFieldBuilder) DisplayTimezone(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1477,7 +1368,6 @@ func (b *CreateFieldBuilder) DisplayTimezone(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayUser The configured option for how users display within the product.
 func (b *CreateFieldBuilder) DisplayUser(value string) *CreateFieldBuilder {
@@ -1493,7 +1383,6 @@ func (b *CreateFieldBuilder) DisplayUser(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // DoesAverage Whether this field averages in reports within the product.
 func (b *CreateFieldBuilder) DoesAverage(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1507,7 +1396,6 @@ func (b *CreateFieldBuilder) DoesAverage(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DoesTotal Whether this field totals in reports within the product.
 func (b *CreateFieldBuilder) DoesTotal(value bool) *CreateFieldBuilder {
@@ -1523,7 +1411,6 @@ func (b *CreateFieldBuilder) DoesTotal(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // Exact Whether an exact match is required for a report link.
 func (b *CreateFieldBuilder) Exact(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1537,7 +1424,6 @@ func (b *CreateFieldBuilder) Exact(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Format The format to display time.
 func (b *CreateFieldBuilder) Format(value int) *CreateFieldBuilder {
@@ -1553,7 +1439,6 @@ func (b *CreateFieldBuilder) Format(value int) *CreateFieldBuilder {
 	return b
 }
 
-
 // Formula The formula of the field as configured in Quickbase.
 func (b *CreateFieldBuilder) Formula(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1567,7 +1452,6 @@ func (b *CreateFieldBuilder) Formula(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // HasExtension Whether this field has a phone extension.
 func (b *CreateFieldBuilder) HasExtension(value bool) *CreateFieldBuilder {
@@ -1583,7 +1467,6 @@ func (b *CreateFieldBuilder) HasExtension(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // Hours24 Indicates whether or not to display time in the 24-hour format within the product.
 func (b *CreateFieldBuilder) Hours24(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1597,7 +1480,6 @@ func (b *CreateFieldBuilder) Hours24(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // LinkText The configured text value that replaces the URL that users see within the product.
 func (b *CreateFieldBuilder) LinkText(value string) *CreateFieldBuilder {
@@ -1613,7 +1495,6 @@ func (b *CreateFieldBuilder) LinkText(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
 func (b *CreateFieldBuilder) MaxLength(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1627,7 +1508,6 @@ func (b *CreateFieldBuilder) MaxLength(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // MaxVersions The maximum number of versions configured for a file attachment.
 func (b *CreateFieldBuilder) MaxVersions(value int) *CreateFieldBuilder {
@@ -1643,7 +1523,6 @@ func (b *CreateFieldBuilder) MaxVersions(value int) *CreateFieldBuilder {
 	return b
 }
 
-
 // NumLines The number of lines shown in Quickbase for this text field.
 func (b *CreateFieldBuilder) NumLines(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1657,7 +1536,6 @@ func (b *CreateFieldBuilder) NumLines(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
 func (b *CreateFieldBuilder) NumberFormat(value int) *CreateFieldBuilder {
@@ -1673,7 +1551,6 @@ func (b *CreateFieldBuilder) NumberFormat(value int) *CreateFieldBuilder {
 	return b
 }
 
-
 // OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
 func (b *CreateFieldBuilder) OpenTargetIn(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1687,7 +1564,6 @@ func (b *CreateFieldBuilder) OpenTargetIn(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // ParentFieldId The id of the parent composite field, when applicable.
 func (b *CreateFieldBuilder) ParentFieldId(value int) *CreateFieldBuilder {
@@ -1703,7 +1579,6 @@ func (b *CreateFieldBuilder) ParentFieldId(value int) *CreateFieldBuilder {
 	return b
 }
 
-
 // PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
 func (b *CreateFieldBuilder) PostTempToken(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1717,7 +1592,6 @@ func (b *CreateFieldBuilder) PostTempToken(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
 func (b *CreateFieldBuilder) SeeVersions(value bool) *CreateFieldBuilder {
@@ -1733,7 +1607,6 @@ func (b *CreateFieldBuilder) SeeVersions(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // SnapFieldId The id of the field that is used to snapshot values from, when applicable.
 func (b *CreateFieldBuilder) SnapFieldId(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1747,7 +1620,6 @@ func (b *CreateFieldBuilder) SnapFieldId(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SortAlpha Whether to sort alphabetically, default sort is by record ID.
 func (b *CreateFieldBuilder) SortAlpha(value bool) *CreateFieldBuilder {
@@ -1763,7 +1635,6 @@ func (b *CreateFieldBuilder) SortAlpha(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
 func (b *CreateFieldBuilder) SortAsGiven(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1777,7 +1648,6 @@ func (b *CreateFieldBuilder) SortAsGiven(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SourceFieldId The id of the source field.
 func (b *CreateFieldBuilder) SourceFieldId(value int) *CreateFieldBuilder {
@@ -1793,7 +1663,6 @@ func (b *CreateFieldBuilder) SourceFieldId(value int) *CreateFieldBuilder {
 	return b
 }
 
-
 // TargetFieldId The id of the target field.
 func (b *CreateFieldBuilder) TargetFieldId(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1807,7 +1676,6 @@ func (b *CreateFieldBuilder) TargetFieldId(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // TargetTableId The id of the target table.
 func (b *CreateFieldBuilder) TargetTableId(value string) *CreateFieldBuilder {
@@ -1823,7 +1691,6 @@ func (b *CreateFieldBuilder) TargetTableId(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // TargetTableName The field's target table name.
 func (b *CreateFieldBuilder) TargetTableName(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1837,7 +1704,6 @@ func (b *CreateFieldBuilder) TargetTableName(value string) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Units The units label.
 func (b *CreateFieldBuilder) Units(value string) *CreateFieldBuilder {
@@ -1853,7 +1719,6 @@ func (b *CreateFieldBuilder) Units(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // UseI18NFormat Whether phone numbers should be in E.164 standard international format
 func (b *CreateFieldBuilder) UseI18NFormat(value bool) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1867,7 +1732,6 @@ func (b *CreateFieldBuilder) UseI18NFormat(value bool) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
 func (b *CreateFieldBuilder) UseNewWindow(value bool) *CreateFieldBuilder {
@@ -1883,7 +1747,6 @@ func (b *CreateFieldBuilder) UseNewWindow(value bool) *CreateFieldBuilder {
 	return b
 }
 
-
 // VersionMode Version modes for files. Keep all versions vs keep last version.
 func (b *CreateFieldBuilder) VersionMode(value string) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1898,7 +1761,6 @@ func (b *CreateFieldBuilder) VersionMode(value string) *CreateFieldBuilder {
 	return b
 }
 
-
 // Width The field's html input width in the product.
 func (b *CreateFieldBuilder) Width(value int) *CreateFieldBuilder {
 	if b.err != nil {
@@ -1912,8 +1774,6 @@ func (b *CreateFieldBuilder) Width(value int) *CreateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
-
 
 // Run executes the createField request and returns the response data directly.
 func (b *CreateFieldBuilder) Run(ctx context.Context) (*CreateFieldResult, error) {
@@ -1964,8 +1824,6 @@ func (b *CreateFieldBuilder) Run(ctx context.Context) (*CreateFieldResult, error
 	return &CreateFieldResult{resp: resp}, nil
 }
 
-
-
 // CreateRelationshipBuilder provides a fluent API for the createRelationship operation.
 // Create a relationship
 type CreateRelationshipBuilder struct {
@@ -1997,7 +1855,6 @@ func (c *Client) CreateRelationship(table string) *CreateRelationshipBuilder {
 	return b
 }
 
-
 // Label The label for the foreign key field.
 func (b *CreateRelationshipBuilder) Label(value string) *CreateRelationshipBuilder {
 	if b.err != nil {
@@ -2012,7 +1869,6 @@ func (b *CreateRelationshipBuilder) Label(value string) *CreateRelationshipBuild
 	return b
 }
 
-
 // LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 func (b *CreateRelationshipBuilder) LookupFieldIds(values ...int) *CreateRelationshipBuilder {
 	if b.err != nil {
@@ -2021,7 +1877,6 @@ func (b *CreateRelationshipBuilder) LookupFieldIds(values ...int) *CreateRelatio
 	b.params["lookupFieldIds"] = values
 	return b
 }
-
 
 // ParentTableId The parent table id for the relationship.
 func (b *CreateRelationshipBuilder) ParentTableId(value string) *CreateRelationshipBuilder {
@@ -2032,7 +1887,6 @@ func (b *CreateRelationshipBuilder) ParentTableId(value string) *CreateRelations
 	return b
 }
 
-
 // SummaryFields An array of objects, each representing a configuration of one field from the child table, that will become summary fields on the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
 func (b *CreateRelationshipBuilder) SummaryFields(values ...map[string]any) *CreateRelationshipBuilder {
 	if b.err != nil {
@@ -2041,8 +1895,6 @@ func (b *CreateRelationshipBuilder) SummaryFields(values ...map[string]any) *Cre
 	b.params["summaryFields"] = values
 	return b
 }
-
-
 
 // Run executes the createRelationship request and returns the response data directly.
 func (b *CreateRelationshipBuilder) Run(ctx context.Context) (*CreateRelationshipResult, error) {
@@ -2076,8 +1928,6 @@ func (b *CreateRelationshipBuilder) Run(ctx context.Context) (*CreateRelationshi
 	return &CreateRelationshipResult{resp: resp}, nil
 }
 
-
-
 // CreateSolutionBuilder provides a fluent API for the createSolution operation.
 // Create a solution
 type CreateSolutionBuilder struct {
@@ -2103,8 +1953,6 @@ func (c *Client) CreateSolution() *CreateSolutionBuilder {
 	return b
 }
 
-
-
 // Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
 func (b *CreateSolutionBuilder) Alias(value string) *CreateSolutionBuilder {
 	if b.err != nil {
@@ -2113,7 +1961,6 @@ func (b *CreateSolutionBuilder) Alias(value string) *CreateSolutionBuilder {
 	b.qpAlias = &value
 	return b
 }
-
 
 // Run executes the createSolution request and returns the response data directly.
 func (b *CreateSolutionBuilder) Run(ctx context.Context) (*generated.CreateSolutionResponse, error) {
@@ -2135,19 +1982,17 @@ func (b *CreateSolutionBuilder) Run(ctx context.Context) (*generated.CreateSolut
 	return resp, nil
 }
 
-
-
 // CreateSolutionFromRecordBuilder provides a fluent API for the createSolutionFromRecord operation.
 // Create solution from record
 type CreateSolutionFromRecordBuilder struct {
-	client  *Client
-	table   string
-	tableID string
-	qpAlias *string
-	qpFieldId *int
+	client     *Client
+	table      string
+	tableID    string
+	qpAlias    *string
+	qpFieldId  *int
 	qpRecordId *int
-	params  map[string]any
-	err     error
+	params     map[string]any
+	err        error
 }
 
 // CreateSolutionFromRecord starts building a createSolutionFromRecord request.
@@ -2171,8 +2016,6 @@ func (c *Client) CreateSolutionFromRecord(table string) *CreateSolutionFromRecor
 	return b
 }
 
-
-
 // Alias An optional alias to identify the solution. This can be used instead of the UUID in subsequent API calls.
 func (b *CreateSolutionFromRecordBuilder) Alias(value string) *CreateSolutionFromRecordBuilder {
 	if b.err != nil {
@@ -2181,7 +2024,6 @@ func (b *CreateSolutionFromRecordBuilder) Alias(value string) *CreateSolutionFro
 	b.qpAlias = &value
 	return b
 }
-
 
 // FieldId The unique identifier (fid) of the field. It needs to be a file attachment field.
 func (b *CreateSolutionFromRecordBuilder) FieldId(value int) *CreateSolutionFromRecordBuilder {
@@ -2192,7 +2034,6 @@ func (b *CreateSolutionFromRecordBuilder) FieldId(value int) *CreateSolutionFrom
 	return b
 }
 
-
 // RecordId The unique identifier of the record.
 func (b *CreateSolutionFromRecordBuilder) RecordId(value int) *CreateSolutionFromRecordBuilder {
 	if b.err != nil {
@@ -2201,7 +2042,6 @@ func (b *CreateSolutionFromRecordBuilder) RecordId(value int) *CreateSolutionFro
 	b.qpRecordId = &value
 	return b
 }
-
 
 // Run executes the createSolutionFromRecord request and returns the response data directly.
 func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.CreateSolutionFromRecordResponse, error) {
@@ -2245,8 +2085,6 @@ func (b *CreateSolutionFromRecordBuilder) Run(ctx context.Context) (*generated.C
 	return resp, nil
 }
 
-
-
 // CreateTableBuilder provides a fluent API for the createTable operation.
 // Create a table
 type CreateTableBuilder struct {
@@ -2265,7 +2103,6 @@ func (c *Client) CreateTable() *CreateTableBuilder {
 	return b
 }
 
-
 // Description The description for the table. If this value is not passed the default value is blank.
 func (b *CreateTableBuilder) Description(value string) *CreateTableBuilder {
 	if b.err != nil {
@@ -2274,7 +2111,6 @@ func (b *CreateTableBuilder) Description(value string) *CreateTableBuilder {
 	b.params["description"] = value
 	return b
 }
-
 
 // Name The name for the table.
 func (b *CreateTableBuilder) Name(value string) *CreateTableBuilder {
@@ -2285,7 +2121,6 @@ func (b *CreateTableBuilder) Name(value string) *CreateTableBuilder {
 	return b
 }
 
-
 // PluralRecordName The plural noun for records in the table. If this value is not passed the default value is 'Records'.
 func (b *CreateTableBuilder) PluralRecordName(value string) *CreateTableBuilder {
 	if b.err != nil {
@@ -2294,7 +2129,6 @@ func (b *CreateTableBuilder) PluralRecordName(value string) *CreateTableBuilder 
 	b.params["pluralRecordName"] = value
 	return b
 }
-
 
 // SingleRecordName The singular noun for records in the table. If this value is not passed the default value is 'Record'.
 func (b *CreateTableBuilder) SingleRecordName(value string) *CreateTableBuilder {
@@ -2305,8 +2139,6 @@ func (b *CreateTableBuilder) SingleRecordName(value string) *CreateTableBuilder 
 	return b
 }
 
-
-
 // AppId The unique identifier of an app
 func (b *CreateTableBuilder) AppId(value string) *CreateTableBuilder {
 	if b.err != nil {
@@ -2315,7 +2147,6 @@ func (b *CreateTableBuilder) AppId(value string) *CreateTableBuilder {
 	b.qpAppId = &value
 	return b
 }
-
 
 // Run executes the createTable request and returns the response data directly.
 func (b *CreateTableBuilder) Run(ctx context.Context) (*CreateTableResult, error) {
@@ -2367,14 +2198,12 @@ func (b *CreateTableBuilder) Run(ctx context.Context) (*CreateTableResult, error
 	return &CreateTableResult{resp: resp}, nil
 }
 
-
-
 // DeactivateUserTokenBuilder provides a fluent API for the deactivateUserToken operation.
 // Deactivate a user token
 type DeactivateUserTokenBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // DeactivateUserToken starts building a deactivateUserToken request.
@@ -2385,8 +2214,6 @@ func (c *Client) DeactivateUserToken() *DeactivateUserTokenBuilder {
 	}
 	return b
 }
-
-
 
 // Run executes the deactivateUserToken request and returns the response data directly.
 func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivateUserTokenResult, error) {
@@ -2403,15 +2230,13 @@ func (b *DeactivateUserTokenBuilder) Run(ctx context.Context) (*DeactivateUserTo
 	return &DeactivateUserTokenResult{resp: resp}, nil
 }
 
-
-
 // DeleteAppBuilder provides a fluent API for the deleteApp operation.
 // Delete an app
 type DeleteAppBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // DeleteApp starts building a deleteApp request.
@@ -2424,7 +2249,6 @@ func (c *Client) DeleteApp(appId string) *DeleteAppBuilder {
 	return b
 }
 
-
 // Name To confirm application deletion we ask for application name.
 func (b *DeleteAppBuilder) Name(value string) *DeleteAppBuilder {
 	if b.err != nil {
@@ -2433,8 +2257,6 @@ func (b *DeleteAppBuilder) Name(value string) *DeleteAppBuilder {
 	b.params["name"] = value
 	return b
 }
-
-
 
 // Run executes the deleteApp request and returns the response data directly.
 func (b *DeleteAppBuilder) Run(ctx context.Context) (*DeleteAppResult, error) {
@@ -2474,8 +2296,6 @@ func (b *DeleteAppBuilder) Run(ctx context.Context) (*DeleteAppResult, error) {
 	return &DeleteAppResult{resp: resp}, nil
 }
 
-
-
 // DeleteFieldsBuilder provides a fluent API for the deleteFields operation.
 // Delete field(s)
 type DeleteFieldsBuilder struct {
@@ -2507,7 +2327,6 @@ func (c *Client) DeleteFields(table string) *DeleteFieldsBuilder {
 	return b
 }
 
-
 // FieldIds List of field IDs to be deleted.
 func (b *DeleteFieldsBuilder) FieldIds(values ...int) *DeleteFieldsBuilder {
 	if b.err != nil {
@@ -2516,8 +2335,6 @@ func (b *DeleteFieldsBuilder) FieldIds(values ...int) *DeleteFieldsBuilder {
 	b.params["fieldIds"] = values
 	return b
 }
-
-
 
 // Run executes the deleteFields request and returns the response data directly.
 func (b *DeleteFieldsBuilder) Run(ctx context.Context) (*DeleteFieldsResult, error) {
@@ -2561,19 +2378,17 @@ func (b *DeleteFieldsBuilder) Run(ctx context.Context) (*DeleteFieldsResult, err
 	return &DeleteFieldsResult{resp: resp}, nil
 }
 
-
-
 // DeleteFileBuilder provides a fluent API for the deleteFile operation.
 // Delete file
 type DeleteFileBuilder struct {
-	client  *Client
-	table   string
-	tableID string
-	recordId int
-	fieldId int
+	client        *Client
+	table         string
+	tableID       string
+	recordId      int
+	fieldId       int
 	versionNumber int
-	params  map[string]any
-	err     error
+	params        map[string]any
+	err           error
 }
 
 // DeleteFile starts building a deleteFile request.
@@ -2600,8 +2415,6 @@ func (c *Client) DeleteFile(table string, recordId int, fieldId int, versionNumb
 	return b
 }
 
-
-
 // Run executes the deleteFile request and returns the response data directly.
 func (b *DeleteFileBuilder) Run(ctx context.Context) (*DeleteFileResult, error) {
 	if b.err != nil {
@@ -2616,8 +2429,6 @@ func (b *DeleteFileBuilder) Run(ctx context.Context) (*DeleteFileResult, error) 
 	}
 	return &DeleteFileResult{resp: resp}, nil
 }
-
-
 
 // DeleteRecordsBuilder provides a fluent API for the deleteRecords operation.
 // Delete record(s)
@@ -2650,7 +2461,6 @@ func (c *Client) DeleteRecords(table string) *DeleteRecordsBuilder {
 	return b
 }
 
-
 // Where The filter to delete records. To delete all records specify a filter that will include all records, for example {3.GT.0} where 3 is the ID of the Record ID field. Or supply a JSON array of Record IDs.
 func (b *DeleteRecordsBuilder) Where(value any) *DeleteRecordsBuilder {
 	if b.err != nil {
@@ -2659,8 +2469,6 @@ func (b *DeleteRecordsBuilder) Where(value any) *DeleteRecordsBuilder {
 	b.params["where"] = value
 	return b
 }
-
-
 
 // Run executes the deleteRecords request and returns the response data directly.
 func (b *DeleteRecordsBuilder) Run(ctx context.Context) (*DeleteRecordsResult, error) {
@@ -2701,17 +2509,15 @@ func (b *DeleteRecordsBuilder) Run(ctx context.Context) (*DeleteRecordsResult, e
 	return &DeleteRecordsResult{resp: resp}, nil
 }
 
-
-
 // DeleteRelationshipBuilder provides a fluent API for the deleteRelationship operation.
 // Delete a relationship
 type DeleteRelationshipBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client         *Client
+	table          string
+	tableID        string
 	relationshipId int64
-	params  map[string]any
-	err     error
+	params         map[string]any
+	err            error
 }
 
 // DeleteRelationship starts building a deleteRelationship request.
@@ -2736,8 +2542,6 @@ func (c *Client) DeleteRelationship(table string, relationshipId int64) *DeleteR
 	return b
 }
 
-
-
 // Run executes the deleteRelationship request and returns the response data directly.
 func (b *DeleteRelationshipBuilder) Run(ctx context.Context) (*DeleteRelationshipResult, error) {
 	if b.err != nil {
@@ -2752,8 +2556,6 @@ func (b *DeleteRelationshipBuilder) Run(ctx context.Context) (*DeleteRelationshi
 	}
 	return &DeleteRelationshipResult{resp: resp}, nil
 }
-
-
 
 // DeleteTableBuilder provides a fluent API for the deleteTable operation.
 // Delete a table
@@ -2787,8 +2589,6 @@ func (c *Client) DeleteTable(table string) *DeleteTableBuilder {
 	return b
 }
 
-
-
 // AppId The unique identifier of an app
 func (b *DeleteTableBuilder) AppId(value string) *DeleteTableBuilder {
 	if b.err != nil {
@@ -2797,7 +2597,6 @@ func (b *DeleteTableBuilder) AppId(value string) *DeleteTableBuilder {
 	b.qpAppId = &value
 	return b
 }
-
 
 // Run executes the deleteTable request and returns the response data directly.
 func (b *DeleteTableBuilder) Run(ctx context.Context) (*DeleteTableResult, error) {
@@ -2826,14 +2625,12 @@ func (b *DeleteTableBuilder) Run(ctx context.Context) (*DeleteTableResult, error
 	return &DeleteTableResult{resp: resp}, nil
 }
 
-
-
 // DeleteUserTokenBuilder provides a fluent API for the deleteUserToken operation.
 // Delete a user token
 type DeleteUserTokenBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // DeleteUserToken starts building a deleteUserToken request.
@@ -2844,8 +2641,6 @@ func (c *Client) DeleteUserToken() *DeleteUserTokenBuilder {
 	}
 	return b
 }
-
-
 
 // Run executes the deleteUserToken request and returns the response data directly.
 func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResult, error) {
@@ -2862,15 +2657,13 @@ func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResul
 	return &DeleteUserTokenResult{resp: resp}, nil
 }
 
-
-
 // DenyUsersBuilder provides a fluent API for the denyUsers operation.
 // Deny users
 type DenyUsersBuilder struct {
-	client  *Client
+	client      *Client
 	qpAccountId *int64
-	params  map[string]any
-	err     error
+	params      map[string]any
+	err         error
 }
 
 // DenyUsers starts building a denyUsers request.
@@ -2882,8 +2675,6 @@ func (c *Client) DenyUsers() *DenyUsersBuilder {
 	return b
 }
 
-
-
 // AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
 func (b *DenyUsersBuilder) AccountId(value int64) *DenyUsersBuilder {
 	if b.err != nil {
@@ -2892,7 +2683,6 @@ func (b *DenyUsersBuilder) AccountId(value int64) *DenyUsersBuilder {
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the denyUsers request and returns the response data directly.
 func (b *DenyUsersBuilder) Run(ctx context.Context) (*DenyUsersResult, error) {
@@ -2930,16 +2720,14 @@ func (b *DenyUsersBuilder) Run(ctx context.Context) (*DenyUsersResult, error) {
 	return &DenyUsersResult{resp: resp}, nil
 }
 
-
-
 // DenyUsersAndGroupsBuilder provides a fluent API for the denyUsersAndGroups operation.
 // Deny and remove users from groups
 type DenyUsersAndGroupsBuilder struct {
-	client  *Client
+	client                 *Client
 	shouldDeleteFromGroups bool
-	qpAccountId *int64
-	params  map[string]any
-	err     error
+	qpAccountId            *int64
+	params                 map[string]any
+	err                    error
 }
 
 // DenyUsersAndGroups starts building a denyUsersAndGroups request.
@@ -2952,8 +2740,6 @@ func (c *Client) DenyUsersAndGroups(shouldDeleteFromGroups bool) *DenyUsersAndGr
 	return b
 }
 
-
-
 // AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
 func (b *DenyUsersAndGroupsBuilder) AccountId(value int64) *DenyUsersAndGroupsBuilder {
 	if b.err != nil {
@@ -2962,7 +2748,6 @@ func (b *DenyUsersAndGroupsBuilder) AccountId(value int64) *DenyUsersAndGroupsBu
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the denyUsersAndGroups request and returns the response data directly.
 func (b *DenyUsersAndGroupsBuilder) Run(ctx context.Context) (*DenyUsersAndGroupsResult, error) {
@@ -3000,19 +2785,17 @@ func (b *DenyUsersAndGroupsBuilder) Run(ctx context.Context) (*DenyUsersAndGroup
 	return &DenyUsersAndGroupsResult{resp: resp}, nil
 }
 
-
-
 // DownloadFileBuilder provides a fluent API for the downloadFile operation.
 // Download file
 type DownloadFileBuilder struct {
-	client  *Client
-	table   string
-	tableID string
-	recordId int
-	fieldId int
+	client        *Client
+	table         string
+	tableID       string
+	recordId      int
+	fieldId       int
 	versionNumber int
-	params  map[string]any
-	err     error
+	params        map[string]any
+	err           error
 }
 
 // DownloadFile starts building a downloadFile request.
@@ -3039,8 +2822,6 @@ func (c *Client) DownloadFile(table string, recordId int, fieldId int, versionNu
 	return b
 }
 
-
-
 // Run executes the downloadFile request and returns the response data directly.
 func (b *DownloadFileBuilder) Run(ctx context.Context) (*generated.DownloadFileResponse, error) {
 	if b.err != nil {
@@ -3056,14 +2837,12 @@ func (b *DownloadFileBuilder) Run(ctx context.Context) (*generated.DownloadFileR
 	return resp, nil
 }
 
-
-
 // ExchangeSsoTokenBuilder provides a fluent API for the exchangeSsoToken operation.
 // Exchange an SSO token
 type ExchangeSsoTokenBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // ExchangeSsoToken starts building a exchangeSsoToken request.
@@ -3075,7 +2854,6 @@ func (c *Client) ExchangeSsoToken() *ExchangeSsoTokenBuilder {
 	return b
 }
 
-
 // Grant_type The value `urn:ietf:params:oauth:grant-type:token-exchange` indicates that a token exchange is being performed.
 func (b *ExchangeSsoTokenBuilder) Grant_type(value string) *ExchangeSsoTokenBuilder {
 	if b.err != nil {
@@ -3084,7 +2862,6 @@ func (b *ExchangeSsoTokenBuilder) Grant_type(value string) *ExchangeSsoTokenBuil
 	b.params["grant_type"] = value
 	return b
 }
-
 
 // Requested_token_type An identifier for the type of the requested security token. For the RESTful API, use `urn:quickbase:params:oauth:token-type:temp_token`. For the XML or SCIM APIs use `urn:quickbase:params:oauth:token-type:temp_ticket`.
 func (b *ExchangeSsoTokenBuilder) Requested_token_type(value string) *ExchangeSsoTokenBuilder {
@@ -3095,7 +2872,6 @@ func (b *ExchangeSsoTokenBuilder) Requested_token_type(value string) *ExchangeSs
 	return b
 }
 
-
 // Subject_token A security token that represents the identity of the party on behalf of whom the request is being made. For SAML 2.0, the value should be a base64url-encoded SAML 2.0 assertion.
 func (b *ExchangeSsoTokenBuilder) Subject_token(value string) *ExchangeSsoTokenBuilder {
 	if b.err != nil {
@@ -3105,7 +2881,6 @@ func (b *ExchangeSsoTokenBuilder) Subject_token(value string) *ExchangeSsoTokenB
 	return b
 }
 
-
 // Subject_token_type An identifier that indicates the type of the security token in the `subject_token` parameter.
 func (b *ExchangeSsoTokenBuilder) Subject_token_type(value string) *ExchangeSsoTokenBuilder {
 	if b.err != nil {
@@ -3114,8 +2889,6 @@ func (b *ExchangeSsoTokenBuilder) Subject_token_type(value string) *ExchangeSsoT
 	b.params["subject_token_type"] = value
 	return b
 }
-
-
 
 // Run executes the exchangeSsoToken request and returns the response data directly.
 func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenResult, error) {
@@ -3176,15 +2949,13 @@ func (b *ExchangeSsoTokenBuilder) Run(ctx context.Context) (*ExchangeSsoTokenRes
 	return &ExchangeSsoTokenResult{resp: resp}, nil
 }
 
-
-
 // ExportSolutionBuilder provides a fluent API for the exportSolution operation.
 // Export a solution
 type ExportSolutionBuilder struct {
-	client  *Client
+	client     *Client
 	solutionId string
-	params  map[string]any
-	err     error
+	params     map[string]any
+	err        error
 }
 
 // ExportSolution starts building a exportSolution request.
@@ -3196,8 +2967,6 @@ func (c *Client) ExportSolution(solutionId string) *ExportSolutionBuilder {
 	b.solutionId = solutionId
 	return b
 }
-
-
 
 // Run executes the exportSolution request and returns the response data directly.
 func (b *ExportSolutionBuilder) Run(ctx context.Context) (*generated.ExportSolutionResponse, error) {
@@ -3216,18 +2985,16 @@ func (b *ExportSolutionBuilder) Run(ctx context.Context) (*generated.ExportSolut
 	return resp, nil
 }
 
-
-
 // ExportSolutionToRecordBuilder provides a fluent API for the exportSolutionToRecord operation.
 // Export solution to record
 type ExportSolutionToRecordBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client     *Client
+	table      string
+	tableID    string
 	solutionId string
-	qpFieldId *int
-	params  map[string]any
-	err     error
+	qpFieldId  *int
+	params     map[string]any
+	err        error
 }
 
 // ExportSolutionToRecord starts building a exportSolutionToRecord request.
@@ -3252,8 +3019,6 @@ func (c *Client) ExportSolutionToRecord(solutionId string, table string) *Export
 	return b
 }
 
-
-
 // FieldId The unique identifier (fid) of the field. It needs to be a file attachment field.
 func (b *ExportSolutionToRecordBuilder) FieldId(value int) *ExportSolutionToRecordBuilder {
 	if b.err != nil {
@@ -3262,7 +3027,6 @@ func (b *ExportSolutionToRecordBuilder) FieldId(value int) *ExportSolutionToReco
 	b.qpFieldId = &value
 	return b
 }
-
 
 // Run executes the exportSolutionToRecord request and returns the response data directly.
 func (b *ExportSolutionToRecordBuilder) Run(ctx context.Context) (*generated.ExportSolutionToRecordResponse, error) {
@@ -3293,25 +3057,23 @@ func (b *ExportSolutionToRecordBuilder) Run(ctx context.Context) (*generated.Exp
 	return resp, nil
 }
 
-
-
 // GenerateDocumentBuilder provides a fluent API for the generateDocument operation.
 // Generate a document
 type GenerateDocumentBuilder struct {
-	client  *Client
-	table   string
-	tableID string
-	templateId int
-	qpRecordId *int
-	qpFilename *string
-	qpFormat *generated.GenerateDocumentParamsFormat
-	qpMargin *string
-	qpUnit *generated.GenerateDocumentParamsUnit
-	qpPageSize *generated.GenerateDocumentParamsPageSize
+	client        *Client
+	table         string
+	tableID       string
+	templateId    int
+	qpRecordId    *int
+	qpFilename    *string
+	qpFormat      *generated.GenerateDocumentParamsFormat
+	qpMargin      *string
+	qpUnit        *generated.GenerateDocumentParamsUnit
+	qpPageSize    *generated.GenerateDocumentParamsPageSize
 	qpOrientation *generated.GenerateDocumentParamsOrientation
-	qpRealm *string
-	params  map[string]any
-	err     error
+	qpRealm       *string
+	params        map[string]any
+	err           error
 }
 
 // GenerateDocument starts building a generateDocument request.
@@ -3336,8 +3098,6 @@ func (c *Client) GenerateDocument(templateId int, table string) *GenerateDocumen
 	return b
 }
 
-
-
 // RecordId The ID of the record
 func (b *GenerateDocumentBuilder) RecordId(value int) *GenerateDocumentBuilder {
 	if b.err != nil {
@@ -3346,7 +3106,6 @@ func (b *GenerateDocumentBuilder) RecordId(value int) *GenerateDocumentBuilder {
 	b.qpRecordId = &value
 	return b
 }
-
 
 // Filename File name for the downloaded file
 func (b *GenerateDocumentBuilder) Filename(value string) *GenerateDocumentBuilder {
@@ -3357,7 +3116,6 @@ func (b *GenerateDocumentBuilder) Filename(value string) *GenerateDocumentBuilde
 	return b
 }
 
-
 // Format The format of the file that is returned. Default is "pdf".
 func (b *GenerateDocumentBuilder) Format(value generated.GenerateDocumentParamsFormat) *GenerateDocumentBuilder {
 	if b.err != nil {
@@ -3366,7 +3124,6 @@ func (b *GenerateDocumentBuilder) Format(value generated.GenerateDocumentParamsF
 	b.qpFormat = &value
 	return b
 }
-
 
 // Margin Margin formatted as top right bottom left, separated by spaces. Add to override the value set in the template builder.
 func (b *GenerateDocumentBuilder) Margin(value string) *GenerateDocumentBuilder {
@@ -3377,7 +3134,6 @@ func (b *GenerateDocumentBuilder) Margin(value string) *GenerateDocumentBuilder 
 	return b
 }
 
-
 // Unit Unit of measurement for the margin. Default is "in". Add to override the value set in the template builder.
 func (b *GenerateDocumentBuilder) Unit(value generated.GenerateDocumentParamsUnit) *GenerateDocumentBuilder {
 	if b.err != nil {
@@ -3386,7 +3142,6 @@ func (b *GenerateDocumentBuilder) Unit(value generated.GenerateDocumentParamsUni
 	b.qpUnit = &value
 	return b
 }
-
 
 // PageSize Page size. Default is "A4". Add to override the value set in the template builder.
 func (b *GenerateDocumentBuilder) PageSize(value generated.GenerateDocumentParamsPageSize) *GenerateDocumentBuilder {
@@ -3397,7 +3152,6 @@ func (b *GenerateDocumentBuilder) PageSize(value generated.GenerateDocumentParam
 	return b
 }
 
-
 // Orientation Page orientation. Default is "portrait". Add to override the value set in the template builder.
 func (b *GenerateDocumentBuilder) Orientation(value generated.GenerateDocumentParamsOrientation) *GenerateDocumentBuilder {
 	if b.err != nil {
@@ -3407,7 +3161,6 @@ func (b *GenerateDocumentBuilder) Orientation(value generated.GenerateDocumentPa
 	return b
 }
 
-
 // Realm Your Quickbase domain, for example demo.quickbase.com
 func (b *GenerateDocumentBuilder) Realm(value string) *GenerateDocumentBuilder {
 	if b.err != nil {
@@ -3416,7 +3169,6 @@ func (b *GenerateDocumentBuilder) Realm(value string) *GenerateDocumentBuilder {
 	b.qpRealm = &value
 	return b
 }
-
 
 // Run executes the generateDocument request and returns the response data directly.
 func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentResult, error) {
@@ -3461,15 +3213,13 @@ func (b *GenerateDocumentBuilder) Run(ctx context.Context) (*GenerateDocumentRes
 	return &GenerateDocumentResult{resp: resp}, nil
 }
 
-
-
 // GetAppBuilder provides a fluent API for the getApp operation.
 // Get an app
 type GetAppBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // GetApp starts building a getApp request.
@@ -3481,8 +3231,6 @@ func (c *Client) GetApp(appId string) *GetAppBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the getApp request and returns the response data directly.
 func (b *GetAppBuilder) Run(ctx context.Context) (*AppResult, error) {
@@ -3499,15 +3247,13 @@ func (b *GetAppBuilder) Run(ctx context.Context) (*AppResult, error) {
 	return &AppResult{resp: resp}, nil
 }
 
-
-
 // GetAppEventsBuilder provides a fluent API for the getAppEvents operation.
 // Get app events
 type GetAppEventsBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // GetAppEvents starts building a getAppEvents request.
@@ -3519,8 +3265,6 @@ func (c *Client) GetAppEvents(appId string) *GetAppEventsBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the getAppEvents request and returns the response data directly.
 func (b *GetAppEventsBuilder) Run(ctx context.Context) ([]*AppEventsItem, error) {
@@ -3542,8 +3286,6 @@ func (b *GetAppEventsBuilder) Run(ctx context.Context) ([]*AppEventsItem, error)
 	return items, nil
 }
 
-
-
 // GetAppTablesBuilder provides a fluent API for the getAppTables operation.
 // Get tables for an app
 type GetAppTablesBuilder struct {
@@ -3562,8 +3304,6 @@ func (c *Client) GetAppTables() *GetAppTablesBuilder {
 	return b
 }
 
-
-
 // AppId The unique identifier of an app
 func (b *GetAppTablesBuilder) AppId(value string) *GetAppTablesBuilder {
 	if b.err != nil {
@@ -3572,7 +3312,6 @@ func (b *GetAppTablesBuilder) AppId(value string) *GetAppTablesBuilder {
 	b.qpAppId = &value
 	return b
 }
-
 
 // Run executes the getAppTables request and returns the response data directly.
 func (b *GetAppTablesBuilder) Run(ctx context.Context) ([]*AppTablesItem, error) {
@@ -3606,18 +3345,16 @@ func (b *GetAppTablesBuilder) Run(ctx context.Context) ([]*AppTablesItem, error)
 	return items, nil
 }
 
-
-
 // GetFieldBuilder provides a fluent API for the getField operation.
 // Get field
 type GetFieldBuilder struct {
-	client  *Client
-	table   string
-	tableID string
-	fieldId int
+	client              *Client
+	table               string
+	tableID             string
+	fieldId             int
 	qpIncludeFieldPerms *bool
-	params  map[string]any
-	err     error
+	params              map[string]any
+	err                 error
 }
 
 // GetField starts building a getField request.
@@ -3642,8 +3379,6 @@ func (c *Client) GetField(fieldId int, table string) *GetFieldBuilder {
 	return b
 }
 
-
-
 // IncludeFieldPerms Set to 'true' if you'd like to get back the custom permissions for the field(s).
 func (b *GetFieldBuilder) IncludeFieldPerms(value bool) *GetFieldBuilder {
 	if b.err != nil {
@@ -3652,7 +3387,6 @@ func (b *GetFieldBuilder) IncludeFieldPerms(value bool) *GetFieldBuilder {
 	b.qpIncludeFieldPerms = &value
 	return b
 }
-
 
 // Run executes the getField request and returns the response data directly.
 func (b *GetFieldBuilder) Run(ctx context.Context) (*FieldResult, error) {
@@ -3675,8 +3409,6 @@ func (b *GetFieldBuilder) Run(ctx context.Context) (*FieldResult, error) {
 	}
 	return &FieldResult{resp: resp}, nil
 }
-
-
 
 // GetFieldUsageBuilder provides a fluent API for the getFieldUsage operation.
 // Get usage for a field
@@ -3711,8 +3443,6 @@ func (c *Client) GetFieldUsage(fieldId int, table string) *GetFieldUsageBuilder 
 	return b
 }
 
-
-
 // Run executes the getFieldUsage request and returns the response data directly.
 func (b *GetFieldUsageBuilder) Run(ctx context.Context) ([]*FieldUsageItem, error) {
 	if b.err != nil {
@@ -3737,17 +3467,15 @@ func (b *GetFieldUsageBuilder) Run(ctx context.Context) ([]*FieldUsageItem, erro
 	return items, nil
 }
 
-
-
 // GetFieldsBuilder provides a fluent API for the getFields operation.
 // Get fields for a table
 type GetFieldsBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client              *Client
+	table               string
+	tableID             string
 	qpIncludeFieldPerms *bool
-	params  map[string]any
-	err     error
+	params              map[string]any
+	err                 error
 }
 
 // GetFields starts building a getFields request.
@@ -3771,8 +3499,6 @@ func (c *Client) GetFields(table string) *GetFieldsBuilder {
 	return b
 }
 
-
-
 // IncludeFieldPerms Set to 'true' if you'd like to get back the custom permissions for the field(s).
 func (b *GetFieldsBuilder) IncludeFieldPerms(value bool) *GetFieldsBuilder {
 	if b.err != nil {
@@ -3781,7 +3507,6 @@ func (b *GetFieldsBuilder) IncludeFieldPerms(value bool) *GetFieldsBuilder {
 	b.qpIncludeFieldPerms = &value
 	return b
 }
-
 
 // Run executes the getFields request and returns the response data directly.
 func (b *GetFieldsBuilder) Run(ctx context.Context) ([]*FieldsItem, error) {
@@ -3810,16 +3535,14 @@ func (b *GetFieldsBuilder) Run(ctx context.Context) ([]*FieldsItem, error) {
 	return items, nil
 }
 
-
-
 // GetFieldsUsageBuilder provides a fluent API for the getFieldsUsage operation.
 // Get usage for all fields
 type GetFieldsUsageBuilder struct {
 	client  *Client
 	table   string
 	tableID string
-	qpSkip *int
-	qpTop *int
+	qpSkip  *int
+	qpTop   *int
 	params  map[string]any
 	err     error
 }
@@ -3845,8 +3568,6 @@ func (c *Client) GetFieldsUsage(table string) *GetFieldsUsageBuilder {
 	return b
 }
 
-
-
 // Skip The number of fields to skip from the list.
 func (b *GetFieldsUsageBuilder) Skip(value int) *GetFieldsUsageBuilder {
 	if b.err != nil {
@@ -3856,7 +3577,6 @@ func (b *GetFieldsUsageBuilder) Skip(value int) *GetFieldsUsageBuilder {
 	return b
 }
 
-
 // Top The maximum number of fields to return.
 func (b *GetFieldsUsageBuilder) Top(value int) *GetFieldsUsageBuilder {
 	if b.err != nil {
@@ -3865,7 +3585,6 @@ func (b *GetFieldsUsageBuilder) Top(value int) *GetFieldsUsageBuilder {
 	b.qpTop = &value
 	return b
 }
-
 
 // Run executes the getFieldsUsage request and returns the response data directly.
 func (b *GetFieldsUsageBuilder) Run(ctx context.Context) ([]*FieldsUsageItem, error) {
@@ -3897,15 +3616,13 @@ func (b *GetFieldsUsageBuilder) Run(ctx context.Context) ([]*FieldsUsageItem, er
 	return items, nil
 }
 
-
-
 // GetRelationshipsBuilder provides a fluent API for the getRelationships operation.
 // Get all relationships
 type GetRelationshipsBuilder struct {
 	client  *Client
 	table   string
 	tableID string
-	qpSkip *int
+	qpSkip  *int
 	params  map[string]any
 	err     error
 }
@@ -3931,8 +3648,6 @@ func (c *Client) GetRelationships(table string) *GetRelationshipsBuilder {
 	return b
 }
 
-
-
 // Skip The number of relationships to skip.
 func (b *GetRelationshipsBuilder) Skip(value int) *GetRelationshipsBuilder {
 	if b.err != nil {
@@ -3941,7 +3656,6 @@ func (b *GetRelationshipsBuilder) Skip(value int) *GetRelationshipsBuilder {
 	b.qpSkip = &value
 	return b
 }
-
 
 // Run executes the getRelationships request and returns the response data directly.
 func (b *GetRelationshipsBuilder) Run(ctx context.Context) (*RelationshipsResult, error) {
@@ -3963,17 +3677,15 @@ func (b *GetRelationshipsBuilder) Run(ctx context.Context) (*RelationshipsResult
 	return &RelationshipsResult{resp: resp}, nil
 }
 
-
-
 // GetReportBuilder provides a fluent API for the getReport operation.
 // Get a report
 type GetReportBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client   *Client
+	table    string
+	tableID  string
 	reportId string
-	params  map[string]any
-	err     error
+	params   map[string]any
+	err      error
 }
 
 // GetReport starts building a getReport request.
@@ -3998,8 +3710,6 @@ func (c *Client) GetReport(reportId string, table string) *GetReportBuilder {
 	return b
 }
 
-
-
 // Run executes the getReport request and returns the response data directly.
 func (b *GetReportBuilder) Run(ctx context.Context) (*ReportResult, error) {
 	if b.err != nil {
@@ -4019,15 +3729,13 @@ func (b *GetReportBuilder) Run(ctx context.Context) (*ReportResult, error) {
 	return &ReportResult{resp: resp}, nil
 }
 
-
-
 // GetRolesBuilder provides a fluent API for the getRoles operation.
 // Get app roles
 type GetRolesBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // GetRoles starts building a getRoles request.
@@ -4039,8 +3747,6 @@ func (c *Client) GetRoles(appId string) *GetRolesBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the getRoles request and returns the response data directly.
 func (b *GetRolesBuilder) Run(ctx context.Context) ([]*RolesItem, error) {
@@ -4062,15 +3768,13 @@ func (b *GetRolesBuilder) Run(ctx context.Context) ([]*RolesItem, error) {
 	return items, nil
 }
 
-
-
 // GetSolutionPublicBuilder provides a fluent API for the getSolutionPublic operation.
 // Get solution information
 type GetSolutionPublicBuilder struct {
-	client  *Client
+	client     *Client
 	solutionId string
-	params  map[string]any
-	err     error
+	params     map[string]any
+	err        error
 }
 
 // GetSolutionPublic starts building a getSolutionPublic request.
@@ -4082,8 +3786,6 @@ func (c *Client) GetSolutionPublic(solutionId string) *GetSolutionPublicBuilder 
 	b.solutionId = solutionId
 	return b
 }
-
-
 
 // Run executes the getSolutionPublic request and returns the response data directly.
 func (b *GetSolutionPublicBuilder) Run(ctx context.Context) (*generated.GetSolutionPublicResponse, error) {
@@ -4101,8 +3803,6 @@ func (b *GetSolutionPublicBuilder) Run(ctx context.Context) (*generated.GetSolut
 	}
 	return resp, nil
 }
-
-
 
 // GetTableBuilder provides a fluent API for the getTable operation.
 // Get a table
@@ -4136,8 +3836,6 @@ func (c *Client) GetTable(table string) *GetTableBuilder {
 	return b
 }
 
-
-
 // AppId The unique identifier of an app
 func (b *GetTableBuilder) AppId(value string) *GetTableBuilder {
 	if b.err != nil {
@@ -4146,7 +3844,6 @@ func (b *GetTableBuilder) AppId(value string) *GetTableBuilder {
 	b.qpAppId = &value
 	return b
 }
-
 
 // Run executes the getTable request and returns the response data directly.
 func (b *GetTableBuilder) Run(ctx context.Context) (*TableResult, error) {
@@ -4174,8 +3871,6 @@ func (b *GetTableBuilder) Run(ctx context.Context) (*TableResult, error) {
 	}
 	return &TableResult{resp: resp}, nil
 }
-
-
 
 // GetTableReportsBuilder provides a fluent API for the getTableReports operation.
 // Get reports for a table
@@ -4208,8 +3903,6 @@ func (c *Client) GetTableReports(table string) *GetTableReportsBuilder {
 	return b
 }
 
-
-
 // Run executes the getTableReports request and returns the response data directly.
 func (b *GetTableReportsBuilder) Run(ctx context.Context) ([]*TableReportsItem, error) {
 	if b.err != nil {
@@ -4234,15 +3927,13 @@ func (b *GetTableReportsBuilder) Run(ctx context.Context) ([]*TableReportsItem, 
 	return items, nil
 }
 
-
-
 // GetTempTokenDBIDBuilder provides a fluent API for the getTempTokenDBID operation.
 // Get a temporary token for a dbid
 type GetTempTokenDBIDBuilder struct {
-	client  *Client
-	dbid string
-	params  map[string]any
-	err     error
+	client *Client
+	dbid   string
+	params map[string]any
+	err    error
 }
 
 // GetTempTokenDBID starts building a getTempTokenDBID request.
@@ -4254,8 +3945,6 @@ func (c *Client) GetTempTokenDBID(dbid string) *GetTempTokenDBIDBuilder {
 	b.dbid = dbid
 	return b
 }
-
-
 
 // Run executes the getTempTokenDBID request and returns the response data directly.
 func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*TempTokenDBIDResult, error) {
@@ -4274,15 +3963,13 @@ func (b *GetTempTokenDBIDBuilder) Run(ctx context.Context) (*TempTokenDBIDResult
 	return &TempTokenDBIDResult{resp: resp}, nil
 }
 
-
-
 // GetTrusteesBuilder provides a fluent API for the getTrustees operation.
 // Get trustees for an app
 type GetTrusteesBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // GetTrustees starts building a getTrustees request.
@@ -4294,8 +3981,6 @@ func (c *Client) GetTrustees(appId string) *GetTrusteesBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the getTrustees request and returns the response data directly.
 func (b *GetTrusteesBuilder) Run(ctx context.Context) (*generated.GetTrusteesResponse, error) {
@@ -4312,16 +3997,14 @@ func (b *GetTrusteesBuilder) Run(ctx context.Context) (*generated.GetTrusteesRes
 	return resp, nil
 }
 
-
-
 // GetUserAppsBuilder provides a fluent API for the getUserApps operation.
 // Get apps for a user
 type GetUserAppsBuilder struct {
-	client  *Client
-	userId string
+	client      *Client
+	userId      string
 	qpAccountId *int64
-	params  map[string]any
-	err     error
+	params      map[string]any
+	err         error
 }
 
 // GetUserApps starts building a getUserApps request.
@@ -4334,8 +4017,6 @@ func (c *Client) GetUserApps(userId string) *GetUserAppsBuilder {
 	return b
 }
 
-
-
 // AccountId The account id used to scope the request.
 func (b *GetUserAppsBuilder) AccountId(value int64) *GetUserAppsBuilder {
 	if b.err != nil {
@@ -4344,7 +4025,6 @@ func (b *GetUserAppsBuilder) AccountId(value int64) *GetUserAppsBuilder {
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the getUserApps request and returns the response data directly.
 func (b *GetUserAppsBuilder) Run(ctx context.Context) (*UserAppsResult, error) {
@@ -4373,15 +4053,13 @@ func (b *GetUserAppsBuilder) Run(ctx context.Context) (*UserAppsResult, error) {
 	return &UserAppsResult{resp: resp}, nil
 }
 
-
-
 // GetUsersBuilder provides a fluent API for the getUsers operation.
 // Get users
 type GetUsersBuilder struct {
-	client  *Client
+	client      *Client
 	qpAccountId *int64
-	params  map[string]any
-	err     error
+	params      map[string]any
+	err         error
 }
 
 // GetUsers starts building a getUsers request.
@@ -4393,7 +4071,6 @@ func (c *Client) GetUsers() *GetUsersBuilder {
 	return b
 }
 
-
 // AppIds When provided, the returned users will be narrowed down only to the users assigned to the app id's provided in this list. The provided app id's should belong to the same account.
 func (b *GetUsersBuilder) AppIds(values ...string) *GetUsersBuilder {
 	if b.err != nil {
@@ -4402,7 +4079,6 @@ func (b *GetUsersBuilder) AppIds(values ...string) *GetUsersBuilder {
 	b.params["appIds"] = values
 	return b
 }
-
 
 // Emails When provided, the returned users will be narrowed down only to the users included in this list.
 func (b *GetUsersBuilder) Emails(values ...string) *GetUsersBuilder {
@@ -4413,7 +4089,6 @@ func (b *GetUsersBuilder) Emails(values ...string) *GetUsersBuilder {
 	return b
 }
 
-
 // NextPageToken Next page token used to get the next 'page' of results when available. When this field is empty, the first page is returned.
 func (b *GetUsersBuilder) NextPageToken(value string) *GetUsersBuilder {
 	if b.err != nil {
@@ -4423,8 +4098,6 @@ func (b *GetUsersBuilder) NextPageToken(value string) *GetUsersBuilder {
 	return b
 }
 
-
-
 // AccountId The account id being used to get users. If no value is specified, the first account associated with the requesting user token is chosen.
 func (b *GetUsersBuilder) AccountId(value int64) *GetUsersBuilder {
 	if b.err != nil {
@@ -4433,7 +4106,6 @@ func (b *GetUsersBuilder) AccountId(value int64) *GetUsersBuilder {
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the getUsers request and returns the response data directly.
 func (b *GetUsersBuilder) Run(ctx context.Context) (*UsersResult, error) {
@@ -4471,15 +4143,13 @@ func (b *GetUsersBuilder) Run(ctx context.Context) (*UsersResult, error) {
 	return &UsersResult{resp: resp}, nil
 }
 
-
-
 // PlatformAnalyticEventSummariesBuilder provides a fluent API for the platformAnalyticEventSummaries operation.
 // Get event summaries
 type PlatformAnalyticEventSummariesBuilder struct {
-	client  *Client
+	client      *Client
 	qpAccountId *int64
-	params  map[string]any
-	err     error
+	params      map[string]any
+	err         error
 }
 
 // PlatformAnalyticEventSummaries starts building a platformAnalyticEventSummaries request.
@@ -4491,7 +4161,6 @@ func (c *Client) PlatformAnalyticEventSummaries() *PlatformAnalyticEventSummarie
 	return b
 }
 
-
 // End Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure results stop at your intended boundary. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: An end of 3:00 PM UTC returns data through the end of the 3:00 PM bucket. A sub-hour value like 2:33 PM UTC returns the full 2:00 PM bucket instead.
 func (b *PlatformAnalyticEventSummariesBuilder) End(value string) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
@@ -4500,7 +4169,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) End(value string) *PlatformAnaly
 	b.params["end"] = value
 	return b
 }
-
 
 // GroupBy How the events should be grouped.
 func (b *PlatformAnalyticEventSummariesBuilder) GroupBy(value string) *PlatformAnalyticEventSummariesBuilder {
@@ -4511,7 +4179,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) GroupBy(value string) *PlatformA
 	return b
 }
 
-
 // NextToken A pagination token from a previous response made using the same parameters. Used to fetch the next page.
 func (b *PlatformAnalyticEventSummariesBuilder) NextToken(value string) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
@@ -4520,7 +4187,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) NextToken(value string) *Platfor
 	b.params["nextToken"] = value
 	return b
 }
-
 
 // Start Supply whole-hour timestamps (YYYY-MM-DDTHH:00:00Z) to ensure the boundary hour is included in results. Summary data is available in hourly chunks only. Timestamps are evaluated in UTC; if your timestamp includes a timezone offset, confirm which UTC hour it maps to. Example: A start of 2:00 PM UTC includes the 2:00 PM bucket. A sub-hour value like 2:15 PM UTC does not.
 func (b *PlatformAnalyticEventSummariesBuilder) Start(value string) *PlatformAnalyticEventSummariesBuilder {
@@ -4531,7 +4197,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) Start(value string) *PlatformAna
 	return b
 }
 
-
 // Where A list of items to filter events by. Only events which match ALL criteria will be included in the results.
 func (b *PlatformAnalyticEventSummariesBuilder) Where(values ...map[string]any) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
@@ -4541,8 +4206,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) Where(values ...map[string]any) 
 	return b
 }
 
-
-
 // AccountId The ID of the account to query. If no value is specified, the first account matching the provided domain is chosen.
 func (b *PlatformAnalyticEventSummariesBuilder) AccountId(value int64) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
@@ -4551,7 +4214,6 @@ func (b *PlatformAnalyticEventSummariesBuilder) AccountId(value int64) *Platform
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the platformAnalyticEventSummaries request and returns the response data directly.
 func (b *PlatformAnalyticEventSummariesBuilder) Run(ctx context.Context) (*PlatformAnalyticEventSummariesResult, error) {
@@ -4610,15 +4272,13 @@ func (b *PlatformAnalyticEventSummariesBuilder) Run(ctx context.Context) (*Platf
 	return &PlatformAnalyticEventSummariesResult{resp: resp}, nil
 }
 
-
-
 // PlatformAnalyticReadsBuilder provides a fluent API for the platformAnalyticReads operation.
 // Get read summaries
 type PlatformAnalyticReadsBuilder struct {
-	client  *Client
-	qpDay *types.Date
-	params  map[string]any
-	err     error
+	client *Client
+	qpDay  *types.Date
+	params map[string]any
+	err    error
 }
 
 // PlatformAnalyticReads starts building a platformAnalyticReads request.
@@ -4630,8 +4290,6 @@ func (c *Client) PlatformAnalyticReads() *PlatformAnalyticReadsBuilder {
 	return b
 }
 
-
-
 // Day The date for which read summaries need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
 func (b *PlatformAnalyticReadsBuilder) Day(value types.Date) *PlatformAnalyticReadsBuilder {
 	if b.err != nil {
@@ -4640,7 +4298,6 @@ func (b *PlatformAnalyticReadsBuilder) Day(value types.Date) *PlatformAnalyticRe
 	b.qpDay = &value
 	return b
 }
-
 
 // Run executes the platformAnalyticReads request and returns the response data directly.
 func (b *PlatformAnalyticReadsBuilder) Run(ctx context.Context) (*PlatformAnalyticReadsResult, error) {
@@ -4669,14 +4326,12 @@ func (b *PlatformAnalyticReadsBuilder) Run(ctx context.Context) (*PlatformAnalyt
 	return &PlatformAnalyticReadsResult{resp: resp}, nil
 }
 
-
-
 // RecordsModifiedSinceBuilder provides a fluent API for the recordsModifiedSince operation.
 // Get records modified since
 type RecordsModifiedSinceBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // RecordsModifiedSince starts building a recordsModifiedSince request.
@@ -4688,7 +4343,6 @@ func (c *Client) RecordsModifiedSince() *RecordsModifiedSinceBuilder {
 	return b
 }
 
-
 // After A timestamp, formatted in ISO-8601 UTC, representing the date and time to search.
 func (b *RecordsModifiedSinceBuilder) After(value string) *RecordsModifiedSinceBuilder {
 	if b.err != nil {
@@ -4697,7 +4351,6 @@ func (b *RecordsModifiedSinceBuilder) After(value string) *RecordsModifiedSinceB
 	b.params["after"] = value
 	return b
 }
-
 
 // FieldList List of field IDs. Each field is crawled across the entire record dependency graph to find its source record's date modified. If one is not provided, only the current table will be referenced.
 func (b *RecordsModifiedSinceBuilder) FieldList(values ...int) *RecordsModifiedSinceBuilder {
@@ -4708,7 +4361,6 @@ func (b *RecordsModifiedSinceBuilder) FieldList(values ...int) *RecordsModifiedS
 	return b
 }
 
-
 // From The unique identifier (dbid) of the table.
 func (b *RecordsModifiedSinceBuilder) From(value string) *RecordsModifiedSinceBuilder {
 	if b.err != nil {
@@ -4718,7 +4370,6 @@ func (b *RecordsModifiedSinceBuilder) From(value string) *RecordsModifiedSinceBu
 	return b
 }
 
-
 // IncludeDetails When true, the individual record IDs and timestamps will be returned. If false, only the count of changes will be returned.
 func (b *RecordsModifiedSinceBuilder) IncludeDetails(value bool) *RecordsModifiedSinceBuilder {
 	if b.err != nil {
@@ -4727,8 +4378,6 @@ func (b *RecordsModifiedSinceBuilder) IncludeDetails(value bool) *RecordsModifie
 	b.params["includeDetails"] = value
 	return b
 }
-
-
 
 // Run executes the recordsModifiedSince request and returns the response data directly.
 func (b *RecordsModifiedSinceBuilder) Run(ctx context.Context) (*RecordsModifiedSinceResult, error) {
@@ -4768,15 +4417,13 @@ func (b *RecordsModifiedSinceBuilder) Run(ctx context.Context) (*RecordsModified
 	return &RecordsModifiedSinceResult{resp: resp}, nil
 }
 
-
-
 // RemoveManagersFromGroupBuilder provides a fluent API for the removeManagersFromGroup operation.
 // Remove managers
 type RemoveManagersFromGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // RemoveManagersFromGroup starts building a removeManagersFromGroup request.
@@ -4788,8 +4435,6 @@ func (c *Client) RemoveManagersFromGroup(gid int64) *RemoveManagersFromGroupBuil
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the removeManagersFromGroup request and returns the response data directly.
 func (b *RemoveManagersFromGroupBuilder) Run(ctx context.Context) (*RemoveManagersFromGroupResult, error) {
@@ -4822,15 +4467,13 @@ func (b *RemoveManagersFromGroupBuilder) Run(ctx context.Context) (*RemoveManage
 	return &RemoveManagersFromGroupResult{resp: resp}, nil
 }
 
-
-
 // RemoveMembersFromGroupBuilder provides a fluent API for the removeMembersFromGroup operation.
 // Remove members
 type RemoveMembersFromGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // RemoveMembersFromGroup starts building a removeMembersFromGroup request.
@@ -4842,8 +4485,6 @@ func (c *Client) RemoveMembersFromGroup(gid int64) *RemoveMembersFromGroupBuilde
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the removeMembersFromGroup request and returns the response data directly.
 func (b *RemoveMembersFromGroupBuilder) Run(ctx context.Context) (*RemoveMembersFromGroupResult, error) {
@@ -4876,15 +4517,13 @@ func (b *RemoveMembersFromGroupBuilder) Run(ctx context.Context) (*RemoveMembers
 	return &RemoveMembersFromGroupResult{resp: resp}, nil
 }
 
-
-
 // RemoveSubgroupsFromGroupBuilder provides a fluent API for the removeSubgroupsFromGroup operation.
 // Remove child groups
 type RemoveSubgroupsFromGroupBuilder struct {
-	client  *Client
-	gid int64
-	params  map[string]any
-	err     error
+	client *Client
+	gid    int64
+	params map[string]any
+	err    error
 }
 
 // RemoveSubgroupsFromGroup starts building a removeSubgroupsFromGroup request.
@@ -4896,8 +4535,6 @@ func (c *Client) RemoveSubgroupsFromGroup(gid int64) *RemoveSubgroupsFromGroupBu
 	b.gid = gid
 	return b
 }
-
-
 
 // Run executes the removeSubgroupsFromGroup request and returns the response data directly.
 func (b *RemoveSubgroupsFromGroupBuilder) Run(ctx context.Context) (*RemoveSubgroupsFromGroupResult, error) {
@@ -4930,15 +4567,13 @@ func (b *RemoveSubgroupsFromGroupBuilder) Run(ctx context.Context) (*RemoveSubgr
 	return &RemoveSubgroupsFromGroupResult{resp: resp}, nil
 }
 
-
-
 // RemoveTrusteesBuilder provides a fluent API for the removeTrustees operation.
 // Remove trustees from an app
 type RemoveTrusteesBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // RemoveTrustees starts building a removeTrustees request.
@@ -4950,8 +4585,6 @@ func (c *Client) RemoveTrustees(appId string) *RemoveTrusteesBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the removeTrustees request and returns the response data directly.
 func (b *RemoveTrusteesBuilder) Run(ctx context.Context) (*RemoveTrusteesResult, error) {
@@ -4984,14 +4617,12 @@ func (b *RemoveTrusteesBuilder) Run(ctx context.Context) (*RemoveTrusteesResult,
 	return &RemoveTrusteesResult{resp: resp}, nil
 }
 
-
-
 // RunFormulaBuilder provides a fluent API for the runFormula operation.
 // Run a formula
 type RunFormulaBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // RunFormula starts building a runFormula request.
@@ -5003,7 +4634,6 @@ func (c *Client) RunFormula() *RunFormulaBuilder {
 	return b
 }
 
-
 // Formula The formula to run. This must be a valid Quickbase formula.
 func (b *RunFormulaBuilder) Formula(value string) *RunFormulaBuilder {
 	if b.err != nil {
@@ -5012,7 +4642,6 @@ func (b *RunFormulaBuilder) Formula(value string) *RunFormulaBuilder {
 	b.params["formula"] = value
 	return b
 }
-
 
 // From The unique identifier (dbid) of the table.
 func (b *RunFormulaBuilder) From(value string) *RunFormulaBuilder {
@@ -5023,7 +4652,6 @@ func (b *RunFormulaBuilder) From(value string) *RunFormulaBuilder {
 	return b
 }
 
-
 // Rid The record ID to run the formula against. Only necessary for formulas that are run in the context of a record. For example, the formula User() does not need a record ID.
 func (b *RunFormulaBuilder) Rid(value int) *RunFormulaBuilder {
 	if b.err != nil {
@@ -5032,8 +4660,6 @@ func (b *RunFormulaBuilder) Rid(value int) *RunFormulaBuilder {
 	b.params["rid"] = value
 	return b
 }
-
-
 
 // Run executes the runFormula request and returns the response data directly.
 func (b *RunFormulaBuilder) Run(ctx context.Context) (*RunFormulaResult, error) {
@@ -5073,19 +4699,17 @@ func (b *RunFormulaBuilder) Run(ctx context.Context) (*RunFormulaResult, error) 
 	return &RunFormulaResult{resp: resp}, nil
 }
 
-
-
 // RunReportBuilder provides a fluent API for the runReport operation.
 // Run a report
 type RunReportBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client   *Client
+	table    string
+	tableID  string
 	reportId string
-	qpSkip *int
-	qpTop *int
-	params  map[string]any
-	err     error
+	qpSkip   *int
+	qpTop    *int
+	params   map[string]any
+	err      error
 }
 
 // RunReport starts building a runReport request.
@@ -5110,8 +4734,6 @@ func (c *Client) RunReport(reportId string, table string) *RunReportBuilder {
 	return b
 }
 
-
-
 // Skip The number of records to skip. You can set this value when paginating through a set of results.
 func (b *RunReportBuilder) Skip(value int) *RunReportBuilder {
 	if b.err != nil {
@@ -5121,7 +4743,6 @@ func (b *RunReportBuilder) Skip(value int) *RunReportBuilder {
 	return b
 }
 
-
 // Top The maximum number of records to return. You can override the default Quickbase pagination to get more or fewer results. If your requested value here exceeds the dynamic maximums, we will return a subset of results and the rest can be gathered in subsequent API calls.
 func (b *RunReportBuilder) Top(value int) *RunReportBuilder {
 	if b.err != nil {
@@ -5130,7 +4751,6 @@ func (b *RunReportBuilder) Top(value int) *RunReportBuilder {
 	b.qpTop = &value
 	return b
 }
-
 
 // Run executes the runReport request and returns the response data directly.
 func (b *RunReportBuilder) Run(ctx context.Context) (*RunReportResult, error) {
@@ -5157,14 +4777,12 @@ func (b *RunReportBuilder) Run(ctx context.Context) (*RunReportResult, error) {
 	return &RunReportResult{resp: resp}, nil
 }
 
-
-
 // TransferUserTokenBuilder provides a fluent API for the transferUserToken operation.
 // Transfer a user token
 type TransferUserTokenBuilder struct {
-	client  *Client
-	params  map[string]any
-	err     error
+	client *Client
+	params map[string]any
+	err    error
 }
 
 // TransferUserToken starts building a transferUserToken request.
@@ -5176,7 +4794,6 @@ func (c *Client) TransferUserToken() *TransferUserTokenBuilder {
 	return b
 }
 
-
 // From The id of the user to transfer the user token from
 func (b *TransferUserTokenBuilder) From(value string) *TransferUserTokenBuilder {
 	if b.err != nil {
@@ -5185,7 +4802,6 @@ func (b *TransferUserTokenBuilder) From(value string) *TransferUserTokenBuilder 
 	b.params["from"] = value
 	return b
 }
-
 
 // Id The id of the user token to transfer
 func (b *TransferUserTokenBuilder) Id(value int64) *TransferUserTokenBuilder {
@@ -5196,7 +4812,6 @@ func (b *TransferUserTokenBuilder) Id(value int64) *TransferUserTokenBuilder {
 	return b
 }
 
-
 // To The id of the user to transfer the user token to
 func (b *TransferUserTokenBuilder) To(value string) *TransferUserTokenBuilder {
 	if b.err != nil {
@@ -5205,8 +4820,6 @@ func (b *TransferUserTokenBuilder) To(value string) *TransferUserTokenBuilder {
 	b.params["to"] = value
 	return b
 }
-
-
 
 // Run executes the transferUserToken request and returns the response data directly.
 func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenResult, error) {
@@ -5246,15 +4859,13 @@ func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenR
 	return &TransferUserTokenResult{resp: resp}, nil
 }
 
-
-
 // UndenyUsersBuilder provides a fluent API for the undenyUsers operation.
 // Undeny users
 type UndenyUsersBuilder struct {
-	client  *Client
+	client      *Client
 	qpAccountId *int64
-	params  map[string]any
-	err     error
+	params      map[string]any
+	err         error
 }
 
 // UndenyUsers starts building a undenyUsers request.
@@ -5266,8 +4877,6 @@ func (c *Client) UndenyUsers() *UndenyUsersBuilder {
 	return b
 }
 
-
-
 // AccountId The account id being used to undeny users. If no value is specified, the first account associated with the requesting user token is chosen.
 func (b *UndenyUsersBuilder) AccountId(value int64) *UndenyUsersBuilder {
 	if b.err != nil {
@@ -5276,7 +4885,6 @@ func (b *UndenyUsersBuilder) AccountId(value int64) *UndenyUsersBuilder {
 	b.qpAccountId = &value
 	return b
 }
-
 
 // Run executes the undenyUsers request and returns the response data directly.
 func (b *UndenyUsersBuilder) Run(ctx context.Context) (*UndenyUsersResult, error) {
@@ -5314,15 +4922,13 @@ func (b *UndenyUsersBuilder) Run(ctx context.Context) (*UndenyUsersResult, error
 	return &UndenyUsersResult{resp: resp}, nil
 }
 
-
-
 // UpdateAppBuilder provides a fluent API for the updateApp operation.
 // Update an app
 type UpdateAppBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // UpdateApp starts building a updateApp request.
@@ -5335,7 +4941,6 @@ func (c *Client) UpdateApp(appId string) *UpdateAppBuilder {
 	return b
 }
 
-
 // Description The description for the app.
 func (b *UpdateAppBuilder) Description(value string) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5345,7 +4950,6 @@ func (b *UpdateAppBuilder) Description(value string) *UpdateAppBuilder {
 	return b
 }
 
-
 // Name The name for the app.
 func (b *UpdateAppBuilder) Name(value string) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5354,7 +4958,6 @@ func (b *UpdateAppBuilder) Name(value string) *UpdateAppBuilder {
 	b.params["name"] = value
 	return b
 }
-
 
 // AllowClone Allow users who are not administrators to copy
 func (b *UpdateAppBuilder) AllowClone(value bool) *UpdateAppBuilder {
@@ -5370,7 +4973,6 @@ func (b *UpdateAppBuilder) AllowClone(value bool) *UpdateAppBuilder {
 	return b
 }
 
-
 // AllowExport Allow users who are not administrators to export data
 func (b *UpdateAppBuilder) AllowExport(value bool) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5384,7 +4986,6 @@ func (b *UpdateAppBuilder) AllowExport(value bool) *UpdateAppBuilder {
 	b.params["securityProperties"] = nested
 	return b
 }
-
 
 // EnableAppTokens Require Application Tokens
 func (b *UpdateAppBuilder) EnableAppTokens(value bool) *UpdateAppBuilder {
@@ -5400,7 +5001,6 @@ func (b *UpdateAppBuilder) EnableAppTokens(value bool) *UpdateAppBuilder {
 	return b
 }
 
-
 // HideFromPublic Hide from public application searches
 func (b *UpdateAppBuilder) HideFromPublic(value bool) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5414,7 +5014,6 @@ func (b *UpdateAppBuilder) HideFromPublic(value bool) *UpdateAppBuilder {
 	b.params["securityProperties"] = nested
 	return b
 }
-
 
 // MustBeRealmApproved Only "approved" users may access this application
 func (b *UpdateAppBuilder) MustBeRealmApproved(value bool) *UpdateAppBuilder {
@@ -5430,7 +5029,6 @@ func (b *UpdateAppBuilder) MustBeRealmApproved(value bool) *UpdateAppBuilder {
 	return b
 }
 
-
 // UseIPFilter Only users logging in from "approved" IP addresses may access this application
 func (b *UpdateAppBuilder) UseIPFilter(value bool) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5445,7 +5043,6 @@ func (b *UpdateAppBuilder) UseIPFilter(value bool) *UpdateAppBuilder {
 	return b
 }
 
-
 // Variables The app variables. A maximum of 10 variables can be inserted at a time. See [About Application Variables](https://help.quickbase.com/docs/creating-and-using-application-variables)
 func (b *UpdateAppBuilder) Variables(values ...map[string]any) *UpdateAppBuilder {
 	if b.err != nil {
@@ -5454,8 +5051,6 @@ func (b *UpdateAppBuilder) Variables(values ...map[string]any) *UpdateAppBuilder
 	b.params["variables"] = values
 	return b
 }
-
-
 
 // Run executes the updateApp request and returns the response data directly.
 func (b *UpdateAppBuilder) Run(ctx context.Context) (*UpdateAppResult, error) {
@@ -5487,8 +5082,6 @@ func (b *UpdateAppBuilder) Run(ctx context.Context) (*UpdateAppResult, error) {
 	}
 	return &UpdateAppResult{resp: resp}, nil
 }
-
-
 
 // UpdateFieldBuilder provides a fluent API for the updateField operation.
 // Update a field
@@ -5523,7 +5116,6 @@ func (c *Client) UpdateField(fieldId int, table string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // AddToForms Whether the field you are adding should appear on forms.
 func (b *UpdateFieldBuilder) AddToForms(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5532,7 +5124,6 @@ func (b *UpdateFieldBuilder) AddToForms(value bool) *UpdateFieldBuilder {
 	b.params["addToForms"] = value
 	return b
 }
-
 
 // AppearsByDefault Indicates if the field is marked as a default in reports.
 func (b *UpdateFieldBuilder) AppearsByDefault(value bool) *UpdateFieldBuilder {
@@ -5543,7 +5134,6 @@ func (b *UpdateFieldBuilder) AppearsByDefault(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Audited Indicates if the field is being tracked as part of Quickbase Audit Logs. You can only set this property to "true" if the app has audit logs enabled. See Enable data change logs under [Quickbase Audit Logs](https://help.quickbase.com/user-assistance/audit_logs.html).
 func (b *UpdateFieldBuilder) Audited(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5552,7 +5142,6 @@ func (b *UpdateFieldBuilder) Audited(value bool) *UpdateFieldBuilder {
 	b.params["audited"] = value
 	return b
 }
-
 
 // Bold Indicates if the field is configured to display in bold in the product.
 func (b *UpdateFieldBuilder) Bold(value bool) *UpdateFieldBuilder {
@@ -5563,7 +5152,6 @@ func (b *UpdateFieldBuilder) Bold(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // FieldHelp The configured help text shown to users within the product.
 func (b *UpdateFieldBuilder) FieldHelp(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5572,7 +5160,6 @@ func (b *UpdateFieldBuilder) FieldHelp(value string) *UpdateFieldBuilder {
 	b.params["fieldHelp"] = value
 	return b
 }
-
 
 // FindEnabled Indicates if the field is marked as searchable.
 func (b *UpdateFieldBuilder) FindEnabled(value bool) *UpdateFieldBuilder {
@@ -5583,7 +5170,6 @@ func (b *UpdateFieldBuilder) FindEnabled(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Label The label (name) of the field.
 func (b *UpdateFieldBuilder) Label(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5592,7 +5178,6 @@ func (b *UpdateFieldBuilder) Label(value string) *UpdateFieldBuilder {
 	b.params["label"] = value
 	return b
 }
-
 
 // NoWrap Indicates if the field is configured to not wrap when displayed in the product.
 func (b *UpdateFieldBuilder) NoWrap(value bool) *UpdateFieldBuilder {
@@ -5603,7 +5188,6 @@ func (b *UpdateFieldBuilder) NoWrap(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Permissions Field Permissions for different roles.
 func (b *UpdateFieldBuilder) Permissions(values ...map[string]any) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5612,7 +5196,6 @@ func (b *UpdateFieldBuilder) Permissions(values ...map[string]any) *UpdateFieldB
 	b.params["permissions"] = values
 	return b
 }
-
 
 // Abbreviate Don't show the URL protocol when showing the URL.
 func (b *UpdateFieldBuilder) Abbreviate(value bool) *UpdateFieldBuilder {
@@ -5628,7 +5211,6 @@ func (b *UpdateFieldBuilder) Abbreviate(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // AllowMentions If someone can @mention users in the rich text field to generate an email notification.
 func (b *UpdateFieldBuilder) AllowMentions(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5642,7 +5224,6 @@ func (b *UpdateFieldBuilder) AllowMentions(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // AllowNewChoices Indicates if users can add new choices to a selection list.
 func (b *UpdateFieldBuilder) AllowNewChoices(value bool) *UpdateFieldBuilder {
@@ -5658,7 +5239,6 @@ func (b *UpdateFieldBuilder) AllowNewChoices(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // AppearsAs The link text, if empty, the url will be used as link text.
 func (b *UpdateFieldBuilder) AppearsAs(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5672,7 +5252,6 @@ func (b *UpdateFieldBuilder) AppearsAs(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // AppendOnly Whether this field is append only.
 func (b *UpdateFieldBuilder) AppendOnly(value bool) *UpdateFieldBuilder {
@@ -5688,7 +5267,6 @@ func (b *UpdateFieldBuilder) AppendOnly(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // AutoSave Whether the link field will auto save.
 func (b *UpdateFieldBuilder) AutoSave(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5702,7 +5280,6 @@ func (b *UpdateFieldBuilder) AutoSave(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // BlankIsZero Whether a blank value is treated the same as 0 in calculations within the product.
 func (b *UpdateFieldBuilder) BlankIsZero(value bool) *UpdateFieldBuilder {
@@ -5718,7 +5295,6 @@ func (b *UpdateFieldBuilder) BlankIsZero(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // CarryChoices Whether the field should carry its multiple choice fields when copied.
 func (b *UpdateFieldBuilder) CarryChoices(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5732,7 +5308,6 @@ func (b *UpdateFieldBuilder) CarryChoices(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Choices An array of entries that exist for a field that offers choices to the user. Note that these choices refer to the valid values of any records added in the future. You are allowed to remove values from the list of choices even if there are existing records with those values in this field. They will be displayed in red when users look at the data in the browser but there is no other effect. While updating a field with this property, the old choices are removed and replaced by the new choices.
 func (b *UpdateFieldBuilder) Choices(value []string) *UpdateFieldBuilder {
@@ -5748,7 +5323,6 @@ func (b *UpdateFieldBuilder) Choices(value []string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // CommaStart The number of digits before commas display in the product, when applicable.
 func (b *UpdateFieldBuilder) CommaStart(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5762,7 +5336,6 @@ func (b *UpdateFieldBuilder) CommaStart(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Comments The comments entered on the field properties by an administrator.
 func (b *UpdateFieldBuilder) Comments(value string) *UpdateFieldBuilder {
@@ -5778,7 +5351,6 @@ func (b *UpdateFieldBuilder) Comments(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // CompositeFields An array of the fields that make up a composite field (e.g., address).
 func (b *UpdateFieldBuilder) CompositeFields(value []any) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5792,7 +5364,6 @@ func (b *UpdateFieldBuilder) CompositeFields(value []any) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // CoverText An alternate user friendly text that can be used to display a link in the browser.
 func (b *UpdateFieldBuilder) CoverText(value string) *UpdateFieldBuilder {
@@ -5808,7 +5379,6 @@ func (b *UpdateFieldBuilder) CoverText(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // CurrencyFormat The currency format used when displaying field values within the product.
 func (b *UpdateFieldBuilder) CurrencyFormat(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5822,7 +5392,6 @@ func (b *UpdateFieldBuilder) CurrencyFormat(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // CurrencySymbol The current symbol used when displaying field values within the product.
 func (b *UpdateFieldBuilder) CurrencySymbol(value string) *UpdateFieldBuilder {
@@ -5838,7 +5407,6 @@ func (b *UpdateFieldBuilder) CurrencySymbol(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DecimalPlaces The number of decimal places displayed in the product for this field.
 func (b *UpdateFieldBuilder) DecimalPlaces(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5852,7 +5420,6 @@ func (b *UpdateFieldBuilder) DecimalPlaces(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultCountryCode Controls the default country shown on international phone widgets on forms. Country code should be entered in the ISO 3166-1 alpha-2 format.
 func (b *UpdateFieldBuilder) DefaultCountryCode(value string) *UpdateFieldBuilder {
@@ -5868,7 +5435,6 @@ func (b *UpdateFieldBuilder) DefaultCountryCode(value string) *UpdateFieldBuilde
 	return b
 }
 
-
 // DefaultDomain Default email domain.
 func (b *UpdateFieldBuilder) DefaultDomain(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5882,7 +5448,6 @@ func (b *UpdateFieldBuilder) DefaultDomain(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultKind The user default type.
 func (b *UpdateFieldBuilder) DefaultKind(value string) *UpdateFieldBuilder {
@@ -5898,7 +5463,6 @@ func (b *UpdateFieldBuilder) DefaultKind(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DefaultToday Indicates if the field value is defaulted today for new records.
 func (b *UpdateFieldBuilder) DefaultToday(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5912,7 +5476,6 @@ func (b *UpdateFieldBuilder) DefaultToday(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DefaultValue The default value configured for a field when a new record is added.
 func (b *UpdateFieldBuilder) DefaultValue(value string) *UpdateFieldBuilder {
@@ -5928,7 +5491,6 @@ func (b *UpdateFieldBuilder) DefaultValue(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DefaultValueLuid Default user id value.
 func (b *UpdateFieldBuilder) DefaultValueLuid(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5942,7 +5504,6 @@ func (b *UpdateFieldBuilder) DefaultValueLuid(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayAsLink Indicates if a field that is part of the relationship should be shown as a hyperlink to the parent record within the product.
 func (b *UpdateFieldBuilder) DisplayAsLink(value bool) *UpdateFieldBuilder {
@@ -5958,7 +5519,6 @@ func (b *UpdateFieldBuilder) DisplayAsLink(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DisplayCheckboxAsText Indicates whether the checkbox values will be shown as text in reports.
 func (b *UpdateFieldBuilder) DisplayCheckboxAsText(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -5972,7 +5532,6 @@ func (b *UpdateFieldBuilder) DisplayCheckboxAsText(value bool) *UpdateFieldBuild
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayDayOfWeek Indicates whether to display the day of the week within the product.
 func (b *UpdateFieldBuilder) DisplayDayOfWeek(value bool) *UpdateFieldBuilder {
@@ -5988,7 +5547,6 @@ func (b *UpdateFieldBuilder) DisplayDayOfWeek(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DisplayEmail How the email is displayed.
 func (b *UpdateFieldBuilder) DisplayEmail(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6002,7 +5560,6 @@ func (b *UpdateFieldBuilder) DisplayEmail(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayMonth How to display months.
 func (b *UpdateFieldBuilder) DisplayMonth(value string) *UpdateFieldBuilder {
@@ -6018,7 +5575,6 @@ func (b *UpdateFieldBuilder) DisplayMonth(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DisplayRelative Whether to display time as relative.
 func (b *UpdateFieldBuilder) DisplayRelative(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6032,7 +5588,6 @@ func (b *UpdateFieldBuilder) DisplayRelative(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayTime Indicates whether to display the time, in addition to the date.
 func (b *UpdateFieldBuilder) DisplayTime(value bool) *UpdateFieldBuilder {
@@ -6048,7 +5603,6 @@ func (b *UpdateFieldBuilder) DisplayTime(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DisplayTimezone Indicates whether to display the timezone within the product.
 func (b *UpdateFieldBuilder) DisplayTimezone(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6062,7 +5616,6 @@ func (b *UpdateFieldBuilder) DisplayTimezone(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DisplayUser The configured option for how users display within the product.
 func (b *UpdateFieldBuilder) DisplayUser(value string) *UpdateFieldBuilder {
@@ -6078,7 +5631,6 @@ func (b *UpdateFieldBuilder) DisplayUser(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // DoesAverage Whether this field averages in reports within the product.
 func (b *UpdateFieldBuilder) DoesAverage(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6092,7 +5644,6 @@ func (b *UpdateFieldBuilder) DoesAverage(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // DoesTotal Whether this field totals in reports within the product.
 func (b *UpdateFieldBuilder) DoesTotal(value bool) *UpdateFieldBuilder {
@@ -6108,7 +5659,6 @@ func (b *UpdateFieldBuilder) DoesTotal(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Exact Whether an exact match is required for a report link.
 func (b *UpdateFieldBuilder) Exact(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6122,7 +5672,6 @@ func (b *UpdateFieldBuilder) Exact(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // Format The format to display time.
 func (b *UpdateFieldBuilder) Format(value int) *UpdateFieldBuilder {
@@ -6138,7 +5687,6 @@ func (b *UpdateFieldBuilder) Format(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Formula The formula of the field as configured in Quickbase.
 func (b *UpdateFieldBuilder) Formula(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6152,7 +5700,6 @@ func (b *UpdateFieldBuilder) Formula(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // HasExtension Whether this field has a phone extension.
 func (b *UpdateFieldBuilder) HasExtension(value bool) *UpdateFieldBuilder {
@@ -6168,7 +5715,6 @@ func (b *UpdateFieldBuilder) HasExtension(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Hours24 Indicates whether or not to display time in the 24-hour format within the product.
 func (b *UpdateFieldBuilder) Hours24(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6182,7 +5728,6 @@ func (b *UpdateFieldBuilder) Hours24(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // LinkText The configured text value that replaces the URL that users see within the product.
 func (b *UpdateFieldBuilder) LinkText(value string) *UpdateFieldBuilder {
@@ -6198,7 +5743,6 @@ func (b *UpdateFieldBuilder) LinkText(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // LookupReferenceFieldId The id of the field that is the reference in the relationship for this lookup.
 func (b *UpdateFieldBuilder) LookupReferenceFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6212,7 +5756,6 @@ func (b *UpdateFieldBuilder) LookupReferenceFieldId(value int) *UpdateFieldBuild
 	b.params["properties"] = nested
 	return b
 }
-
 
 // LookupTargetFieldId The id of the field that is the target on the parent table for this lookup.
 func (b *UpdateFieldBuilder) LookupTargetFieldId(value int) *UpdateFieldBuilder {
@@ -6228,7 +5771,6 @@ func (b *UpdateFieldBuilder) LookupTargetFieldId(value int) *UpdateFieldBuilder 
 	return b
 }
 
-
 // MaxLength The maximum number of characters allowed for entry in Quickbase for this field.
 func (b *UpdateFieldBuilder) MaxLength(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6242,7 +5784,6 @@ func (b *UpdateFieldBuilder) MaxLength(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // MaxVersions The maximum number of versions configured for a file attachment.
 func (b *UpdateFieldBuilder) MaxVersions(value int) *UpdateFieldBuilder {
@@ -6258,7 +5799,6 @@ func (b *UpdateFieldBuilder) MaxVersions(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // NumLines The number of lines shown in Quickbase for this text field.
 func (b *UpdateFieldBuilder) NumLines(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6272,7 +5812,6 @@ func (b *UpdateFieldBuilder) NumLines(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // NumberFormat The format used for displaying numeric values in the product (decimal, separators, digit group).
 func (b *UpdateFieldBuilder) NumberFormat(value int) *UpdateFieldBuilder {
@@ -6288,7 +5827,6 @@ func (b *UpdateFieldBuilder) NumberFormat(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // OpenTargetIn Indicates which target the URL should open in when a user clicks it within the product.
 func (b *UpdateFieldBuilder) OpenTargetIn(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6302,7 +5840,6 @@ func (b *UpdateFieldBuilder) OpenTargetIn(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // ParentFieldId The id of the parent composite field, when applicable.
 func (b *UpdateFieldBuilder) ParentFieldId(value int) *UpdateFieldBuilder {
@@ -6318,7 +5855,6 @@ func (b *UpdateFieldBuilder) ParentFieldId(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // PostTempToken POSTs a temporary token to the first URL when clicked by a user. [Learn more](https://help.quickbase.com/docs/post-temporary-token-from-a-quickbase-field)
 func (b *UpdateFieldBuilder) PostTempToken(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6332,7 +5868,6 @@ func (b *UpdateFieldBuilder) PostTempToken(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SeeVersions Indicates if the user can see other versions, aside from the most recent, of a file attachment within the product.
 func (b *UpdateFieldBuilder) SeeVersions(value bool) *UpdateFieldBuilder {
@@ -6348,7 +5883,6 @@ func (b *UpdateFieldBuilder) SeeVersions(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // SnapFieldId The id of the field that is used to snapshot values from, when applicable.
 func (b *UpdateFieldBuilder) SnapFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6362,7 +5896,6 @@ func (b *UpdateFieldBuilder) SnapFieldId(value int) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SortAlpha Whether to sort alphabetically, default sort is by record ID.
 func (b *UpdateFieldBuilder) SortAlpha(value bool) *UpdateFieldBuilder {
@@ -6378,7 +5911,6 @@ func (b *UpdateFieldBuilder) SortAlpha(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // SortAsGiven Indicates if the listed entries sort as entered vs alphabetically.
 func (b *UpdateFieldBuilder) SortAsGiven(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6392,7 +5924,6 @@ func (b *UpdateFieldBuilder) SortAsGiven(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SourceFieldId The id of the source field.
 func (b *UpdateFieldBuilder) SourceFieldId(value int) *UpdateFieldBuilder {
@@ -6408,7 +5939,6 @@ func (b *UpdateFieldBuilder) SourceFieldId(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // SummaryFunction The accumulation type for the summary field.
 func (b *UpdateFieldBuilder) SummaryFunction(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6422,7 +5952,6 @@ func (b *UpdateFieldBuilder) SummaryFunction(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SummaryQuery The summary query.
 func (b *UpdateFieldBuilder) SummaryQuery(value string) *UpdateFieldBuilder {
@@ -6438,7 +5967,6 @@ func (b *UpdateFieldBuilder) SummaryQuery(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // SummaryReferenceFieldId The id of the field that is the reference in the relationship for this summary.
 func (b *UpdateFieldBuilder) SummaryReferenceFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6452,7 +5980,6 @@ func (b *UpdateFieldBuilder) SummaryReferenceFieldId(value int) *UpdateFieldBuil
 	b.params["properties"] = nested
 	return b
 }
-
 
 // SummaryTableId The table the summary field references fields from.
 func (b *UpdateFieldBuilder) SummaryTableId(value string) *UpdateFieldBuilder {
@@ -6468,7 +5995,6 @@ func (b *UpdateFieldBuilder) SummaryTableId(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // SummaryTargetFieldId The id of the field that is used to aggregate values from the child, when applicable. This displays 0 if the summary function doesn't require a field selection (like count).
 func (b *UpdateFieldBuilder) SummaryTargetFieldId(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6482,7 +6008,6 @@ func (b *UpdateFieldBuilder) SummaryTargetFieldId(value int) *UpdateFieldBuilder
 	b.params["properties"] = nested
 	return b
 }
-
 
 // TargetFieldId The id of the target field.
 func (b *UpdateFieldBuilder) TargetFieldId(value int) *UpdateFieldBuilder {
@@ -6498,7 +6023,6 @@ func (b *UpdateFieldBuilder) TargetFieldId(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // TargetTableId The id of the target table.
 func (b *UpdateFieldBuilder) TargetTableId(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6512,7 +6036,6 @@ func (b *UpdateFieldBuilder) TargetTableId(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // TargetTableName The field's target table name.
 func (b *UpdateFieldBuilder) TargetTableName(value string) *UpdateFieldBuilder {
@@ -6528,7 +6051,6 @@ func (b *UpdateFieldBuilder) TargetTableName(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Units The units label.
 func (b *UpdateFieldBuilder) Units(value string) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6542,7 +6064,6 @@ func (b *UpdateFieldBuilder) Units(value string) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // UseI18NFormat Whether phone numbers should be in E.164 standard international format
 func (b *UpdateFieldBuilder) UseI18NFormat(value bool) *UpdateFieldBuilder {
@@ -6558,7 +6079,6 @@ func (b *UpdateFieldBuilder) UseI18NFormat(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // UseNewWindow Indicates if the file should open a new window when a user clicks it within the product.
 func (b *UpdateFieldBuilder) UseNewWindow(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6572,7 +6092,6 @@ func (b *UpdateFieldBuilder) UseNewWindow(value bool) *UpdateFieldBuilder {
 	b.params["properties"] = nested
 	return b
 }
-
 
 // VersionMode Version modes for files. Keep all versions vs keep last version.
 func (b *UpdateFieldBuilder) VersionMode(value string) *UpdateFieldBuilder {
@@ -6588,7 +6107,6 @@ func (b *UpdateFieldBuilder) VersionMode(value string) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Width The field's html input width in the product.
 func (b *UpdateFieldBuilder) Width(value int) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6603,7 +6121,6 @@ func (b *UpdateFieldBuilder) Width(value int) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Required Indicates if the field is required (i.e. if every record must have a non-null value in this field). If you attempt to change a field from not-required to required, and the table currently contains records that have null values in that field, you will get an error indicating that there are null values of the field. In this case you need to find and update those records with null values of the field before changing the field to required.
 func (b *UpdateFieldBuilder) Required(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6613,7 +6130,6 @@ func (b *UpdateFieldBuilder) Required(value bool) *UpdateFieldBuilder {
 	return b
 }
 
-
 // Unique Indicates if every record in the table must contain a unique value of this field. If you attempt to change a field from not-unique to unique, and the table currently contains records with the same value of this field, you will get an error. In this case you need to find and update those records with duplicate values of the field before changing the field to unique.
 func (b *UpdateFieldBuilder) Unique(value bool) *UpdateFieldBuilder {
 	if b.err != nil {
@@ -6622,8 +6138,6 @@ func (b *UpdateFieldBuilder) Unique(value bool) *UpdateFieldBuilder {
 	b.params["unique"] = value
 	return b
 }
-
-
 
 // Run executes the updateField request and returns the response data directly.
 func (b *UpdateFieldBuilder) Run(ctx context.Context) (*UpdateFieldResult, error) {
@@ -6660,17 +6174,15 @@ func (b *UpdateFieldBuilder) Run(ctx context.Context) (*UpdateFieldResult, error
 	return &UpdateFieldResult{resp: resp}, nil
 }
 
-
-
 // UpdateRelationshipBuilder provides a fluent API for the updateRelationship operation.
 // Update a relationship
 type UpdateRelationshipBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client         *Client
+	table          string
+	tableID        string
 	relationshipId int64
-	params  map[string]any
-	err     error
+	params         map[string]any
+	err            error
 }
 
 // UpdateRelationship starts building a updateRelationship request.
@@ -6695,7 +6207,6 @@ func (c *Client) UpdateRelationship(table string, relationshipId int64) *UpdateR
 	return b
 }
 
-
 // LookupFieldIds An array of field IDs in the parent table that will become lookup fields in the child table.
 func (b *UpdateRelationshipBuilder) LookupFieldIds(values ...int) *UpdateRelationshipBuilder {
 	if b.err != nil {
@@ -6705,7 +6216,6 @@ func (b *UpdateRelationshipBuilder) LookupFieldIds(values ...int) *UpdateRelatio
 	return b
 }
 
-
 // SummaryFields An array of objects, each representing a configuration of one field from the child table, that will become summary fields on the parent table. When you specify the 'COUNT' accumulation type, you have to specify 0 as the summaryFid (or not set it in the request). 'DISTINCT-COUNT' requires that summaryFid be set to an actual fid.
 func (b *UpdateRelationshipBuilder) SummaryFields(values ...map[string]any) *UpdateRelationshipBuilder {
 	if b.err != nil {
@@ -6714,8 +6224,6 @@ func (b *UpdateRelationshipBuilder) SummaryFields(values ...map[string]any) *Upd
 	b.params["summaryFields"] = values
 	return b
 }
-
-
 
 // Run executes the updateRelationship request and returns the response data directly.
 func (b *UpdateRelationshipBuilder) Run(ctx context.Context) (*UpdateRelationshipResult, error) {
@@ -6749,16 +6257,14 @@ func (b *UpdateRelationshipBuilder) Run(ctx context.Context) (*UpdateRelationshi
 	return &UpdateRelationshipResult{resp: resp}, nil
 }
 
-
-
 // UpdateSolutionBuilder provides a fluent API for the updateSolution operation.
 // Update a solution
 type UpdateSolutionBuilder struct {
-	client  *Client
+	client     *Client
 	solutionId string
-	params  map[string]any
-	err     error
-	rawBody []byte
+	params     map[string]any
+	err        error
+	rawBody    []byte
 }
 
 // Body sets the request body, sent as application/x-yaml.
@@ -6777,8 +6283,6 @@ func (c *Client) UpdateSolution(solutionId string) *UpdateSolutionBuilder {
 	return b
 }
 
-
-
 // Run executes the updateSolution request and returns the response data directly.
 func (b *UpdateSolutionBuilder) Run(ctx context.Context) (*generated.UpdateSolutionResponse, error) {
 	if b.err != nil {
@@ -6796,19 +6300,17 @@ func (b *UpdateSolutionBuilder) Run(ctx context.Context) (*generated.UpdateSolut
 	return resp, nil
 }
 
-
-
 // UpdateSolutionToRecordBuilder provides a fluent API for the updateSolutionToRecord operation.
 // Update solution from record
 type UpdateSolutionToRecordBuilder struct {
-	client  *Client
-	table   string
-	tableID string
+	client     *Client
+	table      string
+	tableID    string
 	solutionId string
-	qpFieldId *int
+	qpFieldId  *int
 	qpRecordId *int
-	params  map[string]any
-	err     error
+	params     map[string]any
+	err        error
 }
 
 // UpdateSolutionToRecord starts building a updateSolutionToRecord request.
@@ -6833,8 +6335,6 @@ func (c *Client) UpdateSolutionToRecord(solutionId string, table string) *Update
 	return b
 }
 
-
-
 // FieldId The unique identifier (fid) of the field. It needs to be a file attachment field.
 func (b *UpdateSolutionToRecordBuilder) FieldId(value int) *UpdateSolutionToRecordBuilder {
 	if b.err != nil {
@@ -6844,7 +6344,6 @@ func (b *UpdateSolutionToRecordBuilder) FieldId(value int) *UpdateSolutionToReco
 	return b
 }
 
-
 // RecordId The unique identifier of the record.
 func (b *UpdateSolutionToRecordBuilder) RecordId(value int) *UpdateSolutionToRecordBuilder {
 	if b.err != nil {
@@ -6853,7 +6352,6 @@ func (b *UpdateSolutionToRecordBuilder) RecordId(value int) *UpdateSolutionToRec
 	b.qpRecordId = &value
 	return b
 }
-
 
 // Run executes the updateSolutionToRecord request and returns the response data directly.
 func (b *UpdateSolutionToRecordBuilder) Run(ctx context.Context) (*generated.UpdateSolutionToRecordResponse, error) {
@@ -6894,8 +6392,6 @@ func (b *UpdateSolutionToRecordBuilder) Run(ctx context.Context) (*generated.Upd
 	return resp, nil
 }
 
-
-
 // UpdateTableBuilder provides a fluent API for the updateTable operation.
 // Update a table
 type UpdateTableBuilder struct {
@@ -6928,7 +6424,6 @@ func (c *Client) UpdateTable(table string) *UpdateTableBuilder {
 	return b
 }
 
-
 // Description The description for the table. If this value is not passed the default value is blank.
 func (b *UpdateTableBuilder) Description(value string) *UpdateTableBuilder {
 	if b.err != nil {
@@ -6937,7 +6432,6 @@ func (b *UpdateTableBuilder) Description(value string) *UpdateTableBuilder {
 	b.params["description"] = value
 	return b
 }
-
 
 // Name The name for the table.
 func (b *UpdateTableBuilder) Name(value string) *UpdateTableBuilder {
@@ -6948,7 +6442,6 @@ func (b *UpdateTableBuilder) Name(value string) *UpdateTableBuilder {
 	return b
 }
 
-
 // PluralRecordName The plural noun for records in the table. If this value is not passed the default value is 'Records'.
 func (b *UpdateTableBuilder) PluralRecordName(value string) *UpdateTableBuilder {
 	if b.err != nil {
@@ -6957,7 +6450,6 @@ func (b *UpdateTableBuilder) PluralRecordName(value string) *UpdateTableBuilder 
 	b.params["pluralRecordName"] = value
 	return b
 }
-
 
 // SingleRecordName The singular noun for records in the table. If this value is not passed the default value is 'Record'.
 func (b *UpdateTableBuilder) SingleRecordName(value string) *UpdateTableBuilder {
@@ -6968,8 +6460,6 @@ func (b *UpdateTableBuilder) SingleRecordName(value string) *UpdateTableBuilder 
 	return b
 }
 
-
-
 // AppId The unique identifier of an app
 func (b *UpdateTableBuilder) AppId(value string) *UpdateTableBuilder {
 	if b.err != nil {
@@ -6978,7 +6468,6 @@ func (b *UpdateTableBuilder) AppId(value string) *UpdateTableBuilder {
 	b.qpAppId = &value
 	return b
 }
-
 
 // Run executes the updateTable request and returns the response data directly.
 func (b *UpdateTableBuilder) Run(ctx context.Context) (*UpdateTableResult, error) {
@@ -7024,15 +6513,13 @@ func (b *UpdateTableBuilder) Run(ctx context.Context) (*UpdateTableResult, error
 	return &UpdateTableResult{resp: resp}, nil
 }
 
-
-
 // UpdateTrusteesBuilder provides a fluent API for the updateTrustees operation.
 // Update trustees of an app
 type UpdateTrusteesBuilder struct {
-	client  *Client
-	appId string
-	params  map[string]any
-	err     error
+	client *Client
+	appId  string
+	params map[string]any
+	err    error
 }
 
 // UpdateTrustees starts building a updateTrustees request.
@@ -7044,8 +6531,6 @@ func (c *Client) UpdateTrustees(appId string) *UpdateTrusteesBuilder {
 	b.appId = appId
 	return b
 }
-
-
 
 // Run executes the updateTrustees request and returns the response data directly.
 func (b *UpdateTrusteesBuilder) Run(ctx context.Context) (*UpdateTrusteesResult, error) {
@@ -7078,8 +6563,6 @@ func (b *UpdateTrusteesBuilder) Run(ctx context.Context) (*UpdateTrusteesResult,
 	return &UpdateTrusteesResult{resp: resp}, nil
 }
 
-
-
 // UpsertBuilder provides a fluent API for the upsert operation.
 // Insert/Update record(s)
 type UpsertBuilder struct {
@@ -7111,7 +6594,6 @@ func (c *Client) Upsert(table string) *UpsertBuilder {
 	return b
 }
 
-
 // Data Record data array, where each record contains key-value mappings of fields to be defined/updated and their values.
 func (b *UpsertBuilder) Data(values ...any) *UpsertBuilder {
 	if b.err != nil {
@@ -7120,7 +6602,6 @@ func (b *UpsertBuilder) Data(values ...any) *UpsertBuilder {
 	b.params["data"] = values
 	return b
 }
-
 
 // FieldsToReturn Specify an array of field IDs that will return data for any updates or added record. Record ID (FID 3) is always returned if any field ID is requested.
 func (b *UpsertBuilder) FieldsToReturn(values ...int) *UpsertBuilder {
@@ -7131,7 +6612,6 @@ func (b *UpsertBuilder) FieldsToReturn(values ...int) *UpsertBuilder {
 	return b
 }
 
-
 // MergeFieldId The merge field id.
 func (b *UpsertBuilder) MergeFieldId(value int) *UpsertBuilder {
 	if b.err != nil {
@@ -7140,8 +6620,6 @@ func (b *UpsertBuilder) MergeFieldId(value int) *UpsertBuilder {
 	b.params["mergeFieldId"] = value
 	return b
 }
-
-
 
 // Run executes the upsert request and returns the response data directly.
 func (b *UpsertBuilder) Run(ctx context.Context) (*UpsertResult, error) {
@@ -7181,12 +6659,24 @@ func (b *UpsertBuilder) Run(ctx context.Context) (*UpsertResult, error) {
 	if err != nil {
 		return nil, err
 	}
+	// 207: QuickBase rejected some values and saved the rest. The body has
+	// the 200 shape; keep it, so the saved records' IDs aren't lost
+	if resp.JSON200 == nil && resp.StatusCode() == http.StatusMultiStatus {
+		if err := json.Unmarshal(resp.Body, &resp.JSON200); err != nil {
+			return nil, err
+		}
+	}
 	if resp.JSON200 == nil {
 		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
 	}
-	return &UpsertResult{resp: resp}, nil
+	result := &UpsertResult{resp: resp}
+	if b.client.lineErrorsAsErrors {
+		if lineErrors := resp.JSON200.Metadata; lineErrors != nil && lineErrors.LineErrors != nil && len(*lineErrors.LineErrors) > 0 {
+			return result, core.NewLineErrorsError(*lineErrors.LineErrors)
+		}
+	}
+	return result, nil
 }
-
 
 // Ensure imports are used
 var (

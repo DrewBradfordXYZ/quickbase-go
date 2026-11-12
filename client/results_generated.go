@@ -6,7 +6,6 @@ import (
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
 )
 
-
 // AddManagersToGroupResult wraps AddManagersToGroupResponse with convenience methods.
 type AddManagersToGroupResult struct {
 	resp *generated.AddManagersToGroupResponse
@@ -19,8 +18,6 @@ func (r *AddManagersToGroupResult) Raw() *generated.AddManagersToGroupResponse {
 	}
 	return r.resp
 }
-
-
 
 // AddMembersToGroupResult wraps AddMembersToGroupResponse with convenience methods.
 type AddMembersToGroupResult struct {
@@ -35,8 +32,6 @@ func (r *AddMembersToGroupResult) Raw() *generated.AddMembersToGroupResponse {
 	return r.resp
 }
 
-
-
 // AddSubgroupsToGroupResult wraps AddSubgroupsToGroupResponse with convenience methods.
 type AddSubgroupsToGroupResult struct {
 	resp *generated.AddSubgroupsToGroupResponse
@@ -50,8 +45,6 @@ func (r *AddSubgroupsToGroupResult) Raw() *generated.AddSubgroupsToGroupResponse
 	return r.resp
 }
 
-
-
 // AddTrusteesResult wraps AddTrusteesResponse with convenience methods.
 type AddTrusteesResult struct {
 	resp *generated.AddTrusteesResponse
@@ -64,8 +57,6 @@ func (r *AddTrusteesResult) Raw() *generated.AddTrusteesResponse {
 	}
 	return r.resp
 }
-
-
 
 // AuditResult wraps AuditResponse with convenience methods.
 type AuditResult struct {
@@ -111,8 +102,6 @@ func (r *AuditResult) QueryId() string {
 	return r.resp.JSON200.QueryId
 }
 
-
-
 // ChangesetSolutionFromRecordResult wraps ChangesetSolutionFromRecordResponse with convenience methods.
 type ChangesetSolutionFromRecordResult struct {
 	resp *generated.ChangesetSolutionFromRecordResponse
@@ -126,8 +115,6 @@ func (r *ChangesetSolutionFromRecordResult) Raw() *generated.ChangesetSolutionFr
 	return r.resp
 }
 
-
-
 // ChangesetSolutionResult wraps ChangesetSolutionResponse with convenience methods.
 type ChangesetSolutionResult struct {
 	resp *generated.ChangesetSolutionResponse
@@ -140,8 +127,6 @@ func (r *ChangesetSolutionResult) Raw() *generated.ChangesetSolutionResponse {
 	}
 	return r.resp
 }
-
-
 
 // CloneUserTokenResult wraps CloneUserTokenResponse with convenience methods.
 type CloneUserTokenResult struct {
@@ -203,8 +188,6 @@ func (r *CloneUserTokenResult) Token() string {
 	}
 	return *r.resp.JSON200.Token
 }
-
-
 
 // CopyAppResult wraps CopyAppResponse with convenience methods.
 type CopyAppResult struct {
@@ -298,8 +281,6 @@ func (r *CopyAppResult) Updated() string {
 	}
 	return *r.resp.JSON200.Updated
 }
-
-
 
 // CreateAppResult wraps CreateAppResponse with convenience methods.
 type CreateAppResult struct {
@@ -409,8 +390,6 @@ func (r *CreateAppResult) Updated() string {
 	}
 	return *r.resp.JSON200.Updated
 }
-
-
 
 // CreateFieldResult wraps CreateFieldResponse with convenience methods.
 type CreateFieldResult struct {
@@ -552,8 +531,6 @@ func (r *CreateFieldResult) Unique() bool {
 	return *r.resp.JSON200.Unique
 }
 
-
-
 // CreateRelationshipResult wraps CreateRelationshipResponse with convenience methods.
 type CreateRelationshipResult struct {
 	resp *generated.CreateRelationshipResponse
@@ -637,8 +614,6 @@ func (r *CreateRelationshipResult) SummaryFields() []*CreateRelationshipSummaryF
 	return items
 }
 
-
-
 // CreateSolutionFromRecordResult wraps CreateSolutionFromRecordResponse with convenience methods.
 type CreateSolutionFromRecordResult struct {
 	resp *generated.CreateSolutionFromRecordResponse
@@ -652,8 +627,6 @@ func (r *CreateSolutionFromRecordResult) Raw() *generated.CreateSolutionFromReco
 	return r.resp
 }
 
-
-
 // CreateSolutionResult wraps CreateSolutionResponse with convenience methods.
 type CreateSolutionResult struct {
 	resp *generated.CreateSolutionResponse
@@ -666,8 +639,6 @@ func (r *CreateSolutionResult) Raw() *generated.CreateSolutionResponse {
 	}
 	return r.resp
 }
-
-
 
 // CreateTableResult wraps CreateTableResponse with convenience methods.
 type CreateTableResult struct {
@@ -810,8 +781,6 @@ func (r *CreateTableResult) Updated() string {
 	return *r.resp.JSON200.Updated
 }
 
-
-
 // DeactivateUserTokenResult wraps DeactivateUserTokenResponse with convenience methods.
 type DeactivateUserTokenResult struct {
 	resp *generated.DeactivateUserTokenResponse
@@ -832,8 +801,6 @@ func (r *DeactivateUserTokenResult) Id() int {
 	}
 	return *r.resp.JSON200.Id
 }
-
-
 
 // DeleteAppResult wraps DeleteAppResponse with convenience methods.
 type DeleteAppResult struct {
@@ -856,8 +823,6 @@ func (r *DeleteAppResult) DeletedAppId() string {
 	return *r.resp.JSON200.DeletedAppId
 }
 
-
-
 // DeleteFieldsResult wraps DeleteFieldsResponse with convenience methods.
 type DeleteFieldsResult struct {
 	resp *generated.DeleteFieldsResponse
@@ -870,8 +835,6 @@ func (r *DeleteFieldsResult) Raw() *generated.DeleteFieldsResponse {
 	}
 	return r.resp
 }
-
-
 
 // DeleteFileResult wraps DeleteFileResponse with convenience methods.
 type DeleteFileResult struct {
@@ -918,8 +881,6 @@ func (r *DeleteFileResult) VersionNumber() int {
 	return *r.resp.JSON200.VersionNumber
 }
 
-
-
 // DeleteRecordsResult wraps DeleteRecordsResponse with convenience methods.
 type DeleteRecordsResult struct {
 	resp *generated.DeleteRecordsResponse
@@ -940,8 +901,6 @@ func (r *DeleteRecordsResult) NumberDeleted() int {
 	}
 	return *r.resp.JSON200.NumberDeleted
 }
-
-
 
 // DeleteRelationshipResult wraps DeleteRelationshipResponse with convenience methods.
 type DeleteRelationshipResult struct {
@@ -964,8 +923,6 @@ func (r *DeleteRelationshipResult) RelationshipId() int {
 	return *r.resp.JSON200.RelationshipId
 }
 
-
-
 // DeleteTableResult wraps DeleteTableResponse with convenience methods.
 type DeleteTableResult struct {
 	resp *generated.DeleteTableResponse
@@ -986,8 +943,6 @@ func (r *DeleteTableResult) DeletedTableId() string {
 	}
 	return *r.resp.JSON200.DeletedTableId
 }
-
-
 
 // DeleteUserTokenResult wraps DeleteUserTokenResponse with convenience methods.
 type DeleteUserTokenResult struct {
@@ -1010,8 +965,6 @@ func (r *DeleteUserTokenResult) Id() int {
 	return *r.resp.JSON200.Id
 }
 
-
-
 // DenyUsersAndGroupsResult wraps DenyUsersAndGroupsResponse with convenience methods.
 type DenyUsersAndGroupsResult struct {
 	resp *generated.DenyUsersAndGroupsResponse
@@ -1025,8 +978,6 @@ func (r *DenyUsersAndGroupsResult) Raw() *generated.DenyUsersAndGroupsResponse {
 	return r.resp
 }
 
-
-
 // DenyUsersResult wraps DenyUsersResponse with convenience methods.
 type DenyUsersResult struct {
 	resp *generated.DenyUsersResponse
@@ -1039,8 +990,6 @@ func (r *DenyUsersResult) Raw() *generated.DenyUsersResponse {
 	}
 	return r.resp
 }
-
-
 
 // ExchangeSsoTokenResult wraps ExchangeSsoTokenResponse with convenience methods.
 type ExchangeSsoTokenResult struct {
@@ -1079,8 +1028,6 @@ func (r *ExchangeSsoTokenResult) TokenType() string {
 	return string(*r.resp.JSON200.TokenType)
 }
 
-
-
 // ExportSolutionToRecordResult wraps ExportSolutionToRecordResponse with convenience methods.
 type ExportSolutionToRecordResult struct {
 	resp *generated.ExportSolutionToRecordResponse
@@ -1093,8 +1040,6 @@ func (r *ExportSolutionToRecordResult) Raw() *generated.ExportSolutionToRecordRe
 	}
 	return r.resp
 }
-
-
 
 // GenerateDocumentResult wraps GenerateDocumentResponse with convenience methods.
 type GenerateDocumentResult struct {
@@ -1133,8 +1078,6 @@ func (r *GenerateDocumentResult) FileName() string {
 	return *r.resp.JSON200.FileName
 }
 
-
-
 // AppEventsResult wraps GetAppEventsResponse with convenience methods.
 type AppEventsResult struct {
 	resp *generated.GetAppEventsResponse
@@ -1147,8 +1090,6 @@ func (r *AppEventsResult) Raw() *generated.GetAppEventsResponse {
 	}
 	return r.resp
 }
-
-
 
 // AppResult wraps GetAppResponse with convenience methods.
 type AppResult struct {
@@ -1259,8 +1200,6 @@ func (r *AppResult) Updated() string {
 	return *r.resp.JSON200.Updated
 }
 
-
-
 // AppTablesResult wraps GetAppTablesResponse with convenience methods.
 type AppTablesResult struct {
 	resp *generated.GetAppTablesResponse
@@ -1273,8 +1212,6 @@ func (r *AppTablesResult) Raw() *generated.GetAppTablesResponse {
 	}
 	return r.resp
 }
-
-
 
 // FieldResult wraps GetFieldResponse with convenience methods.
 type FieldResult struct {
@@ -1416,8 +1353,6 @@ func (r *FieldResult) Unique() bool {
 	return *r.resp.JSON200.Unique
 }
 
-
-
 // FieldUsageResult wraps GetFieldUsageResponse with convenience methods.
 type FieldUsageResult struct {
 	resp *generated.GetFieldUsageResponse
@@ -1430,8 +1365,6 @@ func (r *FieldUsageResult) Raw() *generated.GetFieldUsageResponse {
 	}
 	return r.resp
 }
-
-
 
 // FieldsResult wraps GetFieldsResponse with convenience methods.
 type FieldsResult struct {
@@ -1446,8 +1379,6 @@ func (r *FieldsResult) Raw() *generated.GetFieldsResponse {
 	return r.resp
 }
 
-
-
 // FieldsUsageResult wraps GetFieldsUsageResponse with convenience methods.
 type FieldsUsageResult struct {
 	resp *generated.GetFieldsUsageResponse
@@ -1460,8 +1391,6 @@ func (r *FieldsUsageResult) Raw() *generated.GetFieldsUsageResponse {
 	}
 	return r.resp
 }
-
-
 
 // RelationshipsResult wraps GetRelationshipsResponse with convenience methods.
 type RelationshipsResult struct {
@@ -1495,8 +1424,6 @@ func (r *RelationshipsResult) Relationships() []*GetRelationshipsRelationshipsIt
 	}
 	return items
 }
-
-
 
 // ReportResult wraps GetReportResponse with convenience methods.
 type ReportResult struct {
@@ -1583,8 +1510,6 @@ func (r *ReportResult) UsedLast() string {
 	return *r.resp.JSON200.UsedLast
 }
 
-
-
 // RolesResult wraps GetRolesResponse with convenience methods.
 type RolesResult struct {
 	resp *generated.GetRolesResponse
@@ -1597,8 +1522,6 @@ func (r *RolesResult) Raw() *generated.GetRolesResponse {
 	}
 	return r.resp
 }
-
-
 
 // SolutionPublicResult wraps GetSolutionPublicResponse with convenience methods.
 type SolutionPublicResult struct {
@@ -1645,8 +1568,6 @@ func (r *SolutionPublicResult) Uuid() string {
 	return *r.resp.JSON200.Uuid
 }
 
-
-
 // TableReportsResult wraps GetTableReportsResponse with convenience methods.
 type TableReportsResult struct {
 	resp *generated.GetTableReportsResponse
@@ -1659,8 +1580,6 @@ func (r *TableReportsResult) Raw() *generated.GetTableReportsResponse {
 	}
 	return r.resp
 }
-
-
 
 // TableResult wraps GetTableResponse with convenience methods.
 type TableResult struct {
@@ -1803,8 +1722,6 @@ func (r *TableResult) Updated() string {
 	return *r.resp.JSON200.Updated
 }
 
-
-
 // TempTokenDBIDResult wraps GetTempTokenDBIDResponse with convenience methods.
 type TempTokenDBIDResult struct {
 	resp *generated.GetTempTokenDBIDResponse
@@ -1826,8 +1743,6 @@ func (r *TempTokenDBIDResult) TemporaryAuthorization() string {
 	return *r.resp.JSON200.TemporaryAuthorization
 }
 
-
-
 // TrusteesResult wraps GetTrusteesResponse with convenience methods.
 type TrusteesResult struct {
 	resp *generated.GetTrusteesResponse
@@ -1840,8 +1755,6 @@ func (r *TrusteesResult) Raw() *generated.GetTrusteesResponse {
 	}
 	return r.resp
 }
-
-
 
 // UserAppsResult wraps GetUserAppsResponse with convenience methods.
 type UserAppsResult struct {
@@ -1856,8 +1769,6 @@ func (r *UserAppsResult) Raw() *generated.GetUserAppsResponse {
 	return r.resp
 }
 
-
-
 // UsersResult wraps GetUsersResponse with convenience methods.
 type UsersResult struct {
 	resp *generated.GetUsersResponse
@@ -1870,8 +1781,6 @@ func (r *UsersResult) Raw() *generated.GetUsersResponse {
 	}
 	return r.resp
 }
-
-
 
 // PlatformAnalyticEventSummariesResult wraps PlatformAnalyticEventSummariesResponse with convenience methods.
 type PlatformAnalyticEventSummariesResult struct {
@@ -1886,8 +1795,6 @@ func (r *PlatformAnalyticEventSummariesResult) Raw() *generated.PlatformAnalytic
 	return r.resp
 }
 
-
-
 // PlatformAnalyticReadsResult wraps PlatformAnalyticReadsResponse with convenience methods.
 type PlatformAnalyticReadsResult struct {
 	resp *generated.PlatformAnalyticReadsResponse
@@ -1900,8 +1807,6 @@ func (r *PlatformAnalyticReadsResult) Raw() *generated.PlatformAnalyticReadsResp
 	}
 	return r.resp
 }
-
-
 
 // RecordsModifiedSinceResult wraps RecordsModifiedSinceResponse with convenience methods.
 type RecordsModifiedSinceResult struct {
@@ -1932,8 +1837,6 @@ func (r *RecordsModifiedSinceResult) DeletesTruncated() bool {
 	return *r.resp.JSON200.DeletesTruncated
 }
 
-
-
 // RemoveManagersFromGroupResult wraps RemoveManagersFromGroupResponse with convenience methods.
 type RemoveManagersFromGroupResult struct {
 	resp *generated.RemoveManagersFromGroupResponse
@@ -1946,8 +1849,6 @@ func (r *RemoveManagersFromGroupResult) Raw() *generated.RemoveManagersFromGroup
 	}
 	return r.resp
 }
-
-
 
 // RemoveMembersFromGroupResult wraps RemoveMembersFromGroupResponse with convenience methods.
 type RemoveMembersFromGroupResult struct {
@@ -1962,8 +1863,6 @@ func (r *RemoveMembersFromGroupResult) Raw() *generated.RemoveMembersFromGroupRe
 	return r.resp
 }
 
-
-
 // RemoveSubgroupsFromGroupResult wraps RemoveSubgroupsFromGroupResponse with convenience methods.
 type RemoveSubgroupsFromGroupResult struct {
 	resp *generated.RemoveSubgroupsFromGroupResponse
@@ -1977,8 +1876,6 @@ func (r *RemoveSubgroupsFromGroupResult) Raw() *generated.RemoveSubgroupsFromGro
 	return r.resp
 }
 
-
-
 // RemoveTrusteesResult wraps RemoveTrusteesResponse with convenience methods.
 type RemoveTrusteesResult struct {
 	resp *generated.RemoveTrusteesResponse
@@ -1991,8 +1888,6 @@ func (r *RemoveTrusteesResult) Raw() *generated.RemoveTrusteesResponse {
 	}
 	return r.resp
 }
-
-
 
 // RunFormulaResult wraps RunFormulaResponse with convenience methods.
 type RunFormulaResult struct {
@@ -2014,8 +1909,6 @@ func (r *RunFormulaResult) Result() string {
 	}
 	return *r.resp.JSON200.Result
 }
-
-
 
 // RunQueryResult wraps RunQueryResponse with convenience methods.
 type RunQueryResult struct {
@@ -2053,7 +1946,6 @@ func (r *RunQueryResult) Metadata() *RunQueryMetadata {
 	return &RunQueryMetadata{r.resp.JSON200.Metadata}
 }
 
-
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
 func (r *RunQueryResult) Records() []Record {
@@ -2062,7 +1954,6 @@ func (r *RunQueryResult) Records() []Record {
 	}
 	return unwrapRecords(*r.resp.JSON200.Data)
 }
-
 
 // RunReportResult wraps RunReportResponse with convenience methods.
 type RunReportResult struct {
@@ -2100,7 +1991,6 @@ func (r *RunReportResult) Metadata() *RunReportMetadata {
 	return &RunReportMetadata{r.resp.JSON200.Metadata}
 }
 
-
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
 func (r *RunReportResult) Records() []Record {
@@ -2109,7 +1999,6 @@ func (r *RunReportResult) Records() []Record {
 	}
 	return unwrapRecords(*r.resp.JSON200.Data)
 }
-
 
 // TransferUserTokenResult wraps TransferUserTokenResponse with convenience methods.
 type TransferUserTokenResult struct {
@@ -2164,8 +2053,6 @@ func (r *TransferUserTokenResult) Name() string {
 	return *r.resp.JSON200.Name
 }
 
-
-
 // UndenyUsersResult wraps UndenyUsersResponse with convenience methods.
 type UndenyUsersResult struct {
 	resp *generated.UndenyUsersResponse
@@ -2178,8 +2065,6 @@ func (r *UndenyUsersResult) Raw() *generated.UndenyUsersResponse {
 	}
 	return r.resp
 }
-
-
 
 // UpdateAppResult wraps UpdateAppResponse with convenience methods.
 type UpdateAppResult struct {
@@ -2289,8 +2174,6 @@ func (r *UpdateAppResult) Updated() string {
 	}
 	return *r.resp.JSON200.Updated
 }
-
-
 
 // UpdateFieldResult wraps UpdateFieldResponse with convenience methods.
 type UpdateFieldResult struct {
@@ -2432,8 +2315,6 @@ func (r *UpdateFieldResult) Unique() bool {
 	return *r.resp.JSON200.Unique
 }
 
-
-
 // UpdateRelationshipResult wraps UpdateRelationshipResponse with convenience methods.
 type UpdateRelationshipResult struct {
 	resp *generated.UpdateRelationshipResponse
@@ -2517,8 +2398,6 @@ func (r *UpdateRelationshipResult) SummaryFields() []*UpdateRelationshipSummaryF
 	return items
 }
 
-
-
 // UpdateSolutionResult wraps UpdateSolutionResponse with convenience methods.
 type UpdateSolutionResult struct {
 	resp *generated.UpdateSolutionResponse
@@ -2556,8 +2435,6 @@ func (r *UpdateSolutionResult) Warnings() []string {
 	return *r.resp.JSON200.Warnings
 }
 
-
-
 // UpdateSolutionToRecordResult wraps UpdateSolutionToRecordResponse with convenience methods.
 type UpdateSolutionToRecordResult struct {
 	resp *generated.UpdateSolutionToRecordResponse
@@ -2570,8 +2447,6 @@ func (r *UpdateSolutionToRecordResult) Raw() *generated.UpdateSolutionToRecordRe
 	}
 	return r.resp
 }
-
-
 
 // UpdateTableResult wraps UpdateTableResponse with convenience methods.
 type UpdateTableResult struct {
@@ -2714,8 +2589,6 @@ func (r *UpdateTableResult) Updated() string {
 	return *r.resp.JSON200.Updated
 }
 
-
-
 // UpdateTrusteesResult wraps UpdateTrusteesResponse with convenience methods.
 type UpdateTrusteesResult struct {
 	resp *generated.UpdateTrusteesResponse
@@ -2728,8 +2601,6 @@ func (r *UpdateTrusteesResult) Raw() *generated.UpdateTrusteesResponse {
 	}
 	return r.resp
 }
-
-
 
 // UpsertResult wraps UpsertResponse with convenience methods.
 type UpsertResult struct {
@@ -2752,7 +2623,6 @@ func (r *UpsertResult) Metadata() *UpsertMetadata {
 	return &UpsertMetadata{r.resp.JSON200.Metadata}
 }
 
-
 // Records returns the record data as unwrapped maps.
 // Returns nil if Data is nil.
 func (r *UpsertResult) Records() []Record {
@@ -2761,9 +2631,6 @@ func (r *UpsertResult) Records() []Record {
 	}
 	return unwrapRecords(*r.resp.JSON200.Data)
 }
-
-
-
 
 // AppEventsItem wraps GetAppEventsItem with convenience methods.
 type AppEventsItem struct {
@@ -2817,7 +2684,6 @@ func (r *AppEventsItem) Url() string {
 	}
 	return *r.GetAppEventsItem.Url
 }
-
 
 // AppTablesItem wraps GetAppTablesItem with convenience methods.
 type AppTablesItem struct {
@@ -2952,12 +2818,10 @@ func (r *AppTablesItem) Updated() string {
 	return *r.GetAppTablesItem.Updated
 }
 
-
 // FieldUsageItem wraps GetFieldUsageItem with convenience methods.
 type FieldUsageItem struct {
 	*generated.GetFieldUsageItem
 }
-
 
 // FieldsItem wraps GetFieldsItem with convenience methods.
 type FieldsItem struct {
@@ -3091,12 +2955,10 @@ func (r *FieldsItem) Unique() bool {
 	return *r.GetFieldsItem.Unique
 }
 
-
 // FieldsUsageItem wraps GetFieldsUsageItem with convenience methods.
 type FieldsUsageItem struct {
 	*generated.GetFieldsUsageItem
 }
-
 
 // RolesItem wraps GetRolesItem with convenience methods.
 type RolesItem struct {
@@ -3126,7 +2988,6 @@ func (r *RolesItem) Name() string {
 	}
 	return *r.GetRolesItem.Name
 }
-
 
 // TableReportsItem wraps GetTableReportsItem with convenience methods.
 type TableReportsItem struct {
@@ -3205,7 +3066,6 @@ func (r *TableReportsItem) UsedLast() string {
 	return *r.GetTableReportsItem.UsedLast
 }
 
-
 // TrusteesItem wraps GetTrusteesItem with convenience methods.
 type TrusteesItem struct {
 	*generated.GetTrusteesItem
@@ -3226,9 +3086,6 @@ func (r *TrusteesItem) RoleId() int {
 	}
 	return r.GetTrusteesItem.RoleId
 }
-
-
-
 
 // AuditEventsItem wraps AuditEventsItem with convenience methods.
 type AuditEventsItem struct {
@@ -3323,7 +3180,6 @@ func (r *AuditEventsItem) Useragent() string {
 	return r.AuditEventsItem.Useragent
 }
 
-
 // AuditEventsItem_PayloadChanges wraps AuditEventsItem_PayloadChanges with convenience methods.
 type AuditEventsItem_PayloadChanges struct {
 	*generated.AuditEventsItem_PayloadChanges
@@ -3352,7 +3208,6 @@ func (r *AuditEventsItem_PayloadChanges) Type() string {
 	}
 	return r.AuditEventsItem_PayloadChanges.Type
 }
-
 
 // AuditEventsItem_PayloadChanges_Changes wraps AuditEventsItem_PayloadChanges_Changes with convenience methods.
 type AuditEventsItem_PayloadChanges_Changes struct {
@@ -3401,7 +3256,6 @@ func (r *AuditEventsItem_PayloadChanges_Changes) Previous() []*AuditEventsItem_P
 	return items
 }
 
-
 // AuditEventsItem_PayloadChanges_Changes_Current_Item wraps AuditEventsItem_PayloadChanges_Changes_Current_Item with convenience methods.
 type AuditEventsItem_PayloadChanges_Changes_Current_Item struct {
 	*generated.AuditEventsItem_PayloadChanges_Changes_Current_Item
@@ -3430,7 +3284,6 @@ func (r *AuditEventsItem_PayloadChanges_Changes_Current_Item) Value() string {
 	}
 	return r.AuditEventsItem_PayloadChanges_Changes_Current_Item.Value
 }
-
 
 // AuditEventsItem_PayloadChanges_Changes_Fields_Item wraps AuditEventsItem_PayloadChanges_Changes_Fields_Item with convenience methods.
 type AuditEventsItem_PayloadChanges_Changes_Fields_Item struct {
@@ -3461,7 +3314,6 @@ func (r *AuditEventsItem_PayloadChanges_Changes_Fields_Item) Type() string {
 	return r.AuditEventsItem_PayloadChanges_Changes_Fields_Item.Type
 }
 
-
 // AuditEventsItem_PayloadChanges_Changes_Previous_Item wraps AuditEventsItem_PayloadChanges_Changes_Previous_Item with convenience methods.
 type AuditEventsItem_PayloadChanges_Changes_Previous_Item struct {
 	*generated.AuditEventsItem_PayloadChanges_Changes_Previous_Item
@@ -3491,7 +3343,6 @@ func (r *AuditEventsItem_PayloadChanges_Changes_Previous_Item) Value() string {
 	return r.AuditEventsItem_PayloadChanges_Changes_Previous_Item.Value
 }
 
-
 // CreateAppMemoryInfo wraps CreateAppMemoryInfo with convenience methods.
 type CreateAppMemoryInfo struct {
 	*generated.CreateAppMemoryInfo
@@ -3512,7 +3363,6 @@ func (r *CreateAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	}
 	return *r.CreateAppMemoryInfo.EstMemoryInclDependentApps
 }
-
 
 // CreateAppSecurityProperties wraps CreateAppSecurityProperties with convenience methods.
 type CreateAppSecurityProperties struct {
@@ -3567,7 +3417,6 @@ func (r *CreateAppSecurityProperties) UseIPFilter() bool {
 	return *r.CreateAppSecurityProperties.UseIPFilter
 }
 
-
 // CreateFieldPermissionsItem wraps CreateFieldPermissionsItem with convenience methods.
 type CreateFieldPermissionsItem struct {
 	*generated.CreateFieldPermissionsItem
@@ -3596,7 +3445,6 @@ func (r *CreateFieldPermissionsItem) RoleId() int {
 	}
 	return *r.CreateFieldPermissionsItem.RoleId
 }
-
 
 // CreateFieldProperties wraps CreateFieldProperties with convenience methods.
 type CreateFieldProperties struct {
@@ -4194,12 +4042,10 @@ func (r *CreateFieldProperties) XmlTag() string {
 	return *r.CreateFieldProperties.XmlTag
 }
 
-
 // CreateFieldProperties_CompositeFields_Item wraps CreateFieldProperties_CompositeFields_Item with convenience methods.
 type CreateFieldProperties_CompositeFields_Item struct {
 	*generated.CreateFieldProperties_CompositeFields_Item
 }
-
 
 // CreateRelationshipForeignKeyField wraps CreateRelationshipForeignKeyField with convenience methods.
 type CreateRelationshipForeignKeyField struct {
@@ -4230,7 +4076,6 @@ func (r *CreateRelationshipForeignKeyField) Type() string {
 	return *r.CreateRelationshipForeignKeyField.Type
 }
 
-
 // CreateRelationshipLookupFieldsItem wraps CreateRelationshipLookupFieldsItem with convenience methods.
 type CreateRelationshipLookupFieldsItem struct {
 	*generated.CreateRelationshipLookupFieldsItem
@@ -4260,7 +4105,6 @@ func (r *CreateRelationshipLookupFieldsItem) Type() string {
 	return *r.CreateRelationshipLookupFieldsItem.Type
 }
 
-
 // CreateRelationshipSummaryFieldsItem wraps CreateRelationshipSummaryFieldsItem with convenience methods.
 type CreateRelationshipSummaryFieldsItem struct {
 	*generated.CreateRelationshipSummaryFieldsItem
@@ -4289,7 +4133,6 @@ func (r *CreateRelationshipSummaryFieldsItem) Type() string {
 	}
 	return *r.CreateRelationshipSummaryFieldsItem.Type
 }
-
 
 // DeleteFileCreator wraps DeleteFileCreator with convenience methods.
 type DeleteFileCreator struct {
@@ -4328,7 +4171,6 @@ func (r *DeleteFileCreator) UserName() string {
 	return *r.DeleteFileCreator.UserName
 }
 
-
 // GetAppEventsItemOwner wraps GetAppEventsItemOwner with convenience methods.
 type GetAppEventsItemOwner struct {
 	*generated.GetAppEventsItemOwner
@@ -4366,7 +4208,6 @@ func (r *GetAppEventsItemOwner) UserName() string {
 	return *r.GetAppEventsItemOwner.UserName
 }
 
-
 // GetAppMemoryInfo wraps GetAppMemoryInfo with convenience methods.
 type GetAppMemoryInfo struct {
 	*generated.GetAppMemoryInfo
@@ -4387,7 +4228,6 @@ func (r *GetAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	}
 	return *r.GetAppMemoryInfo.EstMemoryInclDependentApps
 }
-
 
 // GetAppSecurityProperties wraps GetAppSecurityProperties with convenience methods.
 type GetAppSecurityProperties struct {
@@ -4442,7 +4282,6 @@ func (r *GetAppSecurityProperties) UseIPFilter() bool {
 	return *r.GetAppSecurityProperties.UseIPFilter
 }
 
-
 // GetFieldPermissionsItem wraps GetFieldPermissionsItem with convenience methods.
 type GetFieldPermissionsItem struct {
 	*generated.GetFieldPermissionsItem
@@ -4471,7 +4310,6 @@ func (r *GetFieldPermissionsItem) RoleId() int {
 	}
 	return *r.GetFieldPermissionsItem.RoleId
 }
-
 
 // GetFieldProperties wraps GetFieldProperties with convenience methods.
 type GetFieldProperties struct {
@@ -5117,12 +4955,10 @@ func (r *GetFieldProperties) XmlTag() string {
 	return *r.GetFieldProperties.XmlTag
 }
 
-
 // GetFieldProperties_CompositeFields_Item wraps GetFieldProperties_CompositeFields_Item with convenience methods.
 type GetFieldProperties_CompositeFields_Item struct {
 	*generated.GetFieldProperties_CompositeFields_Item
 }
-
 
 // GetFieldUsageItemField wraps GetFieldUsageItemField with convenience methods.
 type GetFieldUsageItemField struct {
@@ -5153,7 +4989,6 @@ func (r *GetFieldUsageItemField) Type() string {
 	return r.GetFieldUsageItemField.Type
 }
 
-
 // GetFieldUsageItemUsage wraps GetFieldUsageItemUsage with convenience methods.
 type GetFieldUsageItemUsage struct {
 	*generated.GetFieldUsageItemUsage
@@ -5175,7 +5010,6 @@ func (r *GetFieldUsageItemUsage) DocumentTemplates() *GetFieldUsageItemUsage_Doc
 	return &GetFieldUsageItemUsage_DocumentTemplates{r.GetFieldUsageItemUsage.DocumentTemplates}
 }
 
-
 // GetFieldUsageItemUsage_Actions wraps GetFieldUsageItemUsage_Actions with convenience methods.
 type GetFieldUsageItemUsage_Actions struct {
 	*generated.GetFieldUsageItemUsage_Actions
@@ -5188,7 +5022,6 @@ func (r *GetFieldUsageItemUsage_Actions) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_Actions.Count
 }
-
 
 // GetFieldUsageItemUsage_AppHomePages wraps GetFieldUsageItemUsage_AppHomePages with convenience methods.
 type GetFieldUsageItemUsage_AppHomePages struct {
@@ -5203,7 +5036,6 @@ func (r *GetFieldUsageItemUsage_AppHomePages) Count() int {
 	return r.GetFieldUsageItemUsage_AppHomePages.Count
 }
 
-
 // GetFieldUsageItemUsage_CustomEmails wraps GetFieldUsageItemUsage_CustomEmails with convenience methods.
 type GetFieldUsageItemUsage_CustomEmails struct {
 	*generated.GetFieldUsageItemUsage_CustomEmails
@@ -5216,7 +5048,6 @@ func (r *GetFieldUsageItemUsage_CustomEmails) Count() int {
 	}
 	return *r.GetFieldUsageItemUsage_CustomEmails.Count
 }
-
 
 // GetFieldUsageItemUsage_Dashboards wraps GetFieldUsageItemUsage_Dashboards with convenience methods.
 type GetFieldUsageItemUsage_Dashboards struct {
@@ -5231,7 +5062,6 @@ func (r *GetFieldUsageItemUsage_Dashboards) Count() int {
 	return r.GetFieldUsageItemUsage_Dashboards.Count
 }
 
-
 // GetFieldUsageItemUsage_DefaultReports wraps GetFieldUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldUsageItemUsage_DefaultReports
@@ -5244,7 +5074,6 @@ func (r *GetFieldUsageItemUsage_DefaultReports) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_DefaultReports.Count
 }
-
 
 // GetFieldUsageItemUsage_DocumentTemplates wraps GetFieldUsageItemUsage_DocumentTemplates with convenience methods.
 type GetFieldUsageItemUsage_DocumentTemplates struct {
@@ -5259,7 +5088,6 @@ func (r *GetFieldUsageItemUsage_DocumentTemplates) Count() int {
 	return *r.GetFieldUsageItemUsage_DocumentTemplates.Count
 }
 
-
 // GetFieldUsageItemUsage_ExactForms wraps GetFieldUsageItemUsage_ExactForms with convenience methods.
 type GetFieldUsageItemUsage_ExactForms struct {
 	*generated.GetFieldUsageItemUsage_ExactForms
@@ -5272,7 +5100,6 @@ func (r *GetFieldUsageItemUsage_ExactForms) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_ExactForms.Count
 }
-
 
 // GetFieldUsageItemUsage_Fields wraps GetFieldUsageItemUsage_Fields with convenience methods.
 type GetFieldUsageItemUsage_Fields struct {
@@ -5287,7 +5114,6 @@ func (r *GetFieldUsageItemUsage_Fields) Count() int {
 	return r.GetFieldUsageItemUsage_Fields.Count
 }
 
-
 // GetFieldUsageItemUsage_Forms wraps GetFieldUsageItemUsage_Forms with convenience methods.
 type GetFieldUsageItemUsage_Forms struct {
 	*generated.GetFieldUsageItemUsage_Forms
@@ -5300,7 +5126,6 @@ func (r *GetFieldUsageItemUsage_Forms) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_Forms.Count
 }
-
 
 // GetFieldUsageItemUsage_Notifications wraps GetFieldUsageItemUsage_Notifications with convenience methods.
 type GetFieldUsageItemUsage_Notifications struct {
@@ -5315,7 +5140,6 @@ func (r *GetFieldUsageItemUsage_Notifications) Count() int {
 	return r.GetFieldUsageItemUsage_Notifications.Count
 }
 
-
 // GetFieldUsageItemUsage_PersonalReports wraps GetFieldUsageItemUsage_PersonalReports with convenience methods.
 type GetFieldUsageItemUsage_PersonalReports struct {
 	*generated.GetFieldUsageItemUsage_PersonalReports
@@ -5328,7 +5152,6 @@ func (r *GetFieldUsageItemUsage_PersonalReports) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_PersonalReports.Count
 }
-
 
 // GetFieldUsageItemUsage_Pipelines wraps GetFieldUsageItemUsage_Pipelines with convenience methods.
 type GetFieldUsageItemUsage_Pipelines struct {
@@ -5343,7 +5166,6 @@ func (r *GetFieldUsageItemUsage_Pipelines) Count() int {
 	return r.GetFieldUsageItemUsage_Pipelines.Count
 }
 
-
 // GetFieldUsageItemUsage_Relationships wraps GetFieldUsageItemUsage_Relationships with convenience methods.
 type GetFieldUsageItemUsage_Relationships struct {
 	*generated.GetFieldUsageItemUsage_Relationships
@@ -5356,7 +5178,6 @@ func (r *GetFieldUsageItemUsage_Relationships) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_Relationships.Count
 }
-
 
 // GetFieldUsageItemUsage_Reminders wraps GetFieldUsageItemUsage_Reminders with convenience methods.
 type GetFieldUsageItemUsage_Reminders struct {
@@ -5371,7 +5192,6 @@ func (r *GetFieldUsageItemUsage_Reminders) Count() int {
 	return r.GetFieldUsageItemUsage_Reminders.Count
 }
 
-
 // GetFieldUsageItemUsage_Reports wraps GetFieldUsageItemUsage_Reports with convenience methods.
 type GetFieldUsageItemUsage_Reports struct {
 	*generated.GetFieldUsageItemUsage_Reports
@@ -5384,7 +5204,6 @@ func (r *GetFieldUsageItemUsage_Reports) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_Reports.Count
 }
-
 
 // GetFieldUsageItemUsage_Roles wraps GetFieldUsageItemUsage_Roles with convenience methods.
 type GetFieldUsageItemUsage_Roles struct {
@@ -5399,7 +5218,6 @@ func (r *GetFieldUsageItemUsage_Roles) Count() int {
 	return r.GetFieldUsageItemUsage_Roles.Count
 }
 
-
 // GetFieldUsageItemUsage_TableImports wraps GetFieldUsageItemUsage_TableImports with convenience methods.
 type GetFieldUsageItemUsage_TableImports struct {
 	*generated.GetFieldUsageItemUsage_TableImports
@@ -5412,7 +5230,6 @@ func (r *GetFieldUsageItemUsage_TableImports) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_TableImports.Count
 }
-
 
 // GetFieldUsageItemUsage_TableRules wraps GetFieldUsageItemUsage_TableRules with convenience methods.
 type GetFieldUsageItemUsage_TableRules struct {
@@ -5427,7 +5244,6 @@ func (r *GetFieldUsageItemUsage_TableRules) Count() int {
 	return r.GetFieldUsageItemUsage_TableRules.Count
 }
 
-
 // GetFieldUsageItemUsage_Webhooks wraps GetFieldUsageItemUsage_Webhooks with convenience methods.
 type GetFieldUsageItemUsage_Webhooks struct {
 	*generated.GetFieldUsageItemUsage_Webhooks
@@ -5440,7 +5256,6 @@ func (r *GetFieldUsageItemUsage_Webhooks) Count() int {
 	}
 	return r.GetFieldUsageItemUsage_Webhooks.Count
 }
-
 
 // GetFieldsItemPermissionsItem wraps GetFieldsItemPermissionsItem with convenience methods.
 type GetFieldsItemPermissionsItem struct {
@@ -5470,7 +5285,6 @@ func (r *GetFieldsItemPermissionsItem) RoleId() int {
 	}
 	return *r.GetFieldsItemPermissionsItem.RoleId
 }
-
 
 // GetFieldsItemProperties wraps GetFieldsItemProperties with convenience methods.
 type GetFieldsItemProperties struct {
@@ -6116,12 +5930,10 @@ func (r *GetFieldsItemProperties) XmlTag() string {
 	return *r.GetFieldsItemProperties.XmlTag
 }
 
-
 // GetFieldsItemProperties_CompositeFields_Item wraps GetFieldsItemProperties_CompositeFields_Item with convenience methods.
 type GetFieldsItemProperties_CompositeFields_Item struct {
 	*generated.GetFieldsItemProperties_CompositeFields_Item
 }
-
 
 // GetFieldsUsageItemField wraps GetFieldsUsageItemField with convenience methods.
 type GetFieldsUsageItemField struct {
@@ -6152,7 +5964,6 @@ func (r *GetFieldsUsageItemField) Type() string {
 	return r.GetFieldsUsageItemField.Type
 }
 
-
 // GetFieldsUsageItemUsage wraps GetFieldsUsageItemUsage with convenience methods.
 type GetFieldsUsageItemUsage struct {
 	*generated.GetFieldsUsageItemUsage
@@ -6174,7 +5985,6 @@ func (r *GetFieldsUsageItemUsage) DocumentTemplates() *GetFieldsUsageItemUsage_D
 	return &GetFieldsUsageItemUsage_DocumentTemplates{r.GetFieldsUsageItemUsage.DocumentTemplates}
 }
 
-
 // GetFieldsUsageItemUsage_Actions wraps GetFieldsUsageItemUsage_Actions with convenience methods.
 type GetFieldsUsageItemUsage_Actions struct {
 	*generated.GetFieldsUsageItemUsage_Actions
@@ -6187,7 +5997,6 @@ func (r *GetFieldsUsageItemUsage_Actions) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_Actions.Count
 }
-
 
 // GetFieldsUsageItemUsage_AppHomePages wraps GetFieldsUsageItemUsage_AppHomePages with convenience methods.
 type GetFieldsUsageItemUsage_AppHomePages struct {
@@ -6202,7 +6011,6 @@ func (r *GetFieldsUsageItemUsage_AppHomePages) Count() int {
 	return r.GetFieldsUsageItemUsage_AppHomePages.Count
 }
 
-
 // GetFieldsUsageItemUsage_CustomEmails wraps GetFieldsUsageItemUsage_CustomEmails with convenience methods.
 type GetFieldsUsageItemUsage_CustomEmails struct {
 	*generated.GetFieldsUsageItemUsage_CustomEmails
@@ -6215,7 +6023,6 @@ func (r *GetFieldsUsageItemUsage_CustomEmails) Count() int {
 	}
 	return *r.GetFieldsUsageItemUsage_CustomEmails.Count
 }
-
 
 // GetFieldsUsageItemUsage_Dashboards wraps GetFieldsUsageItemUsage_Dashboards with convenience methods.
 type GetFieldsUsageItemUsage_Dashboards struct {
@@ -6230,7 +6037,6 @@ func (r *GetFieldsUsageItemUsage_Dashboards) Count() int {
 	return r.GetFieldsUsageItemUsage_Dashboards.Count
 }
 
-
 // GetFieldsUsageItemUsage_DefaultReports wraps GetFieldsUsageItemUsage_DefaultReports with convenience methods.
 type GetFieldsUsageItemUsage_DefaultReports struct {
 	*generated.GetFieldsUsageItemUsage_DefaultReports
@@ -6243,7 +6049,6 @@ func (r *GetFieldsUsageItemUsage_DefaultReports) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_DefaultReports.Count
 }
-
 
 // GetFieldsUsageItemUsage_DocumentTemplates wraps GetFieldsUsageItemUsage_DocumentTemplates with convenience methods.
 type GetFieldsUsageItemUsage_DocumentTemplates struct {
@@ -6258,7 +6063,6 @@ func (r *GetFieldsUsageItemUsage_DocumentTemplates) Count() int {
 	return *r.GetFieldsUsageItemUsage_DocumentTemplates.Count
 }
 
-
 // GetFieldsUsageItemUsage_ExactForms wraps GetFieldsUsageItemUsage_ExactForms with convenience methods.
 type GetFieldsUsageItemUsage_ExactForms struct {
 	*generated.GetFieldsUsageItemUsage_ExactForms
@@ -6271,7 +6075,6 @@ func (r *GetFieldsUsageItemUsage_ExactForms) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_ExactForms.Count
 }
-
 
 // GetFieldsUsageItemUsage_Fields wraps GetFieldsUsageItemUsage_Fields with convenience methods.
 type GetFieldsUsageItemUsage_Fields struct {
@@ -6286,7 +6089,6 @@ func (r *GetFieldsUsageItemUsage_Fields) Count() int {
 	return r.GetFieldsUsageItemUsage_Fields.Count
 }
 
-
 // GetFieldsUsageItemUsage_Forms wraps GetFieldsUsageItemUsage_Forms with convenience methods.
 type GetFieldsUsageItemUsage_Forms struct {
 	*generated.GetFieldsUsageItemUsage_Forms
@@ -6299,7 +6101,6 @@ func (r *GetFieldsUsageItemUsage_Forms) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_Forms.Count
 }
-
 
 // GetFieldsUsageItemUsage_Notifications wraps GetFieldsUsageItemUsage_Notifications with convenience methods.
 type GetFieldsUsageItemUsage_Notifications struct {
@@ -6314,7 +6115,6 @@ func (r *GetFieldsUsageItemUsage_Notifications) Count() int {
 	return r.GetFieldsUsageItemUsage_Notifications.Count
 }
 
-
 // GetFieldsUsageItemUsage_PersonalReports wraps GetFieldsUsageItemUsage_PersonalReports with convenience methods.
 type GetFieldsUsageItemUsage_PersonalReports struct {
 	*generated.GetFieldsUsageItemUsage_PersonalReports
@@ -6327,7 +6127,6 @@ func (r *GetFieldsUsageItemUsage_PersonalReports) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_PersonalReports.Count
 }
-
 
 // GetFieldsUsageItemUsage_Pipelines wraps GetFieldsUsageItemUsage_Pipelines with convenience methods.
 type GetFieldsUsageItemUsage_Pipelines struct {
@@ -6342,7 +6141,6 @@ func (r *GetFieldsUsageItemUsage_Pipelines) Count() int {
 	return r.GetFieldsUsageItemUsage_Pipelines.Count
 }
 
-
 // GetFieldsUsageItemUsage_Relationships wraps GetFieldsUsageItemUsage_Relationships with convenience methods.
 type GetFieldsUsageItemUsage_Relationships struct {
 	*generated.GetFieldsUsageItemUsage_Relationships
@@ -6355,7 +6153,6 @@ func (r *GetFieldsUsageItemUsage_Relationships) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_Relationships.Count
 }
-
 
 // GetFieldsUsageItemUsage_Reminders wraps GetFieldsUsageItemUsage_Reminders with convenience methods.
 type GetFieldsUsageItemUsage_Reminders struct {
@@ -6370,7 +6167,6 @@ func (r *GetFieldsUsageItemUsage_Reminders) Count() int {
 	return r.GetFieldsUsageItemUsage_Reminders.Count
 }
 
-
 // GetFieldsUsageItemUsage_Reports wraps GetFieldsUsageItemUsage_Reports with convenience methods.
 type GetFieldsUsageItemUsage_Reports struct {
 	*generated.GetFieldsUsageItemUsage_Reports
@@ -6383,7 +6179,6 @@ func (r *GetFieldsUsageItemUsage_Reports) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_Reports.Count
 }
-
 
 // GetFieldsUsageItemUsage_Roles wraps GetFieldsUsageItemUsage_Roles with convenience methods.
 type GetFieldsUsageItemUsage_Roles struct {
@@ -6398,7 +6193,6 @@ func (r *GetFieldsUsageItemUsage_Roles) Count() int {
 	return r.GetFieldsUsageItemUsage_Roles.Count
 }
 
-
 // GetFieldsUsageItemUsage_TableImports wraps GetFieldsUsageItemUsage_TableImports with convenience methods.
 type GetFieldsUsageItemUsage_TableImports struct {
 	*generated.GetFieldsUsageItemUsage_TableImports
@@ -6411,7 +6205,6 @@ func (r *GetFieldsUsageItemUsage_TableImports) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_TableImports.Count
 }
-
 
 // GetFieldsUsageItemUsage_TableRules wraps GetFieldsUsageItemUsage_TableRules with convenience methods.
 type GetFieldsUsageItemUsage_TableRules struct {
@@ -6426,7 +6219,6 @@ func (r *GetFieldsUsageItemUsage_TableRules) Count() int {
 	return r.GetFieldsUsageItemUsage_TableRules.Count
 }
 
-
 // GetFieldsUsageItemUsage_Webhooks wraps GetFieldsUsageItemUsage_Webhooks with convenience methods.
 type GetFieldsUsageItemUsage_Webhooks struct {
 	*generated.GetFieldsUsageItemUsage_Webhooks
@@ -6439,7 +6231,6 @@ func (r *GetFieldsUsageItemUsage_Webhooks) Count() int {
 	}
 	return r.GetFieldsUsageItemUsage_Webhooks.Count
 }
-
 
 // GetRelationshipsMetadata wraps GetRelationshipsMetadata with convenience methods.
 type GetRelationshipsMetadata struct {
@@ -6469,7 +6260,6 @@ func (r *GetRelationshipsMetadata) TotalRelationships() int {
 	}
 	return *r.GetRelationshipsMetadata.TotalRelationships
 }
-
 
 // GetRelationshipsRelationshipsItem wraps GetRelationshipsRelationshipsItem with convenience methods.
 type GetRelationshipsRelationshipsItem struct {
@@ -6546,7 +6336,6 @@ func (r *GetRelationshipsRelationshipsItem) SummaryFields() []*GetRelationshipsR
 	return items
 }
 
-
 // GetRelationshipsRelationshipsItem_ForeignKeyField wraps GetRelationshipsRelationshipsItem_ForeignKeyField with convenience methods.
 type GetRelationshipsRelationshipsItem_ForeignKeyField struct {
 	*generated.GetRelationshipsRelationshipsItem_ForeignKeyField
@@ -6575,7 +6364,6 @@ func (r *GetRelationshipsRelationshipsItem_ForeignKeyField) Type() string {
 	}
 	return *r.GetRelationshipsRelationshipsItem_ForeignKeyField.Type
 }
-
 
 // GetRelationshipsRelationshipsItem_LookupFields_Item wraps GetRelationshipsRelationshipsItem_LookupFields_Item with convenience methods.
 type GetRelationshipsRelationshipsItem_LookupFields_Item struct {
@@ -6606,7 +6394,6 @@ func (r *GetRelationshipsRelationshipsItem_LookupFields_Item) Type() string {
 	return *r.GetRelationshipsRelationshipsItem_LookupFields_Item.Type
 }
 
-
 // GetRelationshipsRelationshipsItem_SummaryFields_Item wraps GetRelationshipsRelationshipsItem_SummaryFields_Item with convenience methods.
 type GetRelationshipsRelationshipsItem_SummaryFields_Item struct {
 	*generated.GetRelationshipsRelationshipsItem_SummaryFields_Item
@@ -6635,7 +6422,6 @@ func (r *GetRelationshipsRelationshipsItem_SummaryFields_Item) Type() string {
 	}
 	return *r.GetRelationshipsRelationshipsItem_SummaryFields_Item.Type
 }
-
 
 // GetReportProperties wraps GetReportProperties with convenience methods.
 type GetReportProperties struct {
@@ -6774,7 +6560,6 @@ func (r *GetReportProperties) Summarize() []*GetReportProperties_Summarize_Item 
 	return items
 }
 
-
 // GetReportProperties_Categories wraps GetReportProperties_Categories with convenience methods.
 type GetReportProperties_Categories struct {
 	*generated.GetReportProperties_Categories
@@ -6811,7 +6596,6 @@ func (r *GetReportProperties_Categories) Order() string {
 	}
 	return *r.GetReportProperties_Categories.Order
 }
-
 
 // GetReportProperties_ColumnProperties_Item wraps GetReportProperties_ColumnProperties_Item with convenience methods.
 type GetReportProperties_ColumnProperties_Item struct {
@@ -6850,7 +6634,6 @@ func (r *GetReportProperties_ColumnProperties_Item) Required() bool {
 	return *r.GetReportProperties_ColumnProperties_Item.Required
 }
 
-
 // GetReportProperties_DataSources_Item wraps GetReportProperties_DataSources_Item with convenience methods.
 type GetReportProperties_DataSources_Item struct {
 	*generated.GetReportProperties_DataSources_Item
@@ -6880,7 +6663,6 @@ func (r *GetReportProperties_DataSources_Item) Type() string {
 	return *r.GetReportProperties_DataSources_Item.Type
 }
 
-
 // GetReportProperties_Goal wraps GetReportProperties_Goal with convenience methods.
 type GetReportProperties_Goal struct {
 	*generated.GetReportProperties_Goal
@@ -6902,7 +6684,6 @@ func (r *GetReportProperties_Goal) Value() float64 {
 	return *r.GetReportProperties_Goal.Value
 }
 
-
 // GetReportProperties_SortBy_Item wraps GetReportProperties_SortBy_Item with convenience methods.
 type GetReportProperties_SortBy_Item struct {
 	*generated.GetReportProperties_SortBy_Item
@@ -6923,7 +6704,6 @@ func (r *GetReportProperties_SortBy_Item) Order() string {
 	}
 	return *r.GetReportProperties_SortBy_Item.Order
 }
-
 
 // GetReportProperties_Summarize_Item wraps GetReportProperties_Summarize_Item with convenience methods.
 type GetReportProperties_Summarize_Item struct {
@@ -6961,7 +6741,6 @@ func (r *GetReportProperties_Summarize_Item) Type() string {
 	}
 	return *r.GetReportProperties_Summarize_Item.Type
 }
-
 
 // GetReportQuery wraps GetReportQuery with convenience methods.
 type GetReportQuery struct {
@@ -7037,7 +6816,6 @@ func (r *GetReportQuery) TableId() string {
 	return *r.GetReportQuery.TableId
 }
 
-
 // GetReportQuery_FormulaFields_Item wraps GetReportQuery_FormulaFields_Item with convenience methods.
 type GetReportQuery_FormulaFields_Item struct {
 	*generated.GetReportQuery_FormulaFields_Item
@@ -7083,7 +6861,6 @@ func (r *GetReportQuery_FormulaFields_Item) Label() string {
 	return *r.GetReportQuery_FormulaFields_Item.Label
 }
 
-
 // GetReportQuery_GroupBy_Item wraps GetReportQuery_GroupBy_Item with convenience methods.
 type GetReportQuery_GroupBy_Item struct {
 	*generated.GetReportQuery_GroupBy_Item
@@ -7104,7 +6881,6 @@ func (r *GetReportQuery_GroupBy_Item) Grouping() string {
 	}
 	return *r.GetReportQuery_GroupBy_Item.Grouping
 }
-
 
 // GetReportQuery_SortBy_Item wraps GetReportQuery_SortBy_Item with convenience methods.
 type GetReportQuery_SortBy_Item struct {
@@ -7127,7 +6903,6 @@ func (r *GetReportQuery_SortBy_Item) Order() string {
 	return *r.GetReportQuery_SortBy_Item.Order
 }
 
-
 // GetRolesItemAccess wraps GetRolesItemAccess with convenience methods.
 type GetRolesItemAccess struct {
 	*generated.GetRolesItemAccess
@@ -7148,7 +6923,6 @@ func (r *GetRolesItemAccess) Type() string {
 	}
 	return string(*r.GetRolesItemAccess.Type)
 }
-
 
 // GetTableReportsItemProperties wraps GetTableReportsItemProperties with convenience methods.
 type GetTableReportsItemProperties struct {
@@ -7287,7 +7061,6 @@ func (r *GetTableReportsItemProperties) Summarize() []*GetTableReportsItemProper
 	return items
 }
 
-
 // GetTableReportsItemProperties_Categories wraps GetTableReportsItemProperties_Categories with convenience methods.
 type GetTableReportsItemProperties_Categories struct {
 	*generated.GetTableReportsItemProperties_Categories
@@ -7324,7 +7097,6 @@ func (r *GetTableReportsItemProperties_Categories) Order() string {
 	}
 	return *r.GetTableReportsItemProperties_Categories.Order
 }
-
 
 // GetTableReportsItemProperties_ColumnProperties_Item wraps GetTableReportsItemProperties_ColumnProperties_Item with convenience methods.
 type GetTableReportsItemProperties_ColumnProperties_Item struct {
@@ -7363,7 +7135,6 @@ func (r *GetTableReportsItemProperties_ColumnProperties_Item) Required() bool {
 	return *r.GetTableReportsItemProperties_ColumnProperties_Item.Required
 }
 
-
 // GetTableReportsItemProperties_DataSources_Item wraps GetTableReportsItemProperties_DataSources_Item with convenience methods.
 type GetTableReportsItemProperties_DataSources_Item struct {
 	*generated.GetTableReportsItemProperties_DataSources_Item
@@ -7393,7 +7164,6 @@ func (r *GetTableReportsItemProperties_DataSources_Item) Type() string {
 	return *r.GetTableReportsItemProperties_DataSources_Item.Type
 }
 
-
 // GetTableReportsItemProperties_Goal wraps GetTableReportsItemProperties_Goal with convenience methods.
 type GetTableReportsItemProperties_Goal struct {
 	*generated.GetTableReportsItemProperties_Goal
@@ -7415,7 +7185,6 @@ func (r *GetTableReportsItemProperties_Goal) Value() float64 {
 	return *r.GetTableReportsItemProperties_Goal.Value
 }
 
-
 // GetTableReportsItemProperties_SortBy_Item wraps GetTableReportsItemProperties_SortBy_Item with convenience methods.
 type GetTableReportsItemProperties_SortBy_Item struct {
 	*generated.GetTableReportsItemProperties_SortBy_Item
@@ -7436,7 +7205,6 @@ func (r *GetTableReportsItemProperties_SortBy_Item) Order() string {
 	}
 	return *r.GetTableReportsItemProperties_SortBy_Item.Order
 }
-
 
 // GetTableReportsItemProperties_Summarize_Item wraps GetTableReportsItemProperties_Summarize_Item with convenience methods.
 type GetTableReportsItemProperties_Summarize_Item struct {
@@ -7474,7 +7242,6 @@ func (r *GetTableReportsItemProperties_Summarize_Item) Type() string {
 	}
 	return *r.GetTableReportsItemProperties_Summarize_Item.Type
 }
-
 
 // GetTableReportsItemQuery wraps GetTableReportsItemQuery with convenience methods.
 type GetTableReportsItemQuery struct {
@@ -7550,7 +7317,6 @@ func (r *GetTableReportsItemQuery) TableId() string {
 	return *r.GetTableReportsItemQuery.TableId
 }
 
-
 // GetTableReportsItemQuery_FormulaFields_Item wraps GetTableReportsItemQuery_FormulaFields_Item with convenience methods.
 type GetTableReportsItemQuery_FormulaFields_Item struct {
 	*generated.GetTableReportsItemQuery_FormulaFields_Item
@@ -7596,7 +7362,6 @@ func (r *GetTableReportsItemQuery_FormulaFields_Item) Label() string {
 	return *r.GetTableReportsItemQuery_FormulaFields_Item.Label
 }
 
-
 // GetTableReportsItemQuery_GroupBy_Item wraps GetTableReportsItemQuery_GroupBy_Item with convenience methods.
 type GetTableReportsItemQuery_GroupBy_Item struct {
 	*generated.GetTableReportsItemQuery_GroupBy_Item
@@ -7617,7 +7382,6 @@ func (r *GetTableReportsItemQuery_GroupBy_Item) Grouping() string {
 	}
 	return *r.GetTableReportsItemQuery_GroupBy_Item.Grouping
 }
-
 
 // GetTableReportsItemQuery_SortBy_Item wraps GetTableReportsItemQuery_SortBy_Item with convenience methods.
 type GetTableReportsItemQuery_SortBy_Item struct {
@@ -7640,7 +7404,6 @@ func (r *GetTableReportsItemQuery_SortBy_Item) Order() string {
 	return *r.GetTableReportsItemQuery_SortBy_Item.Order
 }
 
-
 // GetUsersMetadata wraps GetUsersMetadata with convenience methods.
 type GetUsersMetadata struct {
 	*generated.GetUsersMetadata
@@ -7654,12 +7417,10 @@ func (r *GetUsersMetadata) NextPageToken() string {
 	return r.GetUsersMetadata.NextPageToken
 }
 
-
 // PlatformAnalyticEventSummariesData wraps PlatformAnalyticEventSummariesData with convenience methods.
 type PlatformAnalyticEventSummariesData struct {
 	*generated.PlatformAnalyticEventSummariesData
 }
-
 
 // PlatformAnalyticEventSummariesData_EventsSummaries wraps PlatformAnalyticEventSummariesData_EventsSummaries with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries struct {
@@ -7714,7 +7475,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries) Where() []*Platform
 	return items
 }
 
-
 // PlatformAnalyticEventSummariesData_EventsSummaries_Metadata wraps PlatformAnalyticEventSummariesData_EventsSummaries_Metadata with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Metadata struct {
 	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Metadata
@@ -7727,7 +7487,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Metadata) NextToken(
 	}
 	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Metadata.NextToken
 }
-
 
 // PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item struct {
@@ -7757,7 +7516,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_I
 	}
 	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item.EventType
 }
-
 
 // PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item struct {
@@ -7792,7 +7550,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item) Name()
 	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item.Name
 }
 
-
 // PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals wraps PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals struct {
 	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals
@@ -7821,7 +7578,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) User
 	}
 	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.User
 }
-
 
 // PlatformAnalyticEventSummariesData_EventsSummaries_Totals wraps PlatformAnalyticEventSummariesData_EventsSummaries_Totals with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Totals struct {
@@ -7852,7 +7608,6 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) User() float
 	return *r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.User
 }
 
-
 // PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item wraps PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item with convenience methods.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item struct {
 	*generated.PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item
@@ -7866,18 +7621,15 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item) Id() str
 	return r.PlatformAnalyticEventSummariesData_EventsSummaries_Where_Item.Id
 }
 
-
 // PlatformAnalyticReadsData wraps PlatformAnalyticReadsData with convenience methods.
 type PlatformAnalyticReadsData struct {
 	*generated.PlatformAnalyticReadsData
 }
 
-
 // PlatformAnalyticReadsData_DailyDetailedReads wraps PlatformAnalyticReadsData_DailyDetailedReads with convenience methods.
 type PlatformAnalyticReadsData_DailyDetailedReads struct {
 	*generated.PlatformAnalyticReadsData_DailyDetailedReads
 }
-
 
 // PlatformAnalyticReadsData_DailyDetailedReads_Reads wraps PlatformAnalyticReadsData_DailyDetailedReads_Reads with convenience methods.
 type PlatformAnalyticReadsData_DailyDetailedReads_Reads struct {
@@ -7891,7 +7643,6 @@ func (r *PlatformAnalyticReadsData_DailyDetailedReads_Reads) User() int {
 	}
 	return r.PlatformAnalyticReadsData_DailyDetailedReads_Reads.User
 }
-
 
 // PlatformAnalyticReadsData_DailyDetailedReads_Reads_Integrations wraps PlatformAnalyticReadsData_DailyDetailedReads_Reads_Integrations with convenience methods.
 type PlatformAnalyticReadsData_DailyDetailedReads_Reads_Integrations struct {
@@ -7922,7 +7673,6 @@ func (r *PlatformAnalyticReadsData_DailyDetailedReads_Reads_Integrations) Pipeli
 	return r.PlatformAnalyticReadsData_DailyDetailedReads_Reads_Integrations.Pipelines
 }
 
-
 // RunQueryFieldsItem wraps RunQueryFieldsItem with convenience methods.
 type RunQueryFieldsItem struct {
 	*generated.RunQueryFieldsItem
@@ -7951,7 +7701,6 @@ func (r *RunQueryFieldsItem) Type() string {
 	}
 	return *r.RunQueryFieldsItem.Type
 }
-
 
 // RunQueryMetadata wraps RunQueryMetadata with convenience methods.
 type RunQueryMetadata struct {
@@ -7998,7 +7747,6 @@ func (r *RunQueryMetadata) TotalRecords() int {
 	return r.RunQueryMetadata.TotalRecords
 }
 
-
 // RunReportFieldsItem wraps RunReportFieldsItem with convenience methods.
 type RunReportFieldsItem struct {
 	*generated.RunReportFieldsItem
@@ -8035,7 +7783,6 @@ func (r *RunReportFieldsItem) Type() string {
 	}
 	return *r.RunReportFieldsItem.Type
 }
-
 
 // RunReportMetadata wraps RunReportMetadata with convenience methods.
 type RunReportMetadata struct {
@@ -8082,7 +7829,6 @@ func (r *RunReportMetadata) TotalRecords() int {
 	return r.RunReportMetadata.TotalRecords
 }
 
-
 // UpdateAppMemoryInfo wraps UpdateAppMemoryInfo with convenience methods.
 type UpdateAppMemoryInfo struct {
 	*generated.UpdateAppMemoryInfo
@@ -8103,7 +7849,6 @@ func (r *UpdateAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	}
 	return *r.UpdateAppMemoryInfo.EstMemoryInclDependentApps
 }
-
 
 // UpdateAppSecurityProperties wraps UpdateAppSecurityProperties with convenience methods.
 type UpdateAppSecurityProperties struct {
@@ -8158,7 +7903,6 @@ func (r *UpdateAppSecurityProperties) UseIPFilter() bool {
 	return *r.UpdateAppSecurityProperties.UseIPFilter
 }
 
-
 // UpdateFieldPermissionsItem wraps UpdateFieldPermissionsItem with convenience methods.
 type UpdateFieldPermissionsItem struct {
 	*generated.UpdateFieldPermissionsItem
@@ -8187,7 +7931,6 @@ func (r *UpdateFieldPermissionsItem) RoleId() int {
 	}
 	return *r.UpdateFieldPermissionsItem.RoleId
 }
-
 
 // UpdateFieldProperties wraps UpdateFieldProperties with convenience methods.
 type UpdateFieldProperties struct {
@@ -8785,12 +8528,10 @@ func (r *UpdateFieldProperties) XmlTag() string {
 	return *r.UpdateFieldProperties.XmlTag
 }
 
-
 // UpdateFieldProperties_CompositeFields_Item wraps UpdateFieldProperties_CompositeFields_Item with convenience methods.
 type UpdateFieldProperties_CompositeFields_Item struct {
 	*generated.UpdateFieldProperties_CompositeFields_Item
 }
-
 
 // UpdateRelationshipForeignKeyField wraps UpdateRelationshipForeignKeyField with convenience methods.
 type UpdateRelationshipForeignKeyField struct {
@@ -8821,7 +8562,6 @@ func (r *UpdateRelationshipForeignKeyField) Type() string {
 	return *r.UpdateRelationshipForeignKeyField.Type
 }
 
-
 // UpdateRelationshipLookupFieldsItem wraps UpdateRelationshipLookupFieldsItem with convenience methods.
 type UpdateRelationshipLookupFieldsItem struct {
 	*generated.UpdateRelationshipLookupFieldsItem
@@ -8851,7 +8591,6 @@ func (r *UpdateRelationshipLookupFieldsItem) Type() string {
 	return *r.UpdateRelationshipLookupFieldsItem.Type
 }
 
-
 // UpdateRelationshipSummaryFieldsItem wraps UpdateRelationshipSummaryFieldsItem with convenience methods.
 type UpdateRelationshipSummaryFieldsItem struct {
 	*generated.UpdateRelationshipSummaryFieldsItem
@@ -8880,7 +8619,6 @@ func (r *UpdateRelationshipSummaryFieldsItem) Type() string {
 	}
 	return *r.UpdateRelationshipSummaryFieldsItem.Type
 }
-
 
 // UpsertMetadata wraps UpsertMetadata with convenience methods.
 type UpsertMetadata struct {
@@ -8918,5 +8656,3 @@ func (r *UpsertMetadata) UpdatedRecordIds() []int {
 	}
 	return *r.UpsertMetadata.UpdatedRecordIds
 }
-
-

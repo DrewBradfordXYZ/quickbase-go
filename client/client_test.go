@@ -503,7 +503,7 @@ func TestIsXMLWriteAction(t *testing.T) {
 }
 
 func TestCheckReadOnly_Disabled(t *testing.T) {
-	client := &Client{readOnly: false}
+	client := &Client{readOnly: false, basePath: "/v1"}
 
 	// All methods should be allowed when read-only is disabled
 	methods := []string{"GET", "POST", "PUT", "DELETE", "PATCH"}
@@ -519,7 +519,7 @@ func TestCheckReadOnly_Disabled(t *testing.T) {
 }
 
 func TestCheckReadOnly_BlocksJSONWrites(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// Write methods should be blocked
 	writeTests := []struct {
@@ -565,7 +565,7 @@ func TestCheckReadOnly_BlocksJSONWrites(t *testing.T) {
 }
 
 func TestCheckReadOnly_AllowsJSONReads(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// Read methods should be allowed
 	readTests := []struct {
@@ -592,7 +592,7 @@ func TestCheckReadOnly_AllowsJSONReads(t *testing.T) {
 }
 
 func TestCheckReadOnly_XMLWriteActions(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// XML API write actions should be blocked
 	writeActions := []string{
@@ -630,7 +630,7 @@ func TestCheckReadOnly_XMLWriteActions(t *testing.T) {
 }
 
 func TestCheckReadOnly_XMLReadActions(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// XML API read actions should be allowed
 	readActions := []string{
@@ -811,7 +811,7 @@ func TestIsJSONReadOnlyPOSTEndpoint(t *testing.T) {
 }
 
 func TestCheckReadOnly_BlocksWriteGETs(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// GET requests that perform write operations should be blocked
 	writeGETs := []string{
@@ -845,7 +845,7 @@ func TestCheckReadOnly_BlocksWriteGETs(t *testing.T) {
 }
 
 func TestCheckReadOnly_AllowsReadGETs(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// Regular GET requests should be allowed
 	readGETs := []string{
@@ -870,7 +870,7 @@ func TestCheckReadOnly_AllowsReadGETs(t *testing.T) {
 }
 
 func TestCheckReadOnly_AllowsReadOnlyPOSTs(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// POST endpoints that are read-only should be allowed
 	readOnlyPOSTs := []string{
@@ -896,7 +896,7 @@ func TestCheckReadOnly_AllowsReadOnlyPOSTs(t *testing.T) {
 }
 
 func TestCheckReadOnly_BlocksWritePOSTs(t *testing.T) {
-	client := &Client{readOnly: true}
+	client := &Client{readOnly: true, basePath: "/v1"}
 
 	// POST endpoints that write should be blocked
 	writePOSTs := []string{
@@ -953,13 +953,19 @@ func TestInjectAppToken(t *testing.T) {
 			token:    "mytoken",
 			expected: "<qdbapi><apptoken>mytoken</apptoken><udata>test</udata><rid>123</rid></qdbapi>",
 		},
+		{
+			name:     "escapes the value",
+			body:     "<qdbapi></qdbapi>",
+			token:    "a<b&c",
+			expected: "<qdbapi><apptoken>a&lt;b&amp;c</apptoken></qdbapi>",
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := injectAppToken([]byte(tt.body), tt.token)
+			result := injectXMLElement([]byte(tt.body), "apptoken", tt.token)
 			if string(result) != tt.expected {
-				t.Errorf("injectAppToken() = %q, want %q", string(result), tt.expected)
+				t.Errorf("injectXMLElement() = %q, want %q", string(result), tt.expected)
 			}
 		})
 	}

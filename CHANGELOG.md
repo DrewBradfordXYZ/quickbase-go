@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`WithLineErrorsAsErrors`**: `Upsert` returns a `LineErrorsError` when QuickBase rejects values, with the result, so the saved records' IDs aren't lost. Without it, rejections are only in the result's `Metadata().LineErrors`.
+- **Auth options in the `client` package** (`client.WithUserToken`, `WithTempTokens`, `WithSSOTokenAuth`, `WithTicketAuth`, `WithTicket`, and `WithAuth` for any `auth.Strategy`); `client.New` takes a nil strategy when one is set.
 - **`Date` and `DateTime`**, values for Date and Date/Time fields, which QuickBase accepts in different forms (a Date field only `"2024-01-15"`, a Date/Time field only RFC 3339; checked against a live realm). `DateOf(t)` is t's day in t's location; `DateTimeOf(t)` marshals in UTC. `ParseDate` and `ParseDateTime` read what QuickBase returns. See [docs/queries.md](docs/queries.md#dates).
 - **`RunQueryIterator` and `RunReportIterator`**: stream every record a page at a time (`for record, err := range ...`), so a large table never has to fit in memory. The package docs already pointed to `RunQueryIterator`; it didn't exist.
 - **Response properties the spec omitted**, found by comparing live responses with the spec (`spec/tools/audit-live.ts`):
@@ -23,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING: writes retry only after a 429.** An upsert or other write that timed out or got a 5xx may have been applied, and sending it again could add its records twice. Writes still retry after a 429 (QuickBase didn't process it), after a 401 with a refreshed token, and when the connection never opened. Reads, including `RunQuery` and `RunReport` (POSTs), retry as before.
+- **BREAKING: `quickbase.Option` is `client.Option`** (a type alias), and the top-level `With` functions return the `client` package's options, which document them in full. The two copies had drifted.
+- `OnRequest` fires once per attempt, including attempts that refreshed a token.
+- Generated code is gofmt-formatted, and CI checks formatting.
 - **BREAKING** (152 by `apidiff`, all number types): numbers the spec left without a format were `float32`, which holds whole numbers exactly only up to 16,777,216, so a 9-digit account ID or a large group ID was changed before it was sent. IDs are now `int64`: `gid` (group member, manager and subgroup methods), `accountId`, `relationshipId`, `summaryFid` and `TransferUserToken`'s `Id`. Every other such number is `float64`: `FieldValueValue1` (a record's numeric value), app memory estimates, report column `Justification` and goal `Value`, and analytics totals. Callers passing a `float32` pass an `int64` or `float64` instead.
 - **Generated from QuickBase's current spec.** The spec now builds from the OpenAPI 3 that QuickBase's API portal publishes (`spec/tools/fetch-upstream.ts`) instead of a December 2025 Swagger 2.0 copy. `apidiff` (golang.org/x/exp) counts 198 incompatible changes against the previous commit; by kind:
   - **BREAKING** (18): fields QuickBase marks required became values instead of pointers: app variables' `Name` and `Value` (`CreateApp`, `UpdateApp`, `CopyApp`, `GetApp`), `TransferUserToken`'s `From`, `To` and `Id`, and upsert's `Data` (`Data: data`, not `Data: &data`).
@@ -38,6 +44,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`Upsert` lost its result on a 207**: QuickBase answers 207 when it rejected some values and saved the rest, and `Upsert` returned `Multi-Status (status: 207)` as an error with no result, so the IDs of the records it saved were lost. It now returns the result; the rejections are in `Metadata().LineErrors`.
+- **Read-only mode and retries used the wrong paths under `WithBaseURL`**: the endpoint lists name paths under `/v1`, and another base URL's paths didn't match, so read-only mode let GETs that write through (`GenerateDocument`, solutions to and from records) and `RunQuery` counted as a write. Paths are now matched relative to the base URL.
+- **A token refreshed on the last attempt returned neither a response nor an error**, and the caller dereferenced nil. The last 401 is now the result.
+- An app token or auth token in an XML request body is escaped.
+
+### Deprecated
+
+- `PaginatedRequest` and `NewPaginatedRequest`: nothing returns one. Use `Paginate`, `CollectAll`, `CollectN`, or `RunQueryAll`, `RunQueryN` and `RunQueryIterator`.
 - **BREAKING: `Value` sent `null` for every type it didn't list**, which clears the field: a `time.Time`, a `uint`, a file attachment's map. It now sends `Date` and `DateTime` in their fields' forms and anything else as its JSON, and panics on a `time.Time`, which could be either kind of date; wrap it with `DateOf` or `DateTimeOf`. `nil` still clears the field.
 - **BREAKING: `Upsert` refuses a `time.Time` in its data** with a `PlainTimeError`, before sending. It went as a timestamp with its offset, which a Date field rejects, leaving the field blank on a record QuickBase still saves.
 - **Read-only mode let two solution writes through**: `UpdateSolutionToRecord` (`GET /solutions/{id}/fromrecord`, which changes apps) and `ExportSolutionToRecord` (`GET /solutions/{id}/torecord`, which writes a record) are GETs, and only `/solutions/fromrecord` was blocked. Both now return `ReadOnlyError`. `ChangesetSolutionFromRecord` only reads and is still allowed.

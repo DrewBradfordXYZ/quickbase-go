@@ -33,6 +33,11 @@ jobs:
 
       - run: go vet ./...
 
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l . | grep -v '^spec/' || true)
+          if [ -n "$unformatted" ]; then echo "Run gofmt -w on:"; echo "$unformatted"; exit 1; fi
+
       # Integration tests skip without QB_REALM and QB_USER_TOKEN
       - run: go test ./...
 

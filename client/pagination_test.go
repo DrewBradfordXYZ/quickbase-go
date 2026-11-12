@@ -245,7 +245,7 @@ func TestPaginate(t *testing.T) {
 				}, nil
 			case 3:
 				return &mockResponse{
-					data: []mockRecord{{ID: 5}},
+					data:     []mockRecord{{ID: 5}},
 					metadata: PaginationMetadata{
 						// No NextPageToken - last page
 					},

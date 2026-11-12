@@ -239,7 +239,7 @@ func TestQueryBuilder_TopSkip(t *testing.T) {
 }
 
 func TestQueryBuilder_AliasWithoutSchema(t *testing.T) {
-	client := &Client{} // No schema
+	client := &Client{}                           // No schema
 	qb := client.Query("bqxyz123").Select("name") // String alias without schema
 
 	// Build should fail because we can't resolve string aliases without schema

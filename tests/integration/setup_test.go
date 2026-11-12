@@ -68,8 +68,8 @@ func skipIfNoCredentials(t *testing.T) {
 func TestMain(m *testing.M) {
 	// Load .env file from project root (try multiple locations)
 	envPaths := []string{
-		".env",                                // Current directory
-		"../../.env",                          // From tests/integration/
+		".env",                                  // Current directory
+		"../../.env",                            // From tests/integration/
 		filepath.Join(os.Getenv("PWD"), ".env"), // Absolute from PWD
 	}
 	for _, path := range envPaths {

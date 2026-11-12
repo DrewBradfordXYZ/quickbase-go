@@ -145,13 +145,19 @@ func CollectN[T any, R PaginatedResponse[T]](ctx context.Context, fetcher PageFe
 
 // PaginatedRequest wraps an API request with fluent pagination methods.
 // This provides a similar API to the JavaScript SDK's PaginatedRequest class.
+//
+// Deprecated: nothing in the SDK returns one. Page with [Paginate],
+// [CollectAll] and [CollectN], or the client's RunQueryAll, RunQueryN and
+// RunQueryIterator. It will be removed.
 type PaginatedRequest[T any, R PaginatedResponse[T]] struct {
-	ctx              context.Context
-	fetcher          PageFetcher[T, R]
-	defaultAutoPag   bool
+	ctx            context.Context
+	fetcher        PageFetcher[T, R]
+	defaultAutoPag bool
 }
 
 // NewPaginatedRequest creates a new paginated request wrapper.
+//
+// Deprecated: see [PaginatedRequest].
 func NewPaginatedRequest[T any, R PaginatedResponse[T]](
 	ctx context.Context,
 	fetcher PageFetcher[T, R],

@@ -1,8 +1,8 @@
 package client
 
 import (
-	"strconv"
 	"context"
+	"strconv"
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
 	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
@@ -22,9 +22,9 @@ import (
 //	    Run(ctx)
 type QueryBuilder struct {
 	client  *Client
-	table   string   // Original table (alias or ID)
-	tableID string   // Resolved table ID
-	fields  []any    // Field IDs or aliases
+	table   string // Original table (alias or ID)
+	tableID string // Resolved table ID
+	fields  []any  // Field IDs or aliases
 	where   string
 	sortBy  []SortSpec
 	groupBy []any // Field IDs or aliases

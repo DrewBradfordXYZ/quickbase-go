@@ -66,12 +66,12 @@ type ResolvedSchema struct {
 	Options  SchemaOptions
 
 	// Forward lookups (alias → ID)
-	TableAliasToID map[string]string            // table alias → table ID
-	FieldAliasToID map[string]map[string]int    // table ID → (field alias → field ID)
+	TableAliasToID map[string]string         // table alias → table ID
+	FieldAliasToID map[string]map[string]int // table ID → (field alias → field ID)
 
 	// Reverse lookups (ID → alias)
-	TableIDToAlias map[string]string            // table ID → table alias
-	FieldIDToAlias map[string]map[int]string    // table ID → (field ID → field alias)
+	TableIDToAlias map[string]string         // table ID → table alias
+	FieldIDToAlias map[string]map[int]string // table ID → (field ID → field alias)
 }
 
 // SchemaError is returned when an unknown table or field alias is used.

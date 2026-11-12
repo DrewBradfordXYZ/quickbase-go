@@ -117,3 +117,48 @@ func TestClientTimeoutIsATimeoutError(t *testing.T) {
 		t.Errorf("err = %v (%T), want TimeoutError", err, err)
 	}
 }
+
+// A write that got a 5xx or timed out may have been applied: an upsert sent
+// again could add its records twice. Writes retry only after a 429; reads
+// (including runQuery, a POST) still retry after a 5xx.
+func TestWritesRetryOnlyAfter429(t *testing.T) {
+	for _, c := range []struct {
+		name   string
+		status int
+		write  bool
+		want   int
+	}{
+		{"upsert 503", http.StatusServiceUnavailable, true, 1},
+		{"upsert 429", http.StatusTooManyRequests, true, 3},
+		{"query 503", http.StatusServiceUnavailable, false, 3},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			calls := 0
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				calls++
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(c.status)
+				_, _ = io.WriteString(w, `{"message":"busy"}`)
+			}))
+			defer srv.Close()
+
+			qb, err := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL),
+				quickbase.WithRetryDelay(time.Millisecond), quickbase.WithMaxRetryDelay(time.Millisecond))
+			if err != nil {
+				t.Fatal(err)
+			}
+			ctx := context.Background()
+			if c.write {
+				_, err = qb.Upsert("bqtable").Data(quickbase.Row(6, "a")).Run(ctx)
+			} else {
+				_, err = qb.RunQuery(ctx, quickbase.RunQueryBody{From: "bqtable"})
+			}
+			if err == nil {
+				t.Error("want an error")
+			}
+			if calls != c.want {
+				t.Errorf("%d requests, want %d", calls, c.want)
+			}
+		})
+	}
+}
