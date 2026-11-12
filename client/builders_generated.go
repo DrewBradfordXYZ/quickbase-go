@@ -36,13 +36,13 @@ type SortSpec struct {
 // Add managers
 type AddManagersToGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // AddManagersToGroup starts building a addManagersToGroup request.
-func (c *Client) AddManagersToGroup(gid float32) *AddManagersToGroupBuilder {
+func (c *Client) AddManagersToGroup(gid int64) *AddManagersToGroupBuilder {
 	b := &AddManagersToGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -90,13 +90,13 @@ func (b *AddManagersToGroupBuilder) Run(ctx context.Context) (*AddManagersToGrou
 // Add members
 type AddMembersToGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // AddMembersToGroup starts building a addMembersToGroup request.
-func (c *Client) AddMembersToGroup(gid float32) *AddMembersToGroupBuilder {
+func (c *Client) AddMembersToGroup(gid int64) *AddMembersToGroupBuilder {
 	b := &AddMembersToGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -144,13 +144,13 @@ func (b *AddMembersToGroupBuilder) Run(ctx context.Context) (*AddMembersToGroupR
 // Add child groups
 type AddSubgroupsToGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // AddSubgroupsToGroup starts building a addSubgroupsToGroup request.
-func (c *Client) AddSubgroupsToGroup(gid float32) *AddSubgroupsToGroupBuilder {
+func (c *Client) AddSubgroupsToGroup(gid int64) *AddSubgroupsToGroupBuilder {
 	b := &AddSubgroupsToGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -2709,14 +2709,14 @@ type DeleteRelationshipBuilder struct {
 	client  *Client
 	table   string
 	tableID string
-	relationshipId float32
+	relationshipId int64
 	params  map[string]any
 	err     error
 }
 
 // DeleteRelationship starts building a deleteRelationship request.
 // The table parameter can be a table ID or an alias (if schema is configured).
-func (c *Client) DeleteRelationship(table string, relationshipId float32) *DeleteRelationshipBuilder {
+func (c *Client) DeleteRelationship(table string, relationshipId int64) *DeleteRelationshipBuilder {
 	b := &DeleteRelationshipBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -2868,7 +2868,7 @@ func (b *DeleteUserTokenBuilder) Run(ctx context.Context) (*DeleteUserTokenResul
 // Deny users
 type DenyUsersBuilder struct {
 	client  *Client
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -2885,7 +2885,7 @@ func (c *Client) DenyUsers() *DenyUsersBuilder {
 
 
 // AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
-func (b *DenyUsersBuilder) AccountId(value float32) *DenyUsersBuilder {
+func (b *DenyUsersBuilder) AccountId(value int64) *DenyUsersBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -2937,7 +2937,7 @@ func (b *DenyUsersBuilder) Run(ctx context.Context) (*DenyUsersResult, error) {
 type DenyUsersAndGroupsBuilder struct {
 	client  *Client
 	shouldDeleteFromGroups bool
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -2955,7 +2955,7 @@ func (c *Client) DenyUsersAndGroups(shouldDeleteFromGroups bool) *DenyUsersAndGr
 
 
 // AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
-func (b *DenyUsersAndGroupsBuilder) AccountId(value float32) *DenyUsersAndGroupsBuilder {
+func (b *DenyUsersAndGroupsBuilder) AccountId(value int64) *DenyUsersAndGroupsBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -4319,7 +4319,7 @@ func (b *GetTrusteesBuilder) Run(ctx context.Context) (*generated.GetTrusteesRes
 type GetUserAppsBuilder struct {
 	client  *Client
 	userId string
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -4337,7 +4337,7 @@ func (c *Client) GetUserApps(userId string) *GetUserAppsBuilder {
 
 
 // AccountId The account id used to scope the request.
-func (b *GetUserAppsBuilder) AccountId(value float32) *GetUserAppsBuilder {
+func (b *GetUserAppsBuilder) AccountId(value int64) *GetUserAppsBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -4379,7 +4379,7 @@ func (b *GetUserAppsBuilder) Run(ctx context.Context) (*UserAppsResult, error) {
 // Get users
 type GetUsersBuilder struct {
 	client  *Client
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -4426,7 +4426,7 @@ func (b *GetUsersBuilder) NextPageToken(value string) *GetUsersBuilder {
 
 
 // AccountId The account id being used to get users. If no value is specified, the first account associated with the requesting user token is chosen.
-func (b *GetUsersBuilder) AccountId(value float32) *GetUsersBuilder {
+func (b *GetUsersBuilder) AccountId(value int64) *GetUsersBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -4477,7 +4477,7 @@ func (b *GetUsersBuilder) Run(ctx context.Context) (*UsersResult, error) {
 // Get event summaries
 type PlatformAnalyticEventSummariesBuilder struct {
 	client  *Client
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -4544,7 +4544,7 @@ func (b *PlatformAnalyticEventSummariesBuilder) Where(values ...map[string]any) 
 
 
 // AccountId The ID of the account to query. If no value is specified, the first account matching the provided domain is chosen.
-func (b *PlatformAnalyticEventSummariesBuilder) AccountId(value float32) *PlatformAnalyticEventSummariesBuilder {
+func (b *PlatformAnalyticEventSummariesBuilder) AccountId(value int64) *PlatformAnalyticEventSummariesBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -4774,13 +4774,13 @@ func (b *RecordsModifiedSinceBuilder) Run(ctx context.Context) (*RecordsModified
 // Remove managers
 type RemoveManagersFromGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // RemoveManagersFromGroup starts building a removeManagersFromGroup request.
-func (c *Client) RemoveManagersFromGroup(gid float32) *RemoveManagersFromGroupBuilder {
+func (c *Client) RemoveManagersFromGroup(gid int64) *RemoveManagersFromGroupBuilder {
 	b := &RemoveManagersFromGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -4828,13 +4828,13 @@ func (b *RemoveManagersFromGroupBuilder) Run(ctx context.Context) (*RemoveManage
 // Remove members
 type RemoveMembersFromGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // RemoveMembersFromGroup starts building a removeMembersFromGroup request.
-func (c *Client) RemoveMembersFromGroup(gid float32) *RemoveMembersFromGroupBuilder {
+func (c *Client) RemoveMembersFromGroup(gid int64) *RemoveMembersFromGroupBuilder {
 	b := &RemoveMembersFromGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -4882,13 +4882,13 @@ func (b *RemoveMembersFromGroupBuilder) Run(ctx context.Context) (*RemoveMembers
 // Remove child groups
 type RemoveSubgroupsFromGroupBuilder struct {
 	client  *Client
-	gid float32
+	gid int64
 	params  map[string]any
 	err     error
 }
 
 // RemoveSubgroupsFromGroup starts building a removeSubgroupsFromGroup request.
-func (c *Client) RemoveSubgroupsFromGroup(gid float32) *RemoveSubgroupsFromGroupBuilder {
+func (c *Client) RemoveSubgroupsFromGroup(gid int64) *RemoveSubgroupsFromGroupBuilder {
 	b := &RemoveSubgroupsFromGroupBuilder{
 		client: c,
 		params: make(map[string]any),
@@ -5188,7 +5188,7 @@ func (b *TransferUserTokenBuilder) From(value string) *TransferUserTokenBuilder 
 
 
 // Id The id of the user token to transfer
-func (b *TransferUserTokenBuilder) Id(value float64) *TransferUserTokenBuilder {
+func (b *TransferUserTokenBuilder) Id(value int64) *TransferUserTokenBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -5252,7 +5252,7 @@ func (b *TransferUserTokenBuilder) Run(ctx context.Context) (*TransferUserTokenR
 // Undeny users
 type UndenyUsersBuilder struct {
 	client  *Client
-	qpAccountId *float32
+	qpAccountId *int64
 	params  map[string]any
 	err     error
 }
@@ -5269,7 +5269,7 @@ func (c *Client) UndenyUsers() *UndenyUsersBuilder {
 
 
 // AccountId The account id being used to undeny users. If no value is specified, the first account associated with the requesting user token is chosen.
-func (b *UndenyUsersBuilder) AccountId(value float32) *UndenyUsersBuilder {
+func (b *UndenyUsersBuilder) AccountId(value int64) *UndenyUsersBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -6668,14 +6668,14 @@ type UpdateRelationshipBuilder struct {
 	client  *Client
 	table   string
 	tableID string
-	relationshipId float32
+	relationshipId int64
 	params  map[string]any
 	err     error
 }
 
 // UpdateRelationship starts building a updateRelationship request.
 // The table parameter can be a table ID or an alias (if schema is configured).
-func (c *Client) UpdateRelationship(table string, relationshipId float32) *UpdateRelationshipBuilder {
+func (c *Client) UpdateRelationship(table string, relationshipId int64) *UpdateRelationshipBuilder {
 	b := &UpdateRelationshipBuilder{
 		client: c,
 		params: make(map[string]any),

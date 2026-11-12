@@ -737,6 +737,8 @@ func TestIsJSONWriteEndpoint(t *testing.T) {
 		// GET endpoints that write (non-RESTful)
 		{"GET", "/v1/docTemplates/123/generate"},
 		{"GET", "/v1/solutions/fromrecord"},
+		{"GET", "/v1/solutions/abc123/fromrecord"}, // updateSolutionToRecord
+		{"GET", "/v1/solutions/abc123/torecord"},   // exportSolutionToRecord
 	}
 
 	for _, tt := range writeEndpoints {
@@ -757,6 +759,7 @@ func TestIsJSONWriteEndpoint(t *testing.T) {
 		{"GET", "/v1/fields"},
 		{"GET", "/v1/reports/123"},
 		{"GET", "/v1/solutions/abc123"}, // Export solution (read-only)
+		{"GET", "/v1/solutions/abc123/changeset/fromrecord"},
 		{"GET", "/v1/auth/temporary/abc123"},
 		{"GET", "/v1/files/abc/1/6/0"}, // Download file
 		{"GET", "/v1/fields/usage/6"},

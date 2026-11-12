@@ -3498,7 +3498,7 @@ type CreateAppMemoryInfo struct {
 }
 
 // EstMemory returns the EstMemory field value, or zero value if nil.
-func (r *CreateAppMemoryInfo) EstMemory() float32 {
+func (r *CreateAppMemoryInfo) EstMemory() float64 {
 	if r == nil || r.CreateAppMemoryInfo == nil || r.CreateAppMemoryInfo.EstMemory == nil {
 		return 0
 	}
@@ -3506,7 +3506,7 @@ func (r *CreateAppMemoryInfo) EstMemory() float32 {
 }
 
 // EstMemoryInclDependentApps returns the EstMemoryInclDependentApps field value, or zero value if nil.
-func (r *CreateAppMemoryInfo) EstMemoryInclDependentApps() float32 {
+func (r *CreateAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	if r == nil || r.CreateAppMemoryInfo == nil || r.CreateAppMemoryInfo.EstMemoryInclDependentApps == nil {
 		return 0
 	}
@@ -4373,7 +4373,7 @@ type GetAppMemoryInfo struct {
 }
 
 // EstMemory returns the EstMemory field value, or zero value if nil.
-func (r *GetAppMemoryInfo) EstMemory() float32 {
+func (r *GetAppMemoryInfo) EstMemory() float64 {
 	if r == nil || r.GetAppMemoryInfo == nil || r.GetAppMemoryInfo.EstMemory == nil {
 		return 0
 	}
@@ -4381,7 +4381,7 @@ func (r *GetAppMemoryInfo) EstMemory() float32 {
 }
 
 // EstMemoryInclDependentApps returns the EstMemoryInclDependentApps field value, or zero value if nil.
-func (r *GetAppMemoryInfo) EstMemoryInclDependentApps() float32 {
+func (r *GetAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	if r == nil || r.GetAppMemoryInfo == nil || r.GetAppMemoryInfo.EstMemoryInclDependentApps == nil {
 		return 0
 	}
@@ -6827,7 +6827,7 @@ func (r *GetReportProperties_ColumnProperties_Item) FieldId() int {
 }
 
 // Justification returns the Justification field value, or zero value if nil.
-func (r *GetReportProperties_ColumnProperties_Item) Justification() float32 {
+func (r *GetReportProperties_ColumnProperties_Item) Justification() float64 {
 	if r == nil || r.GetReportProperties_ColumnProperties_Item == nil || r.GetReportProperties_ColumnProperties_Item.Justification == nil {
 		return 0
 	}
@@ -6895,7 +6895,7 @@ func (r *GetReportProperties_Goal) Label() string {
 }
 
 // Value returns the Value field value, or zero value if nil.
-func (r *GetReportProperties_Goal) Value() float32 {
+func (r *GetReportProperties_Goal) Value() float64 {
 	if r == nil || r.GetReportProperties_Goal == nil || r.GetReportProperties_Goal.Value == nil {
 		return 0
 	}
@@ -7340,7 +7340,7 @@ func (r *GetTableReportsItemProperties_ColumnProperties_Item) FieldId() int {
 }
 
 // Justification returns the Justification field value, or zero value if nil.
-func (r *GetTableReportsItemProperties_ColumnProperties_Item) Justification() float32 {
+func (r *GetTableReportsItemProperties_ColumnProperties_Item) Justification() float64 {
 	if r == nil || r.GetTableReportsItemProperties_ColumnProperties_Item == nil || r.GetTableReportsItemProperties_ColumnProperties_Item.Justification == nil {
 		return 0
 	}
@@ -7408,7 +7408,7 @@ func (r *GetTableReportsItemProperties_Goal) Label() string {
 }
 
 // Value returns the Value field value, or zero value if nil.
-func (r *GetTableReportsItemProperties_Goal) Value() float32 {
+func (r *GetTableReportsItemProperties_Goal) Value() float64 {
 	if r == nil || r.GetTableReportsItemProperties_Goal == nil || r.GetTableReportsItemProperties_Goal.Value == nil {
 		return 0
 	}
@@ -7799,7 +7799,7 @@ type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals struct {
 }
 
 // All returns the All field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) All() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) All() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.All == nil {
 		return 0
 	}
@@ -7807,7 +7807,7 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) All(
 }
 
 // Integration returns the Integration field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Integration() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Integration() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.Integration == nil {
 		return 0
 	}
@@ -7815,7 +7815,7 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) Inte
 }
 
 // User returns the User field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) User() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals) User() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals.User == nil {
 		return 0
 	}
@@ -7829,7 +7829,7 @@ type PlatformAnalyticEventSummariesData_EventsSummaries_Totals struct {
 }
 
 // All returns the All field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) All() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) All() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.All == nil {
 		return 0
 	}
@@ -7837,7 +7837,7 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) All() float3
 }
 
 // Integration returns the Integration field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Integration() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Integration() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.Integration == nil {
 		return 0
 	}
@@ -7845,7 +7845,7 @@ func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) Integration(
 }
 
 // User returns the User field value, or zero value if nil.
-func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) User() float32 {
+func (r *PlatformAnalyticEventSummariesData_EventsSummaries_Totals) User() float64 {
 	if r == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals == nil || r.PlatformAnalyticEventSummariesData_EventsSummaries_Totals.User == nil {
 		return 0
 	}
@@ -8089,7 +8089,7 @@ type UpdateAppMemoryInfo struct {
 }
 
 // EstMemory returns the EstMemory field value, or zero value if nil.
-func (r *UpdateAppMemoryInfo) EstMemory() float32 {
+func (r *UpdateAppMemoryInfo) EstMemory() float64 {
 	if r == nil || r.UpdateAppMemoryInfo == nil || r.UpdateAppMemoryInfo.EstMemory == nil {
 		return 0
 	}
@@ -8097,7 +8097,7 @@ func (r *UpdateAppMemoryInfo) EstMemory() float32 {
 }
 
 // EstMemoryInclDependentApps returns the EstMemoryInclDependentApps field value, or zero value if nil.
-func (r *UpdateAppMemoryInfo) EstMemoryInclDependentApps() float32 {
+func (r *UpdateAppMemoryInfo) EstMemoryInclDependentApps() float64 {
 	if r == nil || r.UpdateAppMemoryInfo == nil || r.UpdateAppMemoryInfo.EstMemoryInclDependentApps == nil {
 		return 0
 	}

@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING** (152 by `apidiff`, all number types): numbers the spec left without a format were `float32`, which holds whole numbers exactly only up to 16,777,216, so a 9-digit account ID or a large group ID was changed before it was sent. IDs are now `int64`: `gid` (group member, manager and subgroup methods), `accountId`, `relationshipId`, `summaryFid` and `TransferUserToken`'s `Id`. Every other such number is `float64`: `FieldValueValue1` (a record's numeric value), app memory estimates, report column `Justification` and goal `Value`, and analytics totals. Callers passing a `float32` pass an `int64` or `float64` instead.
 - **Generated from QuickBase's current spec.** The spec now builds from the OpenAPI 3 that QuickBase's API portal publishes (`spec/tools/fetch-upstream.ts`) instead of a December 2025 Swagger 2.0 copy. `apidiff` (golang.org/x/exp) counts 198 incompatible changes against the previous commit; by kind:
   - **BREAKING** (18): fields QuickBase marks required became values instead of pointers: app variables' `Name` and `Value` (`CreateApp`, `UpdateApp`, `CopyApp`, `GetApp`), `TransferUserToken`'s `From`, `To` and `Id`, and upsert's `Data` (`Data: data`, not `Data: &data`).
   - **BREAKING** (46 + 15): inline struct types became named types (every object now keeps unlisted keys, which needs a named type with `AdditionalProperties`): field-usage counts (`Dashboards`, `TableImports`, `TableRules`), trustee items, analytics summaries, request bodies such as `AddTrusteesJSONRequestBody`, and others. Reading fields is unchanged; code that writes these as struct literals must use the named type.
@@ -36,6 +37,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Read-only mode let two solution writes through**: `UpdateSolutionToRecord` (`GET /solutions/{id}/fromrecord`, which changes apps) and `ExportSolutionToRecord` (`GET /solutions/{id}/torecord`, which writes a record) are GETs, and only `/solutions/fromrecord` was blocked. Both now return `ReadOnlyError`. `ChangesetSolutionFromRecord` only reads and is still allowed.
+- **`Value` rounded numbers**: it sent every number as `float32`, so `Value(1234567.89)` wrote 1234567.875 and `Value(20000001)` wrote 20000000. Numbers are sent as `float64`.
+- **A cancelled request reported a timeout**: cancelling the context returned a `TimeoutError` naming the client's timeout. It now returns the context's error (`context.Canceled` or `context.DeadlineExceeded`), and `TimeoutError` means `WithTimeout` ran out, which before came back as a raw `*url.Error`.
+- **A 401 retried after a token refresh leaked its connection**: the response body wasn't closed.
+- **`WithConvertDates` did nothing** (no code read it) and is deprecated. Dates stay the strings QuickBase sends.
 - **`SchemaOptions.TransformResponses` did nothing**: no code read it, so records were always keyed by field ID although it was documented as on by default. It now keys the query builder's records (`Run`, `RunN`) by alias, and is off by default (`DefaultSchemaOptions` returns it false), so nothing changes unless you turn it on with `WithSchemaOptions`.
 - **`RunQueryAll` and `RunQueryN` ignored schema aliases**: `RunQuery` resolved them, but the paging methods sent the body as given, so `From: "projects"` or `'status'` in a filter reached QuickBase unresolved. They now resolve aliases first. They also set each page's skip on the caller's `Options`, changing the caller's body; they now use a copy.
 - **Cancelling a request didn't cancel its retry wait**: backoff waits used `time.Sleep`, so a call whose context ended kept waiting out the backoff (up to 30s by default). The wait now returns the context's error as soon as it ends.

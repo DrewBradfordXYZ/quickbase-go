@@ -640,10 +640,10 @@ type CopyAppVariablesItem struct {
 // CreateAppMemoryInfo Application memory info
 type CreateAppMemoryInfo struct {
 	// EstMemory The estimated memory of this application in gigabytes
-	EstMemory *float32 `json:"estMemory,omitempty"`
+	EstMemory *float64 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float64               `json:"estMemoryInclDependentApps,omitempty"`
 	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
@@ -1000,7 +1000,7 @@ type FieldValue struct {
 type FieldValueValue0 = string
 
 // FieldValueValue1 defines model for .
-type FieldValueValue1 = float32
+type FieldValueValue1 = float64
 
 // FieldValueValue2 defines model for .
 type FieldValueValue2 = bool
@@ -1063,10 +1063,10 @@ type GetAppEventsItemOwner struct {
 // GetAppMemoryInfo Application memory info
 type GetAppMemoryInfo struct {
 	// EstMemory The estimated memory of this application in gigabytes
-	EstMemory *float32 `json:"estMemory,omitempty"`
+	EstMemory *float64 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float64               `json:"estMemoryInclDependentApps,omitempty"`
 	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
@@ -2312,7 +2312,7 @@ type GetReportProperties_Categories struct {
 // GetReportProperties_ColumnProperties_Item defines model for GetReportProperties.columnProperties.Item.
 type GetReportProperties_ColumnProperties_Item struct {
 	FieldId              *int                   `json:"fieldId,omitempty"`
-	Justification        *float32               `json:"justification,omitempty"`
+	Justification        *float64               `json:"justification,omitempty"`
 	LabelOverride        *string                `json:"labelOverride,omitempty"`
 	Required             *bool                  `json:"required,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
@@ -2329,7 +2329,7 @@ type GetReportProperties_DataSources_Item struct {
 // GetReportProperties_Goal defines model for GetReportProperties.Goal.
 type GetReportProperties_Goal struct {
 	Label                *string                `json:"label,omitempty"`
-	Value                *float32               `json:"value,omitempty"`
+	Value                *float64               `json:"value,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2548,7 +2548,7 @@ type GetTableReportsItemProperties_Categories struct {
 // GetTableReportsItemProperties_ColumnProperties_Item defines model for GetTableReportsItemProperties.columnProperties.Item.
 type GetTableReportsItemProperties_ColumnProperties_Item struct {
 	FieldId              *int                   `json:"fieldId,omitempty"`
-	Justification        *float32               `json:"justification,omitempty"`
+	Justification        *float64               `json:"justification,omitempty"`
 	LabelOverride        *string                `json:"labelOverride,omitempty"`
 	Required             *bool                  `json:"required,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
@@ -2565,7 +2565,7 @@ type GetTableReportsItemProperties_DataSources_Item struct {
 // GetTableReportsItemProperties_Goal defines model for GetTableReportsItemProperties.Goal.
 type GetTableReportsItemProperties_Goal struct {
 	Label                *string                `json:"label,omitempty"`
-	Value                *float32               `json:"value,omitempty"`
+	Value                *float64               `json:"value,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2738,9 +2738,9 @@ type PlatformAnalyticEventSummariesData_EventsSummaries_Results_EventTypes_Item 
 
 // PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals Totals by billing category for the event grouping.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Totals struct {
-	All                  *float32               `json:"all,omitempty"`
-	Integration          *float32               `json:"integration,omitempty"`
-	User                 *float32               `json:"user,omitempty"`
+	All                  *float64               `json:"all,omitempty"`
+	Integration          *float64               `json:"integration,omitempty"`
+	User                 *float64               `json:"user,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -2762,9 +2762,9 @@ type PlatformAnalyticEventSummariesData_EventsSummaries_Results_Item struct {
 
 // PlatformAnalyticEventSummariesData_EventsSummaries_Totals Totals by billing category for all queried events.
 type PlatformAnalyticEventSummariesData_EventsSummaries_Totals struct {
-	All                  *float32               `json:"all,omitempty"`
-	Integration          *float32               `json:"integration,omitempty"`
-	User                 *float32               `json:"user,omitempty"`
+	All                  *float64               `json:"all,omitempty"`
+	Integration          *float64               `json:"integration,omitempty"`
+	User                 *float64               `json:"user,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
@@ -3011,10 +3011,10 @@ type TransferUserTokenAppsItem struct {
 // UpdateAppMemoryInfo Application memory info
 type UpdateAppMemoryInfo struct {
 	// EstMemory The estimated memory of this application in gigabytes
-	EstMemory *float32 `json:"estMemory,omitempty"`
+	EstMemory *float64 `json:"estMemory,omitempty"`
 
 	// EstMemoryInclDependentApps The estimated memory of this application and all dependent applications in gigabytes
-	EstMemoryInclDependentApps *float32               `json:"estMemoryInclDependentApps,omitempty"`
+	EstMemoryInclDependentApps *float64               `json:"estMemoryInclDependentApps,omitempty"`
 	AdditionalProperties       map[string]interface{} `json:"-"`
 }
 
@@ -3434,7 +3434,7 @@ type PlatformAnalyticEventSummariesJSONBody struct {
 // PlatformAnalyticEventSummariesParams defines parameters for PlatformAnalyticEventSummaries.
 type PlatformAnalyticEventSummariesParams struct {
 	// AccountId The ID of the account to query. If no value is specified, the first account matching the provided domain is chosen.
-	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+	AccountId *int64 `form:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // PlatformAnalyticEventSummariesJSONBodyGroupBy defines parameters for PlatformAnalyticEventSummaries.
@@ -4684,7 +4684,7 @@ type CreateRelationshipJSONBody_SummaryFields_Item struct {
 	Label *string `json:"label,omitempty"`
 
 	// SummaryFid The field id to summarize.
-	SummaryFid *float32 `json:"summaryFid,omitempty"`
+	SummaryFid *int64 `json:"summaryFid,omitempty"`
 
 	// Where The filter, using the Quickbase query language, which determines the records to return.
 	Where                *string                `json:"where,omitempty"`
@@ -4713,7 +4713,7 @@ type UpdateRelationshipJSONBody_SummaryFields_Item struct {
 	Label *string `json:"label,omitempty"`
 
 	// SummaryFid The field id to summarize.
-	SummaryFid *float32 `json:"summaryFid,omitempty"`
+	SummaryFid *int64 `json:"summaryFid,omitempty"`
 
 	// Where The filter, using the Quickbase query language, which determines the records to return.
 	Where                *string                `json:"where,omitempty"`
@@ -4742,7 +4742,7 @@ type GetUsersJSONBody struct {
 // GetUsersParams defines parameters for GetUsers.
 type GetUsersParams struct {
 	// AccountId The account id being used to get users. If no value is specified, the first account associated with the requesting user token is chosen.
-	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+	AccountId *int64 `form:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // DenyUsersJSONBody defines parameters for DenyUsers.
@@ -4751,7 +4751,7 @@ type DenyUsersJSONBody = []string
 // DenyUsersParams defines parameters for DenyUsers.
 type DenyUsersParams struct {
 	// AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
-	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+	AccountId *int64 `form:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // DenyUsersAndGroupsJSONBody defines parameters for DenyUsersAndGroups.
@@ -4760,7 +4760,7 @@ type DenyUsersAndGroupsJSONBody = []string
 // DenyUsersAndGroupsParams defines parameters for DenyUsersAndGroups.
 type DenyUsersAndGroupsParams struct {
 	// AccountId The account id being used to deny users. If no value is specified, the first account associated with the requesting user token is chosen.
-	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+	AccountId *int64 `form:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // UndenyUsersJSONBody defines parameters for UndenyUsers.
@@ -4769,13 +4769,13 @@ type UndenyUsersJSONBody = []string
 // UndenyUsersParams defines parameters for UndenyUsers.
 type UndenyUsersParams struct {
 	// AccountId The account id being used to undeny users. If no value is specified, the first account associated with the requesting user token is chosen.
-	AccountId *float32 `form:"accountId,omitempty" json:"accountId,omitempty"`
+	AccountId *int64 `form:"accountId,omitempty" json:"accountId,omitempty"`
 }
 
 // GetUserAppsParams defines parameters for GetUserApps.
 type GetUserAppsParams struct {
 	// AccountId The account id used to scope the request.
-	AccountId float32 `form:"accountId" json:"accountId"`
+	AccountId int64 `form:"accountId" json:"accountId"`
 }
 
 // CloneUserTokenJSONBody defines parameters for CloneUserToken.
@@ -4794,7 +4794,7 @@ type TransferUserTokenJSONBody struct {
 	From string `json:"from"`
 
 	// Id The id of the user token to transfer
-	Id float32 `json:"id"`
+	Id int64 `json:"id"`
 
 	// To The id of the user to transfer the user token to
 	To                   string                 `json:"to"`
@@ -27840,34 +27840,34 @@ type ClientInterface interface {
 	RunFormula(ctx context.Context, body RunFormulaJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RemoveManagersFromGroupWithBody request with any body
-	RemoveManagersFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveManagersFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	RemoveManagersFromGroup(ctx context.Context, gid float32, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveManagersFromGroup(ctx context.Context, gid int64, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddManagersToGroupWithBody request with any body
-	AddManagersToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddManagersToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AddManagersToGroup(ctx context.Context, gid float32, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddManagersToGroup(ctx context.Context, gid int64, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RemoveMembersFromGroupWithBody request with any body
-	RemoveMembersFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveMembersFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	RemoveMembersFromGroup(ctx context.Context, gid float32, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveMembersFromGroup(ctx context.Context, gid int64, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddMembersToGroupWithBody request with any body
-	AddMembersToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddMembersToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AddMembersToGroup(ctx context.Context, gid float32, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddMembersToGroup(ctx context.Context, gid int64, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RemoveSubgroupsFromGroupWithBody request with any body
-	RemoveSubgroupsFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveSubgroupsFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveSubgroupsFromGroup(ctx context.Context, gid int64, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddSubgroupsToGroupWithBody request with any body
-	AddSubgroupsToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddSubgroupsToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AddSubgroupsToGroup(ctx context.Context, gid float32, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AddSubgroupsToGroup(ctx context.Context, gid int64, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRecordsWithBody request with any body
 	DeleteRecordsWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -27950,12 +27950,12 @@ type ClientInterface interface {
 	CreateRelationship(ctx context.Context, tableId string, body CreateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteRelationship request
-	DeleteRelationship(ctx context.Context, tableId string, relationshipId float32, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteRelationship(ctx context.Context, tableId string, relationshipId int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateRelationshipWithBody request with any body
-	UpdateRelationshipWithBody(ctx context.Context, tableId string, relationshipId float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateRelationshipWithBody(ctx context.Context, tableId string, relationshipId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateRelationship(ctx context.Context, tableId string, relationshipId float32, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateRelationship(ctx context.Context, tableId string, relationshipId int64, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRelationships request
 	GetRelationships(ctx context.Context, tableId string, params *GetRelationshipsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -28492,7 +28492,7 @@ func (c *Client) RunFormula(ctx context.Context, body RunFormulaJSONRequestBody,
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveManagersFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveManagersFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveManagersFromGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28504,7 +28504,7 @@ func (c *Client) RemoveManagersFromGroupWithBody(ctx context.Context, gid float3
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid float32, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid int64, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveManagersFromGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28516,7 +28516,7 @@ func (c *Client) RemoveManagersFromGroup(ctx context.Context, gid float32, body 
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddManagersToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddManagersToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddManagersToGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28528,7 +28528,7 @@ func (c *Client) AddManagersToGroupWithBody(ctx context.Context, gid float32, co
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddManagersToGroup(ctx context.Context, gid float32, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddManagersToGroup(ctx context.Context, gid int64, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddManagersToGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28540,7 +28540,7 @@ func (c *Client) AddManagersToGroup(ctx context.Context, gid float32, body AddMa
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveMembersFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveMembersFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveMembersFromGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28552,7 +28552,7 @@ func (c *Client) RemoveMembersFromGroupWithBody(ctx context.Context, gid float32
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid float32, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid int64, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveMembersFromGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28564,7 +28564,7 @@ func (c *Client) RemoveMembersFromGroup(ctx context.Context, gid float32, body R
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddMembersToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddMembersToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddMembersToGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28576,7 +28576,7 @@ func (c *Client) AddMembersToGroupWithBody(ctx context.Context, gid float32, con
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddMembersToGroup(ctx context.Context, gid float32, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddMembersToGroup(ctx context.Context, gid int64, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddMembersToGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28588,7 +28588,7 @@ func (c *Client) AddMembersToGroup(ctx context.Context, gid float32, body AddMem
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveSubgroupsFromGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveSubgroupsFromGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveSubgroupsFromGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28600,7 +28600,7 @@ func (c *Client) RemoveSubgroupsFromGroupWithBody(ctx context.Context, gid float
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid int64, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveSubgroupsFromGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28612,7 +28612,7 @@ func (c *Client) RemoveSubgroupsFromGroup(ctx context.Context, gid float32, body
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddSubgroupsToGroupWithBody(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddSubgroupsToGroupWithBody(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddSubgroupsToGroupRequestWithBody(c.Server, gid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -28624,7 +28624,7 @@ func (c *Client) AddSubgroupsToGroupWithBody(ctx context.Context, gid float32, c
 	return c.Client.Do(req)
 }
 
-func (c *Client) AddSubgroupsToGroup(ctx context.Context, gid float32, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AddSubgroupsToGroup(ctx context.Context, gid int64, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddSubgroupsToGroupRequest(c.Server, gid, body)
 	if err != nil {
 		return nil, err
@@ -28984,7 +28984,7 @@ func (c *Client) CreateRelationship(ctx context.Context, tableId string, body Cr
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relationshipId float32, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relationshipId int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteRelationshipRequest(c.Server, tableId, relationshipId)
 	if err != nil {
 		return nil, err
@@ -28996,7 +28996,7 @@ func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relatio
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateRelationshipWithBody(ctx context.Context, tableId string, relationshipId float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateRelationshipWithBody(ctx context.Context, tableId string, relationshipId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateRelationshipRequestWithBody(c.Server, tableId, relationshipId, contentType, body)
 	if err != nil {
 		return nil, err
@@ -29008,7 +29008,7 @@ func (c *Client) UpdateRelationshipWithBody(ctx context.Context, tableId string,
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relationshipId float32, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relationshipId int64, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateRelationshipRequest(c.Server, tableId, relationshipId, body)
 	if err != nil {
 		return nil, err
@@ -30691,7 +30691,7 @@ func NewRunFormulaRequestWithBody(server string, contentType string, body io.Rea
 }
 
 // NewRemoveManagersFromGroupRequest calls the generic RemoveManagersFromGroup builder with application/json body
-func NewRemoveManagersFromGroupRequest(server string, gid float32, body RemoveManagersFromGroupJSONRequestBody) (*http.Request, error) {
+func NewRemoveManagersFromGroupRequest(server string, gid int64, body RemoveManagersFromGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30702,7 +30702,7 @@ func NewRemoveManagersFromGroupRequest(server string, gid float32, body RemoveMa
 }
 
 // NewRemoveManagersFromGroupRequestWithBody generates requests for RemoveManagersFromGroup with any type of body
-func NewRemoveManagersFromGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewRemoveManagersFromGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -30738,7 +30738,7 @@ func NewRemoveManagersFromGroupRequestWithBody(server string, gid float32, conte
 }
 
 // NewAddManagersToGroupRequest calls the generic AddManagersToGroup builder with application/json body
-func NewAddManagersToGroupRequest(server string, gid float32, body AddManagersToGroupJSONRequestBody) (*http.Request, error) {
+func NewAddManagersToGroupRequest(server string, gid int64, body AddManagersToGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30749,7 +30749,7 @@ func NewAddManagersToGroupRequest(server string, gid float32, body AddManagersTo
 }
 
 // NewAddManagersToGroupRequestWithBody generates requests for AddManagersToGroup with any type of body
-func NewAddManagersToGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewAddManagersToGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -30785,7 +30785,7 @@ func NewAddManagersToGroupRequestWithBody(server string, gid float32, contentTyp
 }
 
 // NewRemoveMembersFromGroupRequest calls the generic RemoveMembersFromGroup builder with application/json body
-func NewRemoveMembersFromGroupRequest(server string, gid float32, body RemoveMembersFromGroupJSONRequestBody) (*http.Request, error) {
+func NewRemoveMembersFromGroupRequest(server string, gid int64, body RemoveMembersFromGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30796,7 +30796,7 @@ func NewRemoveMembersFromGroupRequest(server string, gid float32, body RemoveMem
 }
 
 // NewRemoveMembersFromGroupRequestWithBody generates requests for RemoveMembersFromGroup with any type of body
-func NewRemoveMembersFromGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewRemoveMembersFromGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -30832,7 +30832,7 @@ func NewRemoveMembersFromGroupRequestWithBody(server string, gid float32, conten
 }
 
 // NewAddMembersToGroupRequest calls the generic AddMembersToGroup builder with application/json body
-func NewAddMembersToGroupRequest(server string, gid float32, body AddMembersToGroupJSONRequestBody) (*http.Request, error) {
+func NewAddMembersToGroupRequest(server string, gid int64, body AddMembersToGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30843,7 +30843,7 @@ func NewAddMembersToGroupRequest(server string, gid float32, body AddMembersToGr
 }
 
 // NewAddMembersToGroupRequestWithBody generates requests for AddMembersToGroup with any type of body
-func NewAddMembersToGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewAddMembersToGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -30879,7 +30879,7 @@ func NewAddMembersToGroupRequestWithBody(server string, gid float32, contentType
 }
 
 // NewRemoveSubgroupsFromGroupRequest calls the generic RemoveSubgroupsFromGroup builder with application/json body
-func NewRemoveSubgroupsFromGroupRequest(server string, gid float32, body RemoveSubgroupsFromGroupJSONRequestBody) (*http.Request, error) {
+func NewRemoveSubgroupsFromGroupRequest(server string, gid int64, body RemoveSubgroupsFromGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30890,7 +30890,7 @@ func NewRemoveSubgroupsFromGroupRequest(server string, gid float32, body RemoveS
 }
 
 // NewRemoveSubgroupsFromGroupRequestWithBody generates requests for RemoveSubgroupsFromGroup with any type of body
-func NewRemoveSubgroupsFromGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewRemoveSubgroupsFromGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -30926,7 +30926,7 @@ func NewRemoveSubgroupsFromGroupRequestWithBody(server string, gid float32, cont
 }
 
 // NewAddSubgroupsToGroupRequest calls the generic AddSubgroupsToGroup builder with application/json body
-func NewAddSubgroupsToGroupRequest(server string, gid float32, body AddSubgroupsToGroupJSONRequestBody) (*http.Request, error) {
+func NewAddSubgroupsToGroupRequest(server string, gid int64, body AddSubgroupsToGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -30937,7 +30937,7 @@ func NewAddSubgroupsToGroupRequest(server string, gid float32, body AddSubgroups
 }
 
 // NewAddSubgroupsToGroupRequestWithBody generates requests for AddSubgroupsToGroup with any type of body
-func NewAddSubgroupsToGroupRequestWithBody(server string, gid float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewAddSubgroupsToGroupRequestWithBody(server string, gid int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -32271,7 +32271,7 @@ func NewCreateRelationshipRequestWithBody(server string, tableId string, content
 }
 
 // NewDeleteRelationshipRequest generates requests for DeleteRelationship
-func NewDeleteRelationshipRequest(server string, tableId string, relationshipId float32) (*http.Request, error) {
+func NewDeleteRelationshipRequest(server string, tableId string, relationshipId int64) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -32312,7 +32312,7 @@ func NewDeleteRelationshipRequest(server string, tableId string, relationshipId 
 }
 
 // NewUpdateRelationshipRequest calls the generic UpdateRelationship builder with application/json body
-func NewUpdateRelationshipRequest(server string, tableId string, relationshipId float32, body UpdateRelationshipJSONRequestBody) (*http.Request, error) {
+func NewUpdateRelationshipRequest(server string, tableId string, relationshipId int64, body UpdateRelationshipJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -32323,7 +32323,7 @@ func NewUpdateRelationshipRequest(server string, tableId string, relationshipId 
 }
 
 // NewUpdateRelationshipRequestWithBody generates requests for UpdateRelationship with any type of body
-func NewUpdateRelationshipRequestWithBody(server string, tableId string, relationshipId float32, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateRelationshipRequestWithBody(server string, tableId string, relationshipId int64, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -33015,34 +33015,34 @@ type ClientWithResponsesInterface interface {
 	RunFormulaWithResponse(ctx context.Context, body RunFormulaJSONRequestBody, reqEditors ...RequestEditorFn) (*RunFormulaResponse, error)
 
 	// RemoveManagersFromGroupWithBodyWithResponse request with any body
-	RemoveManagersFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error)
+	RemoveManagersFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error)
 
-	RemoveManagersFromGroupWithResponse(ctx context.Context, gid float32, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error)
+	RemoveManagersFromGroupWithResponse(ctx context.Context, gid int64, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error)
 
 	// AddManagersToGroupWithBodyWithResponse request with any body
-	AddManagersToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error)
+	AddManagersToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error)
 
-	AddManagersToGroupWithResponse(ctx context.Context, gid float32, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error)
+	AddManagersToGroupWithResponse(ctx context.Context, gid int64, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error)
 
 	// RemoveMembersFromGroupWithBodyWithResponse request with any body
-	RemoveMembersFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error)
+	RemoveMembersFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error)
 
-	RemoveMembersFromGroupWithResponse(ctx context.Context, gid float32, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error)
+	RemoveMembersFromGroupWithResponse(ctx context.Context, gid int64, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error)
 
 	// AddMembersToGroupWithBodyWithResponse request with any body
-	AddMembersToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error)
+	AddMembersToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error)
 
-	AddMembersToGroupWithResponse(ctx context.Context, gid float32, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error)
+	AddMembersToGroupWithResponse(ctx context.Context, gid int64, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error)
 
 	// RemoveSubgroupsFromGroupWithBodyWithResponse request with any body
-	RemoveSubgroupsFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error)
+	RemoveSubgroupsFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error)
 
-	RemoveSubgroupsFromGroupWithResponse(ctx context.Context, gid float32, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error)
+	RemoveSubgroupsFromGroupWithResponse(ctx context.Context, gid int64, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error)
 
 	// AddSubgroupsToGroupWithBodyWithResponse request with any body
-	AddSubgroupsToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error)
+	AddSubgroupsToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error)
 
-	AddSubgroupsToGroupWithResponse(ctx context.Context, gid float32, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error)
+	AddSubgroupsToGroupWithResponse(ctx context.Context, gid int64, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error)
 
 	// DeleteRecordsWithBodyWithResponse request with any body
 	DeleteRecordsWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeleteRecordsResponse, error)
@@ -33125,12 +33125,12 @@ type ClientWithResponsesInterface interface {
 	CreateRelationshipWithResponse(ctx context.Context, tableId string, body CreateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRelationshipResponse, error)
 
 	// DeleteRelationshipWithResponse request
-	DeleteRelationshipWithResponse(ctx context.Context, tableId string, relationshipId float32, reqEditors ...RequestEditorFn) (*DeleteRelationshipResponse, error)
+	DeleteRelationshipWithResponse(ctx context.Context, tableId string, relationshipId int64, reqEditors ...RequestEditorFn) (*DeleteRelationshipResponse, error)
 
 	// UpdateRelationshipWithBodyWithResponse request with any body
-	UpdateRelationshipWithBodyWithResponse(ctx context.Context, tableId string, relationshipId float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error)
+	UpdateRelationshipWithBodyWithResponse(ctx context.Context, tableId string, relationshipId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error)
 
-	UpdateRelationshipWithResponse(ctx context.Context, tableId string, relationshipId float32, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error)
+	UpdateRelationshipWithResponse(ctx context.Context, tableId string, relationshipId int64, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error)
 
 	// GetRelationshipsWithResponse request
 	GetRelationshipsWithResponse(ctx context.Context, tableId string, params *GetRelationshipsParams, reqEditors ...RequestEditorFn) (*GetRelationshipsResponse, error)
@@ -36052,7 +36052,7 @@ func (c *ClientWithResponses) RunFormulaWithResponse(ctx context.Context, body R
 }
 
 // RemoveManagersFromGroupWithBodyWithResponse request with arbitrary body returning *RemoveManagersFromGroupResponse
-func (c *ClientWithResponses) RemoveManagersFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveManagersFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error) {
 	rsp, err := c.RemoveManagersFromGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36060,7 +36060,7 @@ func (c *ClientWithResponses) RemoveManagersFromGroupWithBodyWithResponse(ctx co
 	return ParseRemoveManagersFromGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) RemoveManagersFromGroupWithResponse(ctx context.Context, gid float32, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveManagersFromGroupWithResponse(ctx context.Context, gid int64, body RemoveManagersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveManagersFromGroupResponse, error) {
 	rsp, err := c.RemoveManagersFromGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36069,7 +36069,7 @@ func (c *ClientWithResponses) RemoveManagersFromGroupWithResponse(ctx context.Co
 }
 
 // AddManagersToGroupWithBodyWithResponse request with arbitrary body returning *AddManagersToGroupResponse
-func (c *ClientWithResponses) AddManagersToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error) {
+func (c *ClientWithResponses) AddManagersToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error) {
 	rsp, err := c.AddManagersToGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36077,7 +36077,7 @@ func (c *ClientWithResponses) AddManagersToGroupWithBodyWithResponse(ctx context
 	return ParseAddManagersToGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) AddManagersToGroupWithResponse(ctx context.Context, gid float32, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error) {
+func (c *ClientWithResponses) AddManagersToGroupWithResponse(ctx context.Context, gid int64, body AddManagersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddManagersToGroupResponse, error) {
 	rsp, err := c.AddManagersToGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36086,7 +36086,7 @@ func (c *ClientWithResponses) AddManagersToGroupWithResponse(ctx context.Context
 }
 
 // RemoveMembersFromGroupWithBodyWithResponse request with arbitrary body returning *RemoveMembersFromGroupResponse
-func (c *ClientWithResponses) RemoveMembersFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveMembersFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error) {
 	rsp, err := c.RemoveMembersFromGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36094,7 +36094,7 @@ func (c *ClientWithResponses) RemoveMembersFromGroupWithBodyWithResponse(ctx con
 	return ParseRemoveMembersFromGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) RemoveMembersFromGroupWithResponse(ctx context.Context, gid float32, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveMembersFromGroupWithResponse(ctx context.Context, gid int64, body RemoveMembersFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveMembersFromGroupResponse, error) {
 	rsp, err := c.RemoveMembersFromGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36103,7 +36103,7 @@ func (c *ClientWithResponses) RemoveMembersFromGroupWithResponse(ctx context.Con
 }
 
 // AddMembersToGroupWithBodyWithResponse request with arbitrary body returning *AddMembersToGroupResponse
-func (c *ClientWithResponses) AddMembersToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error) {
+func (c *ClientWithResponses) AddMembersToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error) {
 	rsp, err := c.AddMembersToGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36111,7 +36111,7 @@ func (c *ClientWithResponses) AddMembersToGroupWithBodyWithResponse(ctx context.
 	return ParseAddMembersToGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) AddMembersToGroupWithResponse(ctx context.Context, gid float32, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error) {
+func (c *ClientWithResponses) AddMembersToGroupWithResponse(ctx context.Context, gid int64, body AddMembersToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddMembersToGroupResponse, error) {
 	rsp, err := c.AddMembersToGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36120,7 +36120,7 @@ func (c *ClientWithResponses) AddMembersToGroupWithResponse(ctx context.Context,
 }
 
 // RemoveSubgroupsFromGroupWithBodyWithResponse request with arbitrary body returning *RemoveSubgroupsFromGroupResponse
-func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error) {
 	rsp, err := c.RemoveSubgroupsFromGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36128,7 +36128,7 @@ func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithBodyWithResponse(ctx c
 	return ParseRemoveSubgroupsFromGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithResponse(ctx context.Context, gid float32, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithResponse(ctx context.Context, gid int64, body RemoveSubgroupsFromGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveSubgroupsFromGroupResponse, error) {
 	rsp, err := c.RemoveSubgroupsFromGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36137,7 +36137,7 @@ func (c *ClientWithResponses) RemoveSubgroupsFromGroupWithResponse(ctx context.C
 }
 
 // AddSubgroupsToGroupWithBodyWithResponse request with arbitrary body returning *AddSubgroupsToGroupResponse
-func (c *ClientWithResponses) AddSubgroupsToGroupWithBodyWithResponse(ctx context.Context, gid float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error) {
+func (c *ClientWithResponses) AddSubgroupsToGroupWithBodyWithResponse(ctx context.Context, gid int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error) {
 	rsp, err := c.AddSubgroupsToGroupWithBody(ctx, gid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36145,7 +36145,7 @@ func (c *ClientWithResponses) AddSubgroupsToGroupWithBodyWithResponse(ctx contex
 	return ParseAddSubgroupsToGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) AddSubgroupsToGroupWithResponse(ctx context.Context, gid float32, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error) {
+func (c *ClientWithResponses) AddSubgroupsToGroupWithResponse(ctx context.Context, gid int64, body AddSubgroupsToGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*AddSubgroupsToGroupResponse, error) {
 	rsp, err := c.AddSubgroupsToGroup(ctx, gid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36408,7 +36408,7 @@ func (c *ClientWithResponses) CreateRelationshipWithResponse(ctx context.Context
 }
 
 // DeleteRelationshipWithResponse request returning *DeleteRelationshipResponse
-func (c *ClientWithResponses) DeleteRelationshipWithResponse(ctx context.Context, tableId string, relationshipId float32, reqEditors ...RequestEditorFn) (*DeleteRelationshipResponse, error) {
+func (c *ClientWithResponses) DeleteRelationshipWithResponse(ctx context.Context, tableId string, relationshipId int64, reqEditors ...RequestEditorFn) (*DeleteRelationshipResponse, error) {
 	rsp, err := c.DeleteRelationship(ctx, tableId, relationshipId, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36417,7 +36417,7 @@ func (c *ClientWithResponses) DeleteRelationshipWithResponse(ctx context.Context
 }
 
 // UpdateRelationshipWithBodyWithResponse request with arbitrary body returning *UpdateRelationshipResponse
-func (c *ClientWithResponses) UpdateRelationshipWithBodyWithResponse(ctx context.Context, tableId string, relationshipId float32, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error) {
+func (c *ClientWithResponses) UpdateRelationshipWithBodyWithResponse(ctx context.Context, tableId string, relationshipId int64, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error) {
 	rsp, err := c.UpdateRelationshipWithBody(ctx, tableId, relationshipId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -36425,7 +36425,7 @@ func (c *ClientWithResponses) UpdateRelationshipWithBodyWithResponse(ctx context
 	return ParseUpdateRelationshipResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateRelationshipWithResponse(ctx context.Context, tableId string, relationshipId float32, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error) {
+func (c *ClientWithResponses) UpdateRelationshipWithResponse(ctx context.Context, tableId string, relationshipId int64, body UpdateRelationshipJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRelationshipResponse, error) {
 	rsp, err := c.UpdateRelationship(ctx, tableId, relationshipId, body, reqEditors...)
 	if err != nil {
 		return nil, err

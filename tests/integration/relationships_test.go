@@ -18,7 +18,7 @@ func TestRelationships(t *testing.T) {
 	childTableID := createChildTable(t, ctx, testCtx.AppID)
 	defer deleteTable(t, ctx, testCtx.AppID, childTableID)
 
-	var relationshipID float32
+	var relationshipID int64
 
 	t.Run("CreateRelationship", func(t *testing.T) {
 		// Create a relationship from child table to parent table
@@ -34,7 +34,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Store relationship ID for subsequent tests
-		relationshipID = float32(resp.JSON200.Id)
+		relationshipID = int64(resp.JSON200.Id)
 		t.Logf("Created relationship: %v", relationshipID)
 
 		// Verify parent/child table IDs
@@ -66,7 +66,7 @@ func TestRelationships(t *testing.T) {
 		// Find our relationship
 		found := false
 		for _, rel := range rels {
-			if float32(rel.Id()) == relationshipID {
+			if int64(rel.Id()) == relationshipID {
 				found = true
 				// Verify parent table ID
 				if rel.ParentTableId() != testCtx.TableID {
@@ -145,7 +145,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		for _, rel := range getResp.Relationships() {
-			if float32(rel.Id()) == relationshipID {
+			if int64(rel.Id()) == relationshipID {
 				t.Error("Relationship still exists after delete")
 			}
 		}

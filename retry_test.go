@@ -67,3 +67,53 @@ func TestRetryWaitStopsWhenContextEnds(t *testing.T) {
 		t.Errorf("err = %v, want context.DeadlineExceeded", err)
 	}
 }
+
+// A caller cancelling its context got a TimeoutError naming the client's
+// timeout, as if the request had run out of time. It now gets the context's
+// error; TimeoutError is kept for WithTimeout running out.
+func TestCancelIsNotATimeout(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		<-r.Context().Done()
+	}))
+	defer srv.Close()
+
+	qb, err := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL))
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	time.AfterFunc(50*time.Millisecond, cancel)
+	_, err = qb.ExportSolution("abc").Run(ctx)
+	if !errors.Is(err, context.Canceled) {
+		t.Errorf("err = %v, want context.Canceled", err)
+	}
+	var timeout *quickbase.TimeoutError
+	if errors.As(err, &timeout) {
+		t.Errorf("a cancelled request reported a timeout: %v", err)
+	}
+}
+
+func TestClientTimeoutIsATimeoutError(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case <-r.Context().Done():
+		case <-time.After(2 * time.Second):
+		}
+	}))
+	defer srv.Close()
+
+	qb, err := quickbase.New("testrealm",
+		quickbase.WithUserToken("token"),
+		quickbase.WithBaseURL(srv.URL),
+		quickbase.WithTimeout(50*time.Millisecond),
+		quickbase.WithMaxRetries(1),
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = qb.ExportSolution("abc").Run(context.Background())
+	var timeout *quickbase.TimeoutError
+	if !errors.As(err, &timeout) {
+		t.Errorf("err = %v (%T), want TimeoutError", err, err)
+	}
+}

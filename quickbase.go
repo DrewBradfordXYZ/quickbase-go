@@ -373,7 +373,10 @@ func WithDebug(enabled bool) Option {
 	}
 }
 
-// WithConvertDates enables/disables automatic ISO date string conversion.
+// WithConvertDates has no effect: the client never converted dates. Responses
+// keep dates as the strings QuickBase sends; parse them with [ParseISODate].
+//
+// Deprecated: it does nothing and will be removed.
 func WithConvertDates(enabled bool) Option {
 	return func(c *clientConfig) {
 		c.clientOpts = append(c.clientOpts, client.WithConvertDates(enabled))
@@ -492,7 +495,8 @@ func WithAppToken(token string) Option {
 // When configured, the client automatically:
 //   - Transforms table aliases to IDs in requests (from, to fields)
 //   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
-//   - Transforms field IDs to aliases in responses
+//   - Keys the query builder's records by alias, if WithSchemaOptions sets
+//     TransformResponses (off by default: records are keyed by field ID)
 //   - Unwraps { value: X } to just X in response records
 //
 // Example with struct:
@@ -638,7 +642,7 @@ func NewSchema() *SchemaBuilder {
 }
 
 // DefaultSchemaOptions returns the default schema options.
-// Response transformation is enabled by default.
+// Records are keyed by field ID (TransformResponses is off).
 func DefaultSchemaOptions() SchemaOptions {
 	return core.DefaultSchemaOptions()
 }
@@ -1094,15 +1098,15 @@ func Value(v any) FieldValue {
 	case string:
 		fv.FromFieldValueValue0(val)
 	case int:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(float64(val))
 	case int32:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(float64(val))
 	case int64:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(float64(val))
 	case float32:
-		fv.FromFieldValueValue1(val)
+		fv.FromFieldValueValue1(float64(val))
 	case float64:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(val)
 	case bool:
 		fv.FromFieldValueValue2(val)
 	case []string:

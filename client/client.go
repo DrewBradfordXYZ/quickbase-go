@@ -25,10 +25,12 @@ import (
 	"context"
 	"encoding/json"
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"io"
 	"math"
 	"math/rand"
+	"net"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -207,7 +209,10 @@ func WithDebug(enabled bool) Option {
 	}
 }
 
-// WithConvertDates enables/disables automatic ISO date string conversion (default true).
+// WithConvertDates has no effect: the client never converted dates. Responses
+// keep dates as the strings QuickBase sends; parse them with [core.ParseISODate].
+//
+// Deprecated: it does nothing and will be removed.
 func WithConvertDates(enabled bool) Option {
 	return func(c *Client) {
 		c.convertDates = enabled
@@ -318,7 +323,8 @@ func WithAppToken(token string) Option {
 // When configured, the client automatically:
 //   - Transforms table aliases to IDs in requests (from, to fields)
 //   - Transforms field aliases to IDs in requests (select, sortBy, groupBy, where, data)
-//   - Transforms field IDs to aliases in responses (unless disabled via WithSchemaOptions)
+//   - Keys the query builder's records by alias, if WithSchemaOptions sets
+//     TransformResponses (off by default: records are keyed by field ID)
 //   - Unwraps { value: X } to just X in response records
 func WithSchema(schema *core.Schema) Option {
 	return func(c *Client) {
@@ -574,9 +580,10 @@ func (c *Client) do(
 				})
 			}
 
-			// Check for timeout
+			// The caller's context ended (cancelled, or its own deadline):
+			// report that, not a timeout of ours
 			if ctx.Err() != nil {
-				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
+				return nil, ctx.Err()
 			}
 
 			if attempt < maxAttempts {
@@ -598,6 +605,11 @@ func (c *Client) do(
 					return nil, err
 				}
 				continue
+			}
+			// Our own per-request timeout (WithTimeout) ran out
+			var netErr net.Error
+			if errors.As(err, &netErr) && netErr.Timeout() {
+				return nil, core.NewTimeoutError(int(c.timeout.Milliseconds()))
 			}
 			return nil, err
 		}
@@ -680,6 +692,7 @@ func (c *Client) do(
 				return nil, err
 			}
 			if newToken != "" {
+				resp.Body.Close()
 				c.logger.Debug("Token refreshed, retrying request")
 				continue
 			}
@@ -1062,9 +1075,16 @@ var jsonWriteEndpoints = map[string]bool{
 	// Document generation (GET but writes)
 	"GET /v1/docTemplates/": true, // GenerateDocument (prefix)
 
-	// Solution from/to record (GET but writes)
-	"GET /v1/solutions/fromrecord": true, // CreateSolutionFromRecord
+	// Solutions to and from records are GETs that write: see solutionRecordWritePath
 }
+
+// solutionRecordWritePath matches the solution endpoints that are GETs but
+// write: createSolutionFromRecord (/solutions/fromrecord) and
+// updateSolutionToRecord (/solutions/{id}/fromrecord) change apps, and
+// exportSolutionToRecord (/solutions/{id}/torecord) writes a record.
+// changesetSolutionFromRecord (/solutions/{id}/changeset/fromrecord) only
+// reads, and doesn't match. The path may carry a base URL's prefix.
+var solutionRecordWritePath = regexp.MustCompile(`/solutions/(fromrecord|[^/]+/(fromrecord|torecord))$`)
 
 // jsonReadOnlyPOSTEndpoints are POST endpoints that are actually read-only.
 // These are exceptions to the "POST = write" rule.
@@ -1150,6 +1170,10 @@ func isXMLWriteAction(action string) bool {
 // isJSONWriteEndpoint checks if the request matches a known write endpoint.
 // Uses both exact matching and prefix matching for paths with IDs.
 func isJSONWriteEndpoint(method, path string) bool {
+	if method == http.MethodGet && solutionRecordWritePath.MatchString(path) {
+		return true
+	}
+
 	key := method + " " + path
 
 	// Exact match

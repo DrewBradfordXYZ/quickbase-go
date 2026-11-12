@@ -262,11 +262,11 @@ func toFieldValue(v any) generated.FieldValue_Value {
 	case string:
 		fv.FromFieldValueValue0(val)
 	case int:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(float64(val))
 	case float32:
-		fv.FromFieldValueValue1(val)
+		fv.FromFieldValueValue1(float64(val))
 	case float64:
-		fv.FromFieldValueValue1(float32(val))
+		fv.FromFieldValueValue1(val)
 	}
 	return fv
 }

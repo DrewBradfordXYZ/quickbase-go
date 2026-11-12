@@ -532,8 +532,7 @@ func extractResponseFields(schema *Schema, opName string) []ResponseField {
 				field.GoType = "int"
 			}
 		case "number":
-			// Use float32 since that's what oapi-codegen typically generates
-			field.GoType = "float32"
+			field.GoType = goNumberType(propSchema.Format)
 		case "boolean":
 			field.GoType = "bool"
 		case "string":
@@ -587,15 +586,26 @@ func inferGoType(schema *Schema) string {
 	}
 }
 
+// goNumberType is the Go type oapi-codegen gives a number of this format.
+func goNumberType(format string) string {
+	if format == "double" {
+		return "float64"
+	}
+	return "float32"
+}
+
 func inferGoTypeForParam(schema *Schema) string {
 	if schema == nil {
 		return "string"
 	}
 	switch schema.Type {
 	case "integer":
+		if schema.Format == "int64" {
+			return "int64"
+		}
 		return "int"
 	case "number":
-		return "float32" // oapi-codegen uses float32 for number params
+		return goNumberType(schema.Format)
 	case "boolean":
 		return "bool"
 	default:
