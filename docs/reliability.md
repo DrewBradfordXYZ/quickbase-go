@@ -40,7 +40,16 @@ quickbase.New("myrealm",
 
 ## What is retried
 
-A 429, a 5xx response or a network error is retried until the attempts run out. The wait is QuickBase's `Retry-After` when it sends one; otherwise `RetryDelay × Multiplier^(attempt−1)`, ±10% jitter, capped at `MaxRetryDelay`. After the last attempt a 429 returns `*RateLimitError`, whose `RateLimitInfo` has the `Retry-After` value and QuickBase's ray IDs for support requests.
+| Failure | Reads (GETs, and POSTs that read: `RunQuery`, `RunReport`, `RunFormula`, ...) | Writes (upserts, creates, deletes, XML write actions) |
+|---|---|---|
+| 429 | retried | retried: QuickBase didn't process it |
+| 401 | retried when the auth strategy has a new token | the same |
+| Connection never opened (DNS, refused) | retried | retried: it wasn't sent |
+| Timeout, 5xx, connection lost | retried | **not retried**: returned |
+
+A write that timed out or got a 502 may have been applied, and sending it again could, for example, add an upsert's records twice. Check what happened (query for the records) before sending it again.
+
+A retried failure is retried until the attempts run out. The wait is QuickBase's `Retry-After` when it sends one; otherwise `RetryDelay × Multiplier^(attempt−1)`, ±10% jitter, capped at `MaxRetryDelay`. After the last attempt a 429 returns `*RateLimitError`, whose `RateLimitInfo` has the `Retry-After` value and QuickBase's ray IDs for support requests.
 
 ## Throttling
 
@@ -76,3 +85,15 @@ quickbase.New("myrealm",
 ```
 
 Label by path only after replacing IDs in it, or every app and table becomes its own series.
+
+## Values QuickBase rejects
+
+An upsert whose values QuickBase rejects (a date in the wrong form, text in a numeric field) still saves the records, with those fields blank, and answers 207. The result's `Metadata().LineErrors` has the rejections, keyed by each record's 1-based position. `WithLineErrorsAsErrors()` returns them as a `*LineErrorsError` too, alongside the result, so the saved records' IDs aren't lost:
+
+```go
+result, err := client.Upsert(tableID).Data(records...).Run(ctx)
+var rejected *quickbase.LineErrorsError
+if errors.As(err, &rejected) {
+	log.Printf("saved %v; rejected %v", result.Metadata().CreatedRecordIds(), rejected.LineErrors)
+}
+```
