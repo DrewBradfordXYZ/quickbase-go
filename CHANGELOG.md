@@ -25,6 +25,7 @@ v3: one method per operation, with plain results. The module path is `github.com
 
 ### Removed
 - **BREAKING:** the fluent builders, the result wrappers with accessor methods (`Raw()`, `Name()`, ...), the `Query()` builder, `Asc`/`Desc`/`SortSpec`, and the union helpers for record values (`FieldValueUnion`). `client.API()` remains for the full generated response.
+- **BREAKING:** what v2 deprecated or never used: `PaginatedRequest`, `NewPaginatedRequest`, `PaginationOptions`, `PaginationType` and its constants, `DetectPaginationType` and `HasMorePages` (page with `RunQueryAll`, `RunQueryIterator` and the other iterators, or `Paginate`); `WithConvertDates`, which did nothing; `TransformDates`, `IsISODateString` and `ParseISODate`, which guessed dates from a string's shape (use `ParseDate`, `ParseDateTime`, or `Record.Decode` into `Date` and `DateTime`); `core.TransformResponse`, which nothing called; and `quickbase.Error`, which nothing returned.
 
 ### Fixed
 - The schema generator's Go output imports `github.com/DrewBradfordXYZ/quickbase-go/v3`; it imported the module path without its major version, which didn't compile.

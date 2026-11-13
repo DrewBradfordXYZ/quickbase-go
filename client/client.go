@@ -81,9 +81,6 @@ type Client struct {
 	// Logging
 	logger *core.Logger
 
-	// Date conversion
-	convertDates bool
-
 	// Schema for table/field aliases
 	schema *core.ResolvedSchema
 
@@ -217,16 +214,6 @@ func WithProactiveThrottle(requestsPer10Seconds int) Option {
 func WithDebug(enabled bool) Option {
 	return func(c *Client) {
 		c.logger = core.NewLogger(enabled)
-	}
-}
-
-// WithConvertDates has no effect: the client never converted dates. Responses
-// keep dates as the strings QuickBase sends; parse them with [core.ParseISODate].
-//
-// Deprecated: it does nothing and will be removed.
-func WithConvertDates(enabled bool) Option {
-	return func(c *Client) {
-		c.convertDates = enabled
 	}
 }
 
@@ -382,7 +369,6 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 		backoffMult:  2,
 		timeout:      30 * time.Second,
 		logger:       core.NewLogger(false),
-		convertDates: true,
 	}
 
 	for _, opt := range opts {

@@ -124,19 +124,10 @@ type (
 
 	// Pagination types
 	PaginationMetadata = client.PaginationMetadata
-	PaginationOptions  = client.PaginationOptions
-	PaginationType     = client.PaginationType
 
 	// Monitoring types
 	RequestInfo = client.RequestInfo
 	RetryInfo   = client.RetryInfo
-)
-
-// Pagination type constants
-const (
-	PaginationTypeSkip  = client.PaginationTypeSkip
-	PaginationTypeToken = client.PaginationTypeToken
-	PaginationTypeNone  = client.PaginationTypeNone
 )
 
 // Option configures a Client. It is the client package's Option: each With
@@ -202,11 +193,6 @@ func WithThrottle(t Throttle) Option { return client.WithThrottle(t) }
 // WithDebug enables debug logging. See [client.WithDebug].
 func WithDebug(enabled bool) Option { return client.WithDebug(enabled) }
 
-// WithConvertDates has no effect: the client never converted dates. See [client.WithConvertDates].
-//
-// Deprecated: see [client.WithConvertDates].
-func WithConvertDates(enabled bool) Option { return client.WithConvertDates(enabled) }
-
 // WithOnRateLimit sets a callback for rate limit events. See [client.WithOnRateLimit].
 func WithOnRateLimit(callback func(RateLimitInfo)) Option { return client.WithOnRateLimit(callback) }
 
@@ -245,15 +231,6 @@ func New(realm string, opts ...Option) (*Client, error) {
 	return client.New(realm, nil, opts...)
 }
 
-// Error represents a QuickBase SDK error.
-type Error struct {
-	Message string
-}
-
-func (e *Error) Error() string {
-	return e.Message
-}
-
 // Helper functions re-exported from core
 var (
 	// IsRetryableError returns true if the error should trigger a retry.
@@ -261,12 +238,6 @@ var (
 
 	// ParseErrorResponse parses an HTTP response into an appropriate error type.
 	ParseErrorResponse = core.ParseErrorResponse
-
-	// IsISODateString checks if a string looks like an ISO 8601 date.
-	IsISODateString = core.IsISODateString
-
-	// ParseISODate parses an ISO 8601 date string to time.Time.
-	ParseISODate = core.ParseISODate
 
 	// DateOf returns t's calendar day in t's location, for a Date field.
 	DateOf = core.DateOf
@@ -279,9 +250,6 @@ var (
 
 	// ParseDateTime parses a Date/Time field's value ("2024-01-15T15:30:00Z").
 	ParseDateTime = core.ParseDateTime
-
-	// TransformDates recursively transforms ISO date strings to time.Time in a map.
-	TransformDates = core.TransformDates
 )
 
 // NewSlidingWindowThrottle creates a new sliding window throttle.
@@ -316,15 +284,6 @@ func NewSchema() *SchemaBuilder {
 func DefaultSchemaOptions() SchemaOptions {
 	return core.DefaultSchemaOptions()
 }
-
-// Pagination helper functions re-exported from client
-var (
-	// DetectPaginationType determines the pagination type from metadata.
-	DetectPaginationType = client.DetectPaginationType
-
-	// HasMorePages checks if a response has more pages available.
-	HasMorePages = client.HasMorePages
-)
 
 // --- Friendly Type Aliases ---
 // These provide cleaner names for the verbose oapi-codegen generated types.

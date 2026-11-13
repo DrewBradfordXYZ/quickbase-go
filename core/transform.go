@@ -1,7 +1,5 @@
-// Request and response transformation utilities for schema aliases.
-//
-// These functions transform requests (converting aliases to IDs) and responses
-// (converting IDs to aliases and unwrapping values).
+// Request transformation for schema aliases: aliases to IDs.
+
 package core
 
 import (
@@ -187,103 +185,6 @@ func transformRecordForRequest(record map[string]any, schema *ResolvedSchema, ta
 	}
 
 	return result, nil
-}
-
-// TransformResponse transforms a response, converting field IDs to aliases and unwrapping values.
-// Respects the TransformResponses option in SchemaOptions - if false, only unwraps values
-// without converting field IDs to aliases.
-func TransformResponse(response map[string]any, schema *ResolvedSchema, tableID string) map[string]any {
-	if response == nil {
-		return nil
-	}
-
-	result := make(map[string]any)
-	for k, v := range response {
-		result[k] = v
-	}
-
-	// Handle data array (runQuery, upsert responses)
-	if data, ok := result["data"].([]any); ok && tableID != "" {
-		// Determine if we should transform field IDs to aliases
-		transformAliases := schema != nil && schema.Options.TransformResponses
-
-		transformed := make([]any, 0, len(data))
-		for _, item := range data {
-			if record, ok := item.(map[string]any); ok {
-				if transformAliases {
-					transformed = append(transformed, transformRecordForResponse(record, schema, tableID))
-				} else {
-					// Still unwrap values, but keep field IDs as keys
-					transformed = append(transformed, unwrapRecordValues(record))
-				}
-			} else {
-				transformed = append(transformed, item)
-			}
-		}
-		result["data"] = transformed
-	}
-
-	return result
-}
-
-// transformRecordForResponse transforms a record from the response.
-// - Converts field ID keys to aliases (if schema defined)
-// - Unwraps { value: X } to just X
-func transformRecordForResponse(record map[string]any, schema *ResolvedSchema, tableID string) map[string]any {
-	result := make(map[string]any)
-
-	for key, value := range record {
-		// Determine the output key (alias or original)
-		outputKey := key
-
-		// Try to parse key as field ID and get alias
-		if fieldID, err := strconv.Atoi(key); err == nil && schema != nil {
-			if alias := GetFieldAlias(schema, tableID, fieldID); alias != "" {
-				outputKey = alias
-			}
-		}
-
-		// Unwrap { value: X } -> X
-		unwrappedValue := unwrapFieldValue(value)
-		result[outputKey] = unwrappedValue
-	}
-
-	return result
-}
-
-// unwrapRecordValues unwraps all field values in a record without aliasing keys.
-func unwrapRecordValues(record map[string]any) map[string]any {
-	result := make(map[string]any)
-	for key, value := range record {
-		result[key] = unwrapFieldValue(value)
-	}
-	return result
-}
-
-// unwrapFieldValue unwraps a field value from QuickBase's { value: X } format.
-func unwrapFieldValue(value any) any {
-	if value == nil {
-		return nil
-	}
-
-	// Check if it's a map with a "value" key
-	if obj, ok := value.(map[string]any); ok {
-		if val, hasValue := obj["value"]; hasValue {
-			// Recursively unwrap in case value is an array of wrapped values
-			return unwrapFieldValue(val)
-		}
-	}
-
-	// Handle array of { value: X } objects
-	if arr, ok := value.([]any); ok {
-		result := make([]any, 0, len(arr))
-		for _, item := range arr {
-			result = append(result, unwrapFieldValue(item))
-		}
-		return result
-	}
-
-	return value
 }
 
 // extractTableIDFromBody extracts the table ID from a request body.

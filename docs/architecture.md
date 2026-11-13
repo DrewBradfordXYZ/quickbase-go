@@ -52,7 +52,7 @@ This needs oapi-codegen v2.8.2 (v2.4.0 generates code that doesn't compile with 
 1. Types at the source, generated methods, aliases in the HTTP layer; remove the builders, result wrappers and union helpers.
 2. One record decoder.
 3. Typed tables: generated structs per table, `Table[Record, Changes]`.
-4. Remove what is left of the old layers (`Query()`, unused `core` transforms); generate the root package's re-exports.
+4. Remove what is left of the old layers (`Query()`, `PaginatedRequest`, unused `core` transforms, guessed dates); generate the root package's re-exports.
 5. Migrate basetypes.
 
 ## Not chosen

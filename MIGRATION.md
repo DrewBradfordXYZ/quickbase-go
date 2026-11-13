@@ -81,3 +81,5 @@ Aliases now work with every method, resolved in one place: wherever a table goes
 - `Query()`, `QueryBuilder`
 - `FieldValueUnion` and the `From…`/`As…` union helpers for record values
 - `UnwrapRecord`, `UnwrapRecords` and `client.Record` (`rec.Values()`)
+- `PaginatedRequest` and its helpers (`RunQueryAll`, `RunQueryIterator`, the other iterators, or `Paginate`)
+- `WithConvertDates` (it did nothing), and `TransformDates`, `IsISODateString`, `ParseISODate` (`ParseDate`, `ParseDateTime`, or `Record.Decode`)
