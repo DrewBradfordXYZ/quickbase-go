@@ -38,13 +38,13 @@ func TestAliasesResolvedForEveryRequest(t *testing.T) {
 	}
 	ctx := context.Background()
 
-	if _, err := qb.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "projects", Where: quickbase.DeleteWhere("{'status'.EX.'Done'}")}); err != nil {
+	if _, err := qb.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "projects", Where: "{'status'.EX.'Done'}"}); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := qb.Upsert(ctx, quickbase.UpsertBody{To: "projects", Data: []quickbase.Record{quickbase.Row("name", "Alpha", 6, "kept")}}); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := qb.GetFields(ctx, quickbase.GetFieldsParams{TableId: "projects"}); err != nil {
+	if _, err := qb.GetFields(ctx, "projects", nil); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := qb.RunQuery(ctx, quickbase.RunQueryBody{From: "bqother1"}); err != nil {
@@ -101,14 +101,14 @@ func TestAliasesOnlyWhereTablesAre(t *testing.T) {
 	if got[0].body["from"] != "56789.abcd" {
 		t.Errorf("user ID rewritten: %v", got[0].body)
 	}
-	if _, err := qb.GetTable(ctx, "projects", quickbase.GetTableParams{AppId: "bqapp"}); err != nil {
+	if _, err := qb.GetTable(ctx, "projects", "bqapp"); err != nil {
 		t.Fatal(err)
 	}
 	if !strings.HasPrefix(got[1].path, "/tables/bqprojects?") {
 		t.Errorf("GetTable sent %s", got[1].path)
 	}
 	// An older table ID (no "b" prefix) the schema doesn't name goes as given
-	if _, err := qb.GetTable(ctx, "9kaw8phg", quickbase.GetTableParams{AppId: "bqapp"}); err != nil {
+	if _, err := qb.GetTable(ctx, "9kaw8phg", "bqapp"); err != nil {
 		t.Errorf("an unlisted table ID: %v", err)
 	}
 }

@@ -39,7 +39,7 @@ func TestSolutionsSendAndReturnQBL(t *testing.T) {
 	}
 	ctx := context.Background()
 
-	exported, err := qb.ExportSolution(ctx, "abc", quickbase.ExportSolutionParams{})
+	exported, err := qb.ExportSolution(ctx, "abc", nil)
 	if err != nil {
 		t.Fatalf("ExportSolution: %v", err)
 	}
@@ -47,7 +47,7 @@ func TestSolutionsSendAndReturnQBL(t *testing.T) {
 		t.Errorf("ExportSolution = %q, want the QBL", exported)
 	}
 
-	if _, err := qb.CreateSolution(ctx, quickbase.CreateSolutionParams{}, []byte(qbl)); err != nil {
+	if _, err := qb.CreateSolution(ctx, []byte(qbl), nil); err != nil {
 		t.Fatalf("CreateSolution: %v", err)
 	}
 	if gotType != "application/x-yaml" || gotBody != qbl {

@@ -170,7 +170,7 @@ func (c *Client) RunReportIterator(ctx context.Context, reportID string, tableID
 // runReportFetcher fetches one page of a report at the given skip.
 func (c *Client) runReportFetcher(reportID string, tableID string) PageFetcher[generated.QuickbaseRecord, *recordPage] {
 	return func(ctx context.Context, skip int, _ string) (*recordPage, error) {
-		result, err := c.RunReport(ctx, reportID, generated.RunReportParams{TableId: tableID, Skip: &skip})
+		result, err := c.RunReport(ctx, reportID, tableID, &generated.RunReportOptions{Skip: &skip})
 		if err != nil {
 			return nil, err
 		}
@@ -221,7 +221,7 @@ func (c *Client) GetRelationshipsIterator(ctx context.Context, tableID string) i
 	return func(yield func(generated.GetRelationshipsRelationshipsItem, error) bool) {
 		skip := 0
 		for {
-			page, err := c.GetRelationships(ctx, tableID, generated.GetRelationshipsParams{Skip: &skip})
+			page, err := c.GetRelationships(ctx, tableID, &generated.GetRelationshipsOptions{Skip: &skip})
 			if err != nil {
 				yield(generated.GetRelationshipsRelationshipsItem{}, err)
 				return
@@ -241,11 +241,11 @@ func (c *Client) GetRelationshipsIterator(ctx context.Context, tableID string) i
 
 // GetUsersIterator yields every user getUsers finds, a page at a time
 // (getUsers pages by nextPageToken). body filters by email or app; its
-// NextPageToken is set for each page.
-func (c *Client) GetUsersIterator(ctx context.Context, params generated.GetUsersParams, body generated.GetUsersJSONRequestBody) iter.Seq2[generated.GetUsersUsersItem, error] {
+// NextPageToken is set for each page; opts can be nil.
+func (c *Client) GetUsersIterator(ctx context.Context, body generated.GetUsersJSONRequestBody, opts *generated.GetUsersOptions) iter.Seq2[generated.GetUsersUsersItem, error] {
 	return func(yield func(generated.GetUsersUsersItem, error) bool) {
 		for {
-			page, err := c.GetUsers(ctx, params, body)
+			page, err := c.GetUsers(ctx, body, opts)
 			if err != nil {
 				yield(generated.GetUsersUsersItem{}, err)
 				return

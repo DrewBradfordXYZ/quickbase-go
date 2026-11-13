@@ -6,7 +6,6 @@ import (
 	"strings"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v3"
 	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
@@ -107,7 +106,7 @@ func TestDateFields(t *testing.T) {
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.DateFieldID},
-			Where:  quickbase.Where(whereStr),
+			Where:  whereStr,
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -209,7 +208,7 @@ func TestCheckboxFields(t *testing.T) {
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.CheckboxFieldID},
-			Where:  quickbase.Where(whereStr),
+			Where:  whereStr,
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)

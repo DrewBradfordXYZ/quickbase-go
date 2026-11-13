@@ -70,7 +70,11 @@ func (c *Client) Audit(ctx context.Context, body generated.AuditJSONRequestBody)
 // ChangesetSolution: List solution changes.
 //
 // See https://developer.quickbase.com/operation/changesetSolution
-func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, params generated.ChangesetSolutionParams, body []byte) (*generated.ChangesetSolutionResult, error) {
+func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, body []byte, opts *generated.ChangesetSolutionOptions) (*generated.ChangesetSolutionResult, error) {
+	params := generated.ChangesetSolutionParams{}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.ChangesetSolutionWithBodyWithResponse(ctx, solutionId, &params, "application/x-yaml", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
@@ -81,7 +85,11 @@ func (c *Client) ChangesetSolution(ctx context.Context, solutionId string, param
 // ChangesetSolutionFromRecord: List solution changes from record.
 //
 // See https://developer.quickbase.com/operation/changesetSolutionFromRecord
-func (c *Client) ChangesetSolutionFromRecord(ctx context.Context, solutionId string, params generated.ChangesetSolutionFromRecordParams) (any, error) {
+func (c *Client) ChangesetSolutionFromRecord(ctx context.Context, solutionId string, tableId string, fieldId int, recordId int, opts *generated.ChangesetSolutionFromRecordOptions) (any, error) {
+	params := generated.ChangesetSolutionFromRecordParams{TableId: tableId, FieldId: fieldId, RecordId: recordId}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.ChangesetSolutionFromRecordWithResponse(ctx, solutionId, &params)
 	if err != nil {
 		return nil, err
@@ -129,7 +137,8 @@ func (c *Client) CreateApp(ctx context.Context, body generated.CreateAppJSONRequ
 // CreateField: Create a field.
 //
 // See https://developer.quickbase.com/operation/createField
-func (c *Client) CreateField(ctx context.Context, params generated.CreateFieldParams, body generated.CreateFieldJSONRequestBody) (*generated.CreateFieldResult, error) {
+func (c *Client) CreateField(ctx context.Context, tableId string, body generated.CreateFieldJSONRequestBody) (*generated.CreateFieldResult, error) {
+	params := generated.CreateFieldParams{TableId: tableId}
 	resp, err := c.generated.CreateFieldWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -151,7 +160,12 @@ func (c *Client) CreateRelationship(ctx context.Context, tableId string, body ge
 // CreateSolution: Create a solution.
 //
 // See https://developer.quickbase.com/operation/createSolution
-func (c *Client) CreateSolution(ctx context.Context, params generated.CreateSolutionParams, body []byte) (*generated.CreateSolutionResult, error) {
+func (c *Client) CreateSolution(ctx context.Context, body []byte, opts *generated.CreateSolutionOptions) (*generated.CreateSolutionResult, error) {
+	params := generated.CreateSolutionParams{}
+	if opts != nil {
+		params.Alias = opts.Alias
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.CreateSolutionWithBodyWithResponse(ctx, &params, "application/x-yaml", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
@@ -162,7 +176,12 @@ func (c *Client) CreateSolution(ctx context.Context, params generated.CreateSolu
 // CreateSolutionFromRecord: Create solution from record.
 //
 // See https://developer.quickbase.com/operation/createSolutionFromRecord
-func (c *Client) CreateSolutionFromRecord(ctx context.Context, params generated.CreateSolutionFromRecordParams) (any, error) {
+func (c *Client) CreateSolutionFromRecord(ctx context.Context, tableId string, fieldId int, recordId int, opts *generated.CreateSolutionFromRecordOptions) (any, error) {
+	params := generated.CreateSolutionFromRecordParams{TableId: tableId, FieldId: fieldId, RecordId: recordId}
+	if opts != nil {
+		params.Alias = opts.Alias
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.CreateSolutionFromRecordWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -177,7 +196,8 @@ func (c *Client) CreateSolutionFromRecord(ctx context.Context, params generated.
 // CreateTable: Create a table.
 //
 // See https://developer.quickbase.com/operation/createTable
-func (c *Client) CreateTable(ctx context.Context, params generated.CreateTableParams, body generated.CreateTableJSONRequestBody) (*generated.CreateTableResult, error) {
+func (c *Client) CreateTable(ctx context.Context, appId string, body generated.CreateTableJSONRequestBody) (*generated.CreateTableResult, error) {
+	params := generated.CreateTableParams{AppId: appId}
 	resp, err := c.generated.CreateTableWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -210,7 +230,8 @@ func (c *Client) DeleteApp(ctx context.Context, appId string, body generated.Del
 // DeleteFields: Delete field(s).
 //
 // See https://developer.quickbase.com/operation/deleteFields
-func (c *Client) DeleteFields(ctx context.Context, params generated.DeleteFieldsParams, body generated.DeleteFieldsJSONRequestBody) (*generated.DeleteFieldsResult, error) {
+func (c *Client) DeleteFields(ctx context.Context, tableId string, body generated.DeleteFieldsJSONRequestBody) (*generated.DeleteFieldsResult, error) {
+	params := generated.DeleteFieldsParams{TableId: tableId}
 	resp, err := c.generated.DeleteFieldsWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -254,7 +275,8 @@ func (c *Client) DeleteRelationship(ctx context.Context, tableId string, relatio
 // DeleteTable: Delete a table.
 //
 // See https://developer.quickbase.com/operation/deleteTable
-func (c *Client) DeleteTable(ctx context.Context, tableId string, params generated.DeleteTableParams) (*generated.DeleteTableResult, error) {
+func (c *Client) DeleteTable(ctx context.Context, tableId string, appId string) (*generated.DeleteTableResult, error) {
+	params := generated.DeleteTableParams{AppId: appId}
 	resp, err := c.generated.DeleteTableWithResponse(ctx, tableId, &params)
 	if err != nil {
 		return nil, err
@@ -276,7 +298,11 @@ func (c *Client) DeleteUserToken(ctx context.Context) (*generated.DeleteUserToke
 // DenyUsers: Deny users.
 //
 // See https://developer.quickbase.com/operation/denyUsers
-func (c *Client) DenyUsers(ctx context.Context, params generated.DenyUsersParams, body generated.DenyUsersJSONRequestBody) (*generated.DenyUsersResult, error) {
+func (c *Client) DenyUsers(ctx context.Context, body generated.DenyUsersJSONRequestBody, opts *generated.DenyUsersOptions) (*generated.DenyUsersResult, error) {
+	params := generated.DenyUsersParams{}
+	if opts != nil {
+		params.AccountId = opts.AccountId
+	}
 	resp, err := c.generated.DenyUsersWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -287,7 +313,11 @@ func (c *Client) DenyUsers(ctx context.Context, params generated.DenyUsersParams
 // DenyUsersAndGroups: Deny and remove users from groups.
 //
 // See https://developer.quickbase.com/operation/denyUsersAndGroups
-func (c *Client) DenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups bool, params generated.DenyUsersAndGroupsParams, body generated.DenyUsersAndGroupsJSONRequestBody) (*generated.DenyUsersAndGroupsResult, error) {
+func (c *Client) DenyUsersAndGroups(ctx context.Context, shouldDeleteFromGroups bool, body generated.DenyUsersAndGroupsJSONRequestBody, opts *generated.DenyUsersAndGroupsOptions) (*generated.DenyUsersAndGroupsResult, error) {
+	params := generated.DenyUsersAndGroupsParams{}
+	if opts != nil {
+		params.AccountId = opts.AccountId
+	}
 	resp, err := c.generated.DenyUsersAndGroupsWithResponse(ctx, shouldDeleteFromGroups, &params, body)
 	if err != nil {
 		return nil, err
@@ -320,7 +350,11 @@ func (c *Client) ExchangeSsoToken(ctx context.Context, body generated.ExchangeSs
 // ExportSolution: Export a solution.
 //
 // See https://developer.quickbase.com/operation/exportSolution
-func (c *Client) ExportSolution(ctx context.Context, solutionId string, params generated.ExportSolutionParams) ([]byte, error) {
+func (c *Client) ExportSolution(ctx context.Context, solutionId string, opts *generated.ExportSolutionOptions) ([]byte, error) {
+	params := generated.ExportSolutionParams{}
+	if opts != nil {
+		params.QBLVersion = opts.QBLVersion
+	}
 	resp, err := c.generated.ExportSolutionWithResponse(ctx, solutionId, &params)
 	if err != nil {
 		return nil, err
@@ -331,7 +365,12 @@ func (c *Client) ExportSolution(ctx context.Context, solutionId string, params g
 // ExportSolutionToRecord: Export solution to record.
 //
 // See https://developer.quickbase.com/operation/exportSolutionToRecord
-func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, params generated.ExportSolutionToRecordParams) (any, error) {
+func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, tableId string, fieldId int, opts *generated.ExportSolutionToRecordOptions) (any, error) {
+	params := generated.ExportSolutionToRecordParams{TableId: tableId, FieldId: fieldId}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+		params.QBLVersion = opts.QBLVersion
+	}
 	resp, err := c.generated.ExportSolutionToRecordWithResponse(ctx, solutionId, &params)
 	if err != nil {
 		return nil, err
@@ -346,7 +385,19 @@ func (c *Client) ExportSolutionToRecord(ctx context.Context, solutionId string, 
 // GenerateDocument: Generate a document.
 //
 // See https://developer.quickbase.com/operation/generateDocument
-func (c *Client) GenerateDocument(ctx context.Context, templateId int, params generated.GenerateDocumentParams) (*generated.GenerateDocumentResult, error) {
+func (c *Client) GenerateDocument(ctx context.Context, templateId int, tableId string, opts *generated.GenerateDocumentOptions) (*generated.GenerateDocumentResult, error) {
+	params := generated.GenerateDocumentParams{TableId: tableId}
+	if opts != nil {
+		params.RecordId = opts.RecordId
+		params.Filename = opts.Filename
+		params.Format = opts.Format
+		params.Margin = opts.Margin
+		params.Unit = opts.Unit
+		params.PageSize = opts.PageSize
+		params.Orientation = opts.Orientation
+		params.Realm = opts.Realm
+		params.Accept = opts.Accept
+	}
 	resp, err := c.generated.GenerateDocumentWithResponse(ctx, templateId, &params)
 	if err != nil {
 		return nil, err
@@ -383,7 +434,8 @@ func (c *Client) GetAppEvents(ctx context.Context, appId string) ([]generated.Ge
 // GetAppTables: Get tables for an app.
 //
 // See https://developer.quickbase.com/operation/getAppTables
-func (c *Client) GetAppTables(ctx context.Context, params generated.GetAppTablesParams) ([]generated.GetAppTablesItem, error) {
+func (c *Client) GetAppTables(ctx context.Context, appId string) ([]generated.GetAppTablesItem, error) {
+	params := generated.GetAppTablesParams{AppId: appId}
 	resp, err := c.generated.GetAppTablesWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -398,7 +450,11 @@ func (c *Client) GetAppTables(ctx context.Context, params generated.GetAppTables
 // GetField: Get field.
 //
 // See https://developer.quickbase.com/operation/getField
-func (c *Client) GetField(ctx context.Context, fieldId int, params generated.GetFieldParams) (*generated.GetFieldResult, error) {
+func (c *Client) GetField(ctx context.Context, fieldId int, tableId string, opts *generated.GetFieldOptions) (*generated.GetFieldResult, error) {
+	params := generated.GetFieldParams{TableId: tableId}
+	if opts != nil {
+		params.IncludeFieldPerms = opts.IncludeFieldPerms
+	}
 	resp, err := c.generated.GetFieldWithResponse(ctx, fieldId, &params)
 	if err != nil {
 		return nil, err
@@ -409,7 +465,8 @@ func (c *Client) GetField(ctx context.Context, fieldId int, params generated.Get
 // GetFieldUsage: Get usage for a field.
 //
 // See https://developer.quickbase.com/operation/getFieldUsage
-func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, params generated.GetFieldUsageParams) ([]generated.GetFieldUsageItem, error) {
+func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, tableId string) ([]generated.GetFieldUsageItem, error) {
+	params := generated.GetFieldUsageParams{TableId: tableId}
 	resp, err := c.generated.GetFieldUsageWithResponse(ctx, fieldId, &params)
 	if err != nil {
 		return nil, err
@@ -424,7 +481,11 @@ func (c *Client) GetFieldUsage(ctx context.Context, fieldId int, params generate
 // GetFields: Get fields for a table.
 //
 // See https://developer.quickbase.com/operation/getFields
-func (c *Client) GetFields(ctx context.Context, params generated.GetFieldsParams) ([]generated.GetFieldsItem, error) {
+func (c *Client) GetFields(ctx context.Context, tableId string, opts *generated.GetFieldsOptions) ([]generated.GetFieldsItem, error) {
+	params := generated.GetFieldsParams{TableId: tableId}
+	if opts != nil {
+		params.IncludeFieldPerms = opts.IncludeFieldPerms
+	}
 	resp, err := c.generated.GetFieldsWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -439,7 +500,12 @@ func (c *Client) GetFields(ctx context.Context, params generated.GetFieldsParams
 // GetFieldsUsage: Get usage for all fields.
 //
 // See https://developer.quickbase.com/operation/getFieldsUsage
-func (c *Client) GetFieldsUsage(ctx context.Context, params generated.GetFieldsUsageParams) ([]generated.GetFieldsUsageItem, error) {
+func (c *Client) GetFieldsUsage(ctx context.Context, tableId string, opts *generated.GetFieldsUsageOptions) ([]generated.GetFieldsUsageItem, error) {
+	params := generated.GetFieldsUsageParams{TableId: tableId}
+	if opts != nil {
+		params.Skip = opts.Skip
+		params.Top = opts.Top
+	}
 	resp, err := c.generated.GetFieldsUsageWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -454,7 +520,11 @@ func (c *Client) GetFieldsUsage(ctx context.Context, params generated.GetFieldsU
 // GetRelationships: Get all relationships.
 //
 // See https://developer.quickbase.com/operation/getRelationships
-func (c *Client) GetRelationships(ctx context.Context, tableId string, params generated.GetRelationshipsParams) (*generated.GetRelationshipsResult, error) {
+func (c *Client) GetRelationships(ctx context.Context, tableId string, opts *generated.GetRelationshipsOptions) (*generated.GetRelationshipsResult, error) {
+	params := generated.GetRelationshipsParams{}
+	if opts != nil {
+		params.Skip = opts.Skip
+	}
 	resp, err := c.generated.GetRelationshipsWithResponse(ctx, tableId, &params)
 	if err != nil {
 		return nil, err
@@ -465,7 +535,8 @@ func (c *Client) GetRelationships(ctx context.Context, tableId string, params ge
 // GetReport: Get a report.
 //
 // See https://developer.quickbase.com/operation/getReport
-func (c *Client) GetReport(ctx context.Context, reportId string, params generated.GetReportParams) (*generated.GetReportResult, error) {
+func (c *Client) GetReport(ctx context.Context, reportId string, tableId string) (*generated.GetReportResult, error) {
+	params := generated.GetReportParams{TableId: tableId}
 	resp, err := c.generated.GetReportWithResponse(ctx, reportId, &params)
 	if err != nil {
 		return nil, err
@@ -491,7 +562,11 @@ func (c *Client) GetRoles(ctx context.Context, appId string) ([]generated.GetRol
 // GetSolutionPublic: Get solution information.
 //
 // See https://developer.quickbase.com/operation/getSolutionPublic
-func (c *Client) GetSolutionPublic(ctx context.Context, solutionId string, params generated.GetSolutionPublicParams) (*generated.GetSolutionPublicResult, error) {
+func (c *Client) GetSolutionPublic(ctx context.Context, solutionId string, opts *generated.GetSolutionPublicOptions) (*generated.GetSolutionPublicResult, error) {
+	params := generated.GetSolutionPublicParams{}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.GetSolutionPublicWithResponse(ctx, solutionId, &params)
 	if err != nil {
 		return nil, err
@@ -502,7 +577,8 @@ func (c *Client) GetSolutionPublic(ctx context.Context, solutionId string, param
 // GetTable: Get a table.
 //
 // See https://developer.quickbase.com/operation/getTable
-func (c *Client) GetTable(ctx context.Context, tableId string, params generated.GetTableParams) (*generated.GetTableResult, error) {
+func (c *Client) GetTable(ctx context.Context, tableId string, appId string) (*generated.GetTableResult, error) {
+	params := generated.GetTableParams{AppId: appId}
 	resp, err := c.generated.GetTableWithResponse(ctx, tableId, &params)
 	if err != nil {
 		return nil, err
@@ -513,7 +589,8 @@ func (c *Client) GetTable(ctx context.Context, tableId string, params generated.
 // GetTableReports: Get reports for a table.
 //
 // See https://developer.quickbase.com/operation/getTableReports
-func (c *Client) GetTableReports(ctx context.Context, params generated.GetTableReportsParams) ([]generated.GetTableReportsItem, error) {
+func (c *Client) GetTableReports(ctx context.Context, tableId string) ([]generated.GetTableReportsItem, error) {
+	params := generated.GetTableReportsParams{TableId: tableId}
 	resp, err := c.generated.GetTableReportsWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -528,7 +605,11 @@ func (c *Client) GetTableReports(ctx context.Context, params generated.GetTableR
 // GetTempTokenDBID: Get a temporary token for a dbid.
 //
 // See https://developer.quickbase.com/operation/getTempTokenDBID
-func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, params generated.GetTempTokenDBIDParams) (*generated.GetTempTokenDBIDResult, error) {
+func (c *Client) GetTempTokenDBID(ctx context.Context, dbid string, opts *generated.GetTempTokenDBIDOptions) (*generated.GetTempTokenDBIDResult, error) {
+	params := generated.GetTempTokenDBIDParams{}
+	if opts != nil {
+		params.QBAppToken = opts.QBAppToken
+	}
 	resp, err := c.generated.GetTempTokenDBIDWithResponse(ctx, dbid, &params)
 	if err != nil {
 		return nil, err
@@ -554,7 +635,8 @@ func (c *Client) GetTrustees(ctx context.Context, appId string) ([]generated.Get
 // GetUserApps: Get apps for a user.
 //
 // See https://developer.quickbase.com/operation/getUserApps
-func (c *Client) GetUserApps(ctx context.Context, userId string, params generated.GetUserAppsParams) (*generated.GetUserAppsResult, error) {
+func (c *Client) GetUserApps(ctx context.Context, userId string, accountId int64) (*generated.GetUserAppsResult, error) {
+	params := generated.GetUserAppsParams{AccountId: accountId}
 	resp, err := c.generated.GetUserAppsWithResponse(ctx, userId, &params)
 	if err != nil {
 		return nil, err
@@ -565,7 +647,11 @@ func (c *Client) GetUserApps(ctx context.Context, userId string, params generate
 // GetUsers: Get users.
 //
 // See https://developer.quickbase.com/operation/getUsers
-func (c *Client) GetUsers(ctx context.Context, params generated.GetUsersParams, body generated.GetUsersJSONRequestBody) (*generated.GetUsersResult, error) {
+func (c *Client) GetUsers(ctx context.Context, body generated.GetUsersJSONRequestBody, opts *generated.GetUsersOptions) (*generated.GetUsersResult, error) {
+	params := generated.GetUsersParams{}
+	if opts != nil {
+		params.AccountId = opts.AccountId
+	}
 	resp, err := c.generated.GetUsersWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -576,7 +662,11 @@ func (c *Client) GetUsers(ctx context.Context, params generated.GetUsersParams, 
 // PlatformAnalyticEventSummaries: Get event summaries.
 //
 // See https://developer.quickbase.com/operation/platformAnalyticEventSummaries
-func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, params generated.PlatformAnalyticEventSummariesParams, body generated.PlatformAnalyticEventSummariesJSONRequestBody) (*generated.PlatformAnalyticEventSummariesResult, error) {
+func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, body generated.PlatformAnalyticEventSummariesJSONRequestBody, opts *generated.PlatformAnalyticEventSummariesOptions) (*generated.PlatformAnalyticEventSummariesResult, error) {
+	params := generated.PlatformAnalyticEventSummariesParams{}
+	if opts != nil {
+		params.AccountId = opts.AccountId
+	}
 	resp, err := c.generated.PlatformAnalyticEventSummariesWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -587,7 +677,8 @@ func (c *Client) PlatformAnalyticEventSummaries(ctx context.Context, params gene
 // PlatformAnalyticReads: Get read summaries.
 //
 // See https://developer.quickbase.com/operation/platformAnalyticReads
-func (c *Client) PlatformAnalyticReads(ctx context.Context, params generated.PlatformAnalyticReadsParams) (*generated.PlatformAnalyticReadsResult, error) {
+func (c *Client) PlatformAnalyticReads(ctx context.Context, day core.Date) (*generated.PlatformAnalyticReadsResult, error) {
+	params := generated.PlatformAnalyticReadsParams{Day: day}
 	resp, err := c.generated.PlatformAnalyticReadsWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -675,7 +766,12 @@ func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONReques
 // RunReport: Run a report.
 //
 // See https://developer.quickbase.com/operation/runReport
-func (c *Client) RunReport(ctx context.Context, reportId string, params generated.RunReportParams) (*generated.RunReportResult, error) {
+func (c *Client) RunReport(ctx context.Context, reportId string, tableId string, opts *generated.RunReportOptions) (*generated.RunReportResult, error) {
+	params := generated.RunReportParams{TableId: tableId}
+	if opts != nil {
+		params.Skip = opts.Skip
+		params.Top = opts.Top
+	}
 	resp, err := c.generated.RunReportWithResponse(ctx, reportId, &params)
 	if err != nil {
 		return nil, err
@@ -697,7 +793,11 @@ func (c *Client) TransferUserToken(ctx context.Context, body generated.TransferU
 // UndenyUsers: Undeny users.
 //
 // See https://developer.quickbase.com/operation/undenyUsers
-func (c *Client) UndenyUsers(ctx context.Context, params generated.UndenyUsersParams, body generated.UndenyUsersJSONRequestBody) (*generated.UndenyUsersResult, error) {
+func (c *Client) UndenyUsers(ctx context.Context, body generated.UndenyUsersJSONRequestBody, opts *generated.UndenyUsersOptions) (*generated.UndenyUsersResult, error) {
+	params := generated.UndenyUsersParams{}
+	if opts != nil {
+		params.AccountId = opts.AccountId
+	}
 	resp, err := c.generated.UndenyUsersWithResponse(ctx, &params, body)
 	if err != nil {
 		return nil, err
@@ -719,7 +819,8 @@ func (c *Client) UpdateApp(ctx context.Context, appId string, body generated.Upd
 // UpdateField: Update a field.
 //
 // See https://developer.quickbase.com/operation/updateField
-func (c *Client) UpdateField(ctx context.Context, fieldId int, params generated.UpdateFieldParams, body generated.UpdateFieldJSONRequestBody) (*generated.UpdateFieldResult, error) {
+func (c *Client) UpdateField(ctx context.Context, fieldId int, tableId string, body generated.UpdateFieldJSONRequestBody) (*generated.UpdateFieldResult, error) {
+	params := generated.UpdateFieldParams{TableId: tableId}
 	resp, err := c.generated.UpdateFieldWithResponse(ctx, fieldId, &params, body)
 	if err != nil {
 		return nil, err
@@ -741,7 +842,11 @@ func (c *Client) UpdateRelationship(ctx context.Context, tableId string, relatio
 // UpdateSolution: Update a solution.
 //
 // See https://developer.quickbase.com/operation/updateSolution
-func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params generated.UpdateSolutionParams, body []byte) (*generated.UpdateSolutionResult, error) {
+func (c *Client) UpdateSolution(ctx context.Context, solutionId string, body []byte, opts *generated.UpdateSolutionOptions) (*generated.UpdateSolutionResult, error) {
+	params := generated.UpdateSolutionParams{}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.UpdateSolutionWithBodyWithResponse(ctx, solutionId, &params, "application/x-yaml", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
@@ -752,7 +857,11 @@ func (c *Client) UpdateSolution(ctx context.Context, solutionId string, params g
 // UpdateSolutionToRecord: Update solution from record.
 //
 // See https://developer.quickbase.com/operation/updateSolutionToRecord
-func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, params generated.UpdateSolutionToRecordParams) (any, error) {
+func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, tableId string, fieldId int, recordId int, opts *generated.UpdateSolutionToRecordOptions) (any, error) {
+	params := generated.UpdateSolutionToRecordParams{TableId: tableId, FieldId: fieldId, RecordId: recordId}
+	if opts != nil {
+		params.XQBLErrorsAsSuccess = opts.XQBLErrorsAsSuccess
+	}
 	resp, err := c.generated.UpdateSolutionToRecordWithResponse(ctx, solutionId, &params)
 	if err != nil {
 		return nil, err
@@ -767,7 +876,8 @@ func (c *Client) UpdateSolutionToRecord(ctx context.Context, solutionId string, 
 // UpdateTable: Update a table.
 //
 // See https://developer.quickbase.com/operation/updateTable
-func (c *Client) UpdateTable(ctx context.Context, tableId string, params generated.UpdateTableParams, body generated.UpdateTableJSONRequestBody) (*generated.UpdateTableResult, error) {
+func (c *Client) UpdateTable(ctx context.Context, tableId string, appId string, body generated.UpdateTableJSONRequestBody) (*generated.UpdateTableResult, error) {
+	params := generated.UpdateTableParams{AppId: appId}
 	resp, err := c.generated.UpdateTableWithResponse(ctx, tableId, &params, body)
 	if err != nil {
 		return nil, err

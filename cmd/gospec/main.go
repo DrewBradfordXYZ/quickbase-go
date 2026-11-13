@@ -52,6 +52,7 @@ func main() {
 	marked := plainResultFields(spec)
 	plainRecordValues(spec)
 	dates := coreDates(spec)
+	plainQueries(spec)
 
 	out, err := json.MarshalIndent(spec, "", "  ")
 	if err != nil {
@@ -231,10 +232,54 @@ func plainRecordValues(spec obj) {
 	}
 }
 
-// coreDates makes a body's or result's date (a string with format date)
-// core.Date, the type callers already use for Date fields, instead of
-// oapi-codegen's own. Query parameters keep oapi-codegen's type, which its
-// runtime knows how to put in a URL.
+// plainQueries gives the record operations' where clause and sort order
+// plain Go types. In the spec, where is a query string or a list of record
+// IDs, and sortBy a list of fields or false; Go has no union types, so they
+// became wrapper types needing helper functions. Where is a string (a list
+// of record IDs is the same query as text: core.RecordIDs), and sortBy is
+// core.SortBy, a list that writes false for core.NoSort.
+func plainQueries(spec obj) {
+	core := obj{"path": "github.com/DrewBradfordXYZ/quickbase-go/v3/core"}
+	body := func(path, method string) obj {
+		op := spec["paths"].(obj)[path].(obj)[method].(obj)
+		_, schema := jsonSchema(op["requestBody"])
+		if ref, ok := schema["$ref"].(string); ok {
+			schema = schemas(spec)[strings.TrimPrefix(ref, "#/components/schemas/")].(obj)
+		}
+		return schema["properties"].(obj)
+	}
+
+	query := body("/records/query", "post")
+	query["where"] = obj{
+		"type":                            "string",
+		"description":                     "The filter, using the Quickbase query language. Empty returns every record.",
+		"x-go-type-skip-optional-pointer": true,
+	}
+	query["sortBy"] = obj{
+		"type":                            "array",
+		"items":                           obj{"$ref": "#/components/schemas/SortField"},
+		"description":                     "The sort order. Unset: the table's default sort. core.NoSort: unsorted.",
+		"x-go-type":                       "core.SortBy",
+		"x-go-type-import":                core,
+		"x-go-type-skip-optional-pointer": true,
+		"x-omitempty":                     false,
+		"x-omitzero":                      true,
+	}
+	delete(schemas(spec), "SortByUnion") // replaced by core.SortBy
+	sortField := schemas(spec)["SortField"].(obj)
+	sortField["x-go-type"] = "core.SortField"
+	sortField["x-go-type-import"] = core
+
+	body("/records", "delete")["where"] = obj{
+		"type":        "string",
+		"description": "The filter, using the Quickbase query language: the records to delete.",
+	}
+}
+
+// coreDates makes every date (a string with format date) core.Date, the
+// type callers already use for Date fields, instead of oapi-codegen's own:
+// in bodies, results and parameters (the runtime writes a parameter with
+// core.Date's MarshalText).
 func coreDates(spec obj) int {
 	count := 0
 	var visit func(node any)
@@ -259,6 +304,7 @@ func coreDates(spec obj) int {
 	operations(spec, func(_, _ string, op obj) {
 		visit(op["requestBody"])
 		visit(op["responses"])
+		visit(op["parameters"])
 	})
 	return count
 }

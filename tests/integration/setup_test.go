@@ -302,7 +302,7 @@ func deleteAllRecords(t *testing.T, ctx context.Context) {
 
 	_, err := client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
 		From:  testCtx.TableID,
-		Where: quickbase.DeleteWhere("{3.GT.0}"), // Record ID# > 0
+		Where: "{3.GT.0}", // Record ID# > 0
 	})
 	// Ignore errors (may be no records to delete)
 	_ = err

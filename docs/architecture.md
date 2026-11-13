@@ -10,7 +10,7 @@ Decided 2026-11-12, for v3.
 app, err := qb.GetApp(ctx, appID)
 fmt.Println(app.Name, app.Created) // plain fields
 
-fields, err := qb.GetFields(ctx, quickbase.GetFieldsParams{TableId: tableID})
+fields, err := qb.GetFields(ctx, tableID, nil)
 
 for record, err := range qb.RunQueryIterator(ctx, quickbase.RunQueryBody{From: tableID}) {
 	...
@@ -31,13 +31,14 @@ v3 fixes the types where they are made, and drops the layers that hid them.
 
 - An operation's inline response object becomes a named type, `<Operation>Result` (`GetAppResult`), so methods return a type callers can name.
 - An optional field of a type used only in responses is a plain value, not a pointer (`x-go-type-skip-optional-pointer`): a missing field reads as its zero value. Types used in requests keep pointers, where "not set" must differ from zero (a `false` that turns a setting off).
+- A record query's `where` is a string and its `sortBy` a `SortBy` list (`NoSort` sends `false`): the spec's unions (a query or record IDs, fields or `false`) became wrapper types that needed helper functions. A list of record IDs is the same query as text (`RecordIDs`).
 - A record field's value is `any` (`x-go-type: any`): text, numbers, lists and objects decode into plain Go values.
 
 This needs oapi-codegen v2.8.2 (v2.4.0 generates code that doesn't compile with plain optional fields on types that keep unlisted keys). The generated code needs oapi-codegen's runtime v1.8.0, which needs Go 1.24, as before; the generator itself needs Go 1.25 to run, which `go run` fetches.
 
 **The methods.** `cmd/generate-methods` writes one method on `Client` per operation, from the generated client's signatures:
 
-- Path parameters are arguments; query parameters are one params struct; a JSON body is the generated body type. A body that isn't JSON (QBL) is `[]byte`, and so is a response that isn't JSON (QBL, file content).
+- Required parameters (path, and required query parameters) are arguments; a JSON body is the generated body type; optional query parameters are an `*<Operation>Options`, last, that can be `nil` (go-github's convention). Where a parameter goes in the URL doesn't change the call: `GetTable(ctx, tableID, appID)`, `GetFields(ctx, tableID, nil)`. A body that isn't JSON (QBL) is `[]byte`, and so is a response that isn't JSON (QBL, file content).
 - It returns the success type, or the error QuickBase returned (`*ValidationError`, `*NotFoundError`, ...).
 - A 207 (QuickBase applied part of the request) returns the result; `WithLineErrorsAsErrors` makes an upsert's rejected values an error too.
 

@@ -75,7 +75,7 @@ func TestRunQueryAllResolvesAliasesAndKeepsCallerOptions(t *testing.T) {
 	body := quickbase.RunQueryBody{
 		From:    "projects",
 		Select:  quickbase.Fields(schema, "projects", "id", "name"),
-		Where:   quickbase.Where("{'name'.EX.'Alpha'}"),
+		Where:   "{'name'.EX.'Alpha'}",
 		Options: quickbase.Options(2, 0),
 	}
 	records, err := qb.RunQueryAll(context.Background(), body)

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v3"
 	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
@@ -133,7 +132,7 @@ func TestRunQuery(t *testing.T) {
 		resp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.NumberFieldID},
-			Where:  quickbase.Where(whereStr),
+			Where:  whereStr,
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -199,7 +198,7 @@ func TestDeleteRecords(t *testing.T) {
 		// Delete all records
 		deleteResp, err := client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
 			From:  testCtx.TableID,
-			Where: quickbase.DeleteWhere("{3.GT.0}"),
+			Where: "{3.GT.0}",
 		})
 		if err != nil {
 			t.Fatalf("DeleteRecords failed: %v", err)

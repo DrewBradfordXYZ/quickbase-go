@@ -28,7 +28,7 @@ func TestWithMaxRetriesZeroMakesOneAttempt(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := qb.ExportSolution(context.Background(), "abc", quickbase.ExportSolutionParams{}); err == nil {
+	if _, err := qb.ExportSolution(context.Background(), "abc", nil); err == nil {
 		t.Error("a 503 should be an error")
 	}
 	if calls != 1 {
@@ -83,7 +83,7 @@ func TestCancelIsNotATimeout(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	time.AfterFunc(50*time.Millisecond, cancel)
-	_, err = qb.ExportSolution(ctx, "abc", quickbase.ExportSolutionParams{})
+	_, err = qb.ExportSolution(ctx, "abc", nil)
 	if !errors.Is(err, context.Canceled) {
 		t.Errorf("err = %v, want context.Canceled", err)
 	}
@@ -111,7 +111,7 @@ func TestClientTimeoutIsATimeoutError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = qb.ExportSolution(context.Background(), "abc", quickbase.ExportSolutionParams{})
+	_, err = qb.ExportSolution(context.Background(), "abc", nil)
 	var timeout *quickbase.TimeoutError
 	if !errors.As(err, &timeout) {
 		t.Errorf("err = %v (%T), want TimeoutError", err, err)

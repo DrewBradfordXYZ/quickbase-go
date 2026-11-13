@@ -525,84 +525,33 @@ func Row(pairs ...any) Record {
 	return record
 }
 
-// --- Sorting Helpers ---
+// --- Sorting and Where ---
 
-// Sort order constants for use with Sort().
+// Sort orders, for a SortField's Order.
 const (
-	ASC  = generated.SortFieldOrderASC
-	DESC = generated.SortFieldOrderDESC
+	ASC         = core.ASC
+	DESC        = core.DESC
+	EqualValues = core.EqualValues
 )
 
-// Sort creates a SortField for use in sortBy arrays.
-// The order should be ASC or DESC.
-//
-// Example:
-//
-//	quickbase.Sort(6, quickbase.ASC)
-//	quickbase.Sort(7, quickbase.DESC)
-func Sort(fieldId int, order generated.SortFieldOrder) SortField {
-	return SortField{
-		FieldId: fieldId,
-		Order:   order,
-	}
-}
+type (
+	// SortBy is a query's sort order: quickbase.SortBy{quickbase.Asc(6), quickbase.Desc(7)}.
+	// Unset, QuickBase uses the table's default sort.
+	SortBy = core.SortBy
+	// SortOrder is a sort direction: ASC, DESC or EqualValues.
+	SortOrder = core.SortOrder
+)
 
-// SortBy creates a sortBy parameter for RunQuery from SortField values.
-// This wraps the fields in the union type required by the API.
-//
-// Example:
-//
-//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
-//	    From:   tableId,
-//	    Select: quickbase.Ints(3, 6, 7),
-//	    SortBy: quickbase.SortBy(quickbase.Asc(6), quickbase.Desc(7)),
-//	})
-func SortBy(fields ...SortField) *SortByUnion {
-	sortBy, err := client.SortFieldsToSortByUnion(fields)
-	if err != nil {
-		return nil
-	}
-	return sortBy
-}
-
-// --- Where Helper ---
-
-// WhereUnion is the union type for where (query string or []int record IDs)
-type WhereUnion = generated.RunQueryJSONBody_Where
-
-// Where creates a where parameter for RunQuery from a query string.
-// This wraps the string in the union type required by the API.
-//
-// Example:
-//
-//	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
-//	    From:   tableId,
-//	    Where:  quickbase.Where("{6.EX.'Active'}"),
-//	})
-func Where(query string) *WhereUnion {
-	where, err := client.StringToWhereUnion(query)
-	if err != nil {
-		return nil
-	}
-	return where
-}
-
-// DeleteWhereUnion is the union type for DeleteRecords where clause
-type DeleteWhereUnion = generated.DeleteRecordsJSONBody_Where
-
-// DeleteWhere creates a where parameter for DeleteRecords from a query string.
-// This wraps the string in the union type required by the API.
-//
-// Example:
-//
-//	result, _ := client.DeleteRecords(ctx, tableId, quickbase.DeleteWhere("{6.EX.'Deleted'}"))
-func DeleteWhere(query string) DeleteWhereUnion {
-	where, err := client.StringToDeleteWhereUnion(query)
-	if err != nil {
-		return DeleteWhereUnion{}
-	}
-	return where
-}
+var (
+	// Asc sorts by a field, ascending.
+	Asc = core.Asc
+	// Desc sorts by a field, descending.
+	Desc = core.Desc
+	// NoSort turns sorting off, which is faster for large queries.
+	NoSort = core.NoSort
+	// RecordIDs is a where clause for these Record ID#s: {3.EX.12}OR{3.EX.15}.
+	RecordIDs = core.RecordIDs
+)
 
 // --- Query Options Helper ---
 

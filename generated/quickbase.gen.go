@@ -16,7 +16,6 @@ import (
 
 	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 	"github.com/oapi-codegen/runtime"
-	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // Defines values for AddTrusteesFailureItemTrusteeType.
@@ -775,42 +774,6 @@ func (e RemoveTrusteesSuccessItemType) Valid() bool {
 	case RemoveTrusteesSuccessItemTypeGroup:
 		return true
 	case RemoveTrusteesSuccessItemTypeUser:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for SortByUnion1.
-const (
-	False SortByUnion1 = false
-)
-
-// Valid indicates whether the value is a known member of the SortByUnion1 enum.
-func (e SortByUnion1) Valid() bool {
-	switch e {
-	case False:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for SortFieldOrder.
-const (
-	SortFieldOrderASC         SortFieldOrder = "ASC"
-	SortFieldOrderDESC        SortFieldOrder = "DESC"
-	SortFieldOrderEqualValues SortFieldOrder = "equal-values"
-)
-
-// Valid indicates whether the value is a known member of the SortFieldOrder enum.
-func (e SortFieldOrder) Valid() bool {
-	switch e {
-	case SortFieldOrderASC:
-		return true
-	case SortFieldOrderDESC:
-		return true
-	case SortFieldOrderEqualValues:
 		return true
 	default:
 		return false
@@ -5041,28 +5004,8 @@ type RunReportResult struct {
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
-// SortByUnion An array of field IDs and sort directions. Set to false to disable sorting for better performance.
-type SortByUnion struct {
-	union json.RawMessage
-}
-
-// SortByUnion0 defines model for SortByUnion.0.
-type SortByUnion0 = []SortField
-
-// SortByUnion1 defines model for SortByUnion.1.
-type SortByUnion1 bool
-
 // SortField A field to sort by in a query.
-type SortField struct {
-	// FieldId The unique identifier of a field in a table.
-	FieldId int `json:"fieldId"`
-
-	// Order Sort based on ascending order (ASC), descending order (DESC) or equal values (equal-values).
-	Order SortFieldOrder `json:"order"`
-}
-
-// SortFieldOrder Sort based on ascending order (ASC), descending order (DESC) or equal values (equal-values).
-type SortFieldOrder string
+type SortField = core.SortField
 
 // TransferUserTokenAppsItem defines model for TransferUserTokenAppsItem.
 type TransferUserTokenAppsItem struct {
@@ -5904,7 +5847,7 @@ type PlatformAnalyticEventSummariesJSONBody_Where_Item struct {
 // PlatformAnalyticReadsParams defines parameters for PlatformAnalyticReads.
 type PlatformAnalyticReadsParams struct {
 	// Day The date for which read summaries need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
-	Day openapi_types.Date `form:"day" json:"day"`
+	Day core.Date `form:"day" json:"day"`
 }
 
 // RemoveTrusteesJSONBody defines parameters for RemoveTrustees.
@@ -6847,20 +6790,9 @@ type DeleteRecordsJSONBody struct {
 	// Example: bck7gp3q2
 	From string `json:"from"`
 
-	// Where The filter to delete records. To delete all records specify a filter that will include all records, for example {3.GT.0} where 3 is the ID of the Record ID field. Or supply a JSON array of Record IDs.
-	Where                DeleteRecordsJSONBody_Where `json:"where"`
-	AdditionalProperties map[string]interface{}      `json:"-"`
-}
-
-// DeleteRecordsJSONBodyWhere0 defines parameters for DeleteRecords.
-type DeleteRecordsJSONBodyWhere0 = string
-
-// DeleteRecordsJSONBodyWhere1 defines parameters for DeleteRecords.
-type DeleteRecordsJSONBodyWhere1 = []int
-
-// DeleteRecordsJSONBody_Where defines parameters for DeleteRecords.
-type DeleteRecordsJSONBody_Where struct {
-	union json.RawMessage
+	// Where The filter, using the Quickbase query language: the records to delete.
+	Where                string                 `json:"where"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // UpsertJSONBody defines parameters for Upsert.
@@ -6927,12 +6859,12 @@ type RunQueryJSONBody struct {
 	// Select An array of field IDs for the fields that should be returned in the response. If empty, the default columns on the table will be returned.
 	Select *[]int `json:"select,omitempty"`
 
-	// SortBy An array of field IDs and sort directions. Set to false to disable sorting for better performance.
-	SortBy *SortByUnion `json:"sortBy,omitempty"`
+	// SortBy The sort order. Unset: the table's default sort. core.NoSort: unsorted.
+	SortBy core.SortBy `json:"sortBy,omitzero"`
 
-	// Where The filter, using the Quickbase query language, which determines the records to return. Or supply a JSON array of Record IDs. If this parameter is omitted, the query will return all records.
-	Where                *RunQueryJSONBody_Where `json:"where,omitempty"`
-	AdditionalProperties map[string]interface{}  `json:"-"`
+	// Where The filter, using the Quickbase query language. Empty returns every record.
+	Where                string                 `json:"where,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // RunQueryJSONBodyGroupByGrouping defines parameters for RunQuery.
@@ -6959,17 +6891,6 @@ type RunQueryJSONBody_Options struct {
 	// Top The maximum number of records to display.
 	Top                  *int                   `json:"top,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
-}
-
-// RunQueryJSONBodyWhere0 defines parameters for RunQuery.
-type RunQueryJSONBodyWhere0 = string
-
-// RunQueryJSONBodyWhere1 defines parameters for RunQuery.
-type RunQueryJSONBodyWhere1 = []int
-
-// RunQueryJSONBody_Where defines parameters for RunQuery.
-type RunQueryJSONBody_Where struct {
-	union json.RawMessage
 }
 
 // GetTableReportsParams defines parameters for GetTableReports.
@@ -35036,11 +34957,9 @@ func (a RunQueryJSONBody) MarshalJSON() ([]byte, error) {
 		}
 	}
 
-	if a.Where != nil {
-		object["where"], err = json.Marshal(a.Where)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'where': %w", err)
-		}
+	object["where"], err = json.Marshal(a.Where)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'where': %w", err)
 	}
 
 	for fieldName, field := range a.AdditionalProperties {
@@ -36795,68 +36714,6 @@ func (t *GetFieldsItemProperties_CompositeFields_Item) UnmarshalJSON(b []byte) e
 	return err
 }
 
-// AsSortByUnion0 returns the union data inside the SortByUnion as a SortByUnion0
-func (t SortByUnion) AsSortByUnion0() (SortByUnion0, error) {
-	var body SortByUnion0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSortByUnion0 overwrites any union data inside the SortByUnion as the provided SortByUnion0
-func (t *SortByUnion) FromSortByUnion0(v SortByUnion0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSortByUnion0 performs a merge with any union data inside the SortByUnion, using the provided SortByUnion0
-func (t *SortByUnion) MergeSortByUnion0(v SortByUnion0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSortByUnion1 returns the union data inside the SortByUnion as a SortByUnion1
-func (t SortByUnion) AsSortByUnion1() (SortByUnion1, error) {
-	var body SortByUnion1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSortByUnion1 overwrites any union data inside the SortByUnion as the provided SortByUnion1
-func (t *SortByUnion) FromSortByUnion1(v SortByUnion1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSortByUnion1 performs a merge with any union data inside the SortByUnion, using the provided SortByUnion1
-func (t *SortByUnion) MergeSortByUnion1(v SortByUnion1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t SortByUnion) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *SortByUnion) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
 // AsUpdateFieldPropertiesCompositeFields0 returns the union data inside the UpdateFieldProperties_CompositeFields_Item as a UpdateFieldPropertiesCompositeFields0
 func (t UpdateFieldProperties_CompositeFields_Item) AsUpdateFieldPropertiesCompositeFields0() (UpdateFieldPropertiesCompositeFields0, error) {
 	var body UpdateFieldPropertiesCompositeFields0
@@ -37039,130 +36896,6 @@ func (t UpdateFieldJSONBody_Properties_CompositeFields_Item) MarshalJSON() ([]by
 }
 
 func (t *UpdateFieldJSONBody_Properties_CompositeFields_Item) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsDeleteRecordsJSONBodyWhere0 returns the union data inside the DeleteRecordsJSONBody_Where as a DeleteRecordsJSONBodyWhere0
-func (t DeleteRecordsJSONBody_Where) AsDeleteRecordsJSONBodyWhere0() (DeleteRecordsJSONBodyWhere0, error) {
-	var body DeleteRecordsJSONBodyWhere0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDeleteRecordsJSONBodyWhere0 overwrites any union data inside the DeleteRecordsJSONBody_Where as the provided DeleteRecordsJSONBodyWhere0
-func (t *DeleteRecordsJSONBody_Where) FromDeleteRecordsJSONBodyWhere0(v DeleteRecordsJSONBodyWhere0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDeleteRecordsJSONBodyWhere0 performs a merge with any union data inside the DeleteRecordsJSONBody_Where, using the provided DeleteRecordsJSONBodyWhere0
-func (t *DeleteRecordsJSONBody_Where) MergeDeleteRecordsJSONBodyWhere0(v DeleteRecordsJSONBodyWhere0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsDeleteRecordsJSONBodyWhere1 returns the union data inside the DeleteRecordsJSONBody_Where as a DeleteRecordsJSONBodyWhere1
-func (t DeleteRecordsJSONBody_Where) AsDeleteRecordsJSONBodyWhere1() (DeleteRecordsJSONBodyWhere1, error) {
-	var body DeleteRecordsJSONBodyWhere1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDeleteRecordsJSONBodyWhere1 overwrites any union data inside the DeleteRecordsJSONBody_Where as the provided DeleteRecordsJSONBodyWhere1
-func (t *DeleteRecordsJSONBody_Where) FromDeleteRecordsJSONBodyWhere1(v DeleteRecordsJSONBodyWhere1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDeleteRecordsJSONBodyWhere1 performs a merge with any union data inside the DeleteRecordsJSONBody_Where, using the provided DeleteRecordsJSONBodyWhere1
-func (t *DeleteRecordsJSONBody_Where) MergeDeleteRecordsJSONBodyWhere1(v DeleteRecordsJSONBodyWhere1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t DeleteRecordsJSONBody_Where) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *DeleteRecordsJSONBody_Where) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsRunQueryJSONBodyWhere0 returns the union data inside the RunQueryJSONBody_Where as a RunQueryJSONBodyWhere0
-func (t RunQueryJSONBody_Where) AsRunQueryJSONBodyWhere0() (RunQueryJSONBodyWhere0, error) {
-	var body RunQueryJSONBodyWhere0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRunQueryJSONBodyWhere0 overwrites any union data inside the RunQueryJSONBody_Where as the provided RunQueryJSONBodyWhere0
-func (t *RunQueryJSONBody_Where) FromRunQueryJSONBodyWhere0(v RunQueryJSONBodyWhere0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRunQueryJSONBodyWhere0 performs a merge with any union data inside the RunQueryJSONBody_Where, using the provided RunQueryJSONBodyWhere0
-func (t *RunQueryJSONBody_Where) MergeRunQueryJSONBodyWhere0(v RunQueryJSONBodyWhere0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsRunQueryJSONBodyWhere1 returns the union data inside the RunQueryJSONBody_Where as a RunQueryJSONBodyWhere1
-func (t RunQueryJSONBody_Where) AsRunQueryJSONBodyWhere1() (RunQueryJSONBodyWhere1, error) {
-	var body RunQueryJSONBodyWhere1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromRunQueryJSONBodyWhere1 overwrites any union data inside the RunQueryJSONBody_Where as the provided RunQueryJSONBodyWhere1
-func (t *RunQueryJSONBody_Where) FromRunQueryJSONBodyWhere1(v RunQueryJSONBodyWhere1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeRunQueryJSONBodyWhere1 performs a merge with any union data inside the RunQueryJSONBody_Where, using the provided RunQueryJSONBodyWhere1
-func (t *RunQueryJSONBody_Where) MergeRunQueryJSONBodyWhere1(v RunQueryJSONBodyWhere1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t RunQueryJSONBody_Where) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *RunQueryJSONBody_Where) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

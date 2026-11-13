@@ -38,7 +38,7 @@ var Payments = quickbase.NewTable[Payment, PaymentChanges]("bu3e4di4p")
 ```go
 paid, err := app.Payments.Query(ctx, qb, quickbase.TableQuery{
 	Where:  fmt.Sprintf("{%d.EX.'Paid'}", app.PaymentFields.PaymentStatus),
-	SortBy: []quickbase.SortField{quickbase.Sort(app.PaymentFields.PaymentDate, quickbase.ASC)},
+	SortBy: quickbase.SortBy{quickbase.Asc(app.PaymentFields.PaymentDate)},
 	Limit:  100,
 })
 for _, p := range paid {

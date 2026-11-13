@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v3"
 	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
@@ -59,7 +58,7 @@ func TestValidationErrors(t *testing.T) {
 		resp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3},
-			Where:  quickbase.Where("this is not valid query syntax"),
+			Where:  "this is not valid query syntax",
 		})
 		if err != nil {
 			t.Fatalf("Request failed: %v", err)
@@ -96,7 +95,7 @@ func TestEmptyResults(t *testing.T) {
 		resp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3},
-			Where:  quickbase.Where("{3.EX.999999999}"), // Non-existent record ID
+			Where:  "{3.EX.999999999}", // Non-existent record ID
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -113,7 +112,7 @@ func TestEmptyResults(t *testing.T) {
 	t.Run("handles deleteRecords with no matching records gracefully", func(t *testing.T) {
 		resp, err := client.API().DeleteRecordsWithResponse(ctx, generated.DeleteRecordsJSONRequestBody{
 			From:  testCtx.TableID,
-			Where: quickbase.DeleteWhere("{3.EX.999999999}"),
+			Where: "{3.EX.999999999}",
 		})
 		if err != nil {
 			t.Fatalf("DeleteRecords failed: %v", err)

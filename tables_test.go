@@ -202,7 +202,7 @@ func TestListIterators(t *testing.T) {
 	}
 
 	var users []string
-	for u, err := range qb.GetUsersIterator(ctx, quickbase.GetUsersParams{}, quickbase.GetUsersJSONRequestBody{}) {
+	for u, err := range qb.GetUsersIterator(ctx, quickbase.GetUsersJSONRequestBody{}, nil) {
 		if err != nil {
 			t.Fatal(err)
 		}

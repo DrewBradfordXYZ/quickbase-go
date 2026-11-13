@@ -52,7 +52,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Get relationships from child table
-		resp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
+		resp, err := client.GetRelationships(ctx, childTableID, nil)
 		if err != nil {
 			t.Fatalf("GetRelationships failed: %v", err)
 		}
@@ -85,7 +85,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Test the builder pattern (this was the bug - it should use tableID correctly)
-		resp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
+		resp, err := client.GetRelationships(ctx, childTableID, nil)
 		if err != nil {
 			t.Fatalf("GetRelationships builder failed: %v", err)
 		}
@@ -138,7 +138,7 @@ func TestRelationships(t *testing.T) {
 		}
 
 		// Verify GetRelationships no longer returns it
-		getResp, err := client.GetRelationships(ctx, childTableID, generated.GetRelationshipsParams{})
+		getResp, err := client.GetRelationships(ctx, childTableID, nil)
 		if err != nil {
 			t.Fatalf("GetRelationships after delete failed: %v", err)
 		}
@@ -159,7 +159,7 @@ func TestGetRelationships_NoRelationships(t *testing.T) {
 	testCtx := getTestContext(t)
 
 	// The main test table has no relationships initially
-	resp, err := client.GetRelationships(ctx, testCtx.TableID, generated.GetRelationshipsParams{})
+	resp, err := client.GetRelationships(ctx, testCtx.TableID, nil)
 	if err != nil {
 		t.Fatalf("GetRelationships failed: %v", err)
 	}

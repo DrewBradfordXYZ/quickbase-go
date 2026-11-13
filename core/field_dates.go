@@ -67,6 +67,24 @@ func (d Date) MarshalJSON() ([]byte, error) {
 	return json.Marshal(d.String())
 }
 
+// MarshalText writes "2024-01-15", for a URL parameter.
+func (d Date) MarshalText() ([]byte, error) {
+	if !d.IsValid() {
+		return nil, fmt.Errorf("no such day: %s", d)
+	}
+	return []byte(d.String()), nil
+}
+
+// UnmarshalText reads "2024-01-15".
+func (d *Date) UnmarshalText(b []byte) error {
+	parsed, err := ParseDate(string(b))
+	if err != nil {
+		return err
+	}
+	*d = parsed
+	return nil
+}
+
 // UnmarshalJSON reads "2024-01-15". A blank ("" or null, as QuickBase
 // sends an empty date) is the zero Date.
 func (d *Date) UnmarshalJSON(b []byte) error {

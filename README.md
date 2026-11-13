@@ -33,7 +33,7 @@ fmt.Println("App:", app.Name)
 records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 	From:   "bqtable1",
 	Select: quickbase.Ints(3, 6, 7),
-	Where:  quickbase.Where("{7.EX.'Active'}"),
+	Where:  "{7.EX.'Active'}",
 }) // every page; RunQueryN(ctx, body, n) stops at n records
 if err != nil {
 	log.Fatal(err)
@@ -54,21 +54,21 @@ fmt.Println("Created:", result.Metadata.CreatedRecordIds)
 
 ## One method per operation
 
-Every QuickBase operation is a method on the client. Path parameters are arguments, query parameters a params struct, and the body its request type. A method returns the result or QuickBase's error. Results have plain fields: a value QuickBase didn't send is its zero value, so there's nothing to nil-check.
+Every QuickBase operation is a method on the client. Required parameters are arguments, the body is its request type, and optional parameters come last, in an `*Options` struct that can be `nil`: `client.GetFields(ctx, tableID, nil)`. A method returns the result or QuickBase's error. Results have plain fields: a value QuickBase didn't send is its zero value, so there's nothing to nil-check.
 
 ```go
-tables, _ := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: "bqxyz123"})
+tables, _ := client.GetAppTables(ctx, "bqxyz123")
 for _, t := range tables {
 	fmt.Println(t.Id, t.Name)
 }
 
-fields, _ := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: "bqtable1"})
+fields, _ := client.GetFields(ctx, "bqtable1", nil)
 for _, f := range fields {
 	fmt.Println(f.Id, f.Label, f.FieldType)
 }
 
 newApp, _ := client.CreateApp(ctx, quickbase.CreateAppBody{Name: "My App", Description: quickbase.Ptr("Created via API")})
-deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: quickbase.DeleteWhere("{3.EX.123}")})
+deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: "{3.EX.123}"})
 ```
 
 Optional request fields are pointers (`quickbase.Ptr`), so a `false` or `0` you set reaches QuickBase. The methods and types are generated from [quickbase-spec](https://github.com/DrewBradfordXYZ/quickbase-spec), so they follow QuickBase's API as it is, including properties QuickBase returns but doesn't document. Browse them on [pkg.go.dev](https://pkg.go.dev/github.com/DrewBradfordXYZ/quickbase-go/v3/client). Why it's shaped this way: [docs/architecture.md](docs/architecture.md).
@@ -81,8 +81,8 @@ QuickBase returns a page of records at a time (often about 100). `RunQuery` give
 body := quickbase.RunQueryBody{
 	From:   "bqtable1",
 	Select: quickbase.Ints(3, 6, 7),
-	Where:  quickbase.Where("{6.GT.100}"),
-	SortBy: quickbase.SortBy(quickbase.Sort(6, quickbase.ASC)),
+	Where:  "{6.GT.100}",
+	SortBy: quickbase.SortBy{quickbase.Asc(6)},
 }
 
 page, _ := client.RunQuery(ctx, body)
@@ -117,7 +117,7 @@ client, _ := quickbase.New("myrealm",
 active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 	From:   "projects",
 	Select: quickbase.Fields(schema, "projects", "name", "status"),
-	Where:  quickbase.Where("{'status'.EX.'Active'}"),
+	Where:  "{'status'.EX.'Active'}",
 })
 ```
 
@@ -192,9 +192,9 @@ case errors.As(err, &notFound):
 Solutions are QBL, which is YAML, and file downloads are raw content. Their methods send and return bytes:
 
 ```go
-qbl, _ := client.ExportSolution(ctx, "solution-id", quickbase.ExportSolutionParams{}) // the QBL document
+qbl, _ := client.ExportSolution(ctx, "solution-id", nil) // the QBL document
 
-client.UpdateSolution(ctx, "solution-id", quickbase.UpdateSolutionParams{}, qbl)
+client.UpdateSolution(ctx, "solution-id", qbl, nil)
 
 file, _ := client.DownloadFile(ctx, "bqtable1", 12, 8, 0)
 fmt.Println(len(file)) // base64 file content

@@ -199,9 +199,9 @@ func ExampleClient_RunQuery() {
 
 	ctx := context.Background()
 	result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
-		From:   "bqxyz123",                    // table ID
-		Select: quickbase.Ints(3, 6, 7),       // field IDs
-		Where:  quickbase.Where("{6.GT.100}"), // optional filter
+		From:   "bqxyz123",              // table ID
+		Select: quickbase.Ints(3, 6, 7), // field IDs
+		Where:  "{6.GT.100}",            // optional filter
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -340,7 +340,7 @@ func ExampleWithSchema() {
 	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
 		From:   "projects",                                             // alias instead of "bqxyz123"
 		Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
-		Where:  quickbase.Where("{'status'.EX.'Active'}"),              // aliases in where
+		Where:  "{'status'.EX.'Active'}",                               // aliases in where
 	})
 
 	for _, record := range result.Data {

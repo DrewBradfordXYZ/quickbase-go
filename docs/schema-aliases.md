@@ -39,7 +39,7 @@ Aliases work with any method. The client resolves them in the HTTP layer: a tabl
 active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 	From:   "projects",
 	Select: quickbase.Fields(schema, "projects", "name", "status"),
-	Where:  quickbase.Where("{'status'.EX.'Active'}"),
+	Where:  "{'status'.EX.'Active'}",
 })
 
 client.Upsert(ctx, quickbase.UpsertBody{

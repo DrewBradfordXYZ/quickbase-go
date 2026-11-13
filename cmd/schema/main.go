@@ -255,7 +255,7 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 	defer cancel()
 
 	// Fetch all tables
-	tables, err := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: appID})
+	tables, err := client.GetAppTables(ctx, appID)
 	if err != nil {
 		return nil, fmt.Errorf("fetching tables: %w", err)
 	}
@@ -274,7 +274,7 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 		// Generate table alias from name
 		tableAlias := makeUnique(labelToAlias(table.Name), tableAliases)
 
-		fields, err := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: table.Id})
+		fields, err := client.GetFields(ctx, table.Id, nil)
 		if err != nil {
 			return nil, fmt.Errorf("fetching fields for table %s: %w", table.Id, err)
 		}

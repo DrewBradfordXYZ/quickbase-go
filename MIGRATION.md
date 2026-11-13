@@ -10,22 +10,24 @@ import "github.com/DrewBradfordXYZ/quickbase-go/v3"
 
 ## Calls
 
-Path parameters are arguments, query parameters a params struct, a body its request type. `ctx` comes first.
+Required parameters are arguments (`ctx` first, then the path and required query parameters), a body is its request type, and optional query parameters come last in an `*<Operation>Options` that can be `nil`.
 
 | v2 | v3 |
 |---|---|
 | `client.GetApp(appID).Run(ctx)` | `client.GetApp(ctx, appID)` |
-| `client.GetAppTables().AppId(appID).Run(ctx)` | `client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: appID})` |
-| `client.GetFields(tableID).Run(ctx)` | `client.GetFields(ctx, quickbase.GetFieldsParams{TableId: tableID})` |
+| `client.GetAppTables().AppId(appID).Run(ctx)` | `client.GetAppTables(ctx, appID)` |
+| `client.GetFields(tableID).Run(ctx)` | `client.GetFields(ctx, tableID, nil)` |
 | `client.CreateApp().Name("A").Description("B").Run(ctx)` | `client.CreateApp(ctx, quickbase.CreateAppBody{Name: "A", Description: quickbase.Ptr("B")})` |
-| `client.DeleteRecords(t).Where(q).Run(ctx)` | `client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: t, Where: quickbase.DeleteWhere(q)})` |
+| `client.DeleteRecords(t).Where(q).Run(ctx)` | `client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: t, Where: q})` |
 | `client.Upsert(t).Data(rows...).MergeFieldId(9).Run(ctx)` | `client.Upsert(ctx, quickbase.UpsertBody{To: t, Data: rows, MergeFieldId: quickbase.Ptr(9)})` |
-| `client.GetRelationships(t).Run(ctx)` | `client.GetRelationships(ctx, t, quickbase.GetRelationshipsParams{})` |
-| `client.ExportSolution(id).Run(ctx)` then `.Body` | `client.ExportSolution(ctx, id, quickbase.ExportSolutionParams{})` returns `[]byte` |
-| `client.UpdateSolution(id).Body(qbl).Run(ctx)` | `client.UpdateSolution(ctx, id, quickbase.UpdateSolutionParams{}, qbl)` |
+| `client.GetRelationships(t).Run(ctx)` | `client.GetRelationships(ctx, t, nil)` |
+| `client.ExportSolution(id).Run(ctx)` then `.Body` | `client.ExportSolution(ctx, id, nil)` returns `[]byte` |
+| `client.UpdateSolution(id).Body(qbl).Run(ctx)` | `client.UpdateSolution(ctx, id, qbl, nil)` |
 | `client.DownloadFile(t, r, f, v).Run(ctx)` then `.Body` | `client.DownloadFile(ctx, t, r, f, v)` returns `[]byte` |
 
-The method names and parameter types match the generated client's (`client.API()`), which v3 keeps.
+The method names match the generated client's (`client.API()`), which v3 keeps.
+
+In a record query, `Where` is a string (`quickbase.RecordIDs(12, 15)` for a list of records) and `SortBy` a list: `quickbase.SortBy{quickbase.Asc(6)}`, or `quickbase.NoSort` for none. v2's `quickbase.Where(q)`, `quickbase.DeleteWhere(q)` and `quickbase.SortBy(quickbase.Sort(6, quickbase.ASC))` are gone.
 
 ## Results
 
@@ -55,7 +57,7 @@ records, _ := client.Query("projects").Select("name").Where("{'status'.EX.'Activ
 records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 	From:   "projects",
 	Select: quickbase.Fields(schema, "projects", "name"),
-	Where:  quickbase.Where("{'status'.EX.'Active'}"),
+	Where:  "{'status'.EX.'Active'}",
 })
 ```
 

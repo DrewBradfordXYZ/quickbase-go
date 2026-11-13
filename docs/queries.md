@@ -8,8 +8,8 @@ A query is a `RunQueryBody`. Tables and fields can be IDs, or aliases when the c
 records, _ := client.RunQueryN(ctx, quickbase.RunQueryBody{
 	From:   "bqtable1",
 	Select: quickbase.Ints(3, 6, 7),
-	Where:  quickbase.Where("{7.EX.'Active'}"),
-	SortBy: quickbase.SortBy(quickbase.Sort(6, quickbase.ASC), quickbase.Sort(3, quickbase.DESC)),
+	Where:  "{7.EX.'Active'}",
+	SortBy: quickbase.SortBy{quickbase.Asc(6), quickbase.Desc(3)},
 }, 1000) // stop at 1,000 records
 ```
 
@@ -84,7 +84,7 @@ reportRows, _ := client.RunReportAll(ctx, "7", "bqtable1") // report ID, table I
 fmt.Println(len(reportRows), reportRows[0].Values())
 ```
 
-`RunReportN(ctx, reportID, tableID, n)` stops at `n` records, `RunReportIterator` streams them, and `client.RunReport(ctx, reportID, quickbase.RunReportParams{TableId: table})` returns one page.
+`RunReportN(ctx, reportID, tableID, n)` stops at `n` records, `RunReportIterator` streams them, and `client.RunReport(ctx, reportID, table, nil)` returns one page.
 
 ## Upserts
 
@@ -127,7 +127,7 @@ A bare `time.Time` could be either: `Value` panics on one, and `Upsert` returns 
 ## Deletes
 
 ```go
-deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: quickbase.DeleteWhere("{3.EX.123}")})
+deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: "{3.EX.123}"})
 fmt.Println(deleted.NumberDeleted)
 ```
 
@@ -140,9 +140,8 @@ fmt.Println(deleted.NumberDeleted)
 | `DateOf(t)`, `DateTimeOf(t)` | `Date`, `DateTime` | Date and Date/Time field values |
 | `Ints(3, 6, 7)` | `*[]int` | `Select` |
 | `Fields(schema, table, aliases...)` | `*[]int` | `Select` from aliases |
-| `Where(query)` | `*WhereUnion` | `RunQueryBody.Where` |
-| `DeleteWhere(query)` | `DeleteWhereUnion` | `DeleteRecordsBody.Where` |
-| `SortBy(Sort(field, ASC), ...)` | `*SortByUnion` | `RunQueryBody.SortBy` |
+| `RecordIDs(12, 15)` | `string` | `Where` for these records: `{3.EX.12}OR{3.EX.15}` |
+| `SortBy{Asc(6), Desc(7)}` | `SortBy` | `RunQueryBody.SortBy`; `NoSort` for unsorted |
 | `GroupBy(fields...)` | `*[]GroupByItem` | `RunQueryBody.GroupBy` |
 | `Options(top, skip)` | `*QueryOptions` | `RunQueryBody.Options` |
 | `Ptr(v)` | `*T` | Optional request fields |

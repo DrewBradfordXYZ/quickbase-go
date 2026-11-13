@@ -49,8 +49,8 @@ func TestDecodeRecordsLive(t *testing.T) {
 	records, err := qb.RunQueryAll(ctx, quickbase.RunQueryBody{
 		From:   "records",
 		Select: quickbase.Fields(schema, "records", "id", "name", "amount", "due", "active"),
-		Where:  quickbase.Where("{3.EX." + strconv.Itoa(ids[0]) + "}OR{3.EX." + strconv.Itoa(ids[1]) + "}"),
-		SortBy: quickbase.SortBy(quickbase.Sort(3, quickbase.ASC)),
+		Where:  "{3.EX." + strconv.Itoa(ids[0]) + "}OR{3.EX." + strconv.Itoa(ids[1]) + "}",
+		SortBy: quickbase.SortBy{quickbase.Asc(3)},
 	})
 	if err != nil {
 		t.Fatal(err)

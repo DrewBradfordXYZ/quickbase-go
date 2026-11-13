@@ -30,11 +30,18 @@ import (
 const (
 	generatedFile = "generated/quickbase.gen.go"
 	outputFile    = "client/methods_generated.go"
-	aliasesFile   = "types_generated.go" // package quickbase
+	optionsFile   = "generated/options.gen.go" // the <Operation>Options types
+	aliasesFile   = "types_generated.go"       // package quickbase
 )
 
 type param struct {
 	name, typ string
+}
+
+// queryParam is a field of a generated <Operation>Params struct.
+type queryParam struct {
+	field, typ, doc string
+	required        bool // not a pointer: QuickBase requires it
 }
 
 type method struct {
@@ -43,6 +50,7 @@ type method struct {
 	summary     string
 	pathParams  []param
 	paramsType  string // GetAppParams, or ""
+	query       []queryParam
 	jsonBody    string // AddTrusteesJSONRequestBody, or ""
 	rawBody     string // content type of a body that isn't JSON, or ""
 	result      string // *generated.GetAppResult, []generated.GetFieldsItem, or "" for []byte
@@ -62,7 +70,7 @@ func main() {
 	if err != nil {
 		fail(err)
 	}
-	signatures, responses := collect(file)
+	signatures, responses, paramStructs := collect(file)
 
 	var methods []method
 	for name, op := range ops {
@@ -82,6 +90,7 @@ func main() {
 				case strings.HasPrefix(typ, "..."): // reqEditors
 				case n.Name == "params":
 					m.paramsType = strings.TrimPrefix(typ, "*")
+					m.query = paramStructs[m.paramsType]
 				case n.Name == "contentType":
 				case n.Name == "body" && typ == "io.Reader":
 				case n.Name == "body":
@@ -109,6 +118,8 @@ func main() {
 		methods = append(methods, m)
 	}
 	sort.Slice(methods, func(i, j int) bool { return methods[i].name < methods[j].name })
+
+	writeOptions(methods, file)
 
 	src := render(methods)
 	formatted, err := format.Source(src)
@@ -163,8 +174,13 @@ func writeAliases(generatedAST *ast.File) int {
 		}
 	}
 
+	// The generated package's types: oapi-codegen's and the options
+	optionsAST, err := parser.ParseFile(token.NewFileSet(), optionsFile, nil, 0)
+	if err != nil {
+		fail(err)
+	}
 	var names []string
-	for _, decl := range generatedAST.Decls {
+	for _, decl := range append(generatedAST.Decls, optionsAST.Decls...) {
 		gd, ok := decl.(*ast.GenDecl)
 		if !ok || gd.Tok != token.TYPE {
 			continue
@@ -243,11 +259,12 @@ func readSpec(path string) map[string]operation {
 	return ops
 }
 
-// collect returns ClientWithResponses' methods and the *Response structs'
-// field types.
-func collect(file *ast.File) (map[string]*ast.FuncType, map[string]map[string]string) {
+// collect returns ClientWithResponses' methods, the *Response structs'
+// field types, and the *Params structs' fields.
+func collect(file *ast.File) (map[string]*ast.FuncType, map[string]map[string]string, map[string][]queryParam) {
 	signatures := map[string]*ast.FuncType{}
 	responses := map[string]map[string]string{}
+	params := map[string][]queryParam{}
 	for _, decl := range file.Decls {
 		switch d := decl.(type) {
 		case *ast.FuncDecl:
@@ -258,11 +275,25 @@ func collect(file *ast.File) (map[string]*ast.FuncType, map[string]map[string]st
 		case *ast.GenDecl:
 			for _, spec := range d.Specs {
 				ts, ok := spec.(*ast.TypeSpec)
-				if !ok || !strings.HasSuffix(ts.Name.Name, "Response") {
+				if !ok {
 					continue
 				}
 				st, ok := ts.Type.(*ast.StructType)
 				if !ok {
+					continue
+				}
+				if strings.HasSuffix(ts.Name.Name, "Params") {
+					for _, f := range st.Fields.List {
+						typ := exprString(f.Type)
+						for _, n := range f.Names {
+							params[ts.Name.Name] = append(params[ts.Name.Name], queryParam{
+								field: n.Name, typ: typ, doc: f.Doc.Text(), required: !strings.HasPrefix(typ, "*"),
+							})
+						}
+					}
+					continue
+				}
+				if !strings.HasSuffix(ts.Name.Name, "Response") {
 					continue
 				}
 				fields := map[string]string{}
@@ -275,7 +306,72 @@ func collect(file *ast.File) (map[string]*ast.FuncType, map[string]map[string]st
 			}
 		}
 	}
-	return signatures, responses
+	return signatures, responses, params
+}
+
+// optionsName is the type of an operation's optional parameters.
+func optionsName(m method) string { return m.name + "Options" }
+
+func (m method) optional() []queryParam {
+	var out []queryParam
+	for _, q := range m.query {
+		if !q.required {
+			out = append(out, q)
+		}
+	}
+	return out
+}
+
+// argName is a required parameter's argument name: TableId -> tableId.
+func argName(field string) string {
+	r := []rune(field)
+	r[0] = unicode.ToLower(r[0])
+	return string(r)
+}
+
+// writeOptions writes each operation's optional query parameters as an
+// <Operation>Options struct in the generated package (so the root package
+// re-exports it), for the methods' nil-able last argument.
+func writeOptions(methods []method, generatedAST *ast.File) {
+	existing := map[string]bool{}
+	for _, decl := range generatedAST.Decls {
+		if gd, ok := decl.(*ast.GenDecl); ok {
+			for _, spec := range gd.Specs {
+				if ts, ok := spec.(*ast.TypeSpec); ok {
+					existing[ts.Name.Name] = true
+				}
+			}
+		}
+	}
+	var b bytes.Buffer
+	b.WriteString("// Code generated by cmd/generate-methods. DO NOT EDIT.\n\npackage generated\n\n")
+	for _, m := range methods {
+		optional := m.optional()
+		if len(optional) == 0 {
+			continue
+		}
+		name := optionsName(m)
+		if existing[name] {
+			fail(fmt.Errorf("%s: the generated package already has a type %s", m.name, name))
+		}
+		fmt.Fprintf(&b, "// %s are %s's optional parameters; a nil field isn't sent.\ntype %s struct {\n", name, m.name, name)
+		for _, q := range optional {
+			for _, line := range strings.Split(strings.TrimSpace(q.doc), "\n") {
+				if line != "" {
+					fmt.Fprintf(&b, "\t// %s\n", line)
+				}
+			}
+			fmt.Fprintf(&b, "\t%s %s\n", q.field, q.typ)
+		}
+		b.WriteString("}\n\n")
+	}
+	formatted, err := format.Source(b.Bytes())
+	if err != nil {
+		fail(fmt.Errorf("formatting options: %w", err))
+	}
+	if err := os.WriteFile(optionsFile, formatted, 0o644); err != nil {
+		fail(err)
+	}
 }
 
 func exprString(e ast.Expr) string {
@@ -284,6 +380,15 @@ func exprString(e ast.Expr) string {
 		fail(err)
 	}
 	return b.String()
+}
+
+// qualifyParam qualifies a parameter field's type, which may name a
+// generated type (an enum) or a package-qualified one (openapi_types.Date).
+func qualifyParam(typ string) string {
+	if strings.Contains(typ, ".") {
+		return typ
+	}
+	return qualify(typ)
 }
 
 // qualify prefixes generated type names: int64 stays, GetAppParams becomes
@@ -333,8 +438,26 @@ func renderMethod(b *bytes.Buffer, m method) {
 		args = append(args, p.name+" "+qualify(p.typ))
 		call = append(call, p.name)
 	}
+	// Required query parameters are arguments; optional ones a nil-able
+	// *<Operation>Options, last
+	var build strings.Builder
 	if m.paramsType != "" {
-		args = append(args, "params "+qualify(m.paramsType))
+		fmt.Fprintf(&build, "\tparams := %s{", qualify(m.paramsType))
+		var inits []string
+		for _, q := range m.query {
+			if q.required {
+				args = append(args, argName(q.field)+" "+qualifyParam(q.typ))
+				inits = append(inits, q.field+": "+argName(q.field))
+			}
+		}
+		build.WriteString(strings.Join(inits, ", ") + "}\n")
+		if optional := m.optional(); len(optional) > 0 {
+			build.WriteString("\tif opts != nil {\n")
+			for _, q := range optional {
+				fmt.Fprintf(&build, "\t\tparams.%s = opts.%s\n", q.field, q.field)
+			}
+			build.WriteString("\t}\n")
+		}
 		call = append(call, "&params")
 	}
 	switch {
@@ -344,6 +467,9 @@ func renderMethod(b *bytes.Buffer, m method) {
 	case m.jsonBody != "":
 		args = append(args, "body "+qualify(m.jsonBody))
 		call = append(call, "body")
+	}
+	if len(m.optional()) > 0 {
+		args = append(args, "opts *generated."+optionsName(m))
 	}
 	generatedName := m.name + "WithResponse"
 	if m.rawBody != "" {
@@ -360,6 +486,7 @@ func renderMethod(b *bytes.Buffer, m method) {
 		// accepts in different forms; refuse it before anything is sent
 		b.WriteString("\tif err := core.CheckRecordData(body.Data); err != nil {\n\t\treturn nil, err\n\t}\n")
 	}
+	b.WriteString(build.String())
 	fmt.Fprintf(b, "\tresp, err := c.generated.%s(%s)\n", generatedName, strings.Join(call, ", "))
 	b.WriteString("\tif err != nil {\n\t\treturn nil, err\n\t}\n")
 

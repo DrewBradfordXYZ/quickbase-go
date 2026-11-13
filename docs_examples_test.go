@@ -37,7 +37,7 @@ func Example_quickStart() {
 	records, err := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 		From:   "bqtable1",
 		Select: quickbase.Ints(3, 6, 7),
-		Where:  quickbase.Where("{7.EX.'Active'}"),
+		Where:  "{7.EX.'Active'}",
 	}) // every page; RunQueryN(ctx, body, n) stops at n records
 	if err != nil {
 		log.Fatal(err)
@@ -62,12 +62,12 @@ func Example_methods() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
 	ctx := context.Background()
 
-	tables, _ := client.GetAppTables(ctx, quickbase.GetAppTablesParams{AppId: "bqxyz123"})
+	tables, _ := client.GetAppTables(ctx, "bqxyz123")
 	for _, t := range tables {
 		fmt.Println(t.Id, t.Name)
 	}
 
-	fields, _ := client.GetFields(ctx, quickbase.GetFieldsParams{TableId: "bqtable1"})
+	fields, _ := client.GetFields(ctx, "bqtable1", nil)
 	for _, f := range fields {
 		fmt.Println(f.Id, f.Label, f.FieldType)
 	}
@@ -75,7 +75,7 @@ func Example_methods() {
 	newApp, _ := client.CreateApp(ctx, quickbase.CreateAppBody{Name: "My App", Description: quickbase.Ptr("Created via API")})
 	fmt.Println(newApp.Id)
 
-	deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: quickbase.DeleteWhere("{3.EX.123}")})
+	deleted, _ := client.DeleteRecords(ctx, quickbase.DeleteRecordsBody{From: "bqtable1", Where: "{3.EX.123}"})
 	fmt.Println(deleted.NumberDeleted)
 }
 
@@ -86,8 +86,8 @@ func Example_runQuery() {
 	body := quickbase.RunQueryBody{
 		From:   "bqtable1",
 		Select: quickbase.Ints(3, 6, 7),
-		Where:  quickbase.Where("{6.GT.100}"),
-		SortBy: quickbase.SortBy(quickbase.Sort(6, quickbase.ASC)),
+		Where:  "{6.GT.100}",
+		SortBy: quickbase.SortBy{quickbase.Asc(6)},
 	}
 
 	page, _ := client.RunQuery(ctx, body)
@@ -120,7 +120,7 @@ func Example_schemaAliases() {
 	active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
 		From:   "projects",
 		Select: quickbase.Fields(schema, "projects", "name", "status"),
-		Where:  quickbase.Where("{'status'.EX.'Active'}"),
+		Where:  "{'status'.EX.'Active'}",
 	})
 	fmt.Println(len(active))
 
@@ -215,9 +215,9 @@ func Example_solutionsAndFiles() {
 	client, _ := quickbase.New("myrealm", quickbase.WithUserToken("token"))
 	ctx := context.Background()
 
-	qbl, _ := client.ExportSolution(ctx, "solution-id", quickbase.ExportSolutionParams{}) // the QBL document
+	qbl, _ := client.ExportSolution(ctx, "solution-id", nil) // the QBL document
 
-	_, _ = client.UpdateSolution(ctx, "solution-id", quickbase.UpdateSolutionParams{}, qbl)
+	_, _ = client.UpdateSolution(ctx, "solution-id", qbl, nil)
 
 	file, _ := client.DownloadFile(ctx, "bqtable1", 12, 8, 0)
 	fmt.Println(len(file)) // base64 file content
@@ -265,8 +265,8 @@ func Example_queriesGuide() {
 	records, _ := client.RunQueryN(ctx, quickbase.RunQueryBody{
 		From:   "bqtable1",
 		Select: quickbase.Ints(3, 6, 7),
-		Where:  quickbase.Where("{7.EX.'Active'}"),
-		SortBy: quickbase.SortBy(quickbase.Sort(6, quickbase.ASC), quickbase.Sort(3, quickbase.DESC)),
+		Where:  "{7.EX.'Active'}",
+		SortBy: quickbase.SortBy{quickbase.Asc(6), quickbase.Desc(3)},
 	}, 1000) // stop at 1,000 records
 	fmt.Println(len(records))
 
@@ -309,7 +309,7 @@ func Example_schemaAliasesBody() {
 	page, _ := client.RunQuery(context.Background(), quickbase.RunQueryBody{
 		From:   "projects",
 		Select: quickbase.Fields(schema, "projects", "name", "status"),
-		Where:  quickbase.Where("{'status'.EX.'Active'}"),
+		Where:  "{'status'.EX.'Active'}",
 	})
 	for _, rec := range page.Data {
 		fmt.Println(rec["6"].Value)
@@ -470,7 +470,7 @@ func Example_tables() {
 
 	paid, err := Payments.Query(ctx, qb, quickbase.TableQuery{
 		Where:  fmt.Sprintf("{%d.EX.'Paid'}", PaymentFields.PaymentStatus),
-		SortBy: []quickbase.SortField{quickbase.Sort(PaymentFields.PaymentDate, quickbase.ASC)},
+		SortBy: quickbase.SortBy{quickbase.Asc(PaymentFields.PaymentDate)},
 		Limit:  100,
 	})
 	if err != nil {

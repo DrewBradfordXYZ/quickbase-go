@@ -44,21 +44,15 @@ func NewTable[R, C any](id string) *Table[R, C] {
 type TableQuery struct {
 	// Where is a QuickBase query: {6.EX.'Active'}AND{7.GT.100}
 	Where string
-	// SortBy orders the records: quickbase.Sort(6, quickbase.ASC)
-	SortBy []SortField
+	// SortBy orders the records: quickbase.SortBy{quickbase.Asc(6)}
+	SortBy SortBy
 	// Limit stops at this many records; 0 is all of them.
 	Limit int
 }
 
 func (t *Table[R, C]) body(q TableQuery) RunQueryBody {
 	fields := t.fields
-	body := RunQueryBody{From: t.ID, Select: &fields}
-	if q.Where != "" {
-		body.Where = Where(q.Where)
-	}
-	if len(q.SortBy) > 0 {
-		body.SortBy = SortBy(q.SortBy...)
-	}
+	body := RunQueryBody{From: t.ID, Select: &fields, Where: q.Where, SortBy: q.SortBy}
 	if q.Limit > 0 {
 		// QuickBase sends at most Limit records, not a full page
 		top := q.Limit
@@ -145,7 +139,7 @@ func (t *Table[R, C]) Delete(ctx context.Context, qb *Client, where string) (int
 	if strings.TrimSpace(where) == "" {
 		return 0, fmt.Errorf("quickbase: Delete on table %s needs a query; an empty one deletes every record", t.ID)
 	}
-	result, err := qb.DeleteRecords(ctx, DeleteRecordsBody{From: t.ID, Where: DeleteWhere(where)})
+	result, err := qb.DeleteRecords(ctx, DeleteRecordsBody{From: t.ID, Where: where})
 	if err != nil {
 		return 0, err
 	}
