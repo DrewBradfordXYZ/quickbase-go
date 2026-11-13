@@ -99,6 +99,9 @@ type Client struct {
 	// Read-only mode blocks all write operations
 	readOnly bool
 
+	// Write scope limits writes to some apps (nil: no limit)
+	writeScope *writeScope
+
 	// App token for apps requiring application tokens
 	// Only needed when NOT using user tokens (which bypass app token checks)
 	appToken string
@@ -407,7 +410,8 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 	c.transport = transport
 	c.http = &http.Client{Timeout: c.timeout, Transport: transport}
 	if u, err := url.Parse(c.baseURL); err == nil {
-		c.basePath = strings.TrimSuffix(u.Path, "/")
+		// Escaped, like the request paths apiPath trims it from
+		c.basePath = strings.TrimSuffix(u.EscapedPath(), "/")
 	}
 
 	// The generated client sends through authHTTPClient: auth, retry, throttle
@@ -503,6 +507,11 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		}
 	}
 
+	// Write scope, on the IDs the request will send
+	if err := c.checkWriteScope(ctx, req, bodyBytes); err != nil {
+		return nil, err
+	}
+
 	// Extract dbid from request for temp token auth
 	dbid := extractDBID(req)
 	if bodyBytes != nil {
@@ -533,7 +542,8 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		return false, nil // No special handling, use standard logic
 	}
 
-	retrySafe := !isJSONWrite(req.Method, c.apiPath(req.URL.Path))
+	sentPath, _ := c.requestPath(req)
+	retrySafe := !isJSONWrite(req.Method, sentPath)
 	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, retrySafe, requestFactory, responseHandler)
 }
 
@@ -765,8 +775,18 @@ func timeoutOr(err error, timeout time.Duration) error {
 // where possible. This will be removed when QuickBase discontinues the XML API.
 func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([]byte, error) {
 	// Check read-only mode for XML write actions
+	// A dbid that isn't a plain ID could change the URL (a "?" adds a query)
+	if (c.readOnly || c.writeScope != nil) && !plainDBID.MatchString(dbid) {
+		if c.readOnly {
+			return nil, core.NewReadOnlyError(http.MethodPost, "/db/"+dbid, action)
+		}
+		return nil, core.NewWriteScopeError(http.MethodPost, "/db/"+dbid, action, dbid, "the dbid isn't a plain ID")
+	}
 	if c.readOnly && isXMLWriteAction(action) {
 		return nil, core.NewReadOnlyError(http.MethodPost, "/db/"+dbid, action)
+	}
+	if err := c.checkXMLWriteScope(ctx, dbid, action, body); err != nil {
+		return nil, err
 	}
 
 	// Request factory for XML requests
@@ -787,7 +807,7 @@ func (c *Client) DoXML(ctx context.Context, dbid, action string, body []byte) ([
 			usesXMLAuth = true
 		}
 
-		url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, dbid)
+		url := fmt.Sprintf("https://%s.quickbase.com/db/%s", c.realm, url.PathEscape(dbid))
 		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(xmlBody))
 		if err != nil {
 			return nil, err
@@ -1047,87 +1067,73 @@ var jsonWriteEndpoints = map[string]bool{
 // exportSolutionToRecord (/solutions/{id}/torecord) writes a record.
 // changesetSolutionFromRecord (/solutions/{id}/changeset/fromrecord) only
 // reads, and doesn't match. The path may carry a base URL's prefix.
-var solutionRecordWritePath = regexp.MustCompile(`/solutions/(fromrecord|[^/]+/(fromrecord|torecord))$`)
+// solutionChangesetPath matches changesetSolution (PUT
+// /solutions/{id}/changeset), a read sent as PUT: it lists the changes a QBL
+// update would make, and changes nothing. The path may carry a base URL's prefix.
+var solutionChangesetPath = regexp.MustCompile(`(?i)/solutions/[^/]+/changeset$`)
+
+var solutionRecordWritePath = regexp.MustCompile(`(?i)/solutions/(fromrecord|[^/]+/(fromrecord|torecord))$`)
 
 // jsonReadOnlyPOSTEndpoints are POST endpoints that are actually read-only.
 // These are exceptions to the "POST = write" rule.
 var jsonReadOnlyPOSTEndpoints = map[string]bool{
-	"POST /v1/records/query": true, // RunQuery - read-only
-	"POST /v1/reports/":      true, // RunReport - read-only (prefix)
-	"POST /v1/formula/run":   true, // RunFormula - read-only
-	"POST /v1/audit":         true, // Audit logs - read-only
-	"POST /v1/users":         true, // GetUsers - read-only despite POST
-	"POST /v1/analytics/":    true, // Analytics - read-only (prefix)
+	"POST /v1/records/query":         true, // RunQuery - read-only
+	"POST /v1/records/modifiedSince": true, // RecordsModifiedSince - read-only
+	"POST /v1/reports/":              true, // RunReport - read-only (prefix)
+	"POST /v1/formula/run":           true, // RunFormula - read-only
+	"POST /v1/audit":                 true, // Audit logs - read-only
+	"POST /v1/users":                 true, // GetUsers - read-only despite POST
+	"POST /v1/analytics/":            true, // Analytics - read-only (prefix)
 }
 
-// xmlWriteActions contains all XML API actions that modify data.
-// These are blocked when the client is in read-only mode.
-var xmlWriteActions = map[string]bool{
-	// User/Role management
-	"API_AddUserToRole":      true,
-	"API_RemoveUserFromRole": true,
-	"API_ChangeUserRole":     true,
-	"API_ProvisionUser":      true,
-	"API_SendInvitation":     true,
-	"API_ChangeManager":      true,
-	"API_ChangeRecordOwner":  true,
-
-	// Group management
-	"API_CreateGroup":         true,
-	"API_DeleteGroup":         true,
-	"API_AddUserToGroup":      true,
-	"API_RemoveUserFromGroup": true,
-	"API_AddGroupToRole":      true,
-	"API_RemoveGroupFromRole": true,
-	"API_CopyGroup":           true,
-	"API_ChangeGroupInfo":     true,
-	"API_AddSubGroup":         true,
-	"API_RemoveSubGroup":      true,
-
-	// Variables
-	"API_SetDBVar": true,
-
-	// Code pages
-	"API_AddReplaceDBPage": true,
-
-	// Fields
-	"API_FieldAddChoices":    true,
-	"API_FieldRemoveChoices": true,
-	"API_SetKeyField":        true,
-
-	// Webhooks
-	"API_Webhooks_Create":     true,
-	"API_Webhooks_Edit":       true,
-	"API_Webhooks_Delete":     true,
-	"API_Webhooks_Activate":   true,
-	"API_Webhooks_Deactivate": true,
-	"API_Webhooks_Copy":       true,
-
-	// Records/Import
-	"API_ImportFromCSV":    true,
-	"API_RunImport":        true,
-	"API_CopyMasterDetail": true,
-	"API_PurgeRecords":     true,
-	"API_AddRecord":        true,
-	"API_EditRecord":       true,
-	"API_DeleteRecord":     true,
-
-	// Auth (clears session state)
-	"API_SignOut": true,
+// xmlReadActions are the XML API actions known to only read, keyed in lower
+// case: QuickBase matches action names without regard to case. Every other
+// action counts as a write, so read-only mode and a write scope refuse an
+// action they don't know (API_DeleteDatabase, API_AddField, ...) rather than
+// let it through.
+var xmlReadActions = map[string]bool{
+	"api_authenticate":       true,
+	"api_doquery":            true,
+	"api_doquerycount":       true,
+	"api_finddbbyname":       true,
+	"api_genaddrecordform":   true,
+	"api_genresultstable":    true,
+	"api_getancestorinfo":    true,
+	"api_getappdtminfo":      true,
+	"api_getdbinfo":          true,
+	"api_getdbpage":          true,
+	"api_getdbvar":           true,
+	"api_getgrouprole":       true,
+	"api_getnumrecords":      true,
+	"api_getrecordashtml":    true,
+	"api_getrecordinfo":      true,
+	"api_getroleinfo":        true,
+	"api_getschema":          true,
+	"api_getuserinfo":        true,
+	"api_getuserrole":        true,
+	"api_getusersingroup":    true,
+	"api_granteddbs":         true,
+	"api_granteddbsforgroup": true,
+	"api_grantedgroups":      true,
+	"api_listdbpages":        true,
+	"api_userroles":          true,
 }
 
 // isWriteMethod returns true if the HTTP method is a write operation.
+// isWriteMethod reports whether an HTTP method can change data: every method
+// but GET, HEAD and OPTIONS, so an unusual one (PROPPATCH) isn't taken for a read.
 func isWriteMethod(method string) bool {
-	switch method {
-	case http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch:
-		return true
+	switch strings.ToUpper(method) {
+	case http.MethodGet, http.MethodHead, http.MethodOptions:
+		return false
 	}
-	return false
+	return true
 }
 
-// isXMLWriteAction returns true if the XML API action modifies data.
+// isXMLWriteAction reports whether an XML API action can change data: any
+// action not known to only read.
 func isXMLWriteAction(action string) bool {
-	return xmlWriteActions[action]
+	return !xmlReadActions[strings.ToLower(strings.TrimSpace(action))]
 }
 
 // isJSONWriteEndpoint checks if the request matches a known write endpoint.
@@ -1137,10 +1143,13 @@ func isJSONWriteEndpoint(method, path string) bool {
 		return true
 	}
 
+	// Paths are compared without regard to letter case: a server that routes
+	// /Records like /records mustn't get a write judged as something else
+	path = strings.ToLower(path)
 	key := method + " " + path
 
 	// Exact match
-	if jsonWriteEndpoints[key] {
+	if jsonWriteEndpointsLower[key] {
 		return true
 	}
 
@@ -1149,7 +1158,7 @@ func isJSONWriteEndpoint(method, path string) bool {
 	for i := len(path) - 1; i >= 0; i-- {
 		if path[i] == '/' {
 			prefixKey := method + " " + path[:i+1]
-			if jsonWriteEndpoints[prefixKey] {
+			if jsonWriteEndpointsLower[prefixKey] {
 				return true
 			}
 		}
@@ -1160,10 +1169,11 @@ func isJSONWriteEndpoint(method, path string) bool {
 
 // isJSONReadOnlyPOSTEndpoint checks if a POST request is actually read-only.
 func isJSONReadOnlyPOSTEndpoint(path string) bool {
+	path = strings.ToLower(path)
 	key := "POST " + path
 
 	// Exact match
-	if jsonReadOnlyPOSTEndpoints[key] {
+	if jsonReadOnlyPOSTEndpointsLower[key] {
 		return true
 	}
 
@@ -1171,7 +1181,7 @@ func isJSONReadOnlyPOSTEndpoint(path string) bool {
 	for i := len(path) - 1; i >= 0; i-- {
 		if path[i] == '/' {
 			prefixKey := "POST " + path[:i+1]
-			if jsonReadOnlyPOSTEndpoints[prefixKey] {
+			if jsonReadOnlyPOSTEndpointsLower[prefixKey] {
 				return true
 			}
 		}
@@ -1187,20 +1197,66 @@ func (c *Client) checkReadOnly(req *http.Request) error {
 	}
 
 	method := req.Method
-	path := c.apiPath(req.URL.Path)
-
-	// Check for XML API requests first (they use POST for everything)
-	if action := req.Header.Get("QUICKBASE-ACTION"); action != "" {
-		if isXMLWriteAction(action) {
-			return core.NewReadOnlyError(method, path, action)
-		}
-		return nil // Allow read-only XML actions
+	path, safe := c.requestPath(req)
+	if !safe || hasMethodOverride(req) {
+		return core.NewReadOnlyError(method, path, "")
 	}
 
+	// Every request here is a JSON API request (XML goes through DoXML), so a
+	// QUICKBASE-ACTION header doesn't make it an XML read
 	if isJSONWrite(method, path) {
 		return core.NewReadOnlyError(method, path, "")
 	}
 	return nil
+}
+
+// hasMethodOverride reports whether a request asks the server to treat it as
+// another method (X-HTTP-Method-Override and similar), which would make the
+// method it was judged by not the one acted on.
+func hasMethodOverride(req *http.Request) bool {
+	for _, h := range []string{"X-HTTP-Method-Override", "X-HTTP-Method", "X-Method-Override"} {
+		if req.Header.Get(h) != "" {
+			return true
+		}
+	}
+	return false
+}
+
+// plainDBID matches an app or table ID, or "main".
+var plainDBID = regexp.MustCompile(`^[A-Za-z0-9_]+$`)
+
+// requestPath returns the request's path as it will be sent (escaped), under
+// /v1, and whether read-only mode and a write scope can judge it. A path
+// whose meaning a server could change by decoding or normalising it (an
+// encoded slash, dot or backslash, a dot segment, an empty segment) can't
+// be judged: "sol1%2Fchangeset" is checked as one solution ID but may be
+// routed as /solutions/sol1/changeset.
+func (c *Client) requestPath(req *http.Request) (string, bool) {
+	escaped := req.URL.EscapedPath()
+	// net/http sends URL.Opaque in place of the path when it is set, so a
+	// request with one isn't sent to the path judged here; nor does a URL with
+	// a user or fragment come from the generated client
+	odd := req.URL.Opaque != "" || req.URL.User != nil || req.URL.Fragment != "" || req.URL.RawFragment != ""
+	return c.apiPath(escaped), !odd && !ambiguousPath(escaped)
+}
+
+// ambiguousPath reports whether a server could read an escaped path as a
+// different path.
+func ambiguousPath(escaped string) bool {
+	lower := strings.ToLower(escaped)
+	for _, s := range []string{"%2f", "%2e", "%5c", "\\", "//"} {
+		if strings.Contains(lower, s) {
+			return true
+		}
+	}
+	for _, seg := range strings.Split(escaped, "/") {
+		if seg == "." || seg == ".." {
+			return true
+		}
+	}
+	// A server may ignore a trailing slash, so /solutions/fromrecord/ could
+	// act as /solutions/fromrecord
+	return len(escaped) > 1 && strings.HasSuffix(escaped, "/")
 }
 
 // apiPath returns a request's path as the endpoint lists name it, under
@@ -1215,8 +1271,28 @@ func (c *Client) apiPath(path string) string {
 // PATCH that isn't a known read sent as POST (runQuery, runReport, ...).
 // Read-only mode refuses these, and they aren't retried after a timeout or
 // 5xx.
+// The endpoint lists with lower-case paths, for matching without regard to case.
+var (
+	jsonWriteEndpointsLower        = lowerKeys(jsonWriteEndpoints)
+	jsonReadOnlyPOSTEndpointsLower = lowerKeys(jsonReadOnlyPOSTEndpoints)
+)
+
+func lowerKeys(m map[string]bool) map[string]bool {
+	out := make(map[string]bool, len(m))
+	for k, v := range m {
+		method, path, _ := strings.Cut(k, " ")
+		out[method+" "+strings.ToLower(path)] = v
+	}
+	return out
+}
+
 func isJSONWrite(method, path string) bool {
+	method = strings.ToUpper(method)
 	if method == http.MethodPost && isJSONReadOnlyPOSTEndpoint(path) {
+		return false
+	}
+	// changesetSolution is a PUT that only lists what a QBL update would change
+	if method == http.MethodPut && solutionChangesetPath.MatchString(path) {
 		return false
 	}
 	return isJSONWriteEndpoint(method, path) || isWriteMethod(method)

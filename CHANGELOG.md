@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **`WithWriteScope`**: a client may write only to what a `WriteScope` names; any other write returns a `*WriteScopeError` before it is sent. Lists: `AppIDs` (an app and every table in it, found with `getAppTables`), `SolutionIDs`, `GroupIDs`. Switches: `CreateApps`, `CreateSolutions`, `CreateGroups`, `ManageUsers`, `ManageTokens`. A relationship's parent table must be in scope too. Reads are never limited, and `WithReadOnly()` wins over a scope. See the README's write scope section.
+- **`ErrWriteBlocked`**: `errors.Is(err, quickbase.ErrWriteBlocked)` is true for a `ReadOnlyError` or a `WriteScopeError`.
+- `scripts/check-spec.sh`: `make spec`, `make spec-patch` and `make generate` stop when the `spec` submodule is behind the commit this repo records.
+
+### Changed
+- **Read-only mode fails closed.** An XML action counts as a write unless it is known to only read (any letter case), so `API_DeleteDatabase`, `API_AddField` and other unlisted actions are refused; every HTTP method but GET, HEAD and OPTIONS is a write; write endpoints match without regard to letter case. Refused when guarded, read or write: a path a server could read as another path (an encoded slash, dot or backslash, a dot or empty segment, a trailing slash, a URL with `Opaque`, a user or a fragment), a method-override header, and an XML dbid that isn't a plain ID. A JSON request's `QUICKBASE-ACTION` header no longer makes it an XML read.
+- A refused write's message ends by saying the refusal is intentional and not to retry it or send it another way.
+
+### Fixed
+- `changesetSolution` and `recordsModifiedSince` are reads: read-only mode refused them.
+- `DoXML` escapes the dbid in the URL.
+
 ## [3.0.0] - 2026-11-12
 
 v3: one method per operation, with plain results. The module path is `github.com/DrewBradfordXYZ/quickbase-go/v3`. [MIGRATION.md](MIGRATION.md) maps every v2 call; [docs/architecture.md](docs/architecture.md) has the reasons.

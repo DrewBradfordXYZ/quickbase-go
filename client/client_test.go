@@ -591,36 +591,19 @@ func TestCheckReadOnly_AllowsJSONReads(t *testing.T) {
 	}
 }
 
+// XML requests go through DoXML, which checks the action itself; a JSON
+// request's QUICKBASE-ACTION header plays no part.
 func TestCheckReadOnly_XMLWriteActions(t *testing.T) {
-	client := &Client{readOnly: true, basePath: "/v1"}
-
-	// XML API write actions should be blocked
-	writeActions := []string{
-		"API_AddUserToRole",
-		"API_SetDBVar",
-		"API_ImportFromCSV",
-		"API_SignOut",
+	client, err := New("myrealm", nil, WithUserToken("token"), WithReadOnly())
+	if err != nil {
+		t.Fatal(err)
 	}
-
-	for _, action := range writeActions {
+	for _, action := range []string{"API_AddUserToRole", "API_SetDBVar", "API_ImportFromCSV", "API_SignOut", "API_DeleteDatabase"} {
 		t.Run(action, func(t *testing.T) {
-			req := &http.Request{
-				Method: http.MethodPost,
-				URL:    mustParseURL("https://myrealm.quickbase.com/db/bqxyz123"),
-				Header: make(http.Header),
-			}
-			req.Header.Set("QUICKBASE-ACTION", action)
-
-			err := client.checkReadOnly(req)
-			if err == nil {
-				t.Errorf("checkReadOnly() returned nil, expected ReadOnlyError for XML action %s", action)
-				return
-			}
-
+			_, err := client.DoXML(context.Background(), "bqxyz123", action, nil)
 			roErr, ok := err.(*core.ReadOnlyError)
 			if !ok {
-				t.Errorf("checkReadOnly() returned %T, expected *core.ReadOnlyError", err)
-				return
+				t.Fatalf("DoXML(%s) = %v, want *core.ReadOnlyError", action, err)
 			}
 			if roErr.Action != action {
 				t.Errorf("ReadOnlyError.Action = %q, want %q", roErr.Action, action)
@@ -630,33 +613,23 @@ func TestCheckReadOnly_XMLWriteActions(t *testing.T) {
 }
 
 func TestCheckReadOnly_XMLReadActions(t *testing.T) {
-	client := &Client{readOnly: true, basePath: "/v1"}
-
-	// XML API read actions should be allowed
-	readActions := []string{
-		"API_GetRoleInfo",
-		"API_GetSchema",
-		"API_DoQueryCount",
-		"API_GetRecordInfo",
-		"API_GetUserInfo",
-		"API_GrantedDBs",
-		"API_GetDBInfo",
-		"API_GetNumRecords",
+	for _, action := range []string{
+		"API_GetRoleInfo", "API_GetSchema", "API_DoQueryCount", "API_GetRecordInfo",
+		"API_GetUserInfo", "API_GrantedDBs", "API_GetDBInfo", "API_GetNumRecords", "api_getschema",
+	} {
+		if isXMLWriteAction(action) {
+			t.Errorf("isXMLWriteAction(%s) = true, want a read", action)
+		}
 	}
+}
 
-	for _, action := range readActions {
-		t.Run(action, func(t *testing.T) {
-			req := &http.Request{
-				Method: http.MethodPost,
-				URL:    mustParseURL("https://myrealm.quickbase.com/db/bqxyz123"),
-				Header: make(http.Header),
-			}
-			req.Header.Set("QUICKBASE-ACTION", action)
-
-			if err := client.checkReadOnly(req); err != nil {
-				t.Errorf("checkReadOnly() returned error for read XML action %s: %v", action, err)
-			}
-		})
+// A JSON request isn't an XML read because it carries the header.
+func TestCheckReadOnly_JSONWithXMLHeader(t *testing.T) {
+	client := &Client{readOnly: true, basePath: "/v1"}
+	req := &http.Request{Method: http.MethodDelete, URL: mustParseURL("https://api.quickbase.com/v1/apps/bqxyz123"), Header: make(http.Header)}
+	req.Header.Set("QUICKBASE-ACTION", "API_DoQuery")
+	if _, ok := client.checkReadOnly(req).(*core.ReadOnlyError); !ok {
+		t.Error("a DELETE with an XML read action header got through read-only")
 	}
 }
 
@@ -664,7 +637,7 @@ func TestReadOnlyError_Format(t *testing.T) {
 	t.Run("JSON API error message", func(t *testing.T) {
 		err := core.NewReadOnlyError("POST", "/v1/records", "")
 		msg := err.Error()
-		expected := "read-only mode: write operation blocked (POST /v1/records)"
+		expected := "read-only mode: write operation blocked (POST /v1/records)" + blockedNoteForTest
 		if msg != expected {
 			t.Errorf("Error() = %q, want %q", msg, expected)
 		}
@@ -673,7 +646,7 @@ func TestReadOnlyError_Format(t *testing.T) {
 	t.Run("XML API error message", func(t *testing.T) {
 		err := core.NewReadOnlyError("POST", "/db/bqxyz123", "API_AddUserToRole")
 		msg := err.Error()
-		expected := "read-only mode: write operation blocked (XML action: API_AddUserToRole)"
+		expected := "read-only mode: write operation blocked (XML action: API_AddUserToRole)" + blockedNoteForTest
 		if msg != expected {
 			t.Errorf("Error() = %q, want %q", msg, expected)
 		}
@@ -992,3 +965,7 @@ func TestWithAppToken_Option(t *testing.T) {
 		t.Errorf("Client with WithAppToken() should have appToken=%q, got %q", "test-token", client2.appToken)
 	}
 }
+
+// blockedNoteForTest is core's message ending for a refused write.
+const blockedNoteForTest = ". This is intentional, not a temporary failure: don't retry it or send it another way. " +
+	"Whoever configured this client decides what it may change."

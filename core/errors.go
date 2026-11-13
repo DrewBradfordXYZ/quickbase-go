@@ -18,6 +18,7 @@ package core
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"sort"
@@ -301,6 +302,19 @@ func NewMissingTokenError(dbid string) *MissingTokenError {
 	return &MissingTokenError{DBID: dbid}
 }
 
+// blockedNote ends every refused write's message. Whoever, or whatever,
+// reads the error should know the refusal is the client's configuration
+// working, not a fault to work around.
+const blockedNote = ". This is intentional, not a temporary failure: don't retry it or send it another way. " +
+	"Whoever configured this client decides what it may change."
+
+// ErrWriteBlocked matches every write the client refused before sending it,
+// whether read-only mode ([ReadOnlyError]) or a write scope
+// ([WriteScopeError]) blocked it:
+//
+//	if errors.Is(err, core.ErrWriteBlocked) { ... }
+var ErrWriteBlocked = errors.New("write blocked")
+
 // ReadOnlyError is returned when a write operation is attempted in read-only mode.
 //
 // This error is returned when the client is configured with WithReadOnly() and
@@ -322,10 +336,13 @@ type ReadOnlyError struct {
 
 func (e *ReadOnlyError) Error() string {
 	if e.Action != "" {
-		return fmt.Sprintf("read-only mode: write operation blocked (XML action: %s)", e.Action)
+		return fmt.Sprintf("read-only mode: write operation blocked (XML action: %s)", e.Action) + blockedNote
 	}
-	return fmt.Sprintf("read-only mode: write operation blocked (%s %s)", e.Method, e.Path)
+	return fmt.Sprintf("read-only mode: write operation blocked (%s %s)", e.Method, e.Path) + blockedNote
 }
+
+// Is reports whether target is [ErrWriteBlocked].
+func (e *ReadOnlyError) Is(target error) bool { return target == ErrWriteBlocked }
 
 // NewReadOnlyError creates a new ReadOnlyError.
 func NewReadOnlyError(method, path, action string) *ReadOnlyError {
@@ -334,6 +351,38 @@ func NewReadOnlyError(method, path, action string) *ReadOnlyError {
 		Path:   path,
 		Action: action,
 	}
+}
+
+// WriteScopeError is returned when a client with a write scope
+// (WithWriteScope) is asked to write outside it. Nothing was sent.
+//
+// Target is the app or table that was refused, when the request named one;
+// Reason says why.
+type WriteScopeError struct {
+	Method string `json:"method"`
+	Path   string `json:"path"`
+	Action string `json:"action,omitempty"` // For XML API actions
+	Target string `json:"target,omitempty"`
+	Reason string `json:"reason"`
+}
+
+func (e *WriteScopeError) Error() string {
+	op := e.Method + " " + e.Path
+	if e.Action != "" {
+		op = "XML action " + e.Action
+	}
+	if e.Target != "" {
+		return fmt.Sprintf("write scope: %s blocked: %s (%s)", op, e.Reason, e.Target) + blockedNote
+	}
+	return fmt.Sprintf("write scope: %s blocked: %s", op, e.Reason) + blockedNote
+}
+
+// Is reports whether target is [ErrWriteBlocked].
+func (e *WriteScopeError) Is(target error) bool { return target == ErrWriteBlocked }
+
+// NewWriteScopeError creates a new WriteScopeError.
+func NewWriteScopeError(method, path, action, target, reason string) *WriteScopeError {
+	return &WriteScopeError{Method: method, Path: path, Action: action, Target: target, Reason: reason}
 }
 
 // LineErrorsError reports values QuickBase rejected in an upsert, returned

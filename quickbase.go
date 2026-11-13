@@ -98,6 +98,7 @@ type (
 	ServerError         = core.ServerError
 	MissingTokenError   = core.MissingTokenError
 	ReadOnlyError       = core.ReadOnlyError
+	WriteScopeError     = core.WriteScopeError
 	PlainTimeError      = core.PlainTimeError
 	LineErrorsError     = core.LineErrorsError
 	RateLimitInfo       = core.RateLimitInfo
@@ -127,6 +128,7 @@ type (
 
 	// Monitoring types
 	RequestInfo = client.RequestInfo
+	WriteScope  = client.WriteScope
 	RetryInfo   = client.RetryInfo
 )
 
@@ -208,6 +210,9 @@ func WithBaseURL(url string) Option { return client.WithBaseURL(url) }
 // WithReadOnly enables read-only mode, blocking all write operations. See [client.WithReadOnly].
 func WithReadOnly() Option { return client.WithReadOnly() }
 
+// WithWriteScope limits writes to the apps a [WriteScope] names. See [client.WithWriteScope].
+func WithWriteScope(scope WriteScope) Option { return client.WithWriteScope(scope) }
+
 // WithLineErrorsAsErrors makes Upsert return a [LineErrorsError] when QuickBase rejects values. See [client.WithLineErrorsAsErrors].
 func WithLineErrorsAsErrors() Option { return client.WithLineErrorsAsErrors() }
 
@@ -232,6 +237,9 @@ func New(realm string, opts ...Option) (*Client, error) {
 }
 
 // Helper functions re-exported from core
+// ErrWriteBlocked matches every write the client refused before sending it: errors.Is(err, quickbase.ErrWriteBlocked) is true for a [ReadOnlyError] and a [WriteScopeError].
+var ErrWriteBlocked = core.ErrWriteBlocked
+
 var (
 	// IsRetryableError returns true if the error should trigger a retry.
 	IsRetryableError = core.IsRetryableError

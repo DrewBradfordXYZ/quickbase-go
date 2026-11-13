@@ -8,6 +8,7 @@ A Go client for the [QuickBase JSON API](https://developer.quickbase.com/), with
 - **Queries that paginate** for you, with readable **schema aliases** instead of table and field IDs
 - **Retries, throttling and hooks** for QuickBase's rate limits
 - **Read-only mode** for tools that must never write
+- **Write scope** to limit writes to named apps
 - **User token, ticket, temporary token and SSO** authentication
 
 ```bash
@@ -170,11 +171,55 @@ See [docs/reliability.md](docs/reliability.md) for every option, batch-job tunin
 
 ## Read-only mode
 
-`WithReadOnly()` makes the client refuse every write before it is sent: JSON writes (including the GET endpoints that write, such as `generateDocument`), and XML write actions. Reads that use POST, like `RunQuery`, `RunReport` and `Audit`, still work. A blocked call returns `*quickbase.ReadOnlyError`.
+`WithReadOnly()` makes the client refuse every write before it is sent: JSON writes (including the GET endpoints that write, such as `generateDocument`), and XML write actions. Reads that use POST, like `RunQuery`, `RunReport`, `RecordsModifiedSince` and `Audit`, still work. A blocked call returns `*quickbase.ReadOnlyError`.
+
+Both read-only mode and a write scope fail closed:
+
+- **An XML action counts as a write unless it is known to only read** (`API_DoQuery`, `API_GetSchema`, ...), in any letter case. `API_DeleteDatabase`, `API_AddField` and other actions not listed are refused.
+- **A path a server could read as another path is refused**, read or write: an encoded slash, dot or backslash in an ID (`sol1/changeset` as a solution ID), or a dot or empty segment.
+- **An XML call's dbid must be a plain ID.**
+- **A request with a method-override header** (`X-HTTP-Method-Override` and similar) **is refused**, and write endpoints are matched without regard to letter case.
+
+## Write scope
+
+`WithWriteScope` lets a client write only to what you name. Any other write is refused before it is sent, with `*quickbase.WriteScopeError`. Reads are never limited.
+
+```go
+qb, err := quickbase.New(realm,
+	quickbase.WithUserToken(token),
+	quickbase.WithWriteScope(quickbase.WriteScope{
+		AppIDs:          []string{appID},   // the apps, and every table in them
+		CreateApps:      false,             // createApp, copyApp; XML create and clone database
+		SolutionIDs:     []string{},        // updateSolution, updateSolutionToRecord
+		CreateSolutions: false,             // createSolution, createSolutionFromRecord
+		GroupIDs:        []string{},        // members, managers, subgroups; XML rename and delete
+		CreateGroups:    false,             // XML create and copy group
+		ManageUsers:     false,             // deny and undeny users; XML provision user (with the app in AppIDs)
+		ManageTokens:    false,             // clone, transfer, deactivate, delete user tokens; XML sign-out
+	}),
+)
+```
+
+A write whose target can be checked is allowed when the target is listed; a write that creates something, or acts on the realm's users or your own credentials, is allowed by a switch. Nothing is allowed unless it is named.
+
+- A table's writes (fields, relationships, records, files, document generation, exporting a solution to a record) are allowed when the table is in one of `AppIDs`, including tables created later. The client lists those apps' tables (`getAppTables`) to tell, and refuses the write if that fails.
+- A relationship's parent table must be in scope too, since QuickBase adds fields to it.
+- An XML write is checked by its dbid (an app or a table), or, for group actions, by its one `<gid>`; a body with a comment, CDATA or a second `<gid>` is refused.
+- A relationship's parent is required when creating one, and looked up (`getRelationships`) when updating or deleting one.
+- A body or query that names a checked key twice, or in another letter case (`to` and `To`), is refused.
+- Group IDs are matched exactly as the request writes them: the JSON API writes `1217`, the XML API's examples `1217.dgpt`. List each form the client will use.
+- A new app or solution isn't added to the scope: build a client that names it.
+- With `WithReadOnly()` as well, nothing is written.
+
+`errors.Is(err, quickbase.ErrWriteBlocked)` is true for either refusal, a `ReadOnlyError` or a `WriteScopeError`.
+
+`changesetSolution` is a read: it lists what a QBL update would change, so read-only mode and a write scope let it through.
+
+**What these guards are for.** Read-only mode and a write scope stop writes a caller didn't mean to allow: a mistake, a careless call, or an AI agent working through your tool that tries something it shouldn't. A refused write's error says so plainly, so whoever reads it (a person or an agent) knows not to retry it or route around it. The guards don't stop code in the same program that sets out to get around them: such code holds the token and can send any request without this client. To protect a realm from that, give the token's user only the permissions it needs in QuickBase.
 
 ## Errors
 
-Errors are typed by cause: `RateLimitError` (429), `AuthenticationError` (401), `AuthorizationError` (403), `NotFoundError` (404), `ValidationError` (400), `ServerError` (5xx), `TimeoutError` and `ReadOnlyError`.
+Errors are typed by cause: `RateLimitError` (429), `AuthenticationError` (401), `AuthorizationError` (403), `NotFoundError` (404), `ValidationError` (400), `ServerError` (5xx), `TimeoutError`, `ReadOnlyError` and `WriteScopeError`.
 
 ```go
 var rateLimited *quickbase.RateLimitError
