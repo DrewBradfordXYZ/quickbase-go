@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-11-13
+
+Write scope, and read-only mode that fails closed.
+
 ### Added
 - **`WithWriteScope`**: a client may write only to what a `WriteScope` names; any other write returns a `*WriteScopeError` before it is sent. Lists: `AppIDs` (an app and every table in it, found with `getAppTables`), `SolutionIDs`, `GroupIDs`. Switches: `CreateApps`, `CreateSolutions`, `CreateGroups`, `ManageUsers`, `ManageTokens`. A relationship's parent table must be in scope too. Reads are never limited, and `WithReadOnly()` wins over a scope. See the README's write scope section.
 - **`ErrWriteBlocked`**: `errors.Is(err, quickbase.ErrWriteBlocked)` is true for a `ReadOnlyError` or a `WriteScopeError`.
