@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
 )
 
 func TestUserTokenAuth(t *testing.T) {
@@ -27,8 +27,8 @@ func TestUserTokenAuth(t *testing.T) {
 		if resp.JSON200 == nil {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
-		if *resp.JSON200.Id != testCtx.AppID {
-			t.Errorf("App ID = %s, want %s", *resp.JSON200.Id, testCtx.AppID)
+		if resp.JSON200.Id != testCtx.AppID {
+			t.Errorf("App ID = %s, want %s", resp.JSON200.Id, testCtx.AppID)
 		}
 	})
 
@@ -141,8 +141,8 @@ func TestTicketAuth(t *testing.T) {
 		if resp.JSON200 == nil {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
-		if *resp.JSON200.Id != testCtx.AppID {
-			t.Errorf("App ID = %s, want %s", *resp.JSON200.Id, testCtx.AppID)
+		if resp.JSON200.Id != testCtx.AppID {
+			t.Errorf("App ID = %s, want %s", resp.JSON200.Id, testCtx.AppID)
 		}
 	})
 

@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-12
+
+v3: one method per operation, with plain results. The module path is `github.com/DrewBradfordXYZ/quickbase-go/v3`. [MIGRATION.md](MIGRATION.md) maps every v2 call; [docs/architecture.md](docs/architecture.md) has the reasons.
+
+### Changed
+- **BREAKING: one method per operation.** `client.GetApp(ctx, appID)`, `client.GetFields(ctx, tableID, nil)`, `client.Upsert(ctx, quickbase.UpsertBody{...})`: required parameters are arguments (path or query, wherever QuickBase puts them), a body its request type, and optional query parameters an `*<Operation>Options`, last, that can be `nil`. They return the result (`*GetAppResult`, `[]GetFieldsItem`, `[]byte` for QBL and files) or QuickBase's typed error. Generated from the spec (`cmd/generate-methods`).
+- **BREAKING: results have plain fields.** Response types' optional fields are values, not pointers (`app.Name`, `result.Metadata.CreatedRecordIds`), and every response is a named type (`<Operation>Result`). `cmd/gospec` adapts the shared spec for Go; generated with oapi-codegen v2.8.2, whose runtime (v1.8.0) still needs only Go 1.24.
+- **BREAKING: a record query's `Where` is a string and `SortBy` a list**: `Where: "{7.EX.'Active'}"`, `SortBy: quickbase.SortBy{quickbase.Asc(6)}`, `quickbase.NoSort` to turn sorting off (sends `false`), and `quickbase.RecordIDs(12, 15)` for a list of records. `DeleteRecordsBody.Where` is a string too. `quickbase.Where`, `quickbase.DeleteWhere`, `quickbase.SortBy(...)`, `quickbase.Sort` and their union types are removed.
+- Date query parameters (analytics' `day`) are `quickbase.Date`.
+- **BREAKING: a record value is a plain Go value** (`any`), not a union type: `rec["6"].Value.(string)`, `quickbase.FieldValue{Value: 42}`.
+- **BREAKING: schema aliases are resolved for every method** in the HTTP layer, not only by `RunQuery` and `Query()`: a table in a path (`/tables/{tableId}`, `/files/{tableId}`) or a `tableId` parameter; and, for record operations (query, upsert, delete records, modified since, run formula), the body's `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn` and `mergeFieldId`. A table reference the schema doesn't name goes as given (it was an error), unless it is a near miss of an alias, which is an error suggesting it.
+- `TransformResponses` keys the paging helpers' records by alias (`RunQueryAll`, `RunQueryN`, `RunQueryIterator`, `RunReport*`); it keyed `Query()`'s.
+- Every generated type is re-exported from the root package under its own name (`quickbase.GetAppResult`), so callers need one import.
+- **BREAKING: one record type, with a decoder.** `quickbase.Record` (`core.Record`) is a record as QuickBase sends it, field ID to `{Value}`, everywhere: query and report results, upsert data. `rec.Values()` gives a plain map, `rec.Decode(&v)` and `quickbase.DecodeRecords[T]` fill structs by `qb:"<id or alias>"` tags (a blank value leaves the zero value; `Date`, `DateTime` and `User` decode from their forms), and `quickbase.RecordFrom(v)` builds a record to send, leaving out nil pointer fields. `UnwrapRecord`, `UnwrapRecords` and the `client.Record` map type are removed.
+
+### Added
+- **Typed tables.** `go run ./cmd/schema -f structs` writes, for every table of an app, a record struct and a changes struct typed from QuickBase's fields, the field IDs, and a `quickbase.Table[Record, Changes]` with `Query`, `Iterate`, `Get`, `Upsert` and `Delete`. A changes struct's fields are pointers, so a nil field isn't sent, and it leaves out what an upsert can't set (formula, lookup and summary fields, built-in fields), so writing one doesn't compile. `--merge` keeps renamed types and fields. What each field type reads and writes as was checked against a live realm, including that a user field is set by email (a bare user ID stores a wrong user without an error). See [docs/tables.md](docs/tables.md).
+- `-p` sets the package of the schema generator's Go output, which was always `main`.
+- `GetRelationshipsIterator`, `GetUsersIterator` and `AuditIterator`: every relationship, user or audit event, a page at a time.
+- Dates in request bodies and results (the audit log's `Date`, analytics' daily reads) are `quickbase.Date`, not oapi-codegen's date type. A blank (`""` or null) decodes as the zero `Date` or `DateTime`.
+
+### Removed
+- **BREAKING:** the fluent builders, the result wrappers with accessor methods (`Raw()`, `Name()`, ...), the `Query()` builder, `SortSpec`, and the union helpers for record values (`FieldValueUnion`). `client.API()` remains for the full generated response.
+- **BREAKING:** what v2 deprecated or never used: `PaginatedRequest`, `NewPaginatedRequest`, `PaginationOptions`, `PaginationType` and its constants, `DetectPaginationType` and `HasMorePages` (page with `RunQueryAll`, `RunQueryIterator` and the other iterators, or `Paginate`); `WithConvertDates`, which did nothing; `TransformDates`, `IsISODateString` and `ParseISODate`, which guessed dates from a string's shape (use `ParseDate`, `ParseDateTime`, or `Record.Decode` into `Date` and `DateTime`); `core.TransformResponse`, which nothing called; and `quickbase.Error`, which nothing returned.
+
+### Fixed
+- The schema generator's Go output imports `github.com/DrewBradfordXYZ/quickbase-go/v3`; it imported the module path without its major version, which didn't compile.
+
 ## [2.4.0] - 2026-11-12
 
 ### Added

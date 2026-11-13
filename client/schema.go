@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 // ErrNoSchema is returned when a schema operation is attempted without a configured schema.

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 // WithMaxRetries(0) made no attempt: the request returned neither a response
@@ -28,7 +28,7 @@ func TestWithMaxRetriesZeroMakesOneAttempt(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := qb.ExportSolution("abc").Run(context.Background()); err == nil {
+	if _, err := qb.ExportSolution(context.Background(), "abc", nil); err == nil {
 		t.Error("a 503 should be an error")
 	}
 	if calls != 1 {
@@ -59,7 +59,7 @@ func TestRetryWaitStopsWhenContextEnds(t *testing.T) {
 	defer cancel()
 
 	start := time.Now()
-	_, err = qb.GetApp("bqxyz123").Run(ctx)
+	_, err = qb.GetApp(ctx, "bqxyz123")
 	if elapsed := time.Since(start); elapsed > 2*time.Second {
 		t.Errorf("returned after %s; the backoff ignored the context", elapsed)
 	}
@@ -83,7 +83,7 @@ func TestCancelIsNotATimeout(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	time.AfterFunc(50*time.Millisecond, cancel)
-	_, err = qb.ExportSolution("abc").Run(ctx)
+	_, err = qb.ExportSolution(ctx, "abc", nil)
 	if !errors.Is(err, context.Canceled) {
 		t.Errorf("err = %v, want context.Canceled", err)
 	}
@@ -111,7 +111,7 @@ func TestClientTimeoutIsATimeoutError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = qb.ExportSolution("abc").Run(context.Background())
+	_, err = qb.ExportSolution(context.Background(), "abc", nil)
 	var timeout *quickbase.TimeoutError
 	if !errors.As(err, &timeout) {
 		t.Errorf("err = %v (%T), want TimeoutError", err, err)
@@ -149,7 +149,7 @@ func TestWritesRetryOnlyAfter429(t *testing.T) {
 			}
 			ctx := context.Background()
 			if c.write {
-				_, err = qb.Upsert("bqtable").Data(quickbase.Row(6, "a")).Run(ctx)
+				_, err = qb.Upsert(ctx, quickbase.UpsertBody{To: "bqtable", Data: []quickbase.Record{quickbase.Row(6, "a")}})
 			} else {
 				_, err = qb.RunQuery(ctx, quickbase.RunQueryBody{From: "bqtable"})
 			}

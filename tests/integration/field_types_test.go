@@ -6,8 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	quickbase "github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 func TestDateFields(t *testing.T) {
@@ -41,11 +40,11 @@ func TestDateFields(t *testing.T) {
 		if resp.JSON200 == nil {
 			t.Fatalf("Expected JSON200 response, got status %d", resp.StatusCode())
 		}
-		if resp.JSON200.Metadata == nil || resp.JSON200.Metadata.CreatedRecordIds == nil {
+		if resp.JSON200.Metadata.CreatedRecordIds == nil {
 			t.Fatal("Expected createdRecordIds")
 		}
-		if len(*resp.JSON200.Metadata.CreatedRecordIds) != 1 {
-			t.Errorf("Expected 1 created record, got %d", len(*resp.JSON200.Metadata.CreatedRecordIds))
+		if len(resp.JSON200.Metadata.CreatedRecordIds) != 1 {
+			t.Errorf("Expected 1 created record, got %d", len(resp.JSON200.Metadata.CreatedRecordIds))
 		}
 
 		// Query back and verify
@@ -59,12 +58,12 @@ func TestDateFields(t *testing.T) {
 		if queryResp.JSON200 == nil || queryResp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*queryResp.JSON200.Data) != 1 {
-			t.Fatalf("Expected 1 record, got %d", len(*queryResp.JSON200.Data))
+		if len(queryResp.JSON200.Data) != 1 {
+			t.Fatalf("Expected 1 record, got %d", len(queryResp.JSON200.Data))
 		}
 
-		record := (*queryResp.JSON200.Data)[0]
-		dateValue, err := record[dateFieldID].Value.AsFieldValueValue0()
+		record := (queryResp.JSON200.Data)[0]
+		dateValue, err := stringValue(record[dateFieldID].Value)
 		if err != nil {
 			t.Fatalf("Failed to get date value: %v", err)
 		}
@@ -107,7 +106,7 @@ func TestDateFields(t *testing.T) {
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.DateFieldID},
-			Where:  quickbase.Where(whereStr),
+			Where:  whereStr,
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -115,8 +114,8 @@ func TestDateFields(t *testing.T) {
 		if queryResp.JSON200 == nil || queryResp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*queryResp.JSON200.Data) != 2 {
-			t.Errorf("Expected 2 records after June 1st, got %d", len(*queryResp.JSON200.Data))
+		if len(queryResp.JSON200.Data) != 2 {
+			t.Errorf("Expected 2 records after June 1st, got %d", len(queryResp.JSON200.Data))
 		}
 	})
 }
@@ -152,11 +151,11 @@ func TestCheckboxFields(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Upsert failed: %v", err)
 		}
-		if resp.JSON200 == nil || resp.JSON200.Metadata == nil {
+		if resp.JSON200 == nil {
 			t.Fatal("Expected metadata in response")
 		}
-		if len(*resp.JSON200.Metadata.CreatedRecordIds) != 2 {
-			t.Errorf("Expected 2 created records, got %d", len(*resp.JSON200.Metadata.CreatedRecordIds))
+		if len(resp.JSON200.Metadata.CreatedRecordIds) != 2 {
+			t.Errorf("Expected 2 created records, got %d", len(resp.JSON200.Metadata.CreatedRecordIds))
 		}
 
 		// Query back and verify
@@ -170,8 +169,8 @@ func TestCheckboxFields(t *testing.T) {
 		if queryResp.JSON200 == nil || queryResp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*queryResp.JSON200.Data) != 2 {
-			t.Errorf("Expected 2 records, got %d", len(*queryResp.JSON200.Data))
+		if len(queryResp.JSON200.Data) != 2 {
+			t.Errorf("Expected 2 records, got %d", len(queryResp.JSON200.Data))
 		}
 	})
 
@@ -209,7 +208,7 @@ func TestCheckboxFields(t *testing.T) {
 		queryResp, err := client.API().RunQueryWithResponse(ctx, generated.RunQueryJSONRequestBody{
 			From:   testCtx.TableID,
 			Select: &[]int{3, testCtx.TextFieldID, testCtx.CheckboxFieldID},
-			Where:  quickbase.Where(whereStr),
+			Where:  whereStr,
 		})
 		if err != nil {
 			t.Fatalf("RunQuery failed: %v", err)
@@ -217,8 +216,8 @@ func TestCheckboxFields(t *testing.T) {
 		if queryResp.JSON200 == nil || queryResp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*queryResp.JSON200.Data) != 2 {
-			t.Errorf("Expected 2 active records, got %d", len(*queryResp.JSON200.Data))
+		if len(queryResp.JSON200.Data) != 2 {
+			t.Errorf("Expected 2 active records, got %d", len(queryResp.JSON200.Data))
 		}
 	})
 }
@@ -251,11 +250,11 @@ func TestSpecialCharacters(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Upsert failed: %v", err)
 		}
-		if resp.JSON200 == nil || resp.JSON200.Metadata == nil {
+		if resp.JSON200 == nil {
 			t.Fatal("Expected metadata in response")
 		}
-		if len(*resp.JSON200.Metadata.CreatedRecordIds) != 1 {
-			t.Errorf("Expected 1 created record, got %d", len(*resp.JSON200.Metadata.CreatedRecordIds))
+		if len(resp.JSON200.Metadata.CreatedRecordIds) != 1 {
+			t.Errorf("Expected 1 created record, got %d", len(resp.JSON200.Metadata.CreatedRecordIds))
 		}
 
 		// Query back and verify
@@ -270,8 +269,8 @@ func TestSpecialCharacters(t *testing.T) {
 			t.Fatal("Expected data in response")
 		}
 
-		record := (*queryResp.JSON200.Data)[0]
-		textValue, err := record[textFieldID].Value.AsFieldValueValue0()
+		record := (queryResp.JSON200.Data)[0]
+		textValue, err := stringValue(record[textFieldID].Value)
 		if err != nil {
 			t.Fatalf("Failed to get text value: %v", err)
 		}
@@ -307,11 +306,11 @@ func TestNullValues(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Upsert failed: %v", err)
 		}
-		if resp.JSON200 == nil || resp.JSON200.Metadata == nil {
+		if resp.JSON200 == nil {
 			t.Fatal("Expected metadata in response")
 		}
-		if len(*resp.JSON200.Metadata.CreatedRecordIds) != 1 {
-			t.Errorf("Expected 1 created record, got %d", len(*resp.JSON200.Metadata.CreatedRecordIds))
+		if len(resp.JSON200.Metadata.CreatedRecordIds) != 1 {
+			t.Errorf("Expected 1 created record, got %d", len(resp.JSON200.Metadata.CreatedRecordIds))
 		}
 
 		// Query back and verify defaults
@@ -325,28 +324,35 @@ func TestNullValues(t *testing.T) {
 		if queryResp.JSON200 == nil || queryResp.JSON200.Data == nil {
 			t.Fatal("Expected data in response")
 		}
-		if len(*queryResp.JSON200.Data) != 1 {
-			t.Errorf("Expected 1 record, got %d", len(*queryResp.JSON200.Data))
+		if len(queryResp.JSON200.Data) != 1 {
+			t.Errorf("Expected 1 record, got %d", len(queryResp.JSON200.Data))
 		}
 
-		record := (*queryResp.JSON200.Data)[0]
-		textValue, _ := record[textFieldID].Value.AsFieldValueValue0()
+		record := (queryResp.JSON200.Data)[0]
+		textValue, _ := record[textFieldID].Value.(string)
 		if textValue != "OnlyName" {
 			t.Errorf("Expected 'OnlyName', got %q", textValue)
 		}
 
 		// Checkbox defaults to false
 		checkboxFieldID := fmt.Sprintf("%d", testCtx.CheckboxFieldID)
-		checkboxValue, _ := record[checkboxFieldID].Value.AsFieldValueValue2()
+		checkboxValue, _ := record[checkboxFieldID].Value.(bool)
 		if checkboxValue != false {
 			t.Errorf("Expected checkbox to default to false, got %v", checkboxValue)
 		}
 	})
 }
 
-// toBoolFieldValue converts a bool to a FieldValue_Value union type
-func toBoolFieldValue(v bool) generated.FieldValue_Value {
-	var fv generated.FieldValue_Value
-	fv.FromFieldValueValue2(v)
-	return fv
+// toBoolFieldValue is a checkbox value: record values are plain Go values
+func toBoolFieldValue(v bool) any {
+	return v
+}
+
+// stringValue reads a text value, with an error for any other type
+func stringValue(v any) (string, error) {
+	s, ok := v.(string)
+	if !ok {
+		return "", fmt.Errorf("value %v (%T) is not a string", v, v)
+	}
+	return s, nil
 }

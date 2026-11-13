@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // getFields returns summaryQuery on a summary field that has a filter, though
@@ -23,16 +23,16 @@ func TestFieldsItem_SummaryQuery(t *testing.T) {
 		t.Fatalf("unmarshal: %v", err)
 	}
 
-	filtered := (&FieldsItem{&items[0]}).Properties()
-	if got, want := filtered.SummaryQuery(), "{'7'.EX.'Open'}AND{'9'.EX.'1'}"; got != want {
-		t.Errorf("SummaryQuery() = %q, want %q", got, want)
+	filtered := items[0].Properties
+	if got, want := filtered.SummaryQuery, "{'7'.EX.'Open'}AND{'9'.EX.'1'}"; got != want {
+		t.Errorf("SummaryQuery = %q, want %q", got, want)
 	}
 	if _, leaked := filtered.AdditionalProperties["summaryQuery"]; leaked {
 		t.Error("summaryQuery also landed in AdditionalProperties")
 	}
 
-	if got := (&FieldsItem{&items[1]}).Properties().SummaryQuery(); got != "" {
-		t.Errorf("unfiltered SummaryQuery() = %q, want empty", got)
+	if got := items[1].Properties.SummaryQuery; got != "" {
+		t.Errorf("unfiltered SummaryQuery = %q, want empty", got)
 	}
 }
 
@@ -47,12 +47,12 @@ func TestFieldsItem_ReferenceFieldParent(t *testing.T) {
 	if err := json.Unmarshal([]byte(body), &items); err != nil {
 		t.Fatalf("unmarshal: %v", err)
 	}
-	props := (&FieldsItem{&items[0]}).Properties()
-	if got := props.MasterTableId(); got != "bqparent1" {
-		t.Errorf("MasterTableId() = %q, want bqparent1", got)
+	props := items[0].Properties
+	if got := props.MasterTableId; got != "bqparent1" {
+		t.Errorf("MasterTableId = %q, want bqparent1", got)
 	}
-	if got := props.MasterTableKeyFid(); got != 3 {
-		t.Errorf("MasterTableKeyFid() = %d, want 3", got)
+	if got := props.MasterTableKeyFid; got != 3 {
+		t.Errorf("MasterTableKeyFid = %d, want 3", got)
 	}
 	if len(props.AdditionalProperties) != 0 {
 		t.Errorf("AdditionalProperties = %v, want every property typed", props.AdditionalProperties)
@@ -71,19 +71,20 @@ func TestReportProperties_TypedAndKept(t *testing.T) {
 	if err := json.Unmarshal([]byte(body), &item); err != nil {
 		t.Fatalf("unmarshal: %v", err)
 	}
-	if q := item.Query; q == nil || q.Fields == nil || len(*q.Fields) != 2 || (*q.SortBy)[0].FieldId == nil || *(*q.GroupBy)[0].FieldId != 9 {
+	// Plain fields: no nil checks
+	if q := item.Query; len(q.Fields) != 2 || q.SortBy[0].FieldId != 6 || q.GroupBy[0].FieldId != 9 {
 		t.Errorf("query = %+v", item.Query)
 	}
 	p := item.Properties
-	if p == nil || p.DisplayOnlyNewOrChangedRecords == nil || !*p.DisplayOnlyNewOrChangedRecords {
+	if !p.DisplayOnlyNewOrChangedRecords {
 		t.Fatalf("properties = %+v", p)
 	}
 	if _, ok := p.AdditionalProperties["stagesFromFieldId"]; !ok {
 		t.Error("kanban setting stagesFromFieldId was dropped")
 	}
-	col := (*p.ColumnProperties)[0]
-	if *col.LabelOverride != "Unit" {
-		t.Errorf("labelOverride = %q", *col.LabelOverride)
+	col := p.ColumnProperties[0]
+	if col.LabelOverride != "Unit" {
+		t.Errorf("labelOverride = %q", col.LabelOverride)
 	}
 	if _, ok := col.AdditionalProperties["width"]; !ok {
 		t.Error("unlisted column key width was dropped")

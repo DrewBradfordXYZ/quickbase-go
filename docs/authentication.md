@@ -45,7 +45,7 @@ handler := func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	records, err := client.Query("bqtable1").Select(3, 6).Run(r.Context())
+	records, err := client.RunQueryAll(r.Context(), quickbase.RunQueryBody{From: "bqtable1", Select: quickbase.Ints(3, 6)})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return

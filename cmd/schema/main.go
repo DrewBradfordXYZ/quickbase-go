@@ -23,12 +23,13 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
 	"unicode"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 func main() {
@@ -41,6 +42,7 @@ func main() {
 		format string
 		merge  bool
 		help   bool
+		pkg    string
 	)
 
 	flag.StringVar(&realm, "r", "", "QuickBase realm (required)")
@@ -53,6 +55,8 @@ func main() {
 	flag.StringVar(&output, "output", "", "Output file path (default: stdout)")
 	flag.StringVar(&format, "f", "go", "Output format: go or json (default: go)")
 	flag.StringVar(&format, "format", "go", "Output format: go or json (default: go)")
+	flag.StringVar(&pkg, "p", "", "Go package name (default: the output file's directory, or main)")
+	flag.StringVar(&pkg, "package", "", "Go package name (default: the output file's directory, or main)")
 	flag.BoolVar(&merge, "m", false, "Merge with existing schema, preserving custom aliases")
 	flag.BoolVar(&merge, "merge", false, "Merge with existing schema, preserving custom aliases")
 	flag.BoolVar(&help, "h", false, "Show help")
@@ -89,6 +93,35 @@ func main() {
 	if merge && output == "" {
 		fmt.Fprintln(os.Stderr, "Error: --merge requires --output to specify the file to merge with")
 		os.Exit(1)
+	}
+
+	if pkg == "" {
+		pkg = packageFor(output)
+	}
+
+	// Typed tables: their own fetch and merge
+	if format == "structs" {
+		fmt.Fprintf(os.Stderr, "Fetching tables from %s/%s...\n", realm, app)
+		tables, err := fetchApp(realm, app, token)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+		existing := existingNames{table: map[string][3]string{}, fields: map[string]map[int]string{}}
+		if merge {
+			if existing, err = loadExistingNames(output); err != nil {
+				fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+				os.Exit(1)
+			}
+		}
+		result, err := formatAsStructs(tables, pkg, existing)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+		writeOutput(output, result)
+		fmt.Fprintf(os.Stderr, "%d tables\n", len(tables))
+		return
 	}
 
 	// Fetch schema
@@ -134,22 +167,41 @@ func main() {
 	case "json":
 		result = formatAsJSON(schema)
 	case "go":
-		result = formatAsGo(schema)
+		result = formatAsGo(schema, pkg)
 	default:
-		fmt.Fprintf(os.Stderr, "Error: unknown format %q (use 'go' or 'json')\n", format)
+		fmt.Fprintf(os.Stderr, "Error: unknown format %q (use 'go', 'json' or 'structs')\n", format)
 		os.Exit(1)
 	}
+	writeOutput(output, result)
+}
 
-	// Write output
-	if output != "" {
-		if err := os.WriteFile(output, []byte(result), 0644); err != nil {
-			fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Fprintf(os.Stderr, "Schema written to %s\n", output)
-	} else {
+// writeOutput writes the result to the output file, or stdout.
+func writeOutput(output, result string) {
+	if output == "" {
 		fmt.Print(result)
+		return
 	}
+	if err := os.WriteFile(output, []byte(result), 0644); err != nil {
+		fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Fprintf(os.Stderr, "Written to %s\n", output)
+}
+
+// packageFor names the Go package after the output file's directory.
+func packageFor(output string) string {
+	if output == "" {
+		return "main"
+	}
+	abs, err := filepath.Abs(output)
+	if err != nil {
+		return "main"
+	}
+	name := regexp.MustCompile(`[^a-z0-9]`).ReplaceAllString(strings.ToLower(filepath.Base(filepath.Dir(abs))), "")
+	if name == "" || unicode.IsDigit([]rune(name)[0]) {
+		return "main"
+	}
+	return name
 }
 
 func showHelp() {
@@ -163,7 +215,10 @@ Options:
   -a, --app <appId>     Application ID (required, e.g., "bqw123abc")
   -t, --token <token>   User token (or set QB_USER_TOKEN env var)
   -o, --output <file>   Output file path (default: stdout)
-  -f, --format <type>   Output format: "go" or "json" (default: "go")
+  -f, --format <type>   Output format: "go", "json" or "structs" (default: "go")
+                        structs: a record struct, a changes struct, field IDs and
+                        a quickbase.Table per table, typed from QuickBase's fields
+  -p, --package <name>  Go package name (default: the output file's directory)
   -m, --merge           Merge with existing schema, preserving custom aliases
   -h, --help            Show this help message
 
@@ -173,6 +228,9 @@ Examples:
 
   # Generate and save to file
   go run ./cmd/schema -r mycompany -a bqw123abc -o schema.go
+
+  # Typed tables for package app
+  go run ./cmd/schema -r mycompany -a bqw123abc -f structs -o app/quickbase_gen.go
 
   # Generate JSON format
   go run ./cmd/schema -r mycompany -a bqw123abc -f json -o schema.json
@@ -197,14 +255,9 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 	defer cancel()
 
 	// Fetch all tables
-	tablesResp, err := client.API().GetAppTablesWithResponse(ctx, &quickbase.GetAppTablesParams{
-		AppId: appID,
-	})
+	tables, err := client.GetAppTables(ctx, appID)
 	if err != nil {
 		return nil, fmt.Errorf("fetching tables: %w", err)
-	}
-	if tablesResp.JSON200 == nil {
-		return nil, fmt.Errorf("fetching tables: status %d", tablesResp.StatusCode())
 	}
 
 	schema := &quickbase.Schema{
@@ -213,46 +266,31 @@ func fetchSchema(realm, appID, token string) (*quickbase.Schema, error) {
 
 	tableAliases := make(map[string]bool)
 
-	for _, table := range *tablesResp.JSON200 {
-		if table.Id == nil || table.Name == nil {
+	for _, table := range tables {
+		if table.Id == "" || table.Name == "" {
 			continue
 		}
 
-		tableID := *table.Id
-		tableName := *table.Name
-
 		// Generate table alias from name
-		tableAlias := labelToAlias(tableName)
-		tableAlias = makeUnique(tableAlias, tableAliases)
+		tableAlias := makeUnique(labelToAlias(table.Name), tableAliases)
 
-		// Fetch fields for this table
-		fieldsResp, err := client.API().GetFieldsWithResponse(ctx, &quickbase.GetFieldsParams{
-			TableId: tableID,
-		})
+		fields, err := client.GetFields(ctx, table.Id, nil)
 		if err != nil {
-			return nil, fmt.Errorf("fetching fields for table %s: %w", tableID, err)
-		}
-		if fieldsResp.JSON200 == nil {
-			return nil, fmt.Errorf("fetching fields for table %s: status %d", tableID, fieldsResp.StatusCode())
+			return nil, fmt.Errorf("fetching fields for table %s: %w", table.Id, err)
 		}
 
 		fieldAliases := make(map[string]bool)
 		fieldMap := make(map[string]int)
 
-		for _, field := range *fieldsResp.JSON200 {
-			if field.Label == nil {
+		for _, field := range fields {
+			if field.Label == "" {
 				continue
 			}
-
-			// Generate field alias from label
-			alias := labelToAlias(*field.Label)
-			alias = makeUnique(alias, fieldAliases)
-
-			fieldMap[alias] = int(field.Id)
+			fieldMap[makeUnique(labelToAlias(field.Label), fieldAliases)] = int(field.Id)
 		}
 
 		schema.Tables[tableAlias] = quickbase.TableSchema{
-			ID:     tableID,
+			ID:     table.Id,
 			Fields: fieldMap,
 		}
 	}
@@ -495,16 +533,16 @@ func mergeSchemas(existing, fresh *quickbase.Schema) (*quickbase.Schema, MergeSt
 	return merged, stats
 }
 
-func formatAsGo(schema *quickbase.Schema) string {
+func formatAsGo(schema *quickbase.Schema, pkg string) string {
 	var b strings.Builder
 
 	b.WriteString("// QuickBase Schema Definition\n")
 	b.WriteString("// Generated by: go run ./cmd/schema\n")
 	b.WriteString(fmt.Sprintf("// Generated at: %s\n", time.Now().UTC().Format(time.RFC3339)))
 	b.WriteString("\n")
-	b.WriteString("package main\n")
+	b.WriteString("package " + pkg + "\n")
 	b.WriteString("\n")
-	b.WriteString("import \"github.com/DrewBradfordXYZ/quickbase-go\"\n")
+	b.WriteString("import \"github.com/DrewBradfordXYZ/quickbase-go/v3\"\n")
 	b.WriteString("\n")
 	b.WriteString("var schema = &quickbase.Schema{\n")
 	b.WriteString("\tTables: map[string]quickbase.TableSchema{\n")

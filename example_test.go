@@ -7,8 +7,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
 )
 
 // Create a basic client with user token authentication.
@@ -199,24 +199,20 @@ func ExampleClient_RunQuery() {
 
 	ctx := context.Background()
 	result, err := client.RunQuery(ctx, quickbase.RunQueryBody{
-		From:   "bqxyz123",                    // table ID
-		Select: quickbase.Ints(3, 6, 7),       // field IDs
-		Where:  quickbase.Where("{6.GT.100}"), // optional filter
+		From:   "bqxyz123",              // table ID
+		Select: quickbase.Ints(3, 6, 7), // field IDs
+		Where:  "{6.GT.100}",            // optional filter
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Use Records() convenience method for unwrapped record data
-	for _, rec := range result.Records() {
+	// Records as maps of field ID to value
+	for _, rec := range result.Data {
 		fmt.Printf("Record: %v\n", rec)
 	}
 
-	// Use Metadata() accessor for pagination info
-	fmt.Printf("Got %d of %d total records\n",
-		result.Metadata().NumRecords(),
-		result.Metadata().TotalRecords(),
-	)
+	fmt.Printf("Got %d of %d total records\n", result.Metadata.NumRecords, result.Metadata.TotalRecords)
 }
 
 // Fetch ALL records from a table with automatic pagination.
@@ -255,28 +251,22 @@ func ExampleClient_RunQueryN() {
 	fmt.Printf("Fetched %d records\n", len(records))
 }
 
-// Get app details using the fluent builder API.
-// Wrapper types provide nil-safe accessor methods for optional fields.
+// Get an app: its fields are plain values.
 func ExampleClient_GetApp() {
 	client, _ := quickbase.New("myrealm",
 		quickbase.WithUserToken("token"),
 	)
 
 	ctx := context.Background()
-	app, err := client.GetApp("bqxyz123").Run(ctx)
+	app, err := client.GetApp(ctx, "bqxyz123")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// All fields have nil-safe accessor methods (returns zero value if nil)
-	fmt.Printf("App: %s\n", app.Name())
-	fmt.Printf("Description: %s\n", app.Description())
-	fmt.Printf("Created: %s\n", app.Created())
-
-	// Direct pointer access available via Raw() for full control
-	if app.Raw() != nil && app.Raw().JSON200 != nil && app.Raw().JSON200.Description != nil {
-		fmt.Printf("Description (direct): %s\n", *app.Raw().JSON200.Description)
-	}
+	// A field QuickBase didn't send is its zero value
+	fmt.Printf("App: %s\n", app.Name)
+	fmt.Printf("Description: %s\n", app.Description)
+	fmt.Printf("Created: %s\n", app.Created)
 }
 
 // Handle different error types from API responses.
@@ -286,7 +276,7 @@ func ExampleClient_GetApp_errorHandling() {
 	)
 
 	ctx := context.Background()
-	app, err := client.GetApp("invalid-app-id").Run(ctx)
+	app, err := client.GetApp(ctx, "invalid-app-id")
 	if err != nil {
 		var rateLimitErr *quickbase.RateLimitError
 		var notFoundErr *quickbase.NotFoundError
@@ -308,8 +298,7 @@ func ExampleClient_GetApp_errorHandling() {
 		return
 	}
 
-	// Access response via accessor methods
-	fmt.Printf("App: %s\n", app.Name())
+	fmt.Printf("App: %s\n", app.Name)
 }
 
 // Use the Ptr helper to create pointers for optional fields.
@@ -351,11 +340,10 @@ func ExampleWithSchema() {
 	result, _ := client.RunQuery(ctx, quickbase.RunQueryBody{
 		From:   "projects",                                             // alias instead of "bqxyz123"
 		Select: quickbase.Fields(schema, "projects", "name", "status"), // aliases for select
-		Where:  quickbase.Where("{'status'.EX.'Active'}"),              // aliases in where
+		Where:  "{'status'.EX.'Active'}",                               // aliases in where
 	})
 
-	// Use Records() convenience method for unwrapped record data
-	for _, record := range result.Records() {
+	for _, record := range result.Data {
 		// Field IDs are the keys (as strings)
 		fmt.Printf("Name: %v, Status: %v\n", record["6"], record["7"])
 	}

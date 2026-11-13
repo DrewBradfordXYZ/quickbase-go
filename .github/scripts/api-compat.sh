@@ -11,12 +11,17 @@ if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; t
   exit 0
 fi
 
-module="github.com/DrewBradfordXYZ/quickbase-go/v2"
+module="$(go list -m)"
 apidiff="golang.org/x/exp/cmd/apidiff@v0.0.0-20261109185158-a52e3aef5920"
 work="$(mktemp -d)"
 trap 'git worktree remove --force "$work/base" >/dev/null 2>&1 || true; rm -rf "$work"' EXIT
 
 git worktree add --quiet --detach "$work/base" "$base"
+base_module="$(cd "$work/base" && go list -m)"
+if [ "$base_module" != "$module" ]; then
+  echo "Module path changed ($base_module -> $module): a new major version, not compared"
+  exit 0
+fi
 (cd "$work/base" && go run "$apidiff" -m -w "$work/base.api" "$module")
 go run "$apidiff" -m -incompatible "$work/base.api" "$module" > "$work/incompatible.txt"
 

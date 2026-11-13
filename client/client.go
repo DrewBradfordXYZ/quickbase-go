@@ -38,9 +38,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // Client wraps the generated QuickBase client with authentication, automatic retry,
@@ -80,9 +80,6 @@ type Client struct {
 
 	// Logging
 	logger *core.Logger
-
-	// Date conversion
-	convertDates bool
 
 	// Schema for table/field aliases
 	schema *core.ResolvedSchema
@@ -217,16 +214,6 @@ func WithProactiveThrottle(requestsPer10Seconds int) Option {
 func WithDebug(enabled bool) Option {
 	return func(c *Client) {
 		c.logger = core.NewLogger(enabled)
-	}
-}
-
-// WithConvertDates has no effect: the client never converted dates. Responses
-// keep dates as the strings QuickBase sends; parse them with [core.ParseISODate].
-//
-// Deprecated: it does nothing and will be removed.
-func WithConvertDates(enabled bool) Option {
-	return func(c *Client) {
-		c.convertDates = enabled
 	}
 }
 
@@ -382,7 +369,6 @@ func New(realm string, authStrategy auth.Strategy, opts ...Option) (*Client, err
 		backoffMult:  2,
 		timeout:      30 * time.Second,
 		logger:       core.NewLogger(false),
-		convertDates: true,
 	}
 
 	for _, opt := range opts {
@@ -498,9 +484,6 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
-	// Extract dbid from request for temp token auth
-	dbid := extractDBID(req)
-
 	// Read body once for potential retries
 	var bodyBytes []byte
 	if req.Body != nil {
@@ -510,7 +493,19 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 			return nil, fmt.Errorf("reading request body: %w", err)
 		}
 		req.Body.Close()
+	}
 
+	// Schema aliases, for every request
+	if c.schema != nil {
+		var err error
+		if bodyBytes, err = c.resolveAliases(req, bodyBytes); err != nil {
+			return nil, err
+		}
+	}
+
+	// Extract dbid from request for temp token auth
+	dbid := extractDBID(req)
+	if bodyBytes != nil {
 		// Also check body for dbid if not found elsewhere
 		if dbid == "" {
 			dbid = extractDBIDFromBody(bodyBytes)
@@ -521,7 +516,9 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	requestFactory := func(ctx context.Context, token string) (*http.Request, error) {
 		reqCopy := req.Clone(ctx)
 		if bodyBytes != nil {
+			// The body may have changed (aliases resolved), so its length too
 			reqCopy.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+			reqCopy.ContentLength = int64(len(bodyBytes))
 		}
 		c.auth.ApplyAuth(reqCopy, token)
 		return reqCopy, nil
@@ -538,6 +535,64 @@ func (h *authHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 	retrySafe := !isJSONWrite(req.Method, c.apiPath(req.URL.Path))
 	return c.do(ctx, dbid, req.Method, req.URL.Path, bodyBytes, retrySafe, requestFactory, responseHandler)
+}
+
+// tableBodies are the operations whose JSON body names a table and its
+// fields. Other bodies are left alone: transferUserToken's from and to are
+// user IDs, and analytics' where and groupBy aren't record queries.
+var tableBodies = map[string]bool{
+	"/v1/records":               true, // upsert (to), deleteRecords (from)
+	"/v1/records/query":         true,
+	"/v1/records/modifiedSince": true,
+	"/v1/formula/run":           true,
+}
+
+// tablePath matches a table ID in a path: /tables/{tableId}, /files/{tableId}.
+var tablePath = regexp.MustCompile(`^(.*/(?:tables|files)/)([^/]+)(.*)$`)
+
+// resolveAliases resolves the schema's table and field aliases in a request:
+// a table in the path (/tables/{tableId}, /files/{tableId}) or a tableId
+// query parameter; and, for the record operations, a JSON body's from, to,
+// select, sortBy, groupBy, where, record data, fieldsToReturn and
+// mergeFieldId. Numbers in the body keep their exact values.
+func (c *Client) resolveAliases(req *http.Request, body []byte) ([]byte, error) {
+	if m := tablePath.FindStringSubmatch(req.URL.Path); m != nil {
+		resolved, err := core.ResolveTableAlias(c.schema, m[2])
+		if err != nil {
+			return nil, err
+		}
+		if resolved != m[2] {
+			req.URL.Path = m[1] + resolved + m[3]
+			req.URL.RawPath = ""
+		}
+	}
+
+	query := req.URL.Query()
+	if tableID := query.Get("tableId"); tableID != "" {
+		resolved, err := core.ResolveTableAlias(c.schema, tableID)
+		if err != nil {
+			return nil, err
+		}
+		if resolved != tableID {
+			query.Set("tableId", resolved)
+			req.URL.RawQuery = query.Encode()
+		}
+	}
+
+	if len(body) == 0 || !tableBodies[c.apiPath(req.URL.Path)] || !strings.HasPrefix(req.Header.Get("Content-Type"), "application/json") {
+		return body, nil
+	}
+	decoder := json.NewDecoder(bytes.NewReader(body))
+	decoder.UseNumber()
+	var fields map[string]any
+	if err := decoder.Decode(&fields); err != nil {
+		return body, nil // not an object; nothing to resolve
+	}
+	resolved, _, err := core.TransformRequest(fields, c.schema)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(resolved)
 }
 
 // requestFactory creates an authenticated request for a retry attempt.

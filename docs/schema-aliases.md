@@ -33,30 +33,33 @@ schema := &quickbase.Schema{
 
 ## Using aliases
 
-```go
-active, _ := client.Query("projects").
-	Select("name", "status").
-	Where("{'status'.EX.'Active'}").
-	SortBy(quickbase.Asc("name")).
-	Run(ctx)
+Aliases work with any method. The client resolves them in the HTTP layer: a table in a path (`/tables/{tableId}`, `/files/{tableId}`) or a `TableId` parameter, and, in record operations (query, upsert, delete records, modified since, run formula), the body's `from`, `to`, `select`, `sortBy`, `groupBy`, `where`, record data, `fieldsToReturn` and `mergeFieldId`. Other bodies are left alone (`transferUserToken`'s `from` and `to` are user IDs). A table the schema doesn't name goes as given, unless its name is a near miss of an alias: then it's an error suggesting the alias.
 
-client.Upsert("projects").
-	Data(quickbase.Row("name", "Alpha", "status", "Active")).
-	Run(ctx)
+```go
+active, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{
+	From:   "projects",
+	Select: quickbase.Fields(schema, "projects", "name", "status"),
+	Where:  "{'status'.EX.'Active'}",
+})
+
+client.Upsert(ctx, quickbase.UpsertBody{
+	To:   "projects",
+	Data: []quickbase.Record{quickbase.Row("name", "Alpha", "status", "Active")},
+})
 ```
 
-Results key values by field ID (`rec["6"]`). To have the query builder's records keyed by alias (`rec["name"]`), turn on `TransformResponses`:
+Results key values by field ID (`rec["6"]`). To have `RunQueryAll`, `RunQueryN`, `RunQueryIterator` and the report equivalents key records by alias (`rec["name"]`), turn on `TransformResponses`:
 
 ```go
 client, _ := quickbase.New("myrealm",
 	quickbase.WithUserToken("token"),
 	quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}),
 )
-records, _ := client.Query("projects").Select("name").Run(ctx)
-fmt.Println(records[0]["name"])
+records, _ := client.RunQueryAll(ctx, quickbase.RunQueryBody{From: "projects", Select: quickbase.Fields(schema, "projects", "name")})
+fmt.Println(records[0]["name"].Value)
 ```
 
-Fields the schema doesn't name keep their ID. With `RunQueryBody`, resolve field aliases for `Select` with `quickbase.Fields(schema, "projects", "name", "status")`; the table, `Where` and `SortBy` take aliases directly.
+Fields the schema doesn't name keep their ID. `Select` is a list of field IDs, so `quickbase.Fields(schema, "projects", "name", "status")` resolves names into it; `From`, `To` and `Where` take aliases directly.
 
 A name the schema doesn't have is an error that lists the names it does, and suggests the closest: `... Did you mean 'status'?`
 

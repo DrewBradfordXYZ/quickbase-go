@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3"
 )
 
 // A fake runQuery that serves 3 records, 2 per page, and records each body.
@@ -55,7 +55,7 @@ func TestRunQueryIteratorStreamsPages(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		got = append(got, quickbase.UnwrapRecords([]quickbase.Record{rec})[0]["3"])
+		got = append(got, rec.Values()["3"])
 	}
 	if len(got) != 3 || got[2] != float64(3) {
 		t.Errorf("records = %v, want 1, 2, 3", got)
@@ -75,7 +75,7 @@ func TestRunQueryAllResolvesAliasesAndKeepsCallerOptions(t *testing.T) {
 	body := quickbase.RunQueryBody{
 		From:    "projects",
 		Select:  quickbase.Fields(schema, "projects", "id", "name"),
-		Where:   quickbase.Where("{'name'.EX.'Alpha'}"),
+		Where:   "{'name'.EX.'Alpha'}",
 		Options: quickbase.Options(2, 0),
 	}
 	records, err := qb.RunQueryAll(context.Background(), body)
@@ -94,14 +94,14 @@ func TestRunQueryAllResolvesAliasesAndKeepsCallerOptions(t *testing.T) {
 	}
 }
 
-// TransformResponses did nothing (no code read it). It now keys the query
-// builder's records by alias, and is off by default.
-func TestQueryBuilderKeysByAliasWhenAsked(t *testing.T) {
+// TransformResponses keys the paging helpers' records by alias, and is off
+// by default.
+func TestRunQueryKeysByAliasWhenAsked(t *testing.T) {
 	srv, _ := pagedServer(t)
 	schema := quickbase.NewSchema().Table("projects", "bqtable1").Field("id", 3).Build()
 
 	byID, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL), quickbase.WithSchema(schema))
-	recs, err := byID.Query("projects").Select("id").Run(context.Background())
+	recs, err := byID.RunQueryAll(context.Background(), quickbase.RunQueryBody{From: "projects"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -111,11 +111,11 @@ func TestQueryBuilderKeysByAliasWhenAsked(t *testing.T) {
 
 	byAlias, _ := quickbase.New("testrealm", quickbase.WithUserToken("token"), quickbase.WithBaseURL(srv.URL),
 		quickbase.WithSchemaOptions(schema, quickbase.SchemaOptions{TransformResponses: true}))
-	recs, err = byAlias.Query("projects").Select("id").RunN(context.Background(), 2)
+	recs, err = byAlias.RunQueryN(context.Background(), quickbase.RunQueryBody{From: "projects"}, 2)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if recs[0]["id"] != float64(1) {
+	if recs[0]["id"].Value != float64(1) {
 		t.Errorf("TransformResponses: record %v, want keyed by alias", recs[0])
 	}
 }

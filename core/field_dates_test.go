@@ -86,3 +86,19 @@ func TestCheckRecordData(t *testing.T) {
 		}
 	}
 }
+
+// QuickBase sends a blank date as "" (and null); inside a result type that
+// failed the whole response.
+func TestBlankDatesDecodeAsZero(t *testing.T) {
+	var v struct {
+		D  Date     `json:"d"`
+		DT DateTime `json:"dt"`
+		N  Date     `json:"n"`
+	}
+	if err := json.Unmarshal([]byte(`{"d":"","dt":"","n":null}`), &v); err != nil {
+		t.Fatal(err)
+	}
+	if v.D != (Date{}) || !v.DT.IsZero() || v.N != (Date{}) {
+		t.Errorf("blanks decoded as %+v", v)
+	}
+}

@@ -1,6 +1,6 @@
 package client
 
-import "github.com/DrewBradfordXYZ/quickbase-go/v2/auth"
+import "github.com/DrewBradfordXYZ/quickbase-go/v3/auth"
 
 // Auth options. New's authStrategy argument, when not nil, takes precedence.
 

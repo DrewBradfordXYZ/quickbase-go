@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"iter"
 	"net/http"
+	"strconv"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/generated"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/generated"
 )
 
 // parseAPIError extracts a typed error from a non-200 API response.
@@ -99,103 +100,25 @@ func parseAPIError(statusCode int, body []byte, httpResp *http.Response) error {
 	}
 }
 
-// --- RunQuery with schema transformation ---
-
-// RunQuery executes a query and returns the result with convenience methods.
-// For all results, use RunQueryAll or RunQueryIterator.
+// --- Paging: RunQuery and RunReport across pages ---
 //
-// If a schema is configured, table and field aliases in the body are
-// automatically resolved to IDs before the request is sent.
-//
-// Use result.Records() for unwrapped record data, or access result.Data directly.
-func (c *Client) RunQuery(ctx context.Context, body generated.RunQueryJSONRequestBody) (*RunQueryResult, error) {
-	// Transform request body if schema is configured
-	transformedBody, _, err := c.transformRunQueryBody(body)
-	if err != nil {
-		return nil, err
-	}
+// RunQuery and RunReport (generated) return one page. These fetch every
+// page, or n records, or yield records a page at a time. Schema aliases in
+// the body are resolved in the HTTP layer, as for every request.
 
-	resp, err := c.API().RunQueryWithResponse(ctx, transformedBody)
-	if err != nil {
-		return nil, err
-	}
-	if resp.JSON200 == nil {
-		return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
-	}
-
-	return &RunQueryResult{resp: resp}, nil
-}
-
-// transformRunQueryBody transforms a RunQuery body, resolving table alias to ID.
-// Also transforms where clause field aliases.
-func (c *Client) transformRunQueryBody(body generated.RunQueryJSONRequestBody) (generated.RunQueryJSONRequestBody, string, error) {
-	tableID := body.From
-
-	if c.schema == nil {
-		return body, tableID, nil
-	}
-
-	result := body
-
-	// Resolve table alias in 'from'
-	resolvedTableID, err := core.ResolveTableAlias(c.schema, body.From)
-	if err != nil {
-		return body, "", err
-	}
-	result.From = resolvedTableID
-	tableID = resolvedTableID
-
-	// Transform where clause field aliases
-	if body.Where != nil {
-		// Extract the where string from the union type
-		if whereStr, ok := extractWhereString(body.Where); ok {
-			// Transform field aliases in where clause
-			bodyMap := map[string]any{
-				"from":  body.From,
-				"where": whereStr,
-			}
-			transformed, _, _ := core.TransformRequest(bodyMap, c.schema)
-			if transformedWhere, ok := transformed["where"].(string); ok {
-				// Convert back to union type
-				whereUnion, err := StringToWhereUnion(transformedWhere)
-				if err == nil {
-					result.Where = whereUnion
-				}
-			}
-		}
-	}
-
-	return result, tableID, nil
-}
-
-// RunQueryAll fetches all records across all pages.
-// This automatically handles pagination and returns raw QuickbaseRecord slices.
-// Use UnwrapRecords() from the quickbase package to convert to map[string]any.
-// Schema aliases in the body are resolved, as in RunQuery.
+// RunQueryAll fetches every record across all pages.
 func (c *Client) RunQueryAll(ctx context.Context, body generated.RunQueryJSONRequestBody) ([]generated.QuickbaseRecord, error) {
-	fetcher, err := c.runQueryPages(body)
-	if err != nil {
-		return nil, err
-	}
-	return CollectAll(ctx, fetcher)
+	return CollectAll(ctx, c.runQueryFetcher(body))
 }
 
 // RunQueryN fetches up to n records across pages.
-// This automatically handles pagination and returns raw QuickbaseRecord slices.
-// Use UnwrapRecords() from the quickbase package to convert to map[string]any.
-// Schema aliases in the body are resolved, as in RunQuery.
 func (c *Client) RunQueryN(ctx context.Context, body generated.RunQueryJSONRequestBody, n int) ([]generated.QuickbaseRecord, error) {
-	fetcher, err := c.runQueryPages(body)
-	if err != nil {
-		return nil, err
-	}
-	return CollectN(ctx, fetcher, n)
+	return CollectN(ctx, c.runQueryFetcher(body), n)
 }
 
 // RunQueryIterator yields every record across all pages, fetching a page at
 // a time, so a large table never has to fit in memory. Stop early by
-// breaking out of the loop. Schema aliases in the body are resolved, as in
-// RunQuery.
+// breaking out of the loop.
 //
 //	for record, err := range client.RunQueryIterator(ctx, body) {
 //	    if err != nil {
@@ -204,91 +127,39 @@ func (c *Client) RunQueryN(ctx context.Context, body generated.RunQueryJSONReque
 //	    // process record
 //	}
 func (c *Client) RunQueryIterator(ctx context.Context, body generated.RunQueryJSONRequestBody) iter.Seq2[generated.QuickbaseRecord, error] {
-	fetcher, err := c.runQueryPages(body)
-	if err != nil {
-		return func(yield func(generated.QuickbaseRecord, error) bool) {
-			yield(nil, err)
-		}
-	}
-	return Paginate(ctx, fetcher)
+	return Paginate(ctx, c.runQueryFetcher(body))
 }
 
-// runQueryPages resolves schema aliases once, then fetches page by page.
-func (c *Client) runQueryPages(body generated.RunQueryJSONRequestBody) (PageFetcher[generated.QuickbaseRecord, *runQueryPageResponse], error) {
-	transformed, _, err := c.transformRunQueryBody(body)
-	if err != nil {
-		return nil, err
-	}
-	return c.runQueryFetcher(transformed), nil
-}
-
-// runQueryFetcher creates a page fetcher for RunQuery
-func (c *Client) runQueryFetcher(body generated.RunQueryJSONRequestBody) PageFetcher[generated.QuickbaseRecord, *runQueryPageResponse] {
-	return func(ctx context.Context, skip int, nextToken string) (*runQueryPageResponse, error) {
+// runQueryFetcher fetches one page of a query at the given skip.
+func (c *Client) runQueryFetcher(body generated.RunQueryJSONRequestBody) PageFetcher[generated.QuickbaseRecord, *recordPage] {
+	return func(ctx context.Context, skip int, _ string) (*recordPage, error) {
 		// Copy the body and its options: setting Skip on the caller's
 		// Options would change their body.
-		bodyCopy := body
+		page := body
 		var opts generated.RunQueryJSONBody_Options
 		if body.Options != nil {
 			opts = *body.Options
 		}
 		opts.Skip = &skip
-		bodyCopy.Options = &opts
+		page.Options = &opts
 
-		resp, err := c.API().RunQueryWithResponse(ctx, bodyCopy)
+		result, err := c.RunQuery(ctx, page)
 		if err != nil {
 			return nil, err
 		}
-		if resp.JSON200 == nil {
-			return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
-		}
-
-		var data []generated.QuickbaseRecord
-		if resp.JSON200.Data != nil {
-			data = *resp.JSON200.Data
-		}
-
-		var metadata PaginationMetadata
-		if resp.JSON200.Metadata != nil {
-			m := resp.JSON200.Metadata
-			metadata = PaginationMetadata{
-				TotalRecords: &m.TotalRecords,
-				NumRecords:   &m.NumRecords,
-				Skip:         m.Skip,
-			}
-		}
-
-		return &runQueryPageResponse{data: data, metadata: metadata}, nil
+		m := result.Metadata
+		return &recordPage{data: c.keyByAlias(body.From, result.Data), metadata: PaginationMetadata{TotalRecords: &m.TotalRecords, NumRecords: &m.NumRecords, Skip: &m.Skip}}, nil
 	}
 }
 
-// runQueryPageResponse adapts the generated response to PaginatedResponse interface
-type runQueryPageResponse struct {
-	data     []generated.QuickbaseRecord
-	metadata PaginationMetadata
-}
-
-func (r *runQueryPageResponse) GetData() []generated.QuickbaseRecord {
-	return r.data
-}
-
-func (r *runQueryPageResponse) GetMetadata() PaginationMetadata {
-	return r.metadata
-}
-
-// --- RunReport pagination helpers ---
-
-// RunReportAll fetches all records from a report across all pages.
-// This automatically handles pagination.
+// RunReportAll fetches every record of a report across all pages.
 func (c *Client) RunReportAll(ctx context.Context, reportID string, tableID string) ([]generated.QuickbaseRecord, error) {
-	fetcher := c.runReportFetcher(reportID, tableID)
-	return CollectAll(ctx, fetcher)
+	return CollectAll(ctx, c.runReportFetcher(reportID, tableID))
 }
 
-// RunReportN fetches up to n records from a report across pages.
+// RunReportN fetches up to n records of a report across pages.
 func (c *Client) RunReportN(ctx context.Context, reportID string, tableID string, n int) ([]generated.QuickbaseRecord, error) {
-	fetcher := c.runReportFetcher(reportID, tableID)
-	return CollectN(ctx, fetcher, n)
+	return CollectN(ctx, c.runReportFetcher(reportID, tableID), n)
 }
 
 // RunReportIterator yields every record of a report, a page at a time.
@@ -296,75 +167,127 @@ func (c *Client) RunReportIterator(ctx context.Context, reportID string, tableID
 	return Paginate(ctx, c.runReportFetcher(reportID, tableID))
 }
 
-// runReportFetcher creates a page fetcher for RunReport
-func (c *Client) runReportFetcher(reportID string, tableID string) PageFetcher[generated.QuickbaseRecord, *runReportPageResponse] {
-	return func(ctx context.Context, skip int, nextToken string) (*runReportPageResponse, error) {
-		params := &generated.RunReportParams{
-			TableId: tableID,
-			Skip:    &skip,
-		}
-
-		resp, err := c.API().RunReportWithResponse(ctx, reportID, params, nil)
+// runReportFetcher fetches one page of a report at the given skip.
+func (c *Client) runReportFetcher(reportID string, tableID string) PageFetcher[generated.QuickbaseRecord, *recordPage] {
+	return func(ctx context.Context, skip int, _ string) (*recordPage, error) {
+		result, err := c.RunReport(ctx, reportID, tableID, &generated.RunReportOptions{Skip: &skip})
 		if err != nil {
 			return nil, err
 		}
-		if resp.JSON200 == nil {
-			return nil, parseAPIError(resp.StatusCode(), resp.Body, resp.HTTPResponse)
-		}
-
-		var data []generated.QuickbaseRecord
-		if resp.JSON200.Data != nil {
-			data = *resp.JSON200.Data
-		}
-
-		var metadata PaginationMetadata
-		if resp.JSON200.Metadata != nil {
-			m := resp.JSON200.Metadata
-			metadata = PaginationMetadata{
-				TotalRecords: &m.TotalRecords,
-				NumRecords:   &m.NumRecords,
-				Skip:         m.Skip,
-			}
-		}
-
-		return &runReportPageResponse{data: data, metadata: metadata}, nil
+		m := result.Metadata
+		return &recordPage{data: c.keyByAlias(tableID, result.Data), metadata: PaginationMetadata{TotalRecords: &m.TotalRecords, NumRecords: &m.NumRecords, Skip: &m.Skip}}, nil
 	}
 }
 
-// runReportPageResponse adapts the generated response to PaginatedResponse interface
-type runReportPageResponse struct {
+// keyByAlias keys records by field alias instead of field ID when the
+// client's schema has TransformResponses. Fields the schema doesn't name
+// keep their ID.
+func (c *Client) keyByAlias(table string, records []generated.QuickbaseRecord) []generated.QuickbaseRecord {
+	if c.schema == nil || !c.schema.Options.TransformResponses {
+		return records
+	}
+	tableID, err := core.ResolveTableAlias(c.schema, table)
+	if err != nil {
+		return records
+	}
+	for i, record := range records {
+		keyed := make(generated.QuickbaseRecord, len(record))
+		for key, value := range record {
+			if id, err := strconv.Atoi(key); err == nil {
+				if alias := core.GetFieldAlias(c.schema, tableID, id); alias != "" {
+					key = alias
+				}
+			}
+			keyed[key] = value
+		}
+		records[i] = keyed
+	}
+	return records
+}
+
+// recordPage is a page of records for the paging helpers.
+type recordPage struct {
 	data     []generated.QuickbaseRecord
 	metadata PaginationMetadata
 }
 
-func (r *runReportPageResponse) GetData() []generated.QuickbaseRecord {
-	return r.data
-}
+func (r *recordPage) GetData() []generated.QuickbaseRecord { return r.data }
 
-func (r *runReportPageResponse) GetMetadata() PaginationMetadata {
-	return r.metadata
-}
+func (r *recordPage) GetMetadata() PaginationMetadata { return r.metadata }
 
-// --- Helper functions ---
-// These are kept for internal use. For user-facing helpers, see quickbase.go
-
-func derefInt(p *int) int {
-	if p == nil {
-		return 0
+// GetRelationshipsIterator yields every relationship of a table, a page at a
+// time (getRelationships pages by skip).
+func (c *Client) GetRelationshipsIterator(ctx context.Context, tableID string) iter.Seq2[generated.GetRelationshipsRelationshipsItem, error] {
+	return func(yield func(generated.GetRelationshipsRelationshipsItem, error) bool) {
+		skip := 0
+		for {
+			page, err := c.GetRelationships(ctx, tableID, &generated.GetRelationshipsOptions{Skip: &skip})
+			if err != nil {
+				yield(generated.GetRelationshipsRelationshipsItem{}, err)
+				return
+			}
+			for _, rel := range page.Relationships {
+				if !yield(rel, nil) {
+					return
+				}
+			}
+			skip += len(page.Relationships)
+			if len(page.Relationships) == 0 || skip >= page.Metadata.TotalRelationships {
+				return
+			}
+		}
 	}
-	return *p
 }
 
-func derefBool(p *bool) bool {
-	if p == nil {
-		return false
+// GetUsersIterator yields every user getUsers finds, a page at a time
+// (getUsers pages by nextPageToken). body filters by email or app; its
+// NextPageToken is set for each page; opts can be nil.
+func (c *Client) GetUsersIterator(ctx context.Context, body generated.GetUsersJSONRequestBody, opts *generated.GetUsersOptions) iter.Seq2[generated.GetUsersUsersItem, error] {
+	return func(yield func(generated.GetUsersUsersItem, error) bool) {
+		for {
+			page, err := c.GetUsers(ctx, body, opts)
+			if err != nil {
+				yield(generated.GetUsersUsersItem{}, err)
+				return
+			}
+			for _, user := range page.Users {
+				if !yield(user, nil) {
+					return
+				}
+			}
+			token := page.Metadata.NextPageToken
+			if token == "" || len(page.Users) == 0 {
+				return
+			}
+			body.NextPageToken = &token
+		}
 	}
-	return *p
 }
 
-func derefString(p *string) string {
-	if p == nil {
-		return ""
+// AuditIterator yields every audit event body asks for, a page at a time
+// (audit pages by nextToken). Its NextToken and QueryId are set for each
+// page.
+func (c *Client) AuditIterator(ctx context.Context, body generated.AuditJSONRequestBody) iter.Seq2[generated.AuditEventsItem, error] {
+	return func(yield func(generated.AuditEventsItem, error) bool) {
+		for {
+			page, err := c.Audit(ctx, body)
+			if err != nil {
+				yield(generated.AuditEventsItem{}, err)
+				return
+			}
+			for _, event := range page.Events {
+				if !yield(event, nil) {
+					return
+				}
+			}
+			if page.NextToken == "" || len(page.Events) == 0 {
+				return
+			}
+			token, queryID := page.NextToken, page.QueryId
+			body.NextToken = &token
+			if queryID != "" {
+				body.QueryId = &queryID
+			}
+		}
 	}
-	return *p
 }

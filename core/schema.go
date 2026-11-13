@@ -21,6 +21,7 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 )
@@ -48,9 +49,9 @@ type TableSchema struct {
 
 // SchemaOptions configures schema behavior.
 type SchemaOptions struct {
-	// TransformResponses keys the records the query builder returns (Run,
-	// RunN) by field alias instead of field ID. Off by default: records are
-	// keyed by field ID.
+	// TransformResponses keys the records RunQueryAll, RunQueryN,
+	// RunQueryIterator and the RunReport equivalents return by field alias
+	// instead of field ID. Off by default: records are keyed by field ID.
 	TransformResponses bool
 }
 
@@ -141,22 +142,25 @@ func ResolveTableAlias(schema *ResolvedSchema, tableRef string) (string, error) 
 		return tableID, nil
 	}
 
-	// Check if it's already a table ID
+	// Check if it's already one of the schema's table IDs
 	if _, ok := schema.TableIDToAlias[tableRef]; ok {
 		return tableRef, nil
 	}
 
-	// Unknown alias - throw helpful error
+	// Anything else is a table the schema doesn't name, and goes as given,
+	// unless it is a near miss of an alias: then it's a typo, and an error
+	// that suggests the alias. (Telling IDs from aliases by their shape
+	// rejected real IDs: older ones don't start with "b".)
 	available := make([]string, 0, len(schema.TableAliasToID))
 	for alias := range schema.TableAliasToID {
 		available = append(available, alias)
 	}
 
 	suggestion := findSimilar(tableRef, available)
-	suggestionText := ""
-	if suggestion != "" {
-		suggestionText = fmt.Sprintf(" Did you mean '%s'?", suggestion)
+	if suggestion == "" {
+		return tableRef, nil
 	}
+	suggestionText := fmt.Sprintf(" Did you mean '%s'?", suggestion)
 
 	availableText := ""
 	if len(available) > 0 {
@@ -172,9 +176,20 @@ func ResolveTableAlias(schema *ResolvedSchema, tableRef string) (string, error) 
 // If the input is already a field ID (int), returns it unchanged.
 // Returns an error if the alias is not found.
 func ResolveFieldAlias(schema *ResolvedSchema, tableID string, fieldRef any) (int, error) {
-	// If it's already an int, return as-is
-	if id, ok := fieldRef.(int); ok {
+	// A field ID passes as given: an int, or a number decoded from JSON
+	switch id := fieldRef.(type) {
+	case int:
 		return id, nil
+	case int64:
+		return int(id), nil
+	case float64:
+		if id == float64(int(id)) {
+			return int(id), nil
+		}
+	case json.Number:
+		if n, err := id.Int64(); err == nil {
+			return int(n), nil
+		}
 	}
 
 	// Must be a string alias

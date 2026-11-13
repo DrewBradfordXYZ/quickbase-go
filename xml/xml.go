@@ -27,8 +27,8 @@
 // Create an XML client from an existing quickbase.Client:
 //
 //	import (
-//	    "github.com/DrewBradfordXYZ/quickbase-go/v2"
-//	    "github.com/DrewBradfordXYZ/quickbase-go/v2/xml"
+//	    "github.com/DrewBradfordXYZ/quickbase-go/v3"
+//	    "github.com/DrewBradfordXYZ/quickbase-go/v3/xml"
 //	)
 //
 //	// Main client for JSON API
@@ -104,7 +104,7 @@ import (
 	"encoding/xml"
 	"net/http"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 // Caller defines the minimal interface required to make XML API calls.

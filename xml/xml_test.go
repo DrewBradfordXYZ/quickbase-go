@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/DrewBradfordXYZ/quickbase-go/v2/core"
+	"github.com/DrewBradfordXYZ/quickbase-go/v3/core"
 )
 
 // roundTripFunc is an adapter for using a function as an http.RoundTripper.
