@@ -263,3 +263,32 @@ func (c *Client) GetUsersIterator(ctx context.Context, params generated.GetUsers
 		}
 	}
 }
+
+// AuditIterator yields every audit event body asks for, a page at a time
+// (audit pages by nextToken). Its NextToken and QueryId are set for each
+// page.
+func (c *Client) AuditIterator(ctx context.Context, body generated.AuditJSONRequestBody) iter.Seq2[generated.AuditEventsItem, error] {
+	return func(yield func(generated.AuditEventsItem, error) bool) {
+		for {
+			page, err := c.Audit(ctx, body)
+			if err != nil {
+				yield(generated.AuditEventsItem{}, err)
+				return
+			}
+			for _, event := range page.Events {
+				if !yield(event, nil) {
+					return
+				}
+			}
+			if page.NextToken == "" || len(page.Events) == 0 {
+				return
+			}
+			token, queryID := page.NextToken, page.QueryId
+			body.NextToken = &token
+			if queryID != "" {
+				body.QueryId = &queryID
+			}
+		}
+	}
+}
+

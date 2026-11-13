@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -209,5 +210,36 @@ func TestListIterators(t *testing.T) {
 	}
 	if strings.Join(users, ",") != "a,b,c" {
 		t.Errorf("users = %v", users)
+	}
+}
+
+func TestAuditIterator(t *testing.T) {
+	var tokens []string
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		raw, _ := io.ReadAll(r.Body)
+		var body map[string]any
+		_ = json.Unmarshal(raw, &body)
+		tok, _ := body["nextToken"].(string)
+		tokens = append(tokens, tok+"|"+fmt.Sprint(body["date"]))
+		w.Header().Set("Content-Type", "application/json")
+		if tok == "" {
+			_, _ = io.WriteString(w, `{"queryId":"q1","nextToken":"t2","events":[{"id":"1"},{"id":"2"}]}`)
+		} else {
+			_, _ = io.WriteString(w, `{"queryId":"q1","nextToken":"","events":[{"id":"3"}]}`)
+		}
+	}))
+	defer srv.Close()
+	qb, _ := quickbase.New("r", quickbase.WithUserToken("t"), quickbase.WithBaseURL(srv.URL))
+
+	var ids []string
+	day := quickbase.Date{Year: 2024, Month: 1, Day: 15}
+	for e, err := range qb.AuditIterator(context.Background(), quickbase.AuditBody{Date: &day}) {
+		if err != nil {
+			t.Fatal(err)
+		}
+		ids = append(ids, e.Id)
+	}
+	if strings.Join(ids, ",") != "1,2,3" || tokens[1] != "t2|2024-01-15" {
+		t.Errorf("events %v, requests %v", ids, tokens)
 	}
 }

@@ -67,11 +67,16 @@ func (d Date) MarshalJSON() ([]byte, error) {
 	return json.Marshal(d.String())
 }
 
-// UnmarshalJSON reads "2024-01-15".
+// UnmarshalJSON reads "2024-01-15". A blank ("" or null, as QuickBase
+// sends an empty date) is the zero Date.
 func (d *Date) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
+	}
+	if s == "" {
+		*d = Date{}
+		return nil
 	}
 	parsed, err := ParseDate(s)
 	if err != nil {
@@ -112,11 +117,15 @@ func (t DateTime) MarshalJSON() ([]byte, error) {
 	return json.Marshal(t.String())
 }
 
-// UnmarshalJSON reads RFC 3339.
+// UnmarshalJSON reads RFC 3339. A blank ("" or null) is the zero DateTime.
 func (t *DateTime) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
+	}
+	if s == "" {
+		*t = DateTime{}
+		return nil
 	}
 	parsed, err := ParseDateTime(s)
 	if err != nil {

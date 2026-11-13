@@ -51,6 +51,7 @@ func main() {
 	named := nameResults(spec)
 	marked := plainResultFields(spec)
 	plainRecordValues(spec)
+	dates := coreDates(spec)
 
 	out, err := json.MarshalIndent(spec, "", "  ")
 	if err != nil {
@@ -62,7 +63,7 @@ func main() {
 	if err := os.WriteFile(os.Args[2], out, 0o644); err != nil {
 		fail(err)
 	}
-	fmt.Printf("gospec: %d result types named, %d optional result fields made plain\n", named, marked)
+	fmt.Printf("gospec: %d result types named, %d optional result fields made plain, %d dates as core.Date\n", named, marked, dates)
 }
 
 func fail(err error) {
@@ -228,6 +229,38 @@ func plainRecordValues(spec obj) {
 		schema["x-go-type"] = goType
 		schema["x-go-type-import"] = core
 	}
+}
+
+// coreDates makes a body's or result's date (a string with format date)
+// core.Date, the type callers already use for Date fields, instead of
+// oapi-codegen's own. Query parameters keep oapi-codegen's type, which its
+// runtime knows how to put in a URL.
+func coreDates(spec obj) int {
+	count := 0
+	var visit func(node any)
+	visit = func(node any) {
+		switch v := node.(type) {
+		case obj:
+			if v["type"] == "string" && v["format"] == "date" && v["x-go-type"] == nil {
+				v["x-go-type"] = "core.Date"
+				v["x-go-type-import"] = obj{"path": "github.com/DrewBradfordXYZ/quickbase-go/v3/core"}
+				count++
+			}
+			for _, child := range v {
+				visit(child)
+			}
+		case []any:
+			for _, child := range v {
+				visit(child)
+			}
+		}
+	}
+	visit(schemas(spec))
+	operations(spec, func(_, _ string, op obj) {
+		visit(op["requestBody"])
+		visit(op["responses"])
+	})
+	return count
 }
 
 // pascal turns an operationId (getApp) into a type name (GetApp).

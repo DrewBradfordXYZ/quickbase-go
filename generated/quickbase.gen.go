@@ -4705,7 +4705,7 @@ type PlatformAnalyticReadsData_DailyDetailedReads_Reads struct {
 // PlatformAnalyticReadsData_DailyDetailedReads Detailed read summaries for a specific date.
 type PlatformAnalyticReadsData_DailyDetailedReads struct {
 	// Date The date of the requested summary.
-	Date openapi_types.Date `json:"date"`
+	Date core.Date `json:"date"`
 
 	// Reads Total reads for the specified date.
 	Reads                PlatformAnalyticReadsData_DailyDetailedReads_Reads `json:"reads"`
@@ -6127,7 +6127,7 @@ type AuditJSONBody struct {
 	// Date The date for which audit logs need to be fetched. This must be date-time only, as YYYY-MM-DD, and a valid date in the past.
 	//
 	// Example: 2022-05-23
-	Date *openapi_types.Date `json:"date,omitempty"`
+	Date *core.Date `json:"date,omitempty"`
 
 	// NextToken Token specifying start of page. For first page don't supply this.
 	//

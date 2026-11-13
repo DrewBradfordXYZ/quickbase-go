@@ -73,7 +73,7 @@ To send a struct, `quickbase.RecordFrom(v)` builds a record from its tags; a nil
 
 ## Other lists
 
-`GetRelationshipsIterator(ctx, tableID)` and `GetUsersIterator(ctx, params, body)` yield every relationship or user, fetching a page at a time; `GetRelationships` and `GetUsers` return one page.
+`GetRelationshipsIterator(ctx, tableID)`, `GetUsersIterator(ctx, params, body)` and `AuditIterator(ctx, body)` yield every relationship, user or audit event, fetching a page at a time; `GetRelationships`, `GetUsers` and `Audit` return one page.
 
 ## Reports
 
