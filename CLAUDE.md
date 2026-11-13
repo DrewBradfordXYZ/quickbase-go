@@ -54,6 +54,8 @@ quickbase-go/
 
 ## Common Commands
 
+The `spec/` submodule is the shared OpenAPI spec. `git pull` doesn't move it unless `submodule.recurse` is set (`git config submodule.recurse true`); after pulling, run `git submodule update --init spec`. Generating from a checkout behind the commit this repo records writes a client for an old API, so the generate commands stop first (`scripts/check-spec.sh`). A checkout ahead of it (working on a newer spec) is allowed. `git status` showing ` M spec` means the checkout isn't on the recorded commit.
+
 ```bash
 # Run all tests
 go test ./...

@@ -1,6 +1,6 @@
 # QuickBase Go SDK Makefile
 
-.PHONY: all generate spec build test clean
+.PHONY: all generate spec spec-check build test clean
 
 # The oapi-codegen version that produced generated/quickbase.gen.go. Another
 # version rewrites unrelated code. It needs Go 1.25 to run (go run fetches
@@ -22,13 +22,17 @@ generate: spec
 	go mod tidy
 	@echo "Done!"
 
+# Stop if the spec submodule is behind the commit this repo records
+spec-check:
+	@sh scripts/check-spec.sh
+
 # Run spec tools (convert, patch, validate)
-spec:
+spec: spec-check
 	@echo "Building patched OpenAPI spec..."
 	cd spec && npm run build --silent 2>/dev/null || npx tsx tools/cli.ts build
 
 # Just patch the spec (faster if source hasn't changed)
-spec-patch:
+spec-patch: spec-check
 	@echo "Patching OpenAPI spec..."
 	cd spec && npx tsx tools/cli.ts patch
 
