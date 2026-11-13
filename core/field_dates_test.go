@@ -102,4 +102,3 @@ func TestBlankDatesDecodeAsZero(t *testing.T) {
 		t.Errorf("blanks decoded as %+v", v)
 	}
 }
-

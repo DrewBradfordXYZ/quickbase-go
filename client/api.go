@@ -291,4 +291,3 @@ func (c *Client) AuditIterator(ctx context.Context, body generated.AuditJSONRequ
 		}
 	}
 }
-
