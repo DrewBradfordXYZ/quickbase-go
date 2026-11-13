@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-12
+
 v3: one method per operation, with plain results. The module path is `github.com/DrewBradfordXYZ/quickbase-go/v3`. [MIGRATION.md](MIGRATION.md) maps every v2 call; [docs/architecture.md](docs/architecture.md) has the reasons.
 
 ### Changed
